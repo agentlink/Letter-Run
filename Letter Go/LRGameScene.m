@@ -21,8 +21,12 @@
 - (void) didMoveToView:(SKView *)view
 {
     [self setScaleMode:SKSceneScaleModeAspectFit];
+    
     self.backgroundLayer = [[LRBackgroundLayer alloc] init];
+    self.gamePlayLayer = [[LRGamePlayLayer alloc] init];
+    
     [self addChild:self.backgroundLayer];
+    [self addChild:self.gamePlayLayer];
 }
 
 + (LRGameScene*) scene

@@ -8,10 +8,12 @@
 
 #import <SpriteKit/SpriteKit.h>
 #import "LRBackgroundLayer.h"
+#import "LRGamePlayLayer.h"
 
 @interface LRGameScene : SKScene
 
 @property LRBackgroundLayer *backgroundLayer;
+@property LRGamePlayLayer *gamePlayLayer;
 
 + (LRGameScene*) scene;
 

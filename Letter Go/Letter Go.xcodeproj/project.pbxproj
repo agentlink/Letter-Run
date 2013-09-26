@@ -25,6 +25,9 @@
 		00CDF17517F478A1003065F6 /* LRGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CDF17417F478A1003065F6 /* LRGameScene.m */; };
 		00CDF17917F478D7003065F6 /* LRLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CDF17817F478D7003065F6 /* LRLayer.m */; };
 		00CDF17F17F4799B003065F6 /* LRBackgroundLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CDF17D17F4799B003065F6 /* LRBackgroundLayer.m */; };
+		00CDF18217F48310003065F6 /* LRGamePlayLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CDF18117F48310003065F6 /* LRGamePlayLayer.m */; };
+		00CDF18617F483E3003065F6 /* LRScreenSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CDF18517F483E3003065F6 /* LRScreenSection.m */; };
+		00CDF18917F4840F003065F6 /* LRHealthSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CDF18817F4840F003065F6 /* LRHealthSection.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +67,12 @@
 		00CDF17817F478D7003065F6 /* LRLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLayer.m; sourceTree = "<group>"; };
 		00CDF17D17F4799B003065F6 /* LRBackgroundLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRBackgroundLayer.m; sourceTree = "<group>"; };
 		00CDF17E17F4799B003065F6 /* LRBackgroundLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRBackgroundLayer.h; sourceTree = "<group>"; };
+		00CDF18017F48310003065F6 /* LRGamePlayLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRGamePlayLayer.h; sourceTree = "<group>"; };
+		00CDF18117F48310003065F6 /* LRGamePlayLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRGamePlayLayer.m; sourceTree = "<group>"; };
+		00CDF18417F483E3003065F6 /* LRScreenSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRScreenSection.h; sourceTree = "<group>"; };
+		00CDF18517F483E3003065F6 /* LRScreenSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRScreenSection.m; sourceTree = "<group>"; };
+		00CDF18717F4840F003065F6 /* LRHealthSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRHealthSection.h; sourceTree = "<group>"; };
+		00CDF18817F4840F003065F6 /* LRHealthSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRHealthSection.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +103,7 @@
 		00CDF12A17F474EC003065F6 = {
 			isa = PBXGroup;
 			children = (
+				00CDF18317F483C4003065F6 /* Game Screen Sections */,
 				00CDF17617F478BA003065F6 /* Layers */,
 				00CDF17217F477C1003065F6 /* Scenes */,
 				00CDF13E17F474EC003065F6 /* Letter Go */,
@@ -183,8 +193,21 @@
 				00CDF17817F478D7003065F6 /* LRLayer.m */,
 				00CDF17D17F4799B003065F6 /* LRBackgroundLayer.m */,
 				00CDF17E17F4799B003065F6 /* LRBackgroundLayer.h */,
+				00CDF18017F48310003065F6 /* LRGamePlayLayer.h */,
+				00CDF18117F48310003065F6 /* LRGamePlayLayer.m */,
 			);
 			name = Layers;
+			sourceTree = "<group>";
+		};
+		00CDF18317F483C4003065F6 /* Game Screen Sections */ = {
+			isa = PBXGroup;
+			children = (
+				00CDF18417F483E3003065F6 /* LRScreenSection.h */,
+				00CDF18517F483E3003065F6 /* LRScreenSection.m */,
+				00CDF18717F4840F003065F6 /* LRHealthSection.h */,
+				00CDF18817F4840F003065F6 /* LRHealthSection.m */,
+			);
+			name = "Game Screen Sections";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -288,9 +311,12 @@
 				00CDF14917F474EC003065F6 /* LRAppDelegate.m in Sources */,
 				00CDF14517F474EC003065F6 /* main.m in Sources */,
 				00CDF17F17F4799B003065F6 /* LRBackgroundLayer.m in Sources */,
+				00CDF18217F48310003065F6 /* LRGamePlayLayer.m in Sources */,
+				00CDF18917F4840F003065F6 /* LRHealthSection.m in Sources */,
 				00CDF17917F478D7003065F6 /* LRLayer.m in Sources */,
 				00CDF17517F478A1003065F6 /* LRGameScene.m in Sources */,
 				00CDF14F17F474EC003065F6 /* LRViewController.m in Sources */,
+				00CDF18617F483E3003065F6 /* LRScreenSection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
