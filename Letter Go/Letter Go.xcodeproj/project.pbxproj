@@ -16,14 +16,15 @@
 		00CDF14917F474EC003065F6 /* LRAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CDF14817F474EC003065F6 /* LRAppDelegate.m */; };
 		00CDF14C17F474EC003065F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00CDF14A17F474EC003065F6 /* Main.storyboard */; };
 		00CDF14F17F474EC003065F6 /* LRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CDF14E17F474EC003065F6 /* LRViewController.m */; };
-		00CDF15217F474EC003065F6 /* LRMyScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CDF15117F474EC003065F6 /* LRMyScene.m */; };
-		00CDF15417F474EC003065F6 /* Spaceship.png in Resources */ = {isa = PBXBuildFile; fileRef = 00CDF15317F474EC003065F6 /* Spaceship.png */; };
 		00CDF15617F474EC003065F6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00CDF15517F474EC003065F6 /* Images.xcassets */; };
 		00CDF15D17F474EC003065F6 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CDF15C17F474EC003065F6 /* XCTest.framework */; };
 		00CDF15E17F474EC003065F6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CDF13617F474EC003065F6 /* Foundation.framework */; };
 		00CDF15F17F474EC003065F6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CDF13A17F474EC003065F6 /* UIKit.framework */; };
 		00CDF16717F474EC003065F6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 00CDF16517F474EC003065F6 /* InfoPlist.strings */; };
 		00CDF16917F474EC003065F6 /* Letter_GoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CDF16817F474EC003065F6 /* Letter_GoTests.m */; };
+		00CDF17517F478A1003065F6 /* LRGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CDF17417F478A1003065F6 /* LRGameScene.m */; };
+		00CDF17917F478D7003065F6 /* LRLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CDF17817F478D7003065F6 /* LRLayer.m */; };
+		00CDF17F17F4799B003065F6 /* LRBackgroundLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CDF17D17F4799B003065F6 /* LRBackgroundLayer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,15 +52,18 @@
 		00CDF14B17F474EC003065F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		00CDF14D17F474EC003065F6 /* LRViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LRViewController.h; sourceTree = "<group>"; };
 		00CDF14E17F474EC003065F6 /* LRViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LRViewController.m; sourceTree = "<group>"; };
-		00CDF15017F474EC003065F6 /* LRMyScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LRMyScene.h; sourceTree = "<group>"; };
-		00CDF15117F474EC003065F6 /* LRMyScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LRMyScene.m; sourceTree = "<group>"; };
-		00CDF15317F474EC003065F6 /* Spaceship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Spaceship.png; sourceTree = "<group>"; };
 		00CDF15517F474EC003065F6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		00CDF15B17F474EC003065F6 /* Letter GoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Letter GoTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		00CDF15C17F474EC003065F6 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		00CDF16417F474EC003065F6 /* Letter GoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Letter GoTests-Info.plist"; sourceTree = "<group>"; };
 		00CDF16617F474EC003065F6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		00CDF16817F474EC003065F6 /* Letter_GoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Letter_GoTests.m; sourceTree = "<group>"; };
+		00CDF17317F478A1003065F6 /* LRGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRGameScene.h; sourceTree = "<group>"; };
+		00CDF17417F478A1003065F6 /* LRGameScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRGameScene.m; sourceTree = "<group>"; };
+		00CDF17717F478D7003065F6 /* LRLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRLayer.h; sourceTree = "<group>"; };
+		00CDF17817F478D7003065F6 /* LRLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLayer.m; sourceTree = "<group>"; };
+		00CDF17D17F4799B003065F6 /* LRBackgroundLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRBackgroundLayer.m; sourceTree = "<group>"; };
+		00CDF17E17F4799B003065F6 /* LRBackgroundLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRBackgroundLayer.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +94,8 @@
 		00CDF12A17F474EC003065F6 = {
 			isa = PBXGroup;
 			children = (
+				00CDF17617F478BA003065F6 /* Layers */,
+				00CDF17217F477C1003065F6 /* Scenes */,
 				00CDF13E17F474EC003065F6 /* Letter Go */,
 				00CDF16217F474EC003065F6 /* Letter GoTests */,
 				00CDF13517F474EC003065F6 /* Frameworks */,
@@ -126,9 +132,6 @@
 				00CDF14A17F474EC003065F6 /* Main.storyboard */,
 				00CDF14D17F474EC003065F6 /* LRViewController.h */,
 				00CDF14E17F474EC003065F6 /* LRViewController.m */,
-				00CDF15017F474EC003065F6 /* LRMyScene.h */,
-				00CDF15117F474EC003065F6 /* LRMyScene.m */,
-				00CDF15317F474EC003065F6 /* Spaceship.png */,
 				00CDF15517F474EC003065F6 /* Images.xcassets */,
 				00CDF13F17F474EC003065F6 /* Supporting Files */,
 			);
@@ -162,6 +165,26 @@
 				00CDF16517F474EC003065F6 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		00CDF17217F477C1003065F6 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				00CDF17317F478A1003065F6 /* LRGameScene.h */,
+				00CDF17417F478A1003065F6 /* LRGameScene.m */,
+			);
+			name = Scenes;
+			sourceTree = "<group>";
+		};
+		00CDF17617F478BA003065F6 /* Layers */ = {
+			isa = PBXGroup;
+			children = (
+				00CDF17717F478D7003065F6 /* LRLayer.h */,
+				00CDF17817F478D7003065F6 /* LRLayer.m */,
+				00CDF17D17F4799B003065F6 /* LRBackgroundLayer.m */,
+				00CDF17E17F4799B003065F6 /* LRBackgroundLayer.h */,
+			);
+			name = Layers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -243,7 +266,6 @@
 			files = (
 				00CDF14317F474EC003065F6 /* InfoPlist.strings in Resources */,
 				00CDF15617F474EC003065F6 /* Images.xcassets in Resources */,
-				00CDF15417F474EC003065F6 /* Spaceship.png in Resources */,
 				00CDF14C17F474EC003065F6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -263,9 +285,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00CDF15217F474EC003065F6 /* LRMyScene.m in Sources */,
 				00CDF14917F474EC003065F6 /* LRAppDelegate.m in Sources */,
 				00CDF14517F474EC003065F6 /* main.m in Sources */,
+				00CDF17F17F4799B003065F6 /* LRBackgroundLayer.m in Sources */,
+				00CDF17917F478D7003065F6 /* LRLayer.m in Sources */,
+				00CDF17517F478A1003065F6 /* LRGameScene.m in Sources */,
 				00CDF14F17F474EC003065F6 /* LRViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

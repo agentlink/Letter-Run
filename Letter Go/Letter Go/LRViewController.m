@@ -7,7 +7,7 @@
 //
 
 #import "LRViewController.h"
-#import "LRMyScene.h"
+#import "LRGameScene.h"
 
 @implementation LRViewController
 
@@ -20,12 +20,18 @@
     skView.showsFPS = YES;
     skView.showsNodeCount = YES;
     
-    // Create and configure the scene.
-    SKScene * scene = [LRMyScene sceneWithSize:skView.bounds.size];
-    scene.scaleMode = SKSceneScaleModeAspectFill;
     
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    // Create and configure the scene.
+    LRGameScene * scene = [LRGameScene scene];
+    SKView * skView = (SKView *)self.view;
+
     // Present the scene.
     [skView presentScene:scene];
+
 }
 
 - (BOOL)shouldAutorotate
