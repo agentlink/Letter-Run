@@ -8,9 +8,10 @@
 
 #import "LRLayer.h"
 #import "LRHealthSection.h"
+#import "LRLetterSection.h"
 
 @interface LRGamePlayLayer : LRLayer
 
 @property LRHealthSection *healthSection;
-
+@property LRLetterSection *letterSection;
 @end

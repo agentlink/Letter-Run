@@ -14,24 +14,12 @@
 
 @implementation LRHealthSection
 
-- (id) init
+- (void) createSectionContent
 {
-    NSAssert(0, @"Error: must initialize LRHealthSection with initWithSize");
-    return nil;
+    //The color will be replaced by a health bar sprite
+    self.healthBar = [SKSpriteNode spriteNodeWithColor:[SKColor redColor] size:self.size];
+    //self.healthBar.position = CGPointMake(0 - self.size.width / 2, self.position.y);
+    [self addChild:self.healthBar];
 }
-
-- (id) initWithSize:(CGSize)size
-{
-    if (self = [super initWithColor:[SKColor clearColor] size:size])
-    {
-        //The color will be replaced by a health bar sprite
-        self.healthBar = [SKSpriteNode spriteNodeWithColor:[SKColor redColor] size:size];
-        self.healthBar.position = CGPointMake(0 - self.size.width / 2, self.position.y);
-        [self addChild:self.healthBar];
-    }
-    return self;
-}
-
-
 
 @end

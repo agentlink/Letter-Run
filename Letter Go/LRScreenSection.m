@@ -10,4 +10,23 @@
 
 @implementation LRScreenSection
 
+- (id) init
+{
+    NSAssert(0, @"Error: must initialize LRScreenSection with initWithSize");
+    return nil;
+}
+
+- (id) initWithSize:(CGSize)size
+{
+    if (self = [super initWithColor:[SKColor clearColor] size:size])
+    {
+        [self createSectionContent];
+    }
+    return self;
+}
+
+- (void) createSectionContent
+{
+    NSAssert(0, @"Error: createSectionContent should be overridden by section");
+}
 @end

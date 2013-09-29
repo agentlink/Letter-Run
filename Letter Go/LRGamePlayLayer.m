@@ -7,7 +7,7 @@
 //
 
 #import "LRGamePlayLayer.h"
-
+#import "LRLetterBlock.h"
 
 @implementation LRGamePlayLayer
 
@@ -16,16 +16,41 @@
     if (self = [super init])
     {
         //Code here :)
-        [self createLayerContent];        
+        [self createLayerContent];
+        [self setUpPhysics];
     }
     return self;
 }
 
 - (void) createLayerContent
 {
-    self.healthSection = [[LRHealthSection alloc] initWithSize:CGSizeMake(self.size.width, 30)];
-    self.healthSection.position = self.position;CGPointMake(0, self.position.y);
+    //Create the three sections
+    CGFloat healthHeight = 3;
+    CGFloat letterHeight = 70;
+    self.healthSection = [[LRHealthSection alloc] initWithSize:CGSizeMake(self.size.width, healthHeight)];
+    self.healthSection.position = CGPointMake(self.position.x - self.size.width/2, self.size.height/2 - self.healthSection.size.height/2);
     [self addChild:self.healthSection];
+
+    self.letterSection = [[LRLetterSection alloc] initWithSize:CGSizeMake(self.size.width, letterHeight)];
+    self.letterSection.position = CGPointMake(self.position.x - self.size.width/2, 0 - self.size.height/2 + self.letterSection.size.height/2);
+    [self addChild:self.letterSection];
+    
+    //TEMPORARY: blocks will be created by LRLetterBlockGenerator
+    LRLetterBlock *letterBlock = [[LRLetterBlock alloc] initWithSize:CGSizeMake(40, 40) andLetter:[NSString stringWithFormat:@"G"]];
+    letterBlock.position = CGPointMake(0, 300);
+    [self addChild:letterBlock];
+}
+
+- (void) setUpPhysics
+{
+    //Add a line so that the block doesn't just fall forever
+    float edgeHeight = self.letterSection.position.y + self.letterSection.size.height/2;
+    CGPoint leftScreen = CGPointMake(0 - self.size.width /2, edgeHeight);
+    CGPoint rightScreen = CGPointMake (self.size.width/2, edgeHeight);
+    SKPhysicsBody *blockEdge = [SKPhysicsBody bodyWithEdgeFromPoint:leftScreen toPoint:rightScreen];
+    SKSpriteNode *blockEdgeSprite = [[SKSpriteNode alloc] init];
+    blockEdgeSprite.physicsBody = blockEdge;
+    [self addChild:blockEdgeSprite];
 }
 
 @end

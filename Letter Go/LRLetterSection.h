@@ -1,5 +1,5 @@
 //
-//  LRHealthSection.h
+//  LRLetterSection.h
 //  Letter Go
 //
 //  Created by Gabriel Nicholas on 9/26/13.
@@ -8,7 +8,6 @@
 
 #import <SpriteKit/SpriteKit.h>
 #import "LRScreenSection.h"
-
-@interface LRHealthSection : LRScreenSection
+@interface LRLetterSection : LRScreenSection
 
 @end
