@@ -27,6 +27,13 @@
     
     [self addChild:self.backgroundLayer];
     [self addChild:self.gamePlayLayer];
+    [self setUpPhysics];
+}
+
+- (void) setUpPhysics
+{
+    [self.physicsWorld setGravity: CGVectorMake(0.0, -5)];
+    //[self.physicsWorld setContactDelegate:[GGCollisionManager shared]];
 }
 
 + (LRGameScene*) scene

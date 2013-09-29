@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0049695117F8A12B00176F2D /* LRLetterBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049695017F8A12B00176F2D /* LRLetterBlock.m */; };
 		00CDF13717F474EC003065F6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CDF13617F474EC003065F6 /* Foundation.framework */; };
 		00CDF13917F474EC003065F6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CDF13817F474EC003065F6 /* CoreGraphics.framework */; };
 		00CDF13B17F474EC003065F6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CDF13A17F474EC003065F6 /* UIKit.framework */; };
@@ -28,6 +29,7 @@
 		00CDF18217F48310003065F6 /* LRGamePlayLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CDF18117F48310003065F6 /* LRGamePlayLayer.m */; };
 		00CDF18617F483E3003065F6 /* LRScreenSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CDF18517F483E3003065F6 /* LRScreenSection.m */; };
 		00CDF18917F4840F003065F6 /* LRHealthSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CDF18817F4840F003065F6 /* LRHealthSection.m */; };
+		00CDF18C17F4899B003065F6 /* LRLetterSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CDF18B17F4899B003065F6 /* LRLetterSection.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +43,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0049694F17F8A12B00176F2D /* LRLetterBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRLetterBlock.h; sourceTree = "<group>"; };
+		0049695017F8A12B00176F2D /* LRLetterBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterBlock.m; sourceTree = "<group>"; };
 		00CDF13317F474EC003065F6 /* Letter Go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Letter Go.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		00CDF13617F474EC003065F6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		00CDF13817F474EC003065F6 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -73,6 +77,8 @@
 		00CDF18517F483E3003065F6 /* LRScreenSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRScreenSection.m; sourceTree = "<group>"; };
 		00CDF18717F4840F003065F6 /* LRHealthSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRHealthSection.h; sourceTree = "<group>"; };
 		00CDF18817F4840F003065F6 /* LRHealthSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRHealthSection.m; sourceTree = "<group>"; };
+		00CDF18A17F4899B003065F6 /* LRLetterSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRLetterSection.h; sourceTree = "<group>"; };
+		00CDF18B17F4899B003065F6 /* LRLetterSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterSection.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,9 +106,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0049694E17F8A10700176F2D /* Game Screen Objects */ = {
+			isa = PBXGroup;
+			children = (
+				0049694F17F8A12B00176F2D /* LRLetterBlock.h */,
+				0049695017F8A12B00176F2D /* LRLetterBlock.m */,
+			);
+			name = "Game Screen Objects";
+			sourceTree = "<group>";
+		};
 		00CDF12A17F474EC003065F6 = {
 			isa = PBXGroup;
 			children = (
+				0049694E17F8A10700176F2D /* Game Screen Objects */,
 				00CDF18317F483C4003065F6 /* Game Screen Sections */,
 				00CDF17617F478BA003065F6 /* Layers */,
 				00CDF17217F477C1003065F6 /* Scenes */,
@@ -206,6 +222,8 @@
 				00CDF18517F483E3003065F6 /* LRScreenSection.m */,
 				00CDF18717F4840F003065F6 /* LRHealthSection.h */,
 				00CDF18817F4840F003065F6 /* LRHealthSection.m */,
+				00CDF18A17F4899B003065F6 /* LRLetterSection.h */,
+				00CDF18B17F4899B003065F6 /* LRLetterSection.m */,
 			);
 			name = "Game Screen Sections";
 			sourceTree = "<group>";
@@ -313,8 +331,10 @@
 				00CDF17F17F4799B003065F6 /* LRBackgroundLayer.m in Sources */,
 				00CDF18217F48310003065F6 /* LRGamePlayLayer.m in Sources */,
 				00CDF18917F4840F003065F6 /* LRHealthSection.m in Sources */,
+				00CDF18C17F4899B003065F6 /* LRLetterSection.m in Sources */,
 				00CDF17917F478D7003065F6 /* LRLayer.m in Sources */,
 				00CDF17517F478A1003065F6 /* LRGameScene.m in Sources */,
+				0049695117F8A12B00176F2D /* LRLetterBlock.m in Sources */,
 				00CDF14F17F474EC003065F6 /* LRViewController.m in Sources */,
 				00CDF18617F483E3003065F6 /* LRScreenSection.m in Sources */,
 			);
@@ -527,6 +547,7 @@
 				00CDF16E17F474EC003065F6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		00CDF16F17F474EC003065F6 /* Build configuration list for PBXNativeTarget "Letter GoTests" */ = {
 			isa = XCConfigurationList;
@@ -535,6 +556,7 @@
 				00CDF17117F474EC003065F6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>3E47E631-F622-4A0D-927D-8A98409CE91B</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Letter Go</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>7F8F2574-91B6-4BF3-87EB-32E360826D03</key>
+		<string>https://github.com/gajeam/Letter-Run.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Letter Go/Letter Go.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>7F8F2574-91B6-4BF3-87EB-32E360826D03</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/gajeam/Letter-Run.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>7F8F2574-91B6-4BF3-87EB-32E360826D03</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>7F8F2574-91B6-4BF3-87EB-32E360826D03</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Letter-Run</string>
+		</dict>
+	</array>
+</dict>
+</plist>
