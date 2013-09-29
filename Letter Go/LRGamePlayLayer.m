@@ -8,6 +8,8 @@
 
 #import "LRGamePlayLayer.h"
 #import "LRLetterBlockGenerator.h"
+#import "LRSpriteNameConstants.h"
+#import "LRCollisionManager.h"
 
 @implementation LRGamePlayLayer
 
@@ -35,7 +37,7 @@
     self.letterSection.position = CGPointMake(self.position.x - self.size.width/2, 0 - self.size.height/2 + self.letterSection.size.height/2);
     [self addChild:self.letterSection];
     
-    //TEMPORARY: blocks will be created by LRLetterBlockGenerator
+    //TEMPORARY: blocks will be continuously created by LRLetterBlockGenerator
     [self addChild:[LRLetterBlockGenerator createLetterBlock]];
 }
 
@@ -47,7 +49,9 @@
     CGPoint rightScreen = CGPointMake (self.size.width/2, edgeHeight);
     SKPhysicsBody *blockEdge = [SKPhysicsBody bodyWithEdgeFromPoint:leftScreen toPoint:rightScreen];
     SKSpriteNode *blockEdgeSprite = [[SKSpriteNode alloc] init];
+    blockEdgeSprite.name = NAME_BOTTOM_EDGE;
     blockEdgeSprite.physicsBody = blockEdge;
+    [[LRCollisionManager shared] setBitMasksForSprite:blockEdgeSprite];
     [self addChild:blockEdgeSprite];
 }
 

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0049695117F8A12B00176F2D /* LRLetterBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049695017F8A12B00176F2D /* LRLetterBlock.m */; };
 		0049695517F8A75B00176F2D /* LRLetterBlockGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049695417F8A75B00176F2D /* LRLetterBlockGenerator.m */; };
+		0049695917F8AB5D00176F2D /* LRCollisionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049695817F8AB5D00176F2D /* LRCollisionManager.m */; };
 		00CDF13717F474EC003065F6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CDF13617F474EC003065F6 /* Foundation.framework */; };
 		00CDF13917F474EC003065F6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CDF13817F474EC003065F6 /* CoreGraphics.framework */; };
 		00CDF13B17F474EC003065F6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CDF13A17F474EC003065F6 /* UIKit.framework */; };
@@ -48,6 +49,9 @@
 		0049695017F8A12B00176F2D /* LRLetterBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterBlock.m; sourceTree = "<group>"; };
 		0049695317F8A75B00176F2D /* LRLetterBlockGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRLetterBlockGenerator.h; sourceTree = "<group>"; };
 		0049695417F8A75B00176F2D /* LRLetterBlockGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterBlockGenerator.m; sourceTree = "<group>"; };
+		0049695717F8AB5D00176F2D /* LRCollisionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRCollisionManager.h; sourceTree = "<group>"; };
+		0049695817F8AB5D00176F2D /* LRCollisionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRCollisionManager.m; sourceTree = "<group>"; };
+		0049695B17F8AC6400176F2D /* LRSpriteNameConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LRSpriteNameConstants.h; sourceTree = "<group>"; };
 		00CDF13317F474EC003065F6 /* Letter Go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Letter Go.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		00CDF13617F474EC003065F6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		00CDF13817F474EC003065F6 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -128,15 +132,33 @@
 			name = "Letter Blocks";
 			sourceTree = "<group>";
 		};
+		0049695617F8AB3400176F2D /* Singletons */ = {
+			isa = PBXGroup;
+			children = (
+				0049695717F8AB5D00176F2D /* LRCollisionManager.h */,
+				0049695817F8AB5D00176F2D /* LRCollisionManager.m */,
+			);
+			name = Singletons;
+			sourceTree = "<group>";
+		};
+		0049695A17F8AC3D00176F2D /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				0049695B17F8AC6400176F2D /* LRSpriteNameConstants.h */,
+			);
+			name = Constants;
+			sourceTree = "<group>";
+		};
 		00CDF12A17F474EC003065F6 = {
 			isa = PBXGroup;
 			children = (
+				0049695A17F8AC3D00176F2D /* Constants */,
+				0049695617F8AB3400176F2D /* Singletons */,
 				0049694E17F8A10700176F2D /* Game Screen Objects */,
 				00CDF18317F483C4003065F6 /* Game Screen Sections */,
 				00CDF17617F478BA003065F6 /* Layers */,
 				00CDF17217F477C1003065F6 /* Scenes */,
-				00CDF13E17F474EC003065F6 /* Letter Go */,
-				00CDF16217F474EC003065F6 /* Letter GoTests */,
+				00CDF13E17F474EC003065F6 /* Base */,
 				00CDF13517F474EC003065F6 /* Frameworks */,
 				00CDF13417F474EC003065F6 /* Products */,
 			);
@@ -163,7 +185,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		00CDF13E17F474EC003065F6 /* Letter Go */ = {
+		00CDF13E17F474EC003065F6 /* Base */ = {
 			isa = PBXGroup;
 			children = (
 				00CDF14717F474EC003065F6 /* LRAppDelegate.h */,
@@ -172,8 +194,10 @@
 				00CDF14D17F474EC003065F6 /* LRViewController.h */,
 				00CDF14E17F474EC003065F6 /* LRViewController.m */,
 				00CDF15517F474EC003065F6 /* Images.xcassets */,
+				00CDF16217F474EC003065F6 /* Letter GoTests */,
 				00CDF13F17F474EC003065F6 /* Supporting Files */,
 			);
+			name = Base;
 			path = "Letter Go";
 			sourceTree = "<group>";
 		};
@@ -195,7 +219,7 @@
 				00CDF16317F474EC003065F6 /* Supporting Files */,
 			);
 			path = "Letter GoTests";
-			sourceTree = "<group>";
+			sourceTree = SOURCE_ROOT;
 		};
 		00CDF16317F474EC003065F6 /* Supporting Files */ = {
 			isa = PBXGroup;
@@ -343,6 +367,7 @@
 				00CDF14517F474EC003065F6 /* main.m in Sources */,
 				00CDF17F17F4799B003065F6 /* LRBackgroundLayer.m in Sources */,
 				0049695517F8A75B00176F2D /* LRLetterBlockGenerator.m in Sources */,
+				0049695917F8AB5D00176F2D /* LRCollisionManager.m in Sources */,
 				00CDF18217F48310003065F6 /* LRGamePlayLayer.m in Sources */,
 				00CDF18917F4840F003065F6 /* LRHealthSection.m in Sources */,
 				00CDF18C17F4899B003065F6 /* LRLetterSection.m in Sources */,

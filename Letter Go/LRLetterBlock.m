@@ -7,6 +7,8 @@
 //
 
 #import "LRLetterBlock.h"
+#import "LRSpriteNameConstants.h"
+#import "LRCollisionManager.h"
 
 @interface LRLetterBlock ()
 @end
@@ -20,6 +22,7 @@
 - (id) initWithSize:(CGSize)size andLetter:(NSString *)letter;
 {
     if (self = [super initWithColor:[SKColor blackColor] size:size]) {
+        self.name = NAME_LETTER_BLOCK;
         self.letter = letter;
         [self createObjectContent];
         [self setUpPhysics];
@@ -32,6 +35,8 @@
     self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.size];
     self.physicsBody.affectedByGravity = YES;
     self.physicsBody.dynamic = YES;
+    [[LRCollisionManager shared] setBitMasksForSprite:self];
+    [[LRCollisionManager shared] addCollisionDetectionOfSpriteNamed:NAME_BOTTOM_EDGE toSprite:self];
 }
 
 - (void) createObjectContent

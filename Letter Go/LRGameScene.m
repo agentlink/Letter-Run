@@ -7,6 +7,7 @@
 //
 
 #import "LRGameScene.h"
+#import "LRCollisionManager.h"
 
 @implementation LRGameScene
 
@@ -33,7 +34,7 @@
 - (void) setUpPhysics
 {
     [self.physicsWorld setGravity: CGVectorMake(0.0, -5)];
-    //[self.physicsWorld setContactDelegate:[GGCollisionManager shared]];
+    [self.physicsWorld setContactDelegate:[LRCollisionManager shared]];
 }
 
 + (LRGameScene*) scene
