@@ -313,6 +313,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Gabe Nicholas";
 				TargetAttributes = {
+					00CDF13217F474EC003065F6 = {
+						DevelopmentTeam = Q99XXBB934;
+					};
 					00CDF15A17F474EC003065F6 = {
 						TestTargetID = 00CDF13217F474EC003065F6;
 					};
@@ -502,6 +505,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Letter Go/Letter Go-Prefix.pch";
 				INFOPLIST_FILE = "Letter Go/Letter Go-Info.plist";
@@ -516,6 +520,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Letter Go/Letter Go-Prefix.pch";
 				INFOPLIST_FILE = "Letter Go/Letter Go-Info.plist";

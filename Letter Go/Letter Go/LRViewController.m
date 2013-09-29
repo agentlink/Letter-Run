@@ -19,8 +19,12 @@
     SKView * skView = (SKView *)self.view;
     skView.showsFPS = YES;
     skView.showsNodeCount = YES;
-    
-    
+    [self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
+}
+
+- (BOOL) prefersStatusBarHidden
+{
+    return YES;
 }
 
 - (void)viewDidAppear:(BOOL)animated
