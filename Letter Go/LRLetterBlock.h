@@ -11,6 +11,6 @@
 @interface LRLetterBlock : SKSpriteNode
 @property NSString *letter;
 
-- (id) initWithSize:(CGSize)size andLetter:(NSString *)letter;
++ (LRLetterBlock*) letterBlockWithSize:(CGSize)size andLetter:(NSString*)letter;
 
 @end

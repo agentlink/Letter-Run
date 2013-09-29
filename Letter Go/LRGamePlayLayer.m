@@ -7,7 +7,7 @@
 //
 
 #import "LRGamePlayLayer.h"
-#import "LRLetterBlock.h"
+#import "LRLetterBlockGenerator.h"
 
 @implementation LRGamePlayLayer
 
@@ -36,9 +36,7 @@
     [self addChild:self.letterSection];
     
     //TEMPORARY: blocks will be created by LRLetterBlockGenerator
-    LRLetterBlock *letterBlock = [[LRLetterBlock alloc] initWithSize:CGSizeMake(40, 40) andLetter:[NSString stringWithFormat:@"G"]];
-    letterBlock.position = CGPointMake(0, 300);
-    [self addChild:letterBlock];
+    [self addChild:[LRLetterBlockGenerator createLetterBlock]];
 }
 
 - (void) setUpPhysics

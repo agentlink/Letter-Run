@@ -12,6 +12,11 @@
 @end
 @implementation LRLetterBlock
 
++ (LRLetterBlock*) letterBlockWithSize:(CGSize)size andLetter:(NSString*)letter
+{
+    return [[LRLetterBlock alloc] initWithSize:size andLetter:letter];
+}
+
 - (id) initWithSize:(CGSize)size andLetter:(NSString *)letter;
 {
     if (self = [super initWithColor:[SKColor blackColor] size:size]) {
