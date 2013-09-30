@@ -8,3 +8,4 @@
 
 #define NAME_LETTER_BLOCK           @"Falling letter block"
 #define NAME_BOTTOM_EDGE            @"Bottom edge where blocks land"
+#define NAME_EMPTY_LETTER_SLOT      @"Empty letter slot"

@@ -47,4 +47,10 @@
     [self addChild:letterLabel];
     
 }
+
+- (BOOL) isLetterBlockEmpty
+{
+    return ![[self letter] length];
+}
+
 @end

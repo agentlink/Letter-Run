@@ -1,5 +1,5 @@
 //
-//  LRLetterBlockGenerator.h
+//  LRLetterSlot.h
 //  Letter Go
 //
 //  Created by Gabriel Nicholas on 9/29/13.
@@ -9,9 +9,8 @@
 #import <SpriteKit/SpriteKit.h>
 #import "LRLetterBlock.h"
 
-@interface LRLetterBlockGenerator : SKNode
+@interface LRLetterSlot : SKSpriteNode
 
-+ (LRLetterBlock*) createLetterBlock;
-+ (LRLetterBlock*) createEmptyLetterBlock;
+@property (nonatomic) LRLetterBlock *currentBlock;
 
 @end

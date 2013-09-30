@@ -12,5 +12,6 @@
 @property NSString *letter;
 
 + (LRLetterBlock*) letterBlockWithSize:(CGSize)size andLetter:(NSString*)letter;
+- (BOOL) isLetterBlockEmpty;
 
 @end

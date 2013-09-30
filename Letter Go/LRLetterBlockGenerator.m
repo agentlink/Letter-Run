@@ -7,16 +7,11 @@
 //
 
 #import "LRLetterBlockGenerator.h"
-@implementation LRLetterBlockGenerator
+#import "LRSpriteNameConstants.h"
 
-- (id) init
-{
-    if (self = [super init])
-    {
-        
-    }
-    return self;
-}
+#define LETTER_BLOCK_SIZE           48
+
+@implementation LRLetterBlockGenerator
 
 + (LRLetterBlock*) createLetterBlock
 {
@@ -25,11 +20,18 @@
     // Z = 90
     unsigned short unicodeValue = arc4random()%26 + 65;
     NSString *label = [NSString stringWithFormat:@"%C", unicodeValue];
-    LRLetterBlock *letterBlock = [LRLetterBlock letterBlockWithSize:CGSizeMake(50, 50) andLetter:label];
+    LRLetterBlock *letterBlock = [LRLetterBlock letterBlockWithSize:CGSizeMake(LETTER_BLOCK_SIZE, LETTER_BLOCK_SIZE) andLetter:label];
     letterBlock.position = CGPointMake(0, 300);
     
     return letterBlock;
 }
 
-
++ (LRLetterBlock*) createEmptyLetterBlock
+{
+    LRLetterBlock *lb = [LRLetterBlock letterBlockWithSize:CGSizeMake(LETTER_BLOCK_SIZE, LETTER_BLOCK_SIZE) andLetter:@""];
+    lb.physicsBody = nil;
+    lb.color = [SKColor whiteColor];
+    lb.name = NAME_EMPTY_LETTER_SLOT;
+    return lb;
+}
 @end
