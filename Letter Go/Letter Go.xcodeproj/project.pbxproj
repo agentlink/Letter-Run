@@ -11,6 +11,7 @@
 		0049695517F8A75B00176F2D /* LRLetterBlockGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049695417F8A75B00176F2D /* LRLetterBlockGenerator.m */; };
 		0049695917F8AB5D00176F2D /* LRCollisionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049695817F8AB5D00176F2D /* LRCollisionManager.m */; };
 		0049695F17F8B5B900176F2D /* LRLetterSlot.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049695E17F8B5B900176F2D /* LRLetterSlot.m */; };
+		0049696217F92AE700176F2D /* LRLetterBlock+Touch.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049696117F92AE700176F2D /* LRLetterBlock+Touch.m */; };
 		00CDF13717F474EC003065F6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CDF13617F474EC003065F6 /* Foundation.framework */; };
 		00CDF13917F474EC003065F6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CDF13817F474EC003065F6 /* CoreGraphics.framework */; };
 		00CDF13B17F474EC003065F6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CDF13A17F474EC003065F6 /* UIKit.framework */; };
@@ -55,6 +56,8 @@
 		0049695B17F8AC6400176F2D /* LRSpriteNameConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LRSpriteNameConstants.h; sourceTree = "<group>"; };
 		0049695D17F8B5B900176F2D /* LRLetterSlot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRLetterSlot.h; sourceTree = "<group>"; };
 		0049695E17F8B5B900176F2D /* LRLetterSlot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterSlot.m; sourceTree = "<group>"; };
+		0049696017F92AE700176F2D /* LRLetterBlock+Touch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LRLetterBlock+Touch.h"; sourceTree = "<group>"; };
+		0049696117F92AE700176F2D /* LRLetterBlock+Touch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "LRLetterBlock+Touch.m"; sourceTree = "<group>"; };
 		00CDF13317F474EC003065F6 /* Letter Go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Letter Go.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		00CDF13617F474EC003065F6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		00CDF13817F474EC003065F6 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -129,6 +132,8 @@
 			children = (
 				0049694F17F8A12B00176F2D /* LRLetterBlock.h */,
 				0049695017F8A12B00176F2D /* LRLetterBlock.m */,
+				0049696017F92AE700176F2D /* LRLetterBlock+Touch.h */,
+				0049696117F92AE700176F2D /* LRLetterBlock+Touch.m */,
 				0049695317F8A75B00176F2D /* LRLetterBlockGenerator.h */,
 				0049695417F8A75B00176F2D /* LRLetterBlockGenerator.m */,
 			);
@@ -380,6 +385,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				00CDF14917F474EC003065F6 /* LRAppDelegate.m in Sources */,
+				0049696217F92AE700176F2D /* LRLetterBlock+Touch.m in Sources */,
 				00CDF14517F474EC003065F6 /* main.m in Sources */,
 				00CDF17F17F4799B003065F6 /* LRBackgroundLayer.m in Sources */,
 				0049695F17F8B5B900176F2D /* LRLetterSlot.m in Sources */,

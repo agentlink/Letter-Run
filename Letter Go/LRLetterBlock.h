@@ -14,4 +14,10 @@
 + (LRLetterBlock*) letterBlockWithSize:(CGSize)size andLetter:(NSString*)letter;
 - (BOOL) isLetterBlockEmpty;
 
+- (void) setUpPhysics;
+- (void) setUpSwipedPhysics;
+- (void) removePhysics;
+
+@property CGPoint originalPoint;
+@property BOOL blockFlung;
 @end
