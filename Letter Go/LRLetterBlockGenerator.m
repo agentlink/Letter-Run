@@ -7,11 +7,13 @@
 //
 
 #import "LRLetterBlockGenerator.h"
-#import "LRSpriteNameConstants.h"
+#import "LRNameConstants.h"
 
 #define LETTER_BLOCK_SIZE           48
 
 @implementation LRLetterBlockGenerator
+
+#pragma mark - Falling Letters
 
 + (LRLetterBlock*) createLetterBlock
 {
@@ -32,6 +34,15 @@
     lb.physicsBody = nil;
     lb.color = [SKColor whiteColor];
     lb.name = NAME_EMPTY_LETTER_SLOT;
+    return lb;
+}
+
+#pragma mark - Letter Slots
++ (LRLetterBlock*) createBlockForSlotWithLetter:(NSString*)letter
+{
+    LRLetterBlock *lb = [LRLetterBlock letterBlockWithSize:CGSizeMake(LETTER_BLOCK_SIZE, LETTER_BLOCK_SIZE) andLetter:letter];
+    [lb removePhysics];
+    lb.movementEnabled = NO;
     return lb;
 }
 @end

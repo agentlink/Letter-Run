@@ -8,7 +8,7 @@
 
 #import "LRGameScene.h"
 #import "LRCollisionManager.h"
-#import "LRSpriteNameConstants.h"
+#import "LRNameConstants.h"
 #import "LRCharacter.h"
 
 @implementation LRGameScene

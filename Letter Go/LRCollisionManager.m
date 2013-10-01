@@ -7,7 +7,7 @@
 //
 
 #import "LRCollisionManager.h"
-#import "LRSpriteNameConstants.h"
+#import "LRNameConstants.h"
 
 #define BITMASK_KEY_CATEGORY            @"Bitmask category"
 #define BITMASK_KEY_COLLISION           @"Bitmask collision"

@@ -54,7 +54,7 @@
 		0049695417F8A75B00176F2D /* LRLetterBlockGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterBlockGenerator.m; sourceTree = "<group>"; };
 		0049695717F8AB5D00176F2D /* LRCollisionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRCollisionManager.h; sourceTree = "<group>"; };
 		0049695817F8AB5D00176F2D /* LRCollisionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRCollisionManager.m; sourceTree = "<group>"; };
-		0049695B17F8AC6400176F2D /* LRSpriteNameConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LRSpriteNameConstants.h; sourceTree = "<group>"; };
+		0049695B17F8AC6400176F2D /* LRNameConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LRNameConstants.h; sourceTree = "<group>"; };
 		0049695D17F8B5B900176F2D /* LRLetterSlot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRLetterSlot.h; sourceTree = "<group>"; };
 		0049695E17F8B5B900176F2D /* LRLetterSlot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterSlot.m; sourceTree = "<group>"; };
 		0049696017F92AE700176F2D /* LRLetterBlock+Touch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LRLetterBlock+Touch.h"; sourceTree = "<group>"; };
@@ -157,7 +157,7 @@
 		0049695A17F8AC3D00176F2D /* Constants */ = {
 			isa = PBXGroup;
 			children = (
-				0049695B17F8AC6400176F2D /* LRSpriteNameConstants.h */,
+				0049695B17F8AC6400176F2D /* LRNameConstants.h */,
 			);
 			name = Constants;
 			sourceTree = "<group>";
