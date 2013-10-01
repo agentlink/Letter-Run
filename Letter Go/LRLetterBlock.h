@@ -7,8 +7,9 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import "LRCharacter.h"
 
-@interface LRLetterBlock : SKSpriteNode
+@interface LRLetterBlock : LRCharacter
 @property NSString *letter;
 
 + (LRLetterBlock*) letterBlockWithSize:(CGSize)size andLetter:(NSString*)letter;
@@ -20,4 +21,5 @@
 
 @property CGPoint originalPoint;
 @property BOOL blockFlung;
+
 @end

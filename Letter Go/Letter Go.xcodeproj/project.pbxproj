@@ -12,6 +12,7 @@
 		0049695917F8AB5D00176F2D /* LRCollisionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049695817F8AB5D00176F2D /* LRCollisionManager.m */; };
 		0049695F17F8B5B900176F2D /* LRLetterSlot.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049695E17F8B5B900176F2D /* LRLetterSlot.m */; };
 		0049696217F92AE700176F2D /* LRLetterBlock+Touch.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049696117F92AE700176F2D /* LRLetterBlock+Touch.m */; };
+		0049696517FA0CB400176F2D /* LRCharacter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049696417FA0CB400176F2D /* LRCharacter.m */; };
 		00CDF13717F474EC003065F6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CDF13617F474EC003065F6 /* Foundation.framework */; };
 		00CDF13917F474EC003065F6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CDF13817F474EC003065F6 /* CoreGraphics.framework */; };
 		00CDF13B17F474EC003065F6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CDF13A17F474EC003065F6 /* UIKit.framework */; };
@@ -58,6 +59,8 @@
 		0049695E17F8B5B900176F2D /* LRLetterSlot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterSlot.m; sourceTree = "<group>"; };
 		0049696017F92AE700176F2D /* LRLetterBlock+Touch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LRLetterBlock+Touch.h"; sourceTree = "<group>"; };
 		0049696117F92AE700176F2D /* LRLetterBlock+Touch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "LRLetterBlock+Touch.m"; sourceTree = "<group>"; };
+		0049696317FA0CB400176F2D /* LRCharacter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRCharacter.h; sourceTree = "<group>"; };
+		0049696417FA0CB400176F2D /* LRCharacter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRCharacter.m; sourceTree = "<group>"; };
 		00CDF13317F474EC003065F6 /* Letter Go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Letter Go.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		00CDF13617F474EC003065F6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		00CDF13817F474EC003065F6 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -122,6 +125,8 @@
 		0049694E17F8A10700176F2D /* Game Screen Objects */ = {
 			isa = PBXGroup;
 			children = (
+				0049696317FA0CB400176F2D /* LRCharacter.h */,
+				0049696417FA0CB400176F2D /* LRCharacter.m */,
 				0049695217F8A70B00176F2D /* Letter Blocks */,
 			);
 			name = "Game Screen Objects";
@@ -387,6 +392,7 @@
 				00CDF14917F474EC003065F6 /* LRAppDelegate.m in Sources */,
 				0049696217F92AE700176F2D /* LRLetterBlock+Touch.m in Sources */,
 				00CDF14517F474EC003065F6 /* main.m in Sources */,
+				0049696517FA0CB400176F2D /* LRCharacter.m in Sources */,
 				00CDF17F17F4799B003065F6 /* LRBackgroundLayer.m in Sources */,
 				0049695F17F8B5B900176F2D /* LRLetterSlot.m in Sources */,
 				0049695517F8A75B00176F2D /* LRLetterBlockGenerator.m in Sources */,

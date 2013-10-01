@@ -11,10 +11,13 @@
 #import "LRCollisionManager.h"
 #import "LRLetterBlock+Touch.h"
 
+#import "LRGameScene.h"
+
 @interface LRLetterBlock ()
 @end
 @implementation LRLetterBlock
 
+#pragma mark - Initializers/Set Up
 + (LRLetterBlock*) letterBlockWithSize:(CGSize)size andLetter:(NSString*)letter
 {
     return [[LRLetterBlock alloc] initWithSize:size andLetter:letter];
@@ -32,6 +35,15 @@
     return self;
 }
 
+- (void) createObjectContent
+{
+    SKLabelNode *letterLabel = [[SKLabelNode alloc] init];
+    letterLabel.text = self.letter;
+    letterLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - letterLabel.frame.size.height/2);
+    [self addChild:letterLabel];
+}
+
+#pragma mark - Physics Functions
 - (void) setUpPhysics
 {
     self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.size];
@@ -55,13 +67,23 @@
     self.physicsBody = nil;
 }
 
-- (void) createObjectContent
+# pragma mark - Game Loop Checks
+- (void) update:(NSTimeInterval)currentTime
 {
-    SKLabelNode *letterLabel = [[SKLabelNode alloc] init];
-    letterLabel.text = self.letter;
-    letterLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - letterLabel.frame.size.height/2);
-    [self addChild:letterLabel];
+    CGRect sceneRect = [(LRGameScene*)self.scene window];
+    sceneRect.origin = [self convertPoint:sceneRect.origin fromNode:self.scene];
+    CGRect letterFrame = self.frame;
+    letterFrame.origin = [self convertPoint:self.frame.origin fromNode:self.parent];
     
+    //If the box is within the letter box section
+    if (CGRectContainsRect([(LRGameScene*)[self scene] gamePlayLayer].letterSection.frame, self.frame))
+    {
+        [self removeFromParent];
+    }
+    //If the box is outside the screen and has been flung
+    else if (!CGRectIntersectsRect(sceneRect, letterFrame)  && self.blockFlung) {
+        [self removeFromParent];
+    }
 }
 
 - (BOOL) isLetterBlockEmpty

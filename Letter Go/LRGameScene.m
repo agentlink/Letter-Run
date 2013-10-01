@@ -8,9 +8,12 @@
 
 #import "LRGameScene.h"
 #import "LRCollisionManager.h"
+#import "LRSpriteNameConstants.h"
+#import "LRCharacter.h"
 
 @implementation LRGameScene
 
+#pragma mark - Initialization and Set Up
 - (id) init
 {
     //LRScenes are always initialized to the full size of the screen
@@ -37,6 +40,20 @@
     [self.physicsWorld setContactDelegate:[LRCollisionManager shared]];
 }
 
+#pragma mark - Run Loop Functions
+
+- (void) update:(NSTimeInterval)currentTime
+{
+    for (SKSpriteNode *child in [[self gamePlayLayer] children])
+    {
+        if ([child isKindOfClass:[LRCharacter class]])
+        {
+            [(LRCharacter*)child update:currentTime];
+        }
+    }
+}
+
+#pragma mark - Scene Getters
 + (LRGameScene*) scene
 {
     return [[self alloc] init];

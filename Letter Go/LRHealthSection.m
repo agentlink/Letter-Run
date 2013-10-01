@@ -18,7 +18,6 @@
 {
     //The color will be replaced by a health bar sprite
     self.healthBar = [SKSpriteNode spriteNodeWithColor:[SKColor redColor] size:self.size];
-    //self.healthBar.position = CGPointMake(0 - self.size.width / 2, self.position.y);
     [self addChild:self.healthBar];
 }
 

@@ -8,6 +8,8 @@
 
 #import "LRLetterSlot.h"
 #import "LRLetterBlockGenerator.h"
+#import "LRSpriteNameConstants.h"
+
 @implementation LRLetterSlot
 @synthesize currentBlock;
 
@@ -16,6 +18,7 @@
     if (self = [super init])
     {
         self.currentBlock = [LRLetterBlockGenerator createEmptyLetterBlock];
+        self.name = NAME_EMPTY_LETTER_SLOT;
         self.size = self.currentBlock.size;
         self.color = [UIColor clearColor];
         [self addChild:self.currentBlock];

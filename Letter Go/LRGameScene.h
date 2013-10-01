@@ -16,5 +16,6 @@
 @property LRGamePlayLayer *gamePlayLayer;
 
 + (LRGameScene*) scene;
+- (CGRect) window;
 
 @end
