@@ -8,10 +8,9 @@
 
 #import "LRLetterSlot.h"
 #import "LRLetterBlockGenerator.h"
-#import "LRSpriteNameConstants.h"
+#import "LRNameConstants.h"
 
 @implementation LRLetterSlot
-@synthesize currentBlock;
 
 - (id) init
 {
@@ -26,10 +25,29 @@
     return self;
 }
 
-/*
-- (void) setCurrentBlock:(LRLetterBlock *)new_currentBlock
+- (BOOL) isLetterSlotEmpty
 {
-    self.currentBlock = new_currentBlock;
+    return [self.currentBlock isLetterBlockEmpty];
 }
- */
+
+- (void) setCurrentBlock:(LRLetterBlock *)incomingBlock
+{
+    //If it's being initialized
+    if (!_currentBlock)
+    {
+        _currentBlock = incomingBlock;
+    }
+    //If a block is being deleted from a slot
+    else if ([_currentBlock isLetterBlockEmpty] && (!incomingBlock || [incomingBlock isLetterBlockEmpty]))
+    {
+        [self removeChildrenInArray:[NSArray arrayWithObject:_currentBlock]];
+        _currentBlock = [LRLetterBlockGenerator createEmptyLetterBlock];
+    }
+    //If a block is being added to a slot that was previously empty
+    else if ([_currentBlock isLetterBlockEmpty] && ![incomingBlock isLetterBlockEmpty])
+    {
+        _currentBlock = incomingBlock;
+        [self addChild:_currentBlock];
+    }
+}
 @end

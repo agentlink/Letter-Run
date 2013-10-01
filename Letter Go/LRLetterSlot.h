@@ -13,4 +13,6 @@
 
 @property (nonatomic) LRLetterBlock *currentBlock;
 
+- (BOOL) isLetterSlotEmpty;
+
 @end

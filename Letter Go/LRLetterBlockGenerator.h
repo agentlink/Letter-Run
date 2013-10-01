@@ -13,5 +13,6 @@
 
 + (LRLetterBlock*) createLetterBlock;
 + (LRLetterBlock*) createEmptyLetterBlock;
++ (LRLetterBlock*) createBlockForSlotWithLetter:(NSString*)letter;
 
 @end

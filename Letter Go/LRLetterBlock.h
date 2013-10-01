@@ -20,6 +20,7 @@
 - (void) removePhysics;
 
 @property CGPoint originalPoint;
+@property BOOL movementEnabled;
 @property BOOL blockFlung;
 
 @end

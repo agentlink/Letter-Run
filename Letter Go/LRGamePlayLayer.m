@@ -8,7 +8,7 @@
 
 #import "LRGamePlayLayer.h"
 #import "LRLetterBlockGenerator.h"
-#import "LRSpriteNameConstants.h"
+#import "LRNameConstants.h"
 #import "LRCollisionManager.h"
 
 @implementation LRGamePlayLayer
@@ -20,6 +20,7 @@
         //Code here :)
         [self createLayerContent];
         [self setUpPhysics];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dropLetter) name:NOTIFICATION_DROP_LETTER object:nil];
     }
     return self;
 }
@@ -55,4 +56,8 @@
     [self addChild:blockEdgeSprite];
 }
 
+- (void) dropLetter
+{
+    [self addChild:[LRLetterBlockGenerator createLetterBlock]];
+}
 @end

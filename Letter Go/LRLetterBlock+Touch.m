@@ -18,10 +18,12 @@
         CGPoint location = [touch locationInNode:[self parent]];
         if (CGRectContainsPoint(self.frame, location))
         {
-            self.blockFlung = FALSE;
-            self.originalPoint = self.position;
-            self.position = location;
-            [self removePhysics];
+            if (self.movementEnabled) {
+                self.blockFlung = FALSE;
+                self.originalPoint = self.position;
+                self.position = location;
+                [self removePhysics];
+            }
         }
     }
 }
@@ -34,7 +36,9 @@
         CGPoint location = [touch locationInNode:[self parent]];
         if (!CGRectContainsPoint(self.frame, location))
         {
-            [self flingTowardsLocation:location];
+            if (self.movementEnabled) {
+                [self flingTowardsLocation:location];
+            }
         }
     }
 }
@@ -43,8 +47,9 @@
 {
     for (UITouch *touch in touches)
     {
-        if (!self.blockFlung)
+        if (!self.blockFlung && self.movementEnabled) {
             [self setUpPhysics];
+        }
         //Either that, or have it fling towards the new location
     }
 }

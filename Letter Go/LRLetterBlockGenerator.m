@@ -23,7 +23,7 @@
     unsigned short unicodeValue = arc4random()%26 + 65;
     NSString *label = [NSString stringWithFormat:@"%C", unicodeValue];
     LRLetterBlock *letterBlock = [LRLetterBlock letterBlockWithSize:CGSizeMake(LETTER_BLOCK_SIZE, LETTER_BLOCK_SIZE) andLetter:label];
-    letterBlock.position = CGPointMake(0, 300);
+    letterBlock.position = CGPointMake(0, 200);
     
     return letterBlock;
 }

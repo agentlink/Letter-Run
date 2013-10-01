@@ -7,7 +7,7 @@
 //
 
 #import "LRLetterBlock.h"
-#import "LRSpriteNameConstants.h"
+#import "LRNameConstants.h"
 #import "LRCollisionManager.h"
 #import "LRLetterBlock+Touch.h"
 
@@ -28,6 +28,7 @@
     if (self = [super initWithColor:[SKColor blackColor] size:size]) {
         self.name = NAME_LETTER_BLOCK;
         self.letter = letter;
+        self.movementEnabled = YES;
         [self createObjectContent];
         [self setUpPhysics];
         self.userInteractionEnabled = YES;
@@ -78,10 +79,16 @@
     //If the box is within the letter box section
     if (CGRectContainsRect([(LRGameScene*)[self scene] gamePlayLayer].letterSection.frame, self.frame))
     {
+        //Post the notification
+        NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+        [userInfo setValue:self.letter forKey:NOTIFICATION_ADDED_LETTER];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_ADDED_LETTER object:self userInfo:userInfo];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_DROP_LETTER object:self];
         [self removeFromParent];
     }
     //If the box is outside the screen and has been flung
     else if (!CGRectIntersectsRect(sceneRect, letterFrame)  && self.blockFlung) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_DROP_LETTER object:self];
         [self removeFromParent];
     }
 }
