@@ -10,4 +10,6 @@
 #import "LRScreenSection.h"
 @interface LRLetterSection : LRScreenSection
 
+- (int) numLettersInSection;
+
 @end

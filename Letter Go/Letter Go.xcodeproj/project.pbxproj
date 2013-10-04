@@ -35,6 +35,7 @@
 		00CDF18617F483E3003065F6 /* LRScreenSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CDF18517F483E3003065F6 /* LRScreenSection.m */; };
 		00CDF18917F4840F003065F6 /* LRHealthSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CDF18817F4840F003065F6 /* LRHealthSection.m */; };
 		00CDF18C17F4899B003065F6 /* LRLetterSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CDF18B17F4899B003065F6 /* LRLetterSection.m */; };
+		00F6F59717FF5234009EDADB /* LRGameStateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F6F59617FF5234009EDADB /* LRGameStateManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +96,8 @@
 		00CDF18817F4840F003065F6 /* LRHealthSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRHealthSection.m; sourceTree = "<group>"; };
 		00CDF18A17F4899B003065F6 /* LRLetterSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRLetterSection.h; sourceTree = "<group>"; };
 		00CDF18B17F4899B003065F6 /* LRLetterSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterSection.m; sourceTree = "<group>"; };
+		00F6F59517FF5234009EDADB /* LRGameStateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRGameStateManager.h; sourceTree = "<group>"; };
+		00F6F59617FF5234009EDADB /* LRGameStateManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRGameStateManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +153,8 @@
 			children = (
 				0049695717F8AB5D00176F2D /* LRCollisionManager.h */,
 				0049695817F8AB5D00176F2D /* LRCollisionManager.m */,
+				00F6F59517FF5234009EDADB /* LRGameStateManager.h */,
+				00F6F59617FF5234009EDADB /* LRGameStateManager.m */,
 			);
 			name = Singletons;
 			sourceTree = "<group>";
@@ -397,6 +402,7 @@
 				0049695F17F8B5B900176F2D /* LRLetterSlot.m in Sources */,
 				0049695517F8A75B00176F2D /* LRLetterBlockGenerator.m in Sources */,
 				0049695917F8AB5D00176F2D /* LRCollisionManager.m in Sources */,
+				00F6F59717FF5234009EDADB /* LRGameStateManager.m in Sources */,
 				00CDF18217F48310003065F6 /* LRGamePlayLayer.m in Sources */,
 				00CDF18917F4840F003065F6 /* LRHealthSection.m in Sources */,
 				00CDF18C17F4899B003065F6 /* LRLetterSection.m in Sources */,

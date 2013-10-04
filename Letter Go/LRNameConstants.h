@@ -16,3 +16,5 @@
 
 #define KEY_GET_LETTER              @"Get letter"
 #define KEY_GET_LETTER_BLOCK        @"Get the letter block"
+
+#define LETTER_CAPACITY             7

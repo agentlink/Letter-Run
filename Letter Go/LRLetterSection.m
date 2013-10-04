@@ -11,8 +11,6 @@
 #import "LRNameConstants.h"
 #import "LRLetterBlockGenerator.h"
 
-#define LETTER_CAPACITY             7
-
 @interface LRLetterSection ()
 @property SKSpriteNode *letterSection;
 @property NSMutableArray *letterSlots;
@@ -91,6 +89,16 @@
         }
     }
     NSAssert(selectedSlot, @"Error: slot does not exist within array");
+}
+
+- (int) numLettersInSection
+{
+    for (int i = 0; i < self.letterSlots.count; i++)
+    {
+        if ([[self.letterSlots objectAtIndex:i] isLetterSlotEmpty])
+            return i;
+    }
+    return self.letterSlots.count;
 }
 
 @end
