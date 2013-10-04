@@ -45,4 +45,21 @@
     lb.movementEnabled = NO;
     return lb;
 }
+
++ (LRLetterSlot*) createSlotWithLetterBlock:(LRLetterBlock*)block
+{
+    return [[LRLetterSlot alloc] initWithLetterBlock:block];
+}
+
++ (LRLetterSlot*) createSlotWithLetter:(NSString*)letter;
+{
+    LRLetterBlock *block = [self createBlockForSlotWithLetter:letter];
+    return [[LRLetterSlot alloc] initWithLetterBlock:block];
+}
+
++ (LRLetterSlot*) createSlotWithEmptyLetterBlock
+{
+    LRLetterBlock *block = [self createBlockForSlotWithLetter:@""];
+    return [[LRLetterSlot alloc] initWithLetterBlock:block];
+}
 @end

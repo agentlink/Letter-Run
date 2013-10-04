@@ -8,6 +8,7 @@
 
 #import <SpriteKit/SpriteKit.h>
 #import "LRLetterBlock.h"
+#import "LRLetterSlot.h"
 
 @interface LRLetterBlockGenerator : SKNode
 
@@ -15,4 +16,7 @@
 + (LRLetterBlock*) createEmptyLetterBlock;
 + (LRLetterBlock*) createBlockForSlotWithLetter:(NSString*)letter;
 
++ (LRLetterSlot*) createSlotWithLetterBlock:(LRLetterBlock*)block;
++ (LRLetterSlot*) createSlotWithLetter:(NSString*)letter;
++ (LRLetterSlot*) createSlotWithEmptyLetterBlock;
 @end

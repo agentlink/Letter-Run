@@ -13,6 +13,7 @@
 
 @property (nonatomic) LRLetterBlock *currentBlock;
 
+- (id) initWithLetterBlock:(LRLetterBlock*)block;
 - (BOOL) isLetterSlotEmpty;
 
 @end

@@ -13,3 +13,6 @@
 #define NOTIFICATION_ADDED_LETTER   @"Added letter to slot"
 #define NOTIFICATION_DROP_LETTER    @"Drop a new letter"
 #define NOTIFICATION_DELETE_LETTER  @"Deleted a letter"
+
+#define KEY_GET_LETTER              @"Get letter"
+#define KEY_GET_LETTER_BLOCK        @"Get the letter block"

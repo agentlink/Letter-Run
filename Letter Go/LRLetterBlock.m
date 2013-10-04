@@ -81,7 +81,7 @@
     {
         //Post the notification
         NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
-        [userInfo setValue:self.letter forKey:NOTIFICATION_ADDED_LETTER];
+        [userInfo setValue:self.letter forKey:KEY_GET_LETTER];
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_ADDED_LETTER object:self userInfo:userInfo];
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_DROP_LETTER object:self];
         [self removeFromParent];

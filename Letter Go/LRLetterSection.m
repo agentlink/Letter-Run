@@ -25,6 +25,7 @@
     if (self = [super initWithSize:size])
     {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addLetterToSection:) name:NOTIFICATION_ADDED_LETTER object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeLetterFromSection:) name:NOTIFICATION_DELETE_LETTER object:nil];
     }
     return self;
 }
@@ -54,7 +55,7 @@
 - (void) addLetterToSection:(NSNotification*)notification
 {
     //Get the letter from the notificaiton
-    NSString *letter = [[notification userInfo] objectForKey:NOTIFICATION_ADDED_LETTER];
+    NSString *letter = [[notification userInfo] objectForKey:KEY_GET_LETTER];
     LRLetterSlot *currentLetterSlot = nil;
     for (LRLetterSlot* slot in self.letterSlots)
     {
@@ -69,4 +70,27 @@
     }
     currentLetterSlot.currentBlock = [LRLetterBlockGenerator createBlockForSlotWithLetter:letter];
 }
+
+- (void) removeLetterFromSection:(NSNotification*)notification
+{
+    LRLetterBlock *block = [[notification userInfo] objectForKey:KEY_GET_LETTER_BLOCK];
+    LRLetterSlot *selectedSlot = nil;
+    for (int i = 0; i < self.letterSlots.count; i++)
+    {
+        LRLetterSlot *slot = [self.letterSlots objectAtIndex:i];
+        //Get the slot chosen
+        if (slot.currentBlock == block) {
+            selectedSlot = slot;
+        }
+        if (selectedSlot) {
+            if (self.letterSlots.count - 1 > i) {
+                slot.currentBlock = [(LRLetterSlot*)[self.letterSlots objectAtIndex:i+1] currentBlock];
+            }
+            else
+                slot.currentBlock = [LRLetterBlockGenerator createEmptyLetterBlock];
+        }
+    }
+    NSAssert(selectedSlot, @"Error: slot does not exist within array");
+}
+
 @end

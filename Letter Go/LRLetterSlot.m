@@ -25,6 +25,15 @@
     return self;
 }
 
+- (id) initWithLetterBlock:(LRLetterBlock*)block
+{
+    if (self = [self init])
+    {
+        self.currentBlock = block;
+    }
+    return self;
+}
+
 - (BOOL) isLetterSlotEmpty
 {
     return [self.currentBlock isLetterBlockEmpty];
@@ -37,15 +46,13 @@
     {
         _currentBlock = incomingBlock;
     }
-    //If a block is being deleted from a slot
-    else if ([_currentBlock isLetterBlockEmpty] && (!incomingBlock || [incomingBlock isLetterBlockEmpty]))
+    //If a block is being deleted from a slot and is replaced by an empty block
+    else
     {
-        [self removeChildrenInArray:[NSArray arrayWithObject:_currentBlock]];
-        _currentBlock = [LRLetterBlockGenerator createEmptyLetterBlock];
-    }
-    //If a block is being added to a slot that was previously empty
-    else if ([_currentBlock isLetterBlockEmpty] && ![incomingBlock isLetterBlockEmpty])
-    {
+        if ([_currentBlock parent] == self)
+            [self removeChildrenInArray:[NSArray arrayWithObject:_currentBlock]];
+        if ([incomingBlock parent])
+            [incomingBlock removeFromParent];
         _currentBlock = incomingBlock;
         [self addChild:_currentBlock];
     }

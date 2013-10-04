@@ -7,6 +7,7 @@
 //
 
 #import "LRLetterBlock+Touch.h"
+#import "LRNameConstants.h"
 
 @implementation LRLetterBlock (Touch)
 
@@ -47,10 +48,19 @@
 {
     for (UITouch *touch in touches)
     {
+        //If the block is falling but wasn't flung
         if (!self.blockFlung && self.movementEnabled) {
             [self setUpPhysics];
+            return;
         }
-        //Either that, or have it fling towards the new location
+        //If the block is in the letter slot
+        CGPoint location = [touch locationInNode:[self parent]];
+        if (CGRectContainsPoint(self.frame, location) && !self.movementEnabled)
+        {
+            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+            [dict setValue:self forKey:KEY_GET_LETTER_BLOCK];
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_DELETE_LETTER object:self userInfo:dict];
+        }
     }
 }
 
