@@ -13,6 +13,8 @@
 		0049695F17F8B5B900176F2D /* LRLetterSlot.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049695E17F8B5B900176F2D /* LRLetterSlot.m */; };
 		0049696217F92AE700176F2D /* LRLetterBlock+Touch.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049696117F92AE700176F2D /* LRLetterBlock+Touch.m */; };
 		0049696517FA0CB400176F2D /* LRCharacter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049696417FA0CB400176F2D /* LRCharacter.m */; };
+		008428F01800997800908E5D /* LetterProbabilities.plist in Resources */ = {isa = PBXBuildFile; fileRef = 008428EF1800997800908E5D /* LetterProbabilities.plist */; };
+		008428F318009F6300908E5D /* LRLetterGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 008428F218009F6300908E5D /* LRLetterGenerator.m */; };
 		00CDF13717F474EC003065F6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CDF13617F474EC003065F6 /* Foundation.framework */; };
 		00CDF13917F474EC003065F6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CDF13817F474EC003065F6 /* CoreGraphics.framework */; };
 		00CDF13B17F474EC003065F6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CDF13A17F474EC003065F6 /* UIKit.framework */; };
@@ -62,6 +64,9 @@
 		0049696117F92AE700176F2D /* LRLetterBlock+Touch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "LRLetterBlock+Touch.m"; sourceTree = "<group>"; };
 		0049696317FA0CB400176F2D /* LRCharacter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRCharacter.h; sourceTree = "<group>"; };
 		0049696417FA0CB400176F2D /* LRCharacter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRCharacter.m; sourceTree = "<group>"; };
+		008428EF1800997800908E5D /* LetterProbabilities.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = LetterProbabilities.plist; sourceTree = "<group>"; };
+		008428F118009F6300908E5D /* LRLetterGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRLetterGenerator.h; sourceTree = "<group>"; };
+		008428F218009F6300908E5D /* LRLetterGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterGenerator.m; sourceTree = "<group>"; };
 		00CDF13317F474EC003065F6 /* Letter Go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Letter Go.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		00CDF13617F474EC003065F6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		00CDF13817F474EC003065F6 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -155,6 +160,8 @@
 				0049695817F8AB5D00176F2D /* LRCollisionManager.m */,
 				00F6F59517FF5234009EDADB /* LRGameStateManager.h */,
 				00F6F59617FF5234009EDADB /* LRGameStateManager.m */,
+				008428F118009F6300908E5D /* LRLetterGenerator.h */,
+				008428F218009F6300908E5D /* LRLetterGenerator.m */,
 			);
 			name = Singletons;
 			sourceTree = "<group>";
@@ -178,9 +185,18 @@
 			name = "Letter Section";
 			sourceTree = "<group>";
 		};
+		008428EE1800992D00908E5D /* Property Lists */ = {
+			isa = PBXGroup;
+			children = (
+				008428EF1800997800908E5D /* LetterProbabilities.plist */,
+			);
+			name = "Property Lists";
+			sourceTree = "<group>";
+		};
 		00CDF12A17F474EC003065F6 = {
 			isa = PBXGroup;
 			children = (
+				008428EE1800992D00908E5D /* Property Lists */,
 				0049695A17F8AC3D00176F2D /* Constants */,
 				0049695617F8AB3400176F2D /* Singletons */,
 				0049694E17F8A10700176F2D /* Game Screen Objects */,
@@ -373,6 +389,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				008428F01800997800908E5D /* LetterProbabilities.plist in Resources */,
 				00CDF14317F474EC003065F6 /* InfoPlist.strings in Resources */,
 				00CDF15617F474EC003065F6 /* Images.xcassets in Resources */,
 				00CDF14C17F474EC003065F6 /* Main.storyboard in Resources */,
@@ -401,6 +418,7 @@
 				00CDF17F17F4799B003065F6 /* LRBackgroundLayer.m in Sources */,
 				0049695F17F8B5B900176F2D /* LRLetterSlot.m in Sources */,
 				0049695517F8A75B00176F2D /* LRLetterBlockGenerator.m in Sources */,
+				008428F318009F6300908E5D /* LRLetterGenerator.m in Sources */,
 				0049695917F8AB5D00176F2D /* LRCollisionManager.m in Sources */,
 				00F6F59717FF5234009EDADB /* LRGameStateManager.m in Sources */,
 				00CDF18217F48310003065F6 /* LRGamePlayLayer.m in Sources */,

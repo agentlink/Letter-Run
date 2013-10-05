@@ -10,6 +10,8 @@
 #import "LRGameScene.h"
 #import "LRNameConstants.h"
 
+@interface LRGameStateManager ()
+@end
 @implementation LRGameStateManager
 
 static LRGameStateManager *_shared = nil;
@@ -21,6 +23,7 @@ static LRGameStateManager *_shared = nil;
     {
 		if (!_shared)
         {
+            
 			_shared = [[LRGameStateManager alloc] init];
 		}
 	}
@@ -31,7 +34,7 @@ static LRGameStateManager *_shared = nil;
 {
     if (self = [super init])
     {
-        
+
     }
     return self;
 }
@@ -41,4 +44,5 @@ static LRGameStateManager *_shared = nil;
     LRLetterSection *letterSection = [[(LRGameScene*)self.scene gamePlayLayer] letterSection];
     return ([letterSection numLettersInSection] == LETTER_CAPACITY);
 }
+
 @end

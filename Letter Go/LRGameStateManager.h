@@ -10,7 +10,10 @@
 
 @interface LRGameStateManager : SKNode
 
+@property (nonatomic, readonly) NSDictionary *letterProbabilities;
+
 + (LRGameStateManager*) shared;
 - (BOOL) isLetterSectionFull;
+
 
 @end

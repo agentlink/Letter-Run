@@ -8,6 +8,7 @@
 
 #import "LRLetterBlockGenerator.h"
 #import "LRNameConstants.h"
+#import "LRLetterGenerator.h"
 
 #define LETTER_BLOCK_SIZE           48
 
@@ -17,11 +18,8 @@
 
 + (LRLetterBlock*) createLetterBlock
 {
-    //This will actually call LRLetterGenerator to get the string, but for now, it's a random unicode character
-    // A = 65
-    // Z = 90
-    unsigned short unicodeValue = arc4random()%26 + 65;
-    NSString *label = [NSString stringWithFormat:@"%C", unicodeValue];
+
+    NSString *label = [[LRLetterGenerator shared] generateLetter];
     LRLetterBlock *letterBlock = [LRLetterBlock letterBlockWithSize:CGSizeMake(LETTER_BLOCK_SIZE, LETTER_BLOCK_SIZE) andLetter:label];
     letterBlock.position = CGPointMake(0, 200);
     
@@ -31,7 +29,8 @@
 + (LRLetterBlock*) createEmptyLetterBlock
 {
     LRLetterBlock *lb = [LRLetterBlock letterBlockWithSize:CGSizeMake(LETTER_BLOCK_SIZE, LETTER_BLOCK_SIZE) andLetter:@""];
-    lb.physicsBody = nil;
+    [lb removePhysics];
+    lb.movementEnabled = NO;
     lb.color = [SKColor whiteColor];
     lb.name = NAME_EMPTY_LETTER_SLOT;
     return lb;
