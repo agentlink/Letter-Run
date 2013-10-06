@@ -10,10 +10,16 @@
 #import "LRLetterSlot.h"
 #import "LRNameConstants.h"
 #import "LRLetterBlockGenerator.h"
+#import "LRSubmitButton.h"
+
+#define LETTER_MINIMUM_COUNT        3
 
 @interface LRLetterSection ()
+
 @property SKSpriteNode *letterSection;
+@property LRSubmitButton *submitButton;
 @property NSMutableArray *letterSlots;
+
 @end
 
 @implementation LRLetterSection
@@ -24,6 +30,7 @@
     {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addLetterToSection:) name:NOTIFICATION_ADDED_LETTER object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeLetterFromSection:) name:NOTIFICATION_DELETE_LETTER object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(submitWord) name:NOTIFICATION_SUBMIT_WORD object:nil];
     }
     return self;
 }
@@ -48,6 +55,12 @@
         [self.letterSlots addObject:slot];
         [self addChild:slot];
     }
+    
+    //Create submit button
+    LRSubmitButton *submitButton = [[LRSubmitButton alloc] initWithColor:[SKColor lightGrayColor] size:[[self.letterSlots objectAtIndex:0] size]];
+    submitButton.position = CGPointMake(0 - self.size.width/2 + edgeBuffer + submitButton.size.width/2 + LETTER_CAPACITY * (letterSlotWidth + slotMargin), 0);
+    self.submitButton = submitButton;
+    [self addChild:submitButton];
 }
 
 - (void) addLetterToSection:(NSNotification*)notification
@@ -55,18 +68,31 @@
     //Get the letter from the notificaiton
     NSString *letter = [[notification userInfo] objectForKey:KEY_GET_LETTER];
     LRLetterSlot *currentLetterSlot = nil;
+    int letterCount = 0;
     for (LRLetterSlot* slot in self.letterSlots)
     {
+        letterCount++;
         if ([slot isLetterSlotEmpty]) {
             currentLetterSlot = slot;
             break;
         }
     }
     //If all the letter slots are full
-    if (!currentLetterSlot) {
-        return;
+    if (currentLetterSlot) {
+        currentLetterSlot.currentBlock = [LRLetterBlockGenerator createBlockForSlotWithLetter:letter];
     }
-    currentLetterSlot.currentBlock = [LRLetterBlockGenerator createBlockForSlotWithLetter:letter];
+    [self updateSubmitButton];
+}
+
+- (void) updateSubmitButton
+{
+    int i;
+    for (i = 0; i < self.letterSlots.count; i++)
+    {
+        if ([(LRLetterSlot*)[self.letterSlots objectAtIndex:i] isLetterSlotEmpty])
+            break;
+    }
+    self.submitButton.playerCanSubmitWord = (i >= LETTER_MINIMUM_COUNT);
 }
 
 - (void) removeLetterFromSection:(NSNotification*)notification
@@ -88,7 +114,13 @@
                 slot.currentBlock = [LRLetterBlockGenerator createEmptyLetterBlock];
         }
     }
+    [self updateSubmitButton];
     NSAssert(selectedSlot, @"Error: slot does not exist within array");
+}
+
+- (void) submitWord
+{
+    NSLog(@"Letter submitted, fools!");
 }
 
 - (int) numLettersInSection
