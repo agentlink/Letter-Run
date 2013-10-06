@@ -11,6 +11,8 @@
 #import "LRNameConstants.h"
 #import "LRLetterBlockGenerator.h"
 #import "LRSubmitButton.h"
+#import "LRScoreManager.h"
+
 
 #define LETTER_MINIMUM_COUNT        3
 
@@ -23,6 +25,8 @@
 @end
 
 @implementation LRLetterSection
+
+#pragma mark - Set Up
 
 - (id) initWithSize:(CGSize)size
 {
@@ -63,6 +67,8 @@
     [self addChild:submitButton];
 }
 
+# pragma mark - Adding and Removing Letters
+
 - (void) addLetterToSection:(NSNotification*)notification
 {
     //Get the letter from the notificaiton
@@ -82,17 +88,6 @@
         currentLetterSlot.currentBlock = [LRLetterBlockGenerator createBlockForSlotWithLetter:letter];
     }
     [self updateSubmitButton];
-}
-
-- (void) updateSubmitButton
-{
-    int i;
-    for (i = 0; i < self.letterSlots.count; i++)
-    {
-        if ([(LRLetterSlot*)[self.letterSlots objectAtIndex:i] isLetterSlotEmpty])
-            break;
-    }
-    self.submitButton.playerCanSubmitWord = (i >= LETTER_MINIMUM_COUNT);
 }
 
 - (void) removeLetterFromSection:(NSNotification*)notification
@@ -118,10 +113,38 @@
     NSAssert(selectedSlot, @"Error: slot does not exist within array");
 }
 
+#pragma mark - Submit Word Functions
+
 - (void) submitWord
 {
-    NSLog(@"Letter submitted, fools!");
+    [[LRScoreManager shared] submitWord:[self getCurrentWord:YES]];
 }
+
+- (NSString*)getCurrentWord:(BOOL)popOffLetters
+{
+    NSMutableString *currentWord = [[NSMutableString alloc] init];
+    for (LRLetterSlot *slot in self.letterSlots)
+    {
+        [currentWord appendString:[slot.currentBlock letter]];
+        if (popOffLetters)
+            slot.currentBlock = [LRLetterBlockGenerator createEmptyLetterBlock];
+    }
+    [self updateSubmitButton];
+    return currentWord;
+}
+
+- (void) updateSubmitButton
+{
+    int i;
+    for (i = 0; i < self.letterSlots.count; i++)
+    {
+        if ([(LRLetterSlot*)[self.letterSlots objectAtIndex:i] isLetterSlotEmpty])
+            break;
+    }
+    self.submitButton.playerCanSubmitWord = (i >= LETTER_MINIMUM_COUNT);
+}
+
+#pragma mark - Helper Functions
 
 - (int) numLettersInSection
 {

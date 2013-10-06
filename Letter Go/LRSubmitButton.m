@@ -42,6 +42,7 @@
     else
         self.color = [SKColor lightGrayColor];
     _playerCanSubmitWord = playerCanSubmitWord;
+    self.userInteractionEnabled = _playerCanSubmitWord;
 }
 
 - (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
