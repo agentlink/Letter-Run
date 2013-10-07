@@ -9,7 +9,7 @@
 #import "LRGameStateManager.h"
 #import "LRGameScene.h"
 #import "LRNameConstants.h"
-
+#import "LRDictionaryChecker.h"
 @interface LRGameStateManager ()
 @end
 @implementation LRGameStateManager
@@ -34,7 +34,7 @@ static LRGameStateManager *_shared = nil;
 {
     if (self = [super init])
     {
-
+        [LRDictionaryChecker shared];
     }
     return self;
 }

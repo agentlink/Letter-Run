@@ -12,7 +12,7 @@
 #import "LRLetterBlockGenerator.h"
 #import "LRSubmitButton.h"
 #import "LRScoreManager.h"
-
+#import "LRDictionaryChecker.h"
 
 #define LETTER_MINIMUM_COUNT        3
 
@@ -118,6 +118,7 @@
 - (void) submitWord
 {
     [[LRScoreManager shared] submitWord:[self getCurrentWord:YES]];
+    [self updateSubmitButton];
 }
 
 - (NSString*)getCurrentWord:(BOOL)popOffLetters
@@ -125,11 +126,12 @@
     NSMutableString *currentWord = [[NSMutableString alloc] init];
     for (LRLetterSlot *slot in self.letterSlots)
     {
+        if ([slot isLetterSlotEmpty])
+            break;
         [currentWord appendString:[slot.currentBlock letter]];
         if (popOffLetters)
             slot.currentBlock = [LRLetterBlockGenerator createEmptyLetterBlock];
     }
-    [self updateSubmitButton];
     return currentWord;
 }
 
@@ -141,7 +143,7 @@
         if ([(LRLetterSlot*)[self.letterSlots objectAtIndex:i] isLetterSlotEmpty])
             break;
     }
-    self.submitButton.playerCanSubmitWord = (i >= LETTER_MINIMUM_COUNT);
+    self.submitButton.playerCanSubmitWord = (i >= LETTER_MINIMUM_COUNT && [[LRDictionaryChecker shared] checkForWordInSet:[self getCurrentWord:NO]]);
 }
 
 #pragma mark - Helper Functions
