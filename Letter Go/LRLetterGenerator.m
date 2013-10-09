@@ -44,13 +44,11 @@ static LRLetterGenerator *_shared = nil;
 {
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"LetterProbabilities" ofType:@"plist"];
     NSDictionary *probabilityDict = [[NSDictionary dictionaryWithContentsOfFile:plistPath] objectForKey:PROBABILITY_DICT];
-    int counter = 0;
     NSMutableArray *letterArray = [NSMutableArray array];
     for (NSString* key in [probabilityDict allKeys])
     {
-        NSNumber* numberLocation = [probabilityDict objectForKey:key];
-        counter += [numberLocation intValue];
-        for (int i = 0; i < counter; i++)
+        int letterProbability = [[probabilityDict objectForKey:key] intValue];
+        for (int i = 0; i < letterProbability; i++)
         {
             [letterArray addObject:key];
         }
