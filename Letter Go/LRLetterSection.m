@@ -8,7 +8,7 @@
 
 #import "LRLetterSection.h"
 #import "LRLetterSlot.h"
-#import "LRNameConstants.h"
+#import "LRConstants.h"
 #import "LRLetterBlockGenerator.h"
 #import "LRSubmitButton.h"
 #import "LRScoreManager.h"
@@ -49,9 +49,13 @@
     
     //Create the letter slots
     LRLetterSlot *tempSlot = [[LRLetterSlot alloc] init];
-    float slotMargin = tempSlot.size.width/4;
-    float letterSlotWidth = tempSlot.size.width;
-    float edgeBuffer = tempSlot.size.width/5;
+    float slotMargin, letterSlotWidth, edgeBuffer;
+
+    letterSlotWidth = tempSlot.size.width;
+    slotMargin = (IS_IPHONE_5) ? tempSlot.size.width/3.3 : tempSlot.size.width/4;
+    if (IS_IPHONE_5)
+        NSLog(@"iPhone5");
+    edgeBuffer = (self.size.width - (slotMargin + letterSlotWidth) * LETTER_CAPACITY - letterSlotWidth)/2;
     for (int i = 0; i < LETTER_CAPACITY; i++)
     {
         LRLetterSlot *slot = [[LRLetterSlot alloc] init];

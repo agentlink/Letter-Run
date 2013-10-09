@@ -7,7 +7,7 @@
 //
 
 #import "LRScoreManager.h"
-#import "LRNameConstants.h"
+#import "LRConstants.h"
 
 @interface LRScoreManager ()
 @property NSMutableArray *submittedWords;

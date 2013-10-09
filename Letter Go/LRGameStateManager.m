@@ -8,7 +8,7 @@
 
 #import "LRGameStateManager.h"
 #import "LRGameScene.h"
-#import "LRNameConstants.h"
+#import "LRConstants.h"
 #import "LRDictionaryChecker.h"
 @interface LRGameStateManager ()
 @end

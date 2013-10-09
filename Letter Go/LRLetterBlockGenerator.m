@@ -7,7 +7,7 @@
 //
 
 #import "LRLetterBlockGenerator.h"
-#import "LRNameConstants.h"
+#import "LRConstants.h"
 #import "LRLetterGenerator.h"
 
 #define LETTER_BLOCK_SIZE           48

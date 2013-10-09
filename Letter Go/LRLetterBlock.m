@@ -7,7 +7,7 @@
 //
 
 #import "LRLetterBlock.h"
-#import "LRNameConstants.h"
+#import "LRConstants.h"
 #import "LRCollisionManager.h"
 #import "LRLetterBlock+Touch.h"
 

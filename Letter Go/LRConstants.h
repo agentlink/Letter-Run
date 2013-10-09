@@ -1,10 +1,13 @@
 //
-//  LRNameConstants.h
+//  LRConstants.h
 //  Letter Go
 //
 //  Created by Gabriel Nicholas on 9/29/13.
 //  Copyright (c) 2013 Gabe Nicholas. All rights reserved.
 //
+
+#define IS_IPHONE_5                 ([[UIScreen mainScreen] bounds].size.height == 568)
+#define IS_RETINA                   ([[UIScreen mainScreen] scale] == 2.0f)
 
 #define NAME_LETTER_BLOCK           @"Falling letter block"
 #define NAME_BOTTOM_EDGE            @"Bottom edge where blocks land"

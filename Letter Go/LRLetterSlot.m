@@ -8,7 +8,7 @@
 
 #import "LRLetterSlot.h"
 #import "LRLetterBlockGenerator.h"
-#import "LRNameConstants.h"
+#import "LRConstants.h"
 
 @implementation LRLetterSlot
 

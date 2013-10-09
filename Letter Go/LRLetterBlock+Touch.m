@@ -7,7 +7,7 @@
 //
 
 #import "LRLetterBlock+Touch.h"
-#import "LRNameConstants.h"
+#import "LRConstants.h"
 
 @implementation LRLetterBlock (Touch)
 

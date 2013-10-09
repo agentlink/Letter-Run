@@ -7,7 +7,7 @@
 //
 
 #import "LRSubmitButton.h"
-#import "LRNameConstants.h"
+#import "LRConstants.h"
 
 @interface LRSubmitButton ()
 @property SKLabelNode *label;

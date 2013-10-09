@@ -8,7 +8,7 @@
 
 #import "LRGamePlayLayer.h"
 #import "LRLetterBlockGenerator.h"
-#import "LRNameConstants.h"
+#import "LRConstants.h"
 #import "LRCollisionManager.h"
 
 @implementation LRGamePlayLayer
