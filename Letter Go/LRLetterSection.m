@@ -48,27 +48,28 @@
     
     
     //Create the letter slots
-    LRLetterSlot *tempSlot = [[LRLetterSlot alloc] init];
-    float slotMargin, letterSlotWidth, edgeBuffer;
-
-    letterSlotWidth = tempSlot.size.width;
-    slotMargin = (IS_IPHONE_5) ? tempSlot.size.width/3.3 : tempSlot.size.width/4;
-    if (IS_IPHONE_5)
-        NSLog(@"iPhone5");
-    edgeBuffer = (self.size.width - (slotMargin + letterSlotWidth) * LETTER_CAPACITY - letterSlotWidth)/2;
     for (int i = 0; i < LETTER_CAPACITY; i++)
     {
         LRLetterSlot *slot = [[LRLetterSlot alloc] init];
-        slot.position = CGPointMake(0 - self.size.width/2 + edgeBuffer + slot.size.width/2 + i * (letterSlotWidth + slotMargin), 0);
+        slot.position = CGPointMake([self xPosFromSlotIndex:i], 0);
         [self.letterSlots addObject:slot];
         [self addChild:slot];
     }
     
     //Create submit button
     LRSubmitButton *submitButton = [[LRSubmitButton alloc] initWithColor:[SKColor lightGrayColor] size:[[self.letterSlots objectAtIndex:0] size]];
-    submitButton.position = CGPointMake(0 - self.size.width/2 + edgeBuffer + submitButton.size.width/2 + LETTER_CAPACITY * (letterSlotWidth + slotMargin), 0);
+    submitButton.position = CGPointMake([self xPosFromSlotIndex:LETTER_CAPACITY], 0);
     self.submitButton = submitButton;
     [self addChild:submitButton];
+}
+
+- (CGFloat) xPosFromSlotIndex:(int) index {
+    float slotMargin, edgeBuffer;
+    slotMargin = (IS_IPHONE_5) ? LETTER_BLOCK_SIZE/3.3 : LETTER_BLOCK_SIZE/4;
+    edgeBuffer = (self.size.width - (slotMargin + LETTER_BLOCK_SIZE) * LETTER_CAPACITY - LETTER_BLOCK_SIZE)/2;
+
+    float retVal = 0 - self.size.width/2 + edgeBuffer + LETTER_BLOCK_SIZE/2 + index * (LETTER_BLOCK_SIZE + slotMargin);
+    return retVal;
 }
 
 # pragma mark - Adding and Removing Letters
@@ -150,6 +151,23 @@
     self.submitButton.playerCanSubmitWord = (i >= LETTER_MINIMUM_COUNT && [[LRDictionaryChecker shared] checkForWordInSet:[self getCurrentWord:NO]]);
 }
 
+#pragma mark - Reordering Functions
+- (void) moveBlockToClosestToBlock:(LRLetterBlock*)letterBlock
+{
+    CGPoint letterBlockPosition = [letterBlock convertPoint:self.position toNode:self];
+    LRLetterSlot *closestSlot;
+    float currentDiff = MAXFLOAT;
+    for (LRLetterSlot *slot in self.letterSlots)
+    {
+        float nextDiff = ABS(letterBlockPosition.x - slot.position.x);
+        if (nextDiff < currentDiff) {
+            currentDiff = nextDiff;
+            closestSlot = slot;
+        }
+    }
+    [closestSlot setCurrentBlock:letterBlock];
+}
+
 #pragma mark - Helper Functions
 
 - (int) numLettersInSection
@@ -159,7 +177,7 @@
         if ([[self.letterSlots objectAtIndex:i] isLetterSlotEmpty])
             return i;
     }
-    return self.letterSlots.count;
+    return (int)self.letterSlots.count;
 }
 
 @end

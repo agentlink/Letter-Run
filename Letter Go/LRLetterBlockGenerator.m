@@ -10,8 +10,6 @@
 #import "LRConstants.h"
 #import "LRLetterGenerator.h"
 
-#define LETTER_BLOCK_SIZE           48
-
 @implementation LRLetterBlockGenerator
 
 #pragma mark - Falling Letters
@@ -30,8 +28,8 @@
 {
     LRLetterBlock *lb = [LRLetterBlock letterBlockWithSize:CGSizeMake(LETTER_BLOCK_SIZE, LETTER_BLOCK_SIZE) andLetter:@""];
     [lb removePhysics];
-    lb.movementEnabled = NO;
-    lb.color = [SKColor whiteColor];
+    lb.vertMovementEnabled = NO;
+    lb.color = [SKColor clearColor];
     lb.name = NAME_EMPTY_LETTER_SLOT;
     return lb;
 }
@@ -41,7 +39,7 @@
 {
     LRLetterBlock *lb = [LRLetterBlock letterBlockWithSize:CGSizeMake(LETTER_BLOCK_SIZE, LETTER_BLOCK_SIZE) andLetter:letter];
     [lb removePhysics];
-    lb.movementEnabled = NO;
+    lb.vertMovementEnabled = NO;
     return lb;
 }
 

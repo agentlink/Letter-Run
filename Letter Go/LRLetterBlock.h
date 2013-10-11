@@ -20,7 +20,8 @@
 - (void) removePhysics;
 
 @property CGPoint originalPoint;
-@property BOOL movementEnabled;
+@property BOOL vertMovementEnabled;
 @property BOOL blockFlung;
+@property BOOL blockInLetterSection;
 
 @end

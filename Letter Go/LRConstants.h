@@ -22,3 +22,4 @@
 #define KEY_GET_LETTER_BLOCK        @"Get the letter block"
 
 #define LETTER_CAPACITY             7
+#define LETTER_BLOCK_SIZE           48

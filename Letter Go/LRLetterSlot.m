@@ -19,7 +19,7 @@
         self.currentBlock = [LRLetterBlockGenerator createEmptyLetterBlock];
         self.name = NAME_EMPTY_LETTER_SLOT;
         self.size = self.currentBlock.size;
-        self.color = [UIColor clearColor];
+        self.color = [UIColor whiteColor];
         [self addChild:self.currentBlock];
     }
     return self;
@@ -53,8 +53,11 @@
             [self removeChildrenInArray:[NSArray arrayWithObject:_currentBlock]];
         if ([incomingBlock parent])
             [incomingBlock removeFromParent];
+        incomingBlock.position = _currentBlock.position;
         _currentBlock = incomingBlock;
         [self addChild:_currentBlock];
     }
+    _currentBlock.blockInLetterSection = YES;
+    _currentBlock.zPosition = self.zPosition + 10;
 }
 @end

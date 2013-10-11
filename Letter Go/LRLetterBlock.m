@@ -9,12 +9,12 @@
 #import "LRLetterBlock.h"
 #import "LRConstants.h"
 #import "LRCollisionManager.h"
-#import "LRLetterBlock+Touch.h"
 
 #import "LRGameScene.h"
 #import "LRGameStateManager.h"
 
 @interface LRLetterBlock ()
+@property BOOL playerMovedTouch;
 @end
 @implementation LRLetterBlock
 
@@ -29,7 +29,7 @@
     if (self = [super initWithColor:[SKColor blackColor] size:size]) {
         self.name = NAME_LETTER_BLOCK;
         self.letter = letter;
-        self.movementEnabled = YES;
+        self.vertMovementEnabled = YES;
         [self createObjectContent];
         [self setUpPhysics];
         self.userInteractionEnabled = YES;
@@ -102,4 +102,89 @@
     return ![[self letter] length];
 }
 
+#pragma mark - Touch Functions
+- (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    for (UITouch *touch in touches)
+    {
+        CGPoint location = [touch locationInNode:[self parent]];
+        if (CGRectContainsPoint(self.frame, location))
+        {
+            self.playerMovedTouch = FALSE;
+            if (self.vertMovementEnabled) {
+                self.blockFlung = FALSE;
+                self.originalPoint = self.position;
+                self.position = location;
+                [self removePhysics];
+            }
+        }
+    }
+}
+
+//Swipe function is done here by checking to see how far the player moved the block
+- (void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    for (UITouch *touch in touches)
+    {
+        CGPoint location = [touch locationInNode:[self parent]];
+        //If the block is within the letter section
+        if (self.blockInLetterSection) {
+            self.position = CGPointMake(location.x, self.position.y);
+        }
+            
+        //If the block is outside the letter section
+            //Has the player moved their touch outside the block?
+        else if (!CGRectContainsPoint(self.frame, location))
+        {
+            self.playerMovedTouch = TRUE;
+            if (self.vertMovementEnabled) {
+                [self flingTowardsLocation:location];
+            }
+        }
+    }
+}
+
+- (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    for (UITouch *touch in touches)
+    {
+        if (self.blockInLetterSection) {
+            [self moveToNearestEmptySlot];
+            return;
+        }
+        //If the block is falling but wasn't flung
+        if (!self.blockFlung && self.vertMovementEnabled) {
+            [self setUpPhysics];
+            return;
+        }
+        //If the block is in the letter slot
+        CGPoint location = [touch locationInNode:[self parent]];
+        //If the player didn't move the block
+        if (CGRectContainsPoint(self.frame, location) && !self.vertMovementEnabled && !self.playerMovedTouch)
+        {
+            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+            [dict setValue:self forKey:KEY_GET_LETTER_BLOCK];
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_DELETE_LETTER object:self userInfo:dict];
+        }
+    }
+}
+
+- (void) flingTowardsLocation:(CGPoint)location
+{
+    [self setUpSwipedPhysics];
+    float xDiff = location.x - self.originalPoint.x;
+    float yDiff = location.y - self.originalPoint.y;
+    float xToYRatio = xDiff / (ABS(xDiff) + ABS(yDiff));
+    float yToXRatio = yDiff / (ABS(xDiff) + ABS(yDiff));
+    
+    float speedFactor = 500;
+    self.physicsBody.velocity = CGVectorMake(speedFactor * xToYRatio, speedFactor * yToXRatio);
+    self.blockFlung = TRUE;
+}
+
+- (void) moveToNearestEmptySlot
+{
+    LRLetterSection *letterSection = [[(LRGameScene*)[self scene] gamePlayLayer] letterSection];
+    [letterSection moveBlockToClosestToBlock:self];
+}
 @end

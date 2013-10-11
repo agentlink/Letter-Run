@@ -8,8 +8,10 @@
 
 #import <SpriteKit/SpriteKit.h>
 #import "LRScreenSection.h"
+#import "LRLetterBlock.h"
 @interface LRLetterSection : LRScreenSection
 
 - (int) numLettersInSection;
+- (void) moveBlockToClosestToBlock:(LRLetterBlock*)letterBlock;
 
 @end
