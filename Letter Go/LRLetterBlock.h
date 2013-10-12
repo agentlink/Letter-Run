@@ -7,7 +7,7 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-#import "LRCharacter.h"
+#import "LRObject.h"
 
 typedef enum {
     BlockState_Falling,
@@ -17,7 +17,7 @@ typedef enum {
     BlockState_Rearranging
 } BlockState;
 
-@interface LRLetterBlock : LRCharacter
+@interface LRLetterBlock : LRObject
 @property NSString *letter;
 
 + (LRLetterBlock*) letterBlockWithSize:(CGSize)size andLetter:(NSString*)letter;

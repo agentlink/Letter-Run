@@ -7,8 +7,8 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-
-@interface LRScreenSection : SKSpriteNode
+#import "LRObject.h"
+@interface LRScreenSection : LRObject
 
 - (id) initWithSize:(CGSize)size;
 - (void) createSectionContent;

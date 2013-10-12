@@ -1,17 +1,15 @@
 //
-//  LRCharacter.m
+//  LRObject.h
 //  Letter Go
 //
 //  Created by Gabriel Nicholas on 9/30/13.
 //  Copyright (c) 2013 Gabe Nicholas. All rights reserved.
 //
 
-#import "LRCharacter.h"
+#import <SpriteKit/SpriteKit.h>
 
-@implementation LRCharacter
+@interface LRObject : SKSpriteNode
 
-- (void) update:(NSTimeInterval)currentTime
-{
-    return;
-}
+- (void) update:(NSTimeInterval)currentTime;
+
 @end

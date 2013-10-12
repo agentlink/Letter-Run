@@ -9,7 +9,7 @@
 #import "LRGameScene.h"
 #import "LRCollisionManager.h"
 #import "LRConstants.h"
-#import "LRCharacter.h"
+#import "LRObject.h"
 #import "LRGameStateManager.h"
 
 @implementation LRGameScene
@@ -48,9 +48,9 @@
 {
     for (SKSpriteNode *child in [[self gamePlayLayer] children])
     {
-        if ([child isKindOfClass:[LRCharacter class]])
+        if ([child isKindOfClass:[LRObject class]])
         {
-            [(LRCharacter*)child update:currentTime];
+            [(LRObject*)child update:currentTime];
         }
     }
 }
