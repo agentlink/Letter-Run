@@ -1,0 +1,5 @@
+# Ignore user state
+*.xcuserstate
+# Ignore break points
+*.xcbkptlist
+
