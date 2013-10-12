@@ -23,3 +23,8 @@
 
 #define LETTER_CAPACITY             7
 #define LETTER_BLOCK_SIZE           48
+
+typedef enum {
+    HorDirectionLeft,
+    HorDirectionRight
+} HorDirection;

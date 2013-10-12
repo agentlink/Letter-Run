@@ -92,7 +92,7 @@
         [self removeFromParent];
     }
     //If the box is outside the screen and has been flung
-    else if (!CGRectIntersectsRect(sceneRect, letterFrame)  && self.blockFlung) {
+    else if (!CGRectIntersectsRect(sceneRect, letterFrame)  && self.blockState == BlockState_BlockFlung) {
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_DROP_LETTER object:self];
         [self removeFromParent];
     }
@@ -113,21 +113,13 @@
         {
             self.playerMovedTouch = FALSE;
             if (self.vertMovementEnabled) {
-                self.blockFlung = FALSE;
+                self.blockState = BlockState_PlayerIsHolding;
                 self.originalPoint = self.position;
                 self.position = location;
                 [self removePhysics];
             }
             //If the block is in the letter section
             else if (self.blockInLetterSection) {
-                //Change the parent from the letter slot to the letter section
-                LRLetterSection *letterSection = [[(LRGameScene*)[self scene] gamePlayLayer] letterSection];
-                LRLetterSlot *parentSlot = (LRLetterSlot*)[self parent];
-                CGPoint newPos = [self convertPoint:self.position toNode:letterSection];
-                [parentSlot setEmptyLetterBlock];
-//                [self removeFromParent];
-                self.position = newPos;
-                [letterSection addChild:self];
             }
         }
     }
@@ -140,10 +132,19 @@
     {
         CGPoint location = [touch locationInNode:[self parent]];
         //If the block is within the letter section
-        if (self.blockInLetterSection) {
+        if (self.blockInLetterSection && self.blockState != BlockState_Rearranging) {
+            LRLetterSection *letterSection = [[(LRGameScene*)[self scene] gamePlayLayer] letterSection];
+            LRLetterSlot *parentSlot = (LRLetterSlot*)[self parent];
+            CGPoint newPos = [self convertPoint:self.position toNode:letterSection];
+            [parentSlot setEmptyLetterBlock];
+            self.position = newPos;
+            [letterSection addChild:self];
+            self.blockState = BlockState_Rearranging;
+
+        }
+        if (self.blockInLetterSection ) {
             self.position = CGPointMake(location.x, self.position.y);
         }
-            
         //If the block is outside the letter section
             //Has the player moved their touch outside the block?
         else if (!CGRectContainsPoint(self.frame, location))
@@ -160,12 +161,12 @@
 {
     for (UITouch *touch in touches)
     {
-        if (self.blockInLetterSection) {
+        if (self.blockState == BlockState_Rearranging) {
             [self moveToNearestEmptySlot];
             return;
         }
         //If the block is falling but wasn't flung
-        if (!self.blockFlung && self.vertMovementEnabled) {
+        if (self.blockState == BlockState_PlayerIsHolding && self.vertMovementEnabled) {
             [self setUpPhysics];
             return;
         }
@@ -191,7 +192,7 @@
     
     float speedFactor = 500;
     self.physicsBody.velocity = CGVectorMake(speedFactor * xToYRatio, speedFactor * yToXRatio);
-    self.blockFlung = TRUE;
+    self.blockState = BlockState_BlockFlung;
 }
 
 - (void) moveToNearestEmptySlot

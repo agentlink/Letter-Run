@@ -9,6 +9,14 @@
 #import <SpriteKit/SpriteKit.h>
 #import "LRCharacter.h"
 
+typedef enum {
+    BlockState_Falling,
+    BlockState_PlayerIsHolding,
+    BlockState_BlockFlung,
+    BlockState_InLetterSlot,
+    BlockState_Rearranging
+} BlockState;
+
 @interface LRLetterBlock : LRCharacter
 @property NSString *letter;
 
@@ -21,7 +29,7 @@
 
 @property CGPoint originalPoint;
 @property BOOL vertMovementEnabled;
-@property BOOL blockFlung;
+@property BlockState blockState;
 @property BOOL blockInLetterSection;
 
 @end

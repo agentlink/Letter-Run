@@ -103,11 +103,21 @@
     self.currentState = LetterSectionStateRemovingLetter;
     LRLetterBlock *block = [[notification userInfo] objectForKey:KEY_GET_LETTER_BLOCK];
     LRLetterSlot *selectedSlot = nil;
+    //Check to see if it's a child of the letter section
+    __block BOOL foundNode = NO;
+    [self enumerateChildNodesWithName:NAME_LETTER_BLOCK usingBlock:^(SKNode *node, BOOL *stop){
+        if (node == block) {
+            [node removeFromParent];
+            foundNode = YES;
+            return;
+        }
+    }];
+    //Check to see if it exists within the letter slots
     for (int i = 0; i < self.letterSlots.count; i++)
     {
         LRLetterSlot *slot = [self.letterSlots objectAtIndex:i];
         //Get the slot chosen
-        if (slot.currentBlock == block) {
+        if ((!foundNode && slot.currentBlock == block) || (foundNode && [slot isLetterSlotEmpty] && !selectedSlot)) {
             selectedSlot = slot;
         }
         if (selectedSlot) {
@@ -117,9 +127,10 @@
             else
                 slot.currentBlock = [LRLetterBlockGenerator createEmptyLetterBlock];
         }
+
     }
-    [self updateSubmitButton];
     NSAssert(selectedSlot, @"Error: slot does not exist within array");
+    [self updateSubmitButton];
     self.currentState = LetterSectionStateNormal;
 }
 
@@ -187,6 +198,14 @@
         
     }
     [closestSlot setCurrentBlock:letterBlock];
+}
+
+- (void) moveBlockAtSlotIndex:(int)i inDirection:(HorDirection)direction
+{
+    LRLetterSlot *currentSlot = [self.letterSlots objectAtIndex:i];
+    LRLetterSlot *nextSlot = (direction == HorDirectionLeft) ? [self.letterSlots objectAtIndex:i-1] : [self.letterSlots objectAtIndex:i+1];
+    LRLetterBlock *currentBlock = [currentSlot currentBlock];
+    [nextSlot setCurrentBlock:currentBlock];
 }
 
 #pragma mark - Helper Functions
