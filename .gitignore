@@ -1,5 +1,3 @@
-# Ignore user state
-*.xcuserstate
-# Ignore break points
-*.xcbkptlist
+# Ignore user data
+~/Letter\ Go/Letter\ Go.xcodeproj/xcuserdata
 
