@@ -12,6 +12,7 @@
 
 #import "LRGameScene.h"
 #import "LRGameStateManager.h"
+#import "LRLetterSlot.h"
 
 @interface LRLetterBlock ()
 @property BOOL playerMovedTouch;
@@ -117,6 +118,17 @@
                 self.position = location;
                 [self removePhysics];
             }
+            //If the block is in the letter section
+            else if (self.blockInLetterSection) {
+                //Change the parent from the letter slot to the letter section
+                LRLetterSection *letterSection = [[(LRGameScene*)[self scene] gamePlayLayer] letterSection];
+                LRLetterSlot *parentSlot = (LRLetterSlot*)[self parent];
+                CGPoint newPos = [self convertPoint:self.position toNode:letterSection];
+                [parentSlot setEmptyLetterBlock];
+//                [self removeFromParent];
+                self.position = newPos;
+                [letterSection addChild:self];
+            }
         }
     }
 }
@@ -185,6 +197,6 @@
 - (void) moveToNearestEmptySlot
 {
     LRLetterSection *letterSection = [[(LRGameScene*)[self scene] gamePlayLayer] letterSection];
-    [letterSection moveBlockToClosestToBlock:self];
+    [letterSection moveBlockToClosestEmptySlot:self];
 }
 @end

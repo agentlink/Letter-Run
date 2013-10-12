@@ -14,6 +14,7 @@
 @property (nonatomic) LRLetterBlock *currentBlock;
 
 - (id) initWithLetterBlock:(LRLetterBlock*)block;
+- (void) setEmptyLetterBlock;
 - (BOOL) isLetterSlotEmpty;
 
 @end

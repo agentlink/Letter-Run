@@ -60,4 +60,9 @@
     _currentBlock.blockInLetterSection = YES;
     _currentBlock.zPosition = self.zPosition + 10;
 }
+
+- (void) setEmptyLetterBlock
+{
+    self.currentBlock = [LRLetterBlockGenerator createEmptyLetterBlock];
+}
 @end

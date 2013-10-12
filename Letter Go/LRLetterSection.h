@@ -9,9 +9,20 @@
 #import <SpriteKit/SpriteKit.h>
 #import "LRScreenSection.h"
 #import "LRLetterBlock.h"
+
+typedef enum  {
+    LetterSectionStateNormal,
+    LetterSectionStateSubmittingWord,
+    LetterSectionStateAddingLetter,
+    LetterSectionStateRemovingLetter,
+    LetterSectionStateRearranging
+} LetterSectionState;
+
 @interface LRLetterSection : LRScreenSection
 
+@property LetterSectionState currentState;
+
 - (int) numLettersInSection;
-- (void) moveBlockToClosestToBlock:(LRLetterBlock*)letterBlock;
+- (void) moveBlockToClosestEmptySlot:(LRLetterBlock*)letterBlock;
 
 @end

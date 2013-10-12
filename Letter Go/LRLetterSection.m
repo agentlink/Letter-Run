@@ -32,6 +32,7 @@
 {
     if (self = [super initWithSize:size])
     {
+        self.currentState = LetterSectionStateNormal;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addLetterToSection:) name:NOTIFICATION_ADDED_LETTER object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeLetterFromSection:) name:NOTIFICATION_DELETE_LETTER object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(submitWord) name:NOTIFICATION_SUBMIT_WORD object:nil];
@@ -77,6 +78,7 @@
 - (void) addLetterToSection:(NSNotification*)notification
 {
     //Get the letter from the notificaiton
+    self.currentState = LetterSectionStateAddingLetter;
     NSString *letter = [[notification userInfo] objectForKey:KEY_GET_LETTER];
     LRLetterSlot *currentLetterSlot = nil;
     int letterCount = 0;
@@ -93,10 +95,12 @@
         currentLetterSlot.currentBlock = [LRLetterBlockGenerator createBlockForSlotWithLetter:letter];
     }
     [self updateSubmitButton];
+    self.currentState = LetterSectionStateNormal;
 }
 
 - (void) removeLetterFromSection:(NSNotification*)notification
 {
+    self.currentState = LetterSectionStateRemovingLetter;
     LRLetterBlock *block = [[notification userInfo] objectForKey:KEY_GET_LETTER_BLOCK];
     LRLetterSlot *selectedSlot = nil;
     for (int i = 0; i < self.letterSlots.count; i++)
@@ -116,14 +120,17 @@
     }
     [self updateSubmitButton];
     NSAssert(selectedSlot, @"Error: slot does not exist within array");
+    self.currentState = LetterSectionStateNormal;
 }
 
 #pragma mark - Submit Word Functions
 
 - (void) submitWord
 {
+    self.currentState = LetterSectionStateSubmittingWord;
     [[LRScoreManager shared] submitWord:[self getCurrentWord:YES]];
     [self updateSubmitButton];
+    self.currentState = LetterSectionStateNormal;
 }
 
 - (NSString*)getCurrentWord:(BOOL)popOffLetters
@@ -152,18 +159,32 @@
 }
 
 #pragma mark - Reordering Functions
-- (void) moveBlockToClosestToBlock:(LRLetterBlock*)letterBlock
+- (void) moveBlockToClosestEmptySlot:(LRLetterBlock*)letterBlock
 {
+    BOOL lastSlotWasFull = FALSE;
     CGPoint letterBlockPosition = [letterBlock convertPoint:self.position toNode:self];
     LRLetterSlot *closestSlot;
     float currentDiff = MAXFLOAT;
-    for (LRLetterSlot *slot in self.letterSlots)
+    for (int i = 0; i < [self.letterSlots count]; i++)
     {
+        LRLetterSlot *slot = [self.letterSlots objectAtIndex:i];
+        //If the first slot is empty
+        if ([slot isLetterSlotEmpty] && i == 0) {
+            closestSlot = slot;
+            break;
+        }
+        //If the current slot is full
+        else if (![slot isLetterSlotEmpty]) {
+            lastSlotWasFull = YES;
+            continue;
+        }
         float nextDiff = ABS(letterBlockPosition.x - slot.position.x);
-        if (nextDiff < currentDiff) {
+        if (nextDiff < currentDiff && lastSlotWasFull) {
             currentDiff = nextDiff;
             closestSlot = slot;
         }
+        lastSlotWasFull = NO;
+        
     }
     [closestSlot setCurrentBlock:letterBlock];
 }
