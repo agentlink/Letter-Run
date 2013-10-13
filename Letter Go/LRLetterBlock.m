@@ -103,6 +103,11 @@
     return ![[self letter] length];
 }
 
+- (BOOL) isLetterBlockPlaceHolder
+{
+    return ([self.letter isEqualToString:@" "]);
+}
+
 #pragma mark - Touch Functions
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
@@ -121,6 +126,7 @@
             //If the block is in the letter section
             else if (self.blockInLetterSection) {
             }
+            self.zPosition += 5;
         }
     }
 }
@@ -140,6 +146,7 @@
             self.position = newPos;
             [letterSection addChild:self];
             self.blockState = BlockState_Rearranging;
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_REARRANGE_START object:self userInfo:[NSDictionary dictionaryWithObject:self forKey:@"block"]];
 
         }
         if (self.blockInLetterSection ) {
@@ -161,8 +168,10 @@
 {
     for (UITouch *touch in touches)
     {
+        self.zPosition -= 5;
         if (self.blockState == BlockState_Rearranging) {
-            [self moveToNearestEmptySlot];
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_REARRANGE_FINISH object:self userInfo:[NSDictionary dictionaryWithObject:self forKey:@"block"]];
+//            [self moveToNearestEmptySlot];
             return;
         }
         //If the block is falling but wasn't flung

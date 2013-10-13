@@ -21,7 +21,9 @@ typedef enum {
 @property NSString *letter;
 
 + (LRLetterBlock*) letterBlockWithSize:(CGSize)size andLetter:(NSString*)letter;
+
 - (BOOL) isLetterBlockEmpty;
+- (BOOL) isLetterBlockPlaceHolder;
 
 - (void) setUpPhysics;
 - (void) setUpSwipedPhysics;

@@ -42,7 +42,6 @@ static LRDictionaryChecker *_shared = nil;
 
 - (void) setUpDictionary
 {
-    NSLog(@"Started");
     NSString* path = [[NSBundle mainBundle] pathForResource:DICTIONARY_FILE_NAME
                                                      ofType:@"txt"];
     NSStringEncoding encoding;
@@ -51,7 +50,6 @@ static LRDictionaryChecker *_shared = nil;
                                                           usedEncoding:&encoding
                                                                 error:&error];
     self.dictionary = [NSSet setWithArray:[fileContents componentsSeparatedByString:@"\n"]];
-    NSLog(@"Done");
 }
 
 - (BOOL)checkForWordInSet:(NSString*)word

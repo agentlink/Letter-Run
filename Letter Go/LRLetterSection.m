@@ -21,7 +21,7 @@
 @property SKSpriteNode *letterSection;
 @property LRSubmitButton *submitButton;
 @property NSMutableArray *letterSlots;
-
+@property NSTimer *rearrangementTimer;
 @end
 
 @implementation LRLetterSection
@@ -33,11 +33,20 @@
     if (self = [super initWithSize:size])
     {
         self.currentState = LetterSectionStateNormal;
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addLetterToSection:) name:NOTIFICATION_ADDED_LETTER object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeLetterFromSection:) name:NOTIFICATION_DELETE_LETTER object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(submitWord) name:NOTIFICATION_SUBMIT_WORD object:nil];
+        [self setUpNotifications];
     }
     return self;
+}
+
+- (void) setUpNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addLetterToSection:) name:NOTIFICATION_ADDED_LETTER object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeLetterFromSection:) name:NOTIFICATION_DELETE_LETTER object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(submitWord) name:NOTIFICATION_SUBMIT_WORD object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rearrangementScheduler:) name:NOTIFICATION_REARRANGE_START object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishRearrangement:) name:NOTIFICATION_REARRANGE_FINISH object:nil];
+
+
 }
 
 - (void) createSectionContent
@@ -149,7 +158,7 @@
     NSMutableString *currentWord = [[NSMutableString alloc] init];
     for (LRLetterSlot *slot in self.letterSlots)
     {
-        if ([slot isLetterSlotEmpty])
+        if ([slot isLetterSlotEmpty] || [slot.currentBlock isLetterBlockPlaceHolder])
             break;
         [currentWord appendString:[slot.currentBlock letter]];
         if (popOffLetters)
@@ -170,6 +179,34 @@
 }
 
 #pragma mark - Reordering Functions
+- (void) rearrangementScheduler:(NSNotification*)notification
+{
+    LRLetterBlock *block = [[notification userInfo] objectForKey:@"block"];
+    self.rearrangementTimer = [NSTimer scheduledTimerWithTimeInterval:.1 target:self selector:@selector(checkRearrangement:) userInfo:block repeats:YES];
+}
+
+- (void) finishRearrangement:(NSNotification*)notification {
+    //Cancel the timer
+    [self.rearrangementTimer invalidate];
+    self.rearrangementTimer = nil;
+    
+    LRLetterSlot *newLocation = [self getPlaceHolderSlot];
+    newLocation.currentBlock = [[notification userInfo] objectForKey:@"block"];
+}
+
+- (void) checkRearrangement:(NSTimer*)timer
+{
+    LRLetterBlock *block = [timer userInfo];
+    LRLetterSlot *nearBySlot = [self getClosestSlot:block];
+    if ([nearBySlot isLetterSlotEmpty]) {
+        nearBySlot.currentBlock = [LRLetterBlockGenerator createPlaceHolderBlock];
+    }
+    else if (![block isLetterBlockPlaceHolder]) {
+        [self swapLetterAtSlot:[self getPlaceHolderSlot] withLetterAtSlot:nearBySlot];
+        return;
+    }
+}
+
 - (void) moveBlockToClosestEmptySlot:(LRLetterBlock*)letterBlock
 {
     BOOL lastSlotWasFull = FALSE;
@@ -198,6 +235,45 @@
         
     }
     [closestSlot setCurrentBlock:letterBlock];
+}
+
+- (void) swapLetterAtSlot:(LRLetterSlot*) slotA withLetterAtSlot:(LRLetterSlot*) slotB
+{
+    LRLetterBlock *blockA = [slotA currentBlock];
+    LRLetterBlock *blockB = [slotB currentBlock];
+
+    [slotA setCurrentBlock:blockB];
+    [slotB setCurrentBlock:blockA];
+}
+
+- (LRLetterSlot*) getPlaceHolderSlot
+{
+    LRLetterSlot *retVal = nil;
+    for (int i = 0; i < self.letterSlots.count; i++) {
+        LRLetterSlot *tempSlot = [self.letterSlots objectAtIndex:i];
+        if ([[tempSlot currentBlock] isLetterBlockPlaceHolder]) {
+            NSAssert(!retVal, @"Error: multiple place holder slots");
+            retVal = tempSlot;
+        }
+    }
+    return retVal;
+}
+
+- (LRLetterSlot*)getClosestSlot:(LRLetterBlock*)letterBlock
+{
+    CGPoint letterBlockPosition = [letterBlock convertPoint:self.position toNode:self];
+    LRLetterSlot *closestSlot;
+    float currentDiff = MAXFLOAT;
+    for (int i = 0; i < [self.letterSlots count]; i++)
+    {
+        LRLetterSlot *slot = [self.letterSlots objectAtIndex:i];
+        float nextDiff = ABS(letterBlockPosition.x - slot.position.x);
+        if (nextDiff < currentDiff) {
+            currentDiff = nextDiff;
+            closestSlot = slot;
+        }
+    }
+    return closestSlot;
 }
 
 - (void) moveBlockAtSlotIndex:(int)i inDirection:(HorDirection)direction

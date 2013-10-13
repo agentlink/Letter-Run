@@ -10,6 +10,8 @@
 #import "LRConstants.h"
 #import "LRLetterGenerator.h"
 
+#define PLACEHOLDER_TEXT            @" "
+
 @implementation LRLetterBlockGenerator
 
 #pragma mark - Falling Letters
@@ -31,6 +33,13 @@
     lb.vertMovementEnabled = NO;
     lb.color = [SKColor clearColor];
     lb.name = NAME_EMPTY_LETTER_SLOT;
+    return lb;
+}
+
++ (LRLetterBlock*) createPlaceHolderBlock
+{
+    LRLetterBlock *lb = [LRLetterBlockGenerator createEmptyLetterBlock];
+    lb.letter = PLACEHOLDER_TEXT;
     return lb;
 }
 

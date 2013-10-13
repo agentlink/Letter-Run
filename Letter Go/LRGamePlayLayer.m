@@ -38,7 +38,7 @@
     self.letterSection.position = CGPointMake(self.position.x - self.size.width/2, 0 - self.size.height/2 + self.letterSection.size.height/2);
     [self addChild:self.letterSection];
     
-    //TEMPORARY: blocks will be continuously created by LRLetterBlockGenerator
+    //TEMPORARY: blocks will be continuously created by the game play layer
     [self addChild:[LRLetterBlockGenerator createLetterBlock]];
 }
 
