@@ -9,10 +9,13 @@
 #import "LRBackgroundLayer.h"
 
 @interface LRBackgroundLayer ()
-
-@property SKSpriteNode *backgroundImage;
-
+@property NSMutableArray *backgroundLayers;
 @end
+
+enum {
+    BackgroundLayer_Sky = 0,
+    BackgroundLayer_Hills
+};
 
 @implementation LRBackgroundLayer
 
@@ -27,12 +30,13 @@
 
 - (void) createLayerContents
 {
-    self.backgroundImage = [[SKSpriteNode alloc] initWithColor:[SKColor colorWithRed:(132/255.0f) green:(227/255.0f) blue:(240/255.0f) alpha:1.0f] size:self.size];
-    [self addChild:self.backgroundImage];
+    self.backgroundLayers = [[NSMutableArray alloc] init];
+    [self.backgroundLayers setObject:[SKSpriteNode spriteNodeWithImageNamed:@"Background_Sky.jpg"] atIndexedSubscript:BackgroundLayer_Sky];
+    //[self.backgroundLayers setObject:[SKSpriteNode spriteNodeWithImageNamed:@"Background_Hills.jpg"] atIndexedSubscript:BackgroundLayer_Hills];
+    
+    for (SKSpriteNode *layer in self.backgroundLayers) {
+        [self addChild:layer];
+    }
 }
 
-- (void) dealloc
-{
-    self.backgroundImage = nil;
-}
 @end

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0007FB38180B340600E55B0D /* Background_Hills.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0007FB36180B340600E55B0D /* Background_Hills.jpg */; };
+		0007FB39180B340600E55B0D /* Background_Sky.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0007FB37180B340600E55B0D /* Background_Sky.jpg */; };
 		0049695117F8A12B00176F2D /* LRLetterBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049695017F8A12B00176F2D /* LRLetterBlock.m */; };
 		0049695517F8A75B00176F2D /* LRLetterBlockGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049695417F8A75B00176F2D /* LRLetterBlockGenerator.m */; };
 		0049695917F8AB5D00176F2D /* LRCollisionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049695817F8AB5D00176F2D /* LRCollisionManager.m */; };
@@ -54,6 +56,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0007FB36180B340600E55B0D /* Background_Hills.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Background_Hills.jpg; sourceTree = "<group>"; };
+		0007FB37180B340600E55B0D /* Background_Sky.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Background_Sky.jpg; sourceTree = "<group>"; };
 		0049694F17F8A12B00176F2D /* LRLetterBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRLetterBlock.h; sourceTree = "<group>"; };
 		0049695017F8A12B00176F2D /* LRLetterBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterBlock.m; sourceTree = "<group>"; };
 		0049695317F8A75B00176F2D /* LRLetterBlockGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRLetterBlockGenerator.h; sourceTree = "<group>"; };
@@ -138,6 +142,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0007FB30180B2FB600E55B0D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0007FB31180B2FBB00E55B0D /* Background */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		0007FB31180B2FBB00E55B0D /* Background */ = {
+			isa = PBXGroup;
+			children = (
+				0007FB36180B340600E55B0D /* Background_Hills.jpg */,
+				0007FB37180B340600E55B0D /* Background_Sky.jpg */,
+			);
+			name = Background;
+			sourceTree = "<group>";
+		};
 		0049694E17F8A10700176F2D /* Game Screen Objects */ = {
 			isa = PBXGroup;
 			children = (
@@ -209,6 +230,7 @@
 		00CDF12A17F474EC003065F6 = {
 			isa = PBXGroup;
 			children = (
+				0007FB30180B2FB600E55B0D /* Resources */,
 				008428EE1800992D00908E5D /* Property Lists */,
 				0049695A17F8AC3D00176F2D /* Constants */,
 				0049695617F8AB3400176F2D /* Singletons */,
@@ -402,10 +424,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0007FB38180B340600E55B0D /* Background_Hills.jpg in Resources */,
 				008428F01800997800908E5D /* LetterProbabilities.plist in Resources */,
 				008428FB180348E700908E5D /* scrabbleDictionary1.txt in Resources */,
 				00CDF14317F474EC003065F6 /* InfoPlist.strings in Resources */,
 				00CDF15617F474EC003065F6 /* Images.xcassets in Resources */,
+				0007FB39180B340600E55B0D /* Background_Sky.jpg in Resources */,
 				00CDF14C17F474EC003065F6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
