@@ -65,7 +65,7 @@
     //Make it bounce off the bottom if the section is full
     if ([[LRGameStateManager shared] isLetterSectionFull])
         [[LRCollisionManager shared] addCollisionDetectionOfSpriteNamed:NAME_BOTTOM_EDGE toSprite:self];
-
+    
 }
 
 - (void) removePhysics
@@ -171,7 +171,7 @@
         self.zPosition -= 5;
         if (self.blockState == BlockState_Rearranging) {
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_REARRANGE_FINISH object:self userInfo:[NSDictionary dictionaryWithObject:self forKey:@"block"]];
-//            [self moveToNearestEmptySlot];
+            self.blockState = BlockState_InLetterSlot;
             return;
         }
         //If the block is falling but wasn't flung

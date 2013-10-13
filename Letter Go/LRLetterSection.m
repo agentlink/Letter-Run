@@ -22,6 +22,7 @@
 @property LRSubmitButton *submitButton;
 @property NSMutableArray *letterSlots;
 @property NSTimer *rearrangementTimer;
+@property LRLetterSlot *currentSlot;
 @end
 
 @implementation LRLetterSection
@@ -192,19 +193,34 @@
     
     LRLetterSlot *newLocation = [self getPlaceHolderSlot];
     newLocation.currentBlock = [[notification userInfo] objectForKey:@"block"];
+    self.currentSlot = nil;
 }
 
 - (void) checkRearrangement:(NSTimer*)timer
 {
     LRLetterBlock *block = [timer userInfo];
     LRLetterSlot *nearBySlot = [self getClosestSlot:block];
-    if ([nearBySlot isLetterSlotEmpty]) {
+    if (!self.currentSlot && ![self getPlaceHolderSlot]) {
+        NSLog(@"New place holder slot");
         nearBySlot.currentBlock = [LRLetterBlockGenerator createPlaceHolderBlock];
+        self.currentSlot = nearBySlot;
     }
-    else if (![block isLetterBlockPlaceHolder]) {
-        [self swapLetterAtSlot:[self getPlaceHolderSlot] withLetterAtSlot:nearBySlot];
+    else if (![nearBySlot.currentBlock isLetterBlockPlaceHolder] && [self slotIsWithinRearrangementArea:nearBySlot]) {
+        [self swapLetterAtSlot:self.currentSlot withLetterAtSlot:nearBySlot];
+        self.currentSlot = nearBySlot;
         return;
     }
+}
+
+- (BOOL) slotIsWithinRearrangementArea:(LRLetterSlot*)slot
+{
+    for (int i = 0; i < self.letterSlots.count; i++) {
+        if ([[self.letterSlots objectAtIndex:i] isLetterSlotEmpty])
+            break;
+        else if ([self.letterSlots objectAtIndex:i] == slot)
+            return YES;
+    }
+    return NO;
 }
 
 - (void) moveBlockToClosestEmptySlot:(LRLetterBlock*)letterBlock
@@ -239,9 +255,22 @@
 
 - (void) swapLetterAtSlot:(LRLetterSlot*) slotA withLetterAtSlot:(LRLetterSlot*) slotB
 {
+    int aLoc = 0;
+    int bLoc = 0;
+    for (int i = 0; i < self.letterSlots.count; i++)
+    {
+        LRLetterSlot *tempSlot = [self.letterSlots objectAtIndex:i];
+        if (tempSlot == slotA)
+            aLoc = i;
+        else if (tempSlot == slotB)
+            bLoc = i;
+    }
+    NSLog(@"Swapping block %i with block %i", aLoc, bLoc);
+    
     LRLetterBlock *blockA = [slotA currentBlock];
     LRLetterBlock *blockB = [slotB currentBlock];
 
+    NSAssert(!([blockA isLetterBlockEmpty] || [blockB isLetterBlockEmpty]), @"ERROR: cannot swap empty blocks");
     [slotA setCurrentBlock:blockB];
     [slotB setCurrentBlock:blockA];
 }
@@ -264,6 +293,7 @@
     CGPoint letterBlockPosition = [letterBlock convertPoint:self.position toNode:self];
     LRLetterSlot *closestSlot;
     float currentDiff = MAXFLOAT;
+    int location;
     for (int i = 0; i < [self.letterSlots count]; i++)
     {
         LRLetterSlot *slot = [self.letterSlots objectAtIndex:i];
@@ -271,8 +301,10 @@
         if (nextDiff < currentDiff) {
             currentDiff = nextDiff;
             closestSlot = slot;
+            location = i;
         }
     }
+    //NSLog(@"Closest slot at index: %i", location);
     return closestSlot;
 }
 
