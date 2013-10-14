@@ -53,8 +53,8 @@
             [self removeChildrenInArray:[NSArray arrayWithObject:_currentBlock]];
         if ([incomingBlock parent])
             [incomingBlock removeFromParent];
-        incomingBlock.position = _currentBlock.position;
         _currentBlock = incomingBlock;
+        _currentBlock.position = CGPointMake(0, 0);
         [self addChild:_currentBlock];
     }
     _currentBlock.zPosition = self.zPosition + 10;

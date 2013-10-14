@@ -281,7 +281,6 @@
             location = i;
         }
     }
-    //NSLog(@"Closest slot at index: %i", location);
     return closestSlot;
 }
 
