@@ -204,9 +204,4 @@
     self.blockState = BlockState_BlockFlung;
 }
 
-- (void) moveToNearestEmptySlot
-{
-    LRLetterSection *letterSection = [[(LRGameScene*)[self scene] gamePlayLayer] letterSection];
-    [letterSection moveBlockToClosestEmptySlot:self];
-}
 @end

@@ -11,5 +11,5 @@
 @interface LRDictionaryChecker : SKNode
 
 + (LRDictionaryChecker*) shared;
-- (BOOL)checkForWordInSet:(NSString*)word;
+- (BOOL)checkForWordInDictionary:(NSString*)word;
 @end

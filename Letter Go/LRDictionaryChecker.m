@@ -52,7 +52,7 @@ static LRDictionaryChecker *_shared = nil;
     self.dictionary = [NSSet setWithArray:[fileContents componentsSeparatedByString:@"\n"]];
 }
 
-- (BOOL)checkForWordInSet:(NSString*)word
+- (BOOL)checkForWordInDictionary:(NSString*)word
 {
     return [self.dictionary containsObject:[word stringByAppendingString:@"\r"]];
 }

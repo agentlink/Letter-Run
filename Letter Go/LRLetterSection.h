@@ -23,6 +23,5 @@ typedef enum  {
 @property LetterSectionState currentState;
 
 - (int) numLettersInSection;
-- (void) moveBlockToClosestEmptySlot:(LRLetterBlock*)letterBlock;
 
 @end

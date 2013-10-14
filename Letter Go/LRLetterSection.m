@@ -23,6 +23,9 @@
 @property NSMutableArray *letterSlots;
 @property NSTimer *rearrangementTimer;
 @property LRLetterSlot *currentSlot;
+
+@property LRLetterBlock *touchedBlock;
+
 @end
 
 @implementation LRLetterSection
@@ -176,14 +179,19 @@
         if ([(LRLetterSlot*)[self.letterSlots objectAtIndex:i] isLetterSlotEmpty])
             break;
     }
-    self.submitButton.playerCanSubmitWord = (i >= LETTER_MINIMUM_COUNT && [[LRDictionaryChecker shared] checkForWordInSet:[self getCurrentWord:NO]]);
+    self.submitButton.playerCanSubmitWord = (i >= LETTER_MINIMUM_COUNT && [[LRDictionaryChecker shared] checkForWordInDictionary:[self getCurrentWord:NO]]);
 }
 
 #pragma mark - Reordering Functions
+- (void) update:(NSTimeInterval)currentTime
+{
+    if (self.touchedBlock) {
+        [self checkRearrangement];
+    }
+}
 - (void) rearrangementScheduler:(NSNotification*)notification
 {
-    LRLetterBlock *block = [[notification userInfo] objectForKey:@"block"];
-    self.rearrangementTimer = [NSTimer scheduledTimerWithTimeInterval:.1 target:self selector:@selector(checkRearrangement:) userInfo:block repeats:YES];
+    self.touchedBlock = [[notification userInfo] objectForKey:@"block"];
 }
 
 - (void) finishRearrangement:(NSNotification*)notification {
@@ -194,12 +202,13 @@
     LRLetterSlot *newLocation = [self getPlaceHolderSlot];
     newLocation.currentBlock = [[notification userInfo] objectForKey:@"block"];
     self.currentSlot = nil;
+    self.touchedBlock = nil;
+    [self updateSubmitButton];
 }
 
-- (void) checkRearrangement:(NSTimer*)timer
+- (void) checkRearrangement
 {
-    LRLetterBlock *block = [timer userInfo];
-    LRLetterSlot *nearBySlot = [self getClosestSlot:block];
+    LRLetterSlot *nearBySlot = [self getClosestSlot:self.touchedBlock];
     if (!self.currentSlot && ![self getPlaceHolderSlot]) {
         NSLog(@"New place holder slot");
         nearBySlot.currentBlock = [LRLetterBlockGenerator createPlaceHolderBlock];
@@ -221,36 +230,6 @@
             return YES;
     }
     return NO;
-}
-
-- (void) moveBlockToClosestEmptySlot:(LRLetterBlock*)letterBlock
-{
-    BOOL lastSlotWasFull = FALSE;
-    CGPoint letterBlockPosition = [letterBlock convertPoint:self.position toNode:self];
-    LRLetterSlot *closestSlot;
-    float currentDiff = MAXFLOAT;
-    for (int i = 0; i < [self.letterSlots count]; i++)
-    {
-        LRLetterSlot *slot = [self.letterSlots objectAtIndex:i];
-        //If the first slot is empty
-        if ([slot isLetterSlotEmpty] && i == 0) {
-            closestSlot = slot;
-            break;
-        }
-        //If the current slot is full
-        else if (![slot isLetterSlotEmpty]) {
-            lastSlotWasFull = YES;
-            continue;
-        }
-        float nextDiff = ABS(letterBlockPosition.x - slot.position.x);
-        if (nextDiff < currentDiff && lastSlotWasFull) {
-            currentDiff = nextDiff;
-            closestSlot = slot;
-        }
-        lastSlotWasFull = NO;
-        
-    }
-    [closestSlot setCurrentBlock:letterBlock];
 }
 
 - (void) swapLetterAtSlot:(LRLetterSlot*) slotA withLetterAtSlot:(LRLetterSlot*) slotB
