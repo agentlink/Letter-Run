@@ -28,6 +28,7 @@
 - (id) initWithLetter:(NSString*)letter
 {
     if (self = [super initWithLetter:letter]) {
+        self.blockState = BlockState_Falling;
         self.name = NAME_FALLING_ENVELOPE;
         [self setUpPhysics];
     }
@@ -66,7 +67,7 @@
 - (void) update:(NSTimeInterval)currentTime
 {
     //Only check if the block has been flung
-    if (!self.blockState == BlockState_BlockFlung)
+    if (self.blockState != BlockState_BlockFlung)
         return;
 
     //Get the letter's location in the scene
@@ -133,10 +134,8 @@
         //If the block is falling but wasn't flung
         if (self.blockState == BlockState_PlayerIsHolding) {
             [self setUpPhysics];
-            return;
-        }
-        else {
             self.blockState = BlockState_Falling;
+            return;
         }
     }
 }

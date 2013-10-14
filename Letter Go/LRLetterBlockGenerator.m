@@ -20,6 +20,7 @@
 {
     NSString *letter = [[LRLetterGenerator shared] generateLetter];
     LRFallingEnvelope *envelope = [LRFallingEnvelope envelopeWithLetter:letter];
+    envelope.zPosition += 10;
     envelope.position = CGPointMake(0, 200);
     return envelope;
 }
