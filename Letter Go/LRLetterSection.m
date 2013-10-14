@@ -21,9 +21,8 @@
 @property SKSpriteNode *letterSection;
 @property LRSubmitButton *submitButton;
 @property NSMutableArray *letterSlots;
-@property NSTimer *rearrangementTimer;
-@property LRLetterSlot *currentSlot;
 
+@property LRLetterSlot *currentSlot;
 @property LRLetterBlock *touchedBlock;
 
 @end
@@ -115,6 +114,7 @@
 {
     self.currentState = LetterSectionStateRemovingLetter;
     LRLetterBlock *block = [[notification userInfo] objectForKey:KEY_GET_LETTER_BLOCK];
+    NSLog(@"Deleting block with letter: %@", block.letter);
     LRLetterSlot *selectedSlot = nil;
     //Check to see if it's a child of the letter section
     __block BOOL foundNode = NO;
@@ -195,10 +195,7 @@
 }
 
 - (void) finishRearrangement:(NSNotification*)notification {
-    //Cancel the timer
-    [self.rearrangementTimer invalidate];
-    self.rearrangementTimer = nil;
-    
+
     LRLetterSlot *newLocation = [self getPlaceHolderSlot];
     newLocation.currentBlock = [[notification userInfo] objectForKey:@"block"];
     self.currentSlot = nil;
@@ -245,7 +242,8 @@
             bLoc = i;
     }
     NSLog(@"Swapping block %i with block %i", aLoc, bLoc);
-    
+    if (ABS(aLoc - bLoc) > 1)
+        NSLog(@"Warning: swapping with non-contiguous block.");
     LRLetterBlock *blockA = [slotA currentBlock];
     LRLetterBlock *blockB = [slotB currentBlock];
 

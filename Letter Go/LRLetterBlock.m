@@ -125,6 +125,7 @@
             }
             //If the block is in the letter section
             else if (self.blockInLetterSection) {
+                [self releaseBlockForRearrangement];
             }
             self.zPosition += 5;
         }
@@ -137,31 +138,30 @@
     for (UITouch *touch in touches)
     {
         CGPoint location = [touch locationInNode:[self parent]];
+        self.playerMovedTouch = TRUE;
         //If the block is within the letter section
-        if (self.blockInLetterSection && self.blockState != BlockState_Rearranging) {
-            LRLetterSection *letterSection = [[(LRGameScene*)[self scene] gamePlayLayer] letterSection];
-            LRLetterSlot *parentSlot = (LRLetterSlot*)[self parent];
-            CGPoint newPos = [self convertPoint:self.position toNode:letterSection];
-            [parentSlot setEmptyLetterBlock];
-            self.position = newPos;
-            [letterSection addChild:self];
-            self.blockState = BlockState_Rearranging;
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_REARRANGE_START object:self userInfo:[NSDictionary dictionaryWithObject:self forKey:@"block"]];
-
-        }
         if (self.blockInLetterSection ) {
             self.position = CGPointMake(location.x, self.position.y);
         }
-        //If the block is outside the letter section
-            //Has the player moved their touch outside the block?
         else if (!CGRectContainsPoint(self.frame, location))
         {
-            self.playerMovedTouch = TRUE;
             if (self.vertMovementEnabled) {
                 [self flingTowardsLocation:location];
             }
         }
     }
+}
+
+- (void) releaseBlockForRearrangement
+{
+    LRLetterSection *letterSection = [[(LRGameScene*)[self scene] gamePlayLayer] letterSection];
+    LRLetterSlot *parentSlot = (LRLetterSlot*)[self parent];
+    CGPoint newPos = [self convertPoint:self.position toNode:letterSection];
+    [parentSlot setEmptyLetterBlock];
+    self.position = newPos;
+    [letterSection addChild:self];
+    self.blockState = BlockState_Rearranging;
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_REARRANGE_START object:self userInfo:[NSDictionary dictionaryWithObject:self forKey:@"block"]];
 }
 
 - (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
@@ -172,7 +172,7 @@
         if (self.blockState == BlockState_Rearranging) {
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_REARRANGE_FINISH object:self userInfo:[NSDictionary dictionaryWithObject:self forKey:@"block"]];
             self.blockState = BlockState_InLetterSlot;
-            return;
+            //return;
         }
         //If the block is falling but wasn't flung
         if (self.blockState == BlockState_PlayerIsHolding && self.vertMovementEnabled) {
