@@ -23,7 +23,7 @@
 @property NSMutableArray *letterSlots;
 
 @property LRLetterSlot *currentSlot;
-@property LRLetterBlock *touchedBlock;
+@property LRSectionBlock *touchedBlock;
 
 @end
 
@@ -104,7 +104,7 @@
     }
     //If all the letter slots are full
     if (currentLetterSlot) {
-        currentLetterSlot.currentBlock = [LRLetterBlockGenerator createBlockForSlotWithLetter:letter];
+        currentLetterSlot.currentBlock = [LRLetterBlockGenerator createBlockWithLetter:letter];
     }
     [self updateSubmitButton];
     self.currentState = LetterSectionStateNormal;
@@ -113,12 +113,12 @@
 - (void) removeLetterFromSection:(NSNotification*)notification
 {
     self.currentState = LetterSectionStateRemovingLetter;
-    LRLetterBlock *block = [[notification userInfo] objectForKey:KEY_GET_LETTER_BLOCK];
+    LRSectionBlock *block = [[notification userInfo] objectForKey:KEY_GET_LETTER_BLOCK];
     NSLog(@"Deleting block with letter: %@", block.letter);
     LRLetterSlot *selectedSlot = nil;
     //Check to see if it's a child of the letter section
     __block BOOL foundNode = NO;
-    [self enumerateChildNodesWithName:NAME_LETTER_BLOCK usingBlock:^(SKNode *node, BOOL *stop){
+    [self enumerateChildNodesWithName:NAME_SECTION_LETTER_BLOCK usingBlock:^(SKNode *node, BOOL *stop){
         if (node == block) {
             [node removeFromParent];
             foundNode = YES;
@@ -138,7 +138,7 @@
                 slot.currentBlock = [(LRLetterSlot*)[self.letterSlots objectAtIndex:i+1] currentBlock];
             }
             else
-                slot.currentBlock = [LRLetterBlockGenerator createEmptyLetterBlock];
+                slot.currentBlock = [LRLetterBlockGenerator createEmptySectionBlock];
         }
 
     }
@@ -166,7 +166,7 @@
             break;
         [currentWord appendString:[slot.currentBlock letter]];
         if (popOffLetters)
-            slot.currentBlock = [LRLetterBlockGenerator createEmptyLetterBlock];
+            slot.currentBlock = [LRLetterBlockGenerator createEmptySectionBlock];
     }
     return currentWord;
 }
@@ -244,8 +244,8 @@
     NSLog(@"Swapping block %i with block %i", aLoc, bLoc);
     if (ABS(aLoc - bLoc) > 1)
         NSLog(@"Warning: swapping with non-contiguous block.");
-    LRLetterBlock *blockA = [slotA currentBlock];
-    LRLetterBlock *blockB = [slotB currentBlock];
+    LRSectionBlock *blockA = [slotA currentBlock];
+    LRSectionBlock *blockB = [slotB currentBlock];
 
     NSAssert(!([blockA isLetterBlockEmpty] || [blockB isLetterBlockEmpty]), @"ERROR: cannot swap empty blocks");
     [slotA setCurrentBlock:blockB];
@@ -265,7 +265,7 @@
     return retVal;
 }
 
-- (LRLetterSlot*)getClosestSlot:(LRLetterBlock*)letterBlock
+- (LRLetterSlot*)getClosestSlot:(LRSectionBlock*)letterBlock
 {
     CGPoint letterBlockPosition = [letterBlock convertPoint:self.position toNode:self];
     LRLetterSlot *closestSlot;
@@ -289,7 +289,7 @@
 {
     LRLetterSlot *currentSlot = [self.letterSlots objectAtIndex:i];
     LRLetterSlot *nextSlot = (direction == HorDirectionLeft) ? [self.letterSlots objectAtIndex:i-1] : [self.letterSlots objectAtIndex:i+1];
-    LRLetterBlock *currentBlock = [currentSlot currentBlock];
+    LRSectionBlock *currentBlock = [currentSlot currentBlock];
     [nextSlot setCurrentBlock:currentBlock];
 }
 

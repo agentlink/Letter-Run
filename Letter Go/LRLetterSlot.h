@@ -7,13 +7,13 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-#import "LRLetterBlock.h"
+#import "LRSectionBlock.h"
 
 @interface LRLetterSlot : SKSpriteNode
 
-@property (nonatomic) LRLetterBlock *currentBlock;
+@property (nonatomic) LRSectionBlock *currentBlock;
 
-- (id) initWithLetterBlock:(LRLetterBlock*)block;
+- (id) initWithLetterBlock:(LRSectionBlock*)block;
 - (void) setEmptyLetterBlock;
 - (BOOL) isLetterSlotEmpty;
 

@@ -8,7 +8,6 @@
 
 #import <SpriteKit/SpriteKit.h>
 #import "LRScreenSection.h"
-#import "LRLetterBlock.h"
 
 typedef enum  {
     LetterSectionStateNormal,

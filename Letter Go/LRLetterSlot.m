@@ -16,8 +16,8 @@
 {
     if (self = [super init])
     {
-        self.currentBlock = [LRLetterBlockGenerator createEmptyLetterBlock];
-        self.name = NAME_EMPTY_LETTER_SLOT;
+        self.currentBlock = [LRLetterBlockGenerator createEmptySectionBlock];
+        self.name = NAME_LETTER_SLOT;
         self.size = self.currentBlock.size;
         self.color = [UIColor whiteColor];
         [self addChild:self.currentBlock];
@@ -25,7 +25,7 @@
     return self;
 }
 
-- (id) initWithLetterBlock:(LRLetterBlock*)block
+- (id) initWithLetterBlock:(LRSectionBlock*)block
 {
     if (self = [self init])
     {
@@ -39,7 +39,7 @@
     return [self.currentBlock isLetterBlockEmpty];
 }
 
-- (void) setCurrentBlock:(LRLetterBlock *)incomingBlock
+- (void) setCurrentBlock:(LRSectionBlock *)incomingBlock
 {
     //If it's being initialized
     if (!_currentBlock)
@@ -57,12 +57,11 @@
         _currentBlock = incomingBlock;
         [self addChild:_currentBlock];
     }
-    _currentBlock.blockInLetterSection = YES;
     _currentBlock.zPosition = self.zPosition + 10;
 }
 
 - (void) setEmptyLetterBlock
 {
-    self.currentBlock = [LRLetterBlockGenerator createEmptyLetterBlock];
+    self.currentBlock = [LRLetterBlockGenerator createEmptySectionBlock];
 }
 @end

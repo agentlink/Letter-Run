@@ -39,7 +39,7 @@
     [self addChild:self.letterSection];
     
     //TEMPORARY: blocks will be continuously created by the game play layer
-    [self addChild:[LRLetterBlockGenerator createLetterBlock]];
+    [self addChild:[LRLetterBlockGenerator createRandomEnvelope]];
 }
 
 - (void) setUpPhysics
@@ -58,6 +58,6 @@
 
 - (void) dropLetter
 {
-    [self addChild:[LRLetterBlockGenerator createLetterBlock]];
+    [self addChild:[LRLetterBlockGenerator createRandomEnvelope]];
 }
 @end

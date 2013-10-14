@@ -7,17 +7,14 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-#import "LRLetterBlock.h"
-#import "LRLetterSlot.h"
+#import "LRFallingEnvelope.h"
+#import "LRSectionBlock.h"
 
 @interface LRLetterBlockGenerator : SKNode
 
-+ (LRLetterBlock*) createLetterBlock;
-+ (LRLetterBlock*) createEmptyLetterBlock;
-+ (LRLetterBlock*) createPlaceHolderBlock;
-+ (LRLetterBlock*) createBlockForSlotWithLetter:(NSString*)letter;
++ (LRFallingEnvelope*) createRandomEnvelope;
++ (LRSectionBlock*) createEmptySectionBlock;
++ (LRSectionBlock*) createPlaceHolderBlock;
++ (LRSectionBlock*) createBlockWithLetter:(NSString*)letter;
 
-+ (LRLetterSlot*) createSlotWithLetterBlock:(LRLetterBlock*)block;
-+ (LRLetterSlot*) createSlotWithLetter:(NSString*)letter;
-+ (LRLetterSlot*) createSlotWithEmptyLetterBlock;
 @end

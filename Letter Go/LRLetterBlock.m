@@ -15,24 +15,20 @@
 #import "LRLetterSlot.h"
 
 @interface LRLetterBlock ()
-@property BOOL playerMovedTouch;
 @end
 @implementation LRLetterBlock
 
 #pragma mark - Initializers/Set Up
-+ (LRLetterBlock*) letterBlockWithSize:(CGSize)size andLetter:(NSString*)letter
++ (LRLetterBlock*) letterBlockWithLetter:(NSString*)letter;
 {
-    return [[LRLetterBlock alloc] initWithSize:size andLetter:letter];
+    return [[LRLetterBlock alloc] initWithLetter:letter];
 }
 
-- (id) initWithSize:(CGSize)size andLetter:(NSString *)letter;
+- (id) initWithLetter:(NSString *)letter
 {
-    if (self = [super initWithColor:[SKColor blackColor] size:size]) {
-        self.name = NAME_LETTER_BLOCK;
+    if (self = [super initWithColor:[SKColor blackColor] size:CGSizeMake(LETTER_BLOCK_SIZE, LETTER_BLOCK_SIZE)]) {
         self.letter = letter;
-        self.vertMovementEnabled = YES;
         [self createObjectContent];
-        [self setUpPhysics];
         self.userInteractionEnabled = YES;
     }
     return self;
@@ -46,68 +42,9 @@
     [self addChild:letterLabel];
 }
 
-#pragma mark - Physics Functions
-- (void) setUpPhysics
-{
-    self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.size];
-    self.physicsBody.affectedByGravity = YES;
-    self.physicsBody.dynamic = YES;
-    [[LRCollisionManager shared] setBitMasksForSprite:self];
-    [[LRCollisionManager shared] addCollisionDetectionOfSpriteNamed:NAME_BOTTOM_EDGE toSprite:self];
-}
 
-- (void) setUpSwipedPhysics
-{
-    self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.size];
-    self.physicsBody.affectedByGravity = NO;
-    self.physicsBody.dynamic = YES;
-    [[LRCollisionManager shared] setBitMasksForSprite:self];
-    //Make it bounce off the bottom if the section is full
-    if ([[LRGameStateManager shared] isLetterSectionFull])
-        [[LRCollisionManager shared] addCollisionDetectionOfSpriteNamed:NAME_BOTTOM_EDGE toSprite:self];
-    
-}
 
-- (void) removePhysics
-{
-    self.physicsBody = nil;
-}
-
-# pragma mark - Game Loop Checks
-- (void) update:(NSTimeInterval)currentTime
-{
-    CGRect sceneRect = [(LRGameScene*)self.scene window];
-    sceneRect.origin = [self convertPoint:sceneRect.origin fromNode:self.scene];
-    CGRect letterFrame = self.frame;
-    letterFrame.origin = [self convertPoint:self.frame.origin fromNode:self.parent];
-    
-    //If the box is within the letter box section
-    if (CGRectContainsRect([(LRGameScene*)[self scene] gamePlayLayer].letterSection.frame, self.frame))
-    {
-        //Post the notification
-        NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
-        [userInfo setValue:self.letter forKey:KEY_GET_LETTER];
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_ADDED_LETTER object:self userInfo:userInfo];
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_DROP_LETTER object:self];
-        [self removeFromParent];
-    }
-    //If the box is outside the screen and has been flung
-    else if (!CGRectIntersectsRect(sceneRect, letterFrame)  && self.blockState == BlockState_BlockFlung) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_DROP_LETTER object:self];
-        [self removeFromParent];
-    }
-}
-
-- (BOOL) isLetterBlockEmpty
-{
-    return ![[self letter] length];
-}
-
-- (BOOL) isLetterBlockPlaceHolder
-{
-    return ([self.letter isEqualToString:@" "]);
-}
-
+/*
 #pragma mark - Touch Functions
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
@@ -138,7 +75,6 @@
     for (UITouch *touch in touches)
     {
         CGPoint location = [touch locationInNode:[self parent]];
-        self.playerMovedTouch = TRUE;
         //If the block is within the letter section
         if (self.blockInLetterSection ) {
             self.position = CGPointMake(location.x, self.position.y);
@@ -202,6 +138,6 @@
     float speedFactor = 500;
     self.physicsBody.velocity = CGVectorMake(speedFactor * xToYRatio, speedFactor * yToXRatio);
     self.blockState = BlockState_BlockFlung;
-}
+}*/
 
 @end
