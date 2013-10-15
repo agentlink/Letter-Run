@@ -76,6 +76,7 @@
     CGRect letterFrame = self.frame;
     letterFrame.origin = [self convertPoint:self.frame.origin fromNode:self.parent];
     
+    NSMutableDictionary *dropLetterInfo = [NSMutableDictionary dictionaryWithObject:[NSNumber numberWithInt:self.slot] forKey:@"slot"];
     //If the box has been flung to the letter box section
     if (CGRectContainsRect([(LRGameScene*)[self scene] gamePlayLayer].letterSection.frame, self.frame))
     {
@@ -83,13 +84,12 @@
         NSMutableDictionary *addLetterInfo = [NSMutableDictionary dictionaryWithObject:self.letter forKey:KEY_GET_LETTER];
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_ADDED_LETTER object:self userInfo:addLetterInfo];
         
-        NSMutableDictionary *dropLetterInfo = [NSMutableDictionary dictionaryWithObject:[NSNumber numberWithInt:self.slot] forKey:@"slot"];
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_DROP_LETTER object:self userInfo:dropLetterInfo];
         [self removeFromParent];
     }
     //If the box is outside the screen and has been flung
     else if (!CGRectIntersectsRect(sceneRect, letterFrame)) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_DROP_LETTER object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_DROP_LETTER object:self userInfo:dropLetterInfo];
         [self removeFromParent];
     }
 }

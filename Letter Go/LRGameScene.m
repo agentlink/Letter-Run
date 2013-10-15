@@ -38,7 +38,7 @@
 
 - (void) setUpPhysics
 {
-    [self.physicsWorld setGravity: CGVectorMake(0.0, -.25)];
+    [self.physicsWorld setGravity: CGVectorMake(0.0, -.2)];
     [self.physicsWorld setContactDelegate:[LRCollisionManager shared]];
 }
 
