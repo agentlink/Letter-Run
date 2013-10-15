@@ -114,7 +114,6 @@
 {
     self.currentState = LetterSectionStateRemovingLetter;
     LRSectionBlock *block = [[notification userInfo] objectForKey:KEY_GET_LETTER_BLOCK];
-    NSLog(@"Deleting block with letter: %@", block.letter);
     LRLetterSlot *selectedSlot = nil;
     //Check to see if it's a child of the letter section
     __block BOOL foundNode = NO;
@@ -207,7 +206,6 @@
 {
     LRLetterSlot *nearBySlot = [self getClosestSlot:self.touchedBlock];
     if (!self.currentSlot && ![self getPlaceHolderSlot]) {
-        NSLog(@"New place holder slot");
         nearBySlot.currentBlock = [LRLetterBlockGenerator createPlaceHolderBlock];
         self.currentSlot = nearBySlot;
     }
@@ -241,7 +239,6 @@
         else if (tempSlot == slotB)
             bLoc = i;
     }
-    NSLog(@"Swapping block %i with block %i", aLoc, bLoc);
     if (ABS(aLoc - bLoc) > 1)
         NSLog(@"Warning: swapping with non-contiguous block.");
     LRSectionBlock *blockA = [slotA currentBlock];

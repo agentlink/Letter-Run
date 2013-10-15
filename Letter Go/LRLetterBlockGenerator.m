@@ -25,6 +25,14 @@
     return envelope;
 }
 
++ (LRFallingEnvelope*) createRandomEnvelopeAtSlot:(int)slot
+{
+    LRFallingEnvelope *envelope = [self createRandomEnvelope];
+    //Setting the slot also sets the position. For now, slots are 0 - 2
+    envelope.slot = slot;
+    return envelope;
+}
+
 + (LRSectionBlock*) createEmptySectionBlock
 {
     LRSectionBlock *lb = [LRSectionBlock sectionBlockWithLetter:@""];

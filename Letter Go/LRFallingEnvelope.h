@@ -17,6 +17,7 @@ typedef enum {
 } BlockState;
 
 @property BlockState blockState;
+@property (nonatomic) int slot;
 
 + (LRFallingEnvelope*) envelopeWithLetter:(NSString*)letter;
 

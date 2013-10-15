@@ -20,7 +20,7 @@
         //Code here :)
         [self createLayerContent];
         [self setUpPhysics];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dropLetter) name:NOTIFICATION_DROP_LETTER object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dropLetter:) name:NOTIFICATION_DROP_LETTER object:nil];
     }
     return self;
 }
@@ -39,7 +39,7 @@
     [self addChild:self.letterSection];
     
     //TEMPORARY: blocks will be continuously created by the game play layer
-    [self addChild:[LRLetterBlockGenerator createRandomEnvelope]];
+    [self dropInitialLetters];
 }
 
 - (void) setUpPhysics
@@ -56,8 +56,16 @@
     [self addChild:blockEdgeSprite];
 }
 
-- (void) dropLetter
+- (void) dropInitialLetters
 {
-    [self addChild:[LRLetterBlockGenerator createRandomEnvelope]];
+    for (int i = 0; i < 3; i++)
+        [self addChild:[LRLetterBlockGenerator createRandomEnvelopeAtSlot:i]];
+
+}
+
+- (void) dropLetter:(NSNotification*) notification
+{
+    int slot = [[[notification userInfo] objectForKey:@"slot"] intValue];
+    [self addChild:[LRLetterBlockGenerator createRandomEnvelopeAtSlot:slot]];
 }
 @end

@@ -13,6 +13,7 @@
 @interface LRLetterBlockGenerator : SKNode
 
 + (LRFallingEnvelope*) createRandomEnvelope;
++ (LRFallingEnvelope*) createRandomEnvelopeAtSlot:(int)slot;
 + (LRSectionBlock*) createEmptySectionBlock;
 + (LRSectionBlock*) createPlaceHolderBlock;
 + (LRSectionBlock*) createBlockWithLetter:(NSString*)letter;

@@ -80,10 +80,11 @@
     if (CGRectContainsRect([(LRGameScene*)[self scene] gamePlayLayer].letterSection.frame, self.frame))
     {
         //Post the notification
-        NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
-        [userInfo setValue:self.letter forKey:KEY_GET_LETTER];
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_ADDED_LETTER object:self userInfo:userInfo];
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_DROP_LETTER object:self];
+        NSMutableDictionary *addLetterInfo = [NSMutableDictionary dictionaryWithObject:self.letter forKey:KEY_GET_LETTER];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_ADDED_LETTER object:self userInfo:addLetterInfo];
+        
+        NSMutableDictionary *dropLetterInfo = [NSMutableDictionary dictionaryWithObject:[NSNumber numberWithInt:self.slot] forKey:@"slot"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_DROP_LETTER object:self userInfo:dropLetterInfo];
         [self removeFromParent];
     }
     //If the box is outside the screen and has been flung
@@ -152,6 +153,12 @@
     float speedFactor = 500;
     self.physicsBody.velocity = CGVectorMake(speedFactor * xToYRatio, speedFactor * yToXRatio);
     self.blockState = BlockState_BlockFlung;
+}
+
+- (void) setSlot:(int)newSlot
+{
+    _slot = newSlot;
+    self.position = CGPointMake(newSlot * 100 - 100, self.position.y);
 }
 
 @end
