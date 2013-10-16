@@ -8,7 +8,7 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-@interface LRScoreManager : SKSpriteNode
+@interface LRScoreManager : SKNode
 
 + (LRScoreManager*) shared;
 - (void) submitWord:(NSString*)word;

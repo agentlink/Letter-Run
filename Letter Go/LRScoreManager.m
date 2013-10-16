@@ -8,6 +8,7 @@
 
 #import "LRScoreManager.h"
 #import "LRConstants.h"
+#import "LRGameScene.h"
 
 @interface LRScoreManager ()
 @property NSMutableArray *submittedWords;

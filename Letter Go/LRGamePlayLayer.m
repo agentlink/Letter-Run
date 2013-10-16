@@ -28,10 +28,18 @@
 - (void) createLayerContent
 {
     //Create the three sections
-    CGFloat healthHeight = 3;
+    CGFloat healthHeight = 7;
     CGFloat letterHeight = 70;
     self.healthSection = [[LRHealthSection alloc] initWithSize:CGSizeMake(self.size.width, healthHeight)];
-    self.healthSection.position = CGPointMake(self.position.x - self.size.width/2, self.size.height/2 - self.healthSection.size.height/2);
+    self.healthSection.position = CGPointMake(0, self.size.height/2 - self.healthSection.size.height/2);
+    self.healthSection.zPosition += 15;
+    
+    
+    SKSpriteNode *tempHealth = [SKSpriteNode spriteNodeWithColor:[UIColor greenColor] size:self.healthSection.size];
+    tempHealth.alpha = .5;
+    tempHealth.position = self.healthSection.position;
+    [self addChild:tempHealth];
+
     [self addChild:self.healthSection];
 
     self.letterSection = [[LRLetterSection alloc] initWithSize:CGSizeMake(self.size.width, letterHeight)];

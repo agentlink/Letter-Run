@@ -13,8 +13,12 @@
 #import "LRSubmitButton.h"
 #import "LRScoreManager.h"
 #import "LRDictionaryChecker.h"
+#import "LRGameScene.h"
 
 #define LETTER_MINIMUM_COUNT        3
+
+//UICollectionView
+//868-Hack
 
 @interface LRLetterSection ()
 
@@ -151,7 +155,9 @@
 - (void) submitWord
 {
     self.currentState = LetterSectionStateSubmittingWord;
-    [[LRScoreManager shared] submitWord:[self getCurrentWord:YES]];
+    NSString *currentWord = [self getCurrentWord:YES];
+    [[LRScoreManager shared] submitWord:currentWord];
+    [[[(LRGameScene*)[self scene] gamePlayLayer] healthSection] submitWord:currentWord];
     [self updateSubmitButton];
     self.currentState = LetterSectionStateNormal;
 }
