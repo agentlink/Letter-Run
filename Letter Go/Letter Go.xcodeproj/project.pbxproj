@@ -11,6 +11,7 @@
 		0007FB39180B340600E55B0D /* Background_Sky.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0007FB37180B340600E55B0D /* Background_Sky.jpg */; };
 		0007FB3C180C79B600E55B0D /* LRFallingEnvelope.m in Sources */ = {isa = PBXBuildFile; fileRef = 0007FB3B180C79B600E55B0D /* LRFallingEnvelope.m */; };
 		0007FB3F180C7A1A00E55B0D /* LRSectionBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 0007FB3E180C7A1A00E55B0D /* LRSectionBlock.m */; };
+		003C2670180F46C6003729D4 /* organizedDict.txt in Resources */ = {isa = PBXBuildFile; fileRef = 003C266F180F46C6003729D4 /* organizedDict.txt */; };
 		003E577E180E0D5D00B37B68 /* LRDifficultyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 003E577D180E0D5D00B37B68 /* LRDifficultyManager.m */; };
 		0049695117F8A12B00176F2D /* LRLetterBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049695017F8A12B00176F2D /* LRLetterBlock.m */; };
 		0049695517F8A75B00176F2D /* LRLetterBlockGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049695417F8A75B00176F2D /* LRLetterBlockGenerator.m */; };
@@ -21,7 +22,6 @@
 		008428F318009F6300908E5D /* LRLetterGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 008428F218009F6300908E5D /* LRLetterGenerator.m */; };
 		008428F61801EABB00908E5D /* LRSubmitButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 008428F51801EABB00908E5D /* LRSubmitButton.m */; };
 		008428F91801F46C00908E5D /* LRScoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 008428F81801F46C00908E5D /* LRScoreManager.m */; };
-		008428FB180348E700908E5D /* scrabbleDictionary1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 008428FA180348E700908E5D /* scrabbleDictionary1.txt */; };
 		009CC29E180349E700C0423D /* LRDictionaryChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 009CC29D180349E700C0423D /* LRDictionaryChecker.m */; };
 		00CDF13717F474EC003065F6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CDF13617F474EC003065F6 /* Foundation.framework */; };
 		00CDF13917F474EC003065F6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CDF13817F474EC003065F6 /* CoreGraphics.framework */; };
@@ -65,6 +65,7 @@
 		0007FB3B180C79B600E55B0D /* LRFallingEnvelope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRFallingEnvelope.m; sourceTree = "<group>"; };
 		0007FB3D180C7A1A00E55B0D /* LRSectionBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRSectionBlock.h; sourceTree = "<group>"; };
 		0007FB3E180C7A1A00E55B0D /* LRSectionBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRSectionBlock.m; sourceTree = "<group>"; };
+		003C266F180F46C6003729D4 /* organizedDict.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = organizedDict.txt; path = ../Dictionary/organizedDict.txt; sourceTree = "<group>"; };
 		003E577C180E0D5D00B37B68 /* LRDifficultyManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRDifficultyManager.h; sourceTree = "<group>"; };
 		003E577D180E0D5D00B37B68 /* LRDifficultyManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRDifficultyManager.m; sourceTree = "<group>"; };
 		0049694F17F8A12B00176F2D /* LRLetterBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRLetterBlock.h; sourceTree = "<group>"; };
@@ -85,7 +86,6 @@
 		008428F51801EABB00908E5D /* LRSubmitButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRSubmitButton.m; sourceTree = "<group>"; };
 		008428F71801F46C00908E5D /* LRScoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRScoreManager.h; sourceTree = "<group>"; };
 		008428F81801F46C00908E5D /* LRScoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRScoreManager.m; sourceTree = "<group>"; };
-		008428FA180348E700908E5D /* scrabbleDictionary1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = scrabbleDictionary1.txt; sourceTree = "<group>"; };
 		009CC29C180349E700C0423D /* LRDictionaryChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRDictionaryChecker.h; sourceTree = "<group>"; };
 		009CC29D180349E700C0423D /* LRDictionaryChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRDictionaryChecker.m; sourceTree = "<group>"; };
 		00CDF13317F474EC003065F6 /* Letter Go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Letter Go.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -237,7 +237,7 @@
 			isa = PBXGroup;
 			children = (
 				008428EF1800997800908E5D /* LetterProbabilities.plist */,
-				008428FA180348E700908E5D /* scrabbleDictionary1.txt */,
+				003C266F180F46C6003729D4 /* organizedDict.txt */,
 			);
 			name = "Property Lists";
 			sourceTree = "<group>";
@@ -441,10 +441,10 @@
 			files = (
 				0007FB38180B340600E55B0D /* Background_Hills.jpg in Resources */,
 				008428F01800997800908E5D /* LetterProbabilities.plist in Resources */,
-				008428FB180348E700908E5D /* scrabbleDictionary1.txt in Resources */,
 				00CDF14317F474EC003065F6 /* InfoPlist.strings in Resources */,
 				00CDF15617F474EC003065F6 /* Images.xcassets in Resources */,
 				0007FB39180B340600E55B0D /* Background_Sky.jpg in Resources */,
+				003C2670180F46C6003729D4 /* organizedDict.txt in Resources */,
 				00CDF14C17F474EC003065F6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

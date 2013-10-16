@@ -8,7 +8,7 @@
 
 #import "LRDictionaryChecker.h"
 
-#define DICTIONARY_FILE_NAME        @"scrabbleDictionary1"
+#define DICTIONARY_FILE_NAME        @"organizedDict"
 
 @interface LRDictionaryChecker ()
 @property NSSet *dictionary;
@@ -35,7 +35,12 @@ static LRDictionaryChecker *_shared = nil;
 - (id) init
 {
     if (self = [super init]) {
-        [self setUpDictionary];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [self setUpDictionary];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSLog(@"Finished loading dictionary");
+            });
+        });
     }
     return self;
 }
@@ -49,6 +54,7 @@ static LRDictionaryChecker *_shared = nil;
     NSString *fileContents = [[NSString alloc] initWithContentsOfFile:path
                                                           usedEncoding:&encoding
                                                                 error:&error];
+    
     self.dictionary = [NSSet setWithArray:[fileContents componentsSeparatedByString:@"\n"]];
 }
 
