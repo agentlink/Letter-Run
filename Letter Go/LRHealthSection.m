@@ -55,7 +55,11 @@
 - (void) submitWord:(NSString*) word;
 {
     float letterFactor = 15;
-    self.healthBar.position = CGPointMake(self.healthBar.position.x + ([word length] * letterFactor), self.healthBar.position.y);
+    float newXValue = self.healthBar.position.x + ([word length] * letterFactor);
+    //The bar cannot move farther left than the left most edge
+    newXValue *= (newXValue > 0) ? 0 : 1;
+    self.healthBar.position = CGPointMake(newXValue, self.healthBar.position.y);
+                       
 }
 
 - (void) restartHealthBar
