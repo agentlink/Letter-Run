@@ -22,5 +22,6 @@ typedef enum  {
 @property LetterSectionState currentState;
 
 - (int) numLettersInSection;
+- (void) clearLetterSection;
 
 @end

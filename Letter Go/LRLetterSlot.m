@@ -17,7 +17,7 @@
     if (self = [super init])
     {
         self.currentBlock = [LRLetterBlockGenerator createEmptySectionBlock];
-        self.name = NAME_LETTER_SLOT;
+        self.name = NAME_SPRITE_LETTER_SLOT;
         self.size = self.currentBlock.size;
         self.color = [UIColor whiteColor];
         [self addChild:self.currentBlock];

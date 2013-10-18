@@ -52,8 +52,15 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(submitWord) name:NOTIFICATION_SUBMIT_WORD object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rearrangementScheduler:) name:NOTIFICATION_REARRANGE_START object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishRearrangement:) name:NOTIFICATION_REARRANGE_FINISH object:nil];
+}
 
+# pragma mark - Game State Functions
 
+- (void) clearLetterSection
+{
+    for (LRLetterSlot *slot in self.letterSlots) {
+        slot.currentBlock = [LRLetterBlockGenerator createEmptySectionBlock];
+    }
 }
 
 - (void) createSectionContent
@@ -121,7 +128,7 @@
     LRLetterSlot *selectedSlot = nil;
     //Check to see if it's a child of the letter section
     __block BOOL foundNode = NO;
-    [self enumerateChildNodesWithName:NAME_SECTION_LETTER_BLOCK usingBlock:^(SKNode *node, BOOL *stop){
+    [self enumerateChildNodesWithName:NAME_SPRITE_SECTION_LETTER_BLOCK usingBlock:^(SKNode *node, BOOL *stop){
         if (node == block) {
             [node removeFromParent];
             foundNode = YES;

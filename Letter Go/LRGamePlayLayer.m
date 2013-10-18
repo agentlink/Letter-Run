@@ -10,6 +10,7 @@
 #import "LRLetterBlockGenerator.h"
 #import "LRConstants.h"
 #import "LRCollisionManager.h"
+#import "LRGameStateManager.h"
 
 @implementation LRGamePlayLayer
 
@@ -18,6 +19,7 @@
     if (self = [super init])
     {
         //Code here :)
+        self.name = NAME_LAYER_GAME_PLAY;
         [self createLayerContent];
         [self setUpPhysics];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dropLetter:) name:NOTIFICATION_DROP_LETTER object:nil];
@@ -35,7 +37,7 @@
     self.healthSection.zPosition += 15;
     
     
-    SKSpriteNode *tempHealth = [SKSpriteNode spriteNodeWithColor:[UIColor greenColor] size:self.healthSection.size];
+    SKSpriteNode *tempHealth = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:self.healthSection.size];
     tempHealth.alpha = .5;
     tempHealth.position = self.healthSection.position;
     [self addChild:tempHealth];
@@ -58,7 +60,7 @@
     CGPoint rightScreen = CGPointMake (self.size.width/2, edgeHeight);
     SKPhysicsBody *blockEdge = [SKPhysicsBody bodyWithEdgeFromPoint:leftScreen toPoint:rightScreen];
     SKSpriteNode *blockEdgeSprite = [[SKSpriteNode alloc] init];
-    blockEdgeSprite.name = NAME_BOTTOM_EDGE;
+    blockEdgeSprite.name = NAME_SPRITE_BOTTOM_EDGE;
     blockEdgeSprite.physicsBody = blockEdge;
     [[LRCollisionManager shared] setBitMasksForSprite:blockEdgeSprite];
     [self addChild:blockEdgeSprite];
@@ -78,6 +80,9 @@
 
 - (void) dropLetter:(NSNotification*) notification
 {
+    //This will be moved to the difficulty manager, which will be doing the dropping
+    if ([[LRGameStateManager shared] isGameOver])
+        return;
     int slot = [[[notification userInfo] objectForKey:@"slot"] intValue];
     [self addChild:[LRLetterBlockGenerator createRandomEnvelopeAtSlot:slot]];
 }

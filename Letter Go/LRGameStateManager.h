@@ -15,5 +15,6 @@
 + (LRGameStateManager*) shared;
 - (BOOL) isLetterSectionFull;
 
+- (BOOL) isGameOver;
 
 @end

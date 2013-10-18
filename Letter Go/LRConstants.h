@@ -9,20 +9,26 @@
 #define IS_IPHONE_5                 ([[UIScreen mainScreen] bounds].size.height == 568)
 #define IS_RETINA                   ([[UIScreen mainScreen] scale] == 2.0f)
 
-#define NAME_FALLING_ENVELOPE               @"Falling letter block"
-#define NAME_SECTION_LETTER_BLOCK           @"Letter block in letter section"
-#define NAME_BOTTOM_EDGE                    @"Bottom edge where blocks land"
-#define NAME_LETTER_SLOT                    @"Letter slot"
+#define NAME_SPRITE_FALLING_ENVELOPE                @"NAME_SPRITE_FALLING_ENVELOPE"
+#define NAME_SPRITE_SECTION_LETTER_BLOCK            @"NAME_SPRITE_SECTION_LETTER_BLOCK"
+#define NAME_SPRITE_BOTTOM_EDGE                     @"NAME_SPRITE_BOTTOM_EDGE"
+#define NAME_SPRITE_LETTER_SLOT                     @"NAME_SPRITE_LETTER_SLOT"
 
-#define NOTIFICATION_ADDED_LETTER           @"Added letter to slot"
-#define NOTIFICATION_DROP_LETTER            @"Drop a new letter"
-#define NOTIFICATION_DELETE_LETTER          @"Deleted a letter"
-#define NOTIFICATION_SUBMIT_WORD            @"Submit a word"
-#define NOTIFICATION_REARRANGE_START        @"Started rearranging letters"
-#define NOTIFICATION_REARRANGE_FINISH       @"Finished rearranging letters"
+#define NAME_LAYER_GAME_PLAY                        @"NAME_LAYER_GAME_PLAY"
+#define NAME_LAYER_BACKGROUND                       @"NAME_LAYER_BACKGROUND"
 
-#define KEY_GET_LETTER                      @"Get letter"
-#define KEY_GET_LETTER_BLOCK                @"Get the letter block"
+#define NOTIFICATION_ADDED_LETTER                   @"Added letter to slot"
+#define NOTIFICATION_DROP_LETTER                    @"Drop a new letter"
+#define NOTIFICATION_DELETE_LETTER                  @"Deleted a letter"
+#define NOTIFICATION_SUBMIT_WORD                    @"Submit a word"
+#define NOTIFICATION_REARRANGE_START                @"Started rearranging letters"
+#define NOTIFICATION_REARRANGE_FINISH               @"Finished rearranging letters"
+
+#define GAME_STATE_GAME_OVER                        @"Game over"
+#define GAME_STATE_NEW_GAME                         @"New game"
+
+#define KEY_GET_LETTER                              @"Get letter"
+#define KEY_GET_LETTER_BLOCK                        @"Get the letter block"
 
 #define LETTER_CAPACITY             7
 #define LETTER_BLOCK_SIZE           48

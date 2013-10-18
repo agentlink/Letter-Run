@@ -23,6 +23,7 @@ enum {
 {
     if (self = [super init])
     {
+        self.name = NAME_LAYER_BACKGROUND;
         [self createLayerContents];
     }
     return self;

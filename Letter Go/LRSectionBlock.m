@@ -25,7 +25,7 @@
 - (id) initWithLetter:(NSString *)letter
 {
     if (self = [super initWithLetter:letter]) {
-        self.name = NAME_SECTION_LETTER_BLOCK;
+        self.name = NAME_SPRITE_SECTION_LETTER_BLOCK;
     }
     return self;
 }

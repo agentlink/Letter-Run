@@ -29,7 +29,7 @@
 {
     if (self = [super initWithLetter:letter]) {
         self.blockState = BlockState_Falling;
-        self.name = NAME_FALLING_ENVELOPE;
+        self.name = NAME_SPRITE_FALLING_ENVELOPE;
         [self setUpPhysics];
     }
     return self;
@@ -43,7 +43,7 @@
     self.physicsBody.affectedByGravity = YES;
     self.physicsBody.dynamic = YES;
     [[LRCollisionManager shared] setBitMasksForSprite:self];
-    [[LRCollisionManager shared] addCollisionDetectionOfSpriteNamed:NAME_BOTTOM_EDGE toSprite:self];
+    [[LRCollisionManager shared] addCollisionDetectionOfSpriteNamed:NAME_SPRITE_BOTTOM_EDGE toSprite:self];
 }
 
 - (void) setUpSwipedPhysics
@@ -54,7 +54,7 @@
     [[LRCollisionManager shared] setBitMasksForSprite:self];
     //Make it bounce off the bottom if the section is full
     if ([[LRGameStateManager shared] isLetterSectionFull])
-        [[LRCollisionManager shared] addCollisionDetectionOfSpriteNamed:NAME_BOTTOM_EDGE toSprite:self];
+        [[LRCollisionManager shared] addCollisionDetectionOfSpriteNamed:NAME_SPRITE_BOTTOM_EDGE toSprite:self];
 }
 
 - (void) removePhysics

@@ -22,6 +22,8 @@
     self.healthBar = [SKSpriteNode spriteNodeWithColor:[SKColor redColor] size:self.size];
     [self addChild:self.healthBar];
     self.initialTime = -1;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restartHealthBar) name:GAME_STATE_NEW_GAME object:nil];
 }
 
 - (void) update:(NSTimeInterval)currentTime
@@ -45,7 +47,7 @@
     
     if (barFrame.origin.x < self.frame.origin.x - (2 * barFrame.size.width))
     {
-        NSLog(@"Game over");
+        [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_GAME_OVER object:nil];
         self.gameOver = TRUE;
     }
 }
@@ -56,4 +58,10 @@
     self.healthBar.position = CGPointMake(self.healthBar.position.x + ([word length] * letterFactor), self.healthBar.position.y);
 }
 
+- (void) restartHealthBar
+{
+    self.healthBar.position = CGPointMake(0, self.healthBar.position.y);
+    self.initialTime = -1;
+    self.gameOver = FALSE;
+}
 @end

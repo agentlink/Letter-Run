@@ -14,4 +14,7 @@
 
 @property LRHealthSection *healthSection;
 @property LRLetterSection *letterSection;
+
+- (void) dropInitialLetters;
+
 @end
