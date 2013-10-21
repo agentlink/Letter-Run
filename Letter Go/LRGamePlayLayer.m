@@ -84,6 +84,9 @@
     if ([[LRGameStateManager shared] isGameOver])
         return;
     int slot = [[[notification userInfo] objectForKey:@"slot"] intValue];
-    [self addChild:[LRLetterBlockGenerator createRandomEnvelopeAtSlot:slot]];
+    LRFallingEnvelope *envelope = [LRLetterBlockGenerator createRandomEnvelopeAtSlot:slot];
+    [envelope removePhysics];
+    [envelope dropEnvelopeWithSwing];
+    [self addChild:envelope];
 }
 @end

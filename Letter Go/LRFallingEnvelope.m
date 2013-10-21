@@ -62,6 +62,33 @@
     self.physicsBody = nil;
 }
 
+# pragma mark - Movement Function
+- (void) dropEnvelopeWithSwing
+{
+    //Create the Bezier curves
+    //http://tinyurl.com/beziercurveref
+    
+    UIBezierPath *bezierPath = [UIBezierPath bezierPath];
+    
+    [bezierPath moveToPoint:self.position];
+    CGFloat xDiff = -70;
+    CGFloat yDiff = -120;
+    CGPoint currentPosition = self.position;
+    CGPoint nextPosition = CGPointMake(-70, -120);
+    NSLog(@"Position: (%f, %f),", self.position.x, self.position.y);
+    for (int i = 0; i < 3; i++)
+    {
+        [bezierPath addCurveToPoint: nextPosition controlPoint1: currentPosition controlPoint2: CGPointMake(self.position.x, nextPosition.y - 30)];
+        currentPosition = nextPosition;
+        nextPosition = CGPointMake(nextPosition.x * -1, nextPosition.y + yDiff);
+        nextPosition.x += (nextPosition.x > 0) ?  -1 * xDiff : xDiff;
+        
+        
+    }
+    SKAction *followPath = [SKAction followPath:[bezierPath CGPath] duration:7];
+    [self runAction:followPath];
+}
+
 # pragma mark - Game Loop Checks
 
 - (void) update:(NSTimeInterval)currentTime
