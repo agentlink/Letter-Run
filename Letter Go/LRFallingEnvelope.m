@@ -40,7 +40,7 @@
 - (void) setUpPhysics
 {
     self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.size];
-    self.physicsBody.affectedByGravity = YES;
+    self.physicsBody.affectedByGravity = NO;
     self.physicsBody.dynamic = YES;
     [[LRCollisionManager shared] setBitMasksForSprite:self];
     [[LRCollisionManager shared] addCollisionDetectionOfSpriteNamed:NAME_SPRITE_BOTTOM_EDGE toSprite:self];
@@ -70,22 +70,29 @@
     
     UIBezierPath *bezierPath = [UIBezierPath bezierPath];
     
+    //Get the height that the envelope has to fall
+    LRGamePlayLayer *gpl = [(LRGameScene*)[self scene] gamePlayLayer];
+    CGFloat letterSectionHeight = [gpl letterSection].frame.size.height;
+    CGFloat gameSceneHeight = gpl.frame.size.height;
+    CGFloat dropHeight = gameSceneHeight - letterSectionHeight;
+    
+    
     [bezierPath moveToPoint:self.position];
     CGFloat xDiff = -70;
-    CGFloat yDiff = -120;
+    CGFloat yDiff = 0 - dropHeight/3;
     CGPoint currentPosition = self.position;
-    CGPoint nextPosition = CGPointMake(-70, -120);
+    CGPoint nextPosition = CGPointMake(xDiff, yDiff);
     NSLog(@"Position: (%f, %f),", self.position.x, self.position.y);
     for (int i = 0; i < 3; i++)
     {
-        [bezierPath addCurveToPoint: nextPosition controlPoint1: currentPosition controlPoint2: CGPointMake(self.position.x, nextPosition.y - 30)];
+        [bezierPath addCurveToPoint: nextPosition controlPoint1: currentPosition controlPoint2: CGPointMake(self.position.x, nextPosition.y)];
         currentPosition = nextPosition;
         nextPosition = CGPointMake(nextPosition.x * -1, nextPosition.y + yDiff);
-        nextPosition.x += (nextPosition.x > 0) ?  -1 * xDiff : xDiff;
-        
-        
+        //Set the last position to land at the original x point
+        if (i == 1) nextPosition.x /= 2;
     }
-    SKAction *followPath = [SKAction followPath:[bezierPath CGPath] duration:7];
+    SKAction *followPath = [SKAction followPath:[bezierPath CGPath] asOffset:YES orientToPath:NO duration:7];
+    followPath.timingMode = SKActionTimingEaseInEaseOut;
     [self runAction:followPath];
 }
 

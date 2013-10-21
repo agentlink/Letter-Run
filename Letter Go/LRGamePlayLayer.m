@@ -71,7 +71,9 @@
     for (int i = 0; i < 3; i++) {
         SKAction *delay = [SKAction waitForDuration:(i * .3)];
         SKAction *drop = [SKAction runBlock:^{
-            [self addChild:[LRLetterBlockGenerator createRandomEnvelopeAtSlot:i]];
+            LRFallingEnvelope *envelope = [LRLetterBlockGenerator createRandomEnvelopeAtSlot:i];
+            [self addChild:envelope];
+            [envelope dropEnvelopeWithSwing];
         }];
         [self runAction:[SKAction sequence:[NSArray arrayWithObjects:delay, drop, nil]]];
     }
@@ -85,8 +87,7 @@
         return;
     int slot = [[[notification userInfo] objectForKey:@"slot"] intValue];
     LRFallingEnvelope *envelope = [LRLetterBlockGenerator createRandomEnvelopeAtSlot:slot];
-    [envelope removePhysics];
-    [envelope dropEnvelopeWithSwing];
     [self addChild:envelope];
+    [envelope dropEnvelopeWithSwing];
 }
 @end
