@@ -68,7 +68,7 @@
     //Create the Bezier curves
     //http://tinyurl.com/beziercurveref
     
-    UIBezierPath *bezierPath = [UIBezierPath bezierPath];
+    //UIBezierPath *bezierPath = [UIBezierPath bezierPath];
     
     //Get the height that the envelope has to fall
     LRGamePlayLayer *gpl = [(LRGameScene*)[self scene] gamePlayLayer];
@@ -76,16 +76,17 @@
     CGFloat gameSceneHeight = gpl.frame.size.height;
     CGFloat dropHeight = gameSceneHeight - letterSectionHeight;
     
-    
-    [bezierPath moveToPoint:self.position];
     CGFloat xDiff = -70;
     CGFloat yDiff = 0 - dropHeight/3;
-    CGPoint currentPosition = self.position;
     CGPoint nextPosition = CGPointMake(xDiff, yDiff);
-    NSLog(@"Position: (%f, %f),", self.position.x, self.position.y);
+    /*
+     CGPoint currentPosition = self.position;
+     UIBezierPath *bezierPath = [UIBezierPath bezierPath];
+    [bezierPath moveToPoint:self.position];
+
     for (int i = 0; i < 3; i++)
     {
-        [bezierPath addCurveToPoint: nextPosition controlPoint1: currentPosition controlPoint2: CGPointMake(self.position.x, nextPosition.y)];
+        [bezierPath addCurveToPoint: nextPosition controlPoint1: currentPosition controlPoint2: CGPointMake(currentPosition.x, nextPosition.y)];
         currentPosition = nextPosition;
         nextPosition = CGPointMake(nextPosition.x * -1, nextPosition.y + yDiff);
         //Set the last position to land at the original x point
@@ -93,7 +94,26 @@
     }
     SKAction *followPath = [SKAction followPath:[bezierPath CGPath] asOffset:YES orientToPath:NO duration:7];
     followPath.timingMode = SKActionTimingEaseInEaseOut;
-    [self runAction:followPath];
+    [self runAction:followPath];*/
+
+    NSMutableArray *curveArray = [NSMutableArray array];
+    for (int i = 0; i < 3; i++)
+    {
+        UIBezierPath *bezierPath = [UIBezierPath bezierPath];
+        [bezierPath moveToPoint:CGPointMake(0, 0)];
+        [bezierPath addCurveToPoint: nextPosition controlPoint1: CGPointMake(0, 0) controlPoint2: CGPointMake(0, nextPosition.y)];
+        nextPosition.x *= -1;
+        //Set the last position to land at the original x point
+        if (i == 1) nextPosition.x /= 2;
+        SKAction *followPath = [SKAction followPath:[bezierPath CGPath] asOffset:YES orientToPath:NO duration:2];
+        
+        if (i == 0) followPath.timingMode = SKActionTimingEaseOut;
+        else if (i == 1) followPath.timingMode = SKActionTimingEaseInEaseOut;
+        else followPath.timingMode = SKActionTimingEaseIn;
+        
+        [curveArray addObject:followPath];
+    }
+    [self runAction:[SKAction sequence:curveArray]];
 }
 
 # pragma mark - Game Loop Checks
