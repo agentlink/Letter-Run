@@ -68,8 +68,6 @@
     //Create the Bezier curves
     //http://tinyurl.com/beziercurveref
     
-    //UIBezierPath *bezierPath = [UIBezierPath bezierPath];
-    
     //Get the height that the envelope has to fall
     LRGamePlayLayer *gpl = [(LRGameScene*)[self scene] gamePlayLayer];
     CGFloat letterSectionHeight = [gpl letterSection].frame.size.height;
@@ -79,22 +77,6 @@
     CGFloat xDiff = -70;
     CGFloat yDiff = 0 - dropHeight/3;
     CGPoint nextPosition = CGPointMake(xDiff, yDiff);
-    /*
-     CGPoint currentPosition = self.position;
-     UIBezierPath *bezierPath = [UIBezierPath bezierPath];
-    [bezierPath moveToPoint:self.position];
-
-    for (int i = 0; i < 3; i++)
-    {
-        [bezierPath addCurveToPoint: nextPosition controlPoint1: currentPosition controlPoint2: CGPointMake(currentPosition.x, nextPosition.y)];
-        currentPosition = nextPosition;
-        nextPosition = CGPointMake(nextPosition.x * -1, nextPosition.y + yDiff);
-        //Set the last position to land at the original x point
-        if (i == 1) nextPosition.x /= 2;
-    }
-    SKAction *followPath = [SKAction followPath:[bezierPath CGPath] asOffset:YES orientToPath:NO duration:7];
-    followPath.timingMode = SKActionTimingEaseInEaseOut;
-    [self runAction:followPath];*/
 
     NSMutableArray *curveArray = [NSMutableArray array];
     for (int i = 0; i < 3; i++)
@@ -103,17 +85,18 @@
         [bezierPath moveToPoint:CGPointMake(0, 0)];
         [bezierPath addCurveToPoint: nextPosition controlPoint1: CGPointMake(0, 0) controlPoint2: CGPointMake(0, nextPosition.y)];
         nextPosition.x *= -1;
+        
         //Set the last position to land at the original x point
         if (i == 1) nextPosition.x /= 2;
-        SKAction *followPath = [SKAction followPath:[bezierPath CGPath] asOffset:YES orientToPath:NO duration:2];
         
+        SKAction *followPath = [SKAction followPath:[bezierPath CGPath] asOffset:YES orientToPath:NO duration:2];
         if (i == 0) followPath.timingMode = SKActionTimingEaseOut;
         else if (i == 1) followPath.timingMode = SKActionTimingEaseInEaseOut;
         else followPath.timingMode = SKActionTimingEaseIn;
         
         [curveArray addObject:followPath];
     }
-    [self runAction:[SKAction sequence:curveArray]];
+    [self runAction:[SKAction sequence:curveArray] withKey:ACTION_DROP_ENVELOPE];
 }
 
 # pragma mark - Game Loop Checks
@@ -161,7 +144,7 @@
             self.blockState = BlockState_PlayerIsHolding;
             
             self.originalPoint = self.position;
-            self.position = location;
+            [self removeActionForKey:ACTION_DROP_ENVELOPE];
             self.zPosition += 5;
         
             [self removePhysics];
@@ -188,9 +171,9 @@
         self.zPosition -= 5;
         //If the block is falling but wasn't flung
         if (self.blockState == BlockState_PlayerIsHolding) {
-            [self setUpPhysics];
-            self.blockState = BlockState_Falling;
-            return;
+            //Move off screen (TODO: replace with removal)
+            self.position = CGPointMake(10000, 10000);
+            self.blockState = BlockState_BlockFlung;
         }
     }
 }
@@ -212,7 +195,7 @@
 - (void) setSlot:(int)newSlot
 {
     _slot = newSlot;
-    self.position = CGPointMake(newSlot * 100 - 100, self.position.y);
+    self.position = CGPointMake(newSlot * 125 - 100, self.position.y);
 }
 
 @end

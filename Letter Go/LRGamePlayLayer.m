@@ -69,7 +69,7 @@
 - (void) dropInitialLetters
 {
     for (int i = 0; i < 3; i++) {
-        SKAction *delay = [SKAction waitForDuration:(i * .3)];
+        SKAction *delay = [SKAction waitForDuration:(i * .6)];
         SKAction *drop = [SKAction runBlock:^{
             LRFallingEnvelope *envelope = [LRLetterBlockGenerator createRandomEnvelopeAtSlot:i];
             [self addChild:envelope];
