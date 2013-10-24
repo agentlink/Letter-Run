@@ -60,6 +60,7 @@ static LRGameStateManager *_shared = nil;
 {
     LRGamePlayLayer *gpl = [(LRGameScene*)[self scene] gamePlayLayer];
     [self clearBoard];
+    self.gameIsOver = FALSE;
     [gpl dropInitialLetters];
 }
 

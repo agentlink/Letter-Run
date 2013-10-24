@@ -187,7 +187,7 @@
     float xToYRatio = xDiff / (ABS(xDiff) + ABS(yDiff));
     float yToXRatio = yDiff / (ABS(xDiff) + ABS(yDiff));
     
-    float speedFactor = 500;
+    float speedFactor = 600;
     self.physicsBody.velocity = CGVectorMake(speedFactor * xToYRatio, speedFactor * yToXRatio);
     self.blockState = BlockState_BlockFlung;
 }
