@@ -11,5 +11,4 @@
 @interface LRDifficultyManager : SKNode
 
 
-
 @end

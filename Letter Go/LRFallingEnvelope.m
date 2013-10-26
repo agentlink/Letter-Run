@@ -70,9 +70,14 @@
     
     //Get the height that the envelope has to fall
     LRGamePlayLayer *gpl = [(LRGameScene*)[self scene] gamePlayLayer];
-    CGFloat letterSectionHeight = [gpl letterSection].frame.size.height;
     CGFloat gameSceneHeight = gpl.frame.size.height;
-    CGFloat dropHeight = gameSceneHeight - letterSectionHeight;
+    
+    __block CGFloat bottomEdgeHeight = 0;
+    [gpl enumerateChildNodesWithName:NAME_SPRITE_BOTTOM_EDGE usingBlock:^(SKNode *node, BOOL *stop) {
+        bottomEdgeHeight =  ABS((0 - gameSceneHeight)/2 - node.position.y);
+    }];
+    
+    CGFloat dropHeight = gameSceneHeight - bottomEdgeHeight;
     
     CGFloat xDiff = -70;
     CGFloat yDiff = 0 - dropHeight/3;

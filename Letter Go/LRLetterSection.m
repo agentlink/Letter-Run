@@ -66,7 +66,9 @@
 - (void) createSectionContent
 {
     //The color will be replaced by a health bar sprite
-    self.letterSection = [SKSpriteNode spriteNodeWithColor:[SKColor grayColor] size:self.size];
+    //self.letterSection = [SKSpriteNode spriteNodeWithColor:[SKColor grayColor] size:self.size];
+    self.letterSection = [SKSpriteNode spriteNodeWithImageNamed:@"Background_Grass.png"];
+    [self.letterSection setScale:.5];
     [self addChild:self.letterSection];
     self.letterSlots = [[NSMutableArray alloc] initWithCapacity:LETTER_CAPACITY];
     
@@ -74,8 +76,9 @@
     //Create the letter slots
     for (int i = 0; i < LETTER_CAPACITY; i++)
     {
+        float yOffSet = -7;
         LRLetterSlot *slot = [[LRLetterSlot alloc] init];
-        slot.position = CGPointMake([self xPosFromSlotIndex:i], 0);
+        slot.position = CGPointMake([self xPosFromSlotIndex:i], yOffSet);
         [self.letterSlots addObject:slot];
         [self addChild:slot];
     }

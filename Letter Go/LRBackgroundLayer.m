@@ -13,8 +13,10 @@
 @end
 
 enum {
-    BackgroundLayer_Sky = 0,
-    BackgroundLayer_Hills
+    BackgroundIndex_Sky = 0,
+    BackgroundIndex_Mountains,
+    BackgroundIndex_Hills,
+    BackgroundIndex_Grass
 };
 
 @implementation LRBackgroundLayer
@@ -32,10 +34,16 @@ enum {
 - (void) createLayerContents
 {
     self.backgroundLayers = [[NSMutableArray alloc] init];
-    [self.backgroundLayers setObject:[SKSpriteNode spriteNodeWithImageNamed:@"Background_Sky.jpg"] atIndexedSubscript:BackgroundLayer_Sky];
-    //[self.backgroundLayers setObject:[SKSpriteNode spriteNodeWithImageNamed:@"Background_Hills.jpg"] atIndexedSubscript:BackgroundLayer_Hills];
+    [self.backgroundLayers setObject:[SKSpriteNode spriteNodeWithImageNamed:@"Background_Sky.png"] atIndexedSubscript:BackgroundIndex_Sky];
+    [self.backgroundLayers setObject:[SKSpriteNode spriteNodeWithImageNamed:@"Background_Mountains.png"] atIndexedSubscript:BackgroundIndex_Mountains];
+    [self.backgroundLayers setObject:[SKSpriteNode spriteNodeWithImageNamed:@"Background_Hills.png"] atIndexedSubscript:BackgroundIndex_Hills];
     
-    for (SKSpriteNode *layer in self.backgroundLayers) {
+    for (int i = 0; i < [self.backgroundLayers count]; i++)
+    {
+        SKSpriteNode *layer = [self.backgroundLayers objectAtIndex:i];
+        [layer setScale:.5];
+        if (i == BackgroundIndex_Hills)
+            layer.position = CGPointMake(layer.position.x, layer.size.height/2 - self.size.height/2);
         [self addChild:layer];
     }
 }

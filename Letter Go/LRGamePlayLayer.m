@@ -55,13 +55,18 @@
 - (void) setUpPhysics
 {
     //Add a line so that the block doesn't just fall forever
-    float edgeHeight = self.letterSection.position.y + self.letterSection.size.height/2;
+    float edgeBuffer = -13;
+    
+    float edgeHeight = self.letterSection.position.y + self.letterSection.size.height/2 + edgeBuffer;
     CGPoint leftScreen = CGPointMake(0 - self.size.width /2, edgeHeight);
     CGPoint rightScreen = CGPointMake (self.size.width/2, edgeHeight);
+    
     SKPhysicsBody *blockEdge = [SKPhysicsBody bodyWithEdgeFromPoint:leftScreen toPoint:rightScreen];
     SKSpriteNode *blockEdgeSprite = [[SKSpriteNode alloc] init];
     blockEdgeSprite.name = NAME_SPRITE_BOTTOM_EDGE;
     blockEdgeSprite.physicsBody = blockEdge;
+    blockEdgeSprite.position = CGPointMake(0, edgeHeight);
+    
     [[LRCollisionManager shared] setBitMasksForSprite:blockEdgeSprite];
     [self addChild:blockEdgeSprite];
 }
