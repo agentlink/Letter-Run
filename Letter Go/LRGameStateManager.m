@@ -99,7 +99,7 @@ static LRGameStateManager *_shared = nil;
     SKAction *showLabel = [SKAction runBlock:^{
         [gpl addChild:gameOverLabel];
     }];
-    SKAction *delay = [SKAction waitForDuration:2.5];
+    SKAction *delay = [SKAction waitForDuration:3.5];
     SKAction *restartLevel = [SKAction runBlock:^{
         [gpl removeChildrenInArray:[NSArray arrayWithObject:gameOverLabel]];
         [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_NEW_GAME object:self];

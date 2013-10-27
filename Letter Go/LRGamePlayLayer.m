@@ -30,9 +30,7 @@
 - (void) createLayerContent
 {
     //Create the three sections
-    CGFloat healthHeight = 7;
-    CGFloat letterHeight = 70;
-    self.healthSection = [[LRHealthSection alloc] initWithSize:CGSizeMake(self.size.width, healthHeight)];
+    self.healthSection = [[LRHealthSection alloc] initWithSize:CGSizeMake(self.size.width, SIZE_HEIGHT_HEALTH_SECTION)];
     self.healthSection.position = CGPointMake(0, self.size.height/2 - self.healthSection.size.height/2);
     self.healthSection.zPosition += 15;
     
@@ -44,7 +42,7 @@
 
     [self addChild:self.healthSection];
 
-    self.letterSection = [[LRLetterSection alloc] initWithSize:CGSizeMake(self.size.width, letterHeight)];
+    self.letterSection = [[LRLetterSection alloc] initWithSize:CGSizeMake(self.size.width, SIZE_HEIGHT_LETTER_SECTION)];
     self.letterSection.position = CGPointMake(self.position.x - self.size.width/2, 0 - self.size.height/2 + self.letterSection.size.height/2);
     [self addChild:self.letterSection];
     
@@ -55,7 +53,7 @@
 - (void) setUpPhysics
 {
     //Add a line so that the block doesn't just fall forever
-    float edgeBuffer = -13;
+    float edgeBuffer = 0;
     
     float edgeHeight = self.letterSection.position.y + self.letterSection.size.height/2 + edgeBuffer;
     CGPoint leftScreen = CGPointMake(0 - self.size.width /2, edgeHeight);

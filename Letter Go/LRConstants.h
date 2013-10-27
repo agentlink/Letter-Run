@@ -32,6 +32,9 @@
 #define KEY_GET_LETTER                              @"Get letter"
 #define KEY_GET_LETTER_BLOCK                        @"Get the letter block"
 
+#define SIZE_HEIGHT_LETTER_SECTION                  (178 - 51)/2
+#define SIZE_HEIGHT_HEALTH_SECTION                  7
+
 #define LETTER_CAPACITY             7
 #define LETTER_BLOCK_SIZE           48
 
