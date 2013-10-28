@@ -150,7 +150,7 @@
             
             self.originalPoint = self.position;
             [self removeActionForKey:ACTION_DROP_ENVELOPE];
-            self.zPosition += 5;
+            self.zPosition += 20;
         
             [self removePhysics];
         }
@@ -173,7 +173,6 @@
 {
     for (UITouch *touch in touches)
     {
-        self.zPosition -= 5;
         //If the block is falling but wasn't flung
         if (self.blockState == BlockState_PlayerIsHolding) {
             //Move off screen (TODO: replace with removal)
@@ -192,7 +191,8 @@
     float xToYRatio = xDiff / (ABS(xDiff) + ABS(yDiff));
     float yToXRatio = yDiff / (ABS(xDiff) + ABS(yDiff));
     
-    float speedFactor = 600;
+    //TODO Should equal 600 for iPhone
+    float speedFactor = 500;
     self.physicsBody.velocity = CGVectorMake(speedFactor * xToYRatio, speedFactor * yToXRatio);
     self.blockState = BlockState_BlockFlung;
 }

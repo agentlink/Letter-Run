@@ -20,6 +20,11 @@
 //UICollectionView
 //868-Hack
 
+typedef enum {
+    HorDirectionLeft,
+    HorDirectionRight
+} HorDirection;
+
 @interface LRLetterSection ()
 
 @property SKSpriteNode *letterSection;
@@ -39,7 +44,6 @@
 {
     if (self = [super initWithSize:size])
     {
-        self.currentState = LetterSectionStateNormal;
         [self setUpNotifications];
     }
     return self;
@@ -103,7 +107,6 @@
 - (void) addLetterToSection:(NSNotification*)notification
 {
     //Get the letter from the notificaiton
-    self.currentState = LetterSectionStateAddingLetter;
     NSString *letter = [[notification userInfo] objectForKey:KEY_GET_LETTER];
     LRLetterSlot *currentLetterSlot = nil;
     int letterCount = 0;
@@ -120,12 +123,10 @@
         currentLetterSlot.currentBlock = [LRLetterBlockGenerator createBlockWithLetter:letter];
     }
     [self updateSubmitButton];
-    self.currentState = LetterSectionStateNormal;
 }
 
 - (void) removeLetterFromSection:(NSNotification*)notification
 {
-    self.currentState = LetterSectionStateRemovingLetter;
     LRSectionBlock *block = [[notification userInfo] objectForKey:KEY_GET_LETTER_BLOCK];
     LRLetterSlot *selectedSlot = nil;
     //Check to see if it's a child of the letter section
@@ -156,19 +157,16 @@
     }
     NSAssert(selectedSlot, @"Error: slot does not exist within array");
     [self updateSubmitButton];
-    self.currentState = LetterSectionStateNormal;
 }
 
 #pragma mark - Submit Word Functions
 
 - (void) submitWord
 {
-    self.currentState = LetterSectionStateSubmittingWord;
     NSString *currentWord = [self getCurrentWord:YES];
     [[LRScoreManager shared] submitWord:currentWord];
     [[[(LRGameScene*)[self scene] gamePlayLayer] healthSection] submitWord:currentWord];
     [self updateSubmitButton];
-    self.currentState = LetterSectionStateNormal;
 }
 
 - (NSString*)getCurrentWord:(BOOL)popOffLetters

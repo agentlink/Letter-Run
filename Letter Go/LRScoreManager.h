@@ -10,7 +10,12 @@
 
 @interface LRScoreManager : SKNode
 
+
 + (LRScoreManager*) shared;
+
 - (void) submitWord:(NSString*)word;
++ (int) scoreForWord:(NSString*)word;
+
+- (int) score;
 
 @end

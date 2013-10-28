@@ -7,6 +7,8 @@
 //
 
 #import "LRHealthSection.h"
+#import "LRScoreManager.h"
+#import "LRDifficultyManager.h"
 
 @interface LRHealthSection ()
 @property SKSpriteNode *healthBar;
@@ -54,8 +56,10 @@
 
 - (void) submitWord:(NSString*) word;
 {
-    float letterFactor = 15;
-    float newXValue = self.healthBar.position.x + ([word length] * letterFactor);
+    float wordScore = [LRScoreManager scoreForWord:word];
+    float healthBarToScoreRatio = [[LRDifficultyManager shared] healthBarToScoreRatio];
+
+    float newXValue = self.healthBar.position.x + (wordScore * healthBarToScoreRatio);
     //The bar cannot move farther left than the left most edge
     newXValue *= (newXValue > 0) ? 0 : 1;
     self.healthBar.position = CGPointMake(newXValue, self.healthBar.position.y);

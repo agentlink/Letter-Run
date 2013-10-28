@@ -9,17 +9,7 @@
 #import <SpriteKit/SpriteKit.h>
 #import "LRScreenSection.h"
 
-typedef enum  {
-    LetterSectionStateNormal,
-    LetterSectionStateSubmittingWord,
-    LetterSectionStateAddingLetter,
-    LetterSectionStateRemovingLetter,
-    LetterSectionStateRearranging
-} LetterSectionState;
-
 @interface LRLetterSection : LRScreenSection
-
-@property LetterSectionState currentState;
 
 - (int) numLettersInSection;
 - (void) clearLetterSection;
