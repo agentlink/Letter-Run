@@ -14,6 +14,8 @@
 @interface LRScoreManager ()
 @property NSMutableArray *submittedWords;
 @property (nonatomic) int score;
+@property int scoreToNextLevel;
+@property int lastScoreToNextLevel;
 @end
 
 @implementation LRScoreManager
@@ -25,9 +27,7 @@ static LRScoreManager *_shared = nil;
     //This @synchronized line is for multithreading
     @synchronized (self)
     {
-		if (!_shared)
-        {
-            
+		if (!_shared) {
 			_shared = [[LRScoreManager alloc] init];
 		}
 	}
@@ -38,8 +38,7 @@ static LRScoreManager *_shared = nil;
 {
     if (self = [super init])
     {
-        self.score = 0;
-        self.submittedWords = [NSMutableArray array];
+        [self newGame];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newGame) name:GAME_STATE_NEW_GAME object:nil];
     }
     return self;
@@ -51,17 +50,43 @@ static LRScoreManager *_shared = nil;
     self.score += [LRScoreManager scoreForWord:word];
     [self.submittedWords addObject:word];
     NSLog(@"Score for word %@: %i\nTotalSCore: %i", word, [LRScoreManager scoreForWord:word], self.score);
+    
+    //If the player has made it to the next level
+    if (self.score >= self.scoreToNextLevel) {
+
+        [[LRDifficultyManager shared] increaseLevel];
+        self.lastScoreToNextLevel = self.scoreToNextLevel;
+        IncreaseStyle levelScoreIncrease = [[LRDifficultyManager shared] levelScoreIncreaseStyle];
+
+        //Increase the score needed for the next level based on the increase style
+        switch (levelScoreIncrease) {
+            case IncreaseStyle_None:
+                self.scoreToNextLevel += [[LRDifficultyManager shared] initialNextLevelScore];
+                break;
+            case IncreaseStyle_Linear:
+                self.scoreToNextLevel += self.lastScoreToNextLevel + [[LRDifficultyManager shared] levelScoreIncreaseFactor];
+                break;
+            case IncreaseStyle_Exponential:
+                self.scoreToNextLevel += self.lastScoreToNextLevel * [[LRDifficultyManager shared] levelScoreIncreaseFactor];
+                break;
+        }
+        NSLog(@"Increased level!\nCurrent score: %i\nScore for next level:%i", self.score, self.scoreToNextLevel);
+    }
 }
+
 
 #pragma mark - Getters + Setters
 + (int) scoreForWord:(NSString*)word
 {
     float scoreFactor = [[LRDifficultyManager shared] totalScoreFactor];
     float baseScore = [word length] * [[LRDifficultyManager shared] scorePerLetter];
-    if ([[LRDifficultyManager shared] scoreStyle] == ScoreStyle_Exponential)
+    
+    if ([[LRDifficultyManager shared] scoreIncreaseStyle] == IncreaseStyle_Exponential)
         return pow(baseScore, scoreFactor);
-    else
-        return baseScore * scoreFactor;
+    else if ([[LRDifficultyManager shared] scoreIncreaseStyle] == IncreaseStyle_None)
+        NSLog(@"Warning: score increase style should be linear or exponential");
+    
+    return baseScore * scoreFactor;
 }
 
 - (int) score {
@@ -70,6 +95,8 @@ static LRScoreManager *_shared = nil;
 
 - (void) newGame {
     self.score = 0;
+    self.scoreToNextLevel  = [[LRDifficultyManager shared] initialNextLevelScore];
+    self.submittedWords = [NSMutableArray array];
 }
 
 @end
