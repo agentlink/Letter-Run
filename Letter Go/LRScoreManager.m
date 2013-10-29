@@ -49,7 +49,7 @@ static LRScoreManager *_shared = nil;
     //Add to the score
     self.score += [LRScoreManager scoreForWord:word];
     [self.submittedWords addObject:word];
-    NSLog(@"Score for word %@: %i\nTotalSCore: %i", word, [LRScoreManager scoreForWord:word], self.score);
+    //NSLog(@"Score for word %@: %i\nTotalSCore: %i", word, [LRScoreManager scoreForWord:word], self.score);
     
     //If the player has made it to the next level
     if (self.score >= self.scoreToNextLevel) {
@@ -70,7 +70,7 @@ static LRScoreManager *_shared = nil;
                 self.scoreToNextLevel += self.lastScoreToNextLevel * [[LRDifficultyManager shared] levelScoreIncreaseFactor];
                 break;
         }
-        NSLog(@"Increased level!\nCurrent score: %i\nScore for next level:%i", self.score, self.scoreToNextLevel);
+        //NSLog(@"Increased level!\nCurrent score: %i\nScore for next level:%i", self.score, self.scoreToNextLevel);
     }
 }
 

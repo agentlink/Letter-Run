@@ -8,6 +8,7 @@
 
 #import "LRBackgroundLayer.h"
 #import "LRParallaxNode.h"
+#import "LRCloudLayer.h"
 
 @interface LRBackgroundLayer ()
 @property NSMutableArray *backgroundLayers;
@@ -35,7 +36,8 @@ enum {
 - (void) createLayerContents
 {
     self.backgroundLayers = [[NSMutableArray alloc] init];
-    [self.backgroundLayers setObject:[LRParallaxNode nodeWithImageNamed:@"Background_Sky.png"] atIndexedSubscript:BackgroundIndex_Sky];
+    [self.backgroundLayers setObject:[[LRCloudLayer alloc] init] atIndexedSubscript:BackgroundIndex_Sky];
+//    [self.backgroundLayers setObject:[LRParallaxNode nodeWithImageNamed:@"Background_Sky.png"] atIndexedSubscript:BackgroundIndex_Sky];
     [self.backgroundLayers setObject:[LRParallaxNode nodeWithImageNamed:@"Background_Mountains.png"] atIndexedSubscript:BackgroundIndex_Mountains];
     [self.backgroundLayers setObject:[LRParallaxNode nodeWithImageNamed:@"Background_Hills.png"] atIndexedSubscript:BackgroundIndex_Hills];
     [self.backgroundLayers setObject:[LRParallaxNode nodeWithImageNamed:@"Background_Grass.png"] atIndexedSubscript:BackgroundIndex_Grass];

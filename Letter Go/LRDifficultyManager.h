@@ -44,4 +44,6 @@ typedef enum  {
 */
 @property (nonatomic) float levelScoreIncreaseFactor;
 
+
+@property (nonatomic) BOOL healthFallsOverTime;
 @end

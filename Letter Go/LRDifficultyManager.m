@@ -42,6 +42,8 @@ static LRDifficultyManager *_shared = nil;
         self.levelScoreIncreaseStyle = IncreaseStyle_Linear;
         self.levelScoreIncreaseFactor = 50;
         self.initialNextLevelScore = 150;
+        
+        self.healthFallsOverTime = YES;
 
     }
     return self;

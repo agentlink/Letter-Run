@@ -13,7 +13,9 @@
 		000BC14F181C6B4600BEC563 /* Background_Mountains.png in Resources */ = {isa = PBXBuildFile; fileRef = 000BC14B181C6B4600BEC563 /* Background_Mountains.png */; };
 		000BC150181C6B4600BEC563 /* Background_Hills.png in Resources */ = {isa = PBXBuildFile; fileRef = 000BC14C181C6B4600BEC563 /* Background_Hills.png */; };
 		000BC154181C705D00BEC563 /* LRParallaxNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 000BC153181C705D00BEC563 /* LRParallaxNode.m */; };
-		000BC156181C785200BEC563 /* Background_Grass.png in Resources */ = {isa = PBXBuildFile; fileRef = 000BC155181C785200BEC563 /* Background_Grass.png */; };
+		000BC1591820351900BEC563 /* Background_Cloud.png in Resources */ = {isa = PBXBuildFile; fileRef = 000BC1571820351800BEC563 /* Background_Cloud.png */; };
+		000BC15A1820351900BEC563 /* Background_Grass.png in Resources */ = {isa = PBXBuildFile; fileRef = 000BC1581820351800BEC563 /* Background_Grass.png */; };
+		000BC15D1820356500BEC563 /* LRCloudLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 000BC15C1820356500BEC563 /* LRCloudLayer.m */; };
 		003C2670180F46C6003729D4 /* organizedDict.txt in Resources */ = {isa = PBXBuildFile; fileRef = 003C266F180F46C6003729D4 /* organizedDict.txt */; };
 		003E577E180E0D5D00B37B68 /* LRDifficultyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 003E577D180E0D5D00B37B68 /* LRDifficultyManager.m */; };
 		0049695117F8A12B00176F2D /* LRLetterBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049695017F8A12B00176F2D /* LRLetterBlock.m */; };
@@ -71,7 +73,10 @@
 		000BC14C181C6B4600BEC563 /* Background_Hills.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background_Hills.png; sourceTree = "<group>"; };
 		000BC152181C705D00BEC563 /* LRParallaxNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRParallaxNode.h; sourceTree = "<group>"; };
 		000BC153181C705D00BEC563 /* LRParallaxNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRParallaxNode.m; sourceTree = "<group>"; };
-		000BC155181C785200BEC563 /* Background_Grass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background_Grass.png; sourceTree = "<group>"; };
+		000BC1571820351800BEC563 /* Background_Cloud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background_Cloud.png; sourceTree = "<group>"; };
+		000BC1581820351800BEC563 /* Background_Grass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background_Grass.png; sourceTree = "<group>"; };
+		000BC15B1820356500BEC563 /* LRCloudLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRCloudLayer.h; sourceTree = "<group>"; };
+		000BC15C1820356500BEC563 /* LRCloudLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRCloudLayer.m; sourceTree = "<group>"; };
 		003C266F180F46C6003729D4 /* organizedDict.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = organizedDict.txt; path = ../Dictionary/organizedDict.txt; sourceTree = "<group>"; };
 		003E577C180E0D5D00B37B68 /* LRDifficultyManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRDifficultyManager.h; sourceTree = "<group>"; };
 		003E577D180E0D5D00B37B68 /* LRDifficultyManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRDifficultyManager.m; sourceTree = "<group>"; };
@@ -169,7 +174,8 @@
 		0007FB31180B2FBB00E55B0D /* Background */ = {
 			isa = PBXGroup;
 			children = (
-				000BC155181C785200BEC563 /* Background_Grass.png */,
+				000BC1571820351800BEC563 /* Background_Cloud.png */,
+				000BC1581820351800BEC563 /* Background_Grass.png */,
 				000BC149181C6B4600BEC563 /* Background_Sky.png */,
 				000BC14B181C6B4600BEC563 /* Background_Mountains.png */,
 				000BC14C181C6B4600BEC563 /* Background_Hills.png */,
@@ -184,6 +190,8 @@
 				00CDF17E17F4799B003065F6 /* LRBackgroundLayer.h */,
 				000BC152181C705D00BEC563 /* LRParallaxNode.h */,
 				000BC153181C705D00BEC563 /* LRParallaxNode.m */,
+				000BC15B1820356500BEC563 /* LRCloudLayer.h */,
+				000BC15C1820356500BEC563 /* LRCloudLayer.m */,
 			);
 			name = "Background Layer";
 			sourceTree = "<group>";
@@ -461,12 +469,13 @@
 				000BC14F181C6B4600BEC563 /* Background_Mountains.png in Resources */,
 				008428F01800997800908E5D /* LetterProbabilities.plist in Resources */,
 				000BC14D181C6B4600BEC563 /* Background_Sky.png in Resources */,
+				000BC15A1820351900BEC563 /* Background_Grass.png in Resources */,
 				000BC150181C6B4600BEC563 /* Background_Hills.png in Resources */,
 				00CDF14317F474EC003065F6 /* InfoPlist.strings in Resources */,
+				000BC1591820351900BEC563 /* Background_Cloud.png in Resources */,
 				00CDF15617F474EC003065F6 /* Images.xcassets in Resources */,
 				003C2670180F46C6003729D4 /* organizedDict.txt in Resources */,
 				00CDF14C17F474EC003065F6 /* Main.storyboard in Resources */,
-				000BC156181C785200BEC563 /* Background_Grass.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -501,6 +510,7 @@
 				00CDF18217F48310003065F6 /* LRGamePlayLayer.m in Sources */,
 				00CDF18917F4840F003065F6 /* LRHealthSection.m in Sources */,
 				00CDF18C17F4899B003065F6 /* LRLetterSection.m in Sources */,
+				000BC15D1820356500BEC563 /* LRCloudLayer.m in Sources */,
 				0007FB3C180C79B600E55B0D /* LRFallingEnvelope.m in Sources */,
 				00CDF17917F478D7003065F6 /* LRLayer.m in Sources */,
 				00CDF17517F478A1003065F6 /* LRGameScene.m in Sources */,
