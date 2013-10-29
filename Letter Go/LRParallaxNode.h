@@ -12,4 +12,6 @@
 
 + (LRParallaxNode*) nodeWithImageNamed:(NSString*)imageName;
 
+@property CGFloat relativeSpeed;
+
 @end

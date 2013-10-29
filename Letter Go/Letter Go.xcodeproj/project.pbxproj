@@ -16,6 +16,8 @@
 		000BC1591820351900BEC563 /* Background_Cloud.png in Resources */ = {isa = PBXBuildFile; fileRef = 000BC1571820351800BEC563 /* Background_Cloud.png */; };
 		000BC15A1820351900BEC563 /* Background_Grass.png in Resources */ = {isa = PBXBuildFile; fileRef = 000BC1581820351800BEC563 /* Background_Grass.png */; };
 		000BC15D1820356500BEC563 /* LRCloudLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 000BC15C1820356500BEC563 /* LRCloudLayer.m */; };
+		000BC16018203F2A00BEC563 /* LRGrassLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 000BC15F18203F2A00BEC563 /* LRGrassLayer.m */; };
+		000BC163182044DA00BEC563 /* LRParallaxManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 000BC162182044DA00BEC563 /* LRParallaxManager.m */; };
 		003C2670180F46C6003729D4 /* organizedDict.txt in Resources */ = {isa = PBXBuildFile; fileRef = 003C266F180F46C6003729D4 /* organizedDict.txt */; };
 		003E577E180E0D5D00B37B68 /* LRDifficultyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 003E577D180E0D5D00B37B68 /* LRDifficultyManager.m */; };
 		0049695117F8A12B00176F2D /* LRLetterBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049695017F8A12B00176F2D /* LRLetterBlock.m */; };
@@ -77,6 +79,10 @@
 		000BC1581820351800BEC563 /* Background_Grass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background_Grass.png; sourceTree = "<group>"; };
 		000BC15B1820356500BEC563 /* LRCloudLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRCloudLayer.h; sourceTree = "<group>"; };
 		000BC15C1820356500BEC563 /* LRCloudLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRCloudLayer.m; sourceTree = "<group>"; };
+		000BC15E18203F2A00BEC563 /* LRGrassLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRGrassLayer.h; sourceTree = "<group>"; };
+		000BC15F18203F2A00BEC563 /* LRGrassLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRGrassLayer.m; sourceTree = "<group>"; };
+		000BC161182044DA00BEC563 /* LRParallaxManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRParallaxManager.h; sourceTree = "<group>"; };
+		000BC162182044DA00BEC563 /* LRParallaxManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRParallaxManager.m; sourceTree = "<group>"; };
 		003C266F180F46C6003729D4 /* organizedDict.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = organizedDict.txt; path = ../Dictionary/organizedDict.txt; sourceTree = "<group>"; };
 		003E577C180E0D5D00B37B68 /* LRDifficultyManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRDifficultyManager.h; sourceTree = "<group>"; };
 		003E577D180E0D5D00B37B68 /* LRDifficultyManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRDifficultyManager.m; sourceTree = "<group>"; };
@@ -188,12 +194,24 @@
 			children = (
 				00CDF17D17F4799B003065F6 /* LRBackgroundLayer.m */,
 				00CDF17E17F4799B003065F6 /* LRBackgroundLayer.h */,
+				000BC161182044DA00BEC563 /* LRParallaxManager.h */,
+				000BC162182044DA00BEC563 /* LRParallaxManager.m */,
+				000BC164182044EB00BEC563 /* Parallax Nodes */,
+			);
+			name = "Background Layer";
+			sourceTree = "<group>";
+		};
+		000BC164182044EB00BEC563 /* Parallax Nodes */ = {
+			isa = PBXGroup;
+			children = (
 				000BC152181C705D00BEC563 /* LRParallaxNode.h */,
 				000BC153181C705D00BEC563 /* LRParallaxNode.m */,
 				000BC15B1820356500BEC563 /* LRCloudLayer.h */,
 				000BC15C1820356500BEC563 /* LRCloudLayer.m */,
+				000BC15E18203F2A00BEC563 /* LRGrassLayer.h */,
+				000BC15F18203F2A00BEC563 /* LRGrassLayer.m */,
 			);
-			name = "Background Layer";
+			name = "Parallax Nodes";
 			sourceTree = "<group>";
 		};
 		0049694E17F8A10700176F2D /* Game Screen Objects */ = {
@@ -498,6 +516,7 @@
 				00CDF14917F474EC003065F6 /* LRAppDelegate.m in Sources */,
 				009CC29E180349E700C0423D /* LRDictionaryChecker.m in Sources */,
 				00CDF14517F474EC003065F6 /* main.m in Sources */,
+				000BC16018203F2A00BEC563 /* LRGrassLayer.m in Sources */,
 				000BC154181C705D00BEC563 /* LRParallaxNode.m in Sources */,
 				0049696517FA0CB400176F2D /* LRObject.m in Sources */,
 				00CDF17F17F4799B003065F6 /* LRBackgroundLayer.m in Sources */,
@@ -515,6 +534,7 @@
 				00CDF17917F478D7003065F6 /* LRLayer.m in Sources */,
 				00CDF17517F478A1003065F6 /* LRGameScene.m in Sources */,
 				0049695117F8A12B00176F2D /* LRLetterBlock.m in Sources */,
+				000BC163182044DA00BEC563 /* LRParallaxManager.m in Sources */,
 				0007FB3F180C7A1A00E55B0D /* LRSectionBlock.m in Sources */,
 				00CDF14F17F474EC003065F6 /* LRViewController.m in Sources */,
 				003E577E180E0D5D00B37B68 /* LRDifficultyManager.m in Sources */,

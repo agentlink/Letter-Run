@@ -9,8 +9,11 @@
 #import "LRBackgroundLayer.h"
 #import "LRParallaxNode.h"
 #import "LRCloudLayer.h"
+#import "LRGrassLayer.h"
+#import "LRParallaxManager.h"
 
 @interface LRBackgroundLayer ()
+@property LRParallaxManager *parallaxManager;
 @property NSMutableArray *backgroundLayers;
 @end
 
@@ -35,16 +38,24 @@ enum {
 
 - (void) createLayerContents
 {
-    self.backgroundLayers = [[NSMutableArray alloc] init];
-    [self.backgroundLayers setObject:[[LRCloudLayer alloc] init] atIndexedSubscript:BackgroundIndex_Sky];
-//    [self.backgroundLayers setObject:[LRParallaxNode nodeWithImageNamed:@"Background_Sky.png"] atIndexedSubscript:BackgroundIndex_Sky];
-    [self.backgroundLayers setObject:[LRParallaxNode nodeWithImageNamed:@"Background_Mountains.png"] atIndexedSubscript:BackgroundIndex_Mountains];
-    [self.backgroundLayers setObject:[LRParallaxNode nodeWithImageNamed:@"Background_Hills.png"] atIndexedSubscript:BackgroundIndex_Hills];
-    [self.backgroundLayers setObject:[LRParallaxNode nodeWithImageNamed:@"Background_Grass.png"] atIndexedSubscript:BackgroundIndex_Grass];
+    self.parallaxManager = [[LRParallaxManager alloc] init];
+    [self addChild:self.parallaxManager];
+    [self.parallaxManager addParallaxNode:[[LRCloudLayer alloc] init]
+                                  toIndex:BackgroundIndex_Sky
+                        withRelativeSpeed:1];
+    [self.parallaxManager addParallaxNode:[LRParallaxNode nodeWithImageNamed:@"Background_Mountains.png"]
+                                  toIndex:BackgroundIndex_Mountains
+                        withRelativeSpeed:1];
+    [self.parallaxManager addParallaxNode:[LRParallaxNode nodeWithImageNamed:@"Background_Hills.png"]
+                                  toIndex:BackgroundIndex_Hills
+                        withRelativeSpeed:1];
+    [self.parallaxManager addParallaxNode:[[LRGrassLayer alloc] init]
+                                  toIndex:BackgroundIndex_Grass
+                        withRelativeSpeed:1];    
     
-    for (int i = 0; i < [self.backgroundLayers count]; i++)
+    for (int i = 0; i < [self.parallaxManager count]; i++)
     {
-        SKSpriteNode *layer = [self.backgroundLayers objectAtIndex:i];
+        LRParallaxNode *layer = [self.parallaxManager objectAtIndex:i];
         [layer setScale:.5];
         if (i == BackgroundIndex_Hills)
             layer.position = CGPointMake(layer.position.x, layer.size.height/2 - self.size.height/2);
