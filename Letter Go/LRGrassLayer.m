@@ -27,6 +27,7 @@
 
 - (void) addGrassSprites
 {
+    self.grassSpriteArray = [NSMutableArray array];
     SKSpriteNode *tempGrassBlock = [SKSpriteNode spriteNodeWithImageNamed:@"Background_Grass.png"];
     int numGrassBlocks = self.size.width / tempGrassBlock.size.width + 1;
     CGFloat xPos = 0 - self.size.width/2 + tempGrassBlock.size.width/2;
@@ -43,6 +44,28 @@
 - (SKSpriteNode *)repeatingSprite
 {
     return [SKSpriteNode spriteNodeWithImageNamed:@"Background_Grass.png"];
+}
+
+- (void) moveNodeBy:(CGFloat)distance
+{
+    BOOL swap = FALSE;
+    for (SKSpriteNode *sprite in self.grassSpriteArray) {
+        sprite.position = CGPointMake(sprite.position.x + distance, sprite.position.y);
+        //If the sprite is off screen, move it to the back
+        if (sprite == [self.grassSpriteArray objectAtIndex:0] &&
+            sprite.position.x < 0 - self.scene.size.width - sprite.size.width/2)
+        {
+            SKSpriteNode *backSprite = [self.grassSpriteArray lastObject];
+            sprite.position = CGPointMake(backSprite.position.x + sprite.size.width + self.offset, sprite.position.y);
+            swap = TRUE;
+        }
+    }
+    if (swap) {
+        SKSpriteNode *frontGrass = [self.grassSpriteArray objectAtIndex:0];
+        [self.grassSpriteArray removeObject:frontGrass];
+        [self.grassSpriteArray addObject:frontGrass];
+    }
+    
 }
 
 @end

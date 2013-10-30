@@ -57,12 +57,25 @@ enum {
     {
         LRParallaxNode *layer = [self.parallaxManager objectAtIndex:i];
         [layer setScale:.5];
-        if (i == BackgroundIndex_Hills)
-            layer.position = CGPointMake(layer.position.x, [layer repeatingSprite].size.height/4 - self.size.height/2);
-        else if (i == BackgroundIndex_Grass) {
-            float grassOffset = -2;
-            layer.position = CGPointMake(layer.position.x, [layer repeatingSprite].size.height/4 - self.size.height/2 + SIZE_HEIGHT_LETTER_SECTION + grassOffset );
-            layer.zPosition += 20;
+        CGFloat grassHeightOffset = -2;
+        switch (i) {
+            case BackgroundIndex_Sky:
+                layer.offset = -5;
+                break;
+            case BackgroundIndex_Mountains:
+                layer.offset = -6;
+                break;
+            case BackgroundIndex_Hills:
+                layer.position = CGPointMake(layer.position.x, [layer repeatingSprite].size.height/4 - self.size.height/2);
+                layer.offset = -9;
+                break;
+            case BackgroundIndex_Grass:
+                layer.position = CGPointMake(layer.position.x, [layer repeatingSprite].size.height/4 - self.size.height/2 + SIZE_HEIGHT_LETTER_SECTION + grassHeightOffset);
+                layer.zPosition += 20;
+                layer.offset = -10;
+                break;
+            default:
+                break;
         }
         [self addChild:layer];
     }

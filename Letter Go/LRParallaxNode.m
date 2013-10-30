@@ -9,9 +9,10 @@
 #import "LRParallaxNode.h"
 
 @interface LRParallaxNode ()
+
 @property NSString *imageName;
 @property NSMutableArray *scrollingSprites;
-@property (nonatomic) CGFloat yCoordinate;
+
 @end
 
 @implementation LRParallaxNode
@@ -63,23 +64,11 @@
             sprite.position.x < 0 - self.scene.size.width - sprite.size.width/2)
         {
             SKSpriteNode *secondSprite = [self.scrollingSprites objectAtIndex:1];
-            sprite.position = CGPointMake(secondSprite.position.x + sprite.size.width, sprite.position.y);
+            sprite.position = CGPointMake(secondSprite.position.x + sprite.size.width + self.offset, sprite.position.y);
             swap = TRUE;
         }
     }
     if (swap) [self.scrollingSprites exchangeObjectAtIndex:0 withObjectAtIndex:1];
 }
-
-- (void) setYCoordinate:(CGFloat)y;
-{
-    _yCoordinate = y;
-    for (SKSpriteNode *node in self.scrollingSprites)
-    {
-        CGPoint loc = CGPointMake(node.position.x, _yCoordinate);
-        CGPoint newLoc = [self convertPoint:loc fromNode:self.parent];
-        node.position = CGPointMake(node.position.x, newLoc.y);
-    }
-}
-
 
 @end
