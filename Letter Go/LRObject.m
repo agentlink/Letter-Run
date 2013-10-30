@@ -12,6 +12,12 @@
 
 - (void) update:(NSTimeInterval)currentTime
 {
-    return;
+    for (SKSpriteNode *child in [self children])
+    {
+        if ([child isKindOfClass:[LRObject class]])
+        {
+            [(LRObject*)child update:currentTime];
+        }
+    }
 }
 @end

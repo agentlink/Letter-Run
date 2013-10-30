@@ -11,6 +11,11 @@
 @interface LRParallaxNode : LRObject
 
 + (LRParallaxNode*) nodeWithImageNamed:(NSString*)imageName;
+- (SKSpriteNode *) repeatingSprite;
+
+- (void) moveNodeBy:(CGFloat)distance;
+
+- (void) setYCoordinate:(CGFloat)y;
 
 @property CGFloat relativeSpeed;
 

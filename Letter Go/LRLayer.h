@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Gabe Nicholas. All rights reserved.
 //
 
-#import <SpriteKit/SpriteKit.h>
+#import "LRObject.h"
 
-@interface LRLayer : SKSpriteNode
+@interface LRLayer : LRObject
 
 @end

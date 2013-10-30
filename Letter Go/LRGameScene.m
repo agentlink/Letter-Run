@@ -46,7 +46,7 @@
 
 - (void) update:(NSTimeInterval)currentTime
 {
-    for (SKSpriteNode *child in [[self gamePlayLayer] children])
+    for (SKSpriteNode *child in [self children])
     {
         if ([child isKindOfClass:[LRObject class]])
         {

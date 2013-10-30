@@ -45,27 +45,30 @@ enum {
                         withRelativeSpeed:1];
     [self.parallaxManager addParallaxNode:[LRParallaxNode nodeWithImageNamed:@"Background_Mountains.png"]
                                   toIndex:BackgroundIndex_Mountains
-                        withRelativeSpeed:1];
+                        withRelativeSpeed:2];
     [self.parallaxManager addParallaxNode:[LRParallaxNode nodeWithImageNamed:@"Background_Hills.png"]
                                   toIndex:BackgroundIndex_Hills
-                        withRelativeSpeed:1];
+                        withRelativeSpeed:3];
     [self.parallaxManager addParallaxNode:[[LRGrassLayer alloc] init]
                                   toIndex:BackgroundIndex_Grass
-                        withRelativeSpeed:1];    
+                        withRelativeSpeed:4];
     
     for (int i = 0; i < [self.parallaxManager count]; i++)
     {
         LRParallaxNode *layer = [self.parallaxManager objectAtIndex:i];
         [layer setScale:.5];
         if (i == BackgroundIndex_Hills)
-            layer.position = CGPointMake(layer.position.x, layer.size.height/2 - self.size.height/2);
+            layer.position = CGPointMake(layer.position.x, [layer repeatingSprite].size.height/4 - self.size.height/2);
         else if (i == BackgroundIndex_Grass) {
-            layer.position = CGPointMake(layer.position.x, layer.size.height/2 - self.size.height/2 + SIZE_HEIGHT_LETTER_SECTION);
+            float grassOffset = -2;
+            layer.position = CGPointMake(layer.position.x, [layer repeatingSprite].size.height/4 - self.size.height/2 + SIZE_HEIGHT_LETTER_SECTION + grassOffset );
             layer.zPosition += 20;
         }
-
         [self addChild:layer];
     }
+    self.parallaxManager.speedFactor = 50;
 }
+
+
 
 @end

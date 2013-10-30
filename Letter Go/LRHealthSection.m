@@ -9,11 +9,11 @@
 #import "LRHealthSection.h"
 #import "LRScoreManager.h"
 #import "LRDifficultyManager.h"
+#import "LRGameStateManager.h"
 
 @interface LRHealthSection ()
 @property SKSpriteNode *healthBar;
 @property NSTimeInterval initialTime;
-@property BOOL gameOver;
 @end
 
 @implementation LRHealthSection
@@ -30,7 +30,7 @@
 
 - (void) update:(NSTimeInterval)currentTime
 {
-    if (self.gameOver)
+    if ([[LRGameStateManager shared] isGameOver])
         return;
     else if (self.initialTime == -1) {
         self.initialTime = currentTime;
@@ -38,6 +38,7 @@
     }
     if ([[LRDifficultyManager shared] healthFallsOverTime]) {
         //This will be gotten from the difficulty manager
+        //TODO: There might be a problem that this is inextricably linked to the frame rate
         float speedFactor = 10;
         self.healthBar.position = CGPointMake(self.healthBar.position.x - ((currentTime - self.initialTime) * speedFactor), self.healthBar.position.y);
         self.initialTime = currentTime;
@@ -48,7 +49,6 @@
     if (barFrame.origin.x < self.frame.origin.x - (2 * barFrame.size.width))
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_GAME_OVER object:nil];
-        self.gameOver = TRUE;
     }
 }
 
@@ -68,6 +68,5 @@
 {
     self.healthBar.position = CGPointMake(0, self.healthBar.position.y);
     self.initialTime = -1;
-    self.gameOver = FALSE;
 }
 @end

@@ -20,7 +20,6 @@
     {
         SKSpriteNode *tempGrassBlock = [SKSpriteNode spriteNodeWithImageNamed:@"Background_Grass.png"];
         self.size = CGSizeMake([[UIScreen mainScreen] bounds].size.width * 4, tempGrassBlock.size.height);
-        NSLog(@"Width : %f", self.size.width);
         [self addGrassSprites];
     }
     return self;
@@ -39,6 +38,11 @@
         [self.grassSpriteArray addObject:grassBlock];
         xPos += grassBlock.size.width;
     }
+}
+
+- (SKSpriteNode *)repeatingSprite
+{
+    return [SKSpriteNode spriteNodeWithImageNamed:@"Background_Grass.png"];
 }
 
 @end

@@ -12,34 +12,36 @@
 
 - (id) init
 {
-    if (self = [super initWithColor:
-                [SKColor colorWithRed:174.0/255.0 green:227.0/255.0 blue:248.0/255.0 alpha:1]
-                               size:CGSizeMake([UIScreen mainScreen].bounds.size.height * 2, [UIScreen mainScreen].bounds.size.width * 2)])
-    {
-        [self addRandomClouds];
+    if (self = [super initWithImageNamed:@""]) {
+        
     }
     return self;
 }
 
-- (void) addRandomClouds
+- (SKSpriteNode *) repeatingSprite
 {
+    SKSpriteNode *repeatingSprite = [[SKSpriteNode alloc]
+                                     initWithColor:[SKColor colorWithRed:174.0/255.0 green:227.0/255.0 blue:248.0/255.0 alpha:1]
+                                     size:CGSizeMake([UIScreen mainScreen].bounds.size.height * 2, [UIScreen mainScreen].bounds.size.width * 3)];
+    //Add clouds to the sprite
     SKSpriteNode *tempCloud = [SKSpriteNode spriteNodeWithImageNamed:@"Background_Cloud.png"];
     int numClouds = 2;
     //Must be at least two thirds of the screen high
-    float minHeight = self.size.height/6;
-    float maxHeight = self.size.height/2 - tempCloud.size.height/2;
-    float minWidth = tempCloud.size.width/2 - self.size.width/2;
-    float maxWidth = 0 - minWidth;
+    float minHeight = repeatingSprite.size.height/6;
+    float maxHeight = repeatingSprite.size.height/2 - tempCloud.size.height/2;
+    float minWidth = tempCloud.size.width/2 - repeatingSprite.size.width/2;
+    float maxWidth = repeatingSprite.size.width/2 - tempCloud.size.width/2;
+    //TODO: Make cloud generation semi random, not totally random
     for (int i = 0; i < numClouds; i++) {
         SKSpriteNode *cloud = [SKSpriteNode spriteNodeWithImageNamed:@"Background_Cloud.png"];
         cloud.position = CGPointMake(skRand(minWidth, maxWidth), skRand(minHeight, maxHeight));
-        NSLog(@"Position for Cloud %i: (%f, %f)", i, cloud.position.x, cloud.position.y);
-        [self addChild:cloud];
+        [repeatingSprite addChild:cloud];
     }
+    return repeatingSprite;
 }
 
 static inline CGFloat skRand(CGFloat low, CGFloat high) {
-    return (arc4random()%(int)(high - low)) + low;
+    return ((arc4random()%(int)(high - low)) + low);
 }
 
 @end
