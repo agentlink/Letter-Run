@@ -20,7 +20,9 @@
     {
         SKSpriteNode *tempGrassBlock = [SKSpriteNode spriteNodeWithImageNamed:@"Background_Grass.png"];
         self.size = CGSizeMake([[UIScreen mainScreen] bounds].size.width * 4, tempGrassBlock.size.height);
+        self.offset = 0;
         [self addGrassSprites];
+
     }
     return self;
 }
@@ -60,6 +62,13 @@
             swap = TRUE;
         }
     }
+    /*
+     TODO
+     Right now, a gap in the grass shows up from the first replacement.
+     This is actually a deeper issue--the very first distance provided is
+     six times higher than the next ones because the update loop hits a snag
+     on its first run through (probably due to loading all the images
+    */
     if (swap) {
         SKSpriteNode *frontGrass = [self.grassSpriteArray objectAtIndex:0];
         [self.grassSpriteArray removeObject:frontGrass];

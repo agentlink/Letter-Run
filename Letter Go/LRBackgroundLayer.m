@@ -63,11 +63,11 @@ enum {
                 layer.offset = -5;
                 break;
             case BackgroundIndex_Mountains:
-                layer.offset = -6;
+                layer.offset = -2;
                 break;
             case BackgroundIndex_Hills:
                 layer.position = CGPointMake(layer.position.x, [layer repeatingSprite].size.height/4 - self.size.height/2);
-                layer.offset = -9;
+                layer.offset = -3.5;
                 break;
             case BackgroundIndex_Grass:
                 layer.position = CGPointMake(layer.position.x, [layer repeatingSprite].size.height/4 - self.size.height/2 + SIZE_HEIGHT_LETTER_SECTION + grassHeightOffset);

@@ -36,20 +36,13 @@
     else [self.parallaxNodes insertObject:node atIndex:index];
 }
 
-- (void) sortParallaxNodes {
-    //TODO: Is this used? And if it's necessary, test it
-    [self.parallaxNodes sortUsingComparator:^NSComparisonResult(SKSpriteNode *node1, SKSpriteNode *node2) {
-        if (node1.zPosition > node2.zPosition)
-            return NSOrderedDescending;
-        return NSOrderedAscending;
-    }];
-}
-
 #pragma mark - Parallax Movement Functions
 - (void) update:(NSTimeInterval)currentTime
 {
-    if ([[LRGameStateManager shared] isGameOver])
+    if ([[LRGameStateManager shared] isGameOver]) {
+        self.initialTime = -1;
         return;
+    }
     else if (self.initialTime < 0) {
         self.initialTime = currentTime;
         return;

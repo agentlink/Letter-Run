@@ -29,6 +29,7 @@
     if (self = [super init])
     {
         self.imageName = name;
+        self.offset = 0;
         [self loadScrollingSprites];
     }
     return self;
