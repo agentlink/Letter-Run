@@ -23,7 +23,7 @@ typedef enum  {
 
 - (CGFloat) letterDropPeriod;
 
-#pragma mark - Score Functions
+#pragma mark - Score Properties
 //Determines whether the length of a word affects its score linearly or exponentially
 @property (nonatomic) IncreaseStyle scoreIncreaseStyle;
 //The value the score is multiplied by/to the power of
@@ -32,7 +32,7 @@ typedef enum  {
 @property (nonatomic) CGFloat scorePerLetter;
 
 
-#pragma mark - Level Up Functions
+#pragma mark - Level Up Properties
 //Determines whether total score needed to move to the next level increases or not
 @property (nonatomic) IncreaseStyle levelScoreIncreaseStyle;
 /*
@@ -48,7 +48,7 @@ typedef enum  {
 @property (nonatomic) CGFloat levelScoreIncreaseFactor;
 
 
-#pragma mark - Letter Drop Functions
+#pragma mark - Letter Drop Properties
 //The time difference between letters being dropped in the first round
 @property (nonatomic) CGFloat intialLetterDropPeriod;
 //By how much the rate of letters dropping speeds up every time
@@ -61,9 +61,14 @@ typedef enum  {
 //Only set if IncreaseStyle_Linear
 @property (nonatomic) CGFloat minimumDropPeriod;
 
-#pragma mark - Health Bar Functions
+#pragma mark - Health Bar Properties
 //How many pixels the health bar moves per point scored
 @property (nonatomic) CGFloat healthBarToScoreRatio;
 @property (nonatomic) BOOL healthFallsOverTime;
+
+#pragma mark - Letter Generation Properties
+@property int maxNumber_consonants;
+@property int maxNumber_vowels;
+
 @end
 

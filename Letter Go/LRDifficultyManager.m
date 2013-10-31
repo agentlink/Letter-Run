@@ -49,6 +49,9 @@ static LRDifficultyManager *_shared = nil;
         self.letterDropPeriodDecreaseRate = 1.2;
         self.letterDropDecreaseStyle = IncreaseStyle_Exponential;
         self.minimumDropPeriod = .7;
+        
+        self.maxNumber_consonants = 3;
+        self.maxNumber_vowels = 3;
     }
     return self;
 }
