@@ -11,8 +11,17 @@
 #import "LRConstants.h"
 #import "LRCollisionManager.h"
 #import "LRGameStateManager.h"
+#import "LRDifficultyManager.h"
+
+#define NUM_SLOTS               3
+
+@interface LRGamePlayLayer ()
+@property NSMutableArray *letterSlots;
+@end
 
 @implementation LRGamePlayLayer
+
+#pragma mark - Set Up/Initialization
 
 - (id) init
 {
@@ -22,7 +31,10 @@
         self.name = NAME_LAYER_GAME_PLAY;
         [self createLayerContent];
         [self setUpPhysics];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dropLetter:) name:NOTIFICATION_DROP_LETTER object:nil];
+        [self setUpSlotArray];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateSlots:) name:NOTIFICATION_LETTER_CLEARED object:nil];
+        
+        [self dropInitialLetters];
     }
     return self;
 }
@@ -45,9 +57,6 @@
     self.letterSection = [[LRLetterSection alloc] initWithSize:CGSizeMake(self.size.width, SIZE_HEIGHT_LETTER_SECTION)];
     self.letterSection.position = CGPointMake(self.position.x - self.size.width/2, 0 - self.size.height/2 + self.letterSection.size.height/2);
     [self addChild:self.letterSection];
-    
-    //TEMPORARY: blocks will be continuously created by the game play layer
-    [self dropInitialLetters];
 }
 
 - (void) setUpPhysics
@@ -69,28 +78,75 @@
     [self addChild:blockEdgeSprite];
 }
 
+- (void) setUpSlotArray
+{
+    self.letterSlots = [[NSMutableArray alloc] initWithCapacity:NUM_SLOTS];
+    for (int i = 0; i < NUM_SLOTS; i ++) {
+        [ self.letterSlots addObject:[NSMutableArray array]];
+    }
+}
+
+
+#pragma mark - Letter Drop Functions
+
 - (void) dropInitialLetters
 {
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < NUM_SLOTS - 1; i++) {
         SKAction *delay = [SKAction waitForDuration:(i * .6)];
         SKAction *drop = [SKAction runBlock:^{
-            LRFallingEnvelope *envelope = [LRLetterBlockGenerator createRandomEnvelopeAtSlot:i];
-            [self addChild:envelope];
-            [envelope dropEnvelopeWithSwing];
+            [self dropLetterAtSlot:i];
         }];
         [self runAction:[SKAction sequence:[NSArray arrayWithObjects:delay, drop, nil]]];
     }
-
+    [self letterDropLoop];
 }
 
-- (void) dropLetter:(NSNotification*) notification
+- (void) dropLetter {
+    //Find an empty slot and then dorp the letter at that slot
+    NSMutableArray *emptySlots = [NSMutableArray array];
+    for (int i = 0; i <  self.letterSlots.count; i++)
+    {
+        NSArray *slotArray = [ self.letterSlots objectAtIndex:i];
+        if (![slotArray count]) {
+            [emptySlots addObject:[NSNumber numberWithInt:i]];
+        }
+    }
+    //If there isn't an empty slot, drop it at a full one
+    int letterDropSlot = ([emptySlots count]) ? [[emptySlots objectAtIndex:arc4random()%emptySlots.count] intValue] : arc4random()%NUM_SLOTS;
+    [self dropLetterAtSlot:letterDropSlot];
+}
+
+- (void) dropLetterAtSlot:(int)slotLocation
+{
+    NSAssert(slotLocation < NUM_SLOTS, @"Error: slot %i is outside of bounds.", slotLocation);
+    LRFallingEnvelope *envelope = [LRLetterBlockGenerator createRandomEnvelopeAtSlot:slotLocation];
+    [self addChild:envelope];
+    [envelope dropEnvelopeWithSwing];
+    
+    [[ self.letterSlots objectAtIndex:slotLocation] addObject:[NSNumber numberWithBool:TRUE]];
+}
+
+- (void) letterDropLoop
+{
+    float delayTime = [[LRDifficultyManager shared] letterDropPeriod];
+    SKAction *delay = [SKAction waitForDuration:delayTime];
+    SKAction *dropLetter = [SKAction runBlock:^{
+        [self dropLetter];
+    }];
+    SKAction *waitAndDrop = [SKAction sequence:@[delay, dropLetter]];
+    [self runAction:waitAndDrop completion:^{
+        [self letterDropLoop];
+    }];
+}
+
+- (void) updateSlots:(NSNotification*) notification
 {
     //This will be moved to the difficulty manager, which will be doing the dropping
     if ([[LRGameStateManager shared] isGameOver])
         return;
     int slot = [[[notification userInfo] objectForKey:@"slot"] intValue];
-    LRFallingEnvelope *envelope = [LRLetterBlockGenerator createRandomEnvelopeAtSlot:slot];
-    [self addChild:envelope];
-    [envelope dropEnvelopeWithSwing];
+    NSAssert([[ self.letterSlots objectAtIndex:slot] count], @"Error: cannot remove block from empty slot");
+    [[ self.letterSlots objectAtIndex:slot] removeLastObject];
+    
 }
 @end

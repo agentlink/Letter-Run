@@ -18,7 +18,7 @@
 #define NAME_LAYER_BACKGROUND                       @"NAME_LAYER_BACKGROUND"
 
 #define NOTIFICATION_ADDED_LETTER                   @"Added letter to slot"
-#define NOTIFICATION_DROP_LETTER                    @"Drop a new letter"
+#define NOTIFICATION_LETTER_CLEARED                 @"Letter has been removed from game play area"
 #define NOTIFICATION_DELETE_LETTER                  @"Deleted a letter"
 #define NOTIFICATION_SUBMIT_WORD                    @"Submit a word"
 #define NOTIFICATION_REARRANGE_START                @"Started rearranging letters"

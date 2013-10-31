@@ -126,12 +126,12 @@
         NSMutableDictionary *addLetterInfo = [NSMutableDictionary dictionaryWithObject:self.letter forKey:KEY_GET_LETTER];
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_ADDED_LETTER object:self userInfo:addLetterInfo];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_DROP_LETTER object:self userInfo:dropLetterInfo];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LETTER_CLEARED object:self userInfo:dropLetterInfo];
         [self removeFromParent];
     }
     //If the box is outside the screen and has been flung
     else if (!CGRectIntersectsRect(sceneRect, letterFrame)) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_DROP_LETTER object:self userInfo:dropLetterInfo];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LETTER_CLEARED object:self userInfo:dropLetterInfo];
         [self removeFromParent];
     }
 }
@@ -191,8 +191,8 @@
     float xToYRatio = xDiff / (ABS(xDiff) + ABS(yDiff));
     float yToXRatio = yDiff / (ABS(xDiff) + ABS(yDiff));
     
-    //TODO Should equal 600 for iPhone
-    float speedFactor = 500;
+    //Should equal 600 for iPhone
+    float speedFactor = 600;
     self.physicsBody.velocity = CGVectorMake(speedFactor * xToYRatio, speedFactor * yToXRatio);
     self.blockState = BlockState_BlockFlung;
 }

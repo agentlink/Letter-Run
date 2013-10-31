@@ -44,7 +44,11 @@ static LRDifficultyManager *_shared = nil;
         self.initialNextLevelScore = 150;
         
         self.healthFallsOverTime = YES;
-
+        
+        self.intialLetterDropPeriod = 2.5;
+        self.letterDropPeriodDecreaseRate = 1.2;
+        self.letterDropDecreaseStyle = IncreaseStyle_Exponential;
+        self.minimumDropPeriod = .7;
     }
     return self;
 }
@@ -56,6 +60,22 @@ static LRDifficultyManager *_shared = nil;
 
 - (void) resetLevel {
     self.level = 0;
+}
+
+#pragma mark - Letter Drop Rate
+- (CGFloat) letterDropPeriod {
+    float dropPeriod = self.intialLetterDropPeriod;
+    for (int i = 1; i < self.level; i++) {
+        if (self.letterDropDecreaseStyle == IncreaseStyle_Linear) {
+            dropPeriod-= self.letterDropPeriodDecreaseRate;
+        }
+        else if (self.letterDropPeriodDecreaseRate == IncreaseStyle_Exponential) {
+            dropPeriod/= self.letterDropPeriodDecreaseRate;
+        }
+    }
+    if (self.minimumDropPeriod > dropPeriod)
+        return self.minimumDropPeriod;
+    return self.intialLetterDropPeriod;
 }
 
 @end
