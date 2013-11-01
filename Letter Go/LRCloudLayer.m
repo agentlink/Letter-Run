@@ -22,7 +22,7 @@
 {
     SKSpriteNode *repeatingSprite = [[SKSpriteNode alloc]
                                      initWithColor:[SKColor colorWithRed:174.0/255.0 green:227.0/255.0 blue:248.0/255.0 alpha:1]
-                                     size:CGSizeMake([UIScreen mainScreen].bounds.size.height * 2, [UIScreen mainScreen].bounds.size.width * 3)];
+                                     size:CGSizeMake(SCREEN_WIDTH * 2, SCREEN_HEIGHT * 3)];
     //Add clouds to the sprite
     SKSpriteNode *tempCloud = [SKSpriteNode spriteNodeWithImageNamed:@"Background_Cloud.png"];
     int numClouds = 2;

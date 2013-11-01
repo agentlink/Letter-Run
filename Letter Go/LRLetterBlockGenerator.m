@@ -7,7 +7,7 @@
 //
 
 #import "LRLetterBlockGenerator.h"
-#import "LRConstants.h"
+
 #import "LRLetterGenerator.h"
 
 #define PLACEHOLDER_TEXT            @" "

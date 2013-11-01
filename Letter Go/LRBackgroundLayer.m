@@ -60,19 +60,19 @@ enum {
         CGFloat grassHeightOffset = -2;
         switch (i) {
             case BackgroundIndex_Sky:
-                layer.offset = -5;
+                layer.yOffset = -5;
                 break;
             case BackgroundIndex_Mountains:
-                layer.offset = -2;
+                layer.yOffset = -2;
                 break;
             case BackgroundIndex_Hills:
                 layer.position = CGPointMake(layer.position.x, [layer repeatingSprite].size.height/4 - self.size.height/2);
-                layer.offset = -3.5;
+                layer.yOffset = -3.5;
                 break;
             case BackgroundIndex_Grass:
                 layer.position = CGPointMake(layer.position.x, [layer repeatingSprite].size.height/4 - self.size.height/2 + SIZE_HEIGHT_LETTER_SECTION + grassHeightOffset);
                 layer.zPosition += 20;
-                layer.offset = -10;
+                layer.yOffset = -10;
                 break;
             default:
                 break;

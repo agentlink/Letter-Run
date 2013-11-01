@@ -8,7 +8,7 @@
 
 #import "LRGameScene.h"
 #import "LRCollisionManager.h"
-#import "LRConstants.h"
+
 #import "LRObject.h"
 #import "LRGameStateManager.h"
 
@@ -18,7 +18,7 @@
 - (id) init
 {
     //LRScenes are always initialized to the full size of the screen
-    if (self = [super initWithSize:CGSizeMake([UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.width)]) {
+    if (self = [super initWithSize:CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT)]) {
         [self addChild:[LRGameStateManager shared]];
     }
     return self;

@@ -16,6 +16,6 @@
 - (void) moveNodeBy:(CGFloat)distance;
 
 @property (nonatomic) CGFloat relativeSpeed;
-@property (nonatomic) CGFloat offset;
+@property (nonatomic) CGFloat yOffset;
 
 @end

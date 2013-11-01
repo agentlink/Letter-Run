@@ -29,7 +29,7 @@
     if (self = [super init])
     {
         self.imageName = name;
-        self.offset = 0;
+        self.yOffset = 0;
         [self loadScrollingSprites];
     }
     return self;
@@ -65,7 +65,7 @@
             sprite.position.x < 0 - self.scene.size.width - sprite.size.width/2)
         {
             SKSpriteNode *secondSprite = [self.scrollingSprites objectAtIndex:1];
-            sprite.position = CGPointMake(secondSprite.position.x + sprite.size.width + self.offset, sprite.position.y);
+            sprite.position = CGPointMake(secondSprite.position.x + sprite.size.width + self.yOffset, sprite.position.y);
             swap = TRUE;
         }
     }
