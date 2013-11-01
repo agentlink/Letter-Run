@@ -43,7 +43,8 @@
     self.physicsBody.affectedByGravity = NO;
     self.physicsBody.dynamic = YES;
     [[LRCollisionManager shared] setBitMasksForSprite:self];
-    [[LRCollisionManager shared] addCollisionDetectionOfSpriteNamed:NAME_SPRITE_BOTTOM_EDGE toSprite:self];
+    [[LRCollisionManager shared] addContactDetectionOfSpriteNamed:NAME_SPRITE_BOTTOM_EDGE toSprite:self];
+    
 }
 
 - (void) setUpSwipedPhysics
@@ -98,10 +99,13 @@
         if (i == 0) followPath.timingMode = SKActionTimingEaseOut;
         else if (i == 1) followPath.timingMode = SKActionTimingEaseInEaseOut;
         else followPath.timingMode = SKActionTimingEaseIn;
-        
         [curveArray addObject:followPath];
     }
+    [curveArray addObject:[SKAction runBlock:^{
+        self.physicsBody.affectedByGravity = YES;
+    }]];
     [self runAction:[SKAction sequence:curveArray] withKey:ACTION_DROP_ENVELOPE];
+    
 }
 
 # pragma mark - Game Loop Checks

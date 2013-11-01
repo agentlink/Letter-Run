@@ -7,7 +7,7 @@
 //
 
 #import "LRCollisionManager.h"
-#import "LRConstants.h"
+
 
 #define BITMASK_KEY_CATEGORY            @"Bitmask category"
 #define BITMASK_KEY_COLLISION           @"Bitmask collision"
@@ -161,23 +161,6 @@ static LRCollisionManager *_shared = nil;
 {
     NSNumber *bitMask = [(NSDictionary*)[self.bitMaskDictionary objectForKey:spriteName] objectForKey:BITMASK_KEY_COLLISION];
     return bitMask.intValue;
-}
-
-#pragma mark - Contact Functions
-
-- (void) didBeginContact:(SKPhysicsContact *)contact
-{
-    SKPhysicsBody *firstBody, *secondBody;
-    if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask)
-    {
-        firstBody = contact.bodyA;
-        secondBody = contact.bodyB;
-    }
-    else {
-        firstBody = contact.bodyB;
-        secondBody = contact.bodyA;
-    }
-    NSLog(@"%@ hit %@", firstBody.node.name, secondBody.node.name);
 }
 
 #pragma mark - Tear Down
