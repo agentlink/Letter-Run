@@ -96,7 +96,7 @@
         SKAction *drop = [SKAction runBlock:^{
             [self dropLetterAtSlot:i];
         }];
-        [self runAction:[SKAction sequence:[NSArray arrayWithObjects:delay, drop, nil]]];
+        [self runAction:[SKAction sequence:@[delay, drop]]];
     }
     [self letterDropLoop];
 }
@@ -128,6 +128,8 @@
 
 - (void) letterDropLoop
 {
+    if ([[LRGameStateManager shared] isGameOver])
+        return;
     float delayTime = [[LRDifficultyManager shared] letterDropPeriod];
     SKAction *delay = [SKAction waitForDuration:delayTime];
     SKAction *dropLetter = [SKAction runBlock:^{

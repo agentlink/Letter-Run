@@ -120,7 +120,10 @@
     
     NSMutableDictionary *dropLetterInfo = [NSMutableDictionary dictionaryWithObject:[NSNumber numberWithInt:self.slot] forKey:@"slot"];
     //If the box has been flung to the letter box section
-    if (CGRectContainsRect([(LRGameScene*)[self scene] gamePlayLayer].letterSection.frame, self.frame))
+    CGRect addLetterRect = [(LRGameScene*)[self scene] gamePlayLayer].letterSection.frame;
+    addLetterRect.origin.y -= addLetterRect.size.height;
+    addLetterRect.size.height *= 2;
+    if (CGRectContainsRect(addLetterRect, self.frame))
     {
         //Post the notification
         NSMutableDictionary *addLetterInfo = [NSMutableDictionary dictionaryWithObject:self.letter forKey:KEY_GET_LETTER];

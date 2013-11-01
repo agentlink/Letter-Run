@@ -10,6 +10,7 @@
 #import "LRGameScene.h"
 #import "LRConstants.h"
 #import "LRDictionaryChecker.h"
+#import "LRDifficultyManager.h"
 
 @interface LRGameStateManager ()
 @property BOOL gameIsOver;
@@ -60,6 +61,7 @@ static LRGameStateManager *_shared = nil;
 {
     LRGamePlayLayer *gpl = [(LRGameScene*)[self scene] gamePlayLayer];
     [self clearBoard];
+    [[LRDifficultyManager shared] resetLevel];
     self.gameIsOver = FALSE;
     [gpl dropInitialLetters];
 }
@@ -105,7 +107,7 @@ static LRGameStateManager *_shared = nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_NEW_GAME object:self];
         [self newGame];
     }];
-    [self runAction:[SKAction sequence:[NSArray arrayWithObjects:showLabel, delay, restartLevel, nil]]];
+    [self runAction:[SKAction sequence:@[showLabel, delay, restartLevel]]];
 }
 
 - (void)setGameBoardObjectTouchability:(BOOL)value
