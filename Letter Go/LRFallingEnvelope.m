@@ -103,6 +103,7 @@
     }
     [curveArray addObject:[SKAction runBlock:^{
         self.physicsBody.affectedByGravity = YES;
+        self.blockState = BlockState_Landed;
     }]];
     [self runAction:[SKAction sequence:curveArray] withKey:ACTION_DROP_ENVELOPE];
     
@@ -113,14 +114,16 @@
 - (void) update:(NSTimeInterval)currentTime
 {
     //Only check if the block has been flung
-    if (self.blockState != BlockState_BlockFlung)
+    if (self.blockState != BlockState_BlockFlung && self.blockState != BlockState_Landed)
         return;
 
     //Get the letter's location in the scene
     CGRect sceneRect = [(LRGameScene*)self.scene window];
     sceneRect.origin = [self convertPoint:sceneRect.origin fromNode:self.scene];
-    CGRect letterFrame = self.frame;
-    letterFrame.origin = [self convertPoint:self.frame.origin fromNode:self.parent];
+    //CGRect letterFrame = self.frame;
+    //letterFrame.origin = [self convertPoint:self.frame.origin fromNode:self.parent];
+
+    
     
     NSMutableDictionary *dropLetterInfo = [NSMutableDictionary dictionaryWithObject:[NSNumber numberWithInt:self.slot] forKey:@"slot"];
     //If the box has been flung to the letter box section
@@ -137,7 +140,9 @@
         [self removeFromParent];
     }
     //If the box is outside the screen and has been flung
-    else if (!CGRectIntersectsRect(sceneRect, letterFrame)) {
+//    else if (!CGRectIntersectsRect(sceneRect, letterFrame)) {
+
+    else if (self.position.x < 0 - SCREEN_WIDTH/2 - self.size.width/2) {
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LETTER_CLEARED object:self userInfo:dropLetterInfo];
         [self removeFromParent];
     }
@@ -208,6 +213,12 @@
 {
     _slot = newSlot;
     self.position = CGPointMake(newSlot * 125 - 100, self.position.y);
+}
+
+- (void) removeFromParent
+{
+    NSLog(@"Position: (%f, %f)", self.position.x, self.position.y);
+    [super removeFromParent];
 }
 
 @end

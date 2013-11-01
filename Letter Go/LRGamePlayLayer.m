@@ -62,7 +62,7 @@
 - (void) setUpPhysics
 {
     //Add a line so that the block doesn't just fall forever
-    float edgeBuffer = 0;
+    /*float edgeBuffer = 0;
     
     float edgeHeight = self.letterSection.position.y + self.letterSection.size.height/2 + edgeBuffer;
     CGPoint leftScreen = CGPointMake(0 - self.size.width /2, edgeHeight);
@@ -76,6 +76,7 @@
     
     [[LRCollisionManager shared] setBitMasksForSprite:blockEdgeSprite];
     [self addChild:blockEdgeSprite];
+     */
 }
 
 - (void) setUpSlotArray

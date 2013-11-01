@@ -59,8 +59,8 @@
     CGPoint midScreen = CGPointMake (self.size.width/2, 0);
     
     for (int i = 0; i < 2; i ++) {
-        UIColor *color = [UIColor clearColor];
-//        UIColor *color = (i == 0) ? [UIColor redColor] : [UIColor blackColor];
+//        UIColor *color = [UIColor clearColor];
+        UIColor *color = (i == 0) ? [UIColor redColor] : [UIColor blackColor];
         SKSpriteNode *bottomEdgeSprite = [[SKSpriteNode alloc] initWithColor:color size:CGSizeMake(self.size.width, 1)];
         bottomEdgeSprite.name = NAME_SPRITE_BOTTOM_EDGE;
         bottomEdgeSprite.physicsBody = [SKPhysicsBody bodyWithEdgeFromPoint:leftScreen toPoint:midScreen];

@@ -14,6 +14,7 @@ typedef enum {
     BlockState_Falling,
     BlockState_PlayerIsHolding,
     BlockState_BlockFlung,
+    BlockState_Landed
 } BlockState;
 
 @property BlockState blockState;
