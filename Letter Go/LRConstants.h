@@ -24,6 +24,9 @@
 #define NOTIFICATION_LETTER_CLEARED                 @"Letter has been removed from game play area"
 #define NOTIFICATION_DELETE_LETTER                  @"Deleted a letter"
 #define NOTIFICATION_SUBMIT_WORD                    @"Submit a word"
+
+#define NOTIFICATION_ENVELOPE_HIT_GROUND            @"Envelope hit the ground"
+
 #define NOTIFICATION_REARRANGE_START                @"Started rearranging letters"
 #define NOTIFICATION_REARRANGE_FINISH               @"Finished rearranging letters"
 

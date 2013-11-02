@@ -26,20 +26,15 @@
     if ([nameSet containsObject:NAME_SPRITE_FALLING_ENVELOPE] &&
         [nameSet containsObject:NAME_SPRITE_BOTTOM_EDGE])
     {
-        if ([firstBody.node.name isEqualToString:NAME_SPRITE_BOTTOM_EDGE])
-            [self attachGround:(SKSpriteNode*)firstBody.node andBlock:(SKSpriteNode*)secondBody.node];
-        else
-            [self attachGround:(SKSpriteNode*)secondBody.node andBlock:(SKSpriteNode*)firstBody.node];
+        SKNode *letterBlock = ([firstBody.node.name isEqualToString:NAME_SPRITE_FALLING_ENVELOPE]) ? firstBody.node : secondBody.node;
+        [self blockHitGround:(SKSpriteNode*)letterBlock];
     }
     
 }
 
-- (void) attachGround:(SKSpriteNode*)ground andBlock:(SKSpriteNode*)letterBlock
+- (void) blockHitGround:(SKSpriteNode*)block
 {
-    //Attach the objects with a physics joint
-    CGPoint intersect = CGPointMake(letterBlock.position.x, letterBlock.frame.origin.y);
-    SKPhysicsJointFixed *joint = [SKPhysicsJointFixed jointWithBodyA:ground.physicsBody bodyB:letterBlock.physicsBody
-                                                              anchor:intersect];
-    [letterBlock.scene.physicsWorld addJoint:joint];
+    NSDictionary *blockDict = [NSDictionary dictionaryWithObject:block forKey:KEY_GET_LETTER_BLOCK];
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_ENVELOPE_HIT_GROUND object:self userInfo:blockDict];
 }
 @end
