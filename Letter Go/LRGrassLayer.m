@@ -30,7 +30,7 @@
         self.envelopeArray = [NSMutableArray array];
         
         [self addGrassSprites];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(attachBlockToGrass:) name:NOTIFICATION_ENVELOPE_HIT_GROUND object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(attachBlockToGrass:) name:NOTIFICATION_ENVELOPE_LANDED object:nil];
 
     }
     return self;
@@ -83,6 +83,18 @@
      on its first run through (probably due to loading all the images
     */
     
+    //Move envelopes
+    NSMutableArray *envelopesToRemove = [NSMutableArray array];
+    for (LRFallingEnvelope *envelope in self.envelopeArray) {
+        if (envelope.blockState == BlockState_Landed) {
+            //TODO: figure out why this distance has to be half (doesn't seem to be getting called twice as much)
+            envelope.position = CGPointMake(envelope.position.x + distance/2, envelope.position.y);
+            if (envelope.position.x < 0 - SCREEN_WIDTH/2 - envelope.size.width/2) {
+                [envelopesToRemove addObject:envelope];
+            }
+        }
+    }
+    
     if (swapGrass) {
         SKSpriteNode *frontGrass = [self.grassSpriteArray objectAtIndex:0];
         [self.grassSpriteArray removeObject:frontGrass];
@@ -90,15 +102,6 @@
     }
     
     //Why are envelopes moving faster?
-    //Move envelopes
-    NSMutableArray *envelopesToRemove = [NSMutableArray array];
-    for (LRFallingEnvelope *envelope in self.envelopeArray) {
-        if (envelope.blockState == BlockState_Landed) {
-            envelope.position = CGPointMake(envelope.position.x + distance, envelope.position.y);
-            if (envelope.position.x < 0 - SCREEN_WIDTH/2 - envelope.size.width/2)
-                [envelopesToRemove addObject:envelope];
-        }
-    }
     [self.envelopeArray removeObjectsInArray:envelopesToRemove];
 }
 
@@ -108,6 +111,6 @@
 {
     LRFallingEnvelope *envelope = [[notification userInfo] objectForKey:KEY_GET_LETTER_BLOCK];
     [self.envelopeArray addObject:envelope];
-    [envelope removePhysics];
+    //[envelope removePhysics];
 }
 @end

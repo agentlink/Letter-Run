@@ -35,6 +35,6 @@
 - (void) blockHitGround:(SKSpriteNode*)block
 {
     NSDictionary *blockDict = [NSDictionary dictionaryWithObject:block forKey:KEY_GET_LETTER_BLOCK];
-    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_ENVELOPE_HIT_GROUND object:self userInfo:blockDict];
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_ENVELOPE_LANDED object:self userInfo:blockDict];
 }
 @end

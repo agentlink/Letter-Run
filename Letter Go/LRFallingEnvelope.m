@@ -42,6 +42,7 @@
     self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.size];
     self.physicsBody.affectedByGravity = NO;
     self.physicsBody.dynamic = YES;
+    self.physicsBody.friction = 1;
     [[LRCollisionManager shared] setBitMasksForSprite:self];
     [[LRCollisionManager shared] addContactDetectionOfSpriteNamed:NAME_SPRITE_BOTTOM_EDGE toSprite:self];
     
@@ -75,7 +76,7 @@
     
     __block CGFloat bottomEdgeHeight = 0;
     [gpl enumerateChildNodesWithName:NAME_SPRITE_BOTTOM_EDGE usingBlock:^(SKNode *node, BOOL *stop) {
-        bottomEdgeHeight =  ABS((0 - gameSceneHeight)/2 - node.position.y);
+        bottomEdgeHeight =  ABS((0 - gameSceneHeight)/2 - node.position.y - node.frame.size.height);
     }];
     
     CGFloat dropHeight = gameSceneHeight - bottomEdgeHeight;
@@ -173,7 +174,14 @@
 - (void) setSlot:(int)newSlot
 {
     _slot = newSlot;
-    self.position = CGPointMake(newSlot * 125 - 100, self.position.y);
+
+    //Adding random offset
+    int offsetMin = -40;
+    int offsetMax = 40;
+    int offset = arc4random()%(offsetMax - offsetMin) + offsetMin;
+    
+    self.position = CGPointMake(newSlot * 125 - 100 + offset, self.position.y);
+
 }
 
 - (void) removeFromParent
