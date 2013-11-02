@@ -30,7 +30,6 @@
         //Code here :)
         self.name = NAME_LAYER_GAME_PLAY;
         [self createLayerContent];
-        [self setUpPhysics];
         [self setUpSlotArray];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateSlots:) name:NOTIFICATION_LETTER_CLEARED object:nil];
         
@@ -59,26 +58,6 @@
     [self addChild:self.letterSection];
 }
 
-- (void) setUpPhysics
-{
-    //Add a line so that the block doesn't just fall forever
-    /*float edgeBuffer = 0;
-    
-    float edgeHeight = self.letterSection.position.y + self.letterSection.size.height/2 + edgeBuffer;
-    CGPoint leftScreen = CGPointMake(0 - self.size.width /2, edgeHeight);
-    CGPoint rightScreen = CGPointMake (self.size.width/2, edgeHeight);
-    
-    SKPhysicsBody *blockEdge = [SKPhysicsBody bodyWithEdgeFromPoint:leftScreen toPoint:rightScreen];
-    SKSpriteNode *blockEdgeSprite = [[SKSpriteNode alloc] init];
-    blockEdgeSprite.name = NAME_SPRITE_BOTTOM_EDGE;
-    blockEdgeSprite.physicsBody = blockEdge;
-    blockEdgeSprite.position = CGPointMake(0, edgeHeight);
-    
-    [[LRCollisionManager shared] setBitMasksForSprite:blockEdgeSprite];
-    [self addChild:blockEdgeSprite];
-     */
-}
-
 - (void) setUpSlotArray
 {
     self.letterSlots = [[NSMutableArray alloc] initWithCapacity:NUM_SLOTS];
@@ -87,7 +66,23 @@
     }
 }
 
-
+- (void) update:(NSTimeInterval)currentTime
+{
+    //Check on the falling envelopes
+    CGRect sceneFrame = self.frame;
+    sceneFrame.origin = CGPointMake(0 - SCREEN_WIDTH/2, 0 - SCREEN_HEIGHT/2);
+    
+    [self enumerateChildNodesWithName:NAME_SPRITE_FALLING_ENVELOPE usingBlock:^(SKNode *node, BOOL *stop) {
+        LRFallingEnvelope *envelope = (LRFallingEnvelope*)node;
+        
+        if (!CGRectIntersectsRect(envelope.frame, sceneFrame) &&
+            (envelope.blockState == BlockState_Landed || envelope.blockState == BlockState_BlockFlung)) {
+            NSMutableDictionary *dropLetterInfo = [NSMutableDictionary dictionaryWithObject:[NSNumber numberWithInt:envelope.slot] forKey:@"slot"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LETTER_CLEARED object:self userInfo:dropLetterInfo];
+            [self removeChildrenInArray:@[envelope]];
+        }
+    }];
+}
 #pragma mark - Letter Drop Functions
 
 - (void) dropInitialLetters
@@ -99,6 +94,7 @@
         }];
         [self runAction:[SKAction sequence:@[delay, drop]]];
     }
+
     [self letterDropLoop];
 }
 

@@ -139,13 +139,6 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LETTER_CLEARED object:self userInfo:dropLetterInfo];
         [self removeFromParent];
     }
-    //If the box is outside the screen and has been flung
-//    else if (!CGRectIntersectsRect(sceneRect, letterFrame)) {
-
-    else if (self.position.x < 0 - SCREEN_WIDTH/2 - self.size.width/2) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LETTER_CLEARED object:self userInfo:dropLetterInfo];
-        [self removeFromParent];
-    }
 }
 
 #pragma mark - Touch Functions
