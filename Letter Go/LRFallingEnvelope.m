@@ -102,43 +102,11 @@
         [curveArray addObject:followPath];
     }
     [curveArray addObject:[SKAction runBlock:^{
-        self.physicsBody.affectedByGravity = YES;
-        self.blockState = BlockState_Landed;
+        if (self.blockState != BlockState_BlockFlung)
+            self.blockState = BlockState_Landed;
     }]];
     [self runAction:[SKAction sequence:curveArray] withKey:ACTION_DROP_ENVELOPE];
     
-}
-
-# pragma mark - Game Loop Checks
-
-- (void) update:(NSTimeInterval)currentTime
-{
-    //Only check if the block has been flung
-    if (self.blockState != BlockState_BlockFlung && self.blockState != BlockState_Landed)
-        return;
-
-    //Get the letter's location in the scene
-    CGRect sceneRect = [(LRGameScene*)self.scene window];
-    sceneRect.origin = [self convertPoint:sceneRect.origin fromNode:self.scene];
-    //CGRect letterFrame = self.frame;
-    //letterFrame.origin = [self convertPoint:self.frame.origin fromNode:self.parent];
-
-    
-    
-    NSMutableDictionary *dropLetterInfo = [NSMutableDictionary dictionaryWithObject:[NSNumber numberWithInt:self.slot] forKey:@"slot"];
-    //If the box has been flung to the letter box section
-    CGRect addLetterRect = [(LRGameScene*)[self scene] gamePlayLayer].letterSection.frame;
-    addLetterRect.origin.y -= addLetterRect.size.height;
-    addLetterRect.size.height *= 2;
-    if (CGRectContainsRect(addLetterRect, self.frame))
-    {
-        //Post the notification
-        NSMutableDictionary *addLetterInfo = [NSMutableDictionary dictionaryWithObject:self.letter forKey:KEY_GET_LETTER];
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_ADDED_LETTER object:self userInfo:addLetterInfo];
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LETTER_CLEARED object:self userInfo:dropLetterInfo];
-        [self removeFromParent];
-    }
 }
 
 #pragma mark - Touch Functions
