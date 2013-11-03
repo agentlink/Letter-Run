@@ -44,7 +44,7 @@
     self.physicsBody.dynamic = YES;
     self.physicsBody.friction = 1;
     [[LRCollisionManager shared] setBitMasksForSprite:self];
-    [[LRCollisionManager shared] addContactDetectionOfSpriteNamed:NAME_SPRITE_BOTTOM_EDGE toSprite:self];
+    [[LRCollisionManager shared] addContactDetectionOfSpritesNamed:NAME_SPRITE_BOTTOM_EDGE toSprite:self];
     
 }
 
@@ -56,7 +56,7 @@
     [[LRCollisionManager shared] setBitMasksForSprite:self];
     //Make it bounce off the bottom if the section is full
     if ([[LRGameStateManager shared] isLetterSectionFull])
-        [[LRCollisionManager shared] addCollisionDetectionOfSpriteNamed:NAME_SPRITE_BOTTOM_EDGE toSprite:self];
+        [[LRCollisionManager shared] addCollisionDetectionOfSpritesNamed:NAME_SPRITE_BOTTOM_EDGE toSprite:self];
 }
 
 - (void) removePhysics

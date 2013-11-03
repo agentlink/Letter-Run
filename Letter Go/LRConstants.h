@@ -16,6 +16,7 @@
 #define NAME_SPRITE_SECTION_LETTER_BLOCK            @"NAME_SPRITE_SECTION_LETTER_BLOCK"
 #define NAME_SPRITE_BOTTOM_EDGE                     @"NAME_SPRITE_BOTTOM_EDGE"
 #define NAME_SPRITE_LETTER_SLOT                     @"NAME_SPRITE_LETTER_SLOT"
+#define NAME_SPRITE_MAILMAN                         @"NAME_SPRITE_MAILMAN"
 
 #define NAME_LAYER_GAME_PLAY                        @"NAME_LAYER_GAME_PLAY"
 #define NAME_LAYER_BACKGROUND                       @"NAME_LAYER_BACKGROUND"
@@ -26,6 +27,7 @@
 #define NOTIFICATION_SUBMIT_WORD                    @"Submit a word"
 
 #define NOTIFICATION_ENVELOPE_LANDED                @"Envelope hit the ground"
+#define NOTIFICATION_ENVELOPE_HIT_MAILMAN           @"Envelope hit the mailman"
 
 #define NOTIFICATION_REARRANGE_START                @"Started rearranging letters"
 #define NOTIFICATION_REARRANGE_FINISH               @"Finished rearranging letters"

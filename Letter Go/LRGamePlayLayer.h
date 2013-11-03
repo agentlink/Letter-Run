@@ -9,11 +9,13 @@
 #import "LRLayer.h"
 #import "LRHealthSection.h"
 #import "LRLetterSection.h"
+#import "LRMailman.h"
 
 @interface LRGamePlayLayer : LRLayer
 
 @property LRHealthSection *healthSection;
 @property LRLetterSection *letterSection;
+@property LRMailman *mailman;
 
 - (void) dropInitialLetters;
 

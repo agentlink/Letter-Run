@@ -17,12 +17,12 @@
 - (void) addCollisionDetectionOfSpritesNamed:(NSString *)colliderName toSpritesNamed:(NSString*) recipientName;
 - (void) addContactDetectionOfSpritesNamed:(NSString *)colliderName toSpritesNamed:(NSString*) recipientName;
 
-//Add contact/collision detection to a specific sprite
-- (void) addContactDetectionOfSpriteNamed:(NSString*)colliderName toSprite:(SKSpriteNode*)recipient;
-- (void) addCollisionDetectionOfSpriteNamed:(NSString*)colliderName toSprite:(SKSpriteNode*)recipient;
+//Add contact/collision detection of all sprites with a name to a specific sprite
+- (void) addContactDetectionOfSpritesNamed:(NSString*)colliderName toSprite:(SKSpriteNode*)recipient;
+- (void) addCollisionDetectionOfSpritesNamed:(NSString*)colliderName toSprite:(SKSpriteNode*)recipient;
 
 //Remove contact/collision detection from a specific sprite
-- (void) removeCollisionDetectionOfSpriteNamed:(NSString *)colliderName toSprite:(SKSpriteNode *)recipient;
-- (void) removeContactDetectionOfSpriteNamed:(NSString *)colliderName toSprite:(SKSpriteNode *)recipient;
+- (void) removeCollisionDetectionOfSpritesNamed:(NSString *)colliderName toSprite:(SKSpriteNode *)recipient;
+- (void) removeContactDetectionOfSpritesNamed:(NSString *)colliderName toSprite:(SKSpriteNode *)recipient;
 
 @end

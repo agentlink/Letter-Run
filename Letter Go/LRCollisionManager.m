@@ -55,7 +55,7 @@ static LRCollisionManager *_shared = nil;
      dictionaries are also stored in a character's sub-dictionary.
      */
     
-    NSArray *spriteNameArray = [NSArray arrayWithObjects:NAME_SPRITE_FALLING_ENVELOPE, NAME_SPRITE_BOTTOM_EDGE, nil];
+    NSArray *spriteNameArray = [NSArray arrayWithObjects:NAME_SPRITE_FALLING_ENVELOPE, NAME_SPRITE_BOTTOM_EDGE, NAME_SPRITE_MAILMAN, nil];
     self.bitMaskDictionary = [[NSMutableDictionary alloc] init];
     for (int i = 0; i < [spriteNameArray count]; i++) {
         NSMutableDictionary *spriteDict = [[NSMutableDictionary alloc] init];
@@ -66,8 +66,6 @@ static LRCollisionManager *_shared = nil;
         [self.bitMaskDictionary setObject:spriteDict forKey:(NSString*)[spriteNameArray objectAtIndex:i]];
     }
 }
-
-#pragma mark - 
 
 #pragma mark - Physics Bitmask Public Functions
 
@@ -106,7 +104,7 @@ static LRCollisionManager *_shared = nil;
 
 #pragma mark - Adding Instance Collision/Contact Detection
 
-- (void) addContactDetectionOfSpriteNamed:(NSString*)colliderName toSprite:(SKSpriteNode*)recipient
+- (void) addContactDetectionOfSpritesNamed:(NSString*)colliderName toSprite:(SKSpriteNode*)recipient
 {
     NSString *recipientName = recipient.name;
     uint32_t recipientContactMask = [self getContactMaskForSpirteWithName:recipientName];
@@ -114,7 +112,7 @@ static LRCollisionManager *_shared = nil;
     recipient.physicsBody.contactTestBitMask = recipientContactMask | contacterBitMask;
 }
 
-- (void) addCollisionDetectionOfSpriteNamed:(NSString*)colliderName toSprite:(SKSpriteNode*)recipient
+- (void) addCollisionDetectionOfSpritesNamed:(NSString*)colliderName toSprite:(SKSpriteNode*)recipient
 {
     NSString *recipientName = recipient.name;
     uint32_t recipientCollisionMask = [self getCollisionMaskForSpriteWithName:recipientName];
@@ -123,7 +121,7 @@ static LRCollisionManager *_shared = nil;
 }
 
 #pragma mark - Removing Instance Collision/Contact Detection
-- (void) removeCollisionDetectionOfSpriteNamed:(NSString *)colliderName toSprite:(SKSpriteNode *)recipient
+- (void) removeCollisionDetectionOfSpritesNamed:(NSString *)colliderName toSprite:(SKSpriteNode *)recipient
 {
     NSString *recipientName = recipient.name;
     uint32_t recipientContactMask = [self getCollisionMaskForSpriteWithName:recipientName];
@@ -132,7 +130,7 @@ static LRCollisionManager *_shared = nil;
     recipient.physicsBody.collisionBitMask = recipientContactMask | contacterBitMask;
 }
 
-- (void) removeContactDetectionOfSpriteNamed:(NSString *)colliderName toSprite:(SKSpriteNode *)recipient
+- (void) removeContactDetectionOfSpritesNamed:(NSString *)colliderName toSprite:(SKSpriteNode *)recipient
 {
     NSString *recipientName = recipient.name;
     uint32_t recipientContactMask = [self getContactMaskForSpirteWithName:recipientName];

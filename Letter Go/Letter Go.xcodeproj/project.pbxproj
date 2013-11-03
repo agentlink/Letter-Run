@@ -26,6 +26,8 @@
 		0049695917F8AB5D00176F2D /* LRCollisionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049695817F8AB5D00176F2D /* LRCollisionManager.m */; };
 		0049695F17F8B5B900176F2D /* LRLetterSlot.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049695E17F8B5B900176F2D /* LRLetterSlot.m */; };
 		0049696517FA0CB400176F2D /* LRObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049696417FA0CB400176F2D /* LRObject.m */; };
+		0055EC841826F1C400717DF7 /* Mailman_Temp.png in Resources */ = {isa = PBXBuildFile; fileRef = 0055EC831826F1C400717DF7 /* Mailman_Temp.png */; };
+		0055EC871826F21C00717DF7 /* LRMailman.m in Sources */ = {isa = PBXBuildFile; fileRef = 0055EC861826F21C00717DF7 /* LRMailman.m */; };
 		008428F01800997800908E5D /* LetterProbabilities.plist in Resources */ = {isa = PBXBuildFile; fileRef = 008428EF1800997800908E5D /* LetterProbabilities.plist */; };
 		008428F318009F6300908E5D /* LRLetterGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 008428F218009F6300908E5D /* LRLetterGenerator.m */; };
 		008428F61801EABB00908E5D /* LRSubmitButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 008428F51801EABB00908E5D /* LRSubmitButton.m */; };
@@ -100,6 +102,9 @@
 		0049695E17F8B5B900176F2D /* LRLetterSlot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterSlot.m; sourceTree = "<group>"; };
 		0049696317FA0CB400176F2D /* LRObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRObject.h; sourceTree = "<group>"; };
 		0049696417FA0CB400176F2D /* LRObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRObject.m; sourceTree = "<group>"; };
+		0055EC831826F1C400717DF7 /* Mailman_Temp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Mailman_Temp.png; sourceTree = "<group>"; };
+		0055EC851826F21C00717DF7 /* LRMailman.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRMailman.h; sourceTree = "<group>"; };
+		0055EC861826F21C00717DF7 /* LRMailman.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRMailman.m; sourceTree = "<group>"; };
 		008428EF1800997800908E5D /* LetterProbabilities.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = LetterProbabilities.plist; sourceTree = "<group>"; };
 		008428F118009F6300908E5D /* LRLetterGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRLetterGenerator.h; sourceTree = "<group>"; };
 		008428F218009F6300908E5D /* LRLetterGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterGenerator.m; sourceTree = "<group>"; };
@@ -175,6 +180,7 @@
 		0007FB30180B2FB600E55B0D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0055EC831826F1C400717DF7 /* Mailman_Temp.png */,
 				0007FB31180B2FBB00E55B0D /* Background */,
 			);
 			name = Resources;
@@ -222,6 +228,8 @@
 			children = (
 				0049696317FA0CB400176F2D /* LRObject.h */,
 				0049696417FA0CB400176F2D /* LRObject.m */,
+				0055EC851826F21C00717DF7 /* LRMailman.h */,
+				0055EC861826F21C00717DF7 /* LRMailman.m */,
 				0049695217F8A70B00176F2D /* Letter Blocks */,
 			);
 			name = "Game Screen Objects";
@@ -491,6 +499,7 @@
 			files = (
 				000BC14F181C6B4600BEC563 /* Background_Mountains.png in Resources */,
 				008428F01800997800908E5D /* LetterProbabilities.plist in Resources */,
+				0055EC841826F1C400717DF7 /* Mailman_Temp.png in Resources */,
 				000BC14D181C6B4600BEC563 /* Background_Sky.png in Resources */,
 				000BC15A1820351900BEC563 /* Background_Grass.png in Resources */,
 				000BC150181C6B4600BEC563 /* Background_Hills.png in Resources */,
@@ -526,6 +535,7 @@
 				0049696517FA0CB400176F2D /* LRObject.m in Sources */,
 				00CDF17F17F4799B003065F6 /* LRBackgroundLayer.m in Sources */,
 				0049695F17F8B5B900176F2D /* LRLetterSlot.m in Sources */,
+				0055EC871826F21C00717DF7 /* LRMailman.m in Sources */,
 				0049695517F8A75B00176F2D /* LRLetterBlockGenerator.m in Sources */,
 				008428F318009F6300908E5D /* LRLetterGenerator.m in Sources */,
 				008428F61801EABB00908E5D /* LRSubmitButton.m in Sources */,

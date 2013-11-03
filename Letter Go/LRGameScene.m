@@ -28,12 +28,13 @@
 {
     [self setScaleMode:SKSceneScaleModeAspectFit];
     
+    [self setUpPhysics];
+    
     self.backgroundLayer = [[LRBackgroundLayer alloc] init];
     self.gamePlayLayer = [[LRGamePlayLayer alloc] init];
     
     [self addChild:self.backgroundLayer];
     [self addChild:self.gamePlayLayer];
-    [self setUpPhysics];
 }
 
 - (void) setUpPhysics

@@ -56,6 +56,13 @@
     self.letterSection = [[LRLetterSection alloc] initWithSize:CGSizeMake(self.size.width, SIZE_HEIGHT_LETTER_SECTION)];
     self.letterSection.position = CGPointMake(self.position.x - self.size.width/2, 0 - self.size.height/2 + self.letterSection.size.height/2);
     [self addChild:self.letterSection];
+    
+    self.mailman = [[LRMailman alloc] init];
+    float xOffset = 5;
+    float mailmanX = self.position.x - self.size.width + self.mailman.size.width/2 + xOffset;
+    float mailmanY = self.letterSection.position.y + (self.letterSection.size.height + self.mailman.size.height)/2;
+    self.mailman.position = CGPointMake(mailmanX, mailmanY);
+    [self addChild:self.mailman];
 }
 
 - (void) setUpSlotArray
