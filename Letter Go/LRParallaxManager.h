@@ -15,6 +15,4 @@
 - (NSUInteger) count;
 - (LRParallaxNode*) objectAtIndex:(NSUInteger)index;
 
-@property CGFloat speedFactor;
-
 @end

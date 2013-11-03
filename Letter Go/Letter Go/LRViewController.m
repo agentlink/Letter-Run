@@ -19,6 +19,7 @@
     SKView * skView = (SKView *)self.view;
     skView.showsFPS = YES;
     skView.showsNodeCount = YES;
+    [skView setMultipleTouchEnabled:NO];
     [self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
 }
 

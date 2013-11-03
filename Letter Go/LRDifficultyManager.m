@@ -39,19 +39,23 @@ static LRDifficultyManager *_shared = nil;
         self.scoreIncreaseStyle = IncreaseStyle_Exponential;
 
         //Add levelScoreIncreaseFactor value if style is not IncreaseStyle_None
+        
         self.levelScoreIncreaseStyle = IncreaseStyle_Linear;
         self.levelScoreIncreaseFactor = 50;
         self.initialNextLevelScore = 150;
-        
+
         self.healthFallsOverTime = YES;
         
-        self.intialLetterDropPeriod = 2.5;
+        self.intialLetterDropPeriod = 2;
         self.letterDropPeriodDecreaseRate = 1.2;
         self.letterDropDecreaseStyle = IncreaseStyle_Exponential;
         self.minimumDropPeriod = .7;
         
         self.maxNumber_consonants = 3;
         self.maxNumber_vowels = 3;
+        
+        self.initialScrollingSpeed = 40;
+        self.scrollingSpeedIncrease = 10;
     }
     return self;
 }
@@ -59,10 +63,12 @@ static LRDifficultyManager *_shared = nil;
 #pragma mark - Getters and Setters
 - (void) increaseLevel {
     self.level++;
+    NSLog(@"Level %i", self.level);
 }
 
 - (void) resetLevel {
-    self.level = 0;
+    //Intro level will be 0
+    self.level = 1;
 }
 
 #pragma mark - Letter Drop Rate
@@ -79,6 +85,11 @@ static LRDifficultyManager *_shared = nil;
     if (self.minimumDropPeriod > dropPeriod)
         return self.minimumDropPeriod;
     return self.intialLetterDropPeriod;
+}
+
+- (CGFloat) parallaxSpeedFactor
+{
+    return self.initialScrollingSpeed + self.scrollingSpeedIncrease * self.level;
 }
 
 @end

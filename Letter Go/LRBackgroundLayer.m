@@ -79,7 +79,6 @@ enum {
         }
         [self addChild:layer];
     }
-    self.parallaxManager.speedFactor = 50;
 }
 
 

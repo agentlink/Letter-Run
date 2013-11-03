@@ -49,7 +49,7 @@
     }
     
     for (LRParallaxNode* node in self.parallaxNodes) {
-        CGFloat distance = 0 - (currentTime - self.initialTime) * (self.speedFactor * node.relativeSpeed);
+        CGFloat distance = 0 - (currentTime - self.initialTime) * ([[LRDifficultyManager shared] parallaxSpeedFactor] * node.relativeSpeed);
         [node moveNodeBy:distance];
     }
     self.initialTime = currentTime;

@@ -22,6 +22,8 @@ typedef enum  {
 - (void) resetLevel;
 
 - (CGFloat) letterDropPeriod;
+- (CGFloat) parallaxSpeedFactor;
+
 
 #pragma mark - Score Properties
 //Determines whether the length of a word affects its score linearly or exponentially
@@ -69,6 +71,10 @@ typedef enum  {
 #pragma mark - Letter Generation Properties
 @property int maxNumber_consonants;
 @property int maxNumber_vowels;
+
+#pragma mark - Background Layer Properties
+@property CGFloat initialScrollingSpeed;
+@property CGFloat scrollingSpeedIncrease;
 
 @end
 
