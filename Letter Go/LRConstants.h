@@ -36,6 +36,8 @@
 
 #define GAME_STATE_GAME_OVER                        @"Game over"
 #define GAME_STATE_NEW_GAME                         @"New game"
+#define GAME_STATE_PAUSE_GAME                       @"Game paused"
+#define GAME_STATE_CONTINUE_GAME                    @"Game continued"
 
 #define KEY_GET_LETTER                              @"Get letter"
 #define KEY_GET_LETTER_BLOCK                        @"Get the letter block"

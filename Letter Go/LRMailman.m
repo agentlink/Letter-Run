@@ -42,8 +42,6 @@
 # pragma mark - Contact Functions
 - (void) hitByEnvelope:(NSNotification*)notification
 {
-    //self.blendMode = SKBlendModeReplace;
-
     LRFallingEnvelope *envelope = [[notification userInfo] objectForKey:KEY_GET_LETTER_BLOCK];
     //Remove the envlope
     [envelope envelopeHitMailman];

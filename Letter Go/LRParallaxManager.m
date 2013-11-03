@@ -24,6 +24,8 @@
     if (self = [super init])
     {
         self.initialTime = -1;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(unpauseGame) name:GAME_STATE_CONTINUE_GAME object:nil];
+
     }
     return self;
 }
@@ -65,5 +67,9 @@
     return [self.parallaxNodes count];
 }
 
+#pragma mark - Game State Methods
 
+- (void) unpauseGame {
+    self.initialTime = -1;
+}
 @end
