@@ -28,4 +28,6 @@ typedef enum {
 - (void) setUpSwipedPhysics;
 - (void) removePhysics;
 
+- (void) envelopeHitMailman;
+
 @end

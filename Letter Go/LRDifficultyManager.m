@@ -56,6 +56,8 @@ static LRDifficultyManager *_shared = nil;
         
         self.initialScrollingSpeed = 40;
         self.scrollingSpeedIncrease = 10;
+        
+        self.mailmanHitDamage = 20;
     }
     return self;
 }

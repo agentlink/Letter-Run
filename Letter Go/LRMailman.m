@@ -30,7 +30,8 @@
 
 - (void) setUpPhysics
 {
-    self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.size];
+    CGSize damageSize = CGSizeMake(self.size.width * .75 , self.size.height * .75);
+    self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:damageSize];
     self.physicsBody.dynamic = YES;
     self.physicsBody.affectedByGravity = NO;
     
@@ -41,7 +42,19 @@
 # pragma mark - Contact Functions
 - (void) hitByEnvelope:(NSNotification*)notification
 {
+    //self.blendMode = SKBlendModeReplace;
+
     LRFallingEnvelope *envelope = [[notification userInfo] objectForKey:KEY_GET_LETTER_BLOCK];
-    NSLog(@"Mailman hit by letter %@", envelope.letter);
+    //Remove the envlope
+    [envelope envelopeHitMailman];
+
+    //Pulse the mailman red
+    CGFloat duration = .6;
+    SKColor *pulseColor = [SKColor redColor];
+    SKAction *pulseRed = [SKAction colorizeWithColor:pulseColor colorBlendFactor:.5 duration:duration/2];
+    SKAction *pulseBack = [SKAction colorizeWithColor:pulseColor colorBlendFactor:0 duration:duration/2];
+    [self runAction:[SKAction sequence:@[pulseRed, pulseBack]]];
+    
 }
+
 @end

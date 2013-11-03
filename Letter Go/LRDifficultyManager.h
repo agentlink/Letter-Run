@@ -76,5 +76,8 @@ typedef enum  {
 @property CGFloat initialScrollingSpeed;
 @property CGFloat scrollingSpeedIncrease;
 
+#pragma mark - Mailman Properties
+@property CGFloat mailmanHitDamage;
+
 @end
 

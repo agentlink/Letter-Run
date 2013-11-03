@@ -26,6 +26,8 @@
     self.initialTime = -1;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restartHealthBar) name:GAME_STATE_NEW_GAME object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mailmanHitWithLetterBlock) name:NOTIFICATION_ENVELOPE_HIT_MAILMAN object:nil];
+
 }
 
 - (void) update:(NSTimeInterval)currentTime
@@ -69,4 +71,14 @@
     self.healthBar.position = CGPointMake(0, self.healthBar.position.y);
     self.initialTime = -1;
 }
+
+
+#pragma mark - Mailman Functions
+
+- (void) mailmanHitWithLetterBlock
+{
+    CGFloat damageDistance = [[LRDifficultyManager shared] mailmanHitDamage];
+    self.healthBar.position = CGPointMake(self.healthBar.position.x - damageDistance, self.healthBar.position.y);
+}
+
 @end
