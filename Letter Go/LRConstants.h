@@ -33,6 +33,7 @@
 #define NOTIFICATION_REARRANGE_FINISH               @"Finished rearranging letters"
 
 #define ACTION_DROP_ENVELOPE                        @"Droping the envelope"
+#define ACTION_ENVELOPE_LOOP                        @"Run envelope loop"
 
 #define GAME_STATE_GAME_OVER                        @"Game over"
 #define GAME_STATE_NEW_GAME                         @"New game"

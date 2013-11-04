@@ -12,11 +12,13 @@
 #import "LRCollisionManager.h"
 #import "LRGameStateManager.h"
 #import "LRDifficultyManager.h"
+#import "LRButton.h"
 
 #define NUM_SLOTS               3
 
 @interface LRGamePlayLayer ()
 @property NSMutableArray *letterSlots;
+@property LRButton *pauseButton;
 @end
 
 @implementation LRGamePlayLayer
@@ -40,11 +42,10 @@
 
 - (void) createLayerContent
 {
-    //Create the three sections
+    //Health Section
     self.healthSection = [[LRHealthSection alloc] initWithSize:CGSizeMake(self.size.width, SIZE_HEIGHT_HEALTH_SECTION)];
     self.healthSection.position = CGPointMake(0, self.size.height/2 - self.healthSection.size.height/2);
     self.healthSection.zPosition += 15;
-    
     
     SKSpriteNode *tempHealth = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:self.healthSection.size];
     tempHealth.alpha = .5;
@@ -53,16 +54,25 @@
 
     [self addChild:self.healthSection];
 
+    //Letter Section
     self.letterSection = [[LRLetterSection alloc] initWithSize:CGSizeMake(self.size.width, SIZE_HEIGHT_LETTER_SECTION)];
     self.letterSection.position = CGPointMake(self.position.x - self.size.width/2, 0 - self.size.height/2 + self.letterSection.size.height/2);
     [self addChild:self.letterSection];
     
+    //Mailman
     self.mailman = [[LRMailman alloc] init];
     float xOffset = 5;
     float mailmanX = self.position.x - self.size.width + self.mailman.size.width/2 + xOffset;
     float mailmanY = self.letterSection.position.y + (self.letterSection.size.height + self.mailman.size.height)/2;
     self.mailman.position = CGPointMake(mailmanX, mailmanY);
     [self addChild:self.mailman];
+    
+    //Pause Button
+    self.pauseButton = [[LRButton alloc] initWithImageNamedNormal:@"Pause_Temp.png" selected:@"Pause_Temp.png"];
+    [self.pauseButton setTouchUpInsideTarget:self action:@selector(pauseButtonPressed)];
+    self.pauseButton.position = CGPointMake(0 - SCREEN_WIDTH/2 + self.pauseButton.size.width/2, SCREEN_HEIGHT/2 - self.healthSection.size.height - self.pauseButton.size.height/2);
+;
+    [self addChild:self.pauseButton];
 }
 
 - (void) setUpSlotArray
@@ -91,6 +101,8 @@
     [[LRCollisionManager shared] setBitMasksForSprite:blockEdgeSprite];
     [self addChild:blockEdgeSprite];
 }
+
+#pragma mark - Game Loop Functions
 
 - (void) update:(NSTimeInterval)currentTime
 {
@@ -126,6 +138,17 @@
     [self removeChildrenInArray:childrenToRemove];
     [super update:currentTime];
 }
+
+- (void) pauseButtonPressed
+{
+    if ([[LRGameStateManager shared] isGamePaused]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_CONTINUE_GAME object:nil];
+    }
+    else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_PAUSE_GAME object:nil];
+    }
+}
+
 #pragma mark - Letter Drop Functions
 
 - (void) dropInitialLetters
@@ -167,8 +190,6 @@
 
 - (void) letterDropLoop
 {
-    if ([[LRGameStateManager shared] isGameOver])
-        return;
     float delayTime = [[LRDifficultyManager shared] letterDropPeriod];
     SKAction *delay = [SKAction waitForDuration:delayTime];
     SKAction *dropLetter = [SKAction runBlock:^{
@@ -183,7 +204,7 @@
 - (void) updateSlots:(NSNotification*) notification
 {
     //This will be moved to the difficulty manager, which will be doing the dropping
-    if ([[LRGameStateManager shared] isGameOver])
+    if ([[LRGameStateManager shared] isGameOver] || [[LRGameStateManager shared] isGamePaused])
         return;
     int slot = [[[notification userInfo] objectForKey:@"slot"] intValue];
     NSAssert([[ self.letterSlots objectAtIndex:slot] count], @"Error: cannot remove block from empty slot");

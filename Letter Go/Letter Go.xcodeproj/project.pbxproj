@@ -33,6 +33,8 @@
 		008428F61801EABB00908E5D /* LRSubmitButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 008428F51801EABB00908E5D /* LRSubmitButton.m */; };
 		008428F91801F46C00908E5D /* LRScoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 008428F81801F46C00908E5D /* LRScoreManager.m */; };
 		009CC29E180349E700C0423D /* LRDictionaryChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 009CC29D180349E700C0423D /* LRDictionaryChecker.m */; };
+		00B43D8F1828335100261468 /* Pause_Temp.png in Resources */ = {isa = PBXBuildFile; fileRef = 00B43D8E1828335100261468 /* Pause_Temp.png */; };
+		00B43D92182834CF00261468 /* LRButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 00B43D91182834CF00261468 /* LRButton.m */; };
 		00CDF13717F474EC003065F6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CDF13617F474EC003065F6 /* Foundation.framework */; };
 		00CDF13917F474EC003065F6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CDF13817F474EC003065F6 /* CoreGraphics.framework */; };
 		00CDF13B17F474EC003065F6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CDF13A17F474EC003065F6 /* UIKit.framework */; };
@@ -114,6 +116,9 @@
 		008428F81801F46C00908E5D /* LRScoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRScoreManager.m; sourceTree = "<group>"; };
 		009CC29C180349E700C0423D /* LRDictionaryChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRDictionaryChecker.h; sourceTree = "<group>"; };
 		009CC29D180349E700C0423D /* LRDictionaryChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRDictionaryChecker.m; sourceTree = "<group>"; };
+		00B43D8E1828335100261468 /* Pause_Temp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Pause_Temp.png; sourceTree = "<group>"; };
+		00B43D90182834CF00261468 /* LRButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRButton.h; sourceTree = "<group>"; };
+		00B43D91182834CF00261468 /* LRButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRButton.m; sourceTree = "<group>"; };
 		00CDF13317F474EC003065F6 /* Letter Go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Letter Go.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		00CDF13617F474EC003065F6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		00CDF13817F474EC003065F6 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -181,6 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				0055EC831826F1C400717DF7 /* Mailman_Temp.png */,
+				00B43D8E1828335100261468 /* Pause_Temp.png */,
 				0007FB31180B2FBB00E55B0D /* Background */,
 			);
 			name = Resources;
@@ -230,6 +236,8 @@
 				0049696417FA0CB400176F2D /* LRObject.m */,
 				0055EC851826F21C00717DF7 /* LRMailman.h */,
 				0055EC861826F21C00717DF7 /* LRMailman.m */,
+				00B43D90182834CF00261468 /* LRButton.h */,
+				00B43D91182834CF00261468 /* LRButton.m */,
 				0049695217F8A70B00176F2D /* Letter Blocks */,
 			);
 			name = "Game Screen Objects";
@@ -497,6 +505,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				00B43D8F1828335100261468 /* Pause_Temp.png in Resources */,
 				000BC14F181C6B4600BEC563 /* Background_Mountains.png in Resources */,
 				008428F01800997800908E5D /* LetterProbabilities.plist in Resources */,
 				0055EC841826F1C400717DF7 /* Mailman_Temp.png in Resources */,
@@ -549,6 +558,7 @@
 				0007FB3C180C79B600E55B0D /* LRFallingEnvelope.m in Sources */,
 				00CDF17917F478D7003065F6 /* LRLayer.m in Sources */,
 				00CDF17517F478A1003065F6 /* LRGameScene.m in Sources */,
+				00B43D92182834CF00261468 /* LRButton.m in Sources */,
 				0049695117F8A12B00176F2D /* LRLetterBlock.m in Sources */,
 				000BC163182044DA00BEC563 /* LRParallaxManager.m in Sources */,
 				0007FB3F180C7A1A00E55B0D /* LRSectionBlock.m in Sources */,

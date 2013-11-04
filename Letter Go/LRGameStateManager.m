@@ -14,6 +14,7 @@
 
 @interface LRGameStateManager ()
 @property BOOL gameIsOver;
+@property BOOL gameIsPaused;
 @end
 @implementation LRGameStateManager
 
@@ -26,7 +27,6 @@ static LRGameStateManager *_shared = nil;
     {
 		if (!_shared)
         {
-            
 			_shared = [[LRGameStateManager alloc] init];
 		}
 	}
@@ -47,6 +47,8 @@ static LRGameStateManager *_shared = nil;
 - (void) setUpNotifications
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameOver) name:GAME_STATE_GAME_OVER object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pauseGame) name:GAME_STATE_PAUSE_GAME object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(unpauseGame) name:GAME_STATE_CONTINUE_GAME object:nil];
 }
 
 - (BOOL) isLetterSectionFull
@@ -63,6 +65,7 @@ static LRGameStateManager *_shared = nil;
     [self clearBoard];
     [[LRDifficultyManager shared] resetLevel];
     self.gameIsOver = FALSE;
+    self.gameIsPaused = FALSE;
     [gpl dropInitialLetters];
 }
 
@@ -110,6 +113,29 @@ static LRGameStateManager *_shared = nil;
     [self runAction:[SKAction sequence:@[showLabel, delay, restartLevel]]];
 }
 
+- (void) pauseGame
+{
+    self.gameIsPaused = TRUE;
+    LRGamePlayLayer *gpl = [(LRGameScene*)[self scene] gamePlayLayer];
+    [gpl enumerateChildNodesWithName:NAME_SPRITE_FALLING_ENVELOPE usingBlock:^(SKNode *node, BOOL *stop) {
+        [node setUserInteractionEnabled:NO];
+    }];
+    [gpl.letterSection setUserInteractionEnabled:NO];
+    gpl.paused = YES;
+}
+
+- (void) unpauseGame
+{
+    self.gameIsPaused = NO;
+    LRGamePlayLayer *gpl = [(LRGameScene*)[self scene] gamePlayLayer];
+    [gpl enumerateChildNodesWithName:NAME_SPRITE_FALLING_ENVELOPE usingBlock:^(SKNode *node, BOOL *stop) {
+        [node setUserInteractionEnabled:YES];
+    }];
+    [gpl.letterSection setUserInteractionEnabled:YES];
+    gpl.paused = NO;
+
+}
+
 - (void)setGameBoardObjectTouchability:(BOOL)value
 {
     LRGamePlayLayer *gpl = [(LRGameScene*)[self scene] gamePlayLayer];
@@ -120,5 +146,9 @@ static LRGameStateManager *_shared = nil;
 
 - (BOOL) isGameOver {
     return self.gameIsOver;
+}
+
+- (BOOL) isGamePaused {
+    return self.gameIsPaused;
 }
 @end

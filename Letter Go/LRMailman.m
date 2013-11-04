@@ -43,6 +43,9 @@
 - (void) hitByEnvelope:(NSNotification*)notification
 {
     LRFallingEnvelope *envelope = [[notification userInfo] objectForKey:KEY_GET_LETTER_BLOCK];
+    
+    if (envelope.blockState == BlockState_BlockFlung)
+        return;
     //Remove the envlope
     [envelope envelopeHitMailman];
 

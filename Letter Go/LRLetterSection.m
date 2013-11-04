@@ -314,4 +314,13 @@ typedef enum {
     return (int)self.letterSlots.count;
 }
 
+- (void) setUserInteractionEnabled:(BOOL)userInteractionEnabled
+{
+    for (LRLetterSlot *slot in self.letterSlots) {
+        slot.userInteractionEnabled = userInteractionEnabled;
+        slot.currentBlock.userInteractionEnabled = userInteractionEnabled;
+    }
+    self.submitButton.userInteractionEnabled = userInteractionEnabled;
+}
+
 @end

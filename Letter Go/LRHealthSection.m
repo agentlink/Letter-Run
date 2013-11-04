@@ -10,6 +10,7 @@
 #import "LRScoreManager.h"
 #import "LRDifficultyManager.h"
 #import "LRGameStateManager.h"
+#import "LRFallingEnvelope.h"
 
 @interface LRHealthSection ()
 @property SKSpriteNode *healthBar;
@@ -27,13 +28,13 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restartHealthBar) name:GAME_STATE_NEW_GAME object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(unpauseGame) name:GAME_STATE_CONTINUE_GAME object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mailmanHitWithLetterBlock) name:NOTIFICATION_ENVELOPE_HIT_MAILMAN object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mailmanHitWithLetterBlock:) name:NOTIFICATION_ENVELOPE_HIT_MAILMAN object:nil];
 
 }
 
 - (void) update:(NSTimeInterval)currentTime
 {
-    if ([[LRGameStateManager shared] isGameOver])
+    if ([[LRGameStateManager shared] isGameOver] || [[LRGameStateManager shared] isGamePaused])
         return;
     else if (self.initialTime == -1) {
         self.initialTime = currentTime;
@@ -76,8 +77,11 @@
 
 #pragma mark - Mailman Functions
 
-- (void) mailmanHitWithLetterBlock
+- (void) mailmanHitWithLetterBlock:(NSNotification*)notification
 {
+    LRFallingEnvelope *envelope = [(LRFallingEnvelope*)[notification userInfo] valueForKey:KEY_GET_LETTER_BLOCK];
+    if (envelope.blockState == BlockState_BlockFlung)
+        return;
     CGFloat damageDistance = [[LRDifficultyManager shared] mailmanHitDamage];
     self.healthBar.position = CGPointMake(self.healthBar.position.x - damageDistance, self.healthBar.position.y);
 }

@@ -41,7 +41,7 @@
 #pragma mark - Parallax Movement Functions
 - (void) update:(NSTimeInterval)currentTime
 {
-    if ([[LRGameStateManager shared] isGameOver]) {
+    if ([[LRGameStateManager shared] isGameOver] || [[LRGameStateManager shared] isGamePaused]) {
         self.initialTime = -1;
         return;
     }

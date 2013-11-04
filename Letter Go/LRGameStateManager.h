@@ -14,7 +14,7 @@
 
 + (LRGameStateManager*) shared;
 - (BOOL) isLetterSectionFull;
-
 - (BOOL) isGameOver;
+- (BOOL) isGamePaused;
 
 @end
