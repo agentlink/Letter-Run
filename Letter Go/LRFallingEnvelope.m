@@ -15,6 +15,7 @@
 @property BOOL playerMovedTouch;
 @property CGPoint originalPoint;
 @end
+
 @implementation LRFallingEnvelope
 
 #pragma mark - Set Up/Initializing
@@ -30,6 +31,7 @@
     if (self = [super initWithLetter:letter]) {
         self.blockState = BlockState_Falling;
         self.name = NAME_SPRITE_FALLING_ENVELOPE;
+        
         [self setUpPhysics];
     }
     return self;
@@ -97,9 +99,15 @@
         if (i == 1) nextPosition.x /= 2;
         
         SKAction *followPath = [SKAction followPath:[bezierPath CGPath] asOffset:YES orientToPath:NO duration:2];
-        if (i == 0) followPath.timingMode = SKActionTimingEaseOut;
-        else if (i == 1) followPath.timingMode = SKActionTimingEaseInEaseOut;
-        else followPath.timingMode = SKActionTimingEaseIn;
+        if (i == 0) {
+            followPath.timingMode = SKActionTimingEaseOut;
+        }
+        else if (i == 1) {
+            followPath.timingMode = SKActionTimingEaseInEaseOut;
+        }
+        else {
+            followPath.timingMode = SKActionTimingEaseIn;
+        }
         [curveArray addObject:followPath];
     }
     [curveArray addObject:[SKAction runBlock:^{
@@ -107,7 +115,6 @@
             self.blockState = BlockState_Landed;
     }]];
     [self runAction:[SKAction sequence:curveArray] withKey:ACTION_DROP_ENVELOPE];
-    
 }
 
 #pragma mark - Touch Functions

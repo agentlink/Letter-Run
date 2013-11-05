@@ -10,7 +10,7 @@
 #import "LRCollisionManager.h"
 #import "LRFallingEnvelope.h"
 
-#define IMAGE_NAME_MAILMAN          @"Mailman_Temp.png"
+#define IMAGE_NAME_MAILMAN          @"Manford.png"
 
 @implementation LRMailman
 

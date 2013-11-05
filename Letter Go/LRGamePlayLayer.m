@@ -162,6 +162,8 @@
 }
 
 - (void) dropLetter {
+    if ([[LRGameStateManager shared] isGamePaused])
+        return;
     //Find an empty slot and then dorp the letter at that slot
     NSMutableArray *emptySlots = [NSMutableArray array];
     for (int i = 0; i <  self.letterSlots.count; i++)

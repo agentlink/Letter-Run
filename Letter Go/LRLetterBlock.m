@@ -15,6 +15,7 @@
 #import "LRLetterSlot.h"
 
 @interface LRLetterBlock ()
+@property SKSpriteNode *envelopeSprite;
 @end
 @implementation LRLetterBlock
 
@@ -26,7 +27,7 @@
 
 - (id) initWithLetter:(NSString *)letter
 {
-    if (self = [super initWithColor:[SKColor blackColor] size:CGSizeMake(LETTER_BLOCK_SIZE, LETTER_BLOCK_SIZE)]) {
+    if (self = [super initWithColor:[SKColor clearColor] size:CGSizeMake(LETTER_BLOCK_SIZE, LETTER_BLOCK_SIZE)]) {
         self.letter = letter;
         [self createObjectContent];
         self.userInteractionEnabled = YES;
@@ -34,12 +35,25 @@
     return self;
 }
 
+
 - (void) createObjectContent
 {
+    //Letter Label
     SKLabelNode *letterLabel = [[SKLabelNode alloc] init];
     letterLabel.text = self.letter;
     letterLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - letterLabel.frame.size.height/2);
+    letterLabel.fontColor = [SKColor blackColor];
+    letterLabel.zPosition += 5;
+    
     [self addChild:letterLabel];
+    
+    //Determine which envelope sprite to use
+    if ([self.letter length]) {
+        self.envelopeSprite = [SKSpriteNode spriteNodeWithImageNamed:@"Envelope_Normal.png"];
+        self.envelopeSprite.xScale = LETTER_BLOCK_SIZE/self.envelopeSprite.size.width;
+        self.envelopeSprite.yScale = LETTER_BLOCK_SIZE/self.envelopeSprite.size.height;
+        [self addChild:self.envelopeSprite];
+    }
 }
 
 @end

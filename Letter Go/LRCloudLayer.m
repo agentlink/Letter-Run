@@ -8,6 +8,8 @@
 
 #import "LRCloudLayer.h"
 
+#define IMAGE_NAME_CLOUD            @"Background_Cloud.png"
+
 @implementation LRCloudLayer
 
 - (id) init
@@ -24,7 +26,7 @@
                                      initWithColor:[SKColor colorWithRed:174.0/255.0 green:227.0/255.0 blue:248.0/255.0 alpha:1]
                                      size:CGSizeMake(SCREEN_WIDTH * 2, SCREEN_HEIGHT * 3)];
     //Add clouds to the sprite
-    SKSpriteNode *tempCloud = [SKSpriteNode spriteNodeWithImageNamed:@"Background_Cloud.png"];
+    SKSpriteNode *tempCloud = [SKSpriteNode spriteNodeWithImageNamed:IMAGE_NAME_CLOUD];
     int numClouds = 2;
     //Must be at least two thirds of the screen high
     float minHeight = repeatingSprite.size.height/6;
@@ -33,7 +35,7 @@
     float maxWidth = repeatingSprite.size.width/2 - tempCloud.size.width/2;
     //TODO: Make cloud generation semi random, not totally random
     for (int i = 0; i < numClouds; i++) {
-        SKSpriteNode *cloud = [SKSpriteNode spriteNodeWithImageNamed:@"Background_Cloud.png"];
+        SKSpriteNode *cloud = [SKSpriteNode spriteNodeWithImageNamed:IMAGE_NAME_CLOUD];
         cloud.position = CGPointMake(skRand(minWidth, maxWidth), skRand(minHeight, maxHeight));
         [repeatingSprite addChild:cloud];
     }
