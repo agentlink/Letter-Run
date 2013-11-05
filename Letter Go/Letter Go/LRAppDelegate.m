@@ -7,6 +7,7 @@
 //
 
 #import "LRAppDelegate.h"
+#import "LRGameScene.h"
 #import <SpriteKit/SpriteKit.h>
 
 @implementation LRAppDelegate
@@ -25,6 +26,8 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_PAUSE_GAME object:nil];
     SKView *view = (SKView *)self.window.rootViewController.view;
     view.paused = YES;
+    
+    
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -35,15 +38,15 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_CONTINUE_GAME object:nil];
-    SKView *view = (SKView *)self.window.rootViewController.view;
-    view.paused = NO;
-
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    SKView *view = (SKView *)self.window.rootViewController.view;
+    view.paused = NO;
+    [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_CONTINUE_GAME object:nil];
+
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 

@@ -66,6 +66,7 @@ static LRGameStateManager *_shared = nil;
     [[LRDifficultyManager shared] resetLevel];
     self.gameIsOver = FALSE;
     self.gameIsPaused = FALSE;
+    [gpl.pauseButton setIsEnabled:YES];
     [gpl dropInitialLetters];
 }
 
@@ -101,6 +102,12 @@ static LRGameStateManager *_shared = nil;
     gameOverLabel.fontSize = 50;
     __block LRGamePlayLayer *gpl = [(LRGameScene*)[self scene] gamePlayLayer];
     
+    [gpl.pauseButton setIsEnabled:NO];
+    //[gpl removeActionForKey:ACTION_ENVELOPE_LOOP];
+    [gpl removeAllActions];
+
+    
+    
     SKAction *showLabel = [SKAction runBlock:^{
         [gpl addChild:gameOverLabel];
     }];
@@ -111,28 +118,33 @@ static LRGameStateManager *_shared = nil;
         [self newGame];
     }];
     [self runAction:[SKAction sequence:@[showLabel, delay, restartLevel]]];
+    
+    
 }
 
 - (void) pauseGame
 {
-    self.gameIsPaused = TRUE;
+    self.gameIsPaused = YES;
     LRGamePlayLayer *gpl = [(LRGameScene*)[self scene] gamePlayLayer];
+    gpl.paused = YES;
     [gpl enumerateChildNodesWithName:NAME_SPRITE_FALLING_ENVELOPE usingBlock:^(SKNode *node, BOOL *stop) {
         [node setUserInteractionEnabled:NO];
     }];
+    [[gpl actionForKey:ACTION_ENVELOPE_LOOP] setSpeed:0];
     [gpl.letterSection setUserInteractionEnabled:NO];
-    gpl.paused = YES;
+
 }
 
 - (void) unpauseGame
 {
     self.gameIsPaused = NO;
     LRGamePlayLayer *gpl = [(LRGameScene*)[self scene] gamePlayLayer];
+    gpl.paused = NO;
     [gpl enumerateChildNodesWithName:NAME_SPRITE_FALLING_ENVELOPE usingBlock:^(SKNode *node, BOOL *stop) {
         [node setUserInteractionEnabled:YES];
     }];
+    [[gpl actionForKey:ACTION_ENVELOPE_LOOP] setSpeed:1];
     [gpl.letterSection setUserInteractionEnabled:YES];
-    gpl.paused = NO;
 
 }
 

@@ -12,13 +12,11 @@
 #import "LRCollisionManager.h"
 #import "LRGameStateManager.h"
 #import "LRDifficultyManager.h"
-#import "LRButton.h"
 
 #define NUM_SLOTS               3
 
 @interface LRGamePlayLayer ()
 @property NSMutableArray *letterSlots;
-@property LRButton *pauseButton;
 @end
 
 @implementation LRGamePlayLayer
@@ -196,9 +194,13 @@
         [self dropLetter];
     }];
     SKAction *waitAndDrop = [SKAction sequence:@[delay, dropLetter]];
-    [self runAction:waitAndDrop completion:^{
-        [self letterDropLoop];
+    
+    SKAction *dropLoop = [SKAction runBlock:^{
+        [self runAction:waitAndDrop completion:^{
+            [self letterDropLoop];
+        }];
     }];
+    [self runAction:dropLoop withKey:ACTION_ENVELOPE_LOOP];
 }
 
 - (void) updateSlots:(NSNotification*) notification

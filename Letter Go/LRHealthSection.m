@@ -86,8 +86,7 @@
     self.healthBar.position = CGPointMake(self.healthBar.position.x - damageDistance, self.healthBar.position.y);
 }
 
-- (void) unpauseGame
-{
+- (void) unpauseGame {
     self.initialTime = -1;
 }
 

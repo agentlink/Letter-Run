@@ -10,12 +10,14 @@
 #import "LRHealthSection.h"
 #import "LRLetterSection.h"
 #import "LRMailman.h"
+#import "LRButton.h"
 
 @interface LRGamePlayLayer : LRLayer
 
 @property LRHealthSection *healthSection;
 @property LRLetterSection *letterSection;
 @property LRMailman *mailman;
+@property LRButton *pauseButton;
 
 - (void) dropInitialLetters;
 
