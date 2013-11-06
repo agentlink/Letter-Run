@@ -128,7 +128,8 @@ static LRGameStateManager *_shared = nil;
     gpl.paused = YES;
     [gpl enumerateChildNodesWithName:NAME_SPRITE_FALLING_ENVELOPE usingBlock:^(SKNode *node, BOOL *stop) {
         [node setUserInteractionEnabled:NO];
-        [[node actionForKey:ACTION_DROP_ENVELOPE] setSpeed:0];
+        [[node actionForKey:ACTION_ENVELOPE_DROP] setSpeed:0];
+        [[node actionForKey:ACTION_ENVELOPE_FLING] setSpeed:0];
     }];
     [[gpl actionForKey:ACTION_ENVELOPE_LOOP] setSpeed:0];
     [gpl.letterSection setUserInteractionEnabled:NO];
@@ -142,7 +143,8 @@ static LRGameStateManager *_shared = nil;
     gpl.paused = NO;
     [gpl enumerateChildNodesWithName:NAME_SPRITE_FALLING_ENVELOPE usingBlock:^(SKNode *node, BOOL *stop) {
         [node setUserInteractionEnabled:YES];
-        [[node actionForKey:ACTION_DROP_ENVELOPE] setSpeed:1];
+        [[node actionForKey:ACTION_ENVELOPE_DROP] setSpeed:1];
+        [[node actionForKey:ACTION_ENVELOPE_FLING] setSpeed:1];
     }];
     [[gpl actionForKey:ACTION_ENVELOPE_LOOP] setSpeed:1];
     [gpl.letterSection setUserInteractionEnabled:YES];

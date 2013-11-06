@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		0007FB3C180C79B600E55B0D /* LRFallingEnvelope.m in Sources */ = {isa = PBXBuildFile; fileRef = 0007FB3B180C79B600E55B0D /* LRFallingEnvelope.m */; };
 		0007FB3F180C7A1A00E55B0D /* LRSectionBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 0007FB3E180C7A1A00E55B0D /* LRSectionBlock.m */; };
-		000BC14D181C6B4600BEC563 /* Background_Sky.png in Resources */ = {isa = PBXBuildFile; fileRef = 000BC149181C6B4600BEC563 /* Background_Sky.png */; };
 		000BC14F181C6B4600BEC563 /* Background_Mountains.png in Resources */ = {isa = PBXBuildFile; fileRef = 000BC14B181C6B4600BEC563 /* Background_Mountains.png */; };
 		000BC150181C6B4600BEC563 /* Background_Hills.png in Resources */ = {isa = PBXBuildFile; fileRef = 000BC14C181C6B4600BEC563 /* Background_Hills.png */; };
 		000BC154181C705D00BEC563 /* LRParallaxNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 000BC153181C705D00BEC563 /* LRParallaxNode.m */; };
@@ -76,7 +75,6 @@
 		0007FB3B180C79B600E55B0D /* LRFallingEnvelope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRFallingEnvelope.m; sourceTree = "<group>"; };
 		0007FB3D180C7A1A00E55B0D /* LRSectionBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRSectionBlock.h; sourceTree = "<group>"; };
 		0007FB3E180C7A1A00E55B0D /* LRSectionBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRSectionBlock.m; sourceTree = "<group>"; };
-		000BC149181C6B4600BEC563 /* Background_Sky.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background_Sky.png; sourceTree = "<group>"; };
 		000BC14B181C6B4600BEC563 /* Background_Mountains.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background_Mountains.png; sourceTree = "<group>"; };
 		000BC14C181C6B4600BEC563 /* Background_Hills.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background_Hills.png; sourceTree = "<group>"; };
 		000BC152181C705D00BEC563 /* LRParallaxNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRParallaxNode.h; sourceTree = "<group>"; };
@@ -200,7 +198,6 @@
 			children = (
 				009B7278182991CB00A6CEA0 /* Background_Cloud.png */,
 				000BC1581820351800BEC563 /* Background_Grass.png */,
-				000BC149181C6B4600BEC563 /* Background_Sky.png */,
 				000BC14B181C6B4600BEC563 /* Background_Mountains.png */,
 				000BC14C181C6B4600BEC563 /* Background_Hills.png */,
 			);
@@ -513,7 +510,6 @@
 				000BC14F181C6B4600BEC563 /* Background_Mountains.png in Resources */,
 				008428F01800997800908E5D /* LetterProbabilities.plist in Resources */,
 				009B7279182991CB00A6CEA0 /* Envelope_Normal.png in Resources */,
-				000BC14D181C6B4600BEC563 /* Background_Sky.png in Resources */,
 				000BC15A1820351900BEC563 /* Background_Grass.png in Resources */,
 				000BC150181C6B4600BEC563 /* Background_Hills.png in Resources */,
 				009B727B182991CB00A6CEA0 /* Background_Cloud.png in Resources */,

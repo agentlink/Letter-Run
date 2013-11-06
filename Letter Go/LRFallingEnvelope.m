@@ -14,6 +14,7 @@
 @interface LRFallingEnvelope ()
 @property BOOL playerMovedTouch;
 @property CGPoint originalPoint;
+@property CGFloat pixelsPerSecond;
 @end
 
 @implementation LRFallingEnvelope
@@ -31,7 +32,8 @@
     if (self = [super initWithLetter:letter]) {
         self.blockState = BlockState_Falling;
         self.name = NAME_SPRITE_FALLING_ENVELOPE;
-        
+        self.pixelsPerSecond = 300;
+
         [self setUpPhysics];
     }
     return self;
@@ -87,7 +89,11 @@
     CGFloat yDiff = 0 - dropHeight/3;
     CGPoint nextPosition = CGPointMake(xDiff, yDiff);
 
+    CGFloat rotation = 10;
+    CGFloat duration = 2;
+    
     NSMutableArray *curveArray = [NSMutableArray array];
+
     for (int i = 0; i < 3; i++)
     {
         UIBezierPath *bezierPath = [UIBezierPath bezierPath];
@@ -95,26 +101,32 @@
         [bezierPath addCurveToPoint: nextPosition controlPoint1: CGPointMake(0, 0) controlPoint2: CGPointMake(0, nextPosition.y)];
         nextPosition.x *= -1;
         
+        
         //Set the last position to land at the original x point
         if (i == 1) nextPosition.x /= 2;
         
-        SKAction *followPath = [SKAction followPath:[bezierPath CGPath] asOffset:YES orientToPath:NO duration:2];
+        SKAction *followPath = [SKAction followPath:[bezierPath CGPath] asOffset:YES orientToPath:NO duration:duration];
+        SKAction *rotate;
         if (i == 0) {
             followPath.timingMode = SKActionTimingEaseOut;
+            rotate = [SKAction rotateToAngle:0 -(rotation * M_PI)/180 duration:duration];
         }
         else if (i == 1) {
             followPath.timingMode = SKActionTimingEaseInEaseOut;
+            rotate = [SKAction rotateToAngle:(rotation * M_PI)/180 duration:duration];
         }
         else {
             followPath.timingMode = SKActionTimingEaseIn;
+            rotate = [SKAction rotateToAngle:0 duration:duration];
         }
-        [curveArray addObject:followPath];
+        rotate.timingMode = followPath.timingMode;
+        [curveArray addObject:[SKAction group:@[followPath, rotate]]];
     }
     [curveArray addObject:[SKAction runBlock:^{
         if (self.blockState != BlockState_BlockFlung)
             self.blockState = BlockState_Landed;
     }]];
-    [self runAction:[SKAction sequence:curveArray] withKey:ACTION_DROP_ENVELOPE];
+    [self runAction:[SKAction sequence:curveArray] withKey:ACTION_ENVELOPE_DROP];
 }
 
 #pragma mark - Touch Functions
@@ -130,7 +142,7 @@
             self.blockState = BlockState_PlayerIsHolding;
             
             self.originalPoint = self.position;
-            [self removeActionForKey:ACTION_DROP_ENVELOPE];
+            [self removeActionForKey:ACTION_ENVELOPE_DROP];
             self.zPosition += 20;
         
             [self removePhysics];
@@ -145,7 +157,7 @@
         CGPoint location = [touch locationInNode:[self parent]];
         if (!CGRectContainsPoint(self.frame, location))
         {
-            [self flingTowardsLocation:location];
+            [self flingEnvelopeInDirection:location];
         }
     }
 }
@@ -163,21 +175,6 @@
     }
 }
 
-
-- (void) flingTowardsLocation:(CGPoint)location
-{
-    [self setUpSwipedPhysics];
-    float xDiff = location.x - self.originalPoint.x;
-    float yDiff = location.y - self.originalPoint.y;
-    float xToYRatio = xDiff / (ABS(xDiff) + ABS(yDiff));
-    float yToXRatio = yDiff / (ABS(xDiff) + ABS(yDiff));
-    
-    //Should equal 600 for iPhone
-    float speedFactor = 600;
-    self.physicsBody.velocity = CGVectorMake(speedFactor * xToYRatio, speedFactor * yToXRatio);
-    self.blockState = BlockState_BlockFlung;
-}
-
 - (void) setSlot:(int)newSlot
 {
     _slot = newSlot;
@@ -189,6 +186,70 @@
     
     self.position = CGPointMake(newSlot * 125 - 100 + offset, self.position.y);
 
+}
+
+#pragma mark - Movement Functions
+
+
+- (void) flingEnvelopeInDirection:(CGPoint)location
+{
+    CGPoint destination = [(LRGamePlayLayer*)self.parent flungEnvelopeDestination];
+    
+    //Make sure the object is being flung towards the mailman
+    if (distanceBetweenPoints(destination, location) >= distanceBetweenPoints(destination, self.originalPoint) || [[LRGameStateManager shared] isLetterSectionFull]) {
+        [self flingTowardsLocation:location];
+        return;
+    }
+    
+    //If it is, fling it towards the mailman and add it to the letter section upon arrival
+    float distance = distanceBetweenPoints(destination, self.originalPoint);
+    
+    SKAction *move = [SKAction moveTo:destination duration:distance/self.pixelsPerSecond];
+    SKAction *pause = [SKAction waitForDuration:distance/(2 * self.pixelsPerSecond)];
+    SKAction *zoom = [SKAction scaleTo:0 duration:distance/(2 * self.pixelsPerSecond)];
+    SKAction *pauseAndZoom = [SKAction sequence:@[pause, zoom]];
+    SKAction *moveAndShrink = [SKAction group:@[move, pauseAndZoom]];
+    
+    SKAction *offScreen = [SKAction runBlock:^{
+        [self addLetterToLetterSection];
+    }];
+    [self runAction:[SKAction sequence:@[moveAndShrink, offScreen]] withKey:ACTION_ENVELOPE_FLING];
+    
+    self.blockState = BlockState_BlockFlung;
+}
+
+- (void) addLetterToLetterSection
+{
+    //Add the letter
+    NSMutableDictionary *addLetterInfo = [NSMutableDictionary dictionaryWithObject:self.letter forKey:KEY_GET_LETTER];
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_ADDED_LETTER object:self userInfo:addLetterInfo];
+    
+    //And notify that a new slot is empty
+    NSMutableDictionary *dropLetterInfo = [NSMutableDictionary dictionaryWithObject:[NSNumber numberWithInt:self.slot] forKey:@"slot"];
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LETTER_CLEARED object:self userInfo:dropLetterInfo];
+    [self removeFromParent];
+    
+}
+
+static inline CGFloat distanceBetweenPoints(CGPoint a, CGPoint b) {
+    CGFloat xDiff = a.x - b.x;
+    CGFloat yDiff = a.y - b.y;
+    return sqrtf(powf(xDiff, 2) + powf(yDiff, 2));
+}
+
+- (void) flingTowardsLocation:(CGPoint)location
+{
+    float xDiff = location.x - self.originalPoint.x;
+    float yDiff = location.y - self.originalPoint.y;
+    float xToYRatio = xDiff / (ABS(xDiff) + ABS(yDiff));
+    float yToXRatio = yDiff / (ABS(xDiff) + ABS(yDiff));
+    
+    CGPoint destination = CGPointMake(xToYRatio * SCREEN_WIDTH * 2, yToXRatio * SCREEN_WIDTH * 2);
+    CGFloat distance = distanceBetweenPoints(self.originalPoint, destination);
+    SKAction *move = [SKAction moveTo:destination duration:distance/self.pixelsPerSecond];
+    [self runAction:move withKey:ACTION_ENVELOPE_FLING];
+    
+    self.blockState = BlockState_BlockFlung;
 }
 
 #pragma mark - Destruction Functions

@@ -21,7 +21,7 @@
     if (self = [super initWithImageNamed:IMAGE_NAME_MAILMAN]) {
         self.name = NAME_SPRITE_MAILMAN;
         [self setScale:.7];
-        
+        //self.userInteractionEnabled = YES;
         [self setUpPhysics];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hitByEnvelope:) name:NOTIFICATION_ENVELOPE_HIT_MAILMAN object:nil];
     }
@@ -37,6 +37,8 @@
     
     [[LRCollisionManager shared] setBitMasksForSprite:self];
     [[LRCollisionManager shared] addContactDetectionOfSpritesNamed:NAME_SPRITE_FALLING_ENVELOPE toSprite:self];
+    
+    [self mailBagLocation];
 }
 
 # pragma mark - Contact Functions
@@ -58,4 +60,21 @@
     
 }
 
+- (CGPoint)mailBagLocation
+{
+    //Returns the location of the mailbag in the parent node
+    return CGPointMake(-170.0, -28.0);
+}
+
+/*
+ - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+ {
+ for (UITouch *touch in touches)
+ {
+ CGPoint location = [touch locationInNode:[self parent]];
+ NSLog(@"%f, %f", location.x, location.y);
+ }
+ 
+ }
+ */
 @end

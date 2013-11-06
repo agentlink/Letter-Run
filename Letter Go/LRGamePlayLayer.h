@@ -20,5 +20,5 @@
 @property LRButton *pauseButton;
 
 - (void) dropInitialLetters;
-
+- (CGPoint) flungEnvelopeDestination;
 @end

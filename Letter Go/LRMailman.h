@@ -10,5 +10,6 @@
 
 @interface LRMailman : LRObject
 
+- (CGPoint) mailBagLocation;
 
 @end

@@ -117,18 +117,9 @@
     
     [self enumerateChildNodesWithName:NAME_SPRITE_FALLING_ENVELOPE usingBlock:^(SKNode *node, BOOL *stop) {
         LRFallingEnvelope *envelope = (LRFallingEnvelope*)node;
-        NSMutableDictionary *dropLetterInfo = [NSMutableDictionary dictionaryWithObject:[NSNumber numberWithInt:envelope.slot] forKey:@"slot"];
-        if (CGRectContainsRect(extendedLetterFrame, envelope.frame))
-        {
-            //Post the notification
-            NSMutableDictionary *addLetterInfo = [NSMutableDictionary dictionaryWithObject:envelope.letter forKey:KEY_GET_LETTER];
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_ADDED_LETTER object:self userInfo:addLetterInfo];
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LETTER_CLEARED object:self userInfo:dropLetterInfo];
-            [childrenToRemove addObject:envelope];
-        }
-        
         if (!CGRectIntersectsRect(envelope.frame, sceneFrame) &&
             (envelope.blockState == BlockState_Landed || envelope.blockState == BlockState_BlockFlung)) {
+            NSMutableDictionary *dropLetterInfo = [NSMutableDictionary dictionaryWithObject:[NSNumber numberWithInt:envelope.slot] forKey:@"slot"];
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LETTER_CLEARED object:self userInfo:dropLetterInfo];
             [childrenToRemove addObject:envelope];
         }
@@ -215,4 +206,11 @@
     [[ self.letterSlots objectAtIndex:slot] removeLastObject];
     
 }
+
+#pragma mark - Board Properties
+- (CGPoint) flungEnvelopeDestination
+{
+    return [self.mailman mailBagLocation];
+}
+
 @end
