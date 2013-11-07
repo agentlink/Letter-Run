@@ -30,10 +30,9 @@
     return self;
 }
 
-- (void) addParallaxNode:(LRParallaxNode *)node toIndex:(uint)index withRelativeSpeed: (CGFloat) relativeSpeed;
+- (void) addParallaxNode:(LRParallaxNode *)node toIndex:(uint)index;
 {
-    node.relativeSpeed = relativeSpeed;
-    
+    node.relativeSpeed = [[[[LRDifficultyManager shared] parallaxLayerSpeeds] objectAtIndex:index] floatValue];
     if (!self.parallaxNodes) self.parallaxNodes = [NSMutableArray arrayWithObject:node];
     else [self.parallaxNodes insertObject:node atIndex:index];
 }

@@ -10,6 +10,7 @@
 #import "LRCollisionManager.h"
 #import "LRGameStateManager.h"
 #import "LRGameScene.h"
+#import "LRDifficultyManager.h"
 
 @interface LRFallingEnvelope ()
 @property BOOL playerMovedTouch;
@@ -32,7 +33,7 @@
     if (self = [super initWithLetter:letter]) {
         self.blockState = BlockState_Falling;
         self.name = NAME_SPRITE_FALLING_ENVELOPE;
-        self.pixelsPerSecond = 300;
+        self.pixelsPerSecond = [[LRDifficultyManager shared] flingLetterSpeed];
 
         [self setUpPhysics];
     }

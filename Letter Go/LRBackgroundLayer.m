@@ -17,13 +17,6 @@
 @property NSMutableArray *backgroundLayers;
 @end
 
-enum {
-    BackgroundIndex_Sky = 0,
-    BackgroundIndex_Mountains,
-    BackgroundIndex_Hills,
-    BackgroundIndex_Grass
-};
-
 @implementation LRBackgroundLayer
 
 - (id) init
@@ -41,17 +34,13 @@ enum {
     self.parallaxManager = [[LRParallaxManager alloc] init];
     [self addChild:self.parallaxManager];
     [self.parallaxManager addParallaxNode:[[LRCloudLayer alloc] init]
-                                  toIndex:BackgroundIndex_Sky
-                        withRelativeSpeed:1];
+                                  toIndex:BackgroundIndex_Sky];
     [self.parallaxManager addParallaxNode:[LRParallaxNode nodeWithImageNamed:@"Background_Mountains.png"]
-                                  toIndex:BackgroundIndex_Mountains
-                        withRelativeSpeed:2];
+                                  toIndex:BackgroundIndex_Mountains];
     [self.parallaxManager addParallaxNode:[LRParallaxNode nodeWithImageNamed:@"Background_Hills.png"]
-                                  toIndex:BackgroundIndex_Hills
-                        withRelativeSpeed:3];
+                                  toIndex:BackgroundIndex_Hills];
     [self.parallaxManager addParallaxNode:[[LRGrassLayer alloc] init]
-                                  toIndex:BackgroundIndex_Grass
-                        withRelativeSpeed:4];
+                                  toIndex:BackgroundIndex_Grass];
     
     for (int i = 0; i < [self.parallaxManager count]; i++)
     {

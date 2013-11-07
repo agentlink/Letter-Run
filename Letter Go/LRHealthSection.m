@@ -40,13 +40,10 @@
         self.initialTime = currentTime;
         return;
     }
-    if ([[LRDifficultyManager shared] healthFallsOverTime]) {
-        //This will be gotten from the difficulty manager
-        //TODO: There might be a problem that this is inextricably linked to the frame rate
-        float speedFactor = 10;
-        self.healthBar.position = CGPointMake(self.healthBar.position.x - ((currentTime - self.initialTime) * speedFactor), self.healthBar.position.y);
-        self.initialTime = currentTime;
-    }
+    //TODO: There might be a problem that this is inextricably linked to the frame rate
+    float speedFactor = [[LRDifficultyManager shared] healthSpeedFactor];
+    self.healthBar.position = CGPointMake(self.healthBar.position.x - ((currentTime - self.initialTime) * speedFactor), self.healthBar.position.y);
+    self.initialTime = currentTime;
     
     CGRect barFrame = self.healthBar.frame;
     barFrame.origin = [self.parent convertPoint:barFrame.origin fromNode:self.healthBar];

@@ -8,11 +8,20 @@
 
 #import "LRObject.h"
 #import "LRParallaxNode.h"
+
 @interface LRParallaxManager : LRObject
 
-- (void) addParallaxNode:(LRParallaxNode *)node toIndex:(uint)index withRelativeSpeed: (CGFloat) relativeSpeed;
+enum {
+    BackgroundIndex_Sky = 0,
+    BackgroundIndex_Mountains,
+    BackgroundIndex_Hills,
+    BackgroundIndex_Grass
+};
+
+- (void) addParallaxNode:(LRParallaxNode *)node toIndex:(uint)index;
 
 - (NSUInteger) count;
+
 - (LRParallaxNode*) objectAtIndex:(NSUInteger)index;
 
 @end

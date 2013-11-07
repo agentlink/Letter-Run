@@ -22,8 +22,9 @@ typedef enum  {
 - (void) resetLevel;
 
 - (CGFloat) letterDropPeriod;
+- (CGFloat) healthSpeedFactor;
 - (CGFloat) parallaxSpeedFactor;
-
+- (NSArray*) parallaxLayerSpeeds;
 
 #pragma mark - Score Properties
 //Determines whether the length of a word affects its score linearly or exponentially
@@ -62,11 +63,16 @@ typedef enum  {
 @property (nonatomic) IncreaseStyle letterDropDecreaseStyle;
 //Only set if IncreaseStyle_Linear
 @property (nonatomic) CGFloat minimumDropPeriod;
+@property (nonatomic) CGFloat flingLetterSpeed;
 
 #pragma mark - Health Bar Properties
 //How many pixels the health bar moves per point scored
 @property (nonatomic) CGFloat healthBarToScoreRatio;
-@property (nonatomic) BOOL healthFallsOverTime;
+@property (nonatomic) CGFloat initialHealthFallingRate;
+//Does the health bar fall faster over time?
+@property (nonatomic) CGFloat healthSpeedIncreaseFactor;
+@property (nonatomic) IncreaseStyle healthSpeedIncreaseStyle;
+@property (nonatomic) CGFloat healthBarMaxSpeed;
 
 #pragma mark - Letter Generation Properties
 @property int maxNumber_consonants;
@@ -75,6 +81,8 @@ typedef enum  {
 #pragma mark - Background Layer Properties
 @property CGFloat initialScrollingSpeed;
 @property CGFloat scrollingSpeedIncrease;
+@property CGFloat parallaxSpeed_Sky, parallaxSpeed_Mountain, parallaxSpeed_Hills, parallaxSpeed_Grass;
+
 
 #pragma mark - Mailman Properties
 @property CGFloat mailmanHitDamage;
