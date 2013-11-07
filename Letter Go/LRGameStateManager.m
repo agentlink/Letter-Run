@@ -94,7 +94,7 @@ static LRGameStateManager *_shared = nil;
     self.gameIsOver = TRUE;
     NSLog(@"Game over");
     //Make all of the objects in the game non-touch responsive
-    [self setGameBoardObjectTouchability:FALSE];
+    [self setGameBoardObjectTouchability:NO];
 
     SKLabelNode *gameOverLabel = [[SKLabelNode alloc] init];
     gameOverLabel.text = @"Game Over";
@@ -133,6 +133,7 @@ static LRGameStateManager *_shared = nil;
     }];
     [[gpl actionForKey:ACTION_ENVELOPE_LOOP] setSpeed:0];
     [gpl.letterSection setUserInteractionEnabled:NO];
+    [self setGameBoardObjectTouchability:NO];
 
 }
 

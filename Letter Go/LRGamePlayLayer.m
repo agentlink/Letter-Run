@@ -8,7 +8,6 @@
 
 #import "LRGamePlayLayer.h"
 #import "LRLetterBlockGenerator.h"
-
 #import "LRCollisionManager.h"
 #import "LRGameStateManager.h"
 #import "LRDifficultyManager.h"
@@ -135,6 +134,8 @@
     }
     else {
         [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_PAUSE_GAME object:nil];
+        self.devPause = [[LRDevPauseMenuVC alloc] init];
+        [self.scene.view addSubview:self.devPause.view];
     }
 }
 

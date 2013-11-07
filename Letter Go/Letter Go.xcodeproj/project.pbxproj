@@ -25,6 +25,8 @@
 		0049695F17F8B5B900176F2D /* LRLetterSlot.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049695E17F8B5B900176F2D /* LRLetterSlot.m */; };
 		0049696517FA0CB400176F2D /* LRObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049696417FA0CB400176F2D /* LRObject.m */; };
 		0055EC871826F21C00717DF7 /* LRMailman.m in Sources */ = {isa = PBXBuildFile; fileRef = 0055EC861826F21C00717DF7 /* LRMailman.m */; };
+		00641EA9182C42D30098EC38 /* LRDevPauseMenuVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 00641EA7182C42D30098EC38 /* LRDevPauseMenuVC.m */; };
+		00641EAA182C42D30098EC38 /* LRDevPauseMenuVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 00641EA8182C42D30098EC38 /* LRDevPauseMenuVC.xib */; };
 		008428F01800997800908E5D /* LetterProbabilities.plist in Resources */ = {isa = PBXBuildFile; fileRef = 008428EF1800997800908E5D /* LetterProbabilities.plist */; };
 		008428F318009F6300908E5D /* LRLetterGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 008428F218009F6300908E5D /* LRLetterGenerator.m */; };
 		008428F61801EABB00908E5D /* LRSubmitButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 008428F51801EABB00908E5D /* LRSubmitButton.m */; };
@@ -104,6 +106,9 @@
 		0049696417FA0CB400176F2D /* LRObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRObject.m; sourceTree = "<group>"; };
 		0055EC851826F21C00717DF7 /* LRMailman.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRMailman.h; sourceTree = "<group>"; };
 		0055EC861826F21C00717DF7 /* LRMailman.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRMailman.m; sourceTree = "<group>"; };
+		00641EA6182C42D30098EC38 /* LRDevPauseMenuVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRDevPauseMenuVC.h; sourceTree = "<group>"; };
+		00641EA7182C42D30098EC38 /* LRDevPauseMenuVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRDevPauseMenuVC.m; sourceTree = "<group>"; };
+		00641EA8182C42D30098EC38 /* LRDevPauseMenuVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LRDevPauseMenuVC.xib; sourceTree = "<group>"; };
 		008428EF1800997800908E5D /* LetterProbabilities.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = LetterProbabilities.plist; sourceTree = "<group>"; };
 		008428F118009F6300908E5D /* LRLetterGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRLetterGenerator.h; sourceTree = "<group>"; };
 		008428F218009F6300908E5D /* LRLetterGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterGenerator.m; sourceTree = "<group>"; };
@@ -300,6 +305,16 @@
 			name = "Letter Section";
 			sourceTree = "<group>";
 		};
+		00641EA5182C2C210098EC38 /* Dev Pause Menu */ = {
+			isa = PBXGroup;
+			children = (
+				00641EA6182C42D30098EC38 /* LRDevPauseMenuVC.h */,
+				00641EA7182C42D30098EC38 /* LRDevPauseMenuVC.m */,
+				00641EA8182C42D30098EC38 /* LRDevPauseMenuVC.xib */,
+			);
+			name = "Dev Pause Menu";
+			sourceTree = "<group>";
+		};
 		008428EE1800992D00908E5D /* Property Lists */ = {
 			isa = PBXGroup;
 			children = (
@@ -416,6 +431,7 @@
 		00CDF18317F483C4003065F6 /* Game Screen Sections */ = {
 			isa = PBXGroup;
 			children = (
+				00641EA5182C2C210098EC38 /* Dev Pause Menu */,
 				0049695C17F8B58F00176F2D /* Letter Section */,
 				00CDF18417F483E3003065F6 /* LRScreenSection.h */,
 				00CDF18517F483E3003065F6 /* LRScreenSection.m */,
@@ -505,6 +521,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				00641EAA182C42D30098EC38 /* LRDevPauseMenuVC.xib in Resources */,
 				00B43D94182887AA00261468 /* Pause_Temp.png in Resources */,
 				009B727A182991CB00A6CEA0 /* Manford.png in Resources */,
 				000BC14F181C6B4600BEC563 /* Background_Mountains.png in Resources */,
@@ -556,6 +573,7 @@
 				00CDF18C17F4899B003065F6 /* LRLetterSection.m in Sources */,
 				000BC15D1820356500BEC563 /* LRCloudLayer.m in Sources */,
 				0007FB3C180C79B600E55B0D /* LRFallingEnvelope.m in Sources */,
+				00641EA9182C42D30098EC38 /* LRDevPauseMenuVC.m in Sources */,
 				00CDF17917F478D7003065F6 /* LRLayer.m in Sources */,
 				00CDF17517F478A1003065F6 /* LRGameScene.m in Sources */,
 				00B43D92182834CF00261468 /* LRButton.m in Sources */,

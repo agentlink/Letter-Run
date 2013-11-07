@@ -11,6 +11,7 @@
 #import "LRLetterSection.h"
 #import "LRMailman.h"
 #import "LRButton.h"
+#import "LRDevPauseMenuVC.h"
 
 @interface LRGamePlayLayer : LRLayer
 
@@ -18,6 +19,8 @@
 @property LRLetterSection *letterSection;
 @property LRMailman *mailman;
 @property LRButton *pauseButton;
+
+@property (nonatomic, strong) LRDevPauseMenuVC *devPause;
 
 - (void) dropInitialLetters;
 - (CGPoint) flungEnvelopeDestination;

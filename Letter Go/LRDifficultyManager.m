@@ -31,45 +31,47 @@ static LRDifficultyManager *_shared = nil;
 - (id) init
 {
     if (self = [super init]) {
-        
-        //TODO: replace with NSUserDefaults call when DevPause menu added
-        self.level = 1;
-        self.totalScoreFactor = 1.2;
-        self.scorePerLetter = 10;
-        self.healthBarToScoreRatio = .75;
-        self.scoreIncreaseStyle = IncreaseStyle_Exponential;
-
-        //Add levelScoreIncreaseFactor value if style is not IncreaseStyle_None
-        
-        self.levelScoreIncreaseStyle = IncreaseStyle_Linear;
-        self.levelScoreIncreaseFactor = 50;
-        self.initialNextLevelScore = 150;
-
-        self.initialHealthFallingRate = 8;
-        self.healthSpeedIncreaseFactor = .5;
-        self.healthSpeedIncreaseStyle = IncreaseStyle_Linear;
-        self.healthBarMaxSpeed = 12;
-
-        self.intialLetterDropPeriod = 2;
-        self.letterDropPeriodDecreaseRate = 1.2;
-        self.letterDropDecreaseStyle = IncreaseStyle_Exponential;
-        self.minimumDropPeriod = .7;
-        self.flingLetterSpeed = 300;
-        
-        self.maxNumber_consonants = 3;
-        self.maxNumber_vowels = 3;
-        
-        self.initialScrollingSpeed = 40;
-        self.scrollingSpeedIncrease = 10;
-
-        self.parallaxSpeed_Sky = .7;
-        self.parallaxSpeed_Mountain = 1.8;
-        self.parallaxSpeed_Hills = 2.8;
-        self.parallaxSpeed_Grass = 3.7;
-        
-        self.mailmanHitDamage = 20;
+        [self resetDifficultyValues];
     }
     return self;
+}
+
+- (void) resetDifficultyValues {
+    self.level = 1;
+    self.totalScoreFactor = 1.2;
+    self.scorePerLetter = 10;
+    self.healthBarToScoreRatio = .75;
+    self.scoreIncreaseStyle = IncreaseStyle_Exponential;
+    
+    //Add levelScoreIncreaseFactor value if style is not IncreaseStyle_None
+    
+    self.levelScoreIncreaseStyle = IncreaseStyle_Linear;
+    self.levelScoreIncreaseFactor = 50;
+    self.initialNextLevelScore = 150;
+    
+    self.initialHealthFallingRate = 8;
+    self.healthSpeedIncreaseFactor = .5;
+    self.healthSpeedIncreaseStyle = IncreaseStyle_Linear;
+    self.healthBarMaxSpeed = 12;
+    
+    self.intialLetterDropPeriod = 2;
+    self.letterDropPeriodDecreaseRate = 1.2;
+    self.letterDropDecreaseStyle = IncreaseStyle_Exponential;
+    self.minimumDropPeriod = .7;
+    self.flingLetterSpeed = 300;
+    
+    self.maxNumber_consonants = 3;
+    self.maxNumber_vowels = 3;
+    
+    self.initialScrollingSpeed = 40;
+    self.scrollingSpeedIncrease = 10;
+    
+    self.parallaxSpeed_Sky = .7;
+    self.parallaxSpeed_Mountain = 1.8;
+    self.parallaxSpeed_Hills = 2.8;
+    self.parallaxSpeed_Grass = 3.7;
+    
+    self.mailmanHitDamage = 20;
 }
 
 #pragma mark - Getters and Setters
