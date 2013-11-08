@@ -27,6 +27,7 @@
 		0055EC871826F21C00717DF7 /* LRMailman.m in Sources */ = {isa = PBXBuildFile; fileRef = 0055EC861826F21C00717DF7 /* LRMailman.m */; };
 		00641EA9182C42D30098EC38 /* LRDevPauseMenuVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 00641EA7182C42D30098EC38 /* LRDevPauseMenuVC.m */; };
 		00641EAA182C42D30098EC38 /* LRDevPauseMenuVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 00641EA8182C42D30098EC38 /* LRDevPauseMenuVC.xib */; };
+		00641EB3182D7BFF0098EC38 /* LRSliderLabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00641EB2182D7BFF0098EC38 /* LRSliderLabelView.m */; };
 		008428F01800997800908E5D /* LetterProbabilities.plist in Resources */ = {isa = PBXBuildFile; fileRef = 008428EF1800997800908E5D /* LetterProbabilities.plist */; };
 		008428F318009F6300908E5D /* LRLetterGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 008428F218009F6300908E5D /* LRLetterGenerator.m */; };
 		008428F61801EABB00908E5D /* LRSubmitButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 008428F51801EABB00908E5D /* LRSubmitButton.m */; };
@@ -109,6 +110,8 @@
 		00641EA6182C42D30098EC38 /* LRDevPauseMenuVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRDevPauseMenuVC.h; sourceTree = "<group>"; };
 		00641EA7182C42D30098EC38 /* LRDevPauseMenuVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRDevPauseMenuVC.m; sourceTree = "<group>"; };
 		00641EA8182C42D30098EC38 /* LRDevPauseMenuVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LRDevPauseMenuVC.xib; sourceTree = "<group>"; };
+		00641EB1182D7BFF0098EC38 /* LRSliderLabelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRSliderLabelView.h; sourceTree = "<group>"; };
+		00641EB2182D7BFF0098EC38 /* LRSliderLabelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRSliderLabelView.m; sourceTree = "<group>"; };
 		008428EF1800997800908E5D /* LetterProbabilities.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = LetterProbabilities.plist; sourceTree = "<group>"; };
 		008428F118009F6300908E5D /* LRLetterGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRLetterGenerator.h; sourceTree = "<group>"; };
 		008428F218009F6300908E5D /* LRLetterGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterGenerator.m; sourceTree = "<group>"; };
@@ -311,6 +314,8 @@
 				00641EA6182C42D30098EC38 /* LRDevPauseMenuVC.h */,
 				00641EA7182C42D30098EC38 /* LRDevPauseMenuVC.m */,
 				00641EA8182C42D30098EC38 /* LRDevPauseMenuVC.xib */,
+				00641EB1182D7BFF0098EC38 /* LRSliderLabelView.h */,
+				00641EB2182D7BFF0098EC38 /* LRSliderLabelView.m */,
 			);
 			name = "Dev Pause Menu";
 			sourceTree = "<group>";
@@ -562,6 +567,7 @@
 				00CDF17F17F4799B003065F6 /* LRBackgroundLayer.m in Sources */,
 				0049695F17F8B5B900176F2D /* LRLetterSlot.m in Sources */,
 				0055EC871826F21C00717DF7 /* LRMailman.m in Sources */,
+				00641EB3182D7BFF0098EC38 /* LRSliderLabelView.m in Sources */,
 				0049695517F8A75B00176F2D /* LRLetterBlockGenerator.m in Sources */,
 				008428F318009F6300908E5D /* LRLetterGenerator.m in Sources */,
 				008428F61801EABB00908E5D /* LRSubmitButton.m in Sources */,

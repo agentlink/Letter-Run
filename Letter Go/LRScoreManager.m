@@ -78,7 +78,7 @@ static LRScoreManager *_shared = nil;
 #pragma mark - Getters + Setters
 + (int) scoreForWord:(NSString*)word
 {
-    float scoreFactor = [[LRDifficultyManager shared] totalScoreFactor];
+    float scoreFactor = [[LRDifficultyManager shared] scoreLengthFactor];
     float baseScore = [word length] * [[LRDifficultyManager shared] scorePerLetter];
     
     if ([[LRDifficultyManager shared] scoreIncreaseStyle] == IncreaseStyle_Exponential)

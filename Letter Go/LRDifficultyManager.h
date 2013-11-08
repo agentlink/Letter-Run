@@ -30,7 +30,7 @@ typedef enum  {
 //Determines whether the length of a word affects its score linearly or exponentially
 @property (nonatomic) IncreaseStyle scoreIncreaseStyle;
 //The value the score is multiplied by/to the power of
-@property (nonatomic) CGFloat totalScoreFactor;
+@property (nonatomic) CGFloat scoreLengthFactor;
 //The score per letter BEFORE the total score factor is applied
 @property (nonatomic) CGFloat scorePerLetter;
 

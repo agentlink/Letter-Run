@@ -38,7 +38,7 @@ static LRDifficultyManager *_shared = nil;
 
 - (void) resetDifficultyValues {
     self.level = 1;
-    self.totalScoreFactor = 1.2;
+    self.scoreLengthFactor = 1.2;
     self.scorePerLetter = 10;
     self.healthBarToScoreRatio = .75;
     self.scoreIncreaseStyle = IncreaseStyle_Exponential;
