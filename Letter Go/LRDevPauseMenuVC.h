@@ -13,12 +13,14 @@
     UIScrollView *scrollView;
     UIPageControl* pageControl;
     LRSliderLabelView *scorePerLetterSlider;
+    UIButton *quitButton;
+    
     BOOL pageControlBeingUsed;
 }
 
 @property (nonatomic, retain) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, retain) IBOutlet UIPageControl *pageControl;
-
+@property (nonatomic, retain) IBOutlet UIButton *quitButton;
 @property (nonatomic, retain) LRSliderLabelView *scorePerLetterSlider;
 
 @property BOOL pageControlBeingUsed;

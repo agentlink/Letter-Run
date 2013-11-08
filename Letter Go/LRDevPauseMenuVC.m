@@ -18,6 +18,7 @@
 @synthesize pageControl;
 @synthesize pageControlBeingUsed;
 @synthesize scorePerLetterSlider;
+@synthesize quitButton;
 
 #pragma mark - Set Up/Initialization
 
@@ -52,8 +53,8 @@
     
     //Page Control
     self.pageControl.numberOfPages = self.numPages;
-    
-    //Slider
+
+    [self.view addSubview:quitButton];
 }
 
 - (void) setUpPage:(int)pageNum inView:(UIView*)view
@@ -64,6 +65,13 @@
         scorePerLetterSlider = [[LRSliderLabelView alloc] initWithFrame:scoreFrame];
         [view addSubview:scorePerLetterSlider];
     }
+}
+
+#pragma mark - Quit Button
+
+- (IBAction)quitButtonSelected:(UIButton*)sender{
+    [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_CONTINUE_GAME object:nil];
+    [self.view removeFromSuperview];
 }
 
 #pragma mark - Scroll View Functions

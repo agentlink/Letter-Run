@@ -149,6 +149,7 @@ static LRGameStateManager *_shared = nil;
     }];
     [[gpl actionForKey:ACTION_ENVELOPE_LOOP] setSpeed:1];
     [gpl.letterSection setUserInteractionEnabled:YES];
+    [self setGameBoardObjectTouchability:YES];
 
 }
 
