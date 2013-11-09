@@ -7,9 +7,11 @@
 //
 
 #import "LRDevPauseMenuVC.h"
+#import "LRDifficultyConstants.h"
 
 @interface LRDevPauseMenuVC  ()
 @property NSUInteger numPages;
+@property NSDictionary *difficultyDict;
 @end
 
 @implementation LRDevPauseMenuVC
@@ -17,8 +19,9 @@
 @synthesize scrollView;
 @synthesize pageControl;
 @synthesize pageControlBeingUsed;
-@synthesize scorePerLetterSlider;
+@synthesize healthBarSpeedSlider;
 @synthesize quitButton;
+@synthesize difficultyDict;
 
 #pragma mark - Set Up/Initialization
 
@@ -27,8 +30,15 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.numPages = 4;
+        [self loadDifficultyDictionary];
     }
     return self;
+}
+
+- (void) loadDifficultyDictionary
+{
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"DifficultyVariables" ofType:@"plist"];
+    difficultyDict = [NSDictionary dictionaryWithContentsOfFile:plistPath];
 }
 
 - (void)viewDidLoad
@@ -61,9 +71,9 @@
 {
     if (pageNum == 0) {
         //Score per letter
-        CGRect scoreFrame = CGRectMake(34, 0, 120, SCREEN_HEIGHT * .8);
-        scorePerLetterSlider = [[LRSliderLabelView alloc] initWithFrame:scoreFrame];
-        [view addSubview:scorePerLetterSlider];
+        CGRect frame = CGRectMake(34, 0, 120, SCREEN_HEIGHT * .8);
+        healthBarSpeedSlider = [[LRSliderLabelView alloc] initWithFrame:frame andDictionary:[difficultyDict objectForKey:DV_INTIAL_HEALTH_BAR_SPEED]];
+        [view addSubview:healthBarSpeedSlider];
     }
 }
 

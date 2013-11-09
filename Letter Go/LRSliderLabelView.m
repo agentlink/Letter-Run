@@ -8,10 +8,19 @@
 
 #import "LRSliderLabelView.h"
 #import "LRConstants.h"
+
+#define USER_DEFAULT_KEY            @"userDefaultTag"
+
+@interface LRSliderLabelView ()
+@property NSDictionary *dataDict;
+@end
+
 @implementation LRSliderLabelView
-@synthesize slider, textField, variableTitle;
-- (id) initWithFrame:(CGRect)frame {
+@synthesize slider, textField, variableTitle, dataDict;
+
+- (id) initWithFrame:(CGRect)frame andDictionary:(NSDictionary*)dict{
     if (self = [super initWithFrame:frame]) {
+        self.dataDict = dict;
         [self createContent];
     }
     return self;
@@ -25,6 +34,8 @@
    // [self debug_colors];
 }
 
+#pragma mark - Slider Functions
+
 - (void) setUpSlider
 {
     slider = [[UISlider alloc] init];
@@ -36,10 +47,32 @@
     CGRect slideFrame = CGRectMake(0, self.frame.size.height - slideHeight, slideWidth, slideHeight);
     slider.frame = slideFrame;
     
+    slider.minimumValue = [[dataDict objectForKey:@"min"] floatValue];
+    slider.maximumValue = [[dataDict objectForKey:@"max"] floatValue];
+    slider.value = [[NSUserDefaults standardUserDefaults] floatForKey:[dataDict objectForKey:USER_DEFAULT_KEY]];
+    
     [slider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+    [slider addTarget:self action:@selector(sliderFinishedMoving:) forControlEvents:UIControlEventTouchUpInside];
+    [slider addTarget:self action:@selector(sliderFinishedMoving:) forControlEvents:UIControlEventTouchUpOutside];
+
     [self addSubview:slider];
 }
 
+- (IBAction)sliderValueChanged:(id)sender
+{
+    NSNumberFormatter *nf = [[NSNumberFormatter alloc] init];
+    [nf setNumberStyle:NSNumberFormatterDecimalStyle];
+    [nf setMaximumFractionDigits:2];
+    [nf setMinimumFractionDigits:2];
+    textField.text = [NSString stringWithFormat:@"%@", [self formattedFloat:[(UISlider*)sender value]]];
+}
+
+- (IBAction)sliderFinishedMoving:(id)sender
+{
+    NSString *notificationName = [dataDict objectForKey:USER_DEFAULT_KEY];
+    [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:slider.value] forKey:notificationName]];
+    
+}
 - (void) setUpTextField
 {
     CGFloat textWidth = self.frame.size.width/2;
@@ -75,7 +108,7 @@
 {
     variableTitle = [[UILabel alloc] init];
     variableTitle.font = [UIFont systemFontOfSize:10];
-    variableTitle.text = [NSString stringWithFormat:@"Maximum Score Per Letter"];
+    variableTitle.text = [dataDict objectForKey:@"title"];
     variableTitle.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.width/4);
     variableTitle.numberOfLines = 0;
     variableTitle.textAlignment = NSTextAlignmentCenter;
@@ -98,15 +131,6 @@
     slider.backgroundColor = [UIColor greenColor];
     textField.backgroundColor = [UIColor blueColor];
     variableTitle.backgroundColor = [UIColor purpleColor];
-}
-
-- (IBAction)sliderValueChanged:(id)sender
-{
-    NSNumberFormatter *nf = [[NSNumberFormatter alloc] init];
-    [nf setNumberStyle:NSNumberFormatterDecimalStyle];
-    [nf setMaximumFractionDigits:2];
-    [nf setMinimumFractionDigits:2];
-    textField.text = [NSString stringWithFormat:@"%@", [self formattedFloat:[(UISlider*)sender value]]];
 }
 
 - (IBAction)textFieldDidEndEditing:(UITextField *)field

@@ -14,6 +14,9 @@
     UILabel *variableTitle;
 }
 
+- (id) initWithFrame:(CGRect)frame andDictionary:(NSDictionary*)dict;
+
+
 @property (nonatomic, retain) UISlider *slider;
 @property (nonatomic, retain) UITextField *textField;
 @property (nonatomic, retain) UILabel *variableTitle;

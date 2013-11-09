@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>DV_INTIAL_HEALTH_BAR_SPEED</key>
+	<dict>
+		<key>description</key>
+		<string>How fast is the health bar&apos;s initial speed?</string>
+		<key>title</key>
+		<string>Initial Health Bar Speed</string>
+		<key>initialValue</key>
+		<integer>8</integer>
+		<key>max</key>
+		<string>20</string>
+		<key>min</key>
+		<string>0</string>
+		<key>userDefaultTag</key>
+		<string>DV_INTIAL_HEALTH_BAR_SPEED</string>
+	</dict>
+</dict>
+</plist>

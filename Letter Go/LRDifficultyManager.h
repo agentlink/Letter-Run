@@ -7,6 +7,9 @@
 //
 
 #import "LRObject.h"
+#import "LRDifficultyConstants.h"
+
+#define VALUE_CHANGED_STRING                @"_Value_Changed"
 
 @interface LRDifficultyManager : LRObject
 
@@ -20,6 +23,7 @@ typedef enum  {
 
 - (void) increaseLevel;
 - (void) resetLevel;
+- (void) loadUserDefaults;
 
 - (CGFloat) letterDropPeriod;
 - (CGFloat) healthSpeedFactor;

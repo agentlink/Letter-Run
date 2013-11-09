@@ -8,6 +8,7 @@
 
 #import "LRDifficultyManager.h"
 #import "LRParallaxManager.h"
+#import "LRDifficultyManager+Notifications.h"
 
 @interface LRDifficultyManager ()
 @property (nonatomic) int level;
@@ -32,6 +33,10 @@ static LRDifficultyManager *_shared = nil;
 {
     if (self = [super init]) {
         [self resetDifficultyValues];
+        [self loadUserDefaults];
+        //Add check here to see if user defaults have been set
+//        [self setUserDefaults];
+        [self loadNotifications];
     }
     return self;
 }
@@ -72,6 +77,19 @@ static LRDifficultyManager *_shared = nil;
     self.parallaxSpeed_Grass = 3.7;
     
     self.mailmanHitDamage = 20;
+}
+
+- (void) setUserDefaults
+{
+    [[NSUserDefaults standardUserDefaults] setFloat:self.initialHealthFallingRate forKey:DV_INTIAL_HEALTH_BAR_SPEED];
+    NSLog(@"Set falling rate: %f", self.initialHealthFallingRate);
+
+}
+
+- (void) loadUserDefaults
+{
+    self.initialHealthFallingRate = [[NSUserDefaults standardUserDefaults] floatForKey:DV_INTIAL_HEALTH_BAR_SPEED];
+    NSLog(@"Loaded falling rate: %f", self.initialHealthFallingRate);
 }
 
 #pragma mark - Getters and Setters

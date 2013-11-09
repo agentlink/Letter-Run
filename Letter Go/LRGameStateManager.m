@@ -134,6 +134,10 @@ static LRGameStateManager *_shared = nil;
     [[gpl actionForKey:ACTION_ENVELOPE_LOOP] setSpeed:0];
     [gpl.letterSection setUserInteractionEnabled:NO];
     [self setGameBoardObjectTouchability:NO];
+    
+    gpl.devPause = [[LRDevPauseMenuVC alloc] init];
+    [gpl.scene.view addSubview:gpl.devPause.view];
+
 
 }
 
