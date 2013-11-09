@@ -38,8 +38,9 @@
 		009CC29E180349E700C0423D /* LRDictionaryChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 009CC29D180349E700C0423D /* LRDictionaryChecker.m */; };
 		00AC2804182EDAC100B3C0EB /* DifficultyVariables.plist in Resources */ = {isa = PBXBuildFile; fileRef = 00AC2803182EDAC100B3C0EB /* DifficultyVariables.plist */; };
 		00AC2807182EE1A300B3C0EB /* LRDifficultyManager+Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = 00AC2806182EE1A300B3C0EB /* LRDifficultyManager+Notifications.m */; };
+		00AC280E182EEAD400B3C0EB /* Pause_Selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 00AC280C182EEAD400B3C0EB /* Pause_Selected.png */; };
+		00AC280F182EEAD400B3C0EB /* Pause_Unselected.png in Resources */ = {isa = PBXBuildFile; fileRef = 00AC280D182EEAD400B3C0EB /* Pause_Unselected.png */; };
 		00B43D92182834CF00261468 /* LRButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 00B43D91182834CF00261468 /* LRButton.m */; };
-		00B43D94182887AA00261468 /* Pause_Temp.png in Resources */ = {isa = PBXBuildFile; fileRef = 00B43D93182887AA00261468 /* Pause_Temp.png */; };
 		00CDF13717F474EC003065F6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CDF13617F474EC003065F6 /* Foundation.framework */; };
 		00CDF13917F474EC003065F6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CDF13817F474EC003065F6 /* CoreGraphics.framework */; };
 		00CDF13B17F474EC003065F6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CDF13A17F474EC003065F6 /* UIKit.framework */; };
@@ -130,9 +131,10 @@
 		00AC2803182EDAC100B3C0EB /* DifficultyVariables.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DifficultyVariables.plist; sourceTree = "<group>"; };
 		00AC2805182EE1A300B3C0EB /* LRDifficultyManager+Notifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LRDifficultyManager+Notifications.h"; sourceTree = "<group>"; };
 		00AC2806182EE1A300B3C0EB /* LRDifficultyManager+Notifications.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "LRDifficultyManager+Notifications.m"; sourceTree = "<group>"; };
+		00AC280C182EEAD400B3C0EB /* Pause_Selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Pause_Selected.png; sourceTree = "<group>"; };
+		00AC280D182EEAD400B3C0EB /* Pause_Unselected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Pause_Unselected.png; sourceTree = "<group>"; };
 		00B43D90182834CF00261468 /* LRButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRButton.h; sourceTree = "<group>"; };
 		00B43D91182834CF00261468 /* LRButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRButton.m; sourceTree = "<group>"; };
-		00B43D93182887AA00261468 /* Pause_Temp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Pause_Temp.png; sourceTree = "<group>"; };
 		00CDF13317F474EC003065F6 /* Letter Go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Letter Go.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		00CDF13617F474EC003065F6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		00CDF13817F474EC003065F6 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -199,7 +201,8 @@
 		0007FB30180B2FB600E55B0D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				00B43D93182887AA00261468 /* Pause_Temp.png */,
+				00AC280C182EEAD400B3C0EB /* Pause_Selected.png */,
+				00AC280D182EEAD400B3C0EB /* Pause_Unselected.png */,
 				009B7277182991CB00A6CEA0 /* Manford.png */,
 				009B7276182991CB00A6CEA0 /* Envelope_Normal.png */,
 				0007FB31180B2FBB00E55B0D /* Background */,
@@ -275,22 +278,13 @@
 		0049695617F8AB3400176F2D /* Singletons */ = {
 			isa = PBXGroup;
 			children = (
-				0049695717F8AB5D00176F2D /* LRCollisionManager.h */,
-				0049695817F8AB5D00176F2D /* LRCollisionManager.m */,
-				0020001C18245B3E005DDD46 /* LRCollisionManager+ContactFunctions.h */,
-				0020001D18245B3E005DDD46 /* LRCollisionManager+ContactFunctions.m */,
+				00AC2808182EEA1300B3C0EB /* Collision Manager */,
+				00AC2809182EEA2200B3C0EB /* Difficulty Manager */,
+				00AC280A182EEA3F00B3C0EB /* Letters + Words */,
 				00F6F59517FF5234009EDADB /* LRGameStateManager.h */,
 				00F6F59617FF5234009EDADB /* LRGameStateManager.m */,
-				008428F118009F6300908E5D /* LRLetterGenerator.h */,
-				008428F218009F6300908E5D /* LRLetterGenerator.m */,
 				008428F71801F46C00908E5D /* LRScoreManager.h */,
 				008428F81801F46C00908E5D /* LRScoreManager.m */,
-				003E577C180E0D5D00B37B68 /* LRDifficultyManager.h */,
-				003E577D180E0D5D00B37B68 /* LRDifficultyManager.m */,
-				00AC2805182EE1A300B3C0EB /* LRDifficultyManager+Notifications.h */,
-				00AC2806182EE1A300B3C0EB /* LRDifficultyManager+Notifications.m */,
-				009CC29C180349E700C0423D /* LRDictionaryChecker.h */,
-				009CC29D180349E700C0423D /* LRDictionaryChecker.m */,
 			);
 			name = Singletons;
 			sourceTree = "<group>";
@@ -339,6 +333,47 @@
 			name = "Property Lists";
 			sourceTree = "<group>";
 		};
+		00AC2808182EEA1300B3C0EB /* Collision Manager */ = {
+			isa = PBXGroup;
+			children = (
+				0049695717F8AB5D00176F2D /* LRCollisionManager.h */,
+				0049695817F8AB5D00176F2D /* LRCollisionManager.m */,
+				0020001C18245B3E005DDD46 /* LRCollisionManager+ContactFunctions.h */,
+				0020001D18245B3E005DDD46 /* LRCollisionManager+ContactFunctions.m */,
+			);
+			name = "Collision Manager";
+			sourceTree = "<group>";
+		};
+		00AC2809182EEA2200B3C0EB /* Difficulty Manager */ = {
+			isa = PBXGroup;
+			children = (
+				003E577C180E0D5D00B37B68 /* LRDifficultyManager.h */,
+				003E577D180E0D5D00B37B68 /* LRDifficultyManager.m */,
+				00AC2805182EE1A300B3C0EB /* LRDifficultyManager+Notifications.h */,
+				00AC2806182EE1A300B3C0EB /* LRDifficultyManager+Notifications.m */,
+			);
+			name = "Difficulty Manager";
+			sourceTree = "<group>";
+		};
+		00AC280A182EEA3F00B3C0EB /* Letters + Words */ = {
+			isa = PBXGroup;
+			children = (
+				008428F118009F6300908E5D /* LRLetterGenerator.h */,
+				008428F218009F6300908E5D /* LRLetterGenerator.m */,
+				009CC29C180349E700C0423D /* LRDictionaryChecker.h */,
+				009CC29D180349E700C0423D /* LRDictionaryChecker.m */,
+			);
+			name = "Letters + Words";
+			sourceTree = "<group>";
+		};
+		00AC280B182EEA7900B3C0EB /* Menus */ = {
+			isa = PBXGroup;
+			children = (
+				00641EA5182C2C210098EC38 /* Dev Pause Menu */,
+			);
+			name = Menus;
+			sourceTree = "<group>";
+		};
 		00CDF12A17F474EC003065F6 = {
 			isa = PBXGroup;
 			children = (
@@ -346,6 +381,7 @@
 				008428EE1800992D00908E5D /* Property Lists */,
 				0049695A17F8AC3D00176F2D /* Constants */,
 				0049695617F8AB3400176F2D /* Singletons */,
+				00AC280B182EEA7900B3C0EB /* Menus */,
 				0049694E17F8A10700176F2D /* Game Screen Objects */,
 				00CDF18317F483C4003065F6 /* Game Screen Sections */,
 				00CDF17617F478BA003065F6 /* Layers */,
@@ -446,7 +482,6 @@
 		00CDF18317F483C4003065F6 /* Game Screen Sections */ = {
 			isa = PBXGroup;
 			children = (
-				00641EA5182C2C210098EC38 /* Dev Pause Menu */,
 				0049695C17F8B58F00176F2D /* Letter Section */,
 				00CDF18417F483E3003065F6 /* LRScreenSection.h */,
 				00CDF18517F483E3003065F6 /* LRScreenSection.m */,
@@ -537,10 +572,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				00641EAA182C42D30098EC38 /* LRDevPauseMenuVC.xib in Resources */,
-				00B43D94182887AA00261468 /* Pause_Temp.png in Resources */,
 				009B727A182991CB00A6CEA0 /* Manford.png in Resources */,
 				000BC14F181C6B4600BEC563 /* Background_Mountains.png in Resources */,
 				008428F01800997800908E5D /* LetterProbabilities.plist in Resources */,
+				00AC280F182EEAD400B3C0EB /* Pause_Unselected.png in Resources */,
 				00AC2804182EDAC100B3C0EB /* DifficultyVariables.plist in Resources */,
 				009B7279182991CB00A6CEA0 /* Envelope_Normal.png in Resources */,
 				000BC15A1820351900BEC563 /* Background_Grass.png in Resources */,
@@ -550,6 +585,7 @@
 				00CDF15617F474EC003065F6 /* Images.xcassets in Resources */,
 				003C2670180F46C6003729D4 /* organizedDict.txt in Resources */,
 				00CDF14C17F474EC003065F6 /* Main.storyboard in Resources */,
+				00AC280E182EEAD400B3C0EB /* Pause_Selected.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

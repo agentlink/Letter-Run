@@ -65,7 +65,8 @@
     [self addChild:self.mailman];
     
     //Pause Button
-    self.pauseButton = [[LRButton alloc] initWithImageNamedNormal:@"Pause_Temp.png" selected:@"Pause_Temp.png"];
+    self.pauseButton = [[LRButton alloc] initWithImageNamedNormal:@"Pause_Selected.png" selected:@"Pause_Unselected.png"];
+    [self.pauseButton setScale:.7];
     [self.pauseButton setTouchUpInsideTarget:self action:@selector(pauseButtonPressed)];
     self.pauseButton.position = CGPointMake(0 - SCREEN_WIDTH/2 + self.pauseButton.size.width/2, SCREEN_HEIGHT/2 - self.healthSection.size.height - self.pauseButton.size.height/2);
 ;
