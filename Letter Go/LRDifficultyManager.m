@@ -32,13 +32,22 @@ static LRDifficultyManager *_shared = nil;
 - (id) init
 {
     if (self = [super init]) {
-        [self resetDifficultyValues];
-        [self loadUserDefaults];
-        //Add check here to see if user defaults have been set
-//        [self setUserDefaults];
+        if (![[NSUserDefaults standardUserDefaults] objectForKey:DV_HEALTHBAR_MAX_SPEED]) {
+            [self runInitialLoad];
+        }
+        else {
+            [self resetDifficultyValues];
+            [self loadUserDefaults];
+        }
         [self loadNotifications];
     }
     return self;
+}
+
+- (void) runInitialLoad
+{
+    [self resetDifficultyValues];
+    [self setUserDefaults];
 }
 
 - (void) resetDifficultyValues {
@@ -81,18 +90,27 @@ static LRDifficultyManager *_shared = nil;
 
 - (void) setUserDefaults
 {
-    [[NSUserDefaults standardUserDefaults] setFloat:self.initialHealthFallingRate forKey:DV_INTIAL_HEALTH_BAR_SPEED];
-    NSLog(@"Set falling rate: %f", self.initialHealthFallingRate);
-
+    //Health
+    [[NSUserDefaults standardUserDefaults] setFloat:self.initialHealthFallingRate forKey:DV_HEALTHBAR_INITIAL_SPEED];
+    [[NSUserDefaults standardUserDefaults] setFloat:self.healthSpeedIncreaseFactor forKey:DV_HEALTHBAR_INCREASE_FACTOR];
+    [[NSUserDefaults standardUserDefaults] setFloat:self.healthBarMaxSpeed forKey:DV_HEALTHBAR_MAX_SPEED];
+    [[NSUserDefaults standardUserDefaults] setInteger:self.healthSpeedIncreaseStyle forKey:DV_HEALTHBAR_INCREASE_STYLE];
+    
 }
 
 - (void) loadUserDefaults
 {
-    self.initialHealthFallingRate = [[NSUserDefaults standardUserDefaults] floatForKey:DV_INTIAL_HEALTH_BAR_SPEED];
-    NSLog(@"Loaded falling rate: %f", self.initialHealthFallingRate);
+    //Health
+    self.initialHealthFallingRate = [[NSUserDefaults standardUserDefaults] floatForKey:DV_HEALTHBAR_INITIAL_SPEED];
+    self.healthSpeedIncreaseFactor = [[NSUserDefaults standardUserDefaults] floatForKey:DV_HEALTHBAR_INCREASE_FACTOR];
+    self.healthBarMaxSpeed = [[NSUserDefaults standardUserDefaults] floatForKey:DV_HEALTHBAR_MAX_SPEED];
+    self.healthSpeedIncreaseStyle = [[NSUserDefaults standardUserDefaults] integerForKey:DV_HEALTHBAR_INCREASE_STYLE];
+    
+    
 }
 
 #pragma mark - Getters and Setters
+
 - (void) increaseLevel {
     self.level++;
     NSLog(@"Level %i", self.level);

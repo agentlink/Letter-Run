@@ -8,10 +8,19 @@
 
 #import "LRDevPauseMenuVC.h"
 #import "LRDifficultyConstants.h"
+#import "LRDifficultyManager.h"
+#import "LRIncreaseStyleSelector.h"
+#import "LRStatsPageViewController.h"
+
+#define STYLE_NONE          @"None"
+#define STYLE_LINEAR        @"Linear"
+#define STYLE_EXPONENTIAL   @"Exponential"
 
 @interface LRDevPauseMenuVC  ()
 @property NSUInteger numPages;
 @property NSDictionary *difficultyDict;
+@property NSMutableArray *updatingViews;
+@property LRStatsPageViewController *statsVC;
 @end
 
 @implementation LRDevPauseMenuVC
@@ -19,7 +28,6 @@
 @synthesize scrollView;
 @synthesize pageControl;
 @synthesize pageControlBeingUsed;
-@synthesize healthBarSpeedSlider;
 @synthesize quitButton;
 @synthesize difficultyDict;
 
@@ -30,7 +38,9 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.numPages = 4;
+        self.updatingViews = [NSMutableArray array];
         [self loadDifficultyDictionary];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadSubviewValues) name:NOTIFICATION_RESET_DIFFICULTIES object:nil];
     }
     return self;
 }
@@ -67,21 +77,65 @@
     [self.view addSubview:quitButton];
 }
 
+#pragma mark - Page Set Up Functions
+
 - (void) setUpPage:(int)pageNum inView:(UIView*)view
 {
     if (pageNum == 0) {
-        //Score per letter
-        CGRect frame = CGRectMake(34, 0, 120, SCREEN_HEIGHT * .8);
-        healthBarSpeedSlider = [[LRSliderLabelView alloc] initWithFrame:frame andDictionary:[difficultyDict objectForKey:DV_INTIAL_HEALTH_BAR_SPEED]];
-        [view addSubview:healthBarSpeedSlider];
+        self.statsVC = [[LRStatsPageViewController alloc] init];
+        [view addSubview:[self.statsVC view]];
+    }
+    if (pageNum == 1) {
+        NSArray *healthSliders = @[DV_HEALTHBAR_INITIAL_SPEED, DV_HEALTHBAR_INCREASE_FACTOR, DV_HEALTHBAR_MAX_SPEED];
+        CGRect sliderFrame = CGRectMake(10, 0, 110, SCREEN_HEIGHT * .7);
+        for (int i = 0; i < [healthSliders count]; i++) {
+            LRSliderLabelView *slider = [[LRSliderLabelView alloc] initWithFrame:sliderFrame andDictionary:[difficultyDict objectForKey:[healthSliders objectAtIndex:i]]];
+            [view addSubview:slider];
+            [self.updatingViews addObject:slider];
+            sliderFrame.origin.x += sliderFrame.size.width;
+        }
+        
+        NSArray *styleSelectors = @[DV_HEALTHBAR_INCREASE_STYLE];
+        CGRect selectorFrame = CGRectMake(10, sliderFrame.size.height + 10, 150, SCREEN_HEIGHT * .2);
+        for (int i = 0; i < [styleSelectors count]; i++) {
+            LRIncreaseStyleSelector *selector = [[LRIncreaseStyleSelector alloc] initWithFrame:selectorFrame andDictionary:[difficultyDict objectForKey:[styleSelectors objectAtIndex:i]]];
+            [view addSubview:selector];
+            [self.updatingViews addObject:selector];
+            selectorFrame.origin.x += selectorFrame.size.width;
+        }
+        
     }
 }
 
-#pragma mark - Quit Button
+- (NSString*)increaseStyleToString:(IncreaseStyle)style {
+    if (style == IncreaseStyle_None)        return STYLE_NONE;
+    if (style == IncreaseStyle_Linear)      return STYLE_LINEAR;
+    if (style == IncreaseStyle_Exponential) return STYLE_EXPONENTIAL;
+
+    NSAssert(0, @"Invalid increase style provided: %i", style);
+    return nil;
+}
+
+- (IncreaseStyle)stringToIncreaseStyle:(NSString*)string {
+    if ([string isEqualToString:STYLE_NONE])           return IncreaseStyle_None;
+    if ([string isEqualToString:STYLE_LINEAR])         return IncreaseStyle_Linear;
+    if ([string isEqualToString:STYLE_EXPONENTIAL])    return IncreaseStyle_Exponential;
+    
+    NSAssert(0, @"Invalid increase style title provided: %@", string);
+    return -1;
+}
+
+#pragma mark - Quit Button/Reload
 
 - (IBAction)quitButtonSelected:(UIButton*)sender{
     [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_CONTINUE_GAME object:nil];
     [self.view removeFromSuperview];
+}
+
+- (void) reloadSubviewValues {
+    for (LRDevPauseSubView *subview in self.updatingViews) {
+        [subview reloadValue];
+    }
 }
 
 #pragma mark - Scroll View Functions

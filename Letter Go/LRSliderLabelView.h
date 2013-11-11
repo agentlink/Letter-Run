@@ -6,16 +6,13 @@
 //  Copyright (c) 2013 Gabe Nicholas. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "LRDevPauseSubView.h"
 
-@interface LRSliderLabelView : UIView <UITextFieldDelegate> {
+@interface LRSliderLabelView : LRDevPauseSubView <UITextFieldDelegate> {
     UISlider *slider;
     UITextField *textField;
     UILabel *variableTitle;
 }
-
-- (id) initWithFrame:(CGRect)frame andDictionary:(NSDictionary*)dict;
-
 
 @property (nonatomic, retain) UISlider *slider;
 @property (nonatomic, retain) UITextField *textField;

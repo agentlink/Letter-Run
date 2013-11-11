@@ -12,7 +12,7 @@
 @interface LRDevPauseMenuVC : UIViewController <UIScrollViewDelegate> {
     UIScrollView *scrollView;
     UIPageControl* pageControl;
-    LRSliderLabelView *healthBarSpeedSlider;
+    NSMutableArray *sliderViews;
     UIButton *quitButton;
     
     BOOL pageControlBeingUsed;
@@ -21,10 +21,11 @@
 @property (nonatomic, retain) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, retain) IBOutlet UIPageControl *pageControl;
 @property (nonatomic, retain) IBOutlet UIButton *quitButton;
-@property (nonatomic, retain) LRSliderLabelView *healthBarSpeedSlider;
+
 
 @property BOOL pageControlBeingUsed;
 
 - (IBAction)changePage;
+- (void) reloadSubviewValues;
 
 @end

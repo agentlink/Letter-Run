@@ -2,7 +2,48 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>DV_INTIAL_HEALTH_BAR_SPEED</key>
+	<key>DV_HEALTHBAR_INCREASE_STYLE</key>
+	<dict>
+		<key>description</key>
+		<string>How quickly does the rate increase between levels?</string>
+		<key>title</key>
+		<string>Health Bar Speed Increase Style</string>
+		<key>initialValue</key>
+		<string>Linear</string>
+		<key>userDefaultTag</key>
+		<string>DV_HEALTHBAR_INCREASE_STYLE</string>
+	</dict>
+	<key>DV_HEALTHBAR_MAX_SPEED</key>
+	<dict>
+		<key>description</key>
+		<string>What is the health bar&apos;s max speed?</string>
+		<key>title</key>
+		<string>Health Bar Max Speed</string>
+		<key>initialValue</key>
+		<integer>12</integer>
+		<key>max</key>
+		<string>20</string>
+		<key>min</key>
+		<string>0</string>
+		<key>userDefaultTag</key>
+		<string>DV_HEALTHBAR_MAX_SPEED</string>
+	</dict>
+	<key>DV_HEALTHBAR_INCREASE_FACTOR</key>
+	<dict>
+		<key>description</key>
+		<string>By how much does the health bar speed up every time?</string>
+		<key>title</key>
+		<string>Health Bar Speed Increase Factor</string>
+		<key>initialValue</key>
+		<real>0.5</real>
+		<key>max</key>
+		<string>2</string>
+		<key>min</key>
+		<string>0</string>
+		<key>userDefaultTag</key>
+		<string>DV_HEALTHBAR_INCREASE_FACTOR</string>
+	</dict>
+	<key>DV_HEALTHBAR_INITIAL_SPEED</key>
 	<dict>
 		<key>description</key>
 		<string>How fast is the health bar&apos;s initial speed?</string>
@@ -15,7 +56,7 @@
 		<key>min</key>
 		<string>0</string>
 		<key>userDefaultTag</key>
-		<string>DV_INTIAL_HEALTH_BAR_SPEED</string>
+		<string>DV_HEALTHBAR_INITIAL_SPEED</string>
 	</dict>
 </dict>
 </plist>

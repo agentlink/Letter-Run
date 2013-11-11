@@ -32,6 +32,8 @@
 #define NOTIFICATION_REARRANGE_START                @"Started rearranging letters"
 #define NOTIFICATION_REARRANGE_FINISH               @"Finished rearranging letters"
 
+#define NOTIFICATION_RESET_DIFFICULTIES             @"Reset difficulty values"
+
 #define ACTION_ENVELOPE_DROP                        @"DropPing the envelope"
 #define ACTION_ENVELOPE_LOOP                        @"Run envelope loop"
 #define ACTION_ENVELOPE_FLING                       @"Fling the envelope"

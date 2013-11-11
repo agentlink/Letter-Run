@@ -8,8 +8,7 @@
 
 #import "LRSliderLabelView.h"
 #import "LRConstants.h"
-
-#define USER_DEFAULT_KEY            @"userDefaultTag"
+#import "LRDifficultyConstants.h"
 
 @interface LRSliderLabelView ()
 @property NSDictionary *dataDict;
@@ -19,7 +18,7 @@
 @synthesize slider, textField, variableTitle, dataDict;
 
 - (id) initWithFrame:(CGRect)frame andDictionary:(NSDictionary*)dict{
-    if (self = [super initWithFrame:frame]) {
+    if (self = [super initWithFrame:frame andDictionary:dict]) {
         self.dataDict = dict;
         [self createContent];
     }
@@ -58,13 +57,25 @@
     [self addSubview:slider];
 }
 
+- (void) reloadValue {
+    float value =[[NSUserDefaults standardUserDefaults] floatForKey:[dataDict objectForKey:USER_DEFAULT_KEY]];
+    [self setSliderText:value];
+    [slider setValue:value animated:NO];
+}
+
 - (IBAction)sliderValueChanged:(id)sender
+{
+    [self setSliderText:[(UISlider*)sender value]];
+}
+
+- (void) setSliderText:(float)value
 {
     NSNumberFormatter *nf = [[NSNumberFormatter alloc] init];
     [nf setNumberStyle:NSNumberFormatterDecimalStyle];
     [nf setMaximumFractionDigits:2];
     [nf setMinimumFractionDigits:2];
-    textField.text = [NSString stringWithFormat:@"%@", [self formattedFloat:[(UISlider*)sender value]]];
+    textField.text = [NSString stringWithFormat:@"%@", [self formattedFloat:value]];
+
 }
 
 - (IBAction)sliderFinishedMoving:(id)sender
@@ -97,7 +108,7 @@
     // Create a flexible space to align buttons to the right
     UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     // Create a cancel button to dismiss the keyboard
-    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(resetView)];
+    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(resetText)];
     // Add buttons to the toolbar
     [toolbar setItems:[NSArray arrayWithObjects:flexibleSpace, barButtonItem, nil]];
     // Set the toolbar as accessory view of an UITextField object
@@ -142,12 +153,14 @@
     else if (value < slider.minimumValue) {
         field.text = [NSString stringWithFormat:@"%f", slider.minimumValue];
     }
-    slider.value = field.text.floatValue;
+    //Only change the slider value if the text field is not empty
+    if ([[field text] length])
+        slider.value = field.text.floatValue;
     field.text = [self formattedFloat:slider.value];
     return;
 }
 
-- (void) resetView {
+- (void) resetText {
     [textField endEditing:YES];
 }
 

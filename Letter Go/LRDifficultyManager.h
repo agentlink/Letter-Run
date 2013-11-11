@@ -24,6 +24,7 @@ typedef enum  {
 - (void) increaseLevel;
 - (void) resetLevel;
 - (void) loadUserDefaults;
+- (void) runInitialLoad;
 
 - (CGFloat) letterDropPeriod;
 - (CGFloat) healthSpeedFactor;

@@ -40,6 +40,10 @@
 		00AC2807182EE1A300B3C0EB /* LRDifficultyManager+Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = 00AC2806182EE1A300B3C0EB /* LRDifficultyManager+Notifications.m */; };
 		00AC280E182EEAD400B3C0EB /* Pause_Selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 00AC280C182EEAD400B3C0EB /* Pause_Selected.png */; };
 		00AC280F182EEAD400B3C0EB /* Pause_Unselected.png in Resources */ = {isa = PBXBuildFile; fileRef = 00AC280D182EEAD400B3C0EB /* Pause_Unselected.png */; };
+		00AC28181830415E00B3C0EB /* LRIncreaseStyleSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 00AC28171830415E00B3C0EB /* LRIncreaseStyleSelector.m */; };
+		00AC281C183178B800B3C0EB /* LRStatsPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00AC281A183178B800B3C0EB /* LRStatsPageViewController.m */; };
+		00AC281D183178B800B3C0EB /* LRStatsPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 00AC281B183178B800B3C0EB /* LRStatsPageViewController.xib */; };
+		00AC282018317F7A00B3C0EB /* LRDevPauseSubView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00AC281F18317F7A00B3C0EB /* LRDevPauseSubView.m */; };
 		00B43D92182834CF00261468 /* LRButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 00B43D91182834CF00261468 /* LRButton.m */; };
 		00CDF13717F474EC003065F6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CDF13617F474EC003065F6 /* Foundation.framework */; };
 		00CDF13917F474EC003065F6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CDF13817F474EC003065F6 /* CoreGraphics.framework */; };
@@ -133,6 +137,13 @@
 		00AC2806182EE1A300B3C0EB /* LRDifficultyManager+Notifications.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "LRDifficultyManager+Notifications.m"; sourceTree = "<group>"; };
 		00AC280C182EEAD400B3C0EB /* Pause_Selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Pause_Selected.png; sourceTree = "<group>"; };
 		00AC280D182EEAD400B3C0EB /* Pause_Unselected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Pause_Unselected.png; sourceTree = "<group>"; };
+		00AC28161830415E00B3C0EB /* LRIncreaseStyleSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRIncreaseStyleSelector.h; sourceTree = "<group>"; };
+		00AC28171830415E00B3C0EB /* LRIncreaseStyleSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRIncreaseStyleSelector.m; sourceTree = "<group>"; };
+		00AC2819183178B700B3C0EB /* LRStatsPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRStatsPageViewController.h; sourceTree = "<group>"; };
+		00AC281A183178B800B3C0EB /* LRStatsPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRStatsPageViewController.m; sourceTree = "<group>"; };
+		00AC281B183178B800B3C0EB /* LRStatsPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LRStatsPageViewController.xib; sourceTree = "<group>"; };
+		00AC281E18317F7A00B3C0EB /* LRDevPauseSubView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRDevPauseSubView.h; sourceTree = "<group>"; };
+		00AC281F18317F7A00B3C0EB /* LRDevPauseSubView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRDevPauseSubView.m; sourceTree = "<group>"; };
 		00B43D90182834CF00261468 /* LRButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRButton.h; sourceTree = "<group>"; };
 		00B43D91182834CF00261468 /* LRButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRButton.m; sourceTree = "<group>"; };
 		00CDF13317F474EC003065F6 /* Letter Go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Letter Go.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -317,8 +328,15 @@
 				00641EA6182C42D30098EC38 /* LRDevPauseMenuVC.h */,
 				00641EA7182C42D30098EC38 /* LRDevPauseMenuVC.m */,
 				00641EA8182C42D30098EC38 /* LRDevPauseMenuVC.xib */,
+				00AC2819183178B700B3C0EB /* LRStatsPageViewController.h */,
+				00AC281A183178B800B3C0EB /* LRStatsPageViewController.m */,
+				00AC281B183178B800B3C0EB /* LRStatsPageViewController.xib */,
 				00641EB1182D7BFF0098EC38 /* LRSliderLabelView.h */,
 				00641EB2182D7BFF0098EC38 /* LRSliderLabelView.m */,
+				00AC28161830415E00B3C0EB /* LRIncreaseStyleSelector.h */,
+				00AC28171830415E00B3C0EB /* LRIncreaseStyleSelector.m */,
+				00AC281E18317F7A00B3C0EB /* LRDevPauseSubView.h */,
+				00AC281F18317F7A00B3C0EB /* LRDevPauseSubView.m */,
 			);
 			name = "Dev Pause Menu";
 			sourceTree = "<group>";
@@ -578,6 +596,7 @@
 				00AC280F182EEAD400B3C0EB /* Pause_Unselected.png in Resources */,
 				00AC2804182EDAC100B3C0EB /* DifficultyVariables.plist in Resources */,
 				009B7279182991CB00A6CEA0 /* Envelope_Normal.png in Resources */,
+				00AC281D183178B800B3C0EB /* LRStatsPageViewController.xib in Resources */,
 				000BC15A1820351900BEC563 /* Background_Grass.png in Resources */,
 				000BC150181C6B4600BEC563 /* Background_Hills.png in Resources */,
 				009B727B182991CB00A6CEA0 /* Background_Cloud.png in Resources */,
@@ -604,6 +623,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				00AC281C183178B800B3C0EB /* LRStatsPageViewController.m in Sources */,
 				008428F91801F46C00908E5D /* LRScoreManager.m in Sources */,
 				00CDF14917F474EC003065F6 /* LRAppDelegate.m in Sources */,
 				009CC29E180349E700C0423D /* LRDictionaryChecker.m in Sources */,
@@ -621,6 +641,7 @@
 				008428F61801EABB00908E5D /* LRSubmitButton.m in Sources */,
 				0049695917F8AB5D00176F2D /* LRCollisionManager.m in Sources */,
 				0020001E18245B3E005DDD46 /* LRCollisionManager+ContactFunctions.m in Sources */,
+				00AC282018317F7A00B3C0EB /* LRDevPauseSubView.m in Sources */,
 				00F6F59717FF5234009EDADB /* LRGameStateManager.m in Sources */,
 				00CDF18217F48310003065F6 /* LRGamePlayLayer.m in Sources */,
 				00CDF18917F4840F003065F6 /* LRHealthSection.m in Sources */,
@@ -636,6 +657,7 @@
 				0007FB3F180C7A1A00E55B0D /* LRSectionBlock.m in Sources */,
 				00CDF14F17F474EC003065F6 /* LRViewController.m in Sources */,
 				003E577E180E0D5D00B37B68 /* LRDifficultyManager.m in Sources */,
+				00AC28181830415E00B3C0EB /* LRIncreaseStyleSelector.m in Sources */,
 				00CDF18617F483E3003065F6 /* LRScreenSection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
