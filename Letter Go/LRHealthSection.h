@@ -13,4 +13,7 @@
 
 - (void) submitWord:(NSString*) word;
 
+- (CGFloat) percentHealth;
+- (void) moveHealthByPercent:(CGFloat)percent;
+
 @end

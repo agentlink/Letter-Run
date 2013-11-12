@@ -54,7 +54,9 @@ static LRScoreManager *_shared = nil;
     //If the player has made it to the next level
     if (self.score >= self.scoreToNextLevel) {
 
-        [[LRDifficultyManager shared] increaseLevel];
+        int level = [[LRDifficultyManager shared] level];
+        [[LRDifficultyManager shared] setLevel:level++];
+        
         self.lastScoreToNextLevel = self.scoreToNextLevel;
         IncreaseStyle levelScoreIncrease = [[LRDifficultyManager shared] levelScoreIncreaseStyle];
 

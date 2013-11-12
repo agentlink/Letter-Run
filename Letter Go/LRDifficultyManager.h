@@ -21,8 +21,7 @@ typedef enum  {
 
 + (LRDifficultyManager*) shared;
 
-- (void) increaseLevel;
-- (void) resetLevel;
+
 - (void) loadUserDefaults;
 - (void) runInitialLoad;
 
@@ -41,6 +40,7 @@ typedef enum  {
 
 
 #pragma mark - Level Up Properties
+@property (nonatomic) int level;
 //Determines whether total score needed to move to the next level increases or not
 @property (nonatomic) IncreaseStyle levelScoreIncreaseStyle;
 /*
@@ -74,7 +74,6 @@ typedef enum  {
 //How many pixels the health bar moves per point scored
 @property (nonatomic) CGFloat healthBarToScoreRatio;
 @property (nonatomic) CGFloat initialHealthFallingRate;
-//Does the health bar fall faster over time?
 @property (nonatomic) CGFloat healthSpeedIncreaseFactor;
 @property (nonatomic) IncreaseStyle healthSpeedIncreaseStyle;
 @property (nonatomic) CGFloat healthBarMaxSpeed;
@@ -91,6 +90,11 @@ typedef enum  {
 
 #pragma mark - Mailman Properties
 @property CGFloat mailmanHitDamage;
+
+#pragma mark - Damage Functions
+//Not saved to NSUserDefaults
+@property BOOL mailmanReceivesDamage;
+@property BOOL healthBarFalls;
 
 @end
 

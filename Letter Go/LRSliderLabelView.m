@@ -70,12 +70,7 @@
 
 - (void) setSliderText:(float)value
 {
-    NSNumberFormatter *nf = [[NSNumberFormatter alloc] init];
-    [nf setNumberStyle:NSNumberFormatterDecimalStyle];
-    [nf setMaximumFractionDigits:2];
-    [nf setMinimumFractionDigits:2];
     textField.text = [NSString stringWithFormat:@"%@", [self formattedFloat:value]];
-
 }
 
 - (IBAction)sliderFinishedMoving:(id)sender

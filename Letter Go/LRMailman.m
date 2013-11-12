@@ -9,6 +9,7 @@
 #import "LRMailman.h"
 #import "LRCollisionManager.h"
 #import "LRFallingEnvelope.h"
+#import "LRDifficultyManager.h"
 
 #define IMAGE_NAME_MAILMAN          @"Manford.png"
 
@@ -44,6 +45,8 @@
 # pragma mark - Contact Functions
 - (void) hitByEnvelope:(NSNotification*)notification
 {
+    if (![[LRDifficultyManager shared] mailmanReceivesDamage])
+        return;
     LRFallingEnvelope *envelope = [[notification userInfo] objectForKey:KEY_GET_LETTER_BLOCK];
     
     if (envelope.blockState == BlockState_BlockFlung)

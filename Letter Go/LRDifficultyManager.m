@@ -11,7 +11,6 @@
 #import "LRDifficultyManager+Notifications.h"
 
 @interface LRDifficultyManager ()
-@property (nonatomic) int level;
 @end
 
 @implementation LRDifficultyManager
@@ -40,6 +39,7 @@ static LRDifficultyManager *_shared = nil;
             [self loadUserDefaults];
         }
         [self loadNotifications];
+        [self loadUnsavedValues];
     }
     return self;
 }
@@ -48,6 +48,12 @@ static LRDifficultyManager *_shared = nil;
 {
     [self resetDifficultyValues];
     [self setUserDefaults];
+}
+
+- (void) loadUnsavedValues
+{
+    self.mailmanReceivesDamage = YES;
+    self.healthBarFalls = YES;
 }
 
 - (void) resetDifficultyValues {
@@ -105,20 +111,6 @@ static LRDifficultyManager *_shared = nil;
     self.healthSpeedIncreaseFactor = [[NSUserDefaults standardUserDefaults] floatForKey:DV_HEALTHBAR_INCREASE_FACTOR];
     self.healthBarMaxSpeed = [[NSUserDefaults standardUserDefaults] floatForKey:DV_HEALTHBAR_MAX_SPEED];
     self.healthSpeedIncreaseStyle = [[NSUserDefaults standardUserDefaults] integerForKey:DV_HEALTHBAR_INCREASE_STYLE];
-    
-    
-}
-
-#pragma mark - Getters and Setters
-
-- (void) increaseLevel {
-    self.level++;
-    NSLog(@"Level %i", self.level);
-}
-
-- (void) resetLevel {
-    //Intro level will be 0
-    self.level = 1;
 }
 
 #pragma mark - Speed Factor Calculators

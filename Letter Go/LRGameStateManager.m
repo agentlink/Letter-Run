@@ -49,6 +49,7 @@ static LRGameStateManager *_shared = nil;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameOver) name:GAME_STATE_GAME_OVER object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pauseGame) name:GAME_STATE_PAUSE_GAME object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(unpauseGame) name:GAME_STATE_CONTINUE_GAME object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newGame:) name:GAME_STATE_NEW_GAME object:nil];
 }
 
 - (BOOL) isLetterSectionFull
@@ -59,13 +60,16 @@ static LRGameStateManager *_shared = nil;
 
 #pragma mark - Game State Functions
 
-- (void) newGame
+- (void) newGame:(NSNotification*)notification
 {
     LRGamePlayLayer *gpl = [(LRGameScene*)[self scene] gamePlayLayer];
+    if ([[[notification userInfo] objectForKey:@"devpause"] boolValue]) {
+        [gpl removeAllActions];
+    }
+    
     [self clearBoard];
-    [[LRDifficultyManager shared] resetLevel];
+    [[LRDifficultyManager shared] setLevel:1];
     self.gameIsOver = FALSE;
-    self.gameIsPaused = FALSE;
     [gpl.pauseButton setIsEnabled:YES];
     [gpl dropInitialLetters];
 }
@@ -114,11 +118,8 @@ static LRGameStateManager *_shared = nil;
     SKAction *restartLevel = [SKAction runBlock:^{
         [gpl removeChildrenInArray:[NSArray arrayWithObject:gameOverLabel]];
         [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_NEW_GAME object:self];
-        [self newGame];
     }];
     [self runAction:[SKAction sequence:@[showLabel, delay, restartLevel]]];
-    
-    
 }
 
 - (void) pauseGame
@@ -137,8 +138,6 @@ static LRGameStateManager *_shared = nil;
     
     gpl.devPause = [[LRDevPauseMenuVC alloc] init];
     [gpl.scene.view addSubview:gpl.devPause.view];
-
-
 }
 
 - (void) unpauseGame
@@ -165,6 +164,8 @@ static LRGameStateManager *_shared = nil;
     }];
 }
 
+#pragma mark - Game State Properties
+
 - (BOOL) isGameOver {
     return self.gameIsOver;
 }
@@ -172,4 +173,18 @@ static LRGameStateManager *_shared = nil;
 - (BOOL) isGamePaused {
     return self.gameIsPaused;
 }
+
+#pragma mark - Health Functions
+- (CGFloat) percentHealth
+{
+    LRHealthSection *health = [[(LRGameScene*)[self scene] gamePlayLayer] healthSection];
+    return [health percentHealth];    
+}
+
+- (void) moveHealthByPercent:(CGFloat)percent
+{
+    LRHealthSection *health = [[(LRGameScene*)[self scene] gamePlayLayer] healthSection];
+    [health moveHealthByPercent:percent];
+}
+
 @end

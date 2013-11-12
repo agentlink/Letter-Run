@@ -36,6 +36,10 @@
 {
     if ([[LRGameStateManager shared] isGameOver] || [[LRGameStateManager shared] isGamePaused])
         return;
+    else if (![[LRDifficultyManager shared] healthBarFalls]) {
+        self.initialTime = -1;
+        return;
+    }
     else if (self.initialTime == -1) {
         self.initialTime = currentTime;
         return;
@@ -65,12 +69,27 @@
                        
 }
 
+
 - (void) restartHealthBar
 {
     self.healthBar.position = CGPointMake(0, self.healthBar.position.y);
     self.initialTime = -1;
 }
 
+- (CGFloat) percentHealth
+{
+    return 100 * (SCREEN_WIDTH + self.healthBar.position.x)/SCREEN_WIDTH;
+}
+
+- (void) moveHealthByPercent:(CGFloat)percent
+{
+    CGFloat newXPos = self.healthBar.position.x + (percent/100) * SCREEN_WIDTH;
+    if (newXPos > 0)
+        newXPos = 0;
+    else if (newXPos < 0 - SCREEN_WIDTH)
+        newXPos = 0 - SCREEN_WIDTH;
+    self.healthBar.position = CGPointMake(newXPos, self.healthBar.position.y);
+}
 
 #pragma mark - Mailman Functions
 
