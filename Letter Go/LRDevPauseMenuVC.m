@@ -86,7 +86,7 @@
         [view addSubview:[self.statsVC view]];
     }
     if (pageNum == 1) {
-        NSArray *healthSliders = @[DV_HEALTHBAR_INITIAL_SPEED, DV_HEALTHBAR_INCREASE_FACTOR, DV_HEALTHBAR_MAX_SPEED];
+        NSArray *healthSliders = @[DV_HEALTHBAR_INITIAL_SPEED, DV_HEALTHBAR_INCREASE_FACTOR, DV_HEALTHBAR_MAX_SPEED, DV_HEALTHBAR_INCREASE_PER_WORD];
         CGRect sliderFrame = CGRectMake(10, 0, 110, SCREEN_HEIGHT * .7);
         for (int i = 0; i < [healthSliders count]; i++) {
             LRSliderLabelView *slider = [[LRSliderLabelView alloc] initWithFrame:sliderFrame andDictionary:[difficultyDict objectForKey:[healthSliders objectAtIndex:i]]];

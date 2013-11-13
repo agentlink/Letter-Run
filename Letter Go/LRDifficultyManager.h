@@ -26,7 +26,7 @@ typedef enum  {
 - (void) runInitialLoad;
 
 - (CGFloat) letterDropPeriod;
-- (CGFloat) healthSpeedFactor;
+- (CGFloat) healthBarDropTime;
 - (CGFloat) parallaxSpeedFactor;
 - (NSArray*) parallaxLayerSpeeds;
 
@@ -72,11 +72,11 @@ typedef enum  {
 
 #pragma mark - Health Bar Properties
 //How many pixels the health bar moves per point scored
-@property (nonatomic) CGFloat healthBarToScoreRatio;
-@property (nonatomic) CGFloat initialHealthFallingRate;
+@property (nonatomic) CGFloat healthPercentIncreasePer100Pts;
+@property (nonatomic) CGFloat initialHealthDropTime;
 @property (nonatomic) CGFloat healthSpeedIncreaseFactor;
 @property (nonatomic) IncreaseStyle healthSpeedIncreaseStyle;
-@property (nonatomic) CGFloat healthBarMaxSpeed;
+@property (nonatomic) CGFloat healthBarMinDropTime;
 
 #pragma mark - Letter Generation Properties
 @property int maxNumber_consonants;

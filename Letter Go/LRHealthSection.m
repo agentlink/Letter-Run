@@ -44,8 +44,18 @@
         self.initialTime = currentTime;
         return;
     }
+    /*
+     Let's say we want this to take exactly sixty seconds
+     Then we know that it has to move one 60th of the way every second
+     currentTime is in seconds, so currentTime - self.initialTime is how many seconds has passed
+     timeDiff * (distanceItShouldGoInMinute)/60
+     Or we can replace 60 with timeItShouldTake
+     
+     
+     
+     */
     //TODO: There might be a problem that this is inextricably linked to the frame rate
-    float speedFactor = [[LRDifficultyManager shared] healthSpeedFactor];
+    float speedFactor = SCREEN_WIDTH/[[LRDifficultyManager shared] healthBarDropTime];
     self.healthBar.position = CGPointMake(self.healthBar.position.x - ((currentTime - self.initialTime) * speedFactor), self.healthBar.position.y);
     self.initialTime = currentTime;
     
@@ -59,10 +69,13 @@
 
 - (void) submitWord:(NSString*) word;
 {
-    float wordScore = [LRScoreManager scoreForWord:word];
-    float healthBarToScoreRatio = [[LRDifficultyManager shared] healthBarToScoreRatio];
-    
+    //Percent increase per hundred points
+    int wordScore = [LRScoreManager scoreForWord:word];
+    float healthBarToScoreRatio = (SCREEN_WIDTH * [[LRDifficultyManager shared] healthPercentIncreasePer100Pts]/100) / 100;
+
     float newXValue = self.healthBar.position.x + (wordScore * healthBarToScoreRatio);
+    NSLog(@"Shift distance %f for score %i.", (wordScore * healthBarToScoreRatio), wordScore);
+    
     //The bar cannot move farther left than the left most edge
     newXValue *= (newXValue > 0) ? 0 : 1;
     self.healthBar.position = CGPointMake(newXValue, self.healthBar.position.y);

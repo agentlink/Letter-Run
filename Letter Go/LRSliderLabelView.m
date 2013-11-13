@@ -75,10 +75,14 @@
 
 - (IBAction)sliderFinishedMoving:(id)sender
 {
+    [self saveData];
+}
+
+- (void) saveData {
     NSString *notificationName = [dataDict objectForKey:USER_DEFAULT_KEY];
     [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:slider.value] forKey:notificationName]];
-    
 }
+
 - (void) setUpTextField
 {
     CGFloat textWidth = self.frame.size.width/2;
@@ -126,7 +130,10 @@
 {
     NSNumberFormatter *nf = [[NSNumberFormatter alloc] init];
     [nf setNumberStyle:NSNumberFormatterDecimalStyle];
-    [nf setMaximumFractionDigits:2];
+    if ([dataDict objectForKey:@"decimals"])
+        [nf setMaximumFractionDigits:[[dataDict objectForKey:@"decimals"] integerValue]];
+    else
+        [nf setMaximumFractionDigits:2];
     NSNumber *num = [NSNumber numberWithFloat:input];
     return [nf stringFromNumber:num];
 }
@@ -152,6 +159,7 @@
     if ([[field text] length])
         slider.value = field.text.floatValue;
     field.text = [self formattedFloat:slider.value];
+    [self saveData];
     return;
 }
 
