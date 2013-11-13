@@ -61,7 +61,7 @@
 {
     float wordScore = [LRScoreManager scoreForWord:word];
     float healthBarToScoreRatio = [[LRDifficultyManager shared] healthBarToScoreRatio];
-
+    
     float newXValue = self.healthBar.position.x + (wordScore * healthBarToScoreRatio);
     //The bar cannot move farther left than the left most edge
     newXValue *= (newXValue > 0) ? 0 : 1;
@@ -95,6 +95,8 @@
 
 - (void) mailmanHitWithLetterBlock:(NSNotification*)notification
 {
+    if (![[LRDifficultyManager shared] mailmanReceivesDamage])
+        return;
     LRFallingEnvelope *envelope = [(LRFallingEnvelope*)[notification userInfo] valueForKey:KEY_GET_LETTER_BLOCK];
     if (envelope.blockState == BlockState_BlockFlung)
         return;

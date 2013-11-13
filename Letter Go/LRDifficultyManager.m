@@ -82,6 +82,7 @@ static LRDifficultyManager *_shared = nil;
     
     self.maxNumber_consonants = 3;
     self.maxNumber_vowels = 3;
+    self.maxNumber_sameLetters = 2;
     
     self.initialScrollingSpeed = 40;
     self.scrollingSpeedIncrease = 10;

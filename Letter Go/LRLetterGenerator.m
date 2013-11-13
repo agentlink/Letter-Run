@@ -18,9 +18,13 @@
 @property NSSet *vowelSet;
 @property int vowelConstCount;
 
+@property NSString *lastLetter;
+@property int repeatCount;
+
 @end
 
 @implementation LRLetterGenerator
+@synthesize repeatCount, lastLetter, vowelConstCount;
 
 static LRLetterGenerator *_shared = nil;
 
@@ -41,7 +45,8 @@ static LRLetterGenerator *_shared = nil;
 - (id) init
 {
     if (self = [super init]) {
-        self.vowelConstCount = 0;
+        vowelConstCount = 0;
+        repeatCount = 0;
         [self setUpProbabilityDictionaries];
     }
     return self;
@@ -70,11 +75,12 @@ static LRLetterGenerator *_shared = nil;
 
 }
 
+#pragma mark - Letter Generation Functions
+
 - (NSString*)generateLetter
 {
-    int letterLocation = arc4random()%[self.letterProbabilities count];
-    NSString *letter = [self.letterProbabilities objectAtIndex:letterLocation];
-
+    NSString *letter = [self generateRandomLetter];
+    
     /*
      vowelConstCount works by consonants being negative and vowels being positive.
      If the count gets too high/low for either one, it puts out the opposite. If a streak
@@ -88,33 +94,42 @@ static LRLetterGenerator *_shared = nil;
     int maxVowels = [[LRDifficultyManager shared] maxNumber_vowels];
     
     if ([self.consonantSet containsObject:letter] && maxConsonants > 0) {
-        if (self.vowelConstCount == 0 - maxConsonants) {
-            letter = [self generateVowel];
-        }
-        else if (self.vowelConstCount >= 0) {
-            self.vowelConstCount = -1;
-        }
-        else {
-            self.vowelConstCount--;
-        }
+        if (vowelConstCount == 0 - maxConsonants)      letter = [self generateVowel];
+        else if (vowelConstCount >= 0)                 vowelConstCount = -1;
+        else                                           vowelConstCount--;
     }
     else if ([self.vowelSet containsObject:letter] && maxVowels > 0) {
-        if (self.vowelConstCount == maxVowels) {
-            letter = [self generateConsonant];
-        }
-        else if (self.vowelConstCount <= 0) {
-            self.vowelConstCount = 1;
+        if (vowelConstCount == maxVowels)              letter = [self generateConsonant];
+        else if (vowelConstCount <= 0)                 vowelConstCount = 1;
+        else                                           vowelConstCount++;
+    }
+    
+    //Repeated letters case
+    if ([[LRDifficultyManager shared] maxNumber_sameLetters] == 0)
+        return letter;
+    if ([lastLetter isEqualToString:letter]) {
+        if (repeatCount > [[LRDifficultyManager shared] maxNumber_sameLetters]) {
+            letter = [self generateLetter];
+            repeatCount = 1;
         }
         else {
-            self.vowelConstCount++;
+            repeatCount++;
         }
     }
+    lastLetter = letter;
     return letter;
 }
 
+- (NSString*) generateRandomLetter {
+    int letterLocation = arc4random()%[self.letterProbabilities count];
+    return [self.letterProbabilities objectAtIndex:letterLocation];
+}
+
+//TODO: Make these nicer
+
 - (NSString*)generateVowel
 {
-    NSString *letter = [self generateLetter];
+    NSString *letter = [self generateRandomLetter];
     while ([self.consonantSet containsObject:letter])
         letter = [self generateLetter];
     return letter;
@@ -122,8 +137,7 @@ static LRLetterGenerator *_shared = nil;
 
 - (NSString*)generateConsonant
 {
-    //TODO: Make this neater
-    NSString *letter = [self generateLetter];
+    NSString *letter = [self generateRandomLetter];
     while ([self.vowelSet containsObject:letter])
         letter = [self generateLetter];
     return letter;

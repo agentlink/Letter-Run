@@ -81,6 +81,7 @@ typedef enum  {
 #pragma mark - Letter Generation Properties
 @property int maxNumber_consonants;
 @property int maxNumber_vowels;
+@property int maxNumber_sameLetters;
 
 #pragma mark - Background Layer Properties
 @property CGFloat initialScrollingSpeed;
