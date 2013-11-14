@@ -158,7 +158,7 @@
         CGPoint location = [touch locationInNode:[self parent]];
         if (!CGRectContainsPoint(self.frame, location))
         {
-            [self flingEnvelopeInDirection:location];
+            [self flingTowardsLocation:location];
         }
     }
 }
@@ -168,9 +168,8 @@
     for (UITouch *touch in touches)
     {
         //If the block is falling but wasn't flung
-        if (self.blockState == BlockState_PlayerIsHolding) {
-            //Move off screen (TODO: replace with removal)
-            self.position = CGPointMake(10000, 10000);
+        if (self.blockState != BlockState_BlockFlung) {
+            [self flingEnvelopeToMailman];
             self.blockState = BlockState_BlockFlung;
         }
     }
@@ -191,18 +190,9 @@
 
 #pragma mark - Movement Functions
 
-
-- (void) flingEnvelopeInDirection:(CGPoint)location
+- (void) flingEnvelopeToMailman
 {
     CGPoint destination = [(LRGamePlayLayer*)self.parent flungEnvelopeDestination];
-    
-    //Make sure the object is being flung towards the mailman
-    if (distanceBetweenPoints(destination, location) >= distanceBetweenPoints(destination, self.originalPoint) || [[LRGameStateManager shared] isLetterSectionFull]) {
-        [self flingTowardsLocation:location];
-        return;
-    }
-    
-    //If it is, fling it towards the mailman and add it to the letter section upon arrival
     float distance = distanceBetweenPoints(destination, self.originalPoint);
     
     SKAction *move = [SKAction moveTo:destination duration:distance/self.pixelsPerSecond];
@@ -216,6 +206,22 @@
     }];
     [self runAction:[SKAction sequence:@[moveAndShrink, offScreen]] withKey:ACTION_ENVELOPE_FLING];
     
+    self.blockState = BlockState_BlockFlung;
+}
+
+- (void) flingTowardsLocation:(CGPoint)location
+{
+    float xDiff = location.x - self.originalPoint.x;
+    float yDiff = location.y - self.originalPoint.y;
+    float xToYRatio = xDiff / (ABS(xDiff) + ABS(yDiff));
+    float yToXRatio = yDiff / (ABS(xDiff) + ABS(yDiff));
+    
+    CGPoint destination = CGPointMake(xToYRatio * SCREEN_WIDTH * 2, yToXRatio * SCREEN_WIDTH * 2);
+    CGFloat distance = distanceBetweenPoints(self.originalPoint, destination);
+    SKAction *move = [SKAction moveTo:destination duration:distance/self.pixelsPerSecond];
+    [self runAction:move withKey:ACTION_ENVELOPE_FLING];
+    
+    self.zPosition -= 5;
     self.blockState = BlockState_BlockFlung;
 }
 
@@ -236,21 +242,6 @@ static inline CGFloat distanceBetweenPoints(CGPoint a, CGPoint b) {
     CGFloat xDiff = a.x - b.x;
     CGFloat yDiff = a.y - b.y;
     return sqrtf(powf(xDiff, 2) + powf(yDiff, 2));
-}
-
-- (void) flingTowardsLocation:(CGPoint)location
-{
-    float xDiff = location.x - self.originalPoint.x;
-    float yDiff = location.y - self.originalPoint.y;
-    float xToYRatio = xDiff / (ABS(xDiff) + ABS(yDiff));
-    float yToXRatio = yDiff / (ABS(xDiff) + ABS(yDiff));
-    
-    CGPoint destination = CGPointMake(xToYRatio * SCREEN_WIDTH * 2, yToXRatio * SCREEN_WIDTH * 2);
-    CGFloat distance = distanceBetweenPoints(self.originalPoint, destination);
-    SKAction *move = [SKAction moveTo:destination duration:distance/self.pixelsPerSecond];
-    [self runAction:move withKey:ACTION_ENVELOPE_FLING];
-    
-    self.blockState = BlockState_BlockFlung;
 }
 
 #pragma mark - Destruction Functions

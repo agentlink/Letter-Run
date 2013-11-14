@@ -57,9 +57,12 @@ static LRDifficultyManager *_shared = nil;
 }
 
 - (void) resetDifficultyValues {
+    //This will eventually be replaced by changing the corresponding NSUserDefaults to the initial value stored in DifficultyVariables.plist (once they're all added)
+
     self.level = 1;
     self.scoreLengthFactor = 1.2;
     self.scorePerLetter = 10;
+    self.healthPercentIncreasePer100Pts = 15.0;
     self.scoreIncreaseStyle = IncreaseStyle_Exponential;
     
     //Add levelScoreIncreaseFactor value if style is not IncreaseStyle_None
