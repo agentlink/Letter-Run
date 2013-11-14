@@ -87,7 +87,6 @@
     NSMutableArray *envelopesToRemove = [NSMutableArray array];
     for (LRFallingEnvelope *envelope in self.envelopeArray) {
         if (envelope.blockState == BlockState_Landed) {
-            //TODO: figure out why this distance has to be half (doesn't seem to be getting called twice as much)
             envelope.position = CGPointMake(envelope.position.x + distance/2, envelope.position.y);
             if (envelope.position.x < 0 - SCREEN_WIDTH/2 - envelope.size.width/2) {
                 [envelopesToRemove addObject:envelope];
@@ -100,7 +99,6 @@
         [self.grassSpriteArray removeObject:frontGrass];
         [self.grassSpriteArray addObject:frontGrass];
     }
-    
     //Why are envelopes moving faster?
     [self.envelopeArray removeObjectsInArray:envelopesToRemove];
 }

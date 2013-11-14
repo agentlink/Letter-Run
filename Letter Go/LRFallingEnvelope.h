@@ -23,9 +23,6 @@ typedef enum {
 + (LRFallingEnvelope*) envelopeWithLetter:(NSString*)letter;
 
 - (void) dropEnvelopeWithSwing;
-
-- (void) setUpPhysics;
-- (void) setUpSwipedPhysics;
 - (void) removePhysics;
 
 - (void) envelopeHitMailman;

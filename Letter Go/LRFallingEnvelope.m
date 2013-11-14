@@ -50,26 +50,35 @@
     self.physicsBody.friction = 1;
     [[LRCollisionManager shared] setBitMasksForSprite:self];
     [[LRCollisionManager shared] addContactDetectionOfSpritesNamed:NAME_SPRITE_BOTTOM_EDGE toSprite:self];
-    
 }
 
-- (void) setUpSwipedPhysics
-{
-    self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.size];
-    self.physicsBody.affectedByGravity = NO;
-    self.physicsBody.dynamic = YES;
-    [[LRCollisionManager shared] setBitMasksForSprite:self];
-    //Make it bounce off the bottom if the section is full
-    if ([[LRGameStateManager shared] isLetterSectionFull])
-        [[LRCollisionManager shared] addCollisionDetectionOfSpritesNamed:NAME_SPRITE_BOTTOM_EDGE toSprite:self];
-}
-
-- (void) removePhysics
-{
+- (void) removePhysics {
     self.physicsBody = nil;
 }
 
+#pragma mark - Game Loop
+
+- (void) update:(NSTimeInterval)currentTime
+{
+    //Only check if the block has been flung or has landed on the ground
+    if (self.blockState != BlockState_BlockFlung && self.blockState != BlockState_Landed)
+        return;
+    
+    //Get the letter's location in the scene
+    CGRect sceneRect = [(LRGameScene*)self.scene window];
+    CGRect letterFrame = self.frame;
+    letterFrame.origin = [self.scene convertPoint:letterFrame.origin fromNode:[(LRGameScene*)self.scene gamePlayLayer]];
+    
+    //If the box has been flung to the letter box section
+    if (!(CGRectIntersectsRect(sceneRect, letterFrame))) {
+        NSMutableDictionary *dropLetterInfo = [NSMutableDictionary dictionaryWithObject:[NSNumber numberWithInt:self.slot] forKey:@"slot"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LETTER_CLEARED object:self userInfo:dropLetterInfo];
+        [self removeFromParent];
+    }
+}
+
 # pragma mark - Movement Function
+
 - (void) dropEnvelopeWithSwing
 {
     //Create the Bezier curves
@@ -101,8 +110,7 @@
         [bezierPath moveToPoint:CGPointMake(0, 0)];
         [bezierPath addCurveToPoint: nextPosition controlPoint1: CGPointMake(0, 0) controlPoint2: CGPointMake(0, nextPosition.y)];
         nextPosition.x *= -1;
-        
-        
+
         //Set the last position to land at the original x point
         if (i == 1) nextPosition.x /= 2;
         
@@ -136,6 +144,8 @@
 {
     for (UITouch *touch in touches)
     {
+        if (self.blockState == BlockState_BlockFlung)
+            return;
         CGPoint location = [touch locationInNode:[self parent]];
         if (CGRectContainsPoint(self.frame, location))
         {
@@ -144,8 +154,6 @@
             
             self.originalPoint = self.position;
             [self removeActionForKey:ACTION_ENVELOPE_DROP];
-            self.zPosition += 20;
-        
             [self removePhysics];
         }
     }
@@ -156,8 +164,9 @@
     for (UITouch *touch in touches)
     {
         CGPoint location = [touch locationInNode:[self parent]];
-        if (!CGRectContainsPoint(self.frame, location))
+        if (!CGRectContainsPoint(self.frame, location) && self.blockState != BlockState_BlockFlung)
         {
+            self.blockState = BlockState_BlockFlung;
             [self flingTowardsLocation:location];
         }
     }
@@ -169,8 +178,8 @@
     {
         //If the block is falling but wasn't flung
         if (self.blockState != BlockState_BlockFlung) {
-            [self flingEnvelopeToMailman];
             self.blockState = BlockState_BlockFlung;
+            [self flingEnvelopeToMailman];
         }
     }
 }
@@ -205,8 +214,6 @@
         [self addLetterToLetterSection];
     }];
     [self runAction:[SKAction sequence:@[moveAndShrink, offScreen]] withKey:ACTION_ENVELOPE_FLING];
-    
-    self.blockState = BlockState_BlockFlung;
 }
 
 - (void) flingTowardsLocation:(CGPoint)location
@@ -220,9 +227,6 @@
     CGFloat distance = distanceBetweenPoints(self.originalPoint, destination);
     SKAction *move = [SKAction moveTo:destination duration:distance/self.pixelsPerSecond];
     [self runAction:move withKey:ACTION_ENVELOPE_FLING];
-    
-    self.zPosition -= 5;
-    self.blockState = BlockState_BlockFlung;
 }
 
 - (void) addLetterToLetterSection
@@ -258,4 +262,5 @@ static inline CGFloat distanceBetweenPoints(CGPoint a, CGPoint b) {
     }];
     [self runAction:[SKAction sequence:@[fade, removeSelf]]];
 }
+
 @end

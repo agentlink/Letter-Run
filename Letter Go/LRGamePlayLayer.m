@@ -100,42 +100,10 @@
     [self addChild:blockEdgeSprite];
 }
 
-#pragma mark - Game Loop Functions
-
-- (void) update:(NSTimeInterval)currentTime
-{
-    //Check on the falling envelopes to see if they are outside the screen
-    CGRect sceneFrame = self.frame;
-    sceneFrame.origin = CGPointMake(0 - SCREEN_WIDTH/2, 0 - SCREEN_HEIGHT/2 - self.letterSection.size.height);
-    sceneFrame.size = CGSizeMake(sceneFrame.size.width, sceneFrame.size.height + self.letterSection.size.height);
-    
-    CGRect extendedLetterFrame = self.letterSection.frame;
-    extendedLetterFrame.origin = CGPointMake(extendedLetterFrame.origin.x, extendedLetterFrame.origin.y - extendedLetterFrame.size.height);
-    extendedLetterFrame.size = CGSizeMake(extendedLetterFrame.size.width, extendedLetterFrame.size.height * 2);
-    
-    NSMutableArray *childrenToRemove = [NSMutableArray array];
-    
-    [self enumerateChildNodesWithName:NAME_SPRITE_FALLING_ENVELOPE usingBlock:^(SKNode *node, BOOL *stop) {
-        LRFallingEnvelope *envelope = (LRFallingEnvelope*)node;
-        if (!CGRectIntersectsRect(envelope.frame, sceneFrame) &&
-            (envelope.blockState == BlockState_Landed || envelope.blockState == BlockState_BlockFlung)) {
-            NSMutableDictionary *dropLetterInfo = [NSMutableDictionary dictionaryWithObject:[NSNumber numberWithInt:envelope.slot] forKey:@"slot"];
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LETTER_CLEARED object:self userInfo:dropLetterInfo];
-            [childrenToRemove addObject:envelope];
-        }
-    }];
-    [self removeChildrenInArray:childrenToRemove];
-    [super update:currentTime];
-}
-
 - (void) pauseButtonPressed
 {
-    if ([[LRGameStateManager shared] isGamePaused]) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_CONTINUE_GAME object:nil];
-    }
-    else {
-        [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_PAUSE_GAME object:nil];
-    }
+    NSString *notifName = ([[LRGameStateManager shared] isGamePaused]) ? GAME_STATE_CONTINUE_GAME : GAME_STATE_PAUSE_GAME;
+    [[NSNotificationCenter defaultCenter] postNotificationName:notifName object:nil];
 }
 
 #pragma mark - Letter Drop Functions
@@ -198,12 +166,11 @@
 
 - (void) updateSlots:(NSNotification*) notification
 {
-    //This will be moved to the difficulty manager, which will be doing the dropping
     if ([[LRGameStateManager shared] isGameOver] || [[LRGameStateManager shared] isGamePaused])
         return;
     int slot = [[[notification userInfo] objectForKey:@"slot"] intValue];
     NSAssert([[ self.letterSlots objectAtIndex:slot] count], @"Error: cannot remove block from empty slot");
-    [[ self.letterSlots objectAtIndex:slot] removeLastObject];
+    [[self.letterSlots objectAtIndex:slot] removeLastObject];
     
 }
 
