@@ -146,6 +146,9 @@ static LRGameStateManager *_shared = nil;
 {
     self.gameIsPaused = NO;
     LRGamePlayLayer *gpl = [(LRGameScene*)[self scene] gamePlayLayer];
+    if (gpl.devPause) {
+        gpl.devPause = nil;
+    }
     gpl.paused = NO;
     [gpl enumerateChildNodesWithName:NAME_SPRITE_FALLING_ENVELOPE usingBlock:^(SKNode *node, BOOL *stop) {
         [node setUserInteractionEnabled:YES];

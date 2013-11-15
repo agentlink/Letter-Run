@@ -9,13 +9,12 @@
 #import <SpriteKit/SpriteKit.h>
 
 @interface LRScoreManager : SKNode
-
-
 + (LRScoreManager*) shared;
 
 - (void) submitWord:(NSString*)word;
+- (int) score;
 + (int) scoreForWord:(NSString*)word;
 
-- (int) score;
+@property (readonly) NSMutableArray *submittedWords;
 
 @end

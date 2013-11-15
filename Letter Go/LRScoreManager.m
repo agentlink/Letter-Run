@@ -12,14 +12,14 @@
 #import "LRDifficultyManager.h"
 
 @interface LRScoreManager ()
-@property NSMutableArray *submittedWords;
 @property (nonatomic) int score;
 @property int scoreToNextLevel;
 @property int lastScoreToNextLevel;
+
 @end
 
 @implementation LRScoreManager
-
+@synthesize submittedWords;
 static LRScoreManager *_shared = nil;
 
 + (LRScoreManager*) shared
@@ -48,8 +48,7 @@ static LRScoreManager *_shared = nil;
 {
     //Add to the score
     self.score += [LRScoreManager scoreForWord:word];
-    [self.submittedWords addObject:word];
-    //NSLog(@"Score for word %@: %i\nTotalSCore: %i", word, [LRScoreManager scoreForWord:word], self.score);
+    [submittedWords addObject:word];
     
     //If the player has made it to the next level
     if (self.score >= self.scoreToNextLevel) {
@@ -72,7 +71,6 @@ static LRScoreManager *_shared = nil;
                 self.scoreToNextLevel += self.lastScoreToNextLevel * [[LRDifficultyManager shared] levelScoreIncreaseFactor];
                 break;
         }
-        //NSLog(@"Increased level!\nCurrent score: %i\nScore for next level:%i", self.score, self.scoreToNextLevel);
     }
 }
 
@@ -98,8 +96,9 @@ static LRScoreManager *_shared = nil;
 - (void) newGame {
     self.score = 0;
     self.scoreToNextLevel  = [[LRDifficultyManager shared] initialNextLevelScore];
-    self.submittedWords = [NSMutableArray array];
+    submittedWords = [NSMutableArray array];
 }
+
 
 @end
 

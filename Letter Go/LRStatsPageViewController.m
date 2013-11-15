@@ -21,6 +21,7 @@
 @synthesize levelLabel, healthLabel, scoreLabel;
 @synthesize healthBarDrops, mailmanDamage;
 @synthesize healthStepper, levelStepper;
+@synthesize wordScoreLabel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -34,13 +35,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self loadLabelText];
-    [self loadSwitchValues];
-    [self loadSteppers];
+    [self reloadValues];
     [self addSubviews];
     // Do any additional setup after loading the view from its nib.
 }
 
+#pragma mark - Labels
 - (void) loadLabelText
 {
     self.levelLabel.text = [NSString stringWithFormat:@"%i", [[LRDifficultyManager shared] level]];
@@ -53,6 +53,26 @@
     NSNumber *health = [NSNumber numberWithFloat:[[LRGameStateManager shared] percentHealth]];
 
     self.healthLabel.text = [NSString stringWithFormat:@"%@%@", [nf stringFromNumber: health], @"%"];
+    [self loadWordScores];
+}
+
+- (void) loadWordScores
+{
+    int numShownWords = 3;
+    wordScoreLabel.text = @"";
+    wordScoreLabel.numberOfLines = 0;
+    
+    NSMutableString *labelText = [[NSMutableString alloc] init];
+    NSArray *submittedWords = [[LRScoreManager shared] submittedWords];
+    if ([submittedWords count] > numShownWords)
+        submittedWords = [submittedWords subarrayWithRange:(NSRange){submittedWords.count - numShownWords, numShownWords}];
+    for (int i = [submittedWords count] - 1; i >= 0; i--)
+    {
+        NSString *word = [submittedWords objectAtIndex:i];
+        int wordScore = [LRScoreManager scoreForWord:word];
+        [labelText appendFormat:@"%@: %i\n", word, wordScore];
+    }
+    wordScoreLabel.text = labelText;
 }
 
 #pragma mark - Steppers
@@ -127,6 +147,8 @@
     
     [self.view addSubview:healthStepper];
     [self.view addSubview:levelStepper];
+    
+    [self.view addSubview:wordScoreLabel];
 }
 
 - (void)didReceiveMemoryWarning

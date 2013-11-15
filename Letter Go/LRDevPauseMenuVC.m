@@ -103,7 +103,6 @@
             [self.updatingViews addObject:selector];
             selectorFrame.origin.x += selectorFrame.size.width;
         }
-        
     }
 }
 
@@ -128,8 +127,8 @@
 #pragma mark - Quit Button/Reload
 
 - (IBAction)quitButtonSelected:(UIButton*)sender{
-    [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_CONTINUE_GAME object:nil];
     [self.view removeFromSuperview];
+    [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_CONTINUE_GAME object:nil];
 }
 
 - (void) reloadSubviewValues {

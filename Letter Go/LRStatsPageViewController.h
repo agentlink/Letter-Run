@@ -23,4 +23,6 @@
 @property (nonatomic, retain) IBOutlet UIStepper *levelStepper;
 @property (nonatomic, retain) IBOutlet UIStepper *healthStepper;
 
+@property (nonatomic, retain) IBOutlet UILabel *wordScoreLabel;
+
 @end

@@ -65,7 +65,6 @@
     float healthBarToScoreRatio = (SCREEN_WIDTH * [[LRDifficultyManager shared] healthPercentIncreasePer100Pts]/100) / 100;
 
     float newXValue = self.healthBar.position.x + (wordScore * healthBarToScoreRatio);
-    NSLog(@"Shift distance %f for score %i.", (wordScore * healthBarToScoreRatio), wordScore);
     
     //The bar cannot move farther left than the left most edge
     newXValue *= (newXValue > 0) ? 0 : 1;
