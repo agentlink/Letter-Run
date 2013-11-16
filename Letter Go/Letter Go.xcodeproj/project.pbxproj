@@ -32,6 +32,7 @@
 		008428F318009F6300908E5D /* LRLetterGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 008428F218009F6300908E5D /* LRLetterGenerator.m */; };
 		008428F61801EABB00908E5D /* LRSubmitButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 008428F51801EABB00908E5D /* LRSubmitButton.m */; };
 		008428F91801F46C00908E5D /* LRScoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 008428F81801F46C00908E5D /* LRScoreManager.m */; };
+		00861283183819BF00C42AE0 /* Envelope_Love.png in Resources */ = {isa = PBXBuildFile; fileRef = 00861282183819BF00C42AE0 /* Envelope_Love.png */; };
 		009B7279182991CB00A6CEA0 /* Envelope_Normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 009B7276182991CB00A6CEA0 /* Envelope_Normal.png */; };
 		009B727A182991CB00A6CEA0 /* Manford.png in Resources */ = {isa = PBXBuildFile; fileRef = 009B7277182991CB00A6CEA0 /* Manford.png */; };
 		009B727B182991CB00A6CEA0 /* Background_Cloud.png in Resources */ = {isa = PBXBuildFile; fileRef = 009B7278182991CB00A6CEA0 /* Background_Cloud.png */; };
@@ -126,6 +127,7 @@
 		008428F51801EABB00908E5D /* LRSubmitButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRSubmitButton.m; sourceTree = "<group>"; };
 		008428F71801F46C00908E5D /* LRScoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRScoreManager.h; sourceTree = "<group>"; };
 		008428F81801F46C00908E5D /* LRScoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRScoreManager.m; sourceTree = "<group>"; };
+		00861282183819BF00C42AE0 /* Envelope_Love.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Envelope_Love.png; sourceTree = "<group>"; };
 		009B7276182991CB00A6CEA0 /* Envelope_Normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Envelope_Normal.png; sourceTree = "<group>"; };
 		009B7277182991CB00A6CEA0 /* Manford.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Manford.png; sourceTree = "<group>"; };
 		009B7278182991CB00A6CEA0 /* Background_Cloud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background_Cloud.png; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 				00AC280D182EEAD400B3C0EB /* Pause_Unselected.png */,
 				009B7277182991CB00A6CEA0 /* Manford.png */,
 				009B7276182991CB00A6CEA0 /* Envelope_Normal.png */,
+				00861282183819BF00C42AE0 /* Envelope_Love.png */,
 				0007FB31180B2FBB00E55B0D /* Background */,
 			);
 			name = Resources;
@@ -594,6 +597,7 @@
 				000BC14F181C6B4600BEC563 /* Background_Mountains.png in Resources */,
 				008428F01800997800908E5D /* LetterProbabilities.plist in Resources */,
 				00AC280F182EEAD400B3C0EB /* Pause_Unselected.png in Resources */,
+				00861283183819BF00C42AE0 /* Envelope_Love.png in Resources */,
 				00AC2804182EDAC100B3C0EB /* DifficultyVariables.plist in Resources */,
 				009B7279182991CB00A6CEA0 /* Envelope_Normal.png in Resources */,
 				00AC281D183178B800B3C0EB /* LRStatsPageViewController.xib in Resources */,

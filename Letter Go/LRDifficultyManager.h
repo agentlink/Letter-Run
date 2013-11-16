@@ -25,6 +25,7 @@ typedef enum  {
 - (void) loadUserDefaults;
 - (void) runInitialLoad;
 
+- (int) loveLetterProbability;
 - (CGFloat) letterDropPeriod;
 - (CGFloat) healthBarDropTime;
 - (CGFloat) parallaxSpeedFactor;
@@ -99,6 +100,6 @@ typedef enum  {
 
 #pragma mark - Love Letter Propertis
 @property CGFloat loveLetterBonus;
-
+@property int percentLoveLetters;
 @end
 

@@ -97,6 +97,7 @@ static LRDifficultyManager *_shared = nil;
     self.mailmanHitDamage = 20;
     
     self.loveLetterBonus = 10;
+    self.percentLoveLetters = 10;
 }
 
 - (void) setUserDefaults
@@ -159,6 +160,11 @@ static LRDifficultyManager *_shared = nil;
     if (healthSpeed < self.healthBarMinDropTime)
         return self.healthBarMinDropTime;
     return healthSpeed;
+}
+
+- (int) loveLetterProbability
+{
+    return self.percentLoveLetters;
 }
 
 - (NSArray*) parallaxLayerSpeeds

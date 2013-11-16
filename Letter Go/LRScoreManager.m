@@ -50,9 +50,10 @@ static LRScoreManager *_shared = nil;
 {
     
     //Add to the score
-    int score = [LRScoreManager scoreForWordWithLoveLetters:wordDict];
+    int wordScore = [LRScoreManager scoreForWordWithLoveLetters:wordDict];
+    self.score += wordScore;
     NSMutableDictionary *updatedWordDict = [NSMutableDictionary dictionaryWithDictionary:wordDict];
-    [updatedWordDict setObject:[NSNumber numberWithInt:score] forKey:@"score"];
+    [updatedWordDict setObject:[NSNumber numberWithInt:wordScore] forKey:@"score"];
 
     [submittedWords addObject:updatedWordDict];
 

@@ -7,7 +7,7 @@
 //
 
 #import "LRLetterBlockGenerator.h"
-
+#import "LRDifficultyManager.h"
 #import "LRLetterGenerator.h"
 
 #define PLACEHOLDER_TEXT            @" "
@@ -19,7 +19,8 @@
 + (LRFallingEnvelope*) createRandomEnvelope
 {
     NSString *letter = [[LRLetterGenerator shared] generateLetter];
-    LRFallingEnvelope *envelope = [LRFallingEnvelope envelopeWithLetter:letter loveLetter:[self isLoveLetter]];
+    BOOL love = [self isLoveLetter];
+    LRFallingEnvelope *envelope = [LRFallingEnvelope envelopeWithLetter:letter loveLetter:love];
     
     envelope.position = CGPointMake(0, 160 + envelope.frame.size.height/2);
     return envelope;
@@ -57,6 +58,7 @@
 
 + (BOOL) isLoveLetter
 {
-    return NO;
+    int chance = arc4random()%100;
+    return (chance < [[LRDifficultyManager shared] loveLetterProbability]);
 }
 @end

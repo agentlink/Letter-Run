@@ -30,9 +30,9 @@
 {
     if (self = [super initWithColor:[SKColor clearColor] size:CGSizeMake(LETTER_BLOCK_SIZE, LETTER_BLOCK_SIZE)]) {
         self.letter = letter;
-        [self createObjectContent];
         self.userInteractionEnabled = YES;
         self.loveLetter = love;
+        [self createObjectContent];
     }
     return self;
 }
@@ -50,7 +50,8 @@
     
     //Determine which envelope sprite to use
     if ([self.letter length]) {
-        self.envelopeSprite = [SKSpriteNode spriteNodeWithImageNamed:@"Envelope_Normal.png"];
+        NSString *fileName = (self.loveLetter) ? @"Envelope_Love.png" : @"Envelope_Normal.png";
+        self.envelopeSprite = [SKSpriteNode spriteNodeWithImageNamed:fileName];
         self.envelopeSprite.xScale = LETTER_BLOCK_SIZE/self.envelopeSprite.size.width;
         self.envelopeSprite.yScale = LETTER_BLOCK_SIZE/self.envelopeSprite.size.height;
         [self addChild:self.envelopeSprite];
