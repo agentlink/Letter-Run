@@ -17,14 +17,19 @@
 @implementation LRSectionBlock
 
 #pragma mark - Set Up
-+ (LRSectionBlock*) sectionBlockWithLetter:(NSString*)letter
++ (LRSectionBlock*) sectionBlockWithLetter:(NSString*)letter loveLetter:(BOOL)love
 {
-    return [[LRSectionBlock alloc] initWithLetter:letter];
+    return [[LRSectionBlock alloc] initWithLetter:letter loveLetter:love];
 }
 
-- (id) initWithLetter:(NSString *)letter
++ (LRSectionBlock*) emptySectionBlock
 {
-    if (self = [super initWithLetter:letter]) {
+    return [[LRSectionBlock alloc] initWithLetter:@"" loveLetter:false];
+}
+
+- (id) initWithLetter:(NSString *)letter loveLetter:(BOOL)love
+{
+    if (self = [super initWithLetter:letter loveLetter:love]) {
         self.name = NAME_SPRITE_SECTION_LETTER_BLOCK;
     }
     return self;

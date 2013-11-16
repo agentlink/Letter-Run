@@ -108,6 +108,8 @@ typedef enum {
 {
     //Get the letter from the notificaiton
     NSString *letter = [[notification userInfo] objectForKey:KEY_GET_LETTER];
+    BOOL isLoveLetter = [[[notification userInfo] objectForKey:KEY_GET_LOVE] boolValue];
+
     LRLetterSlot *currentLetterSlot = nil;
     int letterCount = 0;
     for (LRLetterSlot* slot in self.letterSlots)
@@ -120,7 +122,7 @@ typedef enum {
     }
     //If all the letter slots are full
     if (currentLetterSlot) {
-        currentLetterSlot.currentBlock = [LRLetterBlockGenerator createBlockWithLetter:letter];
+        currentLetterSlot.currentBlock = [LRLetterBlockGenerator createBlockWithLetter:letter loveLetter:isLoveLetter];
     }
     [self updateSubmitButton];
 }
@@ -159,6 +161,7 @@ typedef enum {
     [self updateSubmitButton];
 }
 
+
 #pragma mark - Submit Word Functions
 
 - (void) submitWord
@@ -191,29 +194,12 @@ typedef enum {
     NSMutableSet *indices = [NSMutableSet set];
     for (int i = 0; i < [self.letterSlots count]; i++) {
         LRLetterSlot *slot = [self.letterSlots objectAtIndex:i];
-        if (![slot.currentBlock isLetterBlockEmpty] && [slot.currentBlock isLoveLetter]) {
+        if (![slot.currentBlock isLetterBlockEmpty] && [slot.currentBlock loveLetter]) {
             [indices addObject:[NSNumber numberWithInt:i]];
         }
     }
     return indices;
 }
-
-/*
- 
- - (NSString*)getCurrentWord
- {
- NSMutableString *currentWord = [[NSMutableString alloc] init];
- for (LRLetterSlot *slot in self.letterSlots)
- {
- if ([slot isLetterSlotEmpty] || [slot.currentBlock isLetterBlockPlaceHolder])
- break;
- [currentWord appendString:[slot.currentBlock letter]];
- if (popOffLetters)
- slot.currentBlock = [LRLetterBlockGenerator createEmptySectionBlock];
- }
- return currentWord;
- }
- */
 
 - (void) updateSubmitButton
 {

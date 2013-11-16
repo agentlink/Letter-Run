@@ -10,7 +10,8 @@
 
 @interface LRSectionBlock : LRLetterBlock
 
-+ (LRSectionBlock*) sectionBlockWithLetter:(NSString*)letter;
++ (LRSectionBlock*) sectionBlockWithLetter:(NSString*)letter loveLetter:(BOOL)love;;
++ (LRSectionBlock*) emptySectionBlock;
 
 - (BOOL) isLetterBlockEmpty;
 - (BOOL) isLetterBlockPlaceHolder;

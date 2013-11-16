@@ -19,7 +19,7 @@
 + (LRFallingEnvelope*) createRandomEnvelope
 {
     NSString *letter = [[LRLetterGenerator shared] generateLetter];
-    LRFallingEnvelope *envelope = [LRFallingEnvelope envelopeWithLetter:letter];
+    LRFallingEnvelope *envelope = [LRFallingEnvelope envelopeWithLetter:letter loveLetter:[self isLoveLetter]];
     
     envelope.position = CGPointMake(0, 160 + envelope.frame.size.height/2);
     return envelope;
@@ -35,7 +35,7 @@
 
 + (LRSectionBlock*) createEmptySectionBlock
 {
-    LRSectionBlock *lb = [LRSectionBlock sectionBlockWithLetter:@""];
+    LRSectionBlock *lb = [LRSectionBlock emptySectionBlock];
     lb.color = [SKColor clearColor];
     return lb;
 }
@@ -47,9 +47,16 @@
     return lb;
 }
 
-+ (LRSectionBlock*) createBlockWithLetter:(NSString*)letter
++ (LRSectionBlock*) createBlockWithLetter:(NSString*)letter {
+    return[LRSectionBlock sectionBlockWithLetter:letter loveLetter:false];
+}
+
++ (LRSectionBlock*) createBlockWithLetter:(NSString *)letter loveLetter:(BOOL)love {
+    return [LRSectionBlock sectionBlockWithLetter:letter loveLetter:love];
+}
+
++ (BOOL) isLoveLetter
 {
-    LRSectionBlock *lb = [LRSectionBlock sectionBlockWithLetter:letter];
-    return lb;
+    return NO;
 }
 @end

@@ -45,6 +45,7 @@
 
 #define KEY_GET_LETTER                              @"Get letter"
 #define KEY_GET_LETTER_BLOCK                        @"Get the letter block"
+#define KEY_GET_LOVE                                @"Get whether it's a love letter"
 
 #define SIZE_HEIGHT_LETTER_SECTION                  (178 - 51)/2
 #define SIZE_HEIGHT_HEALTH_SECTION                  7

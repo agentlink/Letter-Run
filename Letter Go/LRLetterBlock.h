@@ -13,10 +13,10 @@
 
 @interface LRLetterBlock : LRObject
 @property NSString *letter;
+@property (nonatomic, readonly) BOOL loveLetter;
 
-+ (LRLetterBlock*) letterBlockWithLetter:(NSString*)letter;
-- (id) initWithLetter:(NSString*)letter;
-- (BOOL) isLoveLetter;
++ (LRLetterBlock*) letterBlockWithLetter:(NSString*)letter loveLetter:(BOOL)love;
+- (id) initWithLetter:(NSString*)letter loveLetter:(BOOL)love;
 
 @end
 

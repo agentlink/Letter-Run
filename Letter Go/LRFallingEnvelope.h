@@ -20,7 +20,7 @@ typedef enum {
 @property BlockState blockState;
 @property (nonatomic) int slot;
 
-+ (LRFallingEnvelope*) envelopeWithLetter:(NSString*)letter;
++ (LRFallingEnvelope*) envelopeWithLetter:(NSString*)letter loveLetter:(BOOL)love;
 
 - (void) dropEnvelopeWithSwing;
 - (void) removePhysics;

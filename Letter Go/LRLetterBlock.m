@@ -16,28 +16,26 @@
 
 @interface LRLetterBlock ()
 @property SKSpriteNode *envelopeSprite;
-@property BOOL loveLetter;
+@property (readwrite) BOOL loveLetter;
 @end
 @implementation LRLetterBlock
 
 #pragma mark - Initializers/Set Up
-+ (LRLetterBlock*) letterBlockWithLetter:(NSString*)letter;
++ (LRLetterBlock*) letterBlockWithLetter:(NSString*)letter loveLetter:(BOOL)love;
 {
-    return [[LRLetterBlock alloc] initWithLetter:letter];
+    return [[LRLetterBlock alloc] initWithLetter:letter loveLetter:love];
 }
 
-- (id) initWithLetter:(NSString *)letter
+- (id) initWithLetter:(NSString*)letter loveLetter:(BOOL)love
 {
     if (self = [super initWithColor:[SKColor clearColor] size:CGSizeMake(LETTER_BLOCK_SIZE, LETTER_BLOCK_SIZE)]) {
         self.letter = letter;
         [self createObjectContent];
         self.userInteractionEnabled = YES;
-        
-        self.loveLetter = false;
+        self.loveLetter = love;
     }
     return self;
 }
-
 
 - (void) createObjectContent
 {
@@ -58,9 +56,4 @@
         [self addChild:self.envelopeSprite];
     }
 }
-
-- (BOOL) isLoveLetter {
-    return self.loveLetter;
-}
-
 @end

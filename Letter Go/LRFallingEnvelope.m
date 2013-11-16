@@ -13,6 +13,7 @@
 #import "LRDifficultyManager.h"
 
 @interface LRFallingEnvelope ()
+@property (readwrite) BOOL loveLetter;
 @property BOOL playerMovedTouch;
 @property CGPoint originalPoint;
 @property CGFloat pixelsPerSecond;
@@ -22,15 +23,15 @@
 
 #pragma mark - Set Up/Initializing
 
-+ (LRFallingEnvelope*) envelopeWithLetter:(NSString*)letter
++ (LRFallingEnvelope*) envelopeWithLetter:(NSString*)letter loveLetter:(BOOL)love
 {
-    return [[LRFallingEnvelope alloc] initWithLetter:letter];
+    return [[LRFallingEnvelope alloc] initWithLetter:letter loveLetter:love];
 }
 
 
-- (id) initWithLetter:(NSString*)letter
+- (id) initWithLetter:(NSString*)letter loveLetter:(BOOL)love
 {
-    if (self = [super initWithLetter:letter]) {
+    if (self = [super initWithLetter:letter loveLetter:love]) {
         self.blockState = BlockState_Falling;
         self.name = NAME_SPRITE_FALLING_ENVELOPE;
         self.pixelsPerSecond = [[LRDifficultyManager shared] flingLetterSpeed];
@@ -232,7 +233,7 @@
 - (void) addLetterToLetterSection
 {
     //Add the letter
-    NSMutableDictionary *addLetterInfo = [NSMutableDictionary dictionaryWithObject:self.letter forKey:KEY_GET_LETTER];
+    NSMutableDictionary *addLetterInfo = [NSMutableDictionary dictionaryWithObjects:@[self.letter, [NSNumber numberWithBool:self.loveLetter]] forKeys:@[KEY_GET_LETTER, KEY_GET_LOVE]];
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_ADDED_LETTER object:self userInfo:addLetterInfo];
     
     //And notify that a new slot is empty

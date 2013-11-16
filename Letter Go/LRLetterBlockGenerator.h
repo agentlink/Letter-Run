@@ -16,6 +16,10 @@
 + (LRFallingEnvelope*) createRandomEnvelopeAtSlot:(int)slot;
 + (LRSectionBlock*) createEmptySectionBlock;
 + (LRSectionBlock*) createPlaceHolderBlock;
+
 + (LRSectionBlock*) createBlockWithLetter:(NSString*)letter;
++ (LRSectionBlock*) createBlockWithLetter:(NSString *)letter loveLetter:(BOOL)love;
+
++ (BOOL) isLoveLetter;
 
 @end
