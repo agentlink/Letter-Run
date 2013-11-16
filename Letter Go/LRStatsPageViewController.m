@@ -68,8 +68,8 @@
         submittedWords = [submittedWords subarrayWithRange:(NSRange){submittedWords.count - numShownWords, numShownWords}];
     for (int i = [submittedWords count] - 1; i >= 0; i--)
     {
-        NSString *word = [submittedWords objectAtIndex:i];
-        int wordScore = [LRScoreManager scoreForWord:word];
+        NSString *word = [[submittedWords objectAtIndex:i] objectForKey:@"word"];
+        int wordScore = [[[submittedWords objectAtIndex:i] objectForKey:@"score"] integerValue];
         [labelText appendFormat:@"%@: %i\n", word, wordScore];
     }
     wordScoreLabel.text = labelText;

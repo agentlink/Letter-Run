@@ -16,6 +16,7 @@
 
 @interface LRLetterBlock ()
 @property SKSpriteNode *envelopeSprite;
+@property BOOL loveLetter;
 @end
 @implementation LRLetterBlock
 
@@ -31,6 +32,8 @@
         self.letter = letter;
         [self createObjectContent];
         self.userInteractionEnabled = YES;
+        
+        self.loveLetter = false;
     }
     return self;
 }
@@ -54,6 +57,10 @@
         self.envelopeSprite.yScale = LETTER_BLOCK_SIZE/self.envelopeSprite.size.height;
         [self addChild:self.envelopeSprite];
     }
+}
+
+- (BOOL) isLoveLetter {
+    return self.loveLetter;
 }
 
 @end

@@ -97,5 +97,8 @@ typedef enum  {
 @property BOOL mailmanReceivesDamage;
 @property BOOL healthBarFalls;
 
+#pragma mark - Love Letter Propertis
+@property CGFloat loveLetterBonus;
+
 @end
 

@@ -163,13 +163,18 @@ typedef enum {
 
 - (void) submitWord
 {
-    NSString *currentWord = [self getCurrentWord:YES];
-    [[LRScoreManager shared] submitWord:currentWord];
+    NSString *currentWord = [self getCurrentWord];
+    NSDictionary *wordDict = [NSDictionary dictionaryWithObjects:@[currentWord, [self loveLetterIndices]] forKeys:@[@"word", @"loveLetters"]];
+    
+    [[LRScoreManager shared] submitWord:wordDict];
     [[[(LRGameScene*)[self scene] gamePlayLayer] healthSection] submitWord:currentWord];
+
+    [self clearLetterSection];
     [self updateSubmitButton];
 }
 
-- (NSString*)getCurrentWord:(BOOL)popOffLetters
+
+- (NSString*)getCurrentWord
 {
     NSMutableString *currentWord = [[NSMutableString alloc] init];
     for (LRLetterSlot *slot in self.letterSlots)
@@ -177,11 +182,38 @@ typedef enum {
         if ([slot isLetterSlotEmpty] || [slot.currentBlock isLetterBlockPlaceHolder])
             break;
         [currentWord appendString:[slot.currentBlock letter]];
-        if (popOffLetters)
-            slot.currentBlock = [LRLetterBlockGenerator createEmptySectionBlock];
     }
     return currentWord;
 }
+
+- (NSSet*) loveLetterIndices
+{
+    NSMutableSet *indices = [NSMutableSet set];
+    for (int i = 0; i < [self.letterSlots count]; i++) {
+        LRLetterSlot *slot = [self.letterSlots objectAtIndex:i];
+        if (![slot.currentBlock isLetterBlockEmpty] && [slot.currentBlock isLoveLetter]) {
+            [indices addObject:[NSNumber numberWithInt:i]];
+        }
+    }
+    return indices;
+}
+
+/*
+ 
+ - (NSString*)getCurrentWord
+ {
+ NSMutableString *currentWord = [[NSMutableString alloc] init];
+ for (LRLetterSlot *slot in self.letterSlots)
+ {
+ if ([slot isLetterSlotEmpty] || [slot.currentBlock isLetterBlockPlaceHolder])
+ break;
+ [currentWord appendString:[slot.currentBlock letter]];
+ if (popOffLetters)
+ slot.currentBlock = [LRLetterBlockGenerator createEmptySectionBlock];
+ }
+ return currentWord;
+ }
+ */
 
 - (void) updateSubmitButton
 {
@@ -191,7 +223,7 @@ typedef enum {
         if ([(LRLetterSlot*)[self.letterSlots objectAtIndex:i] isLetterSlotEmpty])
             break;
     }
-    self.submitButton.playerCanSubmitWord = (i >= LETTER_MINIMUM_COUNT && [[LRDictionaryChecker shared] checkForWordInDictionary:[self getCurrentWord:NO]]);
+    self.submitButton.playerCanSubmitWord = (i >= LETTER_MINIMUM_COUNT && [[LRDictionaryChecker shared] checkForWordInDictionary:[self getCurrentWord]]);
 }
 
 #pragma mark - Reordering Functions

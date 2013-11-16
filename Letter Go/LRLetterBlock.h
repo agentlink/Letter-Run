@@ -16,6 +16,8 @@
 
 + (LRLetterBlock*) letterBlockWithLetter:(NSString*)letter;
 - (id) initWithLetter:(NSString*)letter;
+- (BOOL) isLoveLetter;
+
 @end
 
 

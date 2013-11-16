@@ -44,36 +44,44 @@ static LRScoreManager *_shared = nil;
     return self;
 }
 
-- (void) submitWord:(NSString*)word
+#pragma mark - Word Submission
+
+- (void) submitWord:(NSDictionary*)wordDict
 {
-    //Add to the score
-    self.score += [LRScoreManager scoreForWord:word];
-    [submittedWords addObject:word];
     
-    //If the player has made it to the next level
-    if (self.score >= self.scoreToNextLevel) {
+    //Add to the score
+    int score = [LRScoreManager scoreForWordWithLoveLetters:wordDict];
+    NSMutableDictionary *updatedWordDict = [NSMutableDictionary dictionaryWithDictionary:wordDict];
+    [updatedWordDict setObject:[NSNumber numberWithInt:score] forKey:@"score"];
 
-        int level = [[LRDifficultyManager shared] level];
-        [[LRDifficultyManager shared] setLevel:level++];
-        
-        self.lastScoreToNextLevel = self.scoreToNextLevel;
-        IncreaseStyle levelScoreIncrease = [[LRDifficultyManager shared] levelScoreIncreaseStyle];
+    [submittedWords addObject:updatedWordDict];
 
-        //Increase the score needed for the next level based on the increase style
-        switch (levelScoreIncrease) {
-            case IncreaseStyle_None:
-                self.scoreToNextLevel += [[LRDifficultyManager shared] initialNextLevelScore];
-                break;
-            case IncreaseStyle_Linear:
-                self.scoreToNextLevel += self.lastScoreToNextLevel + [[LRDifficultyManager shared] levelScoreIncreaseFactor];
-                break;
-            case IncreaseStyle_Exponential:
-                self.scoreToNextLevel += self.lastScoreToNextLevel * [[LRDifficultyManager shared] levelScoreIncreaseFactor];
-                break;
-        }
-    }
+    //Check for level progression
+    if (self.score >= self.scoreToNextLevel)
+        [self progressLevel];
 }
 
+- (void) progressLevel
+{
+    int level = [[LRDifficultyManager shared] level];
+    [[LRDifficultyManager shared] setLevel:level++];
+    
+    self.lastScoreToNextLevel = self.scoreToNextLevel;
+    IncreaseStyle levelScoreIncrease = [[LRDifficultyManager shared] levelScoreIncreaseStyle];
+    
+    //Increase the score needed for the next level based on the increase style
+    switch (levelScoreIncrease) {
+        case IncreaseStyle_None:
+            self.scoreToNextLevel += [[LRDifficultyManager shared] initialNextLevelScore];
+            break;
+        case IncreaseStyle_Linear:
+            self.scoreToNextLevel += self.lastScoreToNextLevel + [[LRDifficultyManager shared] levelScoreIncreaseFactor];
+            break;
+        case IncreaseStyle_Exponential:
+            self.scoreToNextLevel += self.lastScoreToNextLevel * [[LRDifficultyManager shared] levelScoreIncreaseFactor];
+            break;
+    }
+}
 
 #pragma mark - Getters + Setters
 + (int) scoreForWord:(NSString*)word
@@ -87,6 +95,14 @@ static LRScoreManager *_shared = nil;
         NSLog(@"Warning: score increase style should be linear or exponential");
     
     return baseScore * scoreFactor;
+}
+
++ (int) scoreForWordWithLoveLetters:(NSDictionary *)wordDict
+{
+    int wordScore = [self scoreForWord:[wordDict objectForKey:@"word"]];
+    for (int i = 0; i < [(NSSet*)[wordDict objectForKey:@"loveLetters"] count]; i++)
+        wordScore += [[LRDifficultyManager shared] loveLetterBonus];
+    return wordScore;
 }
 
 - (int) score {

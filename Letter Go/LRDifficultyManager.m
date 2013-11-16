@@ -95,6 +95,8 @@ static LRDifficultyManager *_shared = nil;
     self.parallaxSpeed_Grass = 3.7;
     
     self.mailmanHitDamage = 20;
+    
+    self.loveLetterBonus = 10;
 }
 
 - (void) setUserDefaults

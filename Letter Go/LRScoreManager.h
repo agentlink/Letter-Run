@@ -11,9 +11,10 @@
 @interface LRScoreManager : SKNode
 + (LRScoreManager*) shared;
 
-- (void) submitWord:(NSString*)word;
+- (void) submitWord:(NSDictionary*)wordDict;
 - (int) score;
 + (int) scoreForWord:(NSString*)word;
++ (int) scoreForWordWithLoveLetters:(NSDictionary*)word;
 
 @property (readonly) NSMutableArray *submittedWords;
 
