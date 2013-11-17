@@ -31,6 +31,7 @@ static LRDifficultyManager *_shared = nil;
 - (id) init
 {
     if (self = [super init]) {
+        //Check to see if NSUserDefaults have been loaded
         if (![[NSUserDefaults standardUserDefaults] objectForKey:DV_HEALTHBAR_MAX_SPEED]) {
             [self runInitialLoad];
         }
@@ -60,21 +61,25 @@ static LRDifficultyManager *_shared = nil;
     //This will eventually be replaced by changing the corresponding NSUserDefaults to the initial value stored in DifficultyVariables.plist (once they're all added)
 
     self.level = 1;
-    self.scoreLengthFactor = 1.2;
-    self.scorePerLetter = 10;
-    self.healthPercentIncreasePer100Pts = 15.0;
-    self.scoreIncreaseStyle = IncreaseStyle_Exponential;
     
-    //Add levelScoreIncreaseFactor value if style is not IncreaseStyle_None
-    
-    self.levelScoreIncreaseStyle = IncreaseStyle_Linear;
-    self.levelScoreIncreaseFactor = 50;
-    self.initialNextLevelScore = 150;
-    
+    //Health
     self.initialHealthDropTime = 60;
     self.healthSpeedIncreaseFactor = .5;
     self.healthSpeedIncreaseStyle = IncreaseStyle_Linear;
     self.healthBarMinDropTime = 12;
+    self.healthPercentIncreasePer100Pts = 15.0;
+    
+    //Scores
+    self.scoreLengthFactor = 1.2;
+    self.scorePerLetter = 10;
+    self.scoreIncreaseStyle = IncreaseStyle_Exponential;
+
+    //Levels
+    self.levelScoreIncreaseStyle = IncreaseStyle_Linear;
+    self.levelScoreIncreaseFactor = 50;
+    self.initialNextLevelScore = 150;
+    
+    
     
     self.intialLetterDropPeriod = 2;
     self.letterDropPeriodDecreaseRate = 1.2;
@@ -108,6 +113,15 @@ static LRDifficultyManager *_shared = nil;
     [[NSUserDefaults standardUserDefaults] setFloat:self.healthBarMinDropTime forKey:DV_HEALTHBAR_MAX_SPEED];
     [[NSUserDefaults standardUserDefaults] setInteger:self.healthSpeedIncreaseStyle forKey:DV_HEALTHBAR_INCREASE_STYLE];
     [[NSUserDefaults standardUserDefaults] setFloat:self.healthPercentIncreasePer100Pts forKey:DV_HEALTHBAR_INCREASE_PER_WORD];
+    
+    //Score
+    [[NSUserDefaults standardUserDefaults] setInteger:self.scorePerLetter forKey:DV_SCORE_PER_LETTER];
+    [[NSUserDefaults standardUserDefaults] setFloat:self.scoreLengthFactor forKey:DV_SCORE_WORD_LENGTH_FACTOR];
+    [[NSUserDefaults standardUserDefaults] setInteger:self.initialNextLevelScore forKey:DV_SCORE_INITIAL_LEVEL_PROGRESSION];
+    [[NSUserDefaults standardUserDefaults] setInteger:self.scoreIncreaseStyle forKey:DV_SCORE_LENGTH_INCREASE_STYLE];
+    [[NSUserDefaults standardUserDefaults] setFloat:self.levelScoreIncreaseFactor forKey:DV_SCORE_LEVEL_PROGRESS_INCREASE_FACTOR];
+    [[NSUserDefaults standardUserDefaults] setInteger:self.levelScoreIncreaseStyle forKey:DV_SCORE_LEVEL_PROGRESS_INCREASE_STYLE];
+    
 }
 
 - (void) loadUserDefaults
@@ -118,6 +132,14 @@ static LRDifficultyManager *_shared = nil;
     self.healthBarMinDropTime = [[NSUserDefaults standardUserDefaults] floatForKey:DV_HEALTHBAR_MAX_SPEED];
     self.healthSpeedIncreaseStyle = [[NSUserDefaults standardUserDefaults] integerForKey:DV_HEALTHBAR_INCREASE_STYLE];
     self.healthPercentIncreasePer100Pts = [[NSUserDefaults standardUserDefaults] floatForKey:DV_HEALTHBAR_INCREASE_PER_WORD];
+    
+    //Score
+    self.scorePerLetter = [[NSUserDefaults standardUserDefaults] integerForKey:DV_SCORE_PER_LETTER];
+    self.scoreLengthFactor = [[NSUserDefaults standardUserDefaults] floatForKey:DV_SCORE_WORD_LENGTH_FACTOR];
+    self.initialNextLevelScore = [[NSUserDefaults standardUserDefaults] integerForKey:DV_SCORE_INITIAL_LEVEL_PROGRESSION];
+    self.scoreIncreaseStyle = [[NSUserDefaults standardUserDefaults] integerForKey:DV_SCORE_LENGTH_INCREASE_STYLE];
+    self.levelScoreIncreaseFactor = [[NSUserDefaults standardUserDefaults] floatForKey:DV_SCORE_LEVEL_PROGRESS_INCREASE_FACTOR];
+    self.levelScoreIncreaseStyle = [[NSUserDefaults standardUserDefaults] integerForKey:DV_SCORE_LEVEL_PROGRESS_INCREASE_STYLE];
 }
 
 #pragma mark - Speed Factor Calculators

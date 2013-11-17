@@ -16,6 +16,7 @@
 @property (nonatomic, retain) IBOutlet UILabel *levelLabel;
 @property (nonatomic, retain) IBOutlet UILabel *scoreLabel;
 @property (nonatomic, retain) IBOutlet UILabel *healthLabel;
+@property (nonatomic, retain) IBOutlet UILabel *nextScoreLabel;
 
 @property (nonatomic, retain) IBOutlet UISwitch *mailmanDamage;
 @property (nonatomic, retain) IBOutlet UISwitch *healthBarDrops;

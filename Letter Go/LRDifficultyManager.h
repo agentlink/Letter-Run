@@ -37,7 +37,7 @@ typedef enum  {
 //The value the score is multiplied by/to the power of
 @property (nonatomic) CGFloat scoreLengthFactor;
 //The score per letter BEFORE the total score factor is applied
-@property (nonatomic) CGFloat scorePerLetter;
+@property (nonatomic) int scorePerLetter;
 
 
 #pragma mark - Level Up Properties
@@ -49,7 +49,7 @@ typedef enum  {
  If the levelScoreIncreaseStyle is linear, then this is also the score needed to
  be reached to go to every level.
 */
-@property (nonatomic) CGFloat initialNextLevelScore;
+@property (nonatomic) int initialNextLevelScore;
 /*
  If the score needed to move on to the next level increases with each subsequent level,
  this is the factor by which that necessary score increases every time.

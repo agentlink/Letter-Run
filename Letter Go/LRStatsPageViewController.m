@@ -18,7 +18,7 @@
 
 @implementation LRStatsPageViewController
 
-@synthesize levelLabel, healthLabel, scoreLabel;
+@synthesize levelLabel, healthLabel, scoreLabel, nextScoreLabel;
 @synthesize healthBarDrops, mailmanDamage;
 @synthesize healthStepper, levelStepper;
 @synthesize wordScoreLabel;
@@ -43,16 +43,16 @@
 #pragma mark - Labels
 - (void) loadLabelText
 {
-    self.levelLabel.text = [NSString stringWithFormat:@"%i", [[LRDifficultyManager shared] level]];
-    self.scoreLabel.text = [NSString stringWithFormat:@"%i", [[LRScoreManager shared] score]];
-    
+    levelLabel.text = [NSString stringWithFormat:@"%i", [[LRDifficultyManager shared] level]];
+    scoreLabel.text = [NSString stringWithFormat:@"%i", [[LRScoreManager shared] score]];
+    nextScoreLabel.text = [NSString stringWithFormat:@"%i", [[LRScoreManager shared] scoreToNextLevel]];
     //Make there only one fraction digit
     NSNumberFormatter *nf = [[NSNumberFormatter alloc] init];
     [nf setNumberStyle:NSNumberFormatterDecimalStyle];
     [nf setMaximumFractionDigits:1];
     NSNumber *health = [NSNumber numberWithFloat:[[LRGameStateManager shared] percentHealth]];
 
-    self.healthLabel.text = [NSString stringWithFormat:@"%@%@", [nf stringFromNumber: health], @"%"];
+    healthLabel.text = [NSString stringWithFormat:@"%@%@", [nf stringFromNumber: health], @"%"];
     [self loadWordScores];
 }
 
@@ -141,6 +141,7 @@
     [self.view addSubview:levelLabel];
     [self.view addSubview:scoreLabel];
     [self.view addSubview:healthLabel];
+    [self.view addSubview:nextScoreLabel];
 
     [self.view addSubview:mailmanDamage];
     [self.view addSubview:healthBarDrops];

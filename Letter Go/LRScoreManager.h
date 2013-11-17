@@ -17,5 +17,6 @@
 + (int) scoreForWordWithLoveLetters:(NSDictionary*)word;
 
 @property (readonly) NSMutableArray *submittedWords;
+@property (readonly) int scoreToNextLevel;
 
 @end

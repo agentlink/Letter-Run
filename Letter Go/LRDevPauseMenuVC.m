@@ -59,7 +59,7 @@
     //Scroll View
     for (int i = 0; i < self.numPages; i++) {
         CGRect frame;
-        frame.origin.x = self.scrollView.frame.size.width * i;
+        frame.origin.x = SCREEN_WIDTH * i;
         frame.origin.y = 0;
         frame.size = self.scrollView.frame.size;
         
@@ -81,13 +81,15 @@
 
 - (void) setUpPage:(int)pageNum inView:(UIView*)view
 {
+    float offset = 20;
+    CGRect sliderFrame = CGRectMake(offset, 0, 110, SCREEN_HEIGHT * .7);
+    CGRect selectorFrame = CGRectMake(offset, sliderFrame.size.height + 10, 150, SCREEN_HEIGHT * .2);
     if (pageNum == 0) {
         self.statsVC = [[LRStatsPageViewController alloc] init];
         [view addSubview:[self.statsVC view]];
     }
-    if (pageNum == 1) {
+    else if (pageNum == 1) {
         NSArray *healthSliders = @[DV_HEALTHBAR_INITIAL_SPEED, DV_HEALTHBAR_INCREASE_FACTOR, DV_HEALTHBAR_MAX_SPEED, DV_HEALTHBAR_INCREASE_PER_WORD];
-        CGRect sliderFrame = CGRectMake(10, 0, 110, SCREEN_HEIGHT * .7);
         for (int i = 0; i < [healthSliders count]; i++) {
             LRSliderLabelView *slider = [[LRSliderLabelView alloc] initWithFrame:sliderFrame andDictionary:[difficultyDict objectForKey:[healthSliders objectAtIndex:i]]];
             [view addSubview:slider];
@@ -96,7 +98,24 @@
         }
         
         NSArray *styleSelectors = @[DV_HEALTHBAR_INCREASE_STYLE];
-        CGRect selectorFrame = CGRectMake(10, sliderFrame.size.height + 10, 150, SCREEN_HEIGHT * .2);
+        for (int i = 0; i < [styleSelectors count]; i++) {
+            LRIncreaseStyleSelector *selector = [[LRIncreaseStyleSelector alloc] initWithFrame:selectorFrame andDictionary:[difficultyDict objectForKey:[styleSelectors objectAtIndex:i]]];
+            [view addSubview:selector];
+            [self.updatingViews addObject:selector];
+            selectorFrame.origin.x += selectorFrame.size.width;
+        }
+    }
+    else if (pageNum == 2) {
+        sliderFrame.origin.x = offset;
+        selectorFrame.origin.x = offset;
+        NSArray *scoreSliders = @[DV_SCORE_PER_LETTER, DV_SCORE_WORD_LENGTH_FACTOR, DV_SCORE_INITIAL_LEVEL_PROGRESSION, DV_SCORE_LEVEL_PROGRESS_INCREASE_FACTOR];
+        for (int i = 0; i < [scoreSliders count]; i++) {
+            LRSliderLabelView *slider = [[LRSliderLabelView alloc] initWithFrame:sliderFrame andDictionary:[difficultyDict objectForKey:[scoreSliders objectAtIndex:i]]];
+            [view addSubview:slider];
+            [self.updatingViews addObject:slider];
+            sliderFrame.origin.x += sliderFrame.size.width;
+        }
+        NSArray *styleSelectors = @[DV_SCORE_LENGTH_INCREASE_STYLE, DV_SCORE_LEVEL_PROGRESS_INCREASE_STYLE];
         for (int i = 0; i < [styleSelectors count]; i++) {
             LRIncreaseStyleSelector *selector = [[LRIncreaseStyleSelector alloc] initWithFrame:selectorFrame andDictionary:[difficultyDict objectForKey:[styleSelectors objectAtIndex:i]]];
             [view addSubview:selector];
