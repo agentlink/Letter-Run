@@ -15,8 +15,6 @@
 #import "LRDictionaryChecker.h"
 #import "LRGameScene.h"
 
-#define LETTER_MINIMUM_COUNT        3
-
 //UICollectionView
 //868-Hack
 
@@ -53,7 +51,7 @@ typedef enum {
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addLetterToSection:) name:NOTIFICATION_ADDED_LETTER object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeLetterFromSection:) name:NOTIFICATION_DELETE_LETTER object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(submitWord) name:NOTIFICATION_SUBMIT_WORD object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(submitWord:) name:NOTIFICATION_SUBMIT_WORD object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rearrangementScheduler:) name:NOTIFICATION_REARRANGE_START object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishRearrangement:) name:NOTIFICATION_REARRANGE_FINISH object:nil];
 }
@@ -164,16 +162,23 @@ typedef enum {
 
 #pragma mark - Submit Word Functions
 
-- (void) submitWord
+- (void) submitWord:(NSNotification*)notification
 {
-    NSString *currentWord = [self getCurrentWord];
-    NSDictionary *wordDict = [NSDictionary dictionaryWithObjects:@[currentWord, [self loveLetterIndices]] forKeys:@[@"word", @"loveLetters"]];
-    
-    [[LRScoreManager shared] submitWord:wordDict];
-    [[[(LRGameScene*)[self scene] gamePlayLayer] healthSection] submitWord:currentWord];
-
-    [self clearLetterSection];
-    [self updateSubmitButton];
+    NSString *forcedWord = [[notification userInfo] objectForKey:@"forcedWord"];
+    if (!forcedWord) {
+        NSString *currentWord = [self getCurrentWord];
+        NSDictionary *wordDict = [NSDictionary dictionaryWithObjects:@[currentWord, [self loveLetterIndices]] forKeys:@[@"word", @"loveLetters"]];
+        
+        [[LRScoreManager shared] submitWord:wordDict];
+        [[[(LRGameScene*)[self scene] gamePlayLayer] healthSection] submitWord:currentWord];
+        
+        [self clearLetterSection];
+        [self updateSubmitButton];
+    }
+    else {
+        NSDictionary *wordDict = [NSDictionary dictionaryWithObjects:@[forcedWord, [[NSSet alloc] init]] forKeys:@[@"word", @"loveLetters"]];
+        [[LRScoreManager shared] submitWord:wordDict];
+    }
 }
 
 

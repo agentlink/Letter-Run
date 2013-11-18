@@ -5,13 +5,13 @@
 //  Created by Gabriel Nicholas on 11/4/13.
 //  Copyright (c) 2013 Gabe Nicholas. All rights reserved.
 //
-//  Most of this code was gotten from the following Stack Overflow post:
-//  http://stackoverflow.com/questions/19082202/spritekit-setting-up-buttons-in-skscene
 
 
 #import "LRButton.h"
 #import <objc/message.h>
 
+//  Most of this code was gotten from the following Stack Overflow post:
+//  bit.ly/17hFbVl
 
 @implementation LRButton
 

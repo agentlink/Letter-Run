@@ -75,7 +75,7 @@
 		<key>description</key>
 		<string>To what degree does the length of the word affect its score?</string>
 		<key>title</key>
-		<string>Word Lenght Score Increase Style</string>
+		<string>Word Length Score Increase Style</string>
 		<key>initialValue</key>
 		<string>Exponential</string>
 		<key>userDefaultTag</key>
@@ -86,7 +86,7 @@
 		<key>description</key>
 		<string>At what rate does the score needed to progress to the next level increase?</string>
 		<key>title</key>
-		<string>Level Progression Score Increase STyle</string>
+		<string>Level Progression Score Increase Style</string>
 		<key>initialValue</key>
 		<string>Linear</string>
 		<key>userDefaultTag</key>

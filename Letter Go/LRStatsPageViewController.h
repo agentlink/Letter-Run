@@ -26,4 +26,5 @@
 
 @property (nonatomic, retain) IBOutlet UILabel *wordScoreLabel;
 
+@property (nonatomic, retain) IBOutlet UITextField *forceSubmitField;
 @end

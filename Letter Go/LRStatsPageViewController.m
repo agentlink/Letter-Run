@@ -12,8 +12,9 @@
 #import "LRDifficultyManager.h"
 #import "LRScoreManager.h"
 #import "LRGameStateManager.h"
+#import "LRDictionaryChecker.h"
 
-@interface LRStatsPageViewController ()
+@interface LRStatsPageViewController ()  <UITextFieldDelegate>
 @end
 
 @implementation LRStatsPageViewController
@@ -22,6 +23,7 @@
 @synthesize healthBarDrops, mailmanDamage;
 @synthesize healthStepper, levelStepper;
 @synthesize wordScoreLabel;
+@synthesize forceSubmitField;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -131,7 +133,52 @@
     [self loadSteppers];
     [self loadLabelText];
     [self loadSwitchValues];
+    [self loadTextFields];
     return;
+}
+
+#pragma mark - Text Fields
+
+- (void) loadTextFields
+{
+    forceSubmitField.keyboardType = UIKeyboardTypeNamePhonePad;
+    forceSubmitField.returnKeyType = UIReturnKeyDone;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return NO;
+}
+
+- (IBAction)forceSubmitWord:(UITextField*)sender
+{
+    NSString *inputWord = [sender.text uppercaseString];
+    sender.text = @"";
+    if (![inputWord length])
+        return;
+    
+    //Clean up input by removing non alphabet letters and space
+    NSMutableCharacterSet *legitCharacters = [NSMutableCharacterSet uppercaseLetterCharacterSet];
+    [legitCharacters addCharactersInString:@" "];
+    NSCharacterSet *charactersToRemove = [legitCharacters invertedSet];
+    NSString *cleanInput = [[inputWord componentsSeparatedByCharactersInSet:charactersToRemove] componentsJoinedByString:@""];
+    
+    //Load words into a list and remove those with too many or too few letters.
+    //For the rest, post the submit word notification via forcedWord
+    NSMutableArray *inputWords = [NSMutableArray arrayWithArray:[cleanInput componentsSeparatedByString:@" "]];
+    NSMutableArray *wordsToRemove = [NSMutableArray array];
+    for (NSString *word in inputWords) {
+        if ([word length] < LETTER_MINIMUM_COUNT || [word length] > LETTER_CAPACITY) {
+            NSLog(@"Warning: '%@' is either too long or too short to submit.", word);
+            [wordsToRemove addObject:word];
+        }
+        else {
+            if (![[LRDictionaryChecker shared] checkForWordInDictionary:word])
+                NSLog(@"Warning: %@ does not appear in the dictionary.", word);
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_SUBMIT_WORD object:Nil userInfo:[NSDictionary dictionaryWithObject:word forKey:@"forcedWord"]];
+        }
+    }
+    [self reloadValues];
 }
 
 - (void) addSubviews {
@@ -142,6 +189,7 @@
     [self.view addSubview:scoreLabel];
     [self.view addSubview:healthLabel];
     [self.view addSubview:nextScoreLabel];
+    [self.view addSubview:wordScoreLabel];
 
     [self.view addSubview:mailmanDamage];
     [self.view addSubview:healthBarDrops];
@@ -149,7 +197,7 @@
     [self.view addSubview:healthStepper];
     [self.view addSubview:levelStepper];
     
-    [self.view addSubview:wordScoreLabel];
+    [self.view addSubview:forceSubmitField];
 }
 
 - (void)didReceiveMemoryWarning

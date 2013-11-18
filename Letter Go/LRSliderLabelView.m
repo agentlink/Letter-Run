@@ -101,16 +101,13 @@
     
     [self addSubview:textField];
     
-    //Set up keyboard
+    //Set up cancel button on keyboard
+    //bit.ly/1dbsNej
     UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREEN_HEIGHT, 35.0f)];
     toolbar.barStyle=UIBarStyleBlackOpaque;
-    // Create a flexible space to align buttons to the right
     UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    // Create a cancel button to dismiss the keyboard
     UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(resetText)];
-    // Add buttons to the toolbar
     [toolbar setItems:[NSArray arrayWithObjects:flexibleSpace, barButtonItem, nil]];
-    // Set the toolbar as accessory view of an UITextField object
     textField.inputAccessoryView = toolbar;
 }
 
@@ -149,15 +146,15 @@
 - (IBAction)textFieldDidEndEditing:(UITextField *)field
 {
     float value = [[field text] floatValue];
-    if (value > slider.maximumValue) {
+    if (![[field text] length])
+        field.text = [NSString stringWithFormat:@"%f", slider.value];
+    else if (value > slider.maximumValue) {
         field.text = [NSString stringWithFormat:@"%f", slider.maximumValue];
     }
     else if (value < slider.minimumValue) {
         field.text = [NSString stringWithFormat:@"%f", slider.minimumValue];
     }
-    //Only change the slider value if the text field is not empty
-    if ([[field text] length])
-        slider.value = field.text.floatValue;
+    slider.value = field.text.floatValue;
     field.text = [self formattedFloat:slider.value];
     [self saveData];
     return;
