@@ -14,13 +14,15 @@
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(runInitialLoad) name:NOTIFICATION_RESET_DIFFICULTIES object:nil];
     
-    NSArray *general_floats = @[
-                                DV_HEALTHBAR_INCREASE_FACTOR,
+    NSArray *general_floats = @[DV_HEALTHBAR_INCREASE_FACTOR,
                                 DV_HEALTHBAR_INITIAL_SPEED,
                                 DV_HEALTHBAR_MAX_SPEED,
                                 DV_HEALTHBAR_INCREASE_PER_WORD,
                                 DV_SCORE_WORD_LENGTH_FACTOR,
-                                DV_SCORE_LEVEL_PROGRESS_INCREASE_FACTOR];
+                                DV_SCORE_LEVEL_PROGRESS_INCREASE_FACTOR,
+                                DV_DROP_PERIOD_DECREASE_FACTOR,
+                                DV_DROP_INITIAL_PERIOD,
+                                DV_DROP_MINIMUM_PERIOD];
     for (NSString *notificationName in general_floats) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(generalUpdateValue_float:) name:notificationName object:nil];
     }
@@ -29,7 +31,8 @@
                                   DV_SCORE_PER_LETTER,
                                   DV_SCORE_INITIAL_LEVEL_PROGRESSION,
                                   DV_SCORE_LENGTH_INCREASE_STYLE,
-                                  DV_SCORE_LEVEL_PROGRESS_INCREASE_STYLE];
+                                  DV_SCORE_LEVEL_PROGRESS_INCREASE_STYLE,
+                                  DV_DROP_DECREASE_STYLE];
     for (NSString *notificationName in general_integers) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(generalUpdateValue_integer:) name:notificationName object:nil];
     }

@@ -79,8 +79,8 @@ static LRDifficultyManager *_shared = nil;
     self.levelScoreIncreaseFactor = 50;
     self.initialNextLevelScore = 150;
     
-    //Letteer Drop
-    self.intialLetterDropPeriod = 2;
+    //Letter Drop
+    self.initialLetterDropPeriod = 2;
     self.letterDropPeriodDecreaseRate = 1.2;
     self.letterDropDecreaseStyle = IncreaseStyle_Exponential;
     self.minimumDropPeriod = .7;
@@ -124,6 +124,11 @@ static LRDifficultyManager *_shared = nil;
     [[NSUserDefaults standardUserDefaults] setFloat:self.levelScoreIncreaseFactor forKey:DV_SCORE_LEVEL_PROGRESS_INCREASE_FACTOR];
     [[NSUserDefaults standardUserDefaults] setInteger:self.levelScoreIncreaseStyle forKey:DV_SCORE_LEVEL_PROGRESS_INCREASE_STYLE];
     
+    //Letter Drop
+    [[NSUserDefaults standardUserDefaults] setFloat:self.initialLetterDropPeriod forKey:DV_DROP_INITIAL_PERIOD];
+    [[NSUserDefaults standardUserDefaults] setFloat:self.letterDropPeriodDecreaseRate forKey:DV_DROP_PERIOD_DECREASE_FACTOR];
+    [[NSUserDefaults standardUserDefaults] setFloat:self.minimumDropPeriod forKey:DV_DROP_MINIMUM_PERIOD];
+    [[NSUserDefaults standardUserDefaults] setInteger:self.letterDropDecreaseStyle forKey:DV_DROP_DECREASE_STYLE];
 }
 
 - (void) loadUserDefaults
@@ -142,12 +147,18 @@ static LRDifficultyManager *_shared = nil;
     self.scoreIncreaseStyle = [[NSUserDefaults standardUserDefaults] integerForKey:DV_SCORE_LENGTH_INCREASE_STYLE];
     self.levelScoreIncreaseFactor = [[NSUserDefaults standardUserDefaults] floatForKey:DV_SCORE_LEVEL_PROGRESS_INCREASE_FACTOR];
     self.levelScoreIncreaseStyle = [[NSUserDefaults standardUserDefaults] integerForKey:DV_SCORE_LEVEL_PROGRESS_INCREASE_STYLE];
+
+    //Letter Drop
+    self.initialLetterDropPeriod = [[NSUserDefaults standardUserDefaults] floatForKey:DV_DROP_INITIAL_PERIOD];
+    self.letterDropPeriodDecreaseRate = [[NSUserDefaults standardUserDefaults] floatForKey:DV_DROP_PERIOD_DECREASE_FACTOR];
+    self.minimumDropPeriod = [[NSUserDefaults standardUserDefaults] floatForKey:DV_DROP_MINIMUM_PERIOD];
+    self.letterDropDecreaseStyle = [[NSUserDefaults standardUserDefaults] integerForKey:DV_DROP_DECREASE_STYLE];
 }
 
 #pragma mark - Speed Factor Calculators
 
 - (CGFloat) letterDropPeriod {
-    float dropPeriod = self.intialLetterDropPeriod;
+    float dropPeriod = self.initialLetterDropPeriod;
     for (int i = 1; i < self.level; i++) {
         if (self.letterDropDecreaseStyle == IncreaseStyle_Linear) {
             dropPeriod-= self.letterDropPeriodDecreaseRate;
@@ -158,7 +169,7 @@ static LRDifficultyManager *_shared = nil;
     }
     if (self.minimumDropPeriod > dropPeriod)
         return self.minimumDropPeriod;
-    return self.intialLetterDropPeriod;
+    return self.initialLetterDropPeriod;
 }
 
 - (CGFloat) parallaxSpeedFactor

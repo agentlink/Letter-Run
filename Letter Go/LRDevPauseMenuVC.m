@@ -18,6 +18,9 @@
 
 #define CATEGORY_SCORE      @"Score"
 #define CATEGORY_HEALTH     @"Health Bar"
+#define CATEGORY_DROP       @"Letter Drop"
+
+#define SELECTOR_ID_STRING  @"_STYLE"
 
 @interface LRDevPauseMenuVC  ()
 @property NSUInteger numPages;
@@ -59,6 +62,9 @@
     [super viewDidLoad];
     [self setEdgesForExtendedLayout:UIRectEdgeNone];
     
+    CGRect scrollFrame = self.scrollView.frame;
+    scrollFrame.size.width = SCREEN_WIDTH;
+    self.scrollView.frame = scrollFrame;
     //Scroll View
     for (int i = 0; i < self.numPages; i++) {
         CGRect frame;
@@ -84,15 +90,22 @@
 
 - (void) setUpPage:(int)pageNum inView:(UIView*)view
 {
-    if (pageNum == 0) {
-        self.statsVC = [[LRStatsPageViewController alloc] init];
-        [view addSubview:[self.statsVC view]];
-    }
-    else if (pageNum == 1) {
-        [self loadVariablesFromCategory:CATEGORY_HEALTH toView:view];
-    }
-    else if (pageNum == 2) {
-        [self loadVariablesFromCategory:CATEGORY_SCORE toView:view];
+    switch (pageNum) {
+        case 0:
+            self.statsVC = [[LRStatsPageViewController alloc] init];
+            [view addSubview:[self.statsVC view]];
+            break;
+        case 1:
+            [self loadVariablesFromCategory:CATEGORY_HEALTH toView:view];
+            break;
+        case 2:
+            [self loadVariablesFromCategory:CATEGORY_SCORE toView:view];
+            break;
+        case 3:
+            [self loadVariablesFromCategory:CATEGORY_DROP toView:view];
+            break;
+        default:
+            break;
     }
 }
 
@@ -107,7 +120,7 @@
 
     for (int i = 0; i < [variableNames count]; i++) {
         NSString *vName = [[variableNames objectAtIndex:i] objectForKey:USER_DEFAULT_KEY];
-        if ([vName rangeOfString:@"INCREASE_STYLE"].location == NSNotFound) {
+        if ([vName rangeOfString:SELECTOR_ID_STRING].location == NSNotFound) {
             LRSliderLabelView *slider = [[LRSliderLabelView alloc] initWithFrame:sliderFrame andDictionary:[variableNames objectAtIndex:i]];
             [view addSubview:slider];
             [self.updatingViews addObject:slider];

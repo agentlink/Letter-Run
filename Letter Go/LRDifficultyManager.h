@@ -59,7 +59,7 @@ typedef enum  {
 
 #pragma mark - Letter Drop Properties
 //The time difference between letters being dropped in the first round
-@property (nonatomic) CGFloat intialLetterDropPeriod;
+@property (nonatomic) CGFloat initialLetterDropPeriod;
 //By how much the rate of letters dropping speeds up every time
 @property (nonatomic) CGFloat letterDropPeriodDecreaseRate;
 /*

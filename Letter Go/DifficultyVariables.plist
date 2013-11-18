@@ -121,7 +121,7 @@
 			<key>decimals</key>
 			<integer>1</integer>
 			<key>userDefaultTag</key>
-			<string>DV_DROP_INCREASE_FACTOR</string>
+			<string>DV_DROP_PERIOD_DECREASE_FACTOR</string>
 		</dict>
 		<dict>
 			<key>description</key>
@@ -138,6 +138,16 @@
 			<integer>1</integer>
 			<key>userDefaultTag</key>
 			<string>DV_DROP_INITIAL_PERIOD</string>
+		</dict>
+		<dict>
+			<key>description</key>
+			<string>At what rate does the speed of letters dropping increase?</string>
+			<key>title</key>
+			<string>Letter Drop Period Decrease Style</string>
+			<key>initialValue</key>
+			<string>Exponential</string>
+			<key>userDefaultTag</key>
+			<string>DV_DROP_DECREASE_STYLE</string>
 		</dict>
 	</array>
 	<key>Health Bar</key>
