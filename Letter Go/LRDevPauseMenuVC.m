@@ -90,23 +90,12 @@
 
 - (void) setUpPage:(int)pageNum inView:(UIView*)view
 {
-    switch (pageNum) {
-        case 0:
-            self.statsVC = [[LRStatsPageViewController alloc] init];
-            [view addSubview:[self.statsVC view]];
-            break;
-        case 1:
-            [self loadVariablesFromCategory:CATEGORY_HEALTH toView:view];
-            break;
-        case 2:
-            [self loadVariablesFromCategory:CATEGORY_SCORE toView:view];
-            break;
-        case 3:
-            [self loadVariablesFromCategory:CATEGORY_DROP toView:view];
-            break;
-        default:
-            break;
-    }
+    if      (pageNum == 0) {    self.statsVC = [[LRStatsPageViewController alloc] init];
+                                [view addSubview:[self.statsVC view]];}
+    else if (pageNum == 1)      [self loadVariablesFromCategory:CATEGORY_HEALTH toView:view];
+    else if (pageNum == 2)      [self loadVariablesFromCategory:CATEGORY_SCORE toView:view];
+    else if (pageNum == 3)      [self loadVariablesFromCategory:CATEGORY_DROP toView:view];
+    
 }
 
 - (void) loadVariablesFromCategory:(NSString*)category toView:(UIView*)view

@@ -12,9 +12,14 @@
 #import "LRDifficultyManager.h"
 
 #define IMAGE_NAME_MAILMAN          @"Manford.png"
+#define IMAGE_NAME_COVER            @"Manford_Cover.png"
+
+@interface LRMailman()
+@property SKSpriteNode *mailbagCover;
+@end
 
 @implementation LRMailman
-
+@synthesize mailbagCover;
 #pragma mark - Set Up/Initialization
 
 - (id) init
@@ -22,7 +27,7 @@
     if (self = [super initWithImageNamed:IMAGE_NAME_MAILMAN]) {
         self.name = NAME_SPRITE_MAILMAN;
         [self setScale:.7];
-        //self.userInteractionEnabled = YES;
+        [self setUpCover];
         [self setUpPhysics];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hitByEnvelope:) name:NOTIFICATION_ENVELOPE_HIT_MAILMAN object:nil];
     }
@@ -38,8 +43,14 @@
     
     [[LRCollisionManager shared] setBitMasksForSprite:self];
     [[LRCollisionManager shared] addContactDetectionOfSpritesNamed:NAME_SPRITE_FALLING_ENVELOPE toSprite:self];
-    
-    [self mailBagLocation];
+}
+
+- (void) setUpCover
+{
+    mailbagCover = [SKSpriteNode spriteNodeWithImageNamed:IMAGE_NAME_COVER];
+    mailbagCover.position =  CGPointMake(0, -7);
+    mailbagCover.zPosition += 20;
+    [self addChild:mailbagCover];
 }
 
 # pragma mark - Contact Functions
@@ -66,18 +77,6 @@
 - (CGPoint)mailBagLocation
 {
     //Returns the location of the mailbag in the parent node
-    return CGPointMake(-170.0, -28.0);
+    return CGPointMake(-195.0, -35.0);
 }
-
-/*
- - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
- {
- for (UITouch *touch in touches)
- {
- CGPoint location = [touch locationInNode:[self parent]];
- NSLog(@"%f, %f", location.x, location.y);
- }
- 
- }
- */
 @end
