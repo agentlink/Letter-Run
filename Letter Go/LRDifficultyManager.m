@@ -79,17 +79,19 @@ static LRDifficultyManager *_shared = nil;
     self.levelScoreIncreaseFactor = 50;
     self.initialNextLevelScore = 150;
     
-    
-    
+    //Letteer Drop
     self.intialLetterDropPeriod = 2;
     self.letterDropPeriodDecreaseRate = 1.2;
     self.letterDropDecreaseStyle = IncreaseStyle_Exponential;
     self.minimumDropPeriod = .7;
-    self.flingLetterSpeed = 300;
+
     
     self.maxNumber_consonants = 3;
     self.maxNumber_vowels = 3;
     self.maxNumber_sameLetters = 2;
+    
+    self.loveLetterBonus = 10;
+    self.percentLoveLetters = 10;
     
     self.initialScrollingSpeed = 40;
     self.scrollingSpeedIncrease = 10;
@@ -99,10 +101,10 @@ static LRDifficultyManager *_shared = nil;
     self.parallaxSpeed_Hills = 2.8;
     self.parallaxSpeed_Grass = 3.7;
     
+    self.flingLetterSpeed = 300;
+    
     self.mailmanHitDamage = 20;
     
-    self.loveLetterBonus = 10;
-    self.percentLoveLetters = 10;
 }
 
 - (void) setUserDefaults

@@ -16,6 +16,9 @@
 #define STYLE_LINEAR        @"Linear"
 #define STYLE_EXPONENTIAL   @"Exponential"
 
+#define CATEGORY_SCORE      @"Score"
+#define CATEGORY_HEALTH     @"Health Bar"
+
 @interface LRDevPauseMenuVC  ()
 @property NSUInteger numPages;
 @property NSDictionary *difficultyDict;
@@ -86,39 +89,38 @@
         [view addSubview:[self.statsVC view]];
     }
     else if (pageNum == 1) {
-        [self loadSlidersAndStyleSelectors:@[DV_HEALTHBAR_INITIAL_SPEED, DV_HEALTHBAR_INCREASE_FACTOR, DV_HEALTHBAR_MAX_SPEED, DV_HEALTHBAR_INCREASE_PER_WORD, DV_HEALTHBAR_INCREASE_STYLE] toView:view];;
+        [self loadVariablesFromCategory:CATEGORY_HEALTH toView:view];
     }
     else if (pageNum == 2) {
-        [self loadSlidersAndStyleSelectors:@[DV_SCORE_PER_LETTER, DV_SCORE_WORD_LENGTH_FACTOR, DV_SCORE_INITIAL_LEVEL_PROGRESSION, DV_SCORE_LEVEL_PROGRESS_INCREASE_FACTOR, DV_SCORE_LENGTH_INCREASE_STYLE, DV_SCORE_LEVEL_PROGRESS_INCREASE_STYLE] toView:view];;
+        [self loadVariablesFromCategory:CATEGORY_SCORE toView:view];
     }
 }
 
-- (void) loadSlidersAndStyleSelectors:(NSArray*)variableNames toView:(UIView*)view
+- (void) loadVariablesFromCategory:(NSString*)category toView:(UIView*)view
 {
+    NSArray *variableNames = [difficultyDict objectForKey:category];
+    NSAssert(variableNames, @"Error: now category for key %@", category);
+
     float offset = 20;
     CGRect sliderFrame = CGRectMake(offset, 0, 110, SCREEN_HEIGHT * .7);
     CGRect selectorFrame = CGRectMake(offset, sliderFrame.size.height + 10, 150, SCREEN_HEIGHT * .2);
 
-    NSMutableArray *sliderNames = [NSMutableArray array];
-    NSMutableArray *selectors = [NSMutableArray array];
-    for (NSString *name in variableNames) {
-        if ([name rangeOfString:@"INCREASE_STYLE"].location != NSNotFound)
-            [selectors addObject:name];
-        else
-            [sliderNames addObject:name];
+    for (int i = 0; i < [variableNames count]; i++) {
+        NSString *vName = [[variableNames objectAtIndex:i] objectForKey:USER_DEFAULT_KEY];
+        if ([vName rangeOfString:@"INCREASE_STYLE"].location == NSNotFound) {
+            LRSliderLabelView *slider = [[LRSliderLabelView alloc] initWithFrame:sliderFrame andDictionary:[variableNames objectAtIndex:i]];
+            [view addSubview:slider];
+            [self.updatingViews addObject:slider];
+            sliderFrame.origin.x += sliderFrame.size.width;
+        }
+        else {
+            LRIncreaseStyleSelector *selector = [[LRIncreaseStyleSelector alloc] initWithFrame:selectorFrame andDictionary:[variableNames objectAtIndex:i]];
+            [view addSubview:selector];
+            [self.updatingViews addObject:selector];
+            selectorFrame.origin.x += selectorFrame.size.width;
+        }
     }
-    for (int i = 0; i < [sliderNames count]; i++) {
-        LRSliderLabelView *slider = [[LRSliderLabelView alloc] initWithFrame:sliderFrame andDictionary:[difficultyDict objectForKey:[sliderNames objectAtIndex:i]]];
-        [view addSubview:slider];
-        [self.updatingViews addObject:slider];
-        sliderFrame.origin.x += sliderFrame.size.width;
-    }
-    for (int i = 0; i < [selectors count]; i++) {
-        LRIncreaseStyleSelector *selector = [[LRIncreaseStyleSelector alloc] initWithFrame:selectorFrame andDictionary:[difficultyDict objectForKey:[selectors objectAtIndex:i]]];
-        [view addSubview:selector];
-        [self.updatingViews addObject:selector];
-        selectorFrame.origin.x += selectorFrame.size.width;
-    }
+
 }
 
 - (NSString*)increaseStyleToString:(IncreaseStyle)style {

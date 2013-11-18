@@ -2,172 +2,218 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>DV_SCORE_PER_LETTER</key>
-	<dict>
-		<key>description</key>
-		<string>How many points does the player get per letter per word submitted?</string>
-		<key>title</key>
-		<string>Score Per Letter</string>
-		<key>initialValue</key>
-		<integer>10</integer>
-		<key>max</key>
-		<integer>20</integer>
-		<key>min</key>
-		<integer>0</integer>
-		<key>decimals</key>
-		<integer>0</integer>
-		<key>userDefaultTag</key>
-		<string>DV_SCORE_PER_LETTER</string>
-	</dict>
-	<key>DV_SCORE_WORD_LENGTH_FACTOR</key>
-	<dict>
-		<key>description</key>
-		<string>By what factor does the score of a word increase by length?</string>
-		<key>title</key>
-		<string>Word Length Score Factor</string>
-		<key>initialValue</key>
-		<integer>0</integer>
-		<key>max</key>
-		<integer>2</integer>
-		<key>min</key>
-		<integer>0</integer>
-		<key>decimals</key>
-		<integer>1</integer>
-		<key>userDefaultTag</key>
-		<string>DV_SCORE_WORD_LENGTH_FACTOR</string>
-	</dict>
-	<key>DV_SCORE_INITIAL_LEVEL_PROGRESSION</key>
-	<dict>
-		<key>description</key>
-		<string>What is the initial score needed to progress to the next level?</string>
-		<key>title</key>
-		<string>Initial Next Level Score</string>
-		<key>initialValue</key>
-		<integer>150</integer>
-		<key>max</key>
-		<integer>300</integer>
-		<key>min</key>
-		<integer>1</integer>
-		<key>decimals</key>
-		<integer>0</integer>
-		<key>userDefaultTag</key>
-		<string>DV_SCORE_INITIAL_LEVEL_PROGRESSION</string>
-	</dict>
-	<key>DV_SCORE_LEVEL_PROGRESS_INCREASE_FACTOR</key>
-	<dict>
-		<key>description</key>
-		<string>By how much does the score needed to get to the next level increase every time?</string>
-		<key>title</key>
-		<string>Level Progression Increase Factor</string>
-		<key>initialValue</key>
-		<integer>50</integer>
-		<key>max</key>
-		<integer>200</integer>
-		<key>min</key>
-		<integer>1</integer>
-		<key>decimals</key>
-		<integer>0</integer>
-		<key>userDefaultTag</key>
-		<string>DV_SCORE_LEVEL_PROGRESS_INCREASE_FACTOR</string>
-	</dict>
-	<key>DV_SCORE_LENGTH_INCREASE_STYLE</key>
-	<dict>
-		<key>description</key>
-		<string>To what degree does the length of the word affect its score?</string>
-		<key>title</key>
-		<string>Word Length Score Increase Style</string>
-		<key>initialValue</key>
-		<string>Exponential</string>
-		<key>userDefaultTag</key>
-		<string>DV_SCORE_LENGTH_INCREASE_STYLE</string>
-	</dict>
-	<key>DV_SCORE_LEVEL_PROGRESS_INCREASE_STYLE</key>
-	<dict>
-		<key>description</key>
-		<string>At what rate does the score needed to progress to the next level increase?</string>
-		<key>title</key>
-		<string>Level Progression Score Increase Style</string>
-		<key>initialValue</key>
-		<string>Linear</string>
-		<key>userDefaultTag</key>
-		<string>DV_SCORE_LEVEL_PROGRESS_INCREASE_STYLE</string>
-	</dict>
-	<key>DV_HEALTHBAR_INCREASE_PER_WORD</key>
-	<dict>
-		<key>description</key>
-		<string>What percent does the health bar increase per hundred points in a word?</string>
-		<key>title</key>
-		<string>Health Percent Inrease Per Hundred Pts</string>
-		<key>initialValue</key>
-		<integer>15</integer>
-		<key>max</key>
-		<integer>100</integer>
-		<key>min</key>
-		<integer>0</integer>
-		<key>decimals</key>
-		<integer>0</integer>
-		<key>userDefaultTag</key>
-		<string>DV_HEALTHBAR_INCREASE_PER_WORD</string>
-	</dict>
-	<key>DV_HEALTHBAR_INCREASE_STYLE</key>
-	<dict>
-		<key>description</key>
-		<string>How quickly does the rate increase between levels?</string>
-		<key>title</key>
-		<string>Health Bar Speed Increase Style</string>
-		<key>initialValue</key>
-		<string>Linear</string>
-		<key>userDefaultTag</key>
-		<string>DV_HEALTHBAR_INCREASE_STYLE</string>
-	</dict>
-	<key>DV_HEALTHBAR_MAX_SPEED</key>
-	<dict>
-		<key>description</key>
-		<string>What is the shortest amount of time it can take for the health bar to drop to zero?</string>
-		<key>title</key>
-		<string>Health Bar Minimum Drop Time (Seconds)</string>
-		<key>initialValue</key>
-		<integer>40</integer>
-		<key>max</key>
-		<integer>100</integer>
-		<key>min</key>
-		<integer>1</integer>
-		<key>decimals</key>
-		<integer>0</integer>
-		<key>userDefaultTag</key>
-		<string>DV_HEALTHBAR_MAX_SPEED</string>
-	</dict>
-	<key>DV_HEALTHBAR_INCREASE_FACTOR</key>
-	<dict>
-		<key>description</key>
-		<string>By how much does the health bar speed up every time?</string>
-		<key>title</key>
-		<string>Health Bar Drop Time Decrease Per Level</string>
-		<key>initialValue</key>
-		<integer>3</integer>
-		<key>max</key>
-		<integer>10</integer>
-		<key>min</key>
-		<integer>0</integer>
-		<key>userDefaultTag</key>
-		<string>DV_HEALTHBAR_INCREASE_FACTOR</string>
-	</dict>
-	<key>DV_HEALTHBAR_INITIAL_SPEED</key>
-	<dict>
-		<key>description</key>
-		<string>How long does it take for the health bar to drop to zero initially?</string>
-		<key>title</key>
-		<string>Initial Health Bar Drop Time (Seconds)</string>
-		<key>initialValue</key>
-		<integer>60</integer>
-		<key>max</key>
-		<integer>100</integer>
-		<key>min</key>
-		<integer>1</integer>
-		<key>decimals</key>
-		<integer>0</integer>
-		<key>userDefaultTag</key>
-		<string>DV_HEALTHBAR_INITIAL_SPEED</string>
-	</dict>
+	<key>Score</key>
+	<array>
+		<dict>
+			<key>description</key>
+			<string>How many points does the player get per letter per word submitted?</string>
+			<key>title</key>
+			<string>Score Per Letter</string>
+			<key>initialValue</key>
+			<integer>10</integer>
+			<key>max</key>
+			<integer>20</integer>
+			<key>min</key>
+			<integer>0</integer>
+			<key>decimals</key>
+			<integer>0</integer>
+			<key>userDefaultTag</key>
+			<string>DV_SCORE_PER_LETTER</string>
+		</dict>
+		<dict>
+			<key>description</key>
+			<string>By what factor does the score of a word increase by length?</string>
+			<key>title</key>
+			<string>Word Length Score Factor</string>
+			<key>initialValue</key>
+			<integer>0</integer>
+			<key>max</key>
+			<integer>2</integer>
+			<key>min</key>
+			<integer>0</integer>
+			<key>decimals</key>
+			<integer>1</integer>
+			<key>userDefaultTag</key>
+			<string>DV_SCORE_WORD_LENGTH_FACTOR</string>
+		</dict>
+		<dict>
+			<key>description</key>
+			<string>What is the initial score needed to progress to the next level?</string>
+			<key>title</key>
+			<string>Initial Next Level Score</string>
+			<key>initialValue</key>
+			<integer>150</integer>
+			<key>max</key>
+			<integer>300</integer>
+			<key>min</key>
+			<integer>1</integer>
+			<key>decimals</key>
+			<integer>0</integer>
+			<key>userDefaultTag</key>
+			<string>DV_SCORE_INITIAL_LEVEL_PROGRESSION</string>
+		</dict>
+		<dict>
+			<key>description</key>
+			<string>By how much does the score needed to get to the next level increase every time?</string>
+			<key>title</key>
+			<string>Level Progression Increase Factor</string>
+			<key>initialValue</key>
+			<integer>50</integer>
+			<key>max</key>
+			<integer>200</integer>
+			<key>min</key>
+			<integer>1</integer>
+			<key>decimals</key>
+			<integer>0</integer>
+			<key>userDefaultTag</key>
+			<string>DV_SCORE_LEVEL_PROGRESS_INCREASE_FACTOR</string>
+		</dict>
+		<dict>
+			<key>description</key>
+			<string>To what degree does the length of the word affect its score?</string>
+			<key>title</key>
+			<string>Word Length Score Increase Style</string>
+			<key>initialValue</key>
+			<string>Exponential</string>
+			<key>userDefaultTag</key>
+			<string>DV_SCORE_LENGTH_INCREASE_STYLE</string>
+		</dict>
+		<dict>
+			<key>description</key>
+			<string>At what rate does the score needed to progress to the next level increase?</string>
+			<key>title</key>
+			<string>Level Progression Score Increase Style</string>
+			<key>initialValue</key>
+			<string>Linear</string>
+			<key>userDefaultTag</key>
+			<string>DV_SCORE_LEVEL_PROGRESS_INCREASE_STYLE</string>
+		</dict>
+	</array>
+	<key>Letter Drop</key>
+	<array>
+		<dict>
+			<key>description</key>
+			<string>At what rate does the letter drop period increase between levels?</string>
+			<key>title</key>
+			<string>Letter Drop Period Decrease Rate</string>
+			<key>initialValue</key>
+			<real>0.7</real>
+			<key>max</key>
+			<integer>2</integer>
+			<key>min</key>
+			<real>0.1</real>
+			<key>decimals</key>
+			<integer>1</integer>
+			<key>userDefaultTag</key>
+			<string>DV_DROP_MINIMUM_PERIOD</string>
+		</dict>
+		<dict>
+			<key>description</key>
+			<string>At what rate does the letter drop period increase between levels?</string>
+			<key>title</key>
+			<string>Letter Drop Period Decrease Rate</string>
+			<key>initialValue</key>
+			<real>1.2</real>
+			<key>max</key>
+			<integer>4</integer>
+			<key>min</key>
+			<real>0.1</real>
+			<key>decimals</key>
+			<integer>1</integer>
+			<key>userDefaultTag</key>
+			<string>DV_DROP_INCREASE_FACTOR</string>
+		</dict>
+		<dict>
+			<key>description</key>
+			<string>How many seconds between letter drops on the first level?</string>
+			<key>title</key>
+			<string>Letter Drop Period (Sec)</string>
+			<key>initialValue</key>
+			<integer>2</integer>
+			<key>max</key>
+			<integer>4</integer>
+			<key>min</key>
+			<real>0.1</real>
+			<key>decimals</key>
+			<integer>1</integer>
+			<key>userDefaultTag</key>
+			<string>DV_DROP_INITIAL_PERIOD</string>
+		</dict>
+	</array>
+	<key>Health Bar</key>
+	<array>
+		<dict>
+			<key>description</key>
+			<string>What percent does the health bar increase per hundred points in a word?</string>
+			<key>title</key>
+			<string>Health Percent Inrease Per Hundred Pts</string>
+			<key>initialValue</key>
+			<integer>15</integer>
+			<key>max</key>
+			<integer>100</integer>
+			<key>min</key>
+			<integer>0</integer>
+			<key>decimals</key>
+			<integer>0</integer>
+			<key>userDefaultTag</key>
+			<string>DV_HEALTHBAR_INCREASE_PER_WORD</string>
+		</dict>
+		<dict>
+			<key>description</key>
+			<string>How quickly does the rate increase between levels?</string>
+			<key>title</key>
+			<string>Health Bar Speed Increase Style</string>
+			<key>initialValue</key>
+			<string>Linear</string>
+			<key>userDefaultTag</key>
+			<string>DV_HEALTHBAR_INCREASE_STYLE</string>
+		</dict>
+		<dict>
+			<key>description</key>
+			<string>What is the shortest amount of time it can take for the health bar to drop to zero?</string>
+			<key>title</key>
+			<string>Health Bar Minimum Drop Time (Seconds)</string>
+			<key>initialValue</key>
+			<integer>12</integer>
+			<key>max</key>
+			<integer>100</integer>
+			<key>min</key>
+			<integer>1</integer>
+			<key>decimals</key>
+			<integer>0</integer>
+			<key>userDefaultTag</key>
+			<string>DV_HEALTHBAR_MAX_SPEED</string>
+		</dict>
+		<dict>
+			<key>description</key>
+			<string>By how much does the health bar speed up every time?</string>
+			<key>title</key>
+			<string>Health Bar Drop Time Decrease Per Level</string>
+			<key>initialValue</key>
+			<integer>3</integer>
+			<key>max</key>
+			<integer>10</integer>
+			<key>min</key>
+			<integer>0</integer>
+			<key>userDefaultTag</key>
+			<string>DV_HEALTHBAR_INCREASE_FACTOR</string>
+		</dict>
+		<dict>
+			<key>description</key>
+			<string>How long does it take for the health bar to drop to zero initially?</string>
+			<key>title</key>
+			<string>Initial Health Bar Drop Time (Seconds)</string>
+			<key>initialValue</key>
+			<integer>60</integer>
+			<key>max</key>
+			<integer>100</integer>
+			<key>min</key>
+			<integer>1</integer>
+			<key>decimals</key>
+			<integer>0</integer>
+			<key>userDefaultTag</key>
+			<string>DV_HEALTHBAR_INITIAL_SPEED</string>
+		</dict>
+	</array>
 </dict>
 </plist>
