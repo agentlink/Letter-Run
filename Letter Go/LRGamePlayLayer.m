@@ -16,9 +16,15 @@
 
 @interface LRGamePlayLayer ()
 @property NSMutableArray *letterSlots;
+
+@property BOOL newGame;
+@property NSTimeInterval nextDropTime;
+@property NSTimeInterval pauseTime;
+
 @end
 
 @implementation LRGamePlayLayer
+@synthesize newGame, pauseTime, nextDropTime;
 
 #pragma mark - Set Up/Initialization
 
@@ -27,12 +33,13 @@
     if (self = [super init])
     {
         //Code here :)
+        newGame = TRUE;
+        self.pauseTime = 0;
         self.name = NAME_LAYER_GAME_PLAY;
         [self createLayerContent];
         [self setUpSlotArray];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateSlots:) name:NOTIFICATION_LETTER_CLEARED object:nil];
         [self setUpPhysics];
-        [self dropInitialLetters];
     }
     return self;
 }
@@ -69,7 +76,7 @@
     [self.pauseButton setScale:.7];
     [self.pauseButton setTouchUpInsideTarget:self action:@selector(pauseButtonPressed)];
     self.pauseButton.position = CGPointMake(0 - SCREEN_WIDTH/2 + self.pauseButton.size.width/2, SCREEN_HEIGHT/2 - self.healthSection.size.height - self.pauseButton.size.height/2);
-;
+
     [self addChild:self.pauseButton];
 }
 
@@ -107,22 +114,53 @@
 }
 
 #pragma mark - Letter Drop Functions
+- (void) update:(NSTimeInterval)currentTime
+{
+    [super update:currentTime];
+    //If the game is over
+    if ([[LRGameStateManager shared] isGameOver]) {
+        newGame = TRUE;
+        return;
+    }
+    //If the game is paused
+    else if ([[LRGameStateManager shared] isGamePaused]) {
+        if (pauseTime != 0)
+            pauseTime = nextDropTime - currentTime;
+        return;
+    }
+    //If a new game has just begun
+    else if (newGame) {
+        nextDropTime = currentTime + [[LRDifficultyManager shared] letterDropPeriod];
+        newGame = FALSE;
+        [self dropInitialLetters];
+        return;
+    }
+    //If the game has just been unpaused
+    else if (pauseTime != 0) {
+        nextDropTime = currentTime + pauseTime;
+        pauseTime = 0;
+    }
+    
+    if (currentTime >= nextDropTime) {
+        for (int i = 0; i < [[LRDifficultyManager shared] numLettersPerDrop]; i++) {
+            [self dropLetter];
+        }
+        nextDropTime = currentTime + [[LRDifficultyManager shared] letterDropPeriod];
+    }
+}
 
 - (void) dropInitialLetters
 {
-    for (int i = 0; i < NUM_SLOTS - 1; i++) {
+    for (int i = 0; i < NUM_SLOTS; i++) {
         SKAction *delay = [SKAction waitForDuration:(i * .6)];
         SKAction *drop = [SKAction runBlock:^{
             [self dropLetterAtSlot:i];
         }];
         [self runAction:[SKAction sequence:@[delay, drop]]];
     }
-    [self letterDropLoop];
 }
 
 - (void) dropLetter {
-    if ([[LRGameStateManager shared] isGamePaused])
-        return;
     //Find an empty slot and then dorp the letter at that slot
     NSMutableArray *emptySlots = [NSMutableArray array];
     for (int i = 0; i <  self.letterSlots.count; i++)
@@ -145,23 +183,6 @@
     [envelope dropEnvelopeWithSwing];
     
     [[ self.letterSlots objectAtIndex:slotLocation] addObject:[NSNumber numberWithBool:TRUE]];
-}
-
-- (void) letterDropLoop
-{
-    float delayTime = [[LRDifficultyManager shared] letterDropPeriod];
-    SKAction *delay = [SKAction waitForDuration:delayTime];
-    SKAction *dropLetter = [SKAction runBlock:^{
-        [self dropLetter];
-    }];
-    SKAction *waitAndDrop = [SKAction sequence:@[delay, dropLetter]];
-    
-    SKAction *dropLoop = [SKAction runBlock:^{
-        [self runAction:waitAndDrop completion:^{
-            [self letterDropLoop];
-        }];
-    }];
-    [self runAction:dropLoop withKey:ACTION_ENVELOPE_LOOP];
 }
 
 - (void) updateSlots:(NSNotification*) notification

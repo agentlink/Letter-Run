@@ -53,11 +53,11 @@
 }
 
 - (int) indexOfSegmentFromTitle:(NSString*)title {
-    return [self.segmentTitles indexOfObject:title];
+    return (int)[self.segmentTitles indexOfObject:title];
 }
 
 - (void) reloadValue {
-    IncreaseStyle style = [[NSUserDefaults standardUserDefaults] integerForKey:[self.dataDict objectForKey:USER_DEFAULT_KEY]];
+    IncreaseStyle style = (IncreaseStyle)[[NSUserDefaults standardUserDefaults] integerForKey:[self.dataDict objectForKey:USER_DEFAULT_KEY]];
     [segControl setSelectedSegmentIndex:style];
 }
 

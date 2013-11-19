@@ -71,7 +71,6 @@ static LRGameStateManager *_shared = nil;
     [[LRDifficultyManager shared] setLevel:1];
     self.gameIsOver = FALSE;
     [gpl.pauseButton setIsEnabled:YES];
-    [gpl dropInitialLetters];
 }
 
 - (void) clearBoard

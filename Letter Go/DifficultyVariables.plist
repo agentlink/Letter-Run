@@ -93,9 +93,9 @@
 	<array>
 		<dict>
 			<key>description</key>
-			<string>At what rate does the letter drop period increase between levels?</string>
+			<string>What is the minimum drop rate a letter can fall at?</string>
 			<key>title</key>
-			<string>Letter Drop Period Decrease Rate</string>
+			<string>Minimum Drop Period</string>
 			<key>initialValue</key>
 			<real>0.7</real>
 			<key>max</key>

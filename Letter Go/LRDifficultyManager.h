@@ -41,7 +41,7 @@ typedef enum  {
 
 
 #pragma mark - Level Up Properties
-@property (nonatomic) int level;
+@property int level;
 //Determines whether total score needed to move to the next level increases or not
 @property (nonatomic) IncreaseStyle levelScoreIncreaseStyle;
 /*
@@ -58,18 +58,13 @@ typedef enum  {
 
 
 #pragma mark - Letter Drop Properties
-//The time difference between letters being dropped in the first round
 @property (nonatomic) CGFloat initialLetterDropPeriod;
-//By how much the rate of letters dropping speeds up every time
 @property (nonatomic) CGFloat letterDropPeriodDecreaseRate;
-/*
- IncreaseStyle_Linear: Goes down by letterDropPeriodDecreaseRate each time, has a minumum value
- IncreaseStyle_Exponential: Divides itself be letterDropPeriodDecreaseRate
- */
-@property (nonatomic) IncreaseStyle letterDropDecreaseStyle;
-//Only set if IncreaseStyle_Linear
 @property (nonatomic) CGFloat minimumDropPeriod;
 @property (nonatomic) CGFloat flingLetterSpeed;
+@property (nonatomic) int numLettersPerDrop;
+@property (nonatomic) IncreaseStyle letterDropDecreaseStyle;
+
 
 #pragma mark - Health Bar Properties
 //How many pixels the health bar moves per point scored

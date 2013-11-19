@@ -13,4 +13,6 @@
 + (LRLetterGenerator*) shared;
 - (NSString*)generateLetter;
 
+@property NSMutableArray *forceDropLetters;
+
 @end

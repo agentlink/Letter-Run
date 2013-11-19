@@ -25,6 +25,7 @@
 
 @implementation LRLetterGenerator
 @synthesize repeatCount, lastLetter, vowelConstCount;
+@synthesize forceDropLetters;
 
 static LRLetterGenerator *_shared = nil;
 
@@ -35,7 +36,6 @@ static LRLetterGenerator *_shared = nil;
     {
 		if (!_shared)
         {
-            
 			_shared = [[LRLetterGenerator alloc] init];
 		}
 	}
@@ -69,6 +69,7 @@ static LRLetterGenerator *_shared = nil;
     self.letterProbabilities = letterArray;
     
     //Create vowel and consonant sets
+    //TODO: Replace these with NSCharacterSets
     self.consonantSet = [NSSet setWithObjects: @"B", @"C", @"D", @"F", @"G", @"H", @"J", @"K", @"L", @"M", @"N", @"P", @"Q", @"R", @"S", @"T", @"V", @"W", @"X", @"Z", nil];
     self.vowelSet = [NSSet setWithObjects:@"A", @"E", @"I", @"O", @"U", nil];
 
@@ -79,6 +80,8 @@ static LRLetterGenerator *_shared = nil;
 
 - (NSString*)generateLetter
 {
+    if ([forceDropLetters count])
+        return [forceDropLetters objectAtIndex:0];
     NSString *letter = [self generateRandomLetter];
     
     /*
