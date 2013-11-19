@@ -12,7 +12,7 @@
 #import "LRGameStateManager.h"
 #import "LRDifficultyManager.h"
 
-#define NUM_SLOTS               3
+#define NUM_SLOTS               4
 
 @interface LRGamePlayLayer ()
 @property NSMutableArray *letterSlots;
@@ -20,6 +20,7 @@
 @property BOOL newGame;
 @property NSTimeInterval nextDropTime;
 @property NSTimeInterval pauseTime;
+@property int lastSlot;
 
 @end
 
@@ -35,6 +36,7 @@
         //Code here :)
         newGame = TRUE;
         self.pauseTime = 0;
+        self.lastSlot = -1;
         self.name = NAME_LAYER_GAME_PLAY;
         [self createLayerContent];
         [self setUpSlotArray];
@@ -142,7 +144,8 @@
     }
     
     if (currentTime >= nextDropTime) {
-        for (int i = 0; i < [[LRDifficultyManager shared] numLettersPerDrop]; i++) {
+        int i = 0;
+        for (i = 0; i < [[LRDifficultyManager shared] numLettersPerDrop]; i++) {
             [self dropLetter];
         }
         nextDropTime = currentTime + [[LRDifficultyManager shared] letterDropPeriod];
@@ -171,8 +174,16 @@
         }
     }
     //If there isn't an empty slot, drop it at a full one
-    int letterDropSlot = ([emptySlots count]) ? [[emptySlots objectAtIndex:arc4random()%emptySlots.count] intValue] : arc4random()%NUM_SLOTS;
+    int letterDropSlot = self.lastSlot;
+    if ([emptySlots count])
+        letterDropSlot = [[emptySlots objectAtIndex:arc4random()%emptySlots.count] intValue];
+    else {
+        while (letterDropSlot == self.lastSlot) {
+            letterDropSlot = arc4random()%NUM_SLOTS;
+        }
+    }
     [self dropLetterAtSlot:letterDropSlot];
+    self.lastSlot = letterDropSlot;
 }
 
 - (void) dropLetterAtSlot:(int)slotLocation
@@ -182,7 +193,7 @@
     [self addChild:envelope];
     [envelope dropEnvelopeWithSwing];
     
-    [[ self.letterSlots objectAtIndex:slotLocation] addObject:[NSNumber numberWithBool:TRUE]];
+    [[self.letterSlots objectAtIndex:slotLocation] addObject:[NSNumber numberWithBool:TRUE]];
 }
 
 - (void) updateSlots:(NSNotification*) notification

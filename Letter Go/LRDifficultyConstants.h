@@ -31,3 +31,4 @@
 #define DV_DROP_PERIOD_DECREASE_FACTOR                     @"DV_DROP_PERIOD_DECREASE_FACTOR"
 #define DV_DROP_INITIAL_PERIOD                      @"DV_DROP_INITIAL_PERIOD"
 #define DV_DROP_DECREASE_STYLE                      @"DV_DROP_DECREASE_STYLE"
+#define DV_DROP_NUM_LETTERS                         @"DV_DROP_NUM_LETTERS"

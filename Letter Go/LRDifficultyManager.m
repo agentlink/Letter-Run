@@ -129,6 +129,7 @@ static LRDifficultyManager *_shared = nil;
     [[NSUserDefaults standardUserDefaults] setFloat:self.letterDropPeriodDecreaseRate forKey:DV_DROP_PERIOD_DECREASE_FACTOR];
     [[NSUserDefaults standardUserDefaults] setFloat:self.minimumDropPeriod forKey:DV_DROP_MINIMUM_PERIOD];
     [[NSUserDefaults standardUserDefaults] setInteger:self.letterDropDecreaseStyle forKey:DV_DROP_DECREASE_STYLE];
+    [[NSUserDefaults standardUserDefaults] setInteger:self.numLettersPerDrop forKey:DV_DROP_NUM_LETTERS];
 }
 
 - (void) loadUserDefaults
@@ -153,6 +154,7 @@ static LRDifficultyManager *_shared = nil;
     self.letterDropPeriodDecreaseRate = [[NSUserDefaults standardUserDefaults] floatForKey:DV_DROP_PERIOD_DECREASE_FACTOR];
     self.minimumDropPeriod = [[NSUserDefaults standardUserDefaults] floatForKey:DV_DROP_MINIMUM_PERIOD];
     self.letterDropDecreaseStyle = [[NSUserDefaults standardUserDefaults] integerForKey:DV_DROP_DECREASE_STYLE];
+    self.numLettersPerDrop = [[NSUserDefaults standardUserDefaults] integerForKey:DV_DROP_NUM_LETTERS];
 }
 
 #pragma mark - Speed Factor Calculators

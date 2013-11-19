@@ -32,7 +32,8 @@
                                   DV_SCORE_INITIAL_LEVEL_PROGRESSION,
                                   DV_SCORE_LENGTH_INCREASE_STYLE,
                                   DV_SCORE_LEVEL_PROGRESS_INCREASE_STYLE,
-                                  DV_DROP_DECREASE_STYLE];
+                                  DV_DROP_DECREASE_STYLE,
+                                  DV_DROP_NUM_LETTERS];
     for (NSString *notificationName in general_integers) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(generalUpdateValue_integer:) name:notificationName object:nil];
     }

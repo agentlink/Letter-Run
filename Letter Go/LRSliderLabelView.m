@@ -71,6 +71,7 @@
 - (void) setSliderText:(float)value
 {
     textField.text = [NSString stringWithFormat:@"%@", [self formattedFloat:value]];
+    slider.value = [textField.text floatValue];
 }
 
 - (IBAction)sliderFinishedMoving:(id)sender

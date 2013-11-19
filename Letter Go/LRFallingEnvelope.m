@@ -72,6 +72,8 @@
     
     //If the box has been flung to the letter box section
     if (!(CGRectIntersectsRect(sceneRect, letterFrame))) {
+        if (self.blockState != BlockState_Landed && self.blockState != BlockState_BlockFlung)
+            NSLog(@"Removing letter %@", self.letter);
         NSMutableDictionary *dropLetterInfo = [NSMutableDictionary dictionaryWithObject:[NSNumber numberWithInt:self.slot] forKey:@"slot"];
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LETTER_CLEARED object:self userInfo:dropLetterInfo];
         [self removeFromParent];
@@ -189,13 +191,12 @@
 {
     _slot = newSlot;
 
-    //Adding random offset
-    int offsetMin = -40;
-    int offsetMax = 40;
-    int offset = arc4random()%(offsetMax - offsetMin) + offsetMin;
-    
-    self.position = CGPointMake(newSlot * 125 - 100 + offset, self.position.y);
-
+    float leftBuffer = LETTER_BLOCK_SIZE * 3 - SCREEN_WIDTH/2;
+    float letterDistance = LETTER_BLOCK_SIZE * 1.7;
+    int offsetDegree = 10;
+    int offset = arc4random()%(offsetDegree*2) - offsetDegree;
+    self.position = CGPointMake(newSlot * letterDistance + leftBuffer + (float)offset, self.position.y);
+    NSLog(@"Letter %@ at slot %i", self.letter, self.slot);
 }
 
 #pragma mark - Movement Functions
