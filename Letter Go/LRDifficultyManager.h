@@ -67,7 +67,6 @@ typedef enum  {
 
 
 #pragma mark - Health Bar Properties
-//How many pixels the health bar moves per point scored
 @property (nonatomic) CGFloat healthPercentIncreasePer100Pts;
 @property (nonatomic) CGFloat initialHealthDropTime;
 @property (nonatomic) CGFloat healthSpeedIncreaseFactor;
@@ -84,17 +83,14 @@ typedef enum  {
 @property CGFloat scrollingSpeedIncrease;
 @property CGFloat parallaxSpeed_Sky, parallaxSpeed_Mountain, parallaxSpeed_Hills, parallaxSpeed_Grass;
 
-
-#pragma mark - Mailman Properties
+#pragma mark - Mailman/Love Letter Properties
 @property CGFloat mailmanHitDamage;
+@property CGFloat loveLetterBonus;
+@property int percentLoveLetters;
 
 #pragma mark - Damage Functions
 //Not saved to NSUserDefaults
 @property BOOL mailmanReceivesDamage;
 @property BOOL healthBarFalls;
 
-#pragma mark - Love Letter Propertis
-@property CGFloat loveLetterBonus;
-@property int percentLoveLetters;
 @end
-

@@ -22,7 +22,9 @@
                                 DV_SCORE_LEVEL_PROGRESS_INCREASE_FACTOR,
                                 DV_DROP_PERIOD_DECREASE_FACTOR,
                                 DV_DROP_INITIAL_PERIOD,
-                                DV_DROP_MINIMUM_PERIOD];
+                                DV_DROP_MINIMUM_PERIOD,
+                                DV_MAILMAN_LOVE_BONUS,
+                                DV_MAILMAN_LETTER_DAMAGE];
     for (NSString *notificationName in general_floats) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(generalUpdateValue_float:) name:notificationName object:nil];
     }
@@ -33,7 +35,8 @@
                                   DV_SCORE_LENGTH_INCREASE_STYLE,
                                   DV_SCORE_LEVEL_PROGRESS_INCREASE_STYLE,
                                   DV_DROP_DECREASE_STYLE,
-                                  DV_DROP_NUM_LETTERS];
+                                  DV_DROP_NUM_LETTERS,
+                                  DV_MAILMAN_LOVE_PERCENT];
     for (NSString *notificationName in general_integers) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(generalUpdateValue_integer:) name:notificationName object:nil];
     }

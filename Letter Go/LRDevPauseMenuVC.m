@@ -19,6 +19,7 @@
 #define CATEGORY_SCORE      @"Score"
 #define CATEGORY_HEALTH     @"Health Bar"
 #define CATEGORY_DROP       @"Letter Drop"
+#define CATEGORY_MAILMAN    @"Mailman"
 
 #define SELECTOR_ID_STRING  @"_STYLE"
 
@@ -43,7 +44,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.numPages = 4;
+        self.numPages = 6;
         self.updatingViews = [NSMutableArray array];
         [self loadDifficultyDictionary];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadSubviewValues) name:NOTIFICATION_RESET_DIFFICULTIES object:nil];
@@ -92,9 +93,10 @@
 {
     if      (pageNum == 0) {    self.statsVC = [[LRStatsPageViewController alloc] init];
                                 [view addSubview:[self.statsVC view]];}
-    else if (pageNum == 1)      [self loadVariablesFromCategory:CATEGORY_HEALTH toView:view];
+    else if (pageNum == 1)      [self loadVariablesFromCategory:CATEGORY_DROP toView:view];
     else if (pageNum == 2)      [self loadVariablesFromCategory:CATEGORY_SCORE toView:view];
-    else if (pageNum == 3)      [self loadVariablesFromCategory:CATEGORY_DROP toView:view];
+    else if (pageNum == 3)      [self loadVariablesFromCategory:CATEGORY_HEALTH toView:view];
+    else if (pageNum == 4)      [self loadVariablesFromCategory:CATEGORY_MAILMAN toView:view];
     
 }
 
@@ -105,7 +107,7 @@
 
     float offset = 20;
     CGRect sliderFrame = CGRectMake(offset, 0, 110, SCREEN_HEIGHT * .7);
-    CGRect selectorFrame = CGRectMake(offset, sliderFrame.size.height + 10, 150, SCREEN_HEIGHT * .2);
+    CGRect selectorFrame = CGRectMake(offset, sliderFrame.size.height + 10, 150, SCREEN_HEIGHT * .1);
 
     for (int i = 0; i < [variableNames count]; i++) {
         NSString *vName = [[variableNames objectAtIndex:i] objectForKey:USER_DEFAULT_KEY];

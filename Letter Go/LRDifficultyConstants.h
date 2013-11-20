@@ -32,3 +32,8 @@
 #define DV_DROP_INITIAL_PERIOD                      @"DV_DROP_INITIAL_PERIOD"
 #define DV_DROP_DECREASE_STYLE                      @"DV_DROP_DECREASE_STYLE"
 #define DV_DROP_NUM_LETTERS                         @"DV_DROP_NUM_LETTERS"
+
+//Mailman
+#define DV_MAILMAN_LETTER_DAMAGE                    @"DV_MAILMAN_LETTER_DAMAGE"
+#define DV_MAILMAN_LOVE_BONUS                       @"DV_MAILMAN_LOVE_BONUS"
+#define DV_MAILMAN_LOVE_PERCENT                     @"DV_MAILMAN_LOVE_PERCENT"

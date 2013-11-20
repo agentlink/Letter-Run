@@ -85,13 +85,16 @@ static LRDifficultyManager *_shared = nil;
     self.letterDropDecreaseStyle = IncreaseStyle_Exponential;
     self.minimumDropPeriod = .7;
     self.numLettersPerDrop = 1;
+
+    //Mailman + Love Letters
+    self.mailmanHitDamage = 20;
+    self.loveLetterBonus = 10;
+    self.percentLoveLetters = 10;
     
     self.maxNumber_consonants = 3;
     self.maxNumber_vowels = 3;
     self.maxNumber_sameLetters = 2;
     
-    self.loveLetterBonus = 10;
-    self.percentLoveLetters = 10;
     
     self.initialScrollingSpeed = 40;
     self.scrollingSpeedIncrease = 10;
@@ -103,7 +106,6 @@ static LRDifficultyManager *_shared = nil;
     
     self.flingLetterSpeed = 300;
     
-    self.mailmanHitDamage = 20;
     
 }
 
@@ -130,6 +132,11 @@ static LRDifficultyManager *_shared = nil;
     [[NSUserDefaults standardUserDefaults] setFloat:self.minimumDropPeriod forKey:DV_DROP_MINIMUM_PERIOD];
     [[NSUserDefaults standardUserDefaults] setInteger:self.letterDropDecreaseStyle forKey:DV_DROP_DECREASE_STYLE];
     [[NSUserDefaults standardUserDefaults] setInteger:self.numLettersPerDrop forKey:DV_DROP_NUM_LETTERS];
+    
+    //Mailman + Love Letters
+    [[NSUserDefaults standardUserDefaults] setFloat:self.mailmanHitDamage forKey:DV_MAILMAN_LETTER_DAMAGE];
+    [[NSUserDefaults standardUserDefaults] setFloat:self.loveLetterBonus forKey:DV_MAILMAN_LOVE_BONUS];
+    [[NSUserDefaults standardUserDefaults] setInteger:self.percentLoveLetters forKey:DV_MAILMAN_LOVE_PERCENT];
 }
 
 - (void) loadUserDefaults
@@ -155,6 +162,11 @@ static LRDifficultyManager *_shared = nil;
     self.minimumDropPeriod = [[NSUserDefaults standardUserDefaults] floatForKey:DV_DROP_MINIMUM_PERIOD];
     self.letterDropDecreaseStyle = [[NSUserDefaults standardUserDefaults] integerForKey:DV_DROP_DECREASE_STYLE];
     self.numLettersPerDrop = [[NSUserDefaults standardUserDefaults] integerForKey:DV_DROP_NUM_LETTERS];
+    
+    //Mailman + Love Letters
+    self.mailmanHitDamage = [[NSUserDefaults standardUserDefaults] floatForKey:DV_MAILMAN_LETTER_DAMAGE];
+    self.loveLetterBonus = [[NSUserDefaults standardUserDefaults] floatForKey:DV_MAILMAN_LOVE_BONUS];
+    self.percentLoveLetters = [[NSUserDefaults standardUserDefaults] integerForKey:DV_MAILMAN_LOVE_PERCENT];
 }
 
 #pragma mark - Speed Factor Calculators
