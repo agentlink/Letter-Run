@@ -245,10 +245,12 @@ typedef enum {
         nearBySlot.currentBlock = [LRLetterBlockGenerator createPlaceHolderBlock];
         self.currentSlot = nearBySlot;
     }
-    else if (![nearBySlot.currentBlock isLetterBlockPlaceHolder] && [self slotIsWithinRearrangementArea:nearBySlot]) {
-        [self swapLetterAtSlot:self.currentSlot withLetterAtSlot:nearBySlot];
-        self.currentSlot = nearBySlot;
-        return;
+    else if (![nearBySlot.currentBlock isLetterBlockPlaceHolder]) {
+        if ([self slotIsWithinRearrangementArea:nearBySlot]) {
+            [self swapLetterAtSlot:self.currentSlot withLetterAtSlot:nearBySlot];
+            self.currentSlot = nearBySlot;
+            return;
+        }
     }
 }
 
@@ -265,8 +267,9 @@ typedef enum {
 
 - (void) swapLetterAtSlot:(LRLetterSlot*) slotA withLetterAtSlot:(LRLetterSlot*) slotB
 {
-    int aLoc = 0;
-    int bLoc = 0;
+    //Get the location of the letter blocks with in the slot array
+    int aLoc = -1;
+    int bLoc = -1;
     for (int i = 0; i < self.letterSlots.count; i++)
     {
         LRLetterSlot *tempSlot = [self.letterSlots objectAtIndex:i];
@@ -275,12 +278,28 @@ typedef enum {
         else if (tempSlot == slotB)
             bLoc = i;
     }
-    if (ABS(aLoc - bLoc) > 1)
-        NSLog(@"Warning: swapping with non-contiguous block.");
+    
+    //Swap either to the left or right
+    if (aLoc < bLoc) {
+        for (int i = aLoc; i < bLoc; i++) {
+            [self swapBlocksAtIndexA:i indexB:i+1];
+        }
+    }
+    else if (aLoc > bLoc) {
+        for (int i = aLoc; i > bLoc; i--) {
+            [self swapBlocksAtIndexA:i indexB:i-1];
+        }
+    }
+}
+
+- (void) swapBlocksAtIndexA:(int)a indexB:(int)b
+{
+    LRLetterSlot *slotA = [self.letterSlots objectAtIndex:a];
+    LRLetterSlot *slotB = [self.letterSlots objectAtIndex:b];
+    
     LRSectionBlock *blockA = [slotA currentBlock];
     LRSectionBlock *blockB = [slotB currentBlock];
-
-    NSAssert(!([blockA isLetterBlockEmpty] || [blockB isLetterBlockEmpty]), @"ERROR: cannot swap empty blocks");
+    
     [slotA setCurrentBlock:blockB];
     [slotB setCurrentBlock:blockA];
 }
@@ -315,6 +334,17 @@ typedef enum {
         }
     }
     return closestSlot;
+}
+
+- (LRLetterSlot*)getLastFilledSlot
+{
+    LRLetterSlot *retSlot;
+    for (LRLetterSlot *slot in self.letterSlots) {
+        if ([[slot currentBlock] isLetterBlockEmpty])
+            break;
+        retSlot = slot;
+    }
+    return retSlot;
 }
 
 - (void) moveBlockAtSlotIndex:(int)i inDirection:(HorDirection)direction
