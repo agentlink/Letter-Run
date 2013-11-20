@@ -12,10 +12,12 @@
     UISlider *slider;
     UITextField *textField;
     UILabel *variableTitle;
+    UIButton *resetButton;
 }
 
 @property (nonatomic, retain) UISlider *slider;
 @property (nonatomic, retain) UITextField *textField;
 @property (nonatomic, retain) UILabel *variableTitle;
+@property (nonatomic, retain) UIButton *resetButton;
 
 @end

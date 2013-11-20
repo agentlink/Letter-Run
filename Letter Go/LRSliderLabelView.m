@@ -10,12 +10,14 @@
 #import "LRConstants.h"
 #import "LRDifficultyConstants.h"
 
+#define INITIAL_VALUE_KEY           @"initialValue"
+
 @interface LRSliderLabelView ()
 @property NSDictionary *dataDict;
 @end
 
 @implementation LRSliderLabelView
-@synthesize slider, textField, variableTitle, dataDict;
+@synthesize slider, textField, variableTitle, dataDict, resetButton;
 
 - (id) initWithFrame:(CGRect)frame andDictionary:(NSDictionary*)dict{
     if (self = [super initWithFrame:frame andDictionary:dict]) {
@@ -28,9 +30,10 @@
 - (void) createContent
 {
     [self setUpTitle];
+    [self setUpResetButton];
     [self setUpSlider];
     [self setUpTextField];
-   // [self debug_colors];
+    //[self debug_colors];
 }
 
 #pragma mark - Slider Functions
@@ -42,8 +45,8 @@
     slider.transform = rotate90;
     
     CGFloat slideWidth = self.frame.size.width;
-    CGFloat slideHeight = self.frame.size.height * .7;
-    CGRect slideFrame = CGRectMake(0, self.frame.size.height - slideHeight, slideWidth, slideHeight);
+    CGFloat slideHeight = self.frame.size.height * .6;
+    CGRect slideFrame = CGRectMake(0, self.frame.size.height - slideHeight - resetButton.frame.size.height, slideWidth, slideHeight);
     slider.frame = slideFrame;
     
     slider.minimumValue = [[dataDict objectForKey:@"min"] floatValue];
@@ -57,21 +60,9 @@
     [self addSubview:slider];
 }
 
-- (void) reloadValue {
-    float value =[[NSUserDefaults standardUserDefaults] floatForKey:[dataDict objectForKey:USER_DEFAULT_KEY]];
-    [self setSliderText:value];
-    [slider setValue:value animated:NO];
-}
-
 - (IBAction)sliderValueChanged:(id)sender
 {
     [self setSliderText:[(UISlider*)sender value]];
-}
-
-- (void) setSliderText:(float)value
-{
-    textField.text = [NSString stringWithFormat:@"%@", [self formattedFloat:value]];
-    slider.value = [textField.text floatValue];
 }
 
 - (IBAction)sliderFinishedMoving:(id)sender
@@ -79,11 +70,19 @@
     [self saveData];
 }
 
+#pragma mark - Data Management
+- (void) reloadValue {
+    float value =[[NSUserDefaults standardUserDefaults] floatForKey:[dataDict objectForKey:USER_DEFAULT_KEY]];
+    [self setSliderText:value];
+    [slider setValue:value animated:NO];
+}
+
 - (void) saveData {
     NSString *notificationName = [dataDict objectForKey:USER_DEFAULT_KEY];
     [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:slider.value] forKey:notificationName]];
 }
 
+#pragma mark - Text Field
 - (void) setUpTextField
 {
     CGFloat textWidth = self.frame.size.width/2;
@@ -112,37 +111,12 @@
     textField.inputAccessoryView = toolbar;
 }
 
-- (void) setUpTitle
+- (void) setSliderText:(float)value
 {
-    variableTitle = [[UILabel alloc] init];
-    variableTitle.font = [UIFont systemFontOfSize:10];
-    variableTitle.text = [dataDict objectForKey:@"title"];
-    variableTitle.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.width/4);
-    variableTitle.numberOfLines = 0;
-    variableTitle.textAlignment = NSTextAlignmentCenter;
-    
-    [self addSubview:variableTitle];
+    textField.text = [NSString stringWithFormat:@"%@", [self formattedFloat:value]];
+    slider.value = [textField.text floatValue];
 }
 
-- (NSString*) formattedFloat:(float)input
-{
-    NSNumberFormatter *nf = [[NSNumberFormatter alloc] init];
-    [nf setNumberStyle:NSNumberFormatterDecimalStyle];
-    if ([dataDict objectForKey:@"decimals"])
-        [nf setMaximumFractionDigits:[[dataDict objectForKey:@"decimals"] integerValue]];
-    else
-        [nf setMaximumFractionDigits:2];
-    NSNumber *num = [NSNumber numberWithFloat:input];
-    return [nf stringFromNumber:num];
-}
-
-- (void) debug_colors
-{
-    self.backgroundColor = [UIColor redColor];
-    slider.backgroundColor = [UIColor greenColor];
-    textField.backgroundColor = [UIColor blueColor];
-    variableTitle.backgroundColor = [UIColor purpleColor];
-}
 
 - (IBAction)textFieldDidEndEditing:(UITextField *)field
 {
@@ -163,6 +137,61 @@
 
 - (void) resetText {
     [textField endEditing:YES];
+}
+
+
+#pragma Other Set Up
+
+- (void) setUpTitle
+{
+    variableTitle = [[UILabel alloc] init];
+    variableTitle.font = [UIFont systemFontOfSize:10];
+    variableTitle.text = [dataDict objectForKey:@"title"];
+    variableTitle.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.width/4);
+    variableTitle.numberOfLines = 0;
+    variableTitle.textAlignment = NSTextAlignmentCenter;
+    
+    [self addSubview:variableTitle];
+}
+
+- (void) setUpResetButton
+{
+    CGRect buttonFrame = CGRectMake(0, self.frame.size.height * .85, self.frame.size.width, self.frame.size.height * .15);
+    resetButton = [[UIButton alloc] initWithFrame:buttonFrame];
+    [resetButton setTitle:@"Reset" forState:UIControlStateNormal];
+    [resetButton addTarget:self action:@selector(resetToDefaultValue) forControlEvents:UIControlEventTouchUpInside];
+    resetButton.userInteractionEnabled = YES;
+
+    [self addSubview:resetButton];
+}
+
+- (void) resetToDefaultValue
+{
+    float value =[[dataDict objectForKey:INITIAL_VALUE_KEY] floatValue];
+    [self setSliderText:value];
+    [slider setValue:value animated:NO];
+    [self saveData];
+}
+
+- (NSString*) formattedFloat:(float)input
+{
+    NSNumberFormatter *nf = [[NSNumberFormatter alloc] init];
+    [nf setNumberStyle:NSNumberFormatterDecimalStyle];
+    if ([dataDict objectForKey:@"decimals"])
+        [nf setMaximumFractionDigits:[[dataDict objectForKey:@"decimals"] integerValue]];
+    else
+        [nf setMaximumFractionDigits:2];
+    NSNumber *num = [NSNumber numberWithFloat:input];
+    return [nf stringFromNumber:num];
+}
+
+- (void) debug_colors
+{
+    self.backgroundColor = [UIColor redColor];
+    slider.backgroundColor = [UIColor greenColor];
+    textField.backgroundColor = [UIColor blueColor];
+    variableTitle.backgroundColor = [UIColor purpleColor];
+    resetButton.backgroundColor = [UIColor brownColor];
 }
 
 

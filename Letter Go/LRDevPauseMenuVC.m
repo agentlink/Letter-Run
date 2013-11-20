@@ -106,8 +106,8 @@
     NSAssert(variableNames, @"Error: now category for key %@", category);
 
     float offset = 20;
-    CGRect sliderFrame = CGRectMake(offset, 0, 110, SCREEN_HEIGHT * .7);
-    CGRect selectorFrame = CGRectMake(offset, sliderFrame.size.height + 10, 150, SCREEN_HEIGHT * .1);
+    CGRect sliderFrame = CGRectMake(offset, 0, 110, SCREEN_HEIGHT * .8);
+    CGRect selectorFrame = CGRectMake(offset, sliderFrame.size.height + 5, 150, SCREEN_HEIGHT * .1);
 
     for (int i = 0; i < [variableNames count]; i++) {
         NSString *vName = [[variableNames objectAtIndex:i] objectForKey:USER_DEFAULT_KEY];
@@ -121,7 +121,7 @@
             LRIncreaseStyleSelector *selector = [[LRIncreaseStyleSelector alloc] initWithFrame:selectorFrame andDictionary:[variableNames objectAtIndex:i]];
             [view addSubview:selector];
             [self.updatingViews addObject:selector];
-            selectorFrame.origin.x += selectorFrame.size.width;
+            selectorFrame.origin.x += (selectorFrame.size.width + 10);
         }
     }
 

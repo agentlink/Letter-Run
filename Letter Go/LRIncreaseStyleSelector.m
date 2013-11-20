@@ -46,7 +46,7 @@
     variableTitle = [[UILabel alloc] init];
     variableTitle.font = [UIFont systemFontOfSize:10];
     variableTitle.text = [self.dataDict objectForKey:@"title"];
-    variableTitle.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height * .66);
+    variableTitle.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height * .33);
     variableTitle.numberOfLines = 0;
     variableTitle.textAlignment = NSTextAlignmentCenter;
     [self addSubview:variableTitle];
