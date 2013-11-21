@@ -29,13 +29,12 @@ typedef enum {
 @property LRSubmitButton *submitButton;
 @property NSMutableArray *letterSlots;
 
-@property LRLetterSlot *currentSlot;
+@property (nonatomic) LRLetterSlot  *currentSlot;
 @property LRSectionBlock *touchedBlock;
 
 @end
 
 @implementation LRLetterSection
-
 #pragma mark - Set Up
 
 - (id) initWithSize:(CGSize)size
@@ -218,6 +217,7 @@ typedef enum {
 }
 
 #pragma mark - Reordering Functions
+
 - (void) update:(NSTimeInterval)currentTime
 {
     if (self.touchedBlock) {
@@ -240,26 +240,30 @@ typedef enum {
 
 - (void) checkRearrangement
 {
-    LRLetterSlot *nearBySlot = [self getClosestSlot:self.touchedBlock];
+    LRLetterSlot *nearBySlot = [self getClosestSlotToBlock:self.touchedBlock];
+    
+    //Is there now a place holder block?
     if (!self.currentSlot && ![self getPlaceHolderSlot]) {
         nearBySlot.currentBlock = [LRLetterBlockGenerator createPlaceHolderBlock];
         self.currentSlot = nearBySlot;
     }
+    //Check if the place holder is not in the proper place
     else if (![nearBySlot.currentBlock isLetterBlockPlaceHolder]) {
+        //Make sure that either its new location or old location are within the rearrangement area
+        [self swapLetterAtSlot:self.currentSlot withLetterAtSlot:nearBySlot];
         if ([self slotIsWithinRearrangementArea:nearBySlot]) {
-            [self swapLetterAtSlot:self.currentSlot withLetterAtSlot:nearBySlot];
             self.currentSlot = nearBySlot;
-            return;
         }
+        else
+            self.currentSlot = [self.letterSlots objectAtIndex:[self numLettersInSection] - 1];
+        return;
     }
 }
 
 - (BOOL) slotIsWithinRearrangementArea:(LRLetterSlot*)slot
 {
-    for (int i = 0; i < self.letterSlots.count; i++) {
-        if ([[self.letterSlots objectAtIndex:i] isLetterSlotEmpty])
-            break;
-        else if ([self.letterSlots objectAtIndex:i] == slot)
+    for (int i = 0; i < [self numLettersInSection]; i++) {
+        if ([self.letterSlots objectAtIndex:i] == slot)
             return YES;
     }
     return NO;
@@ -273,10 +277,17 @@ typedef enum {
     for (int i = 0; i < self.letterSlots.count; i++)
     {
         LRLetterSlot *tempSlot = [self.letterSlots objectAtIndex:i];
-        if (tempSlot == slotA)
+        if (tempSlot == slotA) {
             aLoc = i;
-        else if (tempSlot == slotB)
+        }
+        //If the block has been moved to the right, past edge of filled blocks
+        else if (aLoc >= 0 && bLoc == -1 && [[tempSlot currentBlock] isLetterBlockEmpty]) {
+            bLoc = i - 1;
+            break;
+        }
+        else if (tempSlot == slotB) {
             bLoc = i;
+        }
     }
     
     //Swap either to the left or right
@@ -317,7 +328,7 @@ typedef enum {
     return retVal;
 }
 
-- (LRLetterSlot*)getClosestSlot:(LRSectionBlock*)letterBlock
+- (LRLetterSlot*)getClosestSlotToBlock:(LRSectionBlock*)letterBlock
 {
     CGPoint letterBlockPosition = [letterBlock convertPoint:self.position toNode:self];
     LRLetterSlot *closestSlot;
@@ -336,36 +347,18 @@ typedef enum {
     return closestSlot;
 }
 
-- (LRLetterSlot*)getLastFilledSlot
-{
-    LRLetterSlot *retSlot;
-    for (LRLetterSlot *slot in self.letterSlots) {
-        if ([[slot currentBlock] isLetterBlockEmpty])
-            break;
-        retSlot = slot;
-    }
-    return retSlot;
-}
-
-- (void) moveBlockAtSlotIndex:(int)i inDirection:(HorDirection)direction
-{
-    LRLetterSlot *currentSlot = [self.letterSlots objectAtIndex:i];
-    LRLetterSlot *nextSlot = (direction == HorDirectionLeft) ? [self.letterSlots objectAtIndex:i-1] : [self.letterSlots objectAtIndex:i+1];
-    LRSectionBlock *currentBlock = [currentSlot currentBlock];
-    [nextSlot setCurrentBlock:currentBlock];
-}
-
 #pragma mark - Helper Functions
 
 - (int) numLettersInSection
 {
-    for (int i = 0; i < self.letterSlots.count; i++)
-    {
-        if ([[self.letterSlots objectAtIndex:i] isLetterSlotEmpty])
-            return i;
+    int count = 0;;
+    for (LRLetterSlot *slot in self.letterSlots) {
+        if (![[slot currentBlock] isLetterBlockEmpty])
+            count++;
     }
-    return (int)self.letterSlots.count;
+    return count;
 }
+
 
 - (void) setUserInteractionEnabled:(BOOL)userInteractionEnabled
 {
@@ -376,4 +369,13 @@ typedef enum {
     self.submitButton.userInteractionEnabled = userInteractionEnabled;
 }
 
+//Debug function
+/*
+- (void) setCurrentSlot:(LRLetterSlot *)currentSlot
+{
+    [[self currentSlot] setColor:[UIColor whiteColor]];
+    _currentSlot = currentSlot;
+    currentSlot.color = [UIColor redColor];
+}
+*/
 @end
