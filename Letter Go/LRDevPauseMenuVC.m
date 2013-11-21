@@ -12,17 +12,6 @@
 #import "LRIncreaseStyleSelector.h"
 #import "LRStatsPageViewController.h"
 
-#define STYLE_NONE          @"None"
-#define STYLE_LINEAR        @"Linear"
-#define STYLE_EXPONENTIAL   @"Exponential"
-
-#define CATEGORY_SCORE      @"Score"
-#define CATEGORY_HEALTH     @"Health Bar"
-#define CATEGORY_DROP       @"Letter Drop"
-#define CATEGORY_MAILMAN    @"Mailman"
-
-#define SELECTOR_ID_STRING  @"_STYLE"
-
 @interface LRDevPauseMenuVC  ()
 @property NSUInteger numPages;
 @property NSDictionary *difficultyDict;
@@ -44,7 +33,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.numPages = 6;
+        self.numPages = 7;
         self.updatingViews = [NSMutableArray array];
         [self loadDifficultyDictionary];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadSubviewValues) name:NOTIFICATION_RESET_DIFFICULTIES object:nil];
@@ -97,7 +86,7 @@
     else if (pageNum == 2)      [self loadVariablesFromCategory:CATEGORY_SCORE toView:view];
     else if (pageNum == 3)      [self loadVariablesFromCategory:CATEGORY_HEALTH toView:view];
     else if (pageNum == 4)      [self loadVariablesFromCategory:CATEGORY_MAILMAN toView:view];
-    
+    else if (pageNum == 5)      [self loadVariablesFromCategory:CATEGORY_GENERATOIN toView:view];
 }
 
 - (void) loadVariablesFromCategory:(NSString*)category toView:(UIView*)view

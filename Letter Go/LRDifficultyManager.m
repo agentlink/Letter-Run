@@ -137,6 +137,11 @@ static LRDifficultyManager *_shared = nil;
     [[NSUserDefaults standardUserDefaults] setFloat:self.mailmanHitDamage forKey:DV_MAILMAN_LETTER_DAMAGE];
     [[NSUserDefaults standardUserDefaults] setFloat:self.loveLetterBonus forKey:DV_MAILMAN_LOVE_BONUS];
     [[NSUserDefaults standardUserDefaults] setInteger:self.percentLoveLetters forKey:DV_MAILMAN_LOVE_PERCENT];
+    
+    //Letter Generation
+    [[NSUserDefaults standardUserDefaults] setInteger:self.maxNumber_consonants forKey:DV_GENERATION_MAX_CONSONANTS];
+    [[NSUserDefaults standardUserDefaults] setInteger:self.maxNumber_vowels forKey:DV_GENERATION_MAX_VOWELS];
+    [[NSUserDefaults standardUserDefaults] setInteger:self.maxNumber_sameLetters forKey:DV_GENERATION_MAX_LETTERS];
 }
 
 - (void) loadUserDefaults
@@ -167,6 +172,11 @@ static LRDifficultyManager *_shared = nil;
     self.mailmanHitDamage = [[NSUserDefaults standardUserDefaults] floatForKey:DV_MAILMAN_LETTER_DAMAGE];
     self.loveLetterBonus = [[NSUserDefaults standardUserDefaults] floatForKey:DV_MAILMAN_LOVE_BONUS];
     self.percentLoveLetters = [[NSUserDefaults standardUserDefaults] integerForKey:DV_MAILMAN_LOVE_PERCENT];
+    
+    //Letter Generation
+    self.maxNumber_consonants = [[NSUserDefaults standardUserDefaults] integerForKey:DV_GENERATION_MAX_CONSONANTS];
+    self.maxNumber_vowels = [[NSUserDefaults standardUserDefaults] integerForKey:DV_GENERATION_MAX_VOWELS];
+    self.maxNumber_sameLetters = [[NSUserDefaults standardUserDefaults] integerForKey:DV_GENERATION_MAX_LETTERS];
 }
 
 #pragma mark - Speed Factor Calculators

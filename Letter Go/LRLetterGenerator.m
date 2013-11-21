@@ -46,7 +46,7 @@ static LRLetterGenerator *_shared = nil;
 {
     if (self = [super init]) {
         vowelConstCount = 0;
-        repeatCount = 0;
+        repeatCount = 1;
         [self setUpProbabilityDictionaries];
     }
     return self;
@@ -80,6 +80,8 @@ static LRLetterGenerator *_shared = nil;
 
 - (NSString*)generateLetter
 {
+    BOOL forceConsonant = FALSE;
+    BOOL forceVowel = FALSE;
     if ([forceDropLetters count])
         return [forceDropLetters objectAtIndex:0];
     NSString *letter = [self generateRandomLetter];
@@ -97,21 +99,26 @@ static LRLetterGenerator *_shared = nil;
     int maxVowels = [[LRDifficultyManager shared] maxNumber_vowels];
     
     if ([self.consonantSet containsObject:letter] && maxConsonants > 0) {
-        if (vowelConstCount == 0 - maxConsonants)      letter = [self generateVowel];
-        else if (vowelConstCount >= 0)                 vowelConstCount = -1;
-        else                                           vowelConstCount--;
+        if (vowelConstCount <= 0 - maxConsonants){
+            letter = [self generateVowel];
+            forceVowel = true;
+        }
+        else if (vowelConstCount >= 0)      vowelConstCount = -1;
+        else                                vowelConstCount--;
     }
     else if ([self.vowelSet containsObject:letter] && maxVowels > 0) {
-        if (vowelConstCount == maxVowels)              letter = [self generateConsonant];
-        else if (vowelConstCount <= 0)                 vowelConstCount = 1;
-        else                                           vowelConstCount++;
+        if (vowelConstCount >= maxVowels) {
+            letter = [self generateConsonant];
+            forceConsonant = TRUE;
+        }
+        else if (vowelConstCount <= 0)      vowelConstCount = 1;
+        else                                vowelConstCount++;
     }
-    
+
     //Repeated letters case
-    if ([[LRDifficultyManager shared] maxNumber_sameLetters] == 0)
-        return letter;
-    if ([lastLetter isEqualToString:letter]) {
-        if (repeatCount > [[LRDifficultyManager shared] maxNumber_sameLetters]) {
+    if ([lastLetter isEqualToString:letter] &&
+        [[LRDifficultyManager shared] maxNumber_sameLetters] != 0) {
+        if (repeatCount >= [[LRDifficultyManager shared] maxNumber_sameLetters]) {
             letter = [self generateLetter];
             repeatCount = 1;
         }
@@ -119,6 +126,10 @@ static LRLetterGenerator *_shared = nil;
             repeatCount++;
         }
     }
+    
+    if (forceVowel)             vowelConstCount = 1;
+    else if (forceConsonant)    vowelConstCount = -1;
+    
     lastLetter = letter;
     return letter;
 }
@@ -140,6 +151,7 @@ static LRLetterGenerator *_shared = nil;
 
 - (NSString*)generateConsonant
 {
+    vowelConstCount = 0;
     NSString *letter = [self generateRandomLetter];
     while ([self.vowelSet containsObject:letter])
         letter = [self generateLetter];
