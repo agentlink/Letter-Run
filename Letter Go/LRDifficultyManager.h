@@ -24,6 +24,7 @@ typedef enum  {
 - (CGFloat) healthBarDropTime;
 - (CGFloat) parallaxSpeedFactor;
 
+@property NSDictionary *difficultyDict;
 @property int level;
 
 #pragma mark - Score Properties

@@ -13,6 +13,8 @@
 - (void) writeUserDefaults;
 - (void) loadUserDefaults;
 - (void) setUserDefaults;
+
+- (void) loadNotifications;
 - (void) loadUnsavedValues;
 
 @end

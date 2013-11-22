@@ -30,14 +30,23 @@ static LRDifficultyManager *_shared = nil;
 - (id) init
 {
     if (self = [super init]) {
+        [self loadDifficultyInfo];
+
         //Check to see if NSUserDefaults have been loaded
         if (![[NSUserDefaults standardUserDefaults] objectForKey:USER_DEFAULTS_LOADED]) {
             [self writeUserDefaults];
         }
+        [self loadNotifications];
         [self loadUserDefaults];
         [self loadUnsavedValues];
     }
     return self;
+}
+
+- (void) loadDifficultyInfo
+{
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"DifficultyVariables" ofType:@"plist"];
+    self.difficultyDict = [NSDictionary dictionaryWithContentsOfFile:plistPath];
 }
 
 #pragma mark - Speed Factor Calculators
