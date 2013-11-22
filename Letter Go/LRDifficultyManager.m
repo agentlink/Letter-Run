@@ -7,7 +7,6 @@
 //
 
 #import "LRDifficultyManager.h"
-#import "LRParallaxManager.h"
 #import "LRDifficultyManager+Notifications.h"
 
 @interface LRDifficultyManager ()
@@ -32,160 +31,13 @@ static LRDifficultyManager *_shared = nil;
 {
     if (self = [super init]) {
         //Check to see if NSUserDefaults have been loaded
-        if (![[NSUserDefaults standardUserDefaults] objectForKey:DV_HEALTHBAR_MAX_SPEED]) {
-            [self runInitialLoad];
+        if (![[NSUserDefaults standardUserDefaults] objectForKey:USER_DEFAULTS_LOADED]) {
+            [self writeUserDefaults];
         }
-        else {
-            [self resetDifficultyValues];
-            [self loadUserDefaults];
-        }
-        [self loadNotifications];
+        [self loadUserDefaults];
         [self loadUnsavedValues];
     }
     return self;
-}
-
-- (void) runInitialLoad
-{
-    [self resetDifficultyValues];
-    [self setUserDefaults];
-}
-
-- (void) loadUnsavedValues
-{
-    self.mailmanReceivesDamage = YES;
-    self.healthBarFalls = YES;
-}
-
-- (void) resetDifficultyValues {
-    //This will eventually be replaced by changing the corresponding NSUserDefaults to the initial value stored in DifficultyVariables.plist (once they're all added)
-
-    self.level = 1;
-    
-    //Health
-    self.initialHealthDropTime = 60;
-    self.healthSpeedIncreaseFactor = .5;
-    self.healthSpeedIncreaseStyle = IncreaseStyle_Linear;
-    self.healthBarMinDropTime = 12;
-    self.healthPercentIncreasePer100Pts = 15.0;
-    
-    //Scores
-    self.scoreLengthFactor = 1.2;
-    self.scorePerLetter = 10;
-    self.scoreIncreaseStyle = IncreaseStyle_Exponential;
-
-    //Levels
-    self.levelScoreIncreaseStyle = IncreaseStyle_Linear;
-    self.levelScoreIncreaseFactor = 50;
-    self.initialNextLevelScore = 150;
-    
-    //Letter Drop
-    self.initialLetterDropPeriod = 2;
-    self.letterDropPeriodDecreaseRate = 1.2;
-    self.letterDropDecreaseStyle = IncreaseStyle_Exponential;
-    self.minimumDropPeriod = .7;
-    self.numLettersPerDrop = 1;
-
-    //Mailman + Love Letters
-    self.mailmanHitDamage = 20;
-    self.loveLetterBonus = 10;
-    self.percentLoveLetters = 10;
-    
-    self.maxNumber_consonants = 3;
-    self.maxNumber_vowels = 3;
-    self.maxNumber_sameLetters = 2;
-    
-    
-    self.baseParallaxPixelsPerSecond = 200;
-    self.scrollingSpeedIncrease = 30;
-    
-    self.parallaxLayerSpeeds = [self loadParallaxLayerSpeeds];
-    
-    self.flingLetterSpeed = 300;
-    
-    
-}
-
-- (void) setUserDefaults
-{
-    //Health
-    [[NSUserDefaults standardUserDefaults] setFloat:self.initialHealthDropTime forKey:DV_HEALTHBAR_INITIAL_SPEED];
-    [[NSUserDefaults standardUserDefaults] setFloat:self.healthSpeedIncreaseFactor forKey:DV_HEALTHBAR_INCREASE_FACTOR];
-    [[NSUserDefaults standardUserDefaults] setFloat:self.healthBarMinDropTime forKey:DV_HEALTHBAR_MAX_SPEED];
-    [[NSUserDefaults standardUserDefaults] setInteger:self.healthSpeedIncreaseStyle forKey:DV_HEALTHBAR_INCREASE_STYLE];
-    [[NSUserDefaults standardUserDefaults] setFloat:self.healthPercentIncreasePer100Pts forKey:DV_HEALTHBAR_INCREASE_PER_WORD];
-    
-    //Score
-    [[NSUserDefaults standardUserDefaults] setInteger:self.scorePerLetter forKey:DV_SCORE_PER_LETTER];
-    [[NSUserDefaults standardUserDefaults] setFloat:self.scoreLengthFactor forKey:DV_SCORE_WORD_LENGTH_FACTOR];
-    [[NSUserDefaults standardUserDefaults] setInteger:self.initialNextLevelScore forKey:DV_SCORE_INITIAL_LEVEL_PROGRESSION];
-    [[NSUserDefaults standardUserDefaults] setInteger:self.scoreIncreaseStyle forKey:DV_SCORE_LENGTH_INCREASE_STYLE];
-    [[NSUserDefaults standardUserDefaults] setFloat:self.levelScoreIncreaseFactor forKey:DV_SCORE_LEVEL_PROGRESS_INCREASE_FACTOR];
-    [[NSUserDefaults standardUserDefaults] setInteger:self.levelScoreIncreaseStyle forKey:DV_SCORE_LEVEL_PROGRESS_INCREASE_STYLE];
-    
-    //Letter Drop
-    [[NSUserDefaults standardUserDefaults] setFloat:self.initialLetterDropPeriod forKey:DV_DROP_INITIAL_PERIOD];
-    [[NSUserDefaults standardUserDefaults] setFloat:self.letterDropPeriodDecreaseRate forKey:DV_DROP_PERIOD_DECREASE_FACTOR];
-    [[NSUserDefaults standardUserDefaults] setFloat:self.minimumDropPeriod forKey:DV_DROP_MINIMUM_PERIOD];
-    [[NSUserDefaults standardUserDefaults] setInteger:self.letterDropDecreaseStyle forKey:DV_DROP_DECREASE_STYLE];
-    [[NSUserDefaults standardUserDefaults] setInteger:self.numLettersPerDrop forKey:DV_DROP_NUM_LETTERS];
-    
-    //Mailman + Love Letters
-    [[NSUserDefaults standardUserDefaults] setFloat:self.mailmanHitDamage forKey:DV_MAILMAN_LETTER_DAMAGE];
-    [[NSUserDefaults standardUserDefaults] setFloat:self.loveLetterBonus forKey:DV_MAILMAN_LOVE_BONUS];
-    [[NSUserDefaults standardUserDefaults] setInteger:self.percentLoveLetters forKey:DV_MAILMAN_LOVE_PERCENT];
-    [[NSUserDefaults standardUserDefaults] setFloat:self.flingLetterSpeed forKey:DV_MAILMAN_FLING_SPEED];
-    
-    //Letter Generation
-    [[NSUserDefaults standardUserDefaults] setInteger:self.maxNumber_consonants forKey:DV_GENERATION_MAX_CONSONANTS];
-    [[NSUserDefaults standardUserDefaults] setInteger:self.maxNumber_vowels forKey:DV_GENERATION_MAX_VOWELS];
-    [[NSUserDefaults standardUserDefaults] setInteger:self.maxNumber_sameLetters forKey:DV_GENERATION_MAX_LETTERS];
-    
-    //Parallax Speeds
-    [[NSUserDefaults standardUserDefaults] setObject:self.parallaxLayerSpeeds forKey:DV_PARALLAX_SPEED_ARRAY];
-    [[NSUserDefaults standardUserDefaults] setFloat:self.baseParallaxPixelsPerSecond forKey:DV_PARALLAX_BASE_SPEED];
-    [[NSUserDefaults standardUserDefaults] setFloat:self.scrollingSpeedIncrease forKey:DV_PARALLAX_SPEED_INCREASE];
-}
-
-- (void) loadUserDefaults
-{
-    //Health
-    self.initialHealthDropTime = [[NSUserDefaults standardUserDefaults] floatForKey:DV_HEALTHBAR_INITIAL_SPEED];
-    self.healthSpeedIncreaseFactor = [[NSUserDefaults standardUserDefaults] floatForKey:DV_HEALTHBAR_INCREASE_FACTOR];
-    self.healthBarMinDropTime = [[NSUserDefaults standardUserDefaults] floatForKey:DV_HEALTHBAR_MAX_SPEED];
-    self.healthSpeedIncreaseStyle = [[NSUserDefaults standardUserDefaults] integerForKey:DV_HEALTHBAR_INCREASE_STYLE];
-    self.healthPercentIncreasePer100Pts = [[NSUserDefaults standardUserDefaults] floatForKey:DV_HEALTHBAR_INCREASE_PER_WORD];
-    
-    //Score
-    self.scorePerLetter = [[NSUserDefaults standardUserDefaults] integerForKey:DV_SCORE_PER_LETTER];
-    self.scoreLengthFactor = [[NSUserDefaults standardUserDefaults] floatForKey:DV_SCORE_WORD_LENGTH_FACTOR];
-    self.initialNextLevelScore = [[NSUserDefaults standardUserDefaults] integerForKey:DV_SCORE_INITIAL_LEVEL_PROGRESSION];
-    self.scoreIncreaseStyle = [[NSUserDefaults standardUserDefaults] integerForKey:DV_SCORE_LENGTH_INCREASE_STYLE];
-    self.levelScoreIncreaseFactor = [[NSUserDefaults standardUserDefaults] floatForKey:DV_SCORE_LEVEL_PROGRESS_INCREASE_FACTOR];
-    self.levelScoreIncreaseStyle = [[NSUserDefaults standardUserDefaults] integerForKey:DV_SCORE_LEVEL_PROGRESS_INCREASE_STYLE];
-
-    //Letter Drop
-    self.initialLetterDropPeriod = [[NSUserDefaults standardUserDefaults] floatForKey:DV_DROP_INITIAL_PERIOD];
-    self.letterDropPeriodDecreaseRate = [[NSUserDefaults standardUserDefaults] floatForKey:DV_DROP_PERIOD_DECREASE_FACTOR];
-    self.minimumDropPeriod = [[NSUserDefaults standardUserDefaults] floatForKey:DV_DROP_MINIMUM_PERIOD];
-    self.letterDropDecreaseStyle = [[NSUserDefaults standardUserDefaults] integerForKey:DV_DROP_DECREASE_STYLE];
-    self.numLettersPerDrop = [[NSUserDefaults standardUserDefaults] integerForKey:DV_DROP_NUM_LETTERS];
-    
-    //Mailman + Love Letters
-    self.mailmanHitDamage = [[NSUserDefaults standardUserDefaults] floatForKey:DV_MAILMAN_LETTER_DAMAGE];
-    self.loveLetterBonus = [[NSUserDefaults standardUserDefaults] floatForKey:DV_MAILMAN_LOVE_BONUS];
-    self.percentLoveLetters = [[NSUserDefaults standardUserDefaults] integerForKey:DV_MAILMAN_LOVE_PERCENT];
-    self.flingLetterSpeed = [[NSUserDefaults standardUserDefaults] floatForKey:DV_MAILMAN_FLING_SPEED];
-    
-    //Letter Generation
-    self.maxNumber_consonants = [[NSUserDefaults standardUserDefaults] integerForKey:DV_GENERATION_MAX_CONSONANTS];
-    self.maxNumber_vowels = [[NSUserDefaults standardUserDefaults] integerForKey:DV_GENERATION_MAX_VOWELS];
-    self.maxNumber_sameLetters = [[NSUserDefaults standardUserDefaults] integerForKey:DV_GENERATION_MAX_LETTERS];
-    
-    //Parallax
-    self.parallaxLayerSpeeds = [[NSUserDefaults standardUserDefaults] objectForKey:DV_PARALLAX_SPEED_ARRAY];
-    self.baseParallaxPixelsPerSecond = [[NSUserDefaults standardUserDefaults] floatForKey:DV_PARALLAX_BASE_SPEED];
-    self.scrollingSpeedIncrease = [[NSUserDefaults standardUserDefaults] floatForKey:DV_PARALLAX_SPEED_INCREASE];
 }
 
 #pragma mark - Speed Factor Calculators
@@ -233,18 +85,6 @@ static LRDifficultyManager *_shared = nil;
 - (int) loveLetterProbability
 {
     return self.percentLoveLetters;
-}
-
-- (NSArray*) loadParallaxLayerSpeeds
-{
-    //Load from data dict
-    NSMutableArray *layerSpeeds = [NSMutableArray array];
-    [layerSpeeds insertObject:[NSNumber numberWithFloat:.14] atIndex:BackgroundIndex_Sky];
-    [layerSpeeds insertObject:[NSNumber numberWithFloat:.36] atIndex:BackgroundIndex_Mountains];
-    [layerSpeeds insertObject:[NSNumber numberWithFloat:.56] atIndex:BackgroundIndex_Hills];
-    [layerSpeeds insertObject:[NSNumber numberWithFloat:.74] atIndex:BackgroundIndex_Grass];
-    
-    return layerSpeeds;
 }
 
 @end

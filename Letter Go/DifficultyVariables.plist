@@ -17,6 +17,8 @@
 			<integer>0</integer>
 			<key>decimals</key>
 			<integer>0</integer>
+			<key>type</key>
+			<string>int</string>
 			<key>userDefaultTag</key>
 			<string>DV_GENERATION_MAX_CONSONANTS</string>
 		</dict>
@@ -33,6 +35,8 @@
 			<integer>0</integer>
 			<key>decimals</key>
 			<integer>0</integer>
+			<key>type</key>
+			<string>int</string>
 			<key>userDefaultTag</key>
 			<string>DV_GENERATION_MAX_VOWELS</string>
 		</dict>
@@ -49,6 +53,8 @@
 			<integer>0</integer>
 			<key>decimals</key>
 			<integer>0</integer>
+			<key>type</key>
+			<string>int</string>
 			<key>userDefaultTag</key>
 			<string>DV_GENERATION_MAX_LETTERS</string>
 		</dict>
@@ -68,6 +74,8 @@
 			<integer>0</integer>
 			<key>decimals</key>
 			<integer>0</integer>
+			<key>type</key>
+			<string>float</string>
 			<key>userDefaultTag</key>
 			<string>DV_MAILMAN_LETTER_DAMAGE</string>
 		</dict>
@@ -84,6 +92,8 @@
 			<integer>0</integer>
 			<key>decimals</key>
 			<integer>0</integer>
+			<key>type</key>
+			<string>int</string>
 			<key>userDefaultTag</key>
 			<string>DV_MAILMAN_LOVE_BONUS</string>
 		</dict>
@@ -100,6 +110,8 @@
 			<integer>0</integer>
 			<key>decimals</key>
 			<integer>0</integer>
+			<key>type</key>
+			<string>int</string>
 			<key>userDefaultTag</key>
 			<string>DV_MAILMAN_LOVE_PERCENT</string>
 		</dict>
@@ -116,6 +128,8 @@
 			<integer>1</integer>
 			<key>decimals</key>
 			<integer>0</integer>
+			<key>type</key>
+			<string>float</string>
 			<key>userDefaultTag</key>
 			<string>DV_MAILMAN_FLING_SPEED</string>
 		</dict>
@@ -135,6 +149,8 @@
 			<integer>0</integer>
 			<key>decimals</key>
 			<integer>0</integer>
+			<key>type</key>
+			<string>float</string>
 			<key>userDefaultTag</key>
 			<string>DV_PARALLAX_SPEED_INCREASE</string>
 		</dict>
@@ -151,6 +167,8 @@
 			<integer>0</integer>
 			<key>decimals</key>
 			<integer>0</integer>
+			<key>type</key>
+			<string>float</string>
 			<key>userDefaultTag</key>
 			<string>DV_PARALLAX_BASE_SPEED</string>
 		</dict>
@@ -166,6 +184,8 @@
 				<real>0.5600000000000001</real>
 				<real>0.74</real>
 			</array>
+			<key>type</key>
+			<string>object</string>
 			<key>userDefaultTag</key>
 			<string>DV_PARALLAX_SPEED_ARRAY</string>
 		</dict>
@@ -185,6 +205,8 @@
 			<integer>0</integer>
 			<key>decimals</key>
 			<integer>0</integer>
+			<key>type</key>
+			<string>int</string>
 			<key>userDefaultTag</key>
 			<string>DV_SCORE_PER_LETTER</string>
 		</dict>
@@ -201,6 +223,8 @@
 			<integer>0</integer>
 			<key>decimals</key>
 			<integer>1</integer>
+			<key>type</key>
+			<string>float</string>
 			<key>userDefaultTag</key>
 			<string>DV_SCORE_WORD_LENGTH_FACTOR</string>
 		</dict>
@@ -217,6 +241,8 @@
 			<integer>1</integer>
 			<key>decimals</key>
 			<integer>0</integer>
+			<key>type</key>
+			<string>int</string>
 			<key>userDefaultTag</key>
 			<string>DV_SCORE_INITIAL_LEVEL_PROGRESSION</string>
 		</dict>
@@ -233,6 +259,8 @@
 			<integer>1</integer>
 			<key>decimals</key>
 			<integer>0</integer>
+			<key>type</key>
+			<string>float</string>
 			<key>userDefaultTag</key>
 			<string>DV_SCORE_LEVEL_PROGRESS_INCREASE_FACTOR</string>
 		</dict>
@@ -243,6 +271,8 @@
 			<string>Word Length Score Increase</string>
 			<key>initialValue</key>
 			<string>Exponential</string>
+			<key>type</key>
+			<string>int</string>
 			<key>userDefaultTag</key>
 			<string>DV_SCORE_LENGTH_INCREASE_STYLE</string>
 		</dict>
@@ -253,6 +283,8 @@
 			<string>Level Score Increase</string>
 			<key>initialValue</key>
 			<string>Linear</string>
+			<key>type</key>
+			<string>int</string>
 			<key>userDefaultTag</key>
 			<string>DV_SCORE_LEVEL_PROGRESS_INCREASE_STYLE</string>
 		</dict>
@@ -272,6 +304,8 @@
 			<integer>0</integer>
 			<key>decimals</key>
 			<integer>0</integer>
+			<key>type</key>
+			<string>int</string>
 			<key>userDefaultTag</key>
 			<string>DV_DROP_NUM_LETTERS</string>
 		</dict>
@@ -288,6 +322,8 @@
 			<real>0.1</real>
 			<key>decimals</key>
 			<integer>1</integer>
+			<key>type</key>
+			<string>float</string>
 			<key>userDefaultTag</key>
 			<string>DV_DROP_MINIMUM_PERIOD</string>
 		</dict>
@@ -304,6 +340,8 @@
 			<real>0.1</real>
 			<key>decimals</key>
 			<integer>1</integer>
+			<key>type</key>
+			<string>float</string>
 			<key>userDefaultTag</key>
 			<string>DV_DROP_PERIOD_DECREASE_FACTOR</string>
 		</dict>
@@ -320,6 +358,8 @@
 			<real>0.1</real>
 			<key>decimals</key>
 			<integer>1</integer>
+			<key>type</key>
+			<string>float</string>
 			<key>userDefaultTag</key>
 			<string>DV_DROP_INITIAL_PERIOD</string>
 		</dict>
@@ -330,6 +370,8 @@
 			<string>Letter Drop Period Decrease</string>
 			<key>initialValue</key>
 			<string>Exponential</string>
+			<key>type</key>
+			<string>int</string>
 			<key>userDefaultTag</key>
 			<string>DV_DROP_DECREASE_STYLE</string>
 		</dict>
@@ -349,6 +391,8 @@
 			<integer>0</integer>
 			<key>decimals</key>
 			<integer>0</integer>
+			<key>type</key>
+			<string>float</string>
 			<key>userDefaultTag</key>
 			<string>DV_HEALTHBAR_INCREASE_PER_WORD</string>
 		</dict>
@@ -359,6 +403,8 @@
 			<string>Health Bar Speed Increase</string>
 			<key>initialValue</key>
 			<string>Linear</string>
+			<key>type</key>
+			<string>int</string>
 			<key>userDefaultTag</key>
 			<string>DV_HEALTHBAR_INCREASE_STYLE</string>
 		</dict>
@@ -375,6 +421,8 @@
 			<integer>1</integer>
 			<key>decimals</key>
 			<integer>0</integer>
+			<key>type</key>
+			<string>float</string>
 			<key>userDefaultTag</key>
 			<string>DV_HEALTHBAR_MAX_SPEED</string>
 		</dict>
@@ -389,6 +437,8 @@
 			<integer>10</integer>
 			<key>min</key>
 			<integer>0</integer>
+			<key>type</key>
+			<string>float</string>
 			<key>userDefaultTag</key>
 			<string>DV_HEALTHBAR_INCREASE_FACTOR</string>
 		</dict>
@@ -405,6 +455,8 @@
 			<integer>1</integer>
 			<key>decimals</key>
 			<integer>0</integer>
+			<key>type</key>
+			<string>float</string>
 			<key>userDefaultTag</key>
 			<string>DV_HEALTHBAR_INITIAL_SPEED</string>
 		</dict>

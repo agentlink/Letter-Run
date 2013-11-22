@@ -24,7 +24,8 @@
 #define SELECTOR_ID_STRING                          @"_STYLE"
 
 
-/* NOTIFICATIONS */
+/* NOTIFICATIONS + USER DEFAULT NAMES */
+#define USER_DEFAULTS_LOADED                         @"USER_DEFAULTS_LOADED"
 
 //Health
 #define DV_HEALTHBAR_INITIAL_SPEED                  @"DV_HEALTHBAR_INITIAL_SPEED"

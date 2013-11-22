@@ -10,6 +10,9 @@
 
 @interface LRDifficultyManager (Notifications)
 
-- (void) loadNotifications;
+- (void) writeUserDefaults;
+- (void) loadUserDefaults;
+- (void) setUserDefaults;
+- (void) loadUnsavedValues;
 
 @end

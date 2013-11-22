@@ -79,7 +79,8 @@
 
 - (void) saveData {
     NSString *notificationName = [dataDict objectForKey:USER_DEFAULT_KEY];
-    [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:slider.value] forKey:notificationName]];
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithFloat:slider.value], [dataDict objectForKey:@"type"]] forKeys:@[notificationName, @"type"]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:userInfo];
 }
 
 #pragma mark - Text Field

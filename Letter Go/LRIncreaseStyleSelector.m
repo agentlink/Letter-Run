@@ -63,7 +63,8 @@
 
 - (void) updatedValue {
     NSString *notificationName = [self.dataDict objectForKey:USER_DEFAULT_KEY];
-    [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:segControl.selectedSegmentIndex] forKey:notificationName]];
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithFloat:segControl.selectedSegmentIndex], [self.dataDict objectForKey:@"type"]] forKeys:@[notificationName, @"type"]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:userInfo];
 }
 
 @end

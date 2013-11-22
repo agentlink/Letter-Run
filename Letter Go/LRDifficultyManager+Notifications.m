@@ -7,62 +7,163 @@
 //
 
 #import "LRDifficultyManager+Notifications.h"
+#import "LRParallaxManager.h"
+
+#define KEY_TYPE            @"type"
+#define KEY_VALUE           @"initialValue"
+
+#define INT_TYPE            @"int"
+#define FLOAT_TYPE          @"float"
+#define OBJECT_TYPE         @"object"
 
 @implementation LRDifficultyManager (Notifications)
 
-- (void) loadNotifications
+- (void) writeUserDefaults
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(runInitialLoad) name:NOTIFICATION_RESET_DIFFICULTIES object:nil];
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"DifficultyVariables" ofType:@"plist"];
+    NSDictionary *difficultyDict = [NSDictionary dictionaryWithContentsOfFile:plistPath];
+    for (NSArray *section in [difficultyDict allValues]) {
+        for (NSDictionary *diffVar in section) {
+            NSString *userDefaultKey = [diffVar objectForKey:USER_DEFAULT_KEY];
+            NSString *varType = [diffVar objectForKey:KEY_TYPE];
+            if ([varType isEqualToString:INT_TYPE]) {
+                [[NSUserDefaults standardUserDefaults] setInteger:[[diffVar objectForKey:KEY_VALUE] integerValue] forKey:userDefaultKey];
+            }
+            else if ([varType isEqualToString:FLOAT_TYPE]) {
+                [[NSUserDefaults standardUserDefaults] setFloat:[[diffVar objectForKey:KEY_VALUE] floatValue] forKey:userDefaultKey];
+            }
+            else if ([varType isEqualToString:OBJECT_TYPE]) {
+                [[NSUserDefaults standardUserDefaults] setObject:[diffVar objectForKey:KEY_VALUE] forKey:userDefaultKey];
+            }
+            //Load notifications
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateValue:) name:userDefaultKey object:nil];
+        }
+    }
     
-    NSArray *general_floats = @[DV_HEALTHBAR_INCREASE_FACTOR,
-                                DV_HEALTHBAR_INITIAL_SPEED,
-                                DV_HEALTHBAR_MAX_SPEED,
-                                DV_HEALTHBAR_INCREASE_PER_WORD,
-                                DV_SCORE_WORD_LENGTH_FACTOR,
-                                DV_SCORE_LEVEL_PROGRESS_INCREASE_FACTOR,
-                                DV_DROP_PERIOD_DECREASE_FACTOR,
-                                DV_DROP_INITIAL_PERIOD,
-                                DV_DROP_MINIMUM_PERIOD,
-                                DV_MAILMAN_LOVE_BONUS,
-                                DV_MAILMAN_LETTER_DAMAGE,
-                                DV_MAILMAN_FLING_SPEED];
-    for (NSString *notificationName in general_floats) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(generalUpdateValue_float:) name:notificationName object:nil];
-    }
-    //Includes increase
-    NSArray *general_integers = @[DV_HEALTHBAR_INCREASE_STYLE,
-                                  DV_SCORE_PER_LETTER,
-                                  DV_SCORE_INITIAL_LEVEL_PROGRESSION,
-                                  DV_SCORE_LENGTH_INCREASE_STYLE,
-                                  DV_SCORE_LEVEL_PROGRESS_INCREASE_STYLE,
-                                  DV_DROP_DECREASE_STYLE,
-                                  DV_DROP_NUM_LETTERS,
-                                  DV_MAILMAN_LOVE_PERCENT,
-                                  DV_GENERATION_MAX_CONSONANTS,
-                                  DV_GENERATION_MAX_VOWELS,
-                                  DV_GENERATION_MAX_LETTERS];
-    for (NSString *notificationName in general_integers) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(generalUpdateValue_integer:) name:notificationName object:nil];
-    }
+    //This is a dummy NSUserDefault. This makes sure that all the other ones have loaded (thus, it's last)
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:TRUE] forKey:USER_DEFAULTS_LOADED];
 }
 
-- (void) generalUpdateValue_float:(NSNotification*)notification
+- (void) loadUnsavedValues
 {
-    NSString *noteName = notification.name;
-    CGFloat value = [[[notification userInfo] objectForKey:noteName] floatValue];
-    [[NSUserDefaults standardUserDefaults] setFloat:value forKey:noteName];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    [self loadUserDefaults];
-
+    self.mailmanReceivesDamage = YES;
+    self.healthBarFalls = YES;
 }
 
-- (void) generalUpdateValue_integer:(NSNotification*)notification
+- (void) setUserDefaults
+{
+    //Health
+    [[NSUserDefaults standardUserDefaults] setFloat:self.initialHealthDropTime forKey:DV_HEALTHBAR_INITIAL_SPEED];
+    [[NSUserDefaults standardUserDefaults] setFloat:self.healthSpeedIncreaseFactor forKey:DV_HEALTHBAR_INCREASE_FACTOR];
+    [[NSUserDefaults standardUserDefaults] setFloat:self.healthBarMinDropTime forKey:DV_HEALTHBAR_MAX_SPEED];
+    [[NSUserDefaults standardUserDefaults] setInteger:self.healthSpeedIncreaseStyle forKey:DV_HEALTHBAR_INCREASE_STYLE];
+    [[NSUserDefaults standardUserDefaults] setFloat:self.healthPercentIncreasePer100Pts forKey:DV_HEALTHBAR_INCREASE_PER_WORD];
+    
+    //Score
+    [[NSUserDefaults standardUserDefaults] setInteger:self.scorePerLetter forKey:DV_SCORE_PER_LETTER];
+    [[NSUserDefaults standardUserDefaults] setFloat:self.scoreLengthFactor forKey:DV_SCORE_WORD_LENGTH_FACTOR];
+    [[NSUserDefaults standardUserDefaults] setInteger:self.initialNextLevelScore forKey:DV_SCORE_INITIAL_LEVEL_PROGRESSION];
+    [[NSUserDefaults standardUserDefaults] setInteger:self.scoreIncreaseStyle forKey:DV_SCORE_LENGTH_INCREASE_STYLE];
+    [[NSUserDefaults standardUserDefaults] setFloat:self.levelScoreIncreaseFactor forKey:DV_SCORE_LEVEL_PROGRESS_INCREASE_FACTOR];
+    [[NSUserDefaults standardUserDefaults] setInteger:self.levelScoreIncreaseStyle forKey:DV_SCORE_LEVEL_PROGRESS_INCREASE_STYLE];
+    
+    //Letter Drop
+    [[NSUserDefaults standardUserDefaults] setFloat:self.initialLetterDropPeriod forKey:DV_DROP_INITIAL_PERIOD];
+    [[NSUserDefaults standardUserDefaults] setFloat:self.letterDropPeriodDecreaseRate forKey:DV_DROP_PERIOD_DECREASE_FACTOR];
+    [[NSUserDefaults standardUserDefaults] setFloat:self.minimumDropPeriod forKey:DV_DROP_MINIMUM_PERIOD];
+    [[NSUserDefaults standardUserDefaults] setInteger:self.letterDropDecreaseStyle forKey:DV_DROP_DECREASE_STYLE];
+    [[NSUserDefaults standardUserDefaults] setInteger:self.numLettersPerDrop forKey:DV_DROP_NUM_LETTERS];
+    
+    //Mailman + Love Letters
+    [[NSUserDefaults standardUserDefaults] setFloat:self.mailmanHitDamage forKey:DV_MAILMAN_LETTER_DAMAGE];
+    [[NSUserDefaults standardUserDefaults] setInteger:self.loveLetterBonus forKey:DV_MAILMAN_LOVE_BONUS];
+    [[NSUserDefaults standardUserDefaults] setInteger:self.percentLoveLetters forKey:DV_MAILMAN_LOVE_PERCENT];
+    [[NSUserDefaults standardUserDefaults] setFloat:self.flingLetterSpeed forKey:DV_MAILMAN_FLING_SPEED];
+    
+    //Letter Generation
+    [[NSUserDefaults standardUserDefaults] setInteger:self.maxNumber_consonants forKey:DV_GENERATION_MAX_CONSONANTS];
+    [[NSUserDefaults standardUserDefaults] setInteger:self.maxNumber_vowels forKey:DV_GENERATION_MAX_VOWELS];
+    [[NSUserDefaults standardUserDefaults] setInteger:self.maxNumber_sameLetters forKey:DV_GENERATION_MAX_LETTERS];
+    
+    //Parallax Speeds
+    [[NSUserDefaults standardUserDefaults] setObject:self.parallaxLayerSpeeds forKey:DV_PARALLAX_SPEED_ARRAY];
+    [[NSUserDefaults standardUserDefaults] setFloat:self.baseParallaxPixelsPerSecond forKey:DV_PARALLAX_BASE_SPEED];
+    [[NSUserDefaults standardUserDefaults] setFloat:self.scrollingSpeedIncrease forKey:DV_PARALLAX_SPEED_INCREASE];
+}
+
+- (void) loadUserDefaults
+{
+    //Health
+    self.initialHealthDropTime = [[NSUserDefaults standardUserDefaults] floatForKey:DV_HEALTHBAR_INITIAL_SPEED];
+    self.healthSpeedIncreaseFactor = [[NSUserDefaults standardUserDefaults] floatForKey:DV_HEALTHBAR_INCREASE_FACTOR];
+    self.healthBarMinDropTime = [[NSUserDefaults standardUserDefaults] floatForKey:DV_HEALTHBAR_MAX_SPEED];
+    self.healthSpeedIncreaseStyle = [[NSUserDefaults standardUserDefaults] integerForKey:DV_HEALTHBAR_INCREASE_STYLE];
+    self.healthPercentIncreasePer100Pts = [[NSUserDefaults standardUserDefaults] floatForKey:DV_HEALTHBAR_INCREASE_PER_WORD];
+    
+    //Score
+    self.scorePerLetter = [[NSUserDefaults standardUserDefaults] integerForKey:DV_SCORE_PER_LETTER];
+    self.scoreLengthFactor = [[NSUserDefaults standardUserDefaults] floatForKey:DV_SCORE_WORD_LENGTH_FACTOR];
+    self.initialNextLevelScore = [[NSUserDefaults standardUserDefaults] integerForKey:DV_SCORE_INITIAL_LEVEL_PROGRESSION];
+    self.scoreIncreaseStyle = [[NSUserDefaults standardUserDefaults] integerForKey:DV_SCORE_LENGTH_INCREASE_STYLE];
+    self.levelScoreIncreaseFactor = [[NSUserDefaults standardUserDefaults] floatForKey:DV_SCORE_LEVEL_PROGRESS_INCREASE_FACTOR];
+    self.levelScoreIncreaseStyle = [[NSUserDefaults standardUserDefaults] integerForKey:DV_SCORE_LEVEL_PROGRESS_INCREASE_STYLE];
+    
+    //Letter Drop
+    self.initialLetterDropPeriod = [[NSUserDefaults standardUserDefaults] floatForKey:DV_DROP_INITIAL_PERIOD];
+    self.letterDropPeriodDecreaseRate = [[NSUserDefaults standardUserDefaults] floatForKey:DV_DROP_PERIOD_DECREASE_FACTOR];
+    self.minimumDropPeriod = [[NSUserDefaults standardUserDefaults] floatForKey:DV_DROP_MINIMUM_PERIOD];
+    self.letterDropDecreaseStyle = [[NSUserDefaults standardUserDefaults] integerForKey:DV_DROP_DECREASE_STYLE];
+    self.numLettersPerDrop = [[NSUserDefaults standardUserDefaults] integerForKey:DV_DROP_NUM_LETTERS];
+    
+    //Mailman + Love Letters
+    self.mailmanHitDamage = [[NSUserDefaults standardUserDefaults] floatForKey:DV_MAILMAN_LETTER_DAMAGE];
+    self.loveLetterBonus = [[NSUserDefaults standardUserDefaults] integerForKey:DV_MAILMAN_LOVE_BONUS];
+    self.percentLoveLetters = [[NSUserDefaults standardUserDefaults] integerForKey:DV_MAILMAN_LOVE_PERCENT];
+    self.flingLetterSpeed = [[NSUserDefaults standardUserDefaults] floatForKey:DV_MAILMAN_FLING_SPEED];
+    
+    //Letter Generation
+    self.maxNumber_consonants = [[NSUserDefaults standardUserDefaults] integerForKey:DV_GENERATION_MAX_CONSONANTS];
+    self.maxNumber_vowels = [[NSUserDefaults standardUserDefaults] integerForKey:DV_GENERATION_MAX_VOWELS];
+    self.maxNumber_sameLetters = [[NSUserDefaults standardUserDefaults] integerForKey:DV_GENERATION_MAX_LETTERS];
+    
+    //Parallax
+    self.parallaxLayerSpeeds = [[NSUserDefaults standardUserDefaults] objectForKey:DV_PARALLAX_SPEED_ARRAY];
+    self.baseParallaxPixelsPerSecond = [[NSUserDefaults standardUserDefaults] floatForKey:DV_PARALLAX_BASE_SPEED];
+    self.scrollingSpeedIncrease = [[NSUserDefaults standardUserDefaults] floatForKey:DV_PARALLAX_SPEED_INCREASE];
+}
+
+- (void)updateValue:(NSNotification*)notification
 {
     NSString *noteName = notification.name;
-    int value = [[[notification userInfo] objectForKey:noteName] integerValue];
-    [[NSUserDefaults standardUserDefaults] setInteger:value forKey:noteName];
+    NSString *typeName = [notification.userInfo objectForKey:KEY_TYPE];
+    if ([typeName isEqualToString:INT_TYPE]) {
+        int value = [[[notification userInfo] objectForKey:noteName] integerValue];
+        [[NSUserDefaults standardUserDefaults] setInteger:value forKey:noteName];
+    }
+    else if ([typeName isEqualToString:FLOAT_TYPE]) {
+        CGFloat value = [[[notification userInfo] objectForKey:noteName] floatValue];
+        [[NSUserDefaults standardUserDefaults] setFloat:value forKey:noteName];
+
+    }
+    else if ([typeName isEqualToString:OBJECT_TYPE]) {
+        NSObject *value = [[notification userInfo] objectForKey:noteName];
+        [[NSUserDefaults standardUserDefaults] setObject:value forKey:noteName];
+    }
+        
     [[NSUserDefaults standardUserDefaults] synchronize];
     [self loadUserDefaults];
+}
+
+- (NSArray*) loadParallaxLayerSpeeds
+{
+    //Load from data dict
+    NSMutableArray *layerSpeeds = [NSMutableArray array];
+    [layerSpeeds insertObject:[NSNumber numberWithFloat:.14] atIndex:BackgroundIndex_Sky];
+    [layerSpeeds insertObject:[NSNumber numberWithFloat:.36] atIndex:BackgroundIndex_Mountains];
+    [layerSpeeds insertObject:[NSNumber numberWithFloat:.56] atIndex:BackgroundIndex_Hills];
+    [layerSpeeds insertObject:[NSNumber numberWithFloat:.74] atIndex:BackgroundIndex_Grass];
+    
+    return layerSpeeds;
 }
 
 @end

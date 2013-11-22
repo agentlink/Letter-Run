@@ -19,9 +19,6 @@ typedef enum  {
 
 + (LRDifficultyManager*) shared;
 
-- (void) loadUserDefaults;
-- (void) runInitialLoad;
-
 - (int) loveLetterProbability;
 - (CGFloat) letterDropPeriod;
 - (CGFloat) healthBarDropTime;
@@ -58,7 +55,7 @@ typedef enum  {
 
 #pragma mark - Mailman/Love Letter Properties
 @property CGFloat mailmanHitDamage;
-@property CGFloat loveLetterBonus;
+@property int loveLetterBonus;
 @property int percentLoveLetters;
 @property CGFloat flingLetterSpeed;
 
