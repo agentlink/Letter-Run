@@ -105,7 +105,23 @@
 		</dict>
 	</array>
 	<key>Parallax</key>
-	<array/>
+	<array>
+		<dict>
+			<key>description</key>
+			<string>What are the relative speeds of each parallax layer?</string>
+			<key>title</key>
+			<string>Parallax Layer Speeds</string>
+			<key>initialValue</key>
+			<array>
+				<real>0.7</real>
+				<real>1.8</real>
+				<real>2.8</real>
+				<real>3.7</real>
+			</array>
+			<key>userDefaultTag</key>
+			<string>DV_PARALLAX_SPEED_ARRAY</string>
+		</dict>
+	</array>
 	<key>Score</key>
 	<array>
 		<dict>

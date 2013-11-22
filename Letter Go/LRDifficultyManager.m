@@ -99,10 +99,7 @@ static LRDifficultyManager *_shared = nil;
     self.initialScrollingSpeed = 40;
     self.scrollingSpeedIncrease = 10;
     
-    self.parallaxSpeed_Sky = .7;
-    self.parallaxSpeed_Mountain = 1.8;
-    self.parallaxSpeed_Hills = 2.8;
-    self.parallaxSpeed_Grass = 3.7;
+    self.parallaxLayerSpeeds = [self loadParallaxLayerSpeeds];
     
     self.flingLetterSpeed = 300;
     
@@ -142,6 +139,9 @@ static LRDifficultyManager *_shared = nil;
     [[NSUserDefaults standardUserDefaults] setInteger:self.maxNumber_consonants forKey:DV_GENERATION_MAX_CONSONANTS];
     [[NSUserDefaults standardUserDefaults] setInteger:self.maxNumber_vowels forKey:DV_GENERATION_MAX_VOWELS];
     [[NSUserDefaults standardUserDefaults] setInteger:self.maxNumber_sameLetters forKey:DV_GENERATION_MAX_LETTERS];
+    
+    //Parallax Speeds
+    [[NSUserDefaults standardUserDefaults] setObject:[self parallaxLayerSpeeds] forKey:DV_PARALLAX_SPEED_ARRAY];
 }
 
 - (void) loadUserDefaults
@@ -177,6 +177,9 @@ static LRDifficultyManager *_shared = nil;
     self.maxNumber_consonants = [[NSUserDefaults standardUserDefaults] integerForKey:DV_GENERATION_MAX_CONSONANTS];
     self.maxNumber_vowels = [[NSUserDefaults standardUserDefaults] integerForKey:DV_GENERATION_MAX_VOWELS];
     self.maxNumber_sameLetters = [[NSUserDefaults standardUserDefaults] integerForKey:DV_GENERATION_MAX_LETTERS];
+    
+    //Parallax
+    self.parallaxLayerSpeeds = [[NSUserDefaults standardUserDefaults] objectForKey:DV_PARALLAX_SPEED_ARRAY];
 }
 
 #pragma mark - Speed Factor Calculators
@@ -226,13 +229,14 @@ static LRDifficultyManager *_shared = nil;
     return self.percentLoveLetters;
 }
 
-- (NSArray*) parallaxLayerSpeeds
+- (NSArray*) loadParallaxLayerSpeeds
 {
+    //Load from data dict
     NSMutableArray *layerSpeeds = [NSMutableArray array];
-    [layerSpeeds addObject:[NSNumber numberWithFloat:self.parallaxSpeed_Sky]];
-    [layerSpeeds addObject:[NSNumber numberWithFloat:self.parallaxSpeed_Mountain]];
-    [layerSpeeds addObject:[NSNumber numberWithFloat:self.parallaxSpeed_Hills]];
-    [layerSpeeds addObject:[NSNumber numberWithFloat:self.parallaxSpeed_Grass]];
+    [layerSpeeds insertObject:[NSNumber numberWithFloat:.7] atIndex:BackgroundIndex_Sky];
+    [layerSpeeds insertObject:[NSNumber numberWithFloat:1.8] atIndex:BackgroundIndex_Mountains];
+    [layerSpeeds insertObject:[NSNumber numberWithFloat:2.8] atIndex:BackgroundIndex_Hills];
+    [layerSpeeds insertObject:[NSNumber numberWithFloat:3.7] atIndex:BackgroundIndex_Grass];
     
     return layerSpeeds;
 }

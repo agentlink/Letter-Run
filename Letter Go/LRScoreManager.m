@@ -65,7 +65,7 @@ static LRScoreManager *_shared = nil;
 - (void) progressLevel
 {
     int level = [[LRDifficultyManager shared] level];
-    [[LRDifficultyManager shared] setLevel:level++];
+    [[LRDifficultyManager shared] setLevel:level + 1];
     
     self.lastScoreToNextLevel = scoreToNextLevel;
     IncreaseStyle levelScoreIncrease = [[LRDifficultyManager shared] levelScoreIncreaseStyle];

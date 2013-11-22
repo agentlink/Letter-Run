@@ -61,4 +61,6 @@
 #define DV_GENERATION_MAX_VOWELS                    @"DV_GENERATION_MAX_VOWELS"
 #define DV_GENERATION_MAX_LETTERS                   @"DV_GENERATION_MAX_LETTERS"
 
+//Parallax
+#define DV_PARALLAX_SPEED_ARRAY                     @"DV_PARALLAX_SPEED_ARRAY"
 

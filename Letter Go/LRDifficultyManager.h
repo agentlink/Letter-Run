@@ -9,8 +9,6 @@
 #import "LRObject.h"
 #import "LRDifficultyConstants.h"
 
-#define VALUE_CHANGED_STRING                @"_Value_Changed"
-
 @interface LRDifficultyManager : LRObject
 
 typedef enum  {
@@ -21,7 +19,6 @@ typedef enum  {
 
 + (LRDifficultyManager*) shared;
 
-
 - (void) loadUserDefaults;
 - (void) runInitialLoad;
 
@@ -29,49 +26,41 @@ typedef enum  {
 - (CGFloat) letterDropPeriod;
 - (CGFloat) healthBarDropTime;
 - (CGFloat) parallaxSpeedFactor;
-- (NSArray*) parallaxLayerSpeeds;
+
+@property int level;
 
 #pragma mark - Score Properties
-//Determines whether the length of a word affects its score linearly or exponentially
-@property (nonatomic) IncreaseStyle scoreIncreaseStyle;
-//The value the score is multiplied by/to the power of
-@property (nonatomic) CGFloat scoreLengthFactor;
-//The score per letter BEFORE the total score factor is applied
-@property (nonatomic) int scorePerLetter;
+@property IncreaseStyle scoreIncreaseStyle;
+@property CGFloat scoreLengthFactor;
+@property int scorePerLetter;
 
 
 #pragma mark - Level Up Properties
-@property int level;
-//Determines whether total score needed to move to the next level increases or not
-@property (nonatomic) IncreaseStyle levelScoreIncreaseStyle;
-/*
- The score needed to get to the next level.
- If the levelScoreIncreaseStyle is linear, then this is also the score needed to
- be reached to go to every level.
-*/
-@property (nonatomic) int initialNextLevelScore;
-/*
- If the score needed to move on to the next level increases with each subsequent level,
- this is the factor by which that necessary score increases every time.
-*/
-@property (nonatomic) CGFloat levelScoreIncreaseFactor;
+@property IncreaseStyle levelScoreIncreaseStyle;
+@property int initialNextLevelScore;
+@property CGFloat levelScoreIncreaseFactor;
 
 
 #pragma mark - Letter Drop Properties
-@property (nonatomic) CGFloat initialLetterDropPeriod;
-@property (nonatomic) CGFloat letterDropPeriodDecreaseRate;
-@property (nonatomic) CGFloat minimumDropPeriod;
-@property (nonatomic) CGFloat flingLetterSpeed;
-@property (nonatomic) int numLettersPerDrop;
-@property (nonatomic) IncreaseStyle letterDropDecreaseStyle;
+@property CGFloat initialLetterDropPeriod;
+@property CGFloat letterDropPeriodDecreaseRate;
+@property CGFloat minimumDropPeriod;
+@property CGFloat flingLetterSpeed;
+@property int numLettersPerDrop;
+@property IncreaseStyle letterDropDecreaseStyle;
 
 
 #pragma mark - Health Bar Properties
-@property (nonatomic) CGFloat healthPercentIncreasePer100Pts;
-@property (nonatomic) CGFloat initialHealthDropTime;
-@property (nonatomic) CGFloat healthSpeedIncreaseFactor;
-@property (nonatomic) IncreaseStyle healthSpeedIncreaseStyle;
-@property (nonatomic) CGFloat healthBarMinDropTime;
+@property CGFloat healthPercentIncreasePer100Pts;
+@property CGFloat initialHealthDropTime;
+@property CGFloat healthSpeedIncreaseFactor;
+@property IncreaseStyle healthSpeedIncreaseStyle;
+@property CGFloat healthBarMinDropTime;
+
+#pragma mark - Mailman/Love Letter Properties
+@property CGFloat mailmanHitDamage;
+@property CGFloat loveLetterBonus;
+@property int percentLoveLetters;
 
 #pragma mark - Letter Generation Properties
 @property int maxNumber_consonants;
@@ -81,12 +70,11 @@ typedef enum  {
 #pragma mark - Background Layer Properties
 @property CGFloat initialScrollingSpeed;
 @property CGFloat scrollingSpeedIncrease;
-@property CGFloat parallaxSpeed_Sky, parallaxSpeed_Mountain, parallaxSpeed_Hills, parallaxSpeed_Grass;
-
-#pragma mark - Mailman/Love Letter Properties
-@property CGFloat mailmanHitDamage;
-@property CGFloat loveLetterBonus;
-@property int percentLoveLetters;
+@property NSArray *parallaxLayerSpeeds;
+@property CGFloat parallaxSpeed_Sky,
+                    parallaxSpeed_Mountain,
+                    parallaxSpeed_Hills,
+                    parallaxSpeed_Grass;
 
 #pragma mark - Damage Functions
 //Not saved to NSUserDefaults
