@@ -24,7 +24,8 @@
                                 DV_DROP_INITIAL_PERIOD,
                                 DV_DROP_MINIMUM_PERIOD,
                                 DV_MAILMAN_LOVE_BONUS,
-                                DV_MAILMAN_LETTER_DAMAGE];
+                                DV_MAILMAN_LETTER_DAMAGE,
+                                DV_MAILMAN_FLING_SPEED];
     for (NSString *notificationName in general_floats) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(generalUpdateValue_float:) name:notificationName object:nil];
     }

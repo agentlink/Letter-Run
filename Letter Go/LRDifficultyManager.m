@@ -96,8 +96,8 @@ static LRDifficultyManager *_shared = nil;
     self.maxNumber_sameLetters = 2;
     
     
-    self.initialScrollingSpeed = 40;
-    self.scrollingSpeedIncrease = 10;
+    self.baseParallaxPixelsPerSecond = 200;
+    self.scrollingSpeedIncrease = 30;
     
     self.parallaxLayerSpeeds = [self loadParallaxLayerSpeeds];
     
@@ -134,6 +134,7 @@ static LRDifficultyManager *_shared = nil;
     [[NSUserDefaults standardUserDefaults] setFloat:self.mailmanHitDamage forKey:DV_MAILMAN_LETTER_DAMAGE];
     [[NSUserDefaults standardUserDefaults] setFloat:self.loveLetterBonus forKey:DV_MAILMAN_LOVE_BONUS];
     [[NSUserDefaults standardUserDefaults] setInteger:self.percentLoveLetters forKey:DV_MAILMAN_LOVE_PERCENT];
+    [[NSUserDefaults standardUserDefaults] setFloat:self.flingLetterSpeed forKey:DV_MAILMAN_FLING_SPEED];
     
     //Letter Generation
     [[NSUserDefaults standardUserDefaults] setInteger:self.maxNumber_consonants forKey:DV_GENERATION_MAX_CONSONANTS];
@@ -141,7 +142,9 @@ static LRDifficultyManager *_shared = nil;
     [[NSUserDefaults standardUserDefaults] setInteger:self.maxNumber_sameLetters forKey:DV_GENERATION_MAX_LETTERS];
     
     //Parallax Speeds
-    [[NSUserDefaults standardUserDefaults] setObject:[self parallaxLayerSpeeds] forKey:DV_PARALLAX_SPEED_ARRAY];
+    [[NSUserDefaults standardUserDefaults] setObject:self.parallaxLayerSpeeds forKey:DV_PARALLAX_SPEED_ARRAY];
+    [[NSUserDefaults standardUserDefaults] setFloat:self.baseParallaxPixelsPerSecond forKey:DV_PARALLAX_BASE_SPEED];
+    [[NSUserDefaults standardUserDefaults] setFloat:self.scrollingSpeedIncrease forKey:DV_PARALLAX_SPEED_INCREASE];
 }
 
 - (void) loadUserDefaults
@@ -172,6 +175,7 @@ static LRDifficultyManager *_shared = nil;
     self.mailmanHitDamage = [[NSUserDefaults standardUserDefaults] floatForKey:DV_MAILMAN_LETTER_DAMAGE];
     self.loveLetterBonus = [[NSUserDefaults standardUserDefaults] floatForKey:DV_MAILMAN_LOVE_BONUS];
     self.percentLoveLetters = [[NSUserDefaults standardUserDefaults] integerForKey:DV_MAILMAN_LOVE_PERCENT];
+    self.flingLetterSpeed = [[NSUserDefaults standardUserDefaults] floatForKey:DV_MAILMAN_FLING_SPEED];
     
     //Letter Generation
     self.maxNumber_consonants = [[NSUserDefaults standardUserDefaults] integerForKey:DV_GENERATION_MAX_CONSONANTS];
@@ -180,6 +184,8 @@ static LRDifficultyManager *_shared = nil;
     
     //Parallax
     self.parallaxLayerSpeeds = [[NSUserDefaults standardUserDefaults] objectForKey:DV_PARALLAX_SPEED_ARRAY];
+    self.baseParallaxPixelsPerSecond = [[NSUserDefaults standardUserDefaults] floatForKey:DV_PARALLAX_BASE_SPEED];
+    self.scrollingSpeedIncrease = [[NSUserDefaults standardUserDefaults] floatForKey:DV_PARALLAX_SPEED_INCREASE];
 }
 
 #pragma mark - Speed Factor Calculators
@@ -201,7 +207,7 @@ static LRDifficultyManager *_shared = nil;
 
 - (CGFloat) parallaxSpeedFactor
 {
-    return self.initialScrollingSpeed + self.scrollingSpeedIncrease * self.level;
+    return self.baseParallaxPixelsPerSecond + self.scrollingSpeedIncrease * self.level;
 }
 
 - (CGFloat) healthBarDropTime
@@ -233,10 +239,10 @@ static LRDifficultyManager *_shared = nil;
 {
     //Load from data dict
     NSMutableArray *layerSpeeds = [NSMutableArray array];
-    [layerSpeeds insertObject:[NSNumber numberWithFloat:.7] atIndex:BackgroundIndex_Sky];
-    [layerSpeeds insertObject:[NSNumber numberWithFloat:1.8] atIndex:BackgroundIndex_Mountains];
-    [layerSpeeds insertObject:[NSNumber numberWithFloat:2.8] atIndex:BackgroundIndex_Hills];
-    [layerSpeeds insertObject:[NSNumber numberWithFloat:3.7] atIndex:BackgroundIndex_Grass];
+    [layerSpeeds insertObject:[NSNumber numberWithFloat:.14] atIndex:BackgroundIndex_Sky];
+    [layerSpeeds insertObject:[NSNumber numberWithFloat:.36] atIndex:BackgroundIndex_Mountains];
+    [layerSpeeds insertObject:[NSNumber numberWithFloat:.56] atIndex:BackgroundIndex_Hills];
+    [layerSpeeds insertObject:[NSNumber numberWithFloat:.74] atIndex:BackgroundIndex_Grass];
     
     return layerSpeeds;
 }

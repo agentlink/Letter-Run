@@ -103,9 +103,57 @@
 			<key>userDefaultTag</key>
 			<string>DV_MAILMAN_LOVE_PERCENT</string>
 		</dict>
+		<dict>
+			<key>description</key>
+			<string>How fast are letters flung towards the mailman?</string>
+			<key>title</key>
+			<string>Letter Fling Speed</string>
+			<key>initialValue</key>
+			<integer>300</integer>
+			<key>max</key>
+			<integer>600</integer>
+			<key>min</key>
+			<integer>1</integer>
+			<key>decimals</key>
+			<integer>0</integer>
+			<key>userDefaultTag</key>
+			<string>DV_MAILMAN_FLING_SPEED</string>
+		</dict>
 	</array>
 	<key>Parallax</key>
 	<array>
+		<dict>
+			<key>description</key>
+			<string>How much does the base speed increase per level?</string>
+			<key>title</key>
+			<string>Parallax Speed Increase</string>
+			<key>initialValue</key>
+			<integer>30</integer>
+			<key>max</key>
+			<integer>100</integer>
+			<key>min</key>
+			<integer>0</integer>
+			<key>decimals</key>
+			<integer>0</integer>
+			<key>userDefaultTag</key>
+			<string>DV_PARALLAX_SPEED_INCREASE</string>
+		</dict>
+		<dict>
+			<key>description</key>
+			<string>What is the base speed of the layer movement?</string>
+			<key>title</key>
+			<string>Base Parallax Speed</string>
+			<key>initialValue</key>
+			<integer>200</integer>
+			<key>max</key>
+			<integer>400</integer>
+			<key>min</key>
+			<integer>0</integer>
+			<key>decimals</key>
+			<integer>0</integer>
+			<key>userDefaultTag</key>
+			<string>DV_PARALLAX_BASE_SPEED</string>
+		</dict>
 		<dict>
 			<key>description</key>
 			<string>What are the relative speeds of each parallax layer?</string>
@@ -113,10 +161,10 @@
 			<string>Parallax Layer Speeds</string>
 			<key>initialValue</key>
 			<array>
-				<real>0.7</real>
-				<real>1.8</real>
-				<real>2.8</real>
-				<real>3.7</real>
+				<real>0.14</real>
+				<real>0.36</real>
+				<real>0.5600000000000001</real>
+				<real>0.74</real>
 			</array>
 			<key>userDefaultTag</key>
 			<string>DV_PARALLAX_SPEED_ARRAY</string>
@@ -215,7 +263,7 @@
 			<key>description</key>
 			<string>How many letters are dropped at a time?</string>
 			<key>title</key>
-			<string>Letters Dropped At A Time</string>
+			<string>Envelopes Per Drop</string>
 			<key>initialValue</key>
 			<integer>1</integer>
 			<key>max</key>

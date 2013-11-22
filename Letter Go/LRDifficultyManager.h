@@ -45,7 +45,6 @@ typedef enum  {
 @property CGFloat initialLetterDropPeriod;
 @property CGFloat letterDropPeriodDecreaseRate;
 @property CGFloat minimumDropPeriod;
-@property CGFloat flingLetterSpeed;
 @property int numLettersPerDrop;
 @property IncreaseStyle letterDropDecreaseStyle;
 
@@ -61,20 +60,17 @@ typedef enum  {
 @property CGFloat mailmanHitDamage;
 @property CGFloat loveLetterBonus;
 @property int percentLoveLetters;
+@property CGFloat flingLetterSpeed;
 
 #pragma mark - Letter Generation Properties
 @property int maxNumber_consonants;
 @property int maxNumber_vowels;
 @property int maxNumber_sameLetters;
 
-#pragma mark - Background Layer Properties
-@property CGFloat initialScrollingSpeed;
+#pragma mark - Parallax Properties
+@property CGFloat baseParallaxPixelsPerSecond;
 @property CGFloat scrollingSpeedIncrease;
 @property NSArray *parallaxLayerSpeeds;
-@property CGFloat parallaxSpeed_Sky,
-                    parallaxSpeed_Mountain,
-                    parallaxSpeed_Hills,
-                    parallaxSpeed_Grass;
 
 #pragma mark - Damage Functions
 //Not saved to NSUserDefaults

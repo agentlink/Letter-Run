@@ -24,9 +24,6 @@
 #define SELECTOR_ID_STRING                          @"_STYLE"
 
 
-
-
-
 /* NOTIFICATIONS */
 
 //Health
@@ -55,6 +52,7 @@
 #define DV_MAILMAN_LETTER_DAMAGE                    @"DV_MAILMAN_LETTER_DAMAGE"
 #define DV_MAILMAN_LOVE_BONUS                       @"DV_MAILMAN_LOVE_BONUS"
 #define DV_MAILMAN_LOVE_PERCENT                     @"DV_MAILMAN_LOVE_PERCENT"
+#define DV_MAILMAN_FLING_SPEED                      @"DV_MAILMAN_FLING_SPEED"
 
 //Letter Generation
 #define DV_GENERATION_MAX_CONSONANTS                @"DV_GENERATION_MAX_CONSONANTS"
@@ -63,4 +61,5 @@
 
 //Parallax
 #define DV_PARALLAX_SPEED_ARRAY                     @"DV_PARALLAX_SPEED_ARRAY"
-
+#define DV_PARALLAX_BASE_SPEED                      @"DV_PARALLAX_BASE_SPEED"
+#define DV_PARALLAX_SPEED_INCREASE                  @"DV_PARALLAX_SPEED_INCREASE"
