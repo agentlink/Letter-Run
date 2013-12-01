@@ -12,6 +12,8 @@
 #import "LRGameScene.h"
 #import "LRDifficultyManager.h"
 
+#define BEZIER_STEPS            10
+
 @interface LRFallingEnvelope ()
 @property (readwrite) BOOL loveLetter;
 @property BOOL playerMovedTouch;
@@ -107,15 +109,21 @@
 
     for (int i = 0; i < 3; i++)
     {
-        UIBezierPath *bezierPath = [UIBezierPath bezierPath];
-        [bezierPath moveToPoint:CGPointMake(0, 0)];
-        [bezierPath addCurveToPoint: nextPosition controlPoint1: CGPointMake(0, 0) controlPoint2: CGPointMake(0, nextPosition.y)];
-        nextPosition.x *= -1;
+        UIBezierPath *letterPath = [UIBezierPath bezierPath];
+        CGPoint c1 = CGPointMake(0, 0);
+        CGPoint c2 = CGPointMake(0, nextPosition.y);
+        CGPoint end = CGPointMake(0, 0);
+        
+        [letterPath moveToPoint:end];
+        [letterPath addCurveToPoint:nextPosition controlPoint1:c1  controlPoint2: c2];
 
+        nextPosition.x *= -1;
+        
+        
         //Set the last position to land at the original x point
         if (i == 1) nextPosition.x /= 2;
         
-        SKAction *followPath = [SKAction followPath:[bezierPath CGPath] asOffset:YES orientToPath:NO duration:duration];
+        SKAction *followPath = [SKAction followPath:[letterPath CGPath] asOffset:YES orientToPath:NO duration:duration];
         SKAction *rotate;
         if (i == 0) {
             followPath.timingMode = SKActionTimingEaseOut;
@@ -262,4 +270,39 @@ static inline CGFloat distanceBetweenPoints(CGPoint a, CGPoint b) {
     [self runAction:[SKAction sequence:@[fade, removeSelf]]];
 }
 
+#pragma mark - Bezier Curve Functions
+/*  These functions are based off of Javascript found on bit.ly/9xZtnW  */
+
+static inline double bezier_point (double t, double start, double c1, double c2, double end)
+{
+    return start * (1.0 - t) * (1.0 - t)  * (1.0 - t)
+            + 3.0 *  c1 * (1.0 - t) * (1.0 - t)  * t
+            + 3.0 *  c2 * (1.0 - t) * t * t
+            + end * t * t * t;
+}
+
+static inline double bezierLength (CGPoint start, CGPoint c1, CGPoint c2, CGPoint end)
+{
+    double t;
+    int steps = BEZIER_STEPS;
+    double length = 0.0;
+
+    CGPoint dot;
+    CGPoint previousDot;
+
+    for (int i = 0; i < BEZIER_STEPS; i++)
+    {
+        t = (double)i/ (double)steps;
+        dot.x = bezier_point(t, start.x, c1.x, c2.x, end.x);
+        dot.y = bezier_point(t, start.y, c1.y, c2.y, end.y);
+    
+        if (i > 0) {
+            double x_diff = dot.x - previousDot.x;
+            double y_diff = dot.y - previousDot.y;
+            length += sqrt(x_diff * x_diff + y_diff * y_diff);
+        }
+        previousDot = dot;
+    }
+    return length;
+}
 @end
