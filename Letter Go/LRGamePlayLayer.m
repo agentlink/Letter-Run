@@ -35,7 +35,7 @@
     {
         //Code here :)
         newGame = TRUE;
-        self.pauseTime = 0;
+        self.pauseTime = GAME_LOOP_RESET;
         self.lastSlot = -1;
         self.name = NAME_LAYER_GAME_PLAY;
         [self createLayerContent];
@@ -126,21 +126,19 @@
     }
     //If the game is paused
     else if ([[LRGameStateManager shared] isGamePaused]) {
-        if (pauseTime != 0)
+        if (pauseTime != GAME_LOOP_RESET)
             pauseTime = nextDropTime - currentTime;
         return;
     }
     //If a new game has just begun
     else if (newGame) {
-        nextDropTime = currentTime + [[LRDifficultyManager shared] letterDropPeriod];
+        nextDropTime = currentTime;
         newGame = FALSE;
-        [self dropInitialLetters];
-        return;
     }
     //If the game has just been unpaused
-    else if (pauseTime != 0) {
+    else if (pauseTime != GAME_LOOP_RESET) {
         nextDropTime = currentTime + pauseTime;
-        pauseTime = 0;
+        pauseTime = GAME_LOOP_RESET;
     }
     
     if (currentTime >= nextDropTime) {

@@ -24,7 +24,7 @@
     //The color will be replaced by a health bar sprite
     self.healthBar = [SKSpriteNode spriteNodeWithColor:[SKColor redColor] size:self.size];
     [self addChild:self.healthBar];
-    self.initialTime = -1;
+    self.initialTime = GAME_LOOP_RESET;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restartHealthBar) name:GAME_STATE_NEW_GAME object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(unpauseGame) name:GAME_STATE_CONTINUE_GAME object:nil];
@@ -37,10 +37,10 @@
     if ([[LRGameStateManager shared] isGameOver] || [[LRGameStateManager shared] isGamePaused])
         return;
     else if (![[LRDifficultyManager shared] healthBarFalls]) {
-        self.initialTime = -1;
+        self.initialTime = GAME_LOOP_RESET;
         return;
     }
-    else if (self.initialTime == -1) {
+    else if (self.initialTime == GAME_LOOP_RESET) {
         self.initialTime = currentTime;
         return;
     }
@@ -69,14 +69,13 @@
     //The bar cannot move farther left than the left most edge
     newXValue *= (newXValue > 0) ? 0 : 1;
     self.healthBar.position = CGPointMake(newXValue, self.healthBar.position.y);
-                       
 }
 
 
 - (void) restartHealthBar
 {
     self.healthBar.position = CGPointMake(0, self.healthBar.position.y);
-    self.initialTime = -1;
+    self.initialTime = GAME_LOOP_RESET;
 }
 
 - (CGFloat) percentHealth
@@ -108,7 +107,7 @@
 }
 
 - (void) unpauseGame {
-    self.initialTime = -1;
+    self.initialTime = GAME_LOOP_RESET;
 }
 
 @end
