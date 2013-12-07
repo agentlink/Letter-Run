@@ -11,8 +11,7 @@
 #import "LRGameStateManager.h"
 #import "LRGameScene.h"
 #import "LRDifficultyManager.h"
-
-#define BEZIER_STEPS            10
+#import "LRBezierBuilder.h"
 
 @interface LRFallingEnvelope ()
 @property (readwrite) BOOL loveLetter;
@@ -230,12 +229,9 @@
     CGPoint c1 = CGPointMake((start.x + end.x)/2, (start.y + end.y)/2);
     CGPoint c2 = CGPointMake((start.x + end.x)/4, end.y - end.y/4);
     
-    float curveLength = bezierLength(start, c1, c2, end);
+    LRBezierPath *flingPath = [LRBezierBuilder bezierWithStart:start c1:c1 c2:c2 end:end];
+    float curveLength = [LRBezierBuilder lengthOfBezierCurve:flingPath];
     float duration = curveLength/(.5 * SCREEN_WIDTH);
-    
-    UIBezierPath *flingPath = [UIBezierPath bezierPath];
-    [flingPath moveToPoint:start];
-    [flingPath addCurveToPoint:end controlPoint1:c1 controlPoint2:c2];
     
     SKAction *followPath = [SKAction followPath:[flingPath CGPath] asOffset:NO orientToPath:NO duration:duration];
     followPath.timingMode = SKActionTimingEaseIn;
@@ -300,39 +296,5 @@ static inline CGFloat distanceBetweenPoints(CGPoint a, CGPoint b) {
     [self runAction:[SKAction sequence:@[fade, removeSelf]]];
 }
 
-#pragma mark - Bezier Curve Functions
-/*  These functions are based off of Javascript found on bit.ly/9xZtnW  */
 
-static inline double bezier_point (double t, double start, double c1, double c2, double end)
-{
-    return start * (1.0 - t) * (1.0 - t)  * (1.0 - t)
-            + 3.0 *  c1 * (1.0 - t) * (1.0 - t)  * t
-            + 3.0 *  c2 * (1.0 - t) * t * t
-            + end * t * t * t;
-}
-
-static inline double bezierLength (CGPoint start, CGPoint c1, CGPoint c2, CGPoint end)
-{
-    double t;
-    int steps = BEZIER_STEPS;
-    double length = 0.0;
-
-    CGPoint dot;
-    CGPoint previousDot;
-
-    for (int i = 0; i < BEZIER_STEPS; i++)
-    {
-        t = (double)i/ (double)steps;
-        dot.x = bezier_point(t, start.x, c1.x, c2.x, end.x);
-        dot.y = bezier_point(t, start.y, c1.y, c2.y, end.y);
-    
-        if (i > 0) {
-            double x_diff = dot.x - previousDot.x;
-            double y_diff = dot.y - previousDot.y;
-            length += sqrt(x_diff * x_diff + y_diff * y_diff);
-        }
-        previousDot = dot;
-    }
-    return length;
-}
 @end
