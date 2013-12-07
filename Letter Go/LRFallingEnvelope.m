@@ -108,14 +108,12 @@
 
     for (int i = 0; i < 3; i++)
     {
-        UIBezierPath *letterPath = [UIBezierPath bezierPath];
+        CGPoint start = CGPointMake(0, 0);
         CGPoint c1 = CGPointMake(0, 0);
         CGPoint c2 = CGPointMake(0, nextPosition.y);
-        CGPoint end = CGPointMake(0, 0);
-        
-        [letterPath moveToPoint:end];
-        [letterPath addCurveToPoint:nextPosition controlPoint1:c1  controlPoint2: c2];
 
+        LRBezierPath *letterPath = [LRBezierBuilder bezierWithStart:start c1:c1 c2:c2 end:nextPosition];
+        
         nextPosition.x *= -1;
         
         
