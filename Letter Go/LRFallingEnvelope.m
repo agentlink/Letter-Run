@@ -188,7 +188,7 @@
         //If the block is falling but wasn't flung
         if (self.blockState != BlockState_BlockFlung) {
             self.blockState = BlockState_BlockFlung;
-            [self flingEnvelopeToMailman];
+            [self flingEnvelopeToMailmanWithCurve];
         }
     }
 }
@@ -221,6 +221,36 @@
         [self addLetterToLetterSection];
     }];
     [self runAction:[SKAction sequence:@[moveAndShrink, offScreen]] withKey:ACTION_ENVELOPE_FLING];
+}
+
+- (void) flingEnvelopeToMailmanWithCurve
+{
+    CGPoint end = [(LRGamePlayLayer*)self.parent flungEnvelopeDestination];
+    CGPoint start = self.position;
+    CGPoint c1 = CGPointMake((start.x + end.x)/2, (start.y + end.y)/2);
+    CGPoint c2 = CGPointMake((start.x + end.x)/4, end.y - end.y/4);
+    
+    float curveLength = bezierLength(start, c1, c2, end);
+    float duration = curveLength/(.5 * SCREEN_WIDTH);
+    
+    UIBezierPath *flingPath = [UIBezierPath bezierPath];
+    [flingPath moveToPoint:start];
+    [flingPath addCurveToPoint:end controlPoint1:c1 controlPoint2:c2];
+    
+    SKAction *followPath = [SKAction followPath:[flingPath CGPath] asOffset:NO orientToPath:NO duration:duration];
+    followPath.timingMode = SKActionTimingEaseIn;
+    
+    SKAction *pause = [SKAction waitForDuration:duration/2];
+    SKAction *zoom = [SKAction scaleTo:0 duration:duration/2];
+    SKAction *pauseAndZoom = [SKAction sequence:@[pause, zoom]];
+    SKAction *moveAndShrink = [SKAction group:@[followPath, pauseAndZoom]];
+    
+    SKAction *offScreen = [SKAction runBlock:^{
+        [self addLetterToLetterSection];
+    }];
+    [self runAction:[SKAction sequence:@[moveAndShrink, offScreen]] withKey:ACTION_ENVELOPE_FLING];
+
+    
 }
 
 - (void) flingTowardsLocation:(CGPoint)location
