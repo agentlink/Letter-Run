@@ -73,8 +73,7 @@
     
     //If the box has been flung to the letter box section
     if (!(CGRectIntersectsRect(sceneRect, letterFrame))) {
-        NSMutableDictionary *dropLetterInfo = [NSMutableDictionary dictionaryWithObject:[NSNumber numberWithInt:self.slot] forKey:@"slot"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LETTER_CLEARED object:self userInfo:dropLetterInfo];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LETTER_CLEARED object:self userInfo:[self removeLetterDictionary]];
         [self removeFromParent];
     }
 }
@@ -93,7 +92,7 @@
     }];
     CGFloat dropHeight = gameSceneHeight - bottomEdgeHeight;
     
-    //
+    //Get the array of curve actions to run
     NSMutableArray *curveArray = [NSMutableArray arrayWithArray:[LRCurveBuilder createFallingLetterActionsWithHeight:dropHeight andSwingCount:(arc4random()%3 + 3)]];
     [curveArray addObject:[SKAction runBlock:^{
         if (self.blockState != BlockState_BlockFlung)
@@ -161,23 +160,6 @@
 
 #pragma mark - Movement Functions
 
-- (void) flingEnvelopeToMailman
-{
-    CGPoint destination = [(LRGamePlayLayer*)self.parent flungEnvelopeDestination];
-    float distance = distanceBetweenPoints(destination, self.originalPoint);
-    
-    SKAction *move = [SKAction moveTo:destination duration:distance/self.pixelsPerSecond];
-    SKAction *pause = [SKAction waitForDuration:distance/(2 * self.pixelsPerSecond)];
-    SKAction *zoom = [SKAction scaleTo:0 duration:distance/(2 * self.pixelsPerSecond)];
-    SKAction *pauseAndZoom = [SKAction sequence:@[pause, zoom]];
-    SKAction *moveAndShrink = [SKAction group:@[move, pauseAndZoom]];
-    
-    SKAction *offScreen = [SKAction runBlock:^{
-        [self addLetterToLetterSection];
-    }];
-    [self runAction:[SKAction sequence:@[moveAndShrink, offScreen]] withKey:ACTION_ENVELOPE_FLING];
-}
-
 - (void) flingEnvelopeToMailmanWithCurve
 {
     CGPoint end = [(LRGamePlayLayer*)self.parent flungEnvelopeDestination];
@@ -201,8 +183,6 @@
         [self addLetterToLetterSection];
     }];
     [self runAction:[SKAction sequence:@[moveAndShrink, offScreen]] withKey:ACTION_ENVELOPE_FLING];
-
-    
 }
 
 - (void) flingTowardsLocation:(CGPoint)location
@@ -221,12 +201,10 @@
 - (void) addLetterToLetterSection
 {
     //Add the letter
-    NSMutableDictionary *addLetterInfo = [NSMutableDictionary dictionaryWithObjects:@[self.letter, [NSNumber numberWithBool:self.loveLetter]] forKeys:@[KEY_GET_LETTER, KEY_GET_LOVE]];
-    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_ADDED_LETTER object:self userInfo:addLetterInfo];
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_ADDED_LETTER object:self userInfo:[self addLetterDictionary]];
     
     //And notify that a new slot is empty
-    NSMutableDictionary *dropLetterInfo = [NSMutableDictionary dictionaryWithObject:[NSNumber numberWithInt:self.slot] forKey:@"slot"];
-    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LETTER_CLEARED object:self userInfo:dropLetterInfo];
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LETTER_CLEARED object:self userInfo:[self removeLetterDictionary]];
     [self removeFromParent];
     
 }
@@ -237,6 +215,19 @@ static inline CGFloat distanceBetweenPoints(CGPoint a, CGPoint b) {
     return sqrtf(powf(xDiff, 2) + powf(yDiff, 2));
 }
 
+
+#pragma mark - User Info Dictionary Functions
+- (NSDictionary*) removeLetterDictionary
+{
+    NSDictionary *dict = [NSMutableDictionary dictionaryWithObject:self forKey:@"envelope"];
+    return dict;
+}
+
+- (NSDictionary*) addLetterDictionary
+{
+    NSDictionary *dict = [NSDictionary dictionaryWithObjects:@[self.letter, [NSNumber numberWithBool:self.loveLetter]] forKeys:@[KEY_GET_LETTER, KEY_GET_LOVE]];
+    return dict;
+}
 #pragma mark - Destruction Functions
 
 - (void) envelopeHitMailman
@@ -251,6 +242,5 @@ static inline CGFloat distanceBetweenPoints(CGPoint a, CGPoint b) {
     }];
     [self runAction:[SKAction sequence:@[fade, removeSelf]]];
 }
-
 
 @end

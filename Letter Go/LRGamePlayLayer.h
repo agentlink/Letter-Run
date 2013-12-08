@@ -22,6 +22,5 @@
 
 @property (nonatomic, strong) LRDevPauseMenuVC *devPause;
 
-- (void) dropInitialLetters;
 - (CGPoint) flungEnvelopeDestination;
 @end

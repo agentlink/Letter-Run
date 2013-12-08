@@ -11,16 +11,14 @@
 #import "LRCollisionManager.h"
 #import "LRGameStateManager.h"
 #import "LRDifficultyManager.h"
-
-#define NUM_SLOTS               4
+#import "LRFallingEnvelopeSlotManager.h"
 
 @interface LRGamePlayLayer ()
-@property NSMutableArray *letterSlots;
+@property LRFallingEnvelopeSlotManager *letterSlots;
 
 @property BOOL newGame;
 @property NSTimeInterval nextDropTime;
 @property NSTimeInterval pauseTime;
-@property int lastSlot;
 
 @end
 
@@ -33,14 +31,13 @@
 {
     if (self = [super init])
     {
-        //Code here :)
-        newGame = TRUE;
         self.pauseTime = GAME_LOOP_RESET;
-        self.lastSlot = -1;
         self.name = NAME_LAYER_GAME_PLAY;
+        newGame = TRUE;
+
+        self.letterSlots = [[LRFallingEnvelopeSlotManager alloc] init];
+
         [self createLayerContent];
-        [self setUpSlotArray];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateSlots:) name:NOTIFICATION_LETTER_CLEARED object:nil];
         [self setUpPhysics];
     }
     return self;
@@ -82,14 +79,6 @@
     [self addChild:self.pauseButton];
 }
 
-- (void) setUpSlotArray
-{
-    self.letterSlots = [[NSMutableArray alloc] initWithCapacity:NUM_SLOTS];
-    for (int i = 0; i < NUM_SLOTS; i ++) {
-        [ self.letterSlots addObject:[NSMutableArray array]];
-    }
-}
-
 - (void) setUpPhysics
 {
     //Add a line so that the block doesn't just fall forever
@@ -122,6 +111,8 @@
     //If the game is over
     if ([[LRGameStateManager shared] isGameOver]) {
         newGame = TRUE;
+        //Reset the falling letters list
+        [self.letterSlots resetSlots];
         return;
     }
     //If the game is paused
@@ -150,58 +141,12 @@
     }
 }
 
-- (void) dropInitialLetters
+- (void) dropLetter
 {
-    for (int i = 0; i < NUM_SLOTS; i++) {
-        SKAction *delay = [SKAction waitForDuration:(i * .6)];
-        SKAction *drop = [SKAction runBlock:^{
-            [self dropLetterAtSlot:i];
-        }];
-        [self runAction:[SKAction sequence:@[delay, drop]]];
-    }
-}
-
-- (void) dropLetter {
-    //Find an empty slot and then dorp the letter at that slot
-    NSMutableArray *emptySlots = [NSMutableArray array];
-    for (int i = 0; i <  self.letterSlots.count; i++)
-    {
-        NSArray *slotArray = [ self.letterSlots objectAtIndex:i];
-        if (![slotArray count]) {
-            [emptySlots addObject:[NSNumber numberWithInt:i]];
-        }
-    }
-    //If there isn't an empty slot, drop it at a full one
-    int letterDropSlot = self.lastSlot;
-    if ([emptySlots count])
-        letterDropSlot = [[emptySlots objectAtIndex:arc4random()%emptySlots.count] intValue];
-    else {
-        while (letterDropSlot == self.lastSlot) {
-            letterDropSlot = arc4random()%NUM_SLOTS;
-        }
-    }
-    [self dropLetterAtSlot:letterDropSlot];
-    self.lastSlot = letterDropSlot;
-}
-
-- (void) dropLetterAtSlot:(int)slotLocation
-{
-    NSAssert(slotLocation < NUM_SLOTS, @"Error: slot %i is outside of bounds.", slotLocation);
-    LRFallingEnvelope *envelope = [LRLetterBlockGenerator createRandomEnvelopeAtSlot:slotLocation];
+    LRFallingEnvelope *envelope = [LRLetterBlockGenerator createRandomEnvelope];
+    [self.letterSlots addEnvelope:envelope];
     [self addChild:envelope];
     [envelope dropEnvelopeWithSwing];
-    
-    [[self.letterSlots objectAtIndex:slotLocation] addObject:[NSNumber numberWithBool:TRUE]];
-}
-
-- (void) updateSlots:(NSNotification*) notification
-{
-    if ([[LRGameStateManager shared] isGameOver] || [[LRGameStateManager shared] isGamePaused])
-        return;
-    int slot = [[[notification userInfo] objectForKey:@"slot"] intValue];
-    NSAssert([[ self.letterSlots objectAtIndex:slot] count], @"Error: cannot remove block from empty slot");
-    [[self.letterSlots objectAtIndex:slot] removeLastObject];
-    
 }
 
 #pragma mark - Board Properties
