@@ -11,7 +11,7 @@
 #import "LRGameStateManager.h"
 #import "LRGameScene.h"
 #import "LRDifficultyManager.h"
-#import "LRBezierBuilder.h"
+#import "LRCurveBuilder.h"
 
 @interface LRFallingEnvelope ()
 @property (readwrite) BOOL loveLetter;
@@ -83,9 +83,6 @@
 
 - (void) dropEnvelopeWithSwing
 {
-    //Create the Bezier curves
-    //http://tinyurl.com/beziercurveref
-    
     //Get the height that the envelope has to fall
     LRGamePlayLayer *gpl = [(LRGameScene*)[self scene] gamePlayLayer];
     CGFloat gameSceneHeight = gpl.frame.size.height;
@@ -94,49 +91,10 @@
     [gpl enumerateChildNodesWithName:NAME_SPRITE_BOTTOM_EDGE usingBlock:^(SKNode *node, BOOL *stop) {
         bottomEdgeHeight =  ABS((0 - gameSceneHeight)/2 - node.position.y - node.frame.size.height);
     }];
-    
     CGFloat dropHeight = gameSceneHeight - bottomEdgeHeight;
     
-    CGFloat xDiff = -70;
-    CGFloat yDiff = 0 - dropHeight/3;
-    CGPoint nextPosition = CGPointMake(xDiff, yDiff);
-
-    CGFloat rotation = 10;
-    CGFloat duration = 2;
-    
-    NSMutableArray *curveArray = [NSMutableArray array];
-
-    for (int i = 0; i < 3; i++)
-    {
-        CGPoint start = CGPointMake(0, 0);
-        CGPoint c1 = CGPointMake(0, 0);
-        CGPoint c2 = CGPointMake(0, nextPosition.y);
-
-        LRBezierPath *letterPath = [LRBezierBuilder bezierWithStart:start c1:c1 c2:c2 end:nextPosition];
-        
-        nextPosition.x *= -1;
-        
-        
-        //Set the last position to land at the original x point
-        if (i == 1) nextPosition.x /= 2;
-        
-        SKAction *followPath = [SKAction followPath:[letterPath CGPath] asOffset:YES orientToPath:NO duration:duration];
-        SKAction *rotate;
-        if (i == 0) {
-            followPath.timingMode = SKActionTimingEaseOut;
-            rotate = [SKAction rotateToAngle:0 -(rotation * M_PI)/180 duration:duration];
-        }
-        else if (i == 1) {
-            followPath.timingMode = SKActionTimingEaseInEaseOut;
-            rotate = [SKAction rotateToAngle:(rotation * M_PI)/180 duration:duration];
-        }
-        else {
-            followPath.timingMode = SKActionTimingEaseIn;
-            rotate = [SKAction rotateToAngle:0 duration:duration];
-        }
-        rotate.timingMode = followPath.timingMode;
-        [curveArray addObject:[SKAction group:@[followPath, rotate]]];
-    }
+    //
+    NSMutableArray *curveArray = [NSMutableArray arrayWithArray:[LRCurveBuilder createFallingLetterActionsWithHeight:dropHeight andSwingCount:(arc4random()%3 + 3)]];
     [curveArray addObject:[SKAction runBlock:^{
         if (self.blockState != BlockState_BlockFlung)
             self.blockState = BlockState_Landed;
@@ -227,8 +185,8 @@
     CGPoint c1 = CGPointMake((start.x + end.x)/2, (start.y + end.y)/2);
     CGPoint c2 = CGPointMake((start.x + end.x)/4, end.y - end.y/4);
     
-    LRBezierPath *flingPath = [LRBezierBuilder bezierWithStart:start c1:c1 c2:c2 end:end];
-    float curveLength = [LRBezierBuilder lengthOfBezierCurve:flingPath];
+    LRBezierPath *flingPath = [LRCurveBuilder bezierWithStart:start c1:c1 c2:c2 end:end];
+    float curveLength = [LRCurveBuilder lengthOfBezierCurve:flingPath];
     float duration = curveLength/(.5 * SCREEN_WIDTH);
     
     SKAction *followPath = [SKAction followPath:[flingPath CGPath] asOffset:NO orientToPath:NO duration:duration];

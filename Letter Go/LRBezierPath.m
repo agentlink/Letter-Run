@@ -19,6 +19,8 @@
 
 - (void) addCurveToPoint:(CGPoint)endPoint controlPoint1:(CGPoint)controlPoint1 controlPoint2:(CGPoint)controlPoint2
 {
+    //Bezier curve creation source: http://tinyurl.com/beziercurveref
+    
     [super addCurveToPoint:endPoint controlPoint1:controlPoint1 controlPoint2:controlPoint2];
     self.c1 = controlPoint1;
     self.c2 = controlPoint2;
