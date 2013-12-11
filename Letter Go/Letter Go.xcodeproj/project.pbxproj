@@ -191,6 +191,7 @@
 		00F6F59617FF5234009EDADB /* LRGameStateManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRGameStateManager.m; sourceTree = "<group>"; };
 		A82CA94A1855189F004ADD99 /* LRFallingEnvelopeSlotManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRFallingEnvelopeSlotManager.h; sourceTree = "<group>"; };
 		A82CA94B1855189F004ADD99 /* LRFallingEnvelopeSlotManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRFallingEnvelopeSlotManager.m; sourceTree = "<group>"; };
+		A82DD7E71857FB24007483A6 /* LRPositionConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LRPositionConstants.h; sourceTree = "<group>"; };
 		A87BDD961853AC8D00845BB5 /* LRCurveBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRCurveBuilder.h; sourceTree = "<group>"; };
 		A87BDD971853AC8D00845BB5 /* LRCurveBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRCurveBuilder.m; sourceTree = "<group>"; };
 		A87BDD991853AFDC00845BB5 /* LRBezierPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRBezierPath.h; sourceTree = "<group>"; };
@@ -320,6 +321,7 @@
 			isa = PBXGroup;
 			children = (
 				0049695B17F8AC6400176F2D /* LRConstants.h */,
+				A82DD7E71857FB24007483A6 /* LRPositionConstants.h */,
 				00AC2802182ED98800B3C0EB /* LRDifficultyConstants.h */,
 			);
 			name = Constants;

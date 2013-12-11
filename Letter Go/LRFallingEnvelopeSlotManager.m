@@ -8,26 +8,36 @@
 
 #import "LRFallingEnvelopeSlotManager.h"
 #import "LRConstants.h"
-
-static const int NUM_SLOTS = 4;
+#import "LRPositionConstants.h"
 
 @interface LRFallingEnvelopeSlotManager ()
-@property NSMutableArray *slotList;
+
+@property NSMutableArray *slotSortedEnvelopeList;
+@property NSMutableArray *timeSortedEnvelopeList;
+@property CGFloat currentZIndex;
+
+
 @end
 
+static const int kNumberOfSlots = 4;
+
 @implementation LRFallingEnvelopeSlotManager
-@synthesize slotList;
+@synthesize slotSortedEnvelopeList, timeSortedEnvelopeList;
 #pragma mark - Overridden Functions
 
 - (id) init
 {
     //Initialize the array as a list of arrays
     if (self = [super init]) {
-        slotList = [[NSMutableArray alloc] init];
-        for (int i = 0; i < NUM_SLOTS; i++) {
-            [slotList setObject:[NSMutableArray array] atIndexedSubscript:i];
-        }
         
+        slotSortedEnvelopeList = [NSMutableArray new];
+        timeSortedEnvelopeList = [NSMutableArray new];
+        
+        self.currentZIndex = kEnvelopeZPositionMin;
+        
+        for (int i = 0; i < kNumberOfSlots; i++) {
+            [slotSortedEnvelopeList setObject:[NSMutableArray array] atIndexedSubscript:i];
+        }
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeEnvelopeFromNotification:) name:NOTIFICATION_LETTER_CLEARED object:nil];
     }
     return self;
@@ -37,14 +47,19 @@ static const int NUM_SLOTS = 4;
 
 - (void) addEnvelope:(LRFallingEnvelope*)envelope
 {
+    //Slot list
     int slotIndex = [self getIndexOfNextSlot];
     [envelope setSlot:slotIndex];
     [self addObject:envelope atSlotIndex:slotIndex];
+    
+    //Time list
+    [self setZPositionForEnvelope:envelope];
+    [self.timeSortedEnvelopeList addObject:envelope];
 }
 
 - (void) addObject:(id)anObject atSlotIndex:(NSUInteger)index
 {
-    NSMutableArray *slot = [slotList objectAtIndex:index];
+    NSMutableArray *slot = [slotSortedEnvelopeList objectAtIndex:index];
     [slot addObject:anObject];
 }
 
@@ -52,17 +67,43 @@ static const int NUM_SLOTS = 4;
 {
     LRFallingEnvelope *envelope = [[notification userInfo] objectForKey:@"envelope"];
     NSAssert(envelope, @"Error: notification does not include element.");
-    NSAssert ([self removeEnvelope:envelope], @"Error: envelope with letter %@ is not in list", envelope.letter);
+    NSAssert ([self removeEnvelope:envelope], @"Error: envelope with letter %@ is not in slot or time list.", envelope.letter);
+
 }
 
 - (BOOL) removeEnvelope:(LRFallingEnvelope*)envelope
 {
-    NSMutableArray *slotArray = [slotList objectAtIndex:envelope.slot];
+    //Time list
+    [timeSortedEnvelopeList removeObject:envelope];
+    
+    //Slot list
+    NSMutableArray *slotArray = [slotSortedEnvelopeList objectAtIndex:envelope.slot];
     BOOL retValue = [slotArray containsObject:envelope];
-
     //Returns FALSE if envelope is not in the slot
     [slotArray removeObject:envelope];
     return retValue;
+}
+
+#pragma mark - zPosition Function
+
+- (void) setZPositionForEnvelope:(LRFallingEnvelope*)envelope
+{
+    //If next zPosition would be in front of the grass layer, push them all back
+    if (self.currentZIndex + zDiff_Envelope_Envelope >= kEnvelopeZPositionMax)
+        [self pushBackZIndices];
+    self.currentZIndex += zDiff_Envelope_Envelope;
+    envelope.zPosition = self.currentZIndex;
+    
+}
+
+- (void) pushBackZIndices
+{
+    //Invariant: there are less than 1 / zDiff_Envelope_Envelope letters on the screen
+    for (int i = 0; i < [timeSortedEnvelopeList count]; i++) {
+        LRFallingEnvelope *envelope = timeSortedEnvelopeList[i];
+        self.currentZIndex = i * zDiff_Envelope_Envelope + kEnvelopeZPositionMin;
+        envelope.zPosition =  self.currentZIndex;
+    }
 }
 
 #pragma mark - Slot Index Functions
@@ -71,8 +112,8 @@ static const int NUM_SLOTS = 4;
 {
     //Get a list of the empty slots
     NSMutableArray *emptySlots = [NSMutableArray array];
-    for (int i = 0; i < NUM_SLOTS; i++) {
-        if (![[slotList objectAtIndex:i] count]) {
+    for (int i = 0; i < kNumberOfSlots; i++) {
+        if (![[slotSortedEnvelopeList objectAtIndex:i] count]) {
             [emptySlots addObject:@(i)];
         }
     }
@@ -83,15 +124,16 @@ static const int NUM_SLOTS = 4;
     
     //Otherwise, return a random slot
     //TODO: Implement method that then chooses the least full slot (or least recently dropped slot)
-    return arc4random()%NUM_SLOTS;
+    return arc4random()%kNumberOfSlots;
 }
 
 #pragma mark - Reset Functions
 - (void) resetSlots
 {
-    for (NSMutableArray *slot in slotList) {
+    for (NSMutableArray *slot in slotSortedEnvelopeList) {
         [slot removeAllObjects];
     }
+    [timeSortedEnvelopeList removeAllObjects];
 }
 
 @end

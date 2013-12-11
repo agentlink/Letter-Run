@@ -7,12 +7,11 @@
 //
 
 #import "LRLetterBlock.h"
-
 #import "LRCollisionManager.h"
-
 #import "LRGameScene.h"
 #import "LRGameStateManager.h"
 #import "LRLetterSlot.h"
+#import "LRPositionConstants.h"
 
 @interface LRLetterBlock ()
 @property SKSpriteNode *envelopeSprite;
@@ -44,7 +43,7 @@
     letterLabel.text = self.letter;
     letterLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - letterLabel.frame.size.height/2);
     letterLabel.fontColor = [SKColor blackColor];
-    letterLabel.zPosition += .5;
+    letterLabel.zPosition += zDiff_Letter_Envelope;
     
     [self addChild:letterLabel];
     

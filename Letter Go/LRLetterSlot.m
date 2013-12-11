@@ -57,7 +57,7 @@
         _currentBlock.position = CGPointMake(0, 0);
         [self addChild:_currentBlock];
     }
-    _currentBlock.zPosition = self.zPosition + 10;
+    _currentBlock.zPosition = zPos_SectionBlock;
 }
 
 - (void) setEmptyLetterBlock

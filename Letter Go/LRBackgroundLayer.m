@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Gabe Nicholas. All rights reserved.
 //
 
+#import "LRPositionConstants.h"
 #import "LRBackgroundLayer.h"
 #import "LRParallaxNode.h"
 #import "LRCloudLayer.h"
@@ -50,17 +51,20 @@
         switch (i) {
             case BackgroundIndex_Sky:
                 layer.yOffset = -5;
+                layer.zPosition = zPos_SkyLayer;
                 break;
             case BackgroundIndex_Mountains:
                 layer.yOffset = -2;
+                layer.zPosition = zPos_MountainLayer;
                 break;
             case BackgroundIndex_Hills:
                 layer.position = CGPointMake(layer.position.x, [layer repeatingSprite].size.height/4 - self.size.height/2);
                 layer.yOffset = -3.5;
+                layer.zPosition = zPos_HillsLayer;
                 break;
             case BackgroundIndex_Grass:
                 layer.position = CGPointMake(layer.position.x, [layer repeatingSprite].size.height/4 - self.size.height/2 + SIZE_HEIGHT_LETTER_SECTION + grassHeightOffset);
-                layer.zPosition += 20;
+                layer.zPosition = zPos_GrassLayer;
                 layer.yOffset = -10;
                 break;
             default:

@@ -7,6 +7,10 @@
 //
 
 #import "LRLetterBlock.h"
+#import "LRPositionConstants.h"
+
+static const CGFloat kEnvelopeZPositionMin = zPos_Mailman + zDiff_Envelope_Envelope;
+static const CGFloat kEnvelopeZPositionMax = zPos_GrassLayer;
 
 @interface LRFallingEnvelope : LRLetterBlock
 

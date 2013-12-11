@@ -103,6 +103,7 @@ static LRGameStateManager *_shared = nil;
     gameOverLabel.text = @"Game Over";
     gameOverLabel.fontColor = [SKColor redColor];
     gameOverLabel.fontSize = 50;
+    gameOverLabel.zPosition = 500;
     __block LRGamePlayLayer *gpl = [(LRGameScene*)[self scene] gamePlayLayer];
     
     [gpl.pauseButton setIsEnabled:NO];

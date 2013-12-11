@@ -7,6 +7,7 @@
 //
 
 #import "LRMailman.h"
+#import "LRPositionConstants.h"
 #import "LRCollisionManager.h"
 #import "LRFallingEnvelope.h"
 #import "LRDifficultyManager.h"
@@ -25,7 +26,7 @@
 - (id) init
 {
     if (self = [super initWithImageNamed:IMAGE_NAME_MAILMAN]) {
-        self.name = NAME_SPRITE_MAILMAN;
+        self.name = NAME_SPRITE_MAILMAN;        
         [self setScale:.7];
         [self setUpCover];
         [self setUpPhysics];
@@ -49,7 +50,7 @@
 {
     mailbagCover = [SKSpriteNode spriteNodeWithImageNamed:IMAGE_NAME_COVER];
     mailbagCover.position =  CGPointMake(0, -7);
-    mailbagCover.zPosition += 20;
+    mailbagCover.zPosition = zPos_Mailbag;
     [self addChild:mailbagCover];
 }
 

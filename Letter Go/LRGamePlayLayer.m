@@ -12,6 +12,7 @@
 #import "LRGameStateManager.h"
 #import "LRDifficultyManager.h"
 #import "LRFallingEnvelopeSlotManager.h"
+#import "LRPositionConstants.h"
 
 @interface LRGamePlayLayer ()
 @property LRFallingEnvelopeSlotManager *letterSlots;
@@ -48,7 +49,7 @@
     //Health Section
     self.healthSection = [[LRHealthSection alloc] initWithSize:CGSizeMake(self.size.width, SIZE_HEIGHT_HEALTH_SECTION)];
     self.healthSection.position = CGPointMake(0, self.size.height/2 - self.healthSection.size.height/2);
-    self.healthSection.zPosition += 15;
+    self.healthSection.zPosition = zPos_HealthSection;
     
     SKSpriteNode *tempHealth = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:self.healthSection.size];
     tempHealth.alpha = .5;
@@ -60,6 +61,7 @@
     //Letter Section
     self.letterSection = [[LRLetterSection alloc] initWithSize:CGSizeMake(self.size.width, SIZE_HEIGHT_LETTER_SECTION)];
     self.letterSection.position = CGPointMake(self.position.x - self.size.width/2, 0 - self.size.height/2 + self.letterSection.size.height/2);
+    self.letterSection.zPosition = zPos_LetterSection;
     [self addChild:self.letterSection];
     
     //Mailman
@@ -68,6 +70,7 @@
     float mailmanX = self.position.x - self.size.width + self.mailman.size.width/2 + xOffset;
     float mailmanY = self.letterSection.position.y + (self.letterSection.size.height + self.mailman.size.height)/2;
     self.mailman.position = CGPointMake(mailmanX, mailmanY);
+    self.mailman.zPosition = zPos_Mailman;
     [self addChild:self.mailman];
     
     //Pause Button
@@ -75,7 +78,7 @@
     [self.pauseButton setScale:.7];
     [self.pauseButton setTouchUpInsideTarget:self action:@selector(pauseButtonPressed)];
     self.pauseButton.position = CGPointMake(0 - SCREEN_WIDTH/2 + self.pauseButton.size.width/2, SCREEN_HEIGHT/2 - self.healthSection.size.height - self.pauseButton.size.height/2);
-
+    self.pauseButton.zPosition = zPos_PauseButton;
     [self addChild:self.pauseButton];
 }
 

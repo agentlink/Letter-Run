@@ -33,8 +33,10 @@
 {
     node.relativeSpeed = [[[[LRDifficultyManager shared] parallaxLayerSpeeds] objectAtIndex:index] floatValue];
     NSAssert(node.relativeSpeed <= 1, @"Error: relative speed should be a value less than one");
-    if (!self.parallaxNodes) self.parallaxNodes = [NSMutableArray arrayWithObject:node];
-    else [self.parallaxNodes insertObject:node atIndex:index];
+    if (!self.parallaxNodes)
+        self.parallaxNodes = [NSMutableArray arrayWithObject:node];
+    else
+        [self.parallaxNodes insertObject:node atIndex:index];
 }
 
 #pragma mark - Parallax Movement Functions
