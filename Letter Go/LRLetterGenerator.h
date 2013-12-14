@@ -10,8 +10,17 @@
 
 @interface LRLetterGenerator : SKNode
 
+///Returns the shared instance of the letter generator
 + (LRLetterGenerator*) shared;
+
+///Returns a letter generated from the limitations set in the difficulty manager
 - (NSString*)generateLetter;
+
+///Returns the set of all consonants
++ (NSCharacterSet*) consonantSet;
+///Returns the set of all vowels
++ (NSCharacterSet*) vowelSet;
+
 
 @property NSMutableArray *forceDropLetters;
 
