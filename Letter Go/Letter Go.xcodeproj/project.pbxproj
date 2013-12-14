@@ -70,13 +70,30 @@
 		00CDF18917F4840F003065F6 /* LRHealthSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CDF18817F4840F003065F6 /* LRHealthSection.m */; };
 		00CDF18C17F4899B003065F6 /* LRLetterSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CDF18B17F4899B003065F6 /* LRLetterSection.m */; };
 		00F6F59717FF5234009EDADB /* LRGameStateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F6F59617FF5234009EDADB /* LRGameStateManager.m */; };
+		A8049BF8185956AA0043D04D /* Background_Grass2.png in Resources */ = {isa = PBXBuildFile; fileRef = A8049BF4185956AA0043D04D /* Background_Grass2.png */; };
+		A8049BF9185956AA0043D04D /* Background_Hills2.png in Resources */ = {isa = PBXBuildFile; fileRef = A8049BF5185956AA0043D04D /* Background_Hills2.png */; };
+		A8049BFA185956AA0043D04D /* Background_Mountains2.png in Resources */ = {isa = PBXBuildFile; fileRef = A8049BF6185956AA0043D04D /* Background_Mountains2.png */; };
+		A8049BFB185956AA0043D04D /* Background_Sky2.png in Resources */ = {isa = PBXBuildFile; fileRef = A8049BF7185956AA0043D04D /* Background_Sky2.png */; };
 		A82CA94C1855189F004ADD99 /* LRFallingEnvelopeSlotManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A82CA94B1855189F004ADD99 /* LRFallingEnvelopeSlotManager.m */; };
+		A877E5B9185BF8C30028CFFA /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CDF15C17F474EC003065F6 /* XCTest.framework */; };
+		A877E5BA185BF8C30028CFFA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CDF13617F474EC003065F6 /* Foundation.framework */; };
+		A877E5BB185BF8C30028CFFA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CDF13A17F474EC003065F6 /* UIKit.framework */; };
+		A877E5C1185BF8C30028CFFA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A877E5BF185BF8C30028CFFA /* InfoPlist.strings */; };
+		A877E5C3185BF8C30028CFFA /* Letter_Go_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = A877E5C2185BF8C30028CFFA /* Letter_Go_Tests.m */; };
+		A877E5CD185BFA960028CFFA /* LRLetterGenerator_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = A877E5CC185BFA960028CFFA /* LRLetterGenerator_Test.m */; };
 		A87BDD981853AC8D00845BB5 /* LRCurveBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = A87BDD971853AC8D00845BB5 /* LRCurveBuilder.m */; };
 		A87BDD9B1853AFDC00845BB5 /* LRBezierPath.m in Sources */ = {isa = PBXBuildFile; fileRef = A87BDD9A1853AFDC00845BB5 /* LRBezierPath.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		00CDF16017F474EC003065F6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 00CDF12B17F474EC003065F6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 00CDF13217F474EC003065F6;
+			remoteInfo = "Letter Go";
+		};
+		A877E5C5185BF8C30028CFFA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 00CDF12B17F474EC003065F6 /* Project object */;
 			proxyType = 1;
@@ -189,9 +206,19 @@
 		00CDF18B17F4899B003065F6 /* LRLetterSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterSection.m; sourceTree = "<group>"; };
 		00F6F59517FF5234009EDADB /* LRGameStateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRGameStateManager.h; sourceTree = "<group>"; };
 		00F6F59617FF5234009EDADB /* LRGameStateManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRGameStateManager.m; sourceTree = "<group>"; };
+		A8049BF4185956AA0043D04D /* Background_Grass2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Background_Grass2.png; path = "../../../../Downloads/12-11 Assets/Background_Grass2.png"; sourceTree = "<group>"; };
+		A8049BF5185956AA0043D04D /* Background_Hills2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Background_Hills2.png; path = "../../../../Downloads/12-11 Assets/Background_Hills2.png"; sourceTree = "<group>"; };
+		A8049BF6185956AA0043D04D /* Background_Mountains2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Background_Mountains2.png; path = "../../../../Downloads/12-11 Assets/Background_Mountains2.png"; sourceTree = "<group>"; };
+		A8049BF7185956AA0043D04D /* Background_Sky2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Background_Sky2.png; path = "../../../../Downloads/12-11 Assets/Background_Sky2.png"; sourceTree = "<group>"; };
 		A82CA94A1855189F004ADD99 /* LRFallingEnvelopeSlotManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRFallingEnvelopeSlotManager.h; sourceTree = "<group>"; };
 		A82CA94B1855189F004ADD99 /* LRFallingEnvelopeSlotManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRFallingEnvelopeSlotManager.m; sourceTree = "<group>"; };
 		A82DD7E71857FB24007483A6 /* LRPositionConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LRPositionConstants.h; sourceTree = "<group>"; };
+		A877E5B8185BF8C30028CFFA /* Letter Go Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Letter Go Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A877E5BE185BF8C30028CFFA /* Letter Go Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Letter Go Tests-Info.plist"; sourceTree = "<group>"; };
+		A877E5C0185BF8C30028CFFA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A877E5C2185BF8C30028CFFA /* Letter_Go_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Letter_Go_Tests.m; sourceTree = "<group>"; };
+		A877E5C4185BF8C30028CFFA /* Letter Go Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Letter Go Tests-Prefix.pch"; sourceTree = "<group>"; };
+		A877E5CC185BFA960028CFFA /* LRLetterGenerator_Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterGenerator_Test.m; sourceTree = "<group>"; };
 		A87BDD961853AC8D00845BB5 /* LRCurveBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRCurveBuilder.h; sourceTree = "<group>"; };
 		A87BDD971853AC8D00845BB5 /* LRCurveBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRCurveBuilder.m; sourceTree = "<group>"; };
 		A87BDD991853AFDC00845BB5 /* LRBezierPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRBezierPath.h; sourceTree = "<group>"; };
@@ -220,6 +247,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A877E5B5185BF8C30028CFFA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A877E5B9185BF8C30028CFFA /* XCTest.framework in Frameworks */,
+				A877E5BB185BF8C30028CFFA /* UIKit.framework in Frameworks */,
+				A877E5BA185BF8C30028CFFA /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -240,6 +277,10 @@
 		0007FB31180B2FBB00E55B0D /* Background */ = {
 			isa = PBXGroup;
 			children = (
+				A8049BF4185956AA0043D04D /* Background_Grass2.png */,
+				A8049BF5185956AA0043D04D /* Background_Hills2.png */,
+				A8049BF6185956AA0043D04D /* Background_Mountains2.png */,
+				A8049BF7185956AA0043D04D /* Background_Sky2.png */,
 				009B7278182991CB00A6CEA0 /* Background_Cloud.png */,
 				000BC1581820351800BEC563 /* Background_Grass.png */,
 				000BC14B181C6B4600BEC563 /* Background_Mountains.png */,
@@ -423,6 +464,7 @@
 				00CDF17617F478BA003065F6 /* Layers */,
 				00CDF17217F477C1003065F6 /* Scenes */,
 				00CDF13E17F474EC003065F6 /* Base */,
+				A877E5BC185BF8C30028CFFA /* Letter Go Tests */,
 				00CDF13517F474EC003065F6 /* Frameworks */,
 				00CDF13417F474EC003065F6 /* Products */,
 			);
@@ -433,6 +475,7 @@
 			children = (
 				00CDF13317F474EC003065F6 /* Letter Go.app */,
 				00CDF15B17F474EC003065F6 /* Letter GoTests.xctest */,
+				A877E5B8185BF8C30028CFFA /* Letter Go Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -537,6 +580,26 @@
 			name = "Game Play Layer";
 			sourceTree = "<group>";
 		};
+		A877E5BC185BF8C30028CFFA /* Letter Go Tests */ = {
+			isa = PBXGroup;
+			children = (
+				A877E5C2185BF8C30028CFFA /* Letter_Go_Tests.m */,
+				A877E5CC185BFA960028CFFA /* LRLetterGenerator_Test.m */,
+				A877E5BD185BF8C30028CFFA /* Supporting Files */,
+			);
+			path = "Letter Go Tests";
+			sourceTree = "<group>";
+		};
+		A877E5BD185BF8C30028CFFA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A877E5BE185BF8C30028CFFA /* Letter Go Tests-Info.plist */,
+				A877E5BF185BF8C30028CFFA /* InfoPlist.strings */,
+				A877E5C4185BF8C30028CFFA /* Letter Go Tests-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		A87BDD9C1853B4AE00845BB5 /* Bezier */ = {
 			isa = PBXGroup;
 			children = (
@@ -586,6 +649,24 @@
 			productReference = 00CDF15B17F474EC003065F6 /* Letter GoTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		A877E5B7185BF8C30028CFFA /* Letter Go Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A877E5C7185BF8C30028CFFA /* Build configuration list for PBXNativeTarget "Letter Go Tests" */;
+			buildPhases = (
+				A877E5B4185BF8C30028CFFA /* Sources */,
+				A877E5B5185BF8C30028CFFA /* Frameworks */,
+				A877E5B6185BF8C30028CFFA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A877E5C6185BF8C30028CFFA /* PBXTargetDependency */,
+			);
+			name = "Letter Go Tests";
+			productName = "Letter Go Tests";
+			productReference = A877E5B8185BF8C30028CFFA /* Letter Go Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -600,6 +681,9 @@
 						DevelopmentTeam = Q99XXBB934;
 					};
 					00CDF15A17F474EC003065F6 = {
+						TestTargetID = 00CDF13217F474EC003065F6;
+					};
+					A877E5B7185BF8C30028CFFA = {
 						TestTargetID = 00CDF13217F474EC003065F6;
 					};
 				};
@@ -619,6 +703,7 @@
 			targets = (
 				00CDF13217F474EC003065F6 /* Letter Go */,
 				00CDF15A17F474EC003065F6 /* Letter GoTests */,
+				A877E5B7185BF8C30028CFFA /* Letter Go Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -630,10 +715,13 @@
 			files = (
 				00641EAA182C42D30098EC38 /* LRDevPauseMenuVC.xib in Resources */,
 				009B727A182991CB00A6CEA0 /* Manford.png in Resources */,
+				A8049BF8185956AA0043D04D /* Background_Grass2.png in Resources */,
 				000BC14F181C6B4600BEC563 /* Background_Mountains.png in Resources */,
 				008428F01800997800908E5D /* LetterProbabilities.plist in Resources */,
+				A8049BFA185956AA0043D04D /* Background_Mountains2.png in Resources */,
 				00AC280F182EEAD400B3C0EB /* Pause_Unselected.png in Resources */,
 				00861283183819BF00C42AE0 /* Envelope_Love.png in Resources */,
+				A8049BFB185956AA0043D04D /* Background_Sky2.png in Resources */,
 				00AC2804182EDAC100B3C0EB /* DifficultyVariables.plist in Resources */,
 				009B7279182991CB00A6CEA0 /* Envelope_Normal.png in Resources */,
 				00AC281D183178B800B3C0EB /* LRStatsPageViewController.xib in Resources */,
@@ -644,6 +732,7 @@
 				00CDF15617F474EC003065F6 /* Images.xcassets in Resources */,
 				003C2670180F46C6003729D4 /* organizedDict.txt in Resources */,
 				00CDF14C17F474EC003065F6 /* Main.storyboard in Resources */,
+				A8049BF9185956AA0043D04D /* Background_Hills2.png in Resources */,
 				00AC280E182EEAD400B3C0EB /* Pause_Selected.png in Resources */,
 				00861287183AD4D700C42AE0 /* Manford_Cover.png in Resources */,
 			);
@@ -654,6 +743,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				00CDF16717F474EC003065F6 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A877E5B6185BF8C30028CFFA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A877E5C1185BF8C30028CFFA /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -714,6 +811,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A877E5B4185BF8C30028CFFA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A877E5C3185BF8C30028CFFA /* Letter_Go_Tests.m in Sources */,
+				A877E5CD185BFA960028CFFA /* LRLetterGenerator_Test.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -721,6 +827,11 @@
 			isa = PBXTargetDependency;
 			target = 00CDF13217F474EC003065F6 /* Letter Go */;
 			targetProxy = 00CDF16017F474EC003065F6 /* PBXContainerItemProxy */;
+		};
+		A877E5C6185BF8C30028CFFA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 00CDF13217F474EC003065F6 /* Letter Go */;
+			targetProxy = A877E5C5185BF8C30028CFFA /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -745,6 +856,14 @@
 			isa = PBXVariantGroup;
 			children = (
 				00CDF16617F474EC003065F6 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		A877E5BF185BF8C30028CFFA /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A877E5C0185BF8C30028CFFA /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -896,6 +1015,48 @@
 			};
 			name = Release;
 		};
+		A877E5C8185BF8C30028CFFA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Letter Go.app/Letter Go";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Letter Go Tests/Letter Go Tests-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Letter Go Tests/Letter Go Tests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		A877E5C9185BF8C30028CFFA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Letter Go.app/Letter Go";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Letter Go Tests/Letter Go Tests-Prefix.pch";
+				INFOPLIST_FILE = "Letter Go Tests/Letter Go Tests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -922,6 +1083,15 @@
 			buildConfigurations = (
 				00CDF17017F474EC003065F6 /* Debug */,
 				00CDF17117F474EC003065F6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A877E5C7185BF8C30028CFFA /* Build configuration list for PBXNativeTarget "Letter Go Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A877E5C8185BF8C30028CFFA /* Debug */,
+				A877E5C9185BF8C30028CFFA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -18,6 +18,12 @@
 
 @implementation LRDifficultyManager (Notifications)
 
+- (void) resetUserDefaults
+{
+    [self writeUserDefaults];
+    [self loadNotifications];
+}
+
 - (void) writeUserDefaults
 {
     for (NSArray *section in [self.difficultyDict allValues]) {
@@ -45,6 +51,9 @@
     for (NSArray *section in [self.difficultyDict allValues])
         for (NSDictionary *diffVar in section)
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateValue:) name:[diffVar objectForKey:USER_DEFAULT_KEY] object:nil];
+    
+    //Check for resetting all difficulty values
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetUserDefaults) name:NOTIFICATION_RESET_DIFFICULTIES object:nil];
 }
 
 - (void) loadUnsavedValues

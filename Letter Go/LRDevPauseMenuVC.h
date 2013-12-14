@@ -26,6 +26,5 @@
 @property BOOL pageControlBeingUsed;
 
 - (IBAction)changePage;
-- (void) reloadSubviewValues;
 
 @end

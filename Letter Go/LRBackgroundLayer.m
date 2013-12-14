@@ -36,9 +36,9 @@
     [self addChild:self.parallaxManager];
     [self.parallaxManager addParallaxNode:[[LRCloudLayer alloc] init]
                                   toIndex:BackgroundIndex_Sky];
-    [self.parallaxManager addParallaxNode:[LRParallaxNode nodeWithImageNamed:@"Background_Mountains.png"]
+    [self.parallaxManager addParallaxNode:[LRParallaxNode nodeWithImageNamed:@"Background_Mountains2.png"]
                                   toIndex:BackgroundIndex_Mountains];
-    [self.parallaxManager addParallaxNode:[LRParallaxNode nodeWithImageNamed:@"Background_Hills.png"]
+    [self.parallaxManager addParallaxNode:[LRParallaxNode nodeWithImageNamed:@"Background_Hills2.png"]
                                   toIndex:BackgroundIndex_Hills];
     [self.parallaxManager addParallaxNode:[[LRGrassLayer alloc] init]
                                   toIndex:BackgroundIndex_Grass];
@@ -59,7 +59,7 @@
                 break;
             case BackgroundIndex_Hills:
                 layer.position = CGPointMake(layer.position.x, [layer repeatingSprite].size.height/4 - self.size.height/2);
-                layer.yOffset = -3.5;
+                layer.yOffset = -10;
                 layer.zPosition = zPos_HillsLayer;
                 break;
             case BackgroundIndex_Grass:
