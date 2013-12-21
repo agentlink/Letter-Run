@@ -54,4 +54,4 @@
 
 #define LETTER_MINIMUM_COUNT        3
 #define LETTER_CAPACITY             7
-#define LETTER_BLOCK_SIZE           48
+#define SIZE_LETTER_BLOCK           48

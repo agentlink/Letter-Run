@@ -77,7 +77,7 @@
 {
     if (!_mailman) {
         _mailman = [[LRMailman alloc] init];
-        _mailman.screenSide = MailmanScreenRight;
+        _mailman.screenSide = [[LRDifficultyManager shared] mailmanScreenSide];
         _mailman.zPosition = zPos_Mailman;
     }
     return _mailman;

@@ -16,7 +16,9 @@
                                c2:(CGPoint)c2
                               end:(CGPoint)end;
 
-+ (NSArray*) createFallingLetterActionsWithHeight:(CGFloat)height andSwingCount:(int)swingCount;
++ (NSArray*) verticalFallingLetterActionsWithHeight:(CGFloat)height andSwingCount:(int)swingCount;
++ (NSArray*) horizontalLetterActionForDistance:(CGFloat)distance;
+
 + (double) lengthOfBezierCurve:(LRBezierPath*)path;
 
 @end

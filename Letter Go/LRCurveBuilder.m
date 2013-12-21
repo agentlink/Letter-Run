@@ -7,10 +7,15 @@
 //
 
 #import "LRCurveBuilder.h"
+#import "LRDifficultyManager.h"
+#import "LRMailman.h"
 
 @implementation LRCurveBuilder
 
 #define BEZIER_STEPS            10
+
+static const CGFloat kVerticalCurveDuration = 2.0;
+static const CGFloat kHorizontalCurveDuration = 3.5;
 
 typedef enum {
     kSwingLeft  = -1,
@@ -29,7 +34,7 @@ typedef enum {
     return path;
 }
 
-+ (NSArray*) createFallingLetterActionsWithHeight:(CGFloat)height andSwingCount:(int)swingCount
++ (NSArray*) verticalFallingLetterActionsWithHeight:(CGFloat)height andSwingCount:(int)swingCount
 {
     //Set initial direction of the swing
     SwingDirection currentSwingDirection = kSwingLeft;
@@ -41,7 +46,6 @@ typedef enum {
     
     CGFloat rotationPerSwing = 10;
     //TODO: Get this from difficulty manager
-    CGFloat duration = 2;
     
     NSMutableArray *curveArray = [NSMutableArray array];
     
@@ -54,17 +58,17 @@ typedef enum {
         LRBezierPath *letterPath = [LRCurveBuilder bezierWithStart:start c1:c1 c2:c2 end:nextPosition];
         
         //Set the last position to land at the original x point
-        SKAction *followPath = [SKAction followPath:[letterPath CGPath] asOffset:YES orientToPath:NO duration:duration];
+        SKAction *followPath = [SKAction followPath:[letterPath CGPath] asOffset:YES orientToPath:NO duration:kVerticalCurveDuration];
         SKAction *rotate;
         SKActionTimingMode swingTimingMode = SKActionTimingEaseInEaseOut;
         
         //If it's the last swing, make it land in the center
         if (i == swingCount - 1) {
             swingTimingMode = SKActionTimingEaseIn;
-            rotate = [SKAction rotateToAngle:0 duration:duration];
+            rotate = [SKAction rotateToAngle:0 duration:kVerticalCurveDuration];
         }
         else {
-            rotate = [SKAction rotateToAngle:currentSwingDirection * (rotationPerSwing * M_PI)/180 duration:duration];
+            rotate = [SKAction rotateToAngle:currentSwingDirection * (rotationPerSwing * M_PI)/180 duration:kVerticalCurveDuration];
         }
 
         rotate.timingMode = swingTimingMode;
@@ -78,6 +82,23 @@ typedef enum {
     }
     
     return curveArray;
+}
+
++ (NSArray*) horizontalLetterActionForDistance:(CGFloat)distance;
+{
+    if ([[LRDifficultyManager shared] mailmanScreenSide] == MailmanScreenLeft)
+        distance *= -1;
+    
+    CGPoint start = CGPointMake(0, 0);
+    CGPoint c1 = CGPointMake(0, 0);
+    CGPoint c2 = CGPointMake(distance, -15);
+    CGPoint end = CGPointMake(distance, 0);
+    
+    LRBezierPath *letterPath = [LRCurveBuilder bezierWithStart:start c1:c1 c2:c2 end:end];
+    SKAction *followPath = [SKAction followPath:[letterPath CGPath] asOffset:YES orientToPath:NO duration:kHorizontalCurveDuration];
+    followPath.timingMode = SKActionTimingEaseIn;
+    
+    return @[followPath];
 }
 
 #pragma mark - Bezier Length Functions

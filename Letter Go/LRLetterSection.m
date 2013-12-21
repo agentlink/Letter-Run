@@ -92,10 +92,10 @@ typedef enum {
 
 - (CGFloat) xPosFromSlotIndex:(int) index {
     float slotMargin, edgeBuffer;
-    slotMargin = (IS_IPHONE_5) ? LETTER_BLOCK_SIZE/3.3 : LETTER_BLOCK_SIZE/4;
-    edgeBuffer = (self.size.width - (slotMargin + LETTER_BLOCK_SIZE) * LETTER_CAPACITY - LETTER_BLOCK_SIZE)/2;
+    slotMargin = (IS_IPHONE_5) ? SIZE_LETTER_BLOCK/3.3 : SIZE_LETTER_BLOCK/4;
+    edgeBuffer = (self.size.width - (slotMargin + SIZE_LETTER_BLOCK) * LETTER_CAPACITY - SIZE_LETTER_BLOCK)/2;
 
-    float retVal = 0 - self.size.width/2 + edgeBuffer + LETTER_BLOCK_SIZE/2 + index * (LETTER_BLOCK_SIZE + slotMargin);
+    float retVal = 0 - self.size.width/2 + edgeBuffer + SIZE_LETTER_BLOCK/2 + index * (SIZE_LETTER_BLOCK + slotMargin);
     return retVal;
 }
 

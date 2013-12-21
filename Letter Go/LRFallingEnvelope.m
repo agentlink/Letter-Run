@@ -93,7 +93,14 @@
     CGFloat dropHeight = gameSceneHeight - bottomEdgeHeight;
     
     //Get the array of curve actions to run
-    NSMutableArray *curveArray = [NSMutableArray arrayWithArray:[LRCurveBuilder createFallingLetterActionsWithHeight:dropHeight andSwingCount:(arc4random()%3 + 3)]];
+    NSMutableArray *curveArray;
+    if ([[LRDifficultyManager shared] lettersFallVertically]) {
+        curveArray = [NSMutableArray arrayWithArray:[LRCurveBuilder verticalFallingLetterActionsWithHeight:dropHeight andSwingCount:(arc4random()%3 + 3)]];
+    }
+    else {
+        curveArray = [NSMutableArray arrayWithArray:[LRCurveBuilder horizontalLetterActionForDistance:SCREEN_WIDTH + SIZE_LETTER_BLOCK * 2]];
+    }
+    
     [curveArray addObject:[SKAction runBlock:^{
         if (self.blockState != BlockState_BlockFlung)
             self.blockState = BlockState_Landed;
@@ -150,12 +157,29 @@
 - (void) setSlot:(int)newSlot
 {
     _slot = newSlot;
-
-    float leftBuffer = LETTER_BLOCK_SIZE * 3 - SCREEN_WIDTH/2;
-    float letterDistance = LETTER_BLOCK_SIZE * 1.7;
-    int offsetDegree = 10;
-    int offset = arc4random()%(offsetDegree*2) - offsetDegree;
-    self.position = CGPointMake(newSlot * letterDistance + leftBuffer + (float)offset, self.position.y);
+    if ([[LRDifficultyManager shared] lettersFallVertically]) {
+        float leftBuffer = SIZE_LETTER_BLOCK * 3 - SCREEN_WIDTH/2;
+        float letterDistance = SIZE_LETTER_BLOCK * 1.7;
+        int offsetDegree = 10;
+        int offset = arc4random()%(offsetDegree*2) - offsetDegree;
+        self.position = CGPointMake(newSlot * letterDistance + leftBuffer + (float)offset, self.position.y);
+    }
+    else {
+        //TODO: get constant for grass height
+        CGFloat grassHeight = 20;
+        CGFloat topBufferSize = SIZE_HEIGHT_HEALTH_SECTION + SIZE_LETTER_BLOCK/2;
+        CGFloat bottomBufferSize = SIZE_HEIGHT_LETTER_SECTION + SIZE_LETTER_BLOCK/2 + grassHeight;
+        //TODO: replace with constant number of slots
+        CGFloat letterDistance = (SCREEN_HEIGHT - topBufferSize - bottomBufferSize) / 3;
+        
+        CGFloat xPos = SCREEN_WIDTH/2 + SIZE_LETTER_BLOCK;
+        if ([[LRDifficultyManager shared] mailmanScreenSide] == MailmanScreenRight) {
+            xPos *= -1;
+        }
+        
+        self.position = CGPointMake(xPos, -SCREEN_HEIGHT/2 + bottomBufferSize + letterDistance * newSlot);
+    }
+    NSLog(@"Letter %@ generated at position (%f, %f)", self.letter, self.position.x, self.position.y);
 }
 
 #pragma mark - Movement Functions

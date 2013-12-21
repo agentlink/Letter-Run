@@ -74,5 +74,6 @@ typedef enum  {
 //Not saved to NSUserDefaults
 @property BOOL mailmanReceivesDamage;
 @property BOOL healthBarFalls;
-
+@property BOOL mailmanScreenSide;
+@property BOOL lettersFallVertically;
 @end

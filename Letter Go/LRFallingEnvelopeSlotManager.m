@@ -9,6 +9,8 @@
 #import "LRFallingEnvelopeSlotManager.h"
 #import "LRConstants.h"
 #import "LRPositionConstants.h"
+#import "LRGameStateManager.h"
+
 
 @interface LRFallingEnvelopeSlotManager ()
 
@@ -67,7 +69,8 @@ static const int kNumberOfSlots = 4;
 {
     LRFallingEnvelope *envelope = [[notification userInfo] objectForKey:@"envelope"];
     NSAssert(envelope, @"Error: notification does not include element.");
-    NSAssert ([self removeEnvelope:envelope], @"Error: envelope with letter %@ is not in slot or time list.", envelope.letter);
+    if (![[LRGameStateManager shared] isGameOver])
+        NSAssert ([self removeEnvelope:envelope], @"Error: envelope with letter %@ is not in slot or time list.", envelope.letter);
 
 }
 

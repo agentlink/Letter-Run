@@ -8,6 +8,7 @@
 
 #import "LRDifficultyManager+Notifications.h"
 #import "LRParallaxManager.h"
+#import "LRMailman.h"
 
 #define KEY_TYPE            @"type"
 #define KEY_VALUE           @"initialValue"
@@ -60,6 +61,8 @@
 {
     self.mailmanReceivesDamage = YES;
     self.healthBarFalls = YES;
+    self.mailmanScreenSide = MailmanScreenRight;
+    self.lettersFallVertically = NO;
 }
 
 - (void) loadUserDefaults
