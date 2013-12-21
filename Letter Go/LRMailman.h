@@ -8,8 +8,16 @@
 
 #import "LRObject.h"
 
+typedef NS_ENUM(BOOL, MailmanScreenSide) {
+    MailmanScreenLeft = 0,
+    MailmanScreenRight
+};
+
 @interface LRMailman : LRObject
 
-- (CGPoint) mailBagLocation;
+@property (nonatomic) MailmanScreenSide screenSide;
+@property (readonly) CGPoint letterEntryPoint;
+
+- (CGFloat) xPositionForScreenSide:(MailmanScreenSide)screenSide;
 
 @end

@@ -15,12 +15,17 @@
 #define IMAGE_NAME_MAILMAN          @"Manford.png"
 #define IMAGE_NAME_COVER            @"Manford_Cover.png"
 
+static const CGFloat kLetterEntryPointX = 195.0;
+static const CGFloat kLetterEntryPointY = -35.0;
+
 @interface LRMailman()
+@property (readwrite) CGPoint letterEntryPoint;
 @property SKSpriteNode *mailbagCover;
 @end
 
 @implementation LRMailman
 @synthesize mailbagCover;
+
 #pragma mark - Set Up/Initialization
 
 - (id) init
@@ -52,9 +57,38 @@
     mailbagCover.position =  CGPointMake(0, -7);
     mailbagCover.zPosition = zPos_Mailbag;
     [self addChild:mailbagCover];
+    
+}
+
+#pragma mark - Screen Side Functions
+
+- (void)setScreenSide:(MailmanScreenSide)screenSide
+{
+    CGFloat xPos = [self xPositionForScreenSide:screenSide];
+    CGFloat yPos = 0 - SCREEN_HEIGHT/2 + SIZE_HEIGHT_LETTER_SECTION + self.size.height/2;
+    self.position = CGPointMake(xPos, yPos);
+    
+    if (screenSide == MailmanScreenLeft) {
+        self.letterEntryPoint = CGPointMake(-kLetterEntryPointX, kLetterEntryPointY);
+    }
+    else {
+        self.letterEntryPoint = CGPointMake(kLetterEntryPointX, kLetterEntryPointY);
+    }
+    _screenSide = screenSide;
+
+}
+
+- (CGFloat) xPositionForScreenSide:(MailmanScreenSide)screenSide
+{
+    CGFloat xOffset = 5;
+    float mailmanX = (screenSide == MailmanScreenLeft) ?
+            0 - SCREEN_WIDTH/2 + self.size.width/2 + xOffset :
+            SCREEN_WIDTH/2 - self.size.width/2 - xOffset;
+    return mailmanX;
 }
 
 # pragma mark - Contact Functions
+
 - (void) hitByEnvelope:(NSNotification*)notification
 {
     if (![[LRDifficultyManager shared] mailmanReceivesDamage])
@@ -73,11 +107,5 @@
     SKAction *pulseBack = [SKAction colorizeWithColor:pulseColor colorBlendFactor:0 duration:duration/2];
     [self runAction:[SKAction sequence:@[pulseRed, pulseBack]]];
     
-}
-
-- (CGPoint)mailBagLocation
-{
-    //Returns the location of the mailbag in the parent node
-    return CGPointMake(-195.0, -35.0);
 }
 @end

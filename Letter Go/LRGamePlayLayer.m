@@ -35,51 +35,65 @@
         self.pauseTime = GAME_LOOP_RESET;
         self.name = NAME_LAYER_GAME_PLAY;
         newGame = TRUE;
-
         self.letterSlots = [[LRFallingEnvelopeSlotManager alloc] init];
-
         [self createLayerContent];
         [self setUpPhysics];
     }
     return self;
 }
 
+
 - (void) createLayerContent
 {
-    //Health Section
-    self.healthSection = [[LRHealthSection alloc] initWithSize:CGSizeMake(self.size.width, SIZE_HEIGHT_HEALTH_SECTION)];
-    self.healthSection.position = CGPointMake(0, self.size.height/2 - self.healthSection.size.height/2);
-    self.healthSection.zPosition = zPos_HealthSection;
-    
-    SKSpriteNode *tempHealth = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:self.healthSection.size];
-    tempHealth.alpha = .5;
-    tempHealth.position = self.healthSection.position;
-    [self addChild:tempHealth];
-
     [self addChild:self.healthSection];
-
-    //Letter Section
-    self.letterSection = [[LRLetterSection alloc] initWithSize:CGSizeMake(self.size.width, SIZE_HEIGHT_LETTER_SECTION)];
-    self.letterSection.position = CGPointMake(self.position.x - self.size.width/2, 0 - self.size.height/2 + self.letterSection.size.height/2);
-    self.letterSection.zPosition = zPos_LetterSection;
     [self addChild:self.letterSection];
-    
-    //Mailman
-    self.mailman = [[LRMailman alloc] init];
-    float xOffset = 5;
-    float mailmanX = self.position.x - self.size.width + self.mailman.size.width/2 + xOffset;
-    float mailmanY = self.letterSection.position.y + (self.letterSection.size.height + self.mailman.size.height)/2;
-    self.mailman.position = CGPointMake(mailmanX, mailmanY);
-    self.mailman.zPosition = zPos_Mailman;
     [self addChild:self.mailman];
-    
-    //Pause Button
-    self.pauseButton = [[LRButton alloc] initWithImageNamedNormal:@"Pause_Selected.png" selected:@"Pause_Unselected.png"];
-    [self.pauseButton setScale:.7];
-    [self.pauseButton setTouchUpInsideTarget:self action:@selector(pauseButtonPressed)];
-    self.pauseButton.position = CGPointMake(0 - SCREEN_WIDTH/2 + self.pauseButton.size.width/2, SCREEN_HEIGHT/2 - self.healthSection.size.height - self.pauseButton.size.height/2);
-    self.pauseButton.zPosition = zPos_PauseButton;
     [self addChild:self.pauseButton];
+}
+
+#pragma mark - Layer Content Set Up
+
+- (LRHealthSection*) healthSection
+{
+    if (!_healthSection) {
+        _healthSection = [[LRHealthSection alloc] initWithSize:CGSizeMake(self.size.width, SIZE_HEIGHT_HEALTH_SECTION)];
+        _healthSection.position = CGPointMake(0, self.size.height/2 - SIZE_HEIGHT_HEALTH_SECTION/2);
+        _healthSection.zPosition = zPos_HealthSection;
+    }
+    return _healthSection;
+}
+
+- (LRLetterSection*) letterSection
+{
+    if (!_letterSection) {
+        _letterSection = [[LRLetterSection alloc] initWithSize:CGSizeMake(self.size.width, SIZE_HEIGHT_LETTER_SECTION)];
+        _letterSection.position = CGPointMake(self.position.x - self.size.width/2, 0 - self.size.height/2 + self.letterSection.size.height/2);
+        _letterSection.zPosition = zPos_LetterSection;
+    }
+    return _letterSection;
+}
+
+- (LRMailman*) mailman
+{
+    if (!_mailman) {
+        _mailman = [[LRMailman alloc] init];
+        _mailman.screenSide = MailmanScreenRight;
+        _mailman.zPosition = zPos_Mailman;
+    }
+    return _mailman;
+}
+
+- (LRButton*) pauseButton
+{
+    if (!_pauseButton) {
+        _pauseButton = [[LRButton alloc] initWithImageNamedNormal:@"Pause_Selected.png" selected:@"Pause_Unselected.png"];
+        [_pauseButton setScale:.7];
+        [_pauseButton setTouchUpInsideTarget:self action:@selector(pauseButtonPressed)];
+        _pauseButton.position = CGPointMake(0 - SCREEN_WIDTH/2 + _pauseButton.size.width/2, SCREEN_HEIGHT/2 - self.healthSection.size.height - _pauseButton.size.height/2);
+        _pauseButton.zPosition = zPos_PauseButton;
+    }
+    return _pauseButton;
+
 }
 
 - (void) setUpPhysics
@@ -108,6 +122,7 @@
 }
 
 #pragma mark - Letter Drop Functions
+
 - (void) update:(NSTimeInterval)currentTime
 {
     [super update:currentTime];
@@ -153,9 +168,10 @@
 }
 
 #pragma mark - Board Properties
+
 - (CGPoint) flungEnvelopeDestination
 {
-    return [self.mailman mailBagLocation];
+    return [self.mailman letterEntryPoint];
 }
 
 @end
