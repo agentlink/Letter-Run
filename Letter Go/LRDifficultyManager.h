@@ -9,13 +9,15 @@
 #import "LRObject.h"
 #import "LRDifficultyConstants.h"
 
-@interface LRDifficultyManager : LRObject
-
 typedef enum  {
     IncreaseStyle_None,
     IncreaseStyle_Linear,
     IncreaseStyle_Exponential
 } IncreaseStyle;
+
+static const int kNumberOfSlots = 4;
+
+@interface LRDifficultyManager : LRObject
 
 + (LRDifficultyManager*) shared;
 

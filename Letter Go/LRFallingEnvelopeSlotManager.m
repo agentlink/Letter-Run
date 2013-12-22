@@ -10,6 +10,7 @@
 #import "LRConstants.h"
 #import "LRPositionConstants.h"
 #import "LRGameStateManager.h"
+#import "LRDifficultyManager.h"
 
 
 @interface LRFallingEnvelopeSlotManager ()
@@ -20,8 +21,6 @@
 
 
 @end
-
-static const int kNumberOfSlots = 4;
 
 @implementation LRFallingEnvelopeSlotManager
 @synthesize slotSortedEnvelopeList, timeSortedEnvelopeList;

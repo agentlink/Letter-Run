@@ -158,19 +158,17 @@
 {
     _slot = newSlot;
     if ([[LRDifficultyManager shared] lettersFallVertically]) {
-        float leftBuffer = SIZE_LETTER_BLOCK * 3 - SCREEN_WIDTH/2;
-        float letterDistance = SIZE_LETTER_BLOCK * 1.7;
+        CGFloat leftBuffer = SIZE_LETTER_BLOCK * 3 - SCREEN_WIDTH/2;
+        CGFloat letterDistance = SIZE_LETTER_BLOCK * 1.7;
         int offsetDegree = 10;
         int offset = arc4random()%(offsetDegree*2) - offsetDegree;
         self.position = CGPointMake(newSlot * letterDistance + leftBuffer + (float)offset, self.position.y);
     }
     else {
-        //TODO: get constant for grass height
-        CGFloat grassHeight = 20;
+        CGFloat grassHeight = SIZE_GRASS_HEIGHT;
         CGFloat topBufferSize = SIZE_HEIGHT_HEALTH_SECTION + SIZE_LETTER_BLOCK/2;
         CGFloat bottomBufferSize = SIZE_HEIGHT_LETTER_SECTION + SIZE_LETTER_BLOCK/2 + grassHeight;
-        //TODO: replace with constant number of slots
-        CGFloat letterDistance = (SCREEN_HEIGHT - topBufferSize - bottomBufferSize) / 3;
+        CGFloat letterDistance = (SCREEN_HEIGHT - topBufferSize - bottomBufferSize) /(kNumberOfSlots - 1);
         
         CGFloat xPos = SCREEN_WIDTH/2 + SIZE_LETTER_BLOCK;
         if ([[LRDifficultyManager shared] mailmanScreenSide] == MailmanScreenRight) {

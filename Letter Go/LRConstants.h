@@ -51,7 +51,8 @@
 
 #define SIZE_HEIGHT_LETTER_SECTION                  (178 - 51)/2
 #define SIZE_HEIGHT_HEALTH_SECTION                  7
+#define SIZE_LETTER_BLOCK           48
+#define SIZE_GRASS_HEIGHT           26.5
 
 #define LETTER_MINIMUM_COUNT        3
 #define LETTER_CAPACITY             7
-#define SIZE_LETTER_BLOCK           48

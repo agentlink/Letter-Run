@@ -76,7 +76,7 @@
         }
     }
     /*
-     TODO
+     TODO:
      Right now, a gap in the grass shows up from the first replacement.
      This is actually a deeper issue--the very first distance provided is
      six times higher than the next ones because the update loop hits a snag
