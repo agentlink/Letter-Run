@@ -10,6 +10,4 @@
 
 @interface LRSubmitButton : SKSpriteNode
 
-@property (nonatomic) BOOL playerCanSubmitWord;
-
 @end

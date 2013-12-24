@@ -48,10 +48,6 @@
     return lb;
 }
 
-+ (LRSectionBlock*) createBlockWithLetter:(NSString*)letter {
-    return[LRSectionBlock sectionBlockWithLetter:letter loveLetter:false];
-}
-
 + (LRSectionBlock*) createBlockWithLetter:(NSString *)letter loveLetter:(BOOL)love {
     return [LRSectionBlock sectionBlockWithLetter:letter loveLetter:love];
 }

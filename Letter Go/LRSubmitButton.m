@@ -7,50 +7,55 @@
 //
 
 #import "LRSubmitButton.h"
+#import "LRGameStateManager.h"
 
+static const CGFloat kSubmitButtonFontSize = 12;
 
 @interface LRSubmitButton ()
-@property SKLabelNode *label;
+@property (strong, nonatomic) SKLabelNode *label;
 @end
 
 @implementation LRSubmitButton
 
-#pragma mark - Set Up
+#pragma mark - Public Functions
 
 - (id) initWithColor:(UIColor *)color size:(CGSize)size
 {
     if (self = [super initWithColor:color size:size])
     {
-        [self createButtonContent];
+        [self addChild:self.label];
     }
     return self;
 }
 
-- (void) createButtonContent
+- (void) setUserInteractionEnabled:(BOOL)userInteractionEnabled
 {
-    self.label = [SKLabelNode labelNodeWithFontNamed:@"Helvetica"];
-    self.label.text = @"Submit";
-    self.label.fontSize = 12;
-    self.label.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
-    [self addChild:self.label];
+    [super setUserInteractionEnabled:userInteractionEnabled];
+    //Update the color
+    self.color = (userInteractionEnabled) ? [SKColor greenColor] : [SKColor lightGrayColor];
 }
 
-- (void) setPlayerCanSubmitWord:(BOOL)playerCanSubmitWord
+#pragma mark - Private Functions
+
+- (SKLabelNode*) label
 {
-    if (playerCanSubmitWord)
-        self.color = [SKColor greenColor];
-    else
-        self.color = [SKColor lightGrayColor];
-    _playerCanSubmitWord = playerCanSubmitWord;
-    self.userInteractionEnabled = _playerCanSubmitWord;
+    if (!_label) {
+        _label = [SKLabelNode labelNodeWithFontNamed:@"Helvetica"];
+        _label.text = @"Submit";
+        _label.fontSize = kSubmitButtonFontSize;
+        _label.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+    }
+    return _label;
 }
+
+#pragma mark - Touch
 
 - (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     for (UITouch *touch in touches)
     {
         CGPoint location = [touch locationInNode:[self parent]];
-        if (CGRectContainsPoint(self.frame, location) && self.playerCanSubmitWord)
+        if (CGRectContainsPoint(self.frame, location) && ![[LRGameStateManager shared] isGameOver])
         {
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_SUBMIT_WORD object:nil];
         }

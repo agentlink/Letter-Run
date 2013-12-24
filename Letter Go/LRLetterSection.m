@@ -62,6 +62,7 @@ typedef enum {
     for (LRLetterSlot *slot in self.letterSlots) {
         slot.currentBlock = [LRLetterBlockGenerator createEmptySectionBlock];
     }
+    [self updateSubmitButton];
 }
 
 - (void) createSectionContent
@@ -172,7 +173,6 @@ typedef enum {
         [[[(LRGameScene*)[self scene] gamePlayLayer] healthSection] submitWord:currentWord];
         
         [self clearLetterSection];
-        [self updateSubmitButton];
     }
     else {
         NSDictionary *wordDict = [NSDictionary dictionaryWithObjects:@[forcedWord, [[NSSet alloc] init]] forKeys:@[@"word", @"loveLetters"]];
@@ -213,7 +213,7 @@ typedef enum {
         if ([(LRLetterSlot*)[self.letterSlots objectAtIndex:i] isLetterSlotEmpty])
             break;
     }
-    self.submitButton.playerCanSubmitWord = (i >= LETTER_MINIMUM_COUNT && [[LRDictionaryChecker shared] checkForWordInDictionary:[self getCurrentWord]]);
+    self.submitButton.userInteractionEnabled = (i >= LETTER_MINIMUM_COUNT && [[LRDictionaryChecker shared] checkForWordInDictionary:[self getCurrentWord]]);
 }
 
 #pragma mark - Reordering Functions
@@ -366,7 +366,6 @@ typedef enum {
         slot.userInteractionEnabled = userInteractionEnabled;
         slot.currentBlock.userInteractionEnabled = userInteractionEnabled;
     }
-    self.submitButton.userInteractionEnabled = userInteractionEnabled;
 }
 
 //Debug function
