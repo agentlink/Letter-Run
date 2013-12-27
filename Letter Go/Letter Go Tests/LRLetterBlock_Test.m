@@ -42,8 +42,7 @@
 
     //Regular letter block tests
     XCTAssertEqual(letter, gBlock.letter, @"Error: section block should contain letter '%@' but instead contains '%@'", letter, gBlock.letter);
-    XCTAssertEqual(gBlock.letter, gBlock.letterLabel.text, @"Error: envelope text should be equal to letter property '%@' but is instead '%@'", gBlock.letter, gBlock.letterLabel.text);
-    
+
     //Empty letter block test
     XCTAssertTrue([emptyBlock isLetterBlockEmpty], @"Error: isLetterBlockEmpty should be true on empty blocks");
     

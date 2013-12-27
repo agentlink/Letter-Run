@@ -14,4 +14,5 @@
 
 + (LRDictionaryChecker*) shared;
 - (BOOL)checkForWordInDictionary:(NSString*)word;
+
 @end
