@@ -8,7 +8,6 @@
 
 #import <XCTest/XCTest.h>
 #import "LRLetterBlock.h"
-#import "LRLetterBlock_Private.h"
 #import "LRLetterBlockGenerator.h"
 #import "LRFallingEnvelope.h"
 #import "LRSectionBlock.h"
