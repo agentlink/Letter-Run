@@ -12,10 +12,15 @@
 
 
 @interface LRLetterBlock : LRObject
-@property NSString *letter;
+
+///The alphabetical letter represented by the envelope
+@property (nonatomic, strong) NSString *letter;
+///Whether or not the letter is a love letter
 @property (nonatomic, readonly) BOOL loveLetter;
 
+///Returns an initialized letter block
 + (LRLetterBlock*) letterBlockWithLetter:(NSString*)letter loveLetter:(BOOL)love;
+///Initializes a letter block
 - (id) initWithLetter:(NSString*)letter loveLetter:(BOOL)love;
 
 @end

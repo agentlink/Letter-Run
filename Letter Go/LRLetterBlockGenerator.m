@@ -10,8 +10,6 @@
 #import "LRDifficultyManager.h"
 #import "LRLetterGenerator.h"
 
-#define PLACEHOLDER_TEXT            @" "
-
 @implementation LRLetterBlockGenerator
 
 #pragma mark - Falling Letters
@@ -44,7 +42,7 @@
 + (LRSectionBlock*) createPlaceHolderBlock
 {
     LRSectionBlock *lb = [LRLetterBlockGenerator createEmptySectionBlock];
-    lb.letter = PLACEHOLDER_TEXT;
+    lb.letter = LETTER_PLACEHOLDER_TEXT;
     return lb;
 }
 

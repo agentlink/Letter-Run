@@ -14,9 +14,13 @@
 #import "LRPositionConstants.h"
 
 @interface LRLetterBlock ()
-@property SKSpriteNode *envelopeSprite;
+
+@property (nonatomic, strong) SKSpriteNode *envelopeSprite;
+@property (nonatomic, strong) SKLabelNode *letterLabel;
 @property (readwrite) BOOL loveLetter;
+
 @end
+
 @implementation LRLetterBlock
 
 #pragma mark - Initializers/Set Up
@@ -29,31 +33,68 @@
 {
     if (self = [super initWithColor:[SKColor clearColor] size:CGSizeMake(SIZE_LETTER_BLOCK, SIZE_LETTER_BLOCK)]) {
         self.letter = letter;
-        self.userInteractionEnabled = YES;
         self.loveLetter = love;
-        [self createObjectContent];
+        self.userInteractionEnabled = YES;
     }
     return self;
 }
 
-- (void) createObjectContent
+- (void) setLetter:(NSString *)letter
 {
-    //Letter Label
-    SKLabelNode *letterLabel = [[SKLabelNode alloc] init];
-    letterLabel.text = self.letter;
-    letterLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - letterLabel.frame.size.height/2);
-    letterLabel.fontColor = [SKColor blackColor];
-    letterLabel.zPosition += zDiff_Letter_Envelope;
-    
-    [self addChild:letterLabel];
-    
-    //Determine which envelope sprite to use
-    if ([self.letter length]) {
-        NSString *fileName = (self.loveLetter) ? @"Envelope_Love.png" : @"Envelope_Normal.png";
-        self.envelopeSprite = [SKSpriteNode spriteNodeWithImageNamed:fileName];
-        self.envelopeSprite.xScale = SIZE_LETTER_BLOCK/self.envelopeSprite.size.width;
-        self.envelopeSprite.yScale = SIZE_LETTER_BLOCK/self.envelopeSprite.size.height;
+    _letter = letter;
+    if ([self isLetterAlphabetical]) {
+        self.letterLabel.text = letter;
+        [self addChild:self.letterLabel];
+    }
+}
+
+- (void) setLoveLetter:(BOOL)loveLetter
+{
+    _loveLetter = loveLetter;
+    if ([self isLetterAlphabetical]) {
         [self addChild:self.envelopeSprite];
     }
 }
+
+#pragma mark - Children Set Up
+
+- (SKLabelNode*) letterLabel
+{
+    if (!_letterLabel) {
+        _letterLabel = [SKLabelNode new];
+        _letterLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - SIZE_LETTER_BLOCK/4);
+        _letterLabel.fontColor = [SKColor blackColor];
+        _letterLabel.zPosition += zDiff_Letter_Envelope;
+    }
+    return _letterLabel;
+}
+
+- (SKSpriteNode*) envelopeSprite
+{
+    if (!_envelopeSprite) {
+        NSString *fileName = [self fileNameForEnvelopeSprite];
+        _envelopeSprite = [SKSpriteNode spriteNodeWithImageNamed:fileName];
+        _envelopeSprite.xScale = SIZE_LETTER_BLOCK/self.envelopeSprite.size.width;
+        _envelopeSprite.yScale = SIZE_LETTER_BLOCK/self.envelopeSprite.size.height;
+    }
+    return _envelopeSprite;
+}
+
+
+#pragma mark - Helper Functions
+
+- (NSString*) fileNameForEnvelopeSprite
+{
+    NSString *fileName = (self.loveLetter) ? @"Envelope_Love.png" : @"Envelope_Normal.png";
+    return fileName;
+}
+
+///Checks if the letter is not a placeholder or empty
+- (BOOL) isLetterAlphabetical
+{
+    if (![self.letter length] || [self.letter isEqualToString:LETTER_PLACEHOLDER_TEXT])
+        return NO;
+    return YES;
+}
+
 @end

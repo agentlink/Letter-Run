@@ -56,3 +56,4 @@
 
 #define LETTER_MINIMUM_COUNT        3
 #define LETTER_CAPACITY             7
+#define LETTER_PLACEHOLDER_TEXT     @" "

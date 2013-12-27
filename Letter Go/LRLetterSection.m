@@ -118,7 +118,7 @@ typedef enum {
             break;
         }
     }
-    //If all the letter slots are full
+    //If all the letter slots are not full
     if (currentLetterSlot) {
         currentLetterSlot.currentBlock = [LRLetterBlockGenerator createBlockWithLetter:letter loveLetter:isLoveLetter];
     }
@@ -328,6 +328,7 @@ typedef enum {
     return retVal;
 }
 
+///Get the closest section block to a given position (provided by touch)
 - (LRLetterSlot*)getClosestSlotToBlock:(LRSectionBlock*)letterBlock
 {
     CGPoint letterBlockPosition = [letterBlock convertPoint:self.position toNode:self];
