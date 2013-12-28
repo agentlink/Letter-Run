@@ -72,6 +72,7 @@
 		00CDF18C17F4899B003065F6 /* LRLetterSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CDF18B17F4899B003065F6 /* LRLetterSection.m */; };
 		00F6F59717FF5234009EDADB /* LRGameStateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F6F59617FF5234009EDADB /* LRGameStateManager.m */; };
 		A82CA94C1855189F004ADD99 /* LRFallingEnvelopeSlotManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A82CA94B1855189F004ADD99 /* LRFallingEnvelopeSlotManager.m */; };
+		A846FB8B186E0489009DCEF4 /* LRLetterBlock_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = A846FB8A186E0489009DCEF4 /* LRLetterBlock_Test.m */; };
 		A877E5B9185BF8C30028CFFA /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CDF15C17F474EC003065F6 /* XCTest.framework */; };
 		A877E5BA185BF8C30028CFFA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CDF13617F474EC003065F6 /* Foundation.framework */; };
 		A877E5BB185BF8C30028CFFA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CDF13A17F474EC003065F6 /* UIKit.framework */; };
@@ -210,6 +211,7 @@
 		A82CA94A1855189F004ADD99 /* LRFallingEnvelopeSlotManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRFallingEnvelopeSlotManager.h; sourceTree = "<group>"; };
 		A82CA94B1855189F004ADD99 /* LRFallingEnvelopeSlotManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRFallingEnvelopeSlotManager.m; sourceTree = "<group>"; };
 		A82DD7E71857FB24007483A6 /* LRPositionConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LRPositionConstants.h; sourceTree = "<group>"; };
+		A846FB8A186E0489009DCEF4 /* LRLetterBlock_Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterBlock_Test.m; sourceTree = "<group>"; };
 		A877E5B8185BF8C30028CFFA /* Letter Go Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Letter Go Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A877E5BE185BF8C30028CFFA /* Letter Go Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Letter Go Tests-Info.plist"; sourceTree = "<group>"; };
 		A877E5C0185BF8C30028CFFA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -585,6 +587,7 @@
 			children = (
 				A877E5C2185BF8C30028CFFA /* Letter_Go_Tests.m */,
 				A877E5CC185BFA960028CFFA /* LRLetterGenerator_Test.m */,
+				A846FB8A186E0489009DCEF4 /* LRLetterBlock_Test.m */,
 				A877E5BD185BF8C30028CFFA /* Supporting Files */,
 			);
 			path = "Letter Go Tests";
@@ -815,6 +818,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A846FB8B186E0489009DCEF4 /* LRLetterBlock_Test.m in Sources */,
 				A877E5C3185BF8C30028CFFA /* Letter_Go_Tests.m in Sources */,
 				A877E5CD185BFA960028CFFA /* LRLetterGenerator_Test.m in Sources */,
 			);

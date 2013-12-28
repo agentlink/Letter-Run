@@ -101,7 +101,7 @@
 }
 
 - (BOOL) isLetterBlockPlaceHolder {
-    return ([self.letter isEqualToString:@" "]);
+    return ([self.letter isEqualToString:LETTER_PLACEHOLDER_TEXT]);
 }
 
 @end

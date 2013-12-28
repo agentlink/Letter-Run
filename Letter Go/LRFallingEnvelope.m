@@ -14,6 +14,7 @@
 #import "LRCurveBuilder.h"
 
 @interface LRFallingEnvelope ()
+
 @property (readwrite) BOOL loveLetter;
 @property BOOL playerMovedTouch;
 @property CGPoint originalPoint;

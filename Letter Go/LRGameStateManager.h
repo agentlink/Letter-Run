@@ -13,6 +13,7 @@
 @property (nonatomic, readonly) NSDictionary *letterProbabilities;
 
 + (LRGameStateManager*) shared;
+
 - (BOOL) isLetterSectionFull;
 - (BOOL) isGameOver;
 - (BOOL) isGamePaused;

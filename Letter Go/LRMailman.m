@@ -20,11 +20,10 @@ static const CGFloat kLetterEntryPointY = -35.0;
 
 @interface LRMailman()
 @property (readwrite) CGPoint letterEntryPoint;
-@property SKSpriteNode *mailbagCover;
+@property (nonatomic, strong) SKSpriteNode *mailbagCover;
 @end
 
 @implementation LRMailman
-@synthesize mailbagCover;
 
 #pragma mark - Set Up/Initialization
 
@@ -33,8 +32,8 @@ static const CGFloat kLetterEntryPointY = -35.0;
     if (self = [super initWithImageNamed:IMAGE_NAME_MAILMAN]) {
         self.name = NAME_SPRITE_MAILMAN;        
         [self setScale:.7];
-        [self setUpCover];
         [self setUpPhysics];
+        [self addChild:self.mailbagCover];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hitByEnvelope:) name:NOTIFICATION_ENVELOPE_HIT_MAILMAN object:nil];
     }
     return self;
@@ -51,13 +50,14 @@ static const CGFloat kLetterEntryPointY = -35.0;
     [[LRCollisionManager shared] addContactDetectionOfSpritesNamed:NAME_SPRITE_FALLING_ENVELOPE toSprite:self];
 }
 
-- (void) setUpCover
+- (SKSpriteNode*) mailbagCover
 {
-    mailbagCover = [SKSpriteNode spriteNodeWithImageNamed:IMAGE_NAME_COVER];
-    mailbagCover.position =  CGPointMake(0, -7);
-    mailbagCover.zPosition = zPos_Mailbag;
-    [self addChild:mailbagCover];
-    
+    if (!_mailbagCover) {
+        _mailbagCover = [SKSpriteNode spriteNodeWithImageNamed:IMAGE_NAME_COVER];
+        _mailbagCover.position =  CGPointMake(0, -7);
+        _mailbagCover.zPosition = zPos_Mailbag;
+    }
+    return _mailbagCover;
 }
 
 #pragma mark - Screen Side Functions
