@@ -68,7 +68,7 @@ typedef enum {
 {
     //The color will be replaced by a health bar sprite
     //self.letterSection = [SKSpriteNode spriteNodeWithColor:[SKColor grayColor] size:self.size];
-    self.letterSection = [SKSpriteNode spriteNodeWithColor:[SKColor colorWithRed:(64.0/255.0) green:(174.0/255.0) blue:(73.0/255.0) alpha:1] size:self.size];
+    self.letterSection = [SKSpriteNode spriteNodeWithColor:[SKColor colorWithRed:(171.0/255.0) green:(122.0/255.0) blue:(86.0/255.0) alpha:1] size:self.size];
     [self addChild:self.letterSection];
     self.letterSlots = [[NSMutableArray alloc] initWithCapacity:LETTER_CAPACITY];
     

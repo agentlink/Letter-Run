@@ -61,7 +61,7 @@
 {
     self.mailmanReceivesDamage = YES;
     self.healthBarFalls = YES;
-    self.mailmanScreenSide = MailmanScreenRight;
+    self.mailmanScreenSide = MailmanScreenLeft;
     self.lettersFallVertically = NO;
 }
 
