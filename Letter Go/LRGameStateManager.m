@@ -101,7 +101,7 @@ static LRGameStateManager *_shared = nil;
 
     SKLabelNode *gameOverLabel = [[SKLabelNode alloc] init];
     gameOverLabel.text = @"Game Over";
-    gameOverLabel.fontColor = [SKColor redColor];
+    gameOverLabel.fontColor = [LRColor redColor];
     gameOverLabel.fontSize = 50;
     gameOverLabel.zPosition = 500;
     __block LRGamePlayLayer *gpl = [(LRGameScene*)[self scene] gamePlayLayer];

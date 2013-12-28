@@ -31,7 +31,7 @@
 
 - (id) initWithLetter:(NSString*)letter loveLetter:(BOOL)love
 {
-    if (self = [super initWithColor:[SKColor clearColor] size:CGSizeMake(SIZE_LETTER_BLOCK, SIZE_LETTER_BLOCK)]) {
+    if (self = [super initWithColor:[LRColor clearColor] size:CGSizeMake(SIZE_LETTER_BLOCK, SIZE_LETTER_BLOCK)]) {
         self.letter = letter;
         self.loveLetter = love;
         self.userInteractionEnabled = YES;
@@ -61,9 +61,12 @@
 - (SKLabelNode*) letterLabel
 {
     if (!_letterLabel) {
+        UIFont *letterFont = [LRFont letterBlockFont];
         _letterLabel = [SKLabelNode new];
         _letterLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - SIZE_LETTER_BLOCK/4);
-        _letterLabel.fontColor = [SKColor blackColor];
+        _letterLabel.fontSize = letterFont.pointSize;
+        _letterLabel.fontName = letterFont.fontName;
+        _letterLabel.fontColor = [LRColor letterBlockFontColor];
         _letterLabel.zPosition += zDiff_Letter_Envelope;
     }
     return _letterLabel;

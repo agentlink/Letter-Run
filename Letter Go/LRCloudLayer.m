@@ -23,7 +23,7 @@
 - (SKSpriteNode *) repeatingSprite
 {
     SKSpriteNode *repeatingSprite = [[SKSpriteNode alloc]
-                                     initWithColor:[SKColor colorWithRed:174.0/255.0 green:227.0/255.0 blue:248.0/255.0 alpha:1]
+                                     initWithColor:[LRColor skyColor]
                                      size:CGSizeMake(SCREEN_WIDTH * 2, SCREEN_HEIGHT * 3)];
     //Add clouds to the sprite
     SKSpriteNode *tempCloud = [SKSpriteNode spriteNodeWithImageNamed:IMAGE_NAME_CLOUD];

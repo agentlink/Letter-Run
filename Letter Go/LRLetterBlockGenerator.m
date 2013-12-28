@@ -35,7 +35,7 @@
 + (LRSectionBlock*) createEmptySectionBlock
 {
     LRSectionBlock *lb = [LRSectionBlock emptySectionBlock];
-    lb.color = [SKColor clearColor];
+    lb.color = [LRColor clearColor];
     return lb;
 }
 

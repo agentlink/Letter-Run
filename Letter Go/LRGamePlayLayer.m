@@ -106,7 +106,7 @@
     CGPoint rightScreen = CGPointMake (self.size.width/2, 0);
     
     SKPhysicsBody *blockEdge = [SKPhysicsBody bodyWithEdgeFromPoint:leftScreen toPoint:rightScreen];
-    SKSpriteNode *blockEdgeSprite = [[SKSpriteNode alloc] initWithColor:[UIColor clearColor] size:CGSizeMake(SCREEN_WIDTH, 1)];
+    SKSpriteNode *blockEdgeSprite = [[SKSpriteNode alloc] initWithColor:[LRColor clearColor] size:CGSizeMake(SCREEN_WIDTH, 1)];
     blockEdgeSprite.name = NAME_SPRITE_BOTTOM_EDGE;
     blockEdgeSprite.physicsBody = blockEdge;
     blockEdgeSprite.position = CGPointMake(0, edgeHeight);

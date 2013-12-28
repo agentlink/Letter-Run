@@ -40,9 +40,10 @@ static const CGFloat kSubmitButtonFontSize = 12;
 - (SKLabelNode*) label
 {
     if (!_label) {
-        _label = [SKLabelNode labelNodeWithFontNamed:@"Helvetica"];
+        UIFont *labelFont = [LRFont submitButtonFont];
+        _label = [SKLabelNode labelNodeWithFontNamed:labelFont.fontName];
+        _label.fontSize = labelFont.pointSize;
         _label.text = @"Submit";
-        _label.fontSize = kSubmitButtonFontSize;
         _label.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
     }
     return _label;

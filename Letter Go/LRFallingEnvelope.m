@@ -178,7 +178,6 @@
         
         self.position = CGPointMake(xPos, -SCREEN_HEIGHT/2 + bottomBufferSize + letterDistance * newSlot);
     }
-    NSLog(@"Letter %@ generated at position (%f, %f)", self.letter, self.position.x, self.position.y);
 }
 
 #pragma mark - Movement Functions
