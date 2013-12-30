@@ -22,7 +22,7 @@
 - (void) createSectionContent
 {
     //The color will be replaced by a health bar sprite
-    self.healthBar = [SKSpriteNode spriteNodeWithColor:[SKColor redColor] size:self.size];
+    self.healthBar = [SKSpriteNode spriteNodeWithColor:[LRColor healthBarColor] size:self.size];
     [self addChild:self.healthBar];
     self.initialTime = GAME_LOOP_RESET;
     

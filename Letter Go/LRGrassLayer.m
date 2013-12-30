@@ -15,7 +15,7 @@
 @property NSMutableArray *envelopeArray;
 @end
 
-#define GRASS_FILE_NAME                     @"Background_Grass.png"
+#define GRASS_FILE_NAME                     @"Background_Grass2.png"
 
 @implementation LRGrassLayer
 
