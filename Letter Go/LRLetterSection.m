@@ -18,11 +18,6 @@
 //UICollectionView
 //868-Hack
 
-typedef enum {
-    HorDirectionLeft,
-    HorDirectionRight
-} HorDirection;
-
 @interface LRLetterSection ()
 
 @property SKSpriteNode *letterSection;

@@ -15,7 +15,7 @@
 #define BEZIER_STEPS            10
 
 static const CGFloat kVerticalCurveDuration = 2.0;
-static const CGFloat kHorizontalCurveDuration = 3.5;
+static const CGFloat kHorizontalCurveDuration = 7.0;
 
 typedef enum {
     kSwingLeft  = -1,
@@ -96,7 +96,7 @@ typedef enum {
     
     LRBezierPath *letterPath = [LRCurveBuilder bezierWithStart:start c1:c1 c2:c2 end:end];
     SKAction *followPath = [SKAction followPath:[letterPath CGPath] asOffset:YES orientToPath:NO duration:kHorizontalCurveDuration];
-    followPath.timingMode = SKActionTimingEaseIn;
+    //followPath.timingMode = SKActionTimingEaseIn;
     
     return @[followPath];
 }

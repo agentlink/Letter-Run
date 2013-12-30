@@ -30,7 +30,7 @@ static const CGFloat kLetterEntryPointY = -35.0;
 - (id) init
 {
     if (self = [super initWithImageNamed:IMAGE_NAME_MAILMAN]) {
-        self.name = NAME_SPRITE_MAILMAN;        
+        self.name = NAME_SPRITE_MAILMAN;
         [self setScale:.7];
         [self setUpPhysics];
         [self addChild:self.mailbagCover];

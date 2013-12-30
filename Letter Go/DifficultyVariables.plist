@@ -315,7 +315,7 @@
 			<key>title</key>
 			<string>Minimum Drop Period</string>
 			<key>initialValue</key>
-			<real>0.7</real>
+			<real>0.1</real>
 			<key>max</key>
 			<integer>2</integer>
 			<key>min</key>
@@ -333,7 +333,7 @@
 			<key>title</key>
 			<string>Letter Drop Period Decrease Rate</string>
 			<key>initialValue</key>
-			<real>1.2</real>
+			<real>1.15</real>
 			<key>max</key>
 			<integer>4</integer>
 			<key>min</key>
@@ -351,7 +351,7 @@
 			<key>title</key>
 			<string>Letter Drop Period (Sec)</string>
 			<key>initialValue</key>
-			<integer>2</integer>
+			<real>1.5</real>
 			<key>max</key>
 			<integer>4</integer>
 			<key>min</key>

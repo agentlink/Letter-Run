@@ -59,9 +59,9 @@
 
 - (void) loadUnsavedValues
 {
-    self.mailmanReceivesDamage = YES;
+    self.mailmanReceivesDamage = NO;
     self.healthBarFalls = YES;
-    self.mailmanScreenSide = MailmanScreenRight;
+    self.mailmanScreenSide = MailmanScreenLeft;
     self.lettersFallVertically = NO;
 }
 
