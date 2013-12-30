@@ -81,15 +81,15 @@
 		</dict>
 		<dict>
 			<key>description</key>
-			<string>How many extra points does the player score per love letter?</string>
+			<string>How many times more are love letters worth than regular letters?</string>
 			<key>title</key>
 			<string>Bonus Points Per Love Letter</string>
 			<key>initialValue</key>
-			<integer>10</integer>
+			<integer>2</integer>
 			<key>max</key>
-			<integer>30</integer>
+			<integer>3</integer>
 			<key>min</key>
-			<integer>0</integer>
+			<integer>1</integer>
 			<key>decimals</key>
 			<integer>0</integer>
 			<key>type</key>
@@ -216,7 +216,7 @@
 			<key>title</key>
 			<string>Word Length Score Factor</string>
 			<key>initialValue</key>
-			<integer>0</integer>
+			<real>0.5</real>
 			<key>max</key>
 			<integer>2</integer>
 			<key>min</key>
@@ -263,18 +263,6 @@
 			<string>float</string>
 			<key>userDefaultTag</key>
 			<string>DV_SCORE_LEVEL_PROGRESS_INCREASE_FACTOR</string>
-		</dict>
-		<dict>
-			<key>description</key>
-			<string>To what degree does the length of the word affect its score?</string>
-			<key>title</key>
-			<string>Word Length Score Increase</string>
-			<key>initialValue</key>
-			<string>Exponential</string>
-			<key>type</key>
-			<string>int</string>
-			<key>userDefaultTag</key>
-			<string>DV_SCORE_LENGTH_INCREASE_STYLE</string>
 		</dict>
 		<dict>
 			<key>description</key>

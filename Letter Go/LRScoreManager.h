@@ -11,10 +11,14 @@
 @interface LRScoreManager : SKNode
 + (LRScoreManager*) shared;
 
-- (void) submitWord:(NSDictionary*)wordDict;
+/*!
+ @param wordDict: has word stored in "word" key and love letter indices scored in "loveLetters" set
+ @return the score for the word
+ */
+- (int) submitWord:(NSDictionary*)wordDict;
 - (int) score;
-+ (int) scoreForWord:(NSString*)word;
-+ (int) scoreForWordWithLoveLetters:(NSDictionary*)word;
+
++ (int) scoreForWordWithDict:(NSDictionary*)wordDict;
 
 @property (readonly) NSMutableArray *submittedWords;
 @property (readonly) int scoreToNextLevel;

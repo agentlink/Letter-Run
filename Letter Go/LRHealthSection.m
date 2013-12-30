@@ -58,10 +58,9 @@
     }
 }
 
-- (void) submitWord:(NSString*) word;
+- (void) addScore:(int) wordScore;
 {
     //Percent increase per hundred points
-    int wordScore = [LRScoreManager scoreForWord:word];
     float healthBarToScoreRatio = (SCREEN_WIDTH * [[LRDifficultyManager shared] healthPercentIncreasePer100Pts]/100) / 100;
 
     float newXValue = self.healthBar.position.x + (wordScore * healthBarToScoreRatio);

@@ -159,18 +159,15 @@
 - (void) submitWord:(NSNotification*)notification
 {
     NSString *forcedWord = [[notification userInfo] objectForKey:@"forcedWord"];
-    if (!forcedWord) {
-        NSString *currentWord = [self getCurrentWord];
-        NSDictionary *wordDict = [NSDictionary dictionaryWithObjects:@[currentWord, [self loveLetterIndices]] forKeys:@[@"word", @"loveLetters"]];
-        
-        [[LRScoreManager shared] submitWord:wordDict];
-        [[[(LRGameScene*)[self scene] gamePlayLayer] healthSection] submitWord:currentWord];
-        
+    NSString *submittedWord = (forcedWord) ? forcedWord : [self getCurrentWord];
+    
+    
+    NSDictionary *wordDict = [NSDictionary dictionaryWithObjects:@[submittedWord, [self loveLetterIndices]] forKeys:@[@"word", @"loveLetters"]];
+    int wordScore = [[LRScoreManager shared] submitWord:wordDict];
+    if (!forcedWord)
+    {
+        [[[(LRGameScene*)[self scene] gamePlayLayer] healthSection] addScore:wordScore];
         [self clearLetterSection];
-    }
-    else {
-        NSDictionary *wordDict = [NSDictionary dictionaryWithObjects:@[forcedWord, [[NSSet alloc] init]] forKeys:@[@"word", @"loveLetters"]];
-        [[LRScoreManager shared] submitWord:wordDict];
     }
 }
 

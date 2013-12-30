@@ -30,7 +30,6 @@ static const int kNumberOfSlots = 4;
 @property int level;
 
 #pragma mark - Score Properties
-@property IncreaseStyle scoreIncreaseStyle;
 @property CGFloat scoreLengthFactor;
 @property int scorePerLetter;
 
@@ -58,7 +57,7 @@ static const int kNumberOfSlots = 4;
 
 #pragma mark - Mailman/Love Letter Properties
 @property CGFloat mailmanHitDamage;
-@property int loveLetterBonus;
+@property int loveLetterMultiplier;
 @property int percentLoveLetters;
 @property CGFloat flingLetterSpeed;
 
