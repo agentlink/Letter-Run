@@ -24,8 +24,7 @@
 {
     if (self = [super init])
     {
-        SKSpriteNode *tempGrassBlock = [SKSpriteNode spriteNodeWithImageNamed:GRASS_FILE_NAME];
-        self.size = CGSizeMake(SCREEN_WIDTH * 3, tempGrassBlock.size.height);
+        self.size = CGSizeMake(SCREEN_WIDTH * 3, kParallaxHeightGrass);
         self.yOffset = 0;
         self.envelopeArray = [NSMutableArray array];
         

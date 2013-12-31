@@ -168,7 +168,7 @@
     NSMutableArray *inputWords = [NSMutableArray arrayWithArray:[cleanInput componentsSeparatedByString:@" "]];
     NSMutableArray *wordsToRemove = [NSMutableArray array];
     for (NSString *word in inputWords) {
-        if ([word length] < LETTER_MINIMUM_COUNT || [word length] > LETTER_CAPACITY) {
+        if ([word length] < kWordMinimumLetterCount || [word length] > kWordMaximumLetterCount) {
             NSLog(@"Warning: '%@' is either too long or too short to submit.", word);
             [wordsToRemove addObject:word];
         }

@@ -65,11 +65,11 @@
     //The color will be replaced by a health bar sprite
     self.letterSection = [SKSpriteNode spriteNodeWithColor:[LRColor letterSectionColor] size:self.size];
     [self addChild:self.letterSection];
-    self.letterSlots = [[NSMutableArray alloc] initWithCapacity:LETTER_CAPACITY];
+    self.letterSlots = [[NSMutableArray alloc] initWithCapacity:kWordMaximumLetterCount];
     
     
     //Create the letter slots
-    for (int i = 0; i < LETTER_CAPACITY; i++)
+    for (int i = 0; i < kWordMaximumLetterCount; i++)
     {
         float yOffSet = 0;
         LRLetterSlot *slot = [[LRLetterSlot alloc] init];
@@ -80,17 +80,17 @@
     
     //Create submit button
     LRSubmitButton *submitButton = [[LRSubmitButton alloc] initWithColor:[SKColor lightGrayColor] size:[[self.letterSlots objectAtIndex:0] size]];
-    submitButton.position = CGPointMake([self xPosFromSlotIndex:LETTER_CAPACITY], 0);
+    submitButton.position = CGPointMake([self xPosFromSlotIndex:kWordMaximumLetterCount], 0);
     self.submitButton = submitButton;
     [self addChild:submitButton];
 }
 
 - (CGFloat) xPosFromSlotIndex:(int) index {
     float slotMargin, edgeBuffer;
-    slotMargin = (IS_IPHONE_5) ? SIZE_LETTER_BLOCK/3.3 : SIZE_LETTER_BLOCK/4;
-    edgeBuffer = (self.size.width - (slotMargin + SIZE_LETTER_BLOCK) * LETTER_CAPACITY - SIZE_LETTER_BLOCK)/2;
+    slotMargin = (IS_IPHONE_5) ? kLetterBlockDimension/3.3 : kLetterBlockDimension/4;
+    edgeBuffer = (self.size.width - (slotMargin + kLetterBlockDimension) * kWordMaximumLetterCount - kLetterBlockDimension)/2;
 
-    float retVal = 0 - self.size.width/2 + edgeBuffer + SIZE_LETTER_BLOCK/2 + index * (SIZE_LETTER_BLOCK + slotMargin);
+    float retVal = 0 - self.size.width/2 + edgeBuffer + kLetterBlockDimension/2 + index * (kLetterBlockDimension + slotMargin);
     return retVal;
 }
 
@@ -204,7 +204,7 @@
         if ([(LRLetterSlot*)[self.letterSlots objectAtIndex:i] isLetterSlotEmpty])
             break;
     }
-    self.submitButton.userInteractionEnabled = (i >= LETTER_MINIMUM_COUNT && [[LRDictionaryChecker shared] checkForWordInDictionary:[self getCurrentWord]]);
+    self.submitButton.userInteractionEnabled = (i >= kWordMinimumLetterCount && [[LRDictionaryChecker shared] checkForWordInDictionary:[self getCurrentWord]]);
 }
 
 #pragma mark - Reordering Functions

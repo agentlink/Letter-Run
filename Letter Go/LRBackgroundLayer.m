@@ -63,7 +63,7 @@
                 layer.zPosition = zPos_HillsLayer;
                 break;
             case BackgroundIndex_Grass:
-                layer.position = CGPointMake(layer.position.x, [layer repeatingSprite].size.height/4 - self.size.height/2 + SIZE_HEIGHT_LETTER_SECTION + grassHeightOffset);
+                layer.position = CGPointMake(layer.position.x, [layer repeatingSprite].size.height/4 - self.size.height/2 + kSectionHeightLetterSection + grassHeightOffset);
                 layer.zPosition = zPos_GrassLayer;
                 layer.yOffset = -10;
                 break;

@@ -32,7 +32,7 @@
 {
     if (self = [super init])
     {
-        self.pauseTime = GAME_LOOP_RESET;
+        self.pauseTime = kGameLoopResetValue;
         self.name = NAME_LAYER_GAME_PLAY;
         newGame = TRUE;
         self.letterSlots = [[LRFallingEnvelopeSlotManager alloc] init];
@@ -56,8 +56,8 @@
 - (LRHealthSection*) healthSection
 {
     if (!_healthSection) {
-        _healthSection = [[LRHealthSection alloc] initWithSize:CGSizeMake(self.size.width, SIZE_HEIGHT_HEALTH_SECTION)];
-        _healthSection.position = CGPointMake(0, self.size.height/2 - SIZE_HEIGHT_HEALTH_SECTION/2);
+        _healthSection = [[LRHealthSection alloc] initWithSize:CGSizeMake(self.size.width, kSectionHeightHealth)];
+        _healthSection.position = CGPointMake(0, self.size.height/2 - kSectionHeightHealth/2);
         _healthSection.zPosition = zPos_HealthSection;
     }
     return _healthSection;
@@ -66,7 +66,7 @@
 - (LRLetterSection*) letterSection
 {
     if (!_letterSection) {
-        _letterSection = [[LRLetterSection alloc] initWithSize:CGSizeMake(self.size.width, SIZE_HEIGHT_LETTER_SECTION)];
+        _letterSection = [[LRLetterSection alloc] initWithSize:CGSizeMake(self.size.width, kSectionHeightLetterSection)];
         _letterSection.position = CGPointMake(self.position.x - self.size.width/2, 0 - self.size.height/2 + self.letterSection.size.height/2);
         _letterSection.zPosition = zPos_LetterSection;
     }
@@ -135,7 +135,7 @@
     }
     //If the game is paused
     else if ([[LRGameStateManager shared] isGamePaused]) {
-        if (pauseTime != GAME_LOOP_RESET)
+        if (pauseTime != kGameLoopResetValue)
             pauseTime = nextDropTime - currentTime;
         return;
     }
@@ -145,9 +145,9 @@
         newGame = FALSE;
     }
     //If the game has just been unpaused
-    else if (pauseTime != GAME_LOOP_RESET) {
+    else if (pauseTime != kGameLoopResetValue) {
         nextDropTime = currentTime + pauseTime;
-        pauseTime = GAME_LOOP_RESET;
+        pauseTime = kGameLoopResetValue;
     }
     
     if (currentTime >= nextDropTime) {

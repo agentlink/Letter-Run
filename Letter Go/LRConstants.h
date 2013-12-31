@@ -6,13 +6,26 @@
 //  Copyright (c) 2013 Gabe Nicholas. All rights reserved.
 //
 
+//Size constants
+static const float kSectionHeightLetterSection  =       (178 - 51)/2;
+static const float kSectionHeightHealth         =       7.0;
+static const float kLetterBlockDimension        =       48.0;
+static const float kParallaxHeightGrass         =       26.6;
+
+//Letter constants
+static const int kWordMinimumLetterCount        =       3;
+static const int kWordMaximumLetterCount        =       7;
+
+//Timing constants
+static const int kGameLoopResetValue            =       -1;
+
+#define LETTER_PLACEHOLDER_TEXT     @" "
+
 #define IS_IPHONE_5                 ([[UIScreen mainScreen] bounds].size.height == 568)
 #define IS_RETINA                   ([[UIScreen mainScreen] scale] == 2.0f)
 
 #define SCREEN_WIDTH                ([[UIScreen mainScreen] bounds].size.height)
 #define SCREEN_HEIGHT               ([[UIScreen mainScreen] bounds].size.width)
-
-#define GAME_LOOP_RESET                             -1
 
 #define NAME_SPRITE_FALLING_ENVELOPE                @"NAME_SPRITE_FALLING_ENVELOPE"
 #define NAME_SPRITE_SECTION_LETTER_BLOCK            @"NAME_SPRITE_SECTION_LETTER_BLOCK"
@@ -49,11 +62,3 @@
 #define KEY_GET_LETTER_BLOCK                        @"Get the letter block"
 #define KEY_GET_LOVE                                @"Get whether it's a love letter"
 
-#define SIZE_HEIGHT_LETTER_SECTION                  (178 - 51)/2
-#define SIZE_HEIGHT_HEALTH_SECTION                  7
-#define SIZE_LETTER_BLOCK           48
-#define SIZE_GRASS_HEIGHT           26.5
-
-#define LETTER_MINIMUM_COUNT        3
-#define LETTER_CAPACITY             7
-#define LETTER_PLACEHOLDER_TEXT     @" "

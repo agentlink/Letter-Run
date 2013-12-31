@@ -31,7 +31,7 @@
 
 - (id) initWithLetter:(NSString*)letter loveLetter:(BOOL)love
 {
-    if (self = [super initWithColor:[LRColor clearColor] size:CGSizeMake(SIZE_LETTER_BLOCK, SIZE_LETTER_BLOCK)]) {
+    if (self = [super initWithColor:[LRColor clearColor] size:CGSizeMake(kLetterBlockDimension, kLetterBlockDimension)]) {
         self.letter = letter;
         self.loveLetter = love;
         self.userInteractionEnabled = YES;
@@ -63,7 +63,7 @@
     if (!_letterLabel) {
         UIFont *letterFont = [LRFont letterBlockFont];
         _letterLabel = [SKLabelNode new];
-        _letterLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - SIZE_LETTER_BLOCK/4);
+        _letterLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - kLetterBlockDimension/4);
         _letterLabel.fontSize = letterFont.pointSize;
         _letterLabel.fontName = letterFont.fontName;
         _letterLabel.fontColor = [LRColor letterBlockFontColor];
@@ -77,8 +77,8 @@
     if (!_envelopeSprite) {
         NSString *fileName = [self fileNameForEnvelopeSprite];
         _envelopeSprite = [SKSpriteNode spriteNodeWithImageNamed:fileName];
-        _envelopeSprite.xScale = SIZE_LETTER_BLOCK/self.envelopeSprite.size.width;
-        _envelopeSprite.yScale = SIZE_LETTER_BLOCK/self.envelopeSprite.size.height;
+        _envelopeSprite.xScale = kLetterBlockDimension/self.envelopeSprite.size.width;
+        _envelopeSprite.yScale = kLetterBlockDimension/self.envelopeSprite.size.height;
     }
     return _envelopeSprite;
 }

@@ -24,7 +24,7 @@
     //The color will be replaced by a health bar sprite
     self.healthBar = [SKSpriteNode spriteNodeWithColor:[LRColor healthBarColor] size:self.size];
     [self addChild:self.healthBar];
-    self.initialTime = GAME_LOOP_RESET;
+    self.initialTime = kGameLoopResetValue;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restartHealthBar) name:GAME_STATE_NEW_GAME object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(unpauseGame) name:GAME_STATE_CONTINUE_GAME object:nil];
@@ -34,17 +34,24 @@
 
 - (void) update:(NSTimeInterval)currentTime
 {
-    if ([[LRGameStateManager shared] isGameOver] || [[LRGameStateManager shared] isGamePaused])
-        return;
-    else if (![[LRDifficultyManager shared] healthBarFalls]) {
-        self.initialTime = GAME_LOOP_RESET;
+    //If the game is over, do nothing
+    if ([[LRGameStateManager shared] isGameOver] || [[LRGameStateManager shared] isGamePaused]) {
         return;
     }
-    else if (self.initialTime == GAME_LOOP_RESET) {
+    //If the health bar has been toggled off, reset it
+    else if (![[LRDifficultyManager shared] healthBarFalls]) {
+        self.initialTime = kGameLoopResetValue;
+    }
+    else if (self.initialTime == kGameLoopResetValue) {
         self.initialTime = currentTime;
-        return;
+    }
+    else {
+        [self shiftHealthBarWithTimeInterval:currentTime];
     }
     
+}
+
+- (void) shiftHealthBarWithTimeInterval: (NSTimeInterval)currentTime {
     //Calculate drop rate
     float speedFactor = SCREEN_WIDTH/[[LRDifficultyManager shared] healthBarDropTime];
     self.healthBar.position = CGPointMake(self.healthBar.position.x - ((currentTime - self.initialTime) * speedFactor), self.healthBar.position.y);
@@ -56,6 +63,7 @@
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_GAME_OVER object:nil];
     }
+
 }
 
 - (void) addScore:(int) wordScore;
@@ -74,7 +82,7 @@
 - (void) restartHealthBar
 {
     self.healthBar.position = CGPointMake(0, self.healthBar.position.y);
-    self.initialTime = GAME_LOOP_RESET;
+    self.initialTime = kGameLoopResetValue;
 }
 
 - (CGFloat) percentHealth
@@ -106,7 +114,7 @@
 }
 
 - (void) unpauseGame {
-    self.initialTime = GAME_LOOP_RESET;
+    self.initialTime = kGameLoopResetValue;
 }
 
 @end
