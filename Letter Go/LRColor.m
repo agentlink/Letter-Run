@@ -11,9 +11,7 @@
 @implementation LRColor
 
 + (SKColor*) rgbColorWithRed:(CGFloat)r green:(CGFloat)g blue:(CGFloat)b alpha:(CGFloat)alpha{
-    //                                     initWithColor:[SKColor colorWithRed:174.0/255.0 green:227.0/255.0 blue:248.0/255.0 alpha:1]
     CGFloat base = 255.0;
-    
     NSAssert(r <= base && b <= base && g <= base && alpha <= 1.0, @"Error: improper values provided to LRColor.");
     return [SKColor colorWithRed:r/base green:g/base blue:b/base alpha:alpha];
 }

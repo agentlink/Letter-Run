@@ -60,6 +60,8 @@ static LRDictionaryChecker *_shared = nil;
 
 - (BOOL)checkForWordInDictionary:(NSString*)word
 {
+    //Capitalize the letters to handle Qu condition
+    word = [word uppercaseString];
     return [self.dictionary containsObject:[word stringByAppendingString:@"\r"]];
 }
 @end

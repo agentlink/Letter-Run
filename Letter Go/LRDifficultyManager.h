@@ -66,6 +66,8 @@ static const int kNumberOfSlots = 4;
 @property int maxNumber_consonants;
 @property int maxNumber_vowels;
 @property int maxNumber_sameLetters;
+//Not saved
+@property BOOL QuEnabled;
 
 #pragma mark - Parallax Properties
 @property CGFloat baseParallaxPixelsPerSecond;

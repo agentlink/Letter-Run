@@ -63,6 +63,7 @@
     self.healthBarFalls = YES;
     self.mailmanScreenSide = MailmanScreenLeft;
     self.lettersFallVertically = NO;
+    self.QuEnabled = YES;
 }
 
 - (void) loadUserDefaults

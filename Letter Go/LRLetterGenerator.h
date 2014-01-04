@@ -8,6 +8,17 @@
 
 #import <SpriteKit/SpriteKit.h>
 
+
+typedef NS_ENUM(NSUInteger, LetterType)
+{
+    LetterTypeConsonant = 0,
+    LetterTypeVowel,
+    LetterTypeNone
+};
+
+static NSString* const kLetterQu = @"Qu";
+
+
 @interface LRLetterGenerator : SKNode
 
 ///Returns the shared instance of the letter generator
@@ -20,7 +31,8 @@
 + (NSCharacterSet*) consonantSet;
 ///Returns the set of all vowels
 + (NSCharacterSet*) vowelSet;
-
+///Returns whether the string is a consonant or vowel
+- (LetterType) letterTypeForString:(NSString*)letter;
 
 @property NSMutableArray *forceDropLetters;
 
