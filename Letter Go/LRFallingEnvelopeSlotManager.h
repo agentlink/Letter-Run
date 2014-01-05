@@ -15,6 +15,5 @@
 
 - (void) resetSlots;
 - (void) addEnvelope:(LRFallingEnvelope*)envelope;
-- (BOOL) removeEnvelope:(LRFallingEnvelope*)envelope;
 
 @end
