@@ -12,6 +12,8 @@
 #import "LRGameStateManager.h"
 #import "LRFallingEnvelope.h"
 
+#define HEALTHBAR_WIDTH             SCREEN_WIDTH
+
 @interface LRHealthSection ()
 @property SKSpriteNode *healthBar;
 @property NSTimeInterval initialTime;
@@ -51,12 +53,22 @@
     
 }
 
+/// This function animates the health bar
 - (void) shiftHealthBarWithTimeInterval: (NSTimeInterval)currentTime {
-    //Calculate drop rate
-    float speedFactor = SCREEN_WIDTH/[[LRDifficultyManager shared] healthBarDropTime];
-    self.healthBar.position = CGPointMake(self.healthBar.position.x - ((currentTime - self.initialTime) * speedFactor), self.healthBar.position.y);
+    //Calculate the distance the health bar should move...
+    float healthBarDropPerSecond = HEALTHBAR_WIDTH/[[LRDifficultyManager shared] healthBarDropTime];
+    float timeInterval = currentTime - self.initialTime;
+    float healthBarXShift = timeInterval * healthBarDropPerSecond;
+    
+    //...and move it
+    CGPoint healthBarPos = self.healthBar.position;
+    healthBarPos.x -= healthBarXShift;
+    self.healthBar.position = healthBarPos;
+
+    //Update the last time interval
     self.initialTime = currentTime;
     
+    //Check if the bar has moved off screen and if so, post that the game is over
     CGRect barFrame = self.healthBar.frame;
     barFrame.origin = [self.parent convertPoint:barFrame.origin fromNode:self.healthBar];
     if (barFrame.origin.x < self.frame.origin.x - (2 * barFrame.size.width))
@@ -68,10 +80,8 @@
 
 - (void) addScore:(int) wordScore;
 {
-    //Percent increase per hundred points
-    float healthBarToScoreRatio = (SCREEN_WIDTH * [[LRDifficultyManager shared] healthPercentIncreasePer100Pts]/100) / 100;
-
-    float newXValue = self.healthBar.position.x + (wordScore * healthBarToScoreRatio);
+    float shiftDistance = [LRHealthSection healthBarDistanceForScore:wordScore];
+    float newXValue = self.healthBar.position.x + shiftDistance;
     
     //The bar cannot move farther left than the left most edge
     newXValue *= (newXValue > 0) ? 0 : 1;
@@ -79,24 +89,31 @@
 }
 
 
++ (CGFloat) healthBarDistanceForScore:(int)score {
+    float baseDistancePerLetter = HEALTHBAR_WIDTH / [[LRDifficultyManager shared] healthInFallenEnvelopes];
+    float scorePerLetter = [[LRDifficultyManager shared] scorePerLetter];
+    
+    float wordDistance = (score * baseDistancePerLetter) / scorePerLetter;
+    return wordDistance;
+}
+
 - (void) restartHealthBar
 {
     self.healthBar.position = CGPointMake(0, self.healthBar.position.y);
     self.initialTime = kGameLoopResetValue;
 }
 
-- (CGFloat) percentHealth
-{
-    return 100 * (SCREEN_WIDTH + self.healthBar.position.x)/SCREEN_WIDTH;
+- (CGFloat) percentHealth {
+    return 100 * (HEALTHBAR_WIDTH + self.healthBar.position.x)/HEALTHBAR_WIDTH;
 }
 
 - (void) moveHealthByPercent:(CGFloat)percent
 {
-    CGFloat newXPos = self.healthBar.position.x + (percent/100) * SCREEN_WIDTH;
+    CGFloat newXPos = self.healthBar.position.x + (percent/100) * HEALTHBAR_WIDTH;
     if (newXPos > 0)
         newXPos = 0;
-    else if (newXPos < 0 - SCREEN_WIDTH)
-        newXPos = 0 - SCREEN_WIDTH;
+    else if (newXPos < 0 - HEALTHBAR_WIDTH)
+        newXPos = 0 - HEALTHBAR_WIDTH;
     self.healthBar.position = CGPointMake(newXPos, self.healthBar.position.y);
 }
 

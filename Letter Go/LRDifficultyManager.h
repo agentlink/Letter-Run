@@ -52,8 +52,10 @@ static const int kNumberOfSlots = 4;
 @property CGFloat healthPercentIncreasePer100Pts;
 @property CGFloat initialHealthDropTime;
 @property CGFloat healthSpeedIncreaseFactor;
-@property IncreaseStyle healthSpeedIncreaseStyle;
 @property CGFloat healthBarMinDropTime;
+//Not saved
+@property CGFloat healthInFallenEnvelopes;
+
 
 #pragma mark - Mailman/Love Letter Properties
 @property CGFloat mailmanHitDamage;

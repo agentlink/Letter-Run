@@ -63,6 +63,8 @@
     self.healthBarFalls = YES;
     self.mailmanScreenSide = MailmanScreenLeft;
     self.lettersFallVertically = NO;
+    
+    self.healthInFallenEnvelopes = 35.0;
 }
 
 - (void) loadUserDefaults
@@ -71,7 +73,6 @@
     self.initialHealthDropTime = [[NSUserDefaults standardUserDefaults] floatForKey:DV_HEALTHBAR_INITIAL_SPEED];
     self.healthSpeedIncreaseFactor = [[NSUserDefaults standardUserDefaults] floatForKey:DV_HEALTHBAR_INCREASE_FACTOR];
     self.healthBarMinDropTime = [[NSUserDefaults standardUserDefaults] floatForKey:DV_HEALTHBAR_MAX_SPEED];
-    self.healthSpeedIncreaseStyle = [[NSUserDefaults standardUserDefaults] integerForKey:DV_HEALTHBAR_INCREASE_STYLE];
     self.healthPercentIncreasePer100Pts = [[NSUserDefaults standardUserDefaults] floatForKey:DV_HEALTHBAR_INCREASE_PER_WORD];
     
     //Score
@@ -146,7 +147,6 @@
     [[NSUserDefaults standardUserDefaults] setFloat:self.initialHealthDropTime forKey:DV_HEALTHBAR_INITIAL_SPEED];
     [[NSUserDefaults standardUserDefaults] setFloat:self.healthSpeedIncreaseFactor forKey:DV_HEALTHBAR_INCREASE_FACTOR];
     [[NSUserDefaults standardUserDefaults] setFloat:self.healthBarMinDropTime forKey:DV_HEALTHBAR_MAX_SPEED];
-    [[NSUserDefaults standardUserDefaults] setInteger:self.healthSpeedIncreaseStyle forKey:DV_HEALTHBAR_INCREASE_STYLE];
     [[NSUserDefaults standardUserDefaults] setFloat:self.healthPercentIncreasePer100Pts forKey:DV_HEALTHBAR_INCREASE_PER_WORD];
     
     //Score

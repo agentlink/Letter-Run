@@ -73,19 +73,9 @@ static LRDifficultyManager *_shared = nil;
 
 - (CGFloat) healthBarDropTime
 {
-    //Unit: percent falling per second
-    CGFloat healthSpeed = self.initialHealthDropTime;
-    if (self.healthSpeedIncreaseStyle == IncreaseStyle_Linear) {
-        for (int i = 1; i < self.level; i++) {
-                healthSpeed -= self.healthSpeedIncreaseFactor;
-            }
-    }
-    else if (self.healthSpeedIncreaseStyle == IncreaseStyle_Exponential) {
-        for (int i = 1; i < self.level; i++) {
-            healthSpeed /= self.healthSpeedIncreaseFactor;
-        }
-    }
-    
+    //Unit: letters allowed to drop without a response
+    CGFloat healthSpeed = self.letterDropPeriod * self.healthInFallenEnvelopes;
+
     if (healthSpeed < self.healthBarMinDropTime)
         return self.healthBarMinDropTime;
     return healthSpeed;

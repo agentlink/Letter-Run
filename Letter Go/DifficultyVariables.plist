@@ -386,18 +386,6 @@
 		</dict>
 		<dict>
 			<key>description</key>
-			<string>How quickly does the rate increase between levels?</string>
-			<key>title</key>
-			<string>Health Bar Speed Increase</string>
-			<key>initialValue</key>
-			<string>Linear</string>
-			<key>type</key>
-			<string>int</string>
-			<key>userDefaultTag</key>
-			<string>DV_HEALTHBAR_INCREASE_STYLE</string>
-		</dict>
-		<dict>
-			<key>description</key>
 			<string>What is the shortest amount of time it can take for the health bar to drop to zero?</string>
 			<key>title</key>
 			<string>Health Bar Minimum Drop Time (Seconds)</string>

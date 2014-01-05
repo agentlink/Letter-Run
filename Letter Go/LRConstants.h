@@ -19,13 +19,14 @@ static const int kWordMaximumLetterCount        =       7;
 //Timing constants
 static const int kGameLoopResetValue            =       -1;
 
+
 #define LETTER_PLACEHOLDER_TEXT     @" "
 
 #define IS_IPHONE_5                 ([[UIScreen mainScreen] bounds].size.height == 568)
 #define IS_RETINA                   ([[UIScreen mainScreen] scale] == 2.0f)
 
-#define SCREEN_WIDTH                ([[UIScreen mainScreen] bounds].size.height)
-#define SCREEN_HEIGHT               ([[UIScreen mainScreen] bounds].size.width)
+#define SCREEN_HEIGHT                ([[UIScreen mainScreen] bounds].size.width)
+#define SCREEN_WIDTH                 ([[UIScreen mainScreen] bounds].size.height)
 
 #define NAME_SPRITE_FALLING_ENVELOPE                @"NAME_SPRITE_FALLING_ENVELOPE"
 #define NAME_SPRITE_SECTION_LETTER_BLOCK            @"NAME_SPRITE_SECTION_LETTER_BLOCK"
