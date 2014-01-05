@@ -11,14 +11,18 @@
 
 #define PROBABILITY_DICT            @"Scrabble"
 
+static NSString* const kLetterQ = @"Q";
+
 @interface LRLetterGenerator ()
 @property NSArray *letterProbabilities;
 
 @property NSCharacterSet *consonantSet;
 @property NSCharacterSet *vowelSet;
 
+// Vowel-Consonant Tracking
 @property int vowelConstCount;
 
+// Repeat letter tracking
 @property NSString *lastLetter;
 @property int repeatCount;
 
@@ -29,20 +33,7 @@
 @synthesize consonantSet, vowelSet;
 @synthesize forceDropLetters;
 
-static LRLetterGenerator *_shared = nil;
-
-+ (LRLetterGenerator*) shared
-{
-    //This @synchronized line is for multithreading
-    @synchronized (self)
-    {
-		if (!_shared)
-        {
-			_shared = [[LRLetterGenerator alloc] init];
-		}
-	}
-	return _shared;
-}
+#pragma mark - Initialization/Set Up
 
 - (id) init
 {
@@ -74,7 +65,22 @@ static LRLetterGenerator *_shared = nil;
 
 }
 
-#pragma mark - Letter Generation Functions
+#pragma mark - Public Functions
+
+static LRLetterGenerator *_shared = nil;
+
++ (LRLetterGenerator*) shared
+{
+    //This @synchronized line is for multithreading
+    @synchronized (self)
+    {
+		if (!_shared)
+        {
+			_shared = [[LRLetterGenerator alloc] init];
+		}
+	}
+	return _shared;
+}
 
 - (NSString*)generateLetter
 {
@@ -147,28 +153,13 @@ static LRLetterGenerator *_shared = nil;
     if (forceVowel)             vowelConstCount = 1;
     else if (forceConsonant)    vowelConstCount = -1;
     
+    
+    //Handle Qu
+    if ([letter isEqualToString:kLetterQ] && [[LRDifficultyManager shared] QuEnabled]) {
+        letter = kLetterQu;
+    }
+    
     lastLetter = letter;
-    return letter;
-}
-
-- (NSString*) generateRandomLetter {
-    int letterLocation = arc4random()%[self.letterProbabilities count];
-    return [self.letterProbabilities objectAtIndex:letterLocation];
-}
-
-- (NSString*)generateVowel
-{
-    NSString *letter = [self generateRandomLetter];
-    while ([consonantSet characterIsMember:[letter characterAtIndex:0]])
-        letter = [self generateLetter];
-    return letter;
-}
-
-- (NSString*)generateConsonant
-{
-    NSString *letter = [self generateRandomLetter];
-    while ([vowelSet characterIsMember:[letter characterAtIndex:0]])
-        letter = [self generateLetter];
     return letter;
 }
 
@@ -180,6 +171,51 @@ static LRLetterGenerator *_shared = nil;
 + (NSCharacterSet*) vowelSet
 {
     return [NSCharacterSet characterSetWithCharactersInString:@"AEIOU"];
-
 }
+
+#pragma mark - Private Functions
+
+- (NSString*) generateRandomLetter {
+    int letterLocation = arc4random()%[self.letterProbabilities count];
+    return [self.letterProbabilities objectAtIndex:letterLocation];
+}
+
+- (NSString*)generateVowel
+{
+    NSString *letter = [self generateRandomLetter];
+    while ([self letterTypeForString:letter] == LetterTypeConsonant)
+        letter = [self generateLetter];
+    return letter;
+}
+
+- (NSString*)generateConsonant
+{
+    NSString *letter = [self generateRandomLetter];
+    while ([self letterTypeForString:letter] == LetterTypeVowel)
+        letter = [self generateLetter];
+    return letter;
+}
+
+- (LetterType) letterTypeForString:(NSString*)letter
+{
+    //If there is more than one letter...
+    if ([letter length] > 1) {
+        //...and that letter is not Qu
+        if ([[LRDifficultyManager shared] QuEnabled] && [letter isEqualToString:kLetterQu]) {
+            return LetterTypeConsonant;
+        }
+        //...return LetterTypeNone
+        return LetterTypeNone;
+    }
+    //Consonant
+    else if ([consonantSet characterIsMember:[letter characterAtIndex:0]]) {
+        return LetterTypeConsonant;
+    }
+    //Vowel
+    else if ([vowelSet characterIsMember:[letter characterAtIndex:0]]) {
+        return LetterTypeVowel;
+    }
+    return LetterTypeNone;
+}
+
 @end

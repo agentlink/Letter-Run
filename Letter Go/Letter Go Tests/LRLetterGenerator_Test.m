@@ -14,12 +14,6 @@
 
 @end
 
-typedef NS_ENUM(BOOL, kLetterType)
-{
-    kLetterTypeConsonant = FALSE,
-    kLetterTypeVowel
-};
-
 static const unsigned trialCount = 1000;
 
 @implementation LRLetterGenerator_Test
@@ -45,13 +39,13 @@ static const unsigned trialCount = 1000;
 - (void)testLetterSetLimitations
 {
     NSArray *letterArray = [self generateLetterArrayWithCount:trialCount];
-    [self testArrayForLetterType:kLetterTypeConsonant array:letterArray];
-    [self testArrayForLetterType:kLetterTypeVowel array:letterArray];
+    [self testArrayForLetterType:LetterTypeConsonant array:letterArray];
+    [self testArrayForLetterType:LetterTypeVowel array:letterArray];
     [self testArrayForRepetition:letterArray];
     
     /* Tests that should fail
-     [self testArrayForLetterType:kLetterTypeConsonant array:@[@"X", @"X,", @"X", @"X", @"X" @"E"]];
-     [self testArrayForLetterType:kLetterTypeVowel array:@[@"A", @"A", @"A", @"A"]];
+     [self testArrayForLetterType:LetterTypeConsonant array:@[@"X", @"X,", @"X", @"X", @"X" @"E"]];
+     [self testArrayForLetterType:LetterTypeVowel array:@[@"A", @"A", @"A", @"A"]];
      [self testArrayForRepetition:@[@"A", @"A", @"A", @"A"]];
      */
 }
@@ -69,7 +63,7 @@ static const unsigned trialCount = 1000;
     return letterArray;
 }
 
-- (void) testArrayForLetterType:(kLetterType)letterType array:(NSArray*)letterArray
+- (void) testArrayForLetterType:(LetterType)letterType array:(NSArray*)letterArray
 {
     if (!letterArray)
         letterArray = [self generateLetterArrayWithCount:trialCount];
@@ -78,7 +72,7 @@ static const unsigned trialCount = 1000;
     NSUInteger maxLetterCount;
     NSCharacterSet *letterSet;
     NSString *letterTypeDescriptor;
-    if (letterType == kLetterTypeConsonant) {
+    if (letterType == LetterTypeConsonant) {
         maxLetterCount = [[LRDifficultyManager shared] maxNumber_consonants];
         letterSet = [LRLetterGenerator consonantSet];
         letterTypeDescriptor = @"consonant";

@@ -12,11 +12,11 @@
 
 @implementation LRLetterBlockGenerator
 
-#pragma mark - Falling Letters
+#pragma mark - Public Functions
 
 + (LRFallingEnvelope*) createRandomEnvelope
 {
-    NSString *letter = [[LRLetterGenerator shared] generateLetter];
+    NSString *letter = [self generateLetter];
     BOOL love = [self isLoveLetter];
     LRFallingEnvelope *envelope = [LRFallingEnvelope envelopeWithLetter:letter loveLetter:love];
     
@@ -50,9 +50,18 @@
     return [LRSectionBlock sectionBlockWithLetter:letter loveLetter:love];
 }
 
+#pragma mark - Private Functions
+
 + (BOOL) isLoveLetter
 {
     int chance = arc4random()%100;
     return (chance < [[LRDifficultyManager shared] loveLetterProbability]);
 }
+
++ (NSString*) generateLetter
+{
+    NSString *letter = [[LRLetterGenerator shared] generateLetter];
+    return letter;
+}
+
 @end

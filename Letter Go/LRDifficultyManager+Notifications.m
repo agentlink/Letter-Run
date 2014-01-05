@@ -65,6 +65,7 @@
     self.lettersFallVertically = NO;
     
     self.healthInFallenEnvelopes = 35.0;
+    self.QuEnabled = YES;
 }
 
 - (void) loadUserDefaults
