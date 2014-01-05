@@ -15,14 +15,11 @@
 #import "LRDictionaryChecker.h"
 #import "LRGameScene.h"
 
-//UICollectionView
-//868-Hack
-
 @interface LRLetterSection ()
 
-@property SKSpriteNode *letterSection;
-@property LRSubmitButton *submitButton;
-@property NSMutableArray *letterSlots;
+@property (nonatomic, strong) SKSpriteNode *letterSection;
+@property (nonatomic, strong) LRSubmitButton *submitButton;
+@property (nonatomic, strong) NSMutableArray *letterSlots;
 
 @property (nonatomic) LRLetterSlot  *currentSlot;
 @property LRSectionBlock *touchedBlock;
@@ -30,7 +27,8 @@
 @end
 
 @implementation LRLetterSection
-#pragma mark - Set Up
+
+#pragma mark - Set Up/Initialization
 
 - (id) initWithSize:(CGSize)size
 {
@@ -50,39 +48,54 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishRearrangement:) name:NOTIFICATION_REARRANGE_FINISH object:nil];
 }
 
-# pragma mark - Game State Functions
+- (void) createSectionContent
+{
+    [self addChild:self.letterSection];
+    [self addChild:self.submitButton];
+    
+    for (LRLetterSlot *slot in self.letterSlots) {
+        [self addChild:slot];
+    }
+}
 
+#pragma mark - Private Properties
+
+- (SKSpriteNode*) letterSection {
+    if (!_letterSection) {
+        _letterSection = [SKSpriteNode spriteNodeWithColor:[LRColor letterSectionColor] size:self.size];
+    }
+    return _letterSection;
+}
+
+- (LRSubmitButton*) submitButton {
+    if (!_submitButton) {
+        _submitButton = [LRSubmitButton new];
+        _submitButton.position = CGPointMake([self xPosFromSlotIndex:kWordMaximumLetterCount], 0);
+    }
+    return _submitButton;
+}
+
+- (NSMutableArray*) letterSlots {
+    if (!_letterSlots) {
+        _letterSlots = [NSMutableArray new];
+        
+        //Fill the letter slot array with LRSlots
+        for (int i = 0; i < kWordMaximumLetterCount; i++) {
+            LRLetterSlot *slot = [LRLetterSlot new];
+            slot.position = CGPointMake([self xPosFromSlotIndex:i], 0.0);
+            [_letterSlots addObject:slot];
+        }
+    }
+    return _letterSlots;
+}
+
+# pragma mark - Game State Functions
 - (void) clearLetterSection
 {
     for (LRLetterSlot *slot in self.letterSlots) {
         slot.currentBlock = [LRLetterBlockGenerator createEmptySectionBlock];
     }
     [self updateSubmitButton];
-}
-
-- (void) createSectionContent
-{
-    //The color will be replaced by a health bar sprite
-    self.letterSection = [SKSpriteNode spriteNodeWithColor:[LRColor letterSectionColor] size:self.size];
-    [self addChild:self.letterSection];
-    self.letterSlots = [[NSMutableArray alloc] initWithCapacity:kWordMaximumLetterCount];
-    
-    
-    //Create the letter slots
-    for (int i = 0; i < kWordMaximumLetterCount; i++)
-    {
-        float yOffSet = 0;
-        LRLetterSlot *slot = [[LRLetterSlot alloc] init];
-        slot.position = CGPointMake([self xPosFromSlotIndex:i], yOffSet);
-        [self.letterSlots addObject:slot];
-        [self addChild:slot];
-    }
-    
-    //Create submit button
-    LRSubmitButton *submitButton = [[LRSubmitButton alloc] initWithColor:[SKColor lightGrayColor] size:[[self.letterSlots objectAtIndex:0] size]];
-    submitButton.position = CGPointMake([self xPosFromSlotIndex:kWordMaximumLetterCount], 0);
-    self.submitButton = submitButton;
-    [self addChild:submitButton];
 }
 
 - (CGFloat) xPosFromSlotIndex:(int) index {
@@ -166,7 +179,8 @@
     int wordScore = [[LRScoreManager shared] submitWord:wordDict];
     if (!forcedWord)
     {
-        [[[(LRGameScene*)[self scene] gamePlayLayer] healthSection] addScore:wordScore];
+        LRHealthSection *healthSection = [[(LRGameScene*)[self scene] gamePlayLayer] healthSection];
+        [healthSection addScore:wordScore];
         [self clearLetterSection];
     }
 }

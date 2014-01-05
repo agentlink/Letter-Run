@@ -14,8 +14,10 @@
 
 #define HEALTHBAR_WIDTH             SCREEN_WIDTH
 
+static const float kHealthBarRightMostEdgePos = 0.0;
+
 @interface LRHealthSection ()
-@property SKSpriteNode *healthBar;
+@property (nonatomic, strong) SKSpriteNode *healthBar;
 @property NSTimeInterval initialTime;
 @end
 
@@ -24,14 +26,24 @@
 - (void) createSectionContent
 {
     //The color will be replaced by a health bar sprite
-    self.healthBar = [SKSpriteNode spriteNodeWithColor:[LRColor healthBarColor] size:self.size];
     [self addChild:self.healthBar];
     self.initialTime = kGameLoopResetValue;
-    
+    [self setUpNotifications];
+
+}
+
+- (void) setUpNotifications
+{
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restartHealthBar) name:GAME_STATE_NEW_GAME object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(unpauseGame) name:GAME_STATE_CONTINUE_GAME object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mailmanHitWithLetterBlock:) name:NOTIFICATION_ENVELOPE_HIT_MAILMAN object:nil];
+}
 
+- (SKSpriteNode*) healthBar {
+    if (!_healthBar) {
+        _healthBar = [SKSpriteNode spriteNodeWithColor:[LRColor healthBarColor] size:self.size];
+    }
+    return _healthBar;
 }
 
 - (void) update:(NSTimeInterval)currentTime
@@ -83,8 +95,8 @@
     float shiftDistance = [LRHealthSection healthBarDistanceForScore:wordScore];
     float newXValue = self.healthBar.position.x + shiftDistance;
     
-    //The bar cannot move farther left than the left most edge
-    newXValue *= (newXValue > 0) ? 0 : 1;
+    //The bar cannot move farther right than the right most edge
+    newXValue *= (newXValue > kHealthBarRightMostEdgePos) ? 0 : 1;
     self.healthBar.position = CGPointMake(newXValue, self.healthBar.position.y);
 }
 

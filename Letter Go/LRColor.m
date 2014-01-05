@@ -35,7 +35,7 @@
     return [SKColor greenColor];
 }
 + (SKColor*) submitButtonDisabledColor {
-    return [SKColor redColor];
+    return [SKColor lightGrayColor];
 }
 + (SKColor*) submitButtonTextColor {
     return [SKColor whiteColor];
