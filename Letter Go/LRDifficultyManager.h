@@ -15,7 +15,6 @@ typedef enum  {
     IncreaseStyle_Exponential
 } IncreaseStyle;
 
-static const int kNumberOfSlots = 4;
 
 @interface LRDifficultyManager : LRObject
 

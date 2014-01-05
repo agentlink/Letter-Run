@@ -15,22 +15,40 @@
 static const int kSlotHistoryCapacity = 4;
 
 @interface LRFallingEnvelopeSlotManager ()
-@property NSMutableArray *slotHistory;
+@property (nonatomic, strong) NSMutableArray *slotHistory;
+@property (nonatomic, strong) NSMutableArray *slotChanceTracker;
 @property CGFloat currentZIndex;
 @end
 
 @implementation LRFallingEnvelopeSlotManager
-@synthesize slotHistory;
 #pragma mark - Overridden Functions
 
 - (id) init
 {
     //Initialize the array as a list of arrays
     if (self = [super init]) {
-        slotHistory = [NSMutableArray new];
         self.currentZIndex = kEnvelopeZPositionMin;
     }
     return self;
+}
+
+#pragma mark - Private Properties
+
+- (NSMutableArray*) slotHistory {
+    if (!_slotHistory) {
+        _slotHistory = [NSMutableArray new];
+    }
+    return _slotHistory;
+}
+
+- (NSMutableArray*) slotChanceTracker {
+    if (!_slotChanceTracker) {
+        _slotChanceTracker = [NSMutableArray new];
+        for (int i = 0; i < kNumberOfSlots; i++) {
+            [_slotChanceTracker addObject:@(kSlotHistoryCapacity)];
+        }
+    }
+    return _slotChanceTracker;
 }
 
 #pragma mark - Letter Addition
@@ -46,12 +64,25 @@ static const int kSlotHistoryCapacity = 4;
 
 - (void) addSlotHistoryObject:(NSNumber*)slot
 {
-    if ([slotHistory count] == kSlotHistoryCapacity) {
-        [slotHistory removeLastObject];
+    if ([self.slotHistory count] == kSlotHistoryCapacity) {
+        [self removeSlotLastFromHistory];
     }
-    [slotHistory addObject:slot];
+    NSNumber *slotChanceToDecrease = [self.slotChanceTracker objectAtIndex:[slot intValue]];
+    slotChanceToDecrease = @([slotChanceToDecrease intValue] - 1);
+    [self.slotChanceTracker setObject:slotChanceToDecrease atIndexedSubscript:[slot intValue]];
+    [self.slotHistory insertObject:slot atIndex:0];
 }
 
+- (void) removeSlotLastFromHistory
+{
+    NSNumber *slot = [self.slotHistory lastObject];
+    int slotIndex = [slot intValue];
+    NSNumber *slotChanceToIncrease = [self.slotChanceTracker objectAtIndex:slotIndex];
+    slotChanceToIncrease = @(([slotChanceToIncrease intValue] +1));
+    [self.slotChanceTracker setObject:slotChanceToIncrease atIndexedSubscript:slotIndex];
+    [self.slotHistory removeObject:slot];
+    
+}
 
 #pragma mark - zPosition Function
 
@@ -77,10 +108,12 @@ static const int kSlotHistoryCapacity = 4;
     return arc4random()%kNumberOfSlots;
 }
 
+
+
 #pragma mark - Reset Functions
 - (void) resetSlots
 {
-    [slotHistory removeAllObjects];
+    [self.slotHistory removeAllObjects];
     self.currentZIndex = kEnvelopeZPositionMin;
 }
 
