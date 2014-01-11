@@ -11,14 +11,10 @@
 #import "LRPositionConstants.h"
 #import "LRGameStateManager.h"
 #import "LRDifficultyManager.h"
+#import "LRCappedStack.h"
+#import "LRFallingEnvelopeSlotManager_Private.h"
 
-static const int kSlotHistoryCapacity = 4;
-
-@interface LRFallingEnvelopeSlotManager ()
-@property (nonatomic, strong) NSMutableArray *slotHistory;
-@property (nonatomic, strong) NSMutableArray *slotChanceTracker;
-@property CGFloat currentZIndex;
-@end
+static const int kNilSlotValue = -1;
 
 @implementation LRFallingEnvelopeSlotManager
 #pragma mark - Overridden Functions
@@ -34,9 +30,9 @@ static const int kSlotHistoryCapacity = 4;
 
 #pragma mark - Private Properties
 
-- (NSMutableArray*) slotHistory {
+- (LRCappedStack*) slotHistory {
     if (!_slotHistory) {
-        _slotHistory = [NSMutableArray new];
+        _slotHistory = [[LRCappedStack alloc] initWithCapacity:kSlotHistoryCapacity];
     }
     return _slotHistory;
 }
@@ -55,33 +51,41 @@ static const int kSlotHistoryCapacity = 4;
 
 - (void) addEnvelope:(LRFallingEnvelope*)envelope
 {
-    //Slot list
-    int slotIndex = [self getIndexOfNextSlot];
-    [envelope setSlot:slotIndex];
-    [self addSlotHistoryObject:@(slotIndex)];
+    int slotIndexToDecrease = [self getIndexOfNextSlot];
+    int slotIndexToIncrease = kNilSlotValue;
+
+    [envelope setSlot:slotIndexToDecrease];
     [self setZPositionForEnvelope:envelope];
-}
-
-- (void) addSlotHistoryObject:(NSNumber*)slot
-{
-    if ([self.slotHistory count] == kSlotHistoryCapacity) {
-        [self removeSlotLastFromHistory];
-    }
-    NSNumber *slotChanceToDecrease = [self.slotChanceTracker objectAtIndex:[slot intValue]];
-    slotChanceToDecrease = @([slotChanceToDecrease intValue] - 1);
-    [self.slotChanceTracker setObject:slotChanceToDecrease atIndexedSubscript:[slot intValue]];
-    [self.slotHistory insertObject:slot atIndex:0];
-}
-
-- (void) removeSlotLastFromHistory
-{
-    NSNumber *slot = [self.slotHistory lastObject];
-    int slotIndex = [slot intValue];
-    NSNumber *slotChanceToIncrease = [self.slotChanceTracker objectAtIndex:slotIndex];
-    slotChanceToIncrease = @(([slotChanceToIncrease intValue] +1));
-    [self.slotChanceTracker setObject:slotChanceToIncrease atIndexedSubscript:slotIndex];
-    [self.slotHistory removeObject:slot];
     
+    //Push the slot and get the number to decrease
+    NSNumber *slotToIncrease = [self.slotHistory pushObject:@(slotIndexToDecrease)];
+
+    //If the slot history is full...
+    if (slotToIncrease) {
+        //Push an object onto the history stack and see if anything gets popped off
+        slotIndexToIncrease = [slotToIncrease intValue];
+    }
+        //Manage the slot chances
+        [self increaseChanceForSlot:slotIndexToIncrease
+                 andDecreaseForSlot:slotIndexToDecrease];
+}
+
+- (void) increaseChanceForSlot:(int)increase andDecreaseForSlot:(int)decrease
+{
+
+
+    //Decrease the chance for one slot...
+    NSNumber *decreaseSlotOldValue = [self.slotChanceTracker objectAtIndex:decrease];
+    NSNumber *newDecreasedValue = @([decreaseSlotOldValue intValue] - 1);
+    [self.slotChanceTracker setObject:newDecreasedValue atIndexedSubscript:decrease];
+    
+    //...and possibly increase the chance for another
+    if (increase != kNilSlotValue) {
+        NSNumber *increaseSlotOldValue = [self.slotChanceTracker objectAtIndex:increase];
+        //Increase one slot value...
+        NSNumber *newIncreasedValue = @([increaseSlotOldValue intValue] + 1);
+        [self.slotChanceTracker setObject:newIncreasedValue atIndexedSubscript:increase];
+    }
 }
 
 #pragma mark - zPosition Function
@@ -105,15 +109,33 @@ static const int kSlotHistoryCapacity = 4;
 
 - (int) getIndexOfNextSlot
 {
+    //If the slot history is not filled, generate slots randomly
+    if ([self.slotHistory count] != kSlotHistoryCapacity) {
+        return arc4random()%kNumberOfSlots;
+    }
+    int maxRandValue = (kNumberOfSlots - 1) * kSlotHistoryCapacity ;
+    int randValue = arc4random()%maxRandValue + 1;
+    int iterator = 0;
+    for (int i = 0; i < [self.slotChanceTracker count]; i++) {
+        int slotChance = [[self.slotChanceTracker objectAtIndex:i] intValue];
+        iterator += slotChance;
+        if (iterator >= randValue) {
+            return i;
+        }
+    }
+    //TODO: Improve this error message
+    NSAssert(0, @"Error: generated number %i does not fit chance for any slot", randValue);
     return arc4random()%kNumberOfSlots;
 }
 
 
 
 #pragma mark - Reset Functions
+
 - (void) resetSlots
 {
-    [self.slotHistory removeAllObjects];
+    self.slotHistory = nil;
+    self.slotChanceTracker = nil;
     self.currentZIndex = kEnvelopeZPositionMin;
 }
 

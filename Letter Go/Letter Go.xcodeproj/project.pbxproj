@@ -79,13 +79,14 @@
 		A877E5BA185BF8C30028CFFA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CDF13617F474EC003065F6 /* Foundation.framework */; };
 		A877E5BB185BF8C30028CFFA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CDF13A17F474EC003065F6 /* UIKit.framework */; };
 		A877E5C1185BF8C30028CFFA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A877E5BF185BF8C30028CFFA /* InfoPlist.strings */; };
-		A877E5C3185BF8C30028CFFA /* Letter_Go_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = A877E5C2185BF8C30028CFFA /* Letter_Go_Tests.m */; };
 		A877E5CD185BFA960028CFFA /* LRLetterGenerator_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = A877E5CC185BFA960028CFFA /* LRLetterGenerator_Test.m */; };
 		A87BDD981853AC8D00845BB5 /* LRCurveBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = A87BDD971853AC8D00845BB5 /* LRCurveBuilder.m */; };
 		A87BDD9B1853AFDC00845BB5 /* LRBezierPath.m in Sources */ = {isa = PBXBuildFile; fileRef = A87BDD9A1853AFDC00845BB5 /* LRBezierPath.m */; };
 		A8BBFFE4185E26590055A3FD /* Background_Hills2.png in Resources */ = {isa = PBXBuildFile; fileRef = A8BBFFE0185E26590055A3FD /* Background_Hills2.png */; };
 		A8BBFFE5185E26590055A3FD /* Background_Mountains2.png in Resources */ = {isa = PBXBuildFile; fileRef = A8BBFFE1185E26590055A3FD /* Background_Mountains2.png */; };
 		A8BBFFE6185E26590055A3FD /* Background_Sky2.png in Resources */ = {isa = PBXBuildFile; fileRef = A8BBFFE2185E26590055A3FD /* Background_Sky2.png */; };
+		A8E60A131881E25F00F60DF4 /* LRCappedStack.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E60A121881E25F00F60DF4 /* LRCappedStack.m */; };
+		A8E60A161881F6E300F60DF4 /* LRFallingEnvelopeSlotManager_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E60A151881F6E300F60DF4 /* LRFallingEnvelopeSlotManager_Test.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -221,7 +222,6 @@
 		A877E5B8185BF8C30028CFFA /* Letter Go Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Letter Go Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A877E5BE185BF8C30028CFFA /* Letter Go Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Letter Go Tests-Info.plist"; sourceTree = "<group>"; };
 		A877E5C0185BF8C30028CFFA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		A877E5C2185BF8C30028CFFA /* Letter_Go_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Letter_Go_Tests.m; sourceTree = "<group>"; };
 		A877E5C4185BF8C30028CFFA /* Letter Go Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Letter Go Tests-Prefix.pch"; sourceTree = "<group>"; };
 		A877E5CC185BFA960028CFFA /* LRLetterGenerator_Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterGenerator_Test.m; sourceTree = "<group>"; };
 		A87BDD961853AC8D00845BB5 /* LRCurveBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRCurveBuilder.h; sourceTree = "<group>"; };
@@ -231,6 +231,10 @@
 		A8BBFFE0185E26590055A3FD /* Background_Hills2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background_Hills2.png; sourceTree = "<group>"; };
 		A8BBFFE1185E26590055A3FD /* Background_Mountains2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background_Mountains2.png; sourceTree = "<group>"; };
 		A8BBFFE2185E26590055A3FD /* Background_Sky2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background_Sky2.png; sourceTree = "<group>"; };
+		A8E60A111881E25F00F60DF4 /* LRCappedStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRCappedStack.h; sourceTree = "<group>"; };
+		A8E60A121881E25F00F60DF4 /* LRCappedStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRCappedStack.m; sourceTree = "<group>"; };
+		A8E60A151881F6E300F60DF4 /* LRFallingEnvelopeSlotManager_Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRFallingEnvelopeSlotManager_Test.m; sourceTree = "<group>"; };
+		A8E60A171881F89300F60DF4 /* LRFallingEnvelopeSlotManager_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LRFallingEnvelopeSlotManager_Private.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -462,10 +466,7 @@
 		00CDF12A17F474EC003065F6 = {
 			isa = PBXGroup;
 			children = (
-				00076E65186F819000287EF9 /* LRFont.h */,
-				00076E66186F819000287EF9 /* LRFont.m */,
-				00076E62186F798200287EF9 /* LRColor.h */,
-				00076E63186F798200287EF9 /* LRColor.m */,
+				A8E60A141881E27900F60DF4 /* Reusable Classes */,
 				0007FB30180B2FB600E55B0D /* Resources */,
 				008428EE1800992D00908E5D /* Property Lists */,
 				0049695A17F8AC3D00176F2D /* Constants */,
@@ -587,6 +588,7 @@
 				00CDF18017F48310003065F6 /* LRGamePlayLayer.h */,
 				00CDF18117F48310003065F6 /* LRGamePlayLayer.m */,
 				A82CA94A1855189F004ADD99 /* LRFallingEnvelopeSlotManager.h */,
+				A8E60A171881F89300F60DF4 /* LRFallingEnvelopeSlotManager_Private.h */,
 				A82CA94B1855189F004ADD99 /* LRFallingEnvelopeSlotManager.m */,
 			);
 			name = "Game Play Layer";
@@ -595,9 +597,9 @@
 		A877E5BC185BF8C30028CFFA /* Letter Go Tests */ = {
 			isa = PBXGroup;
 			children = (
-				A877E5C2185BF8C30028CFFA /* Letter_Go_Tests.m */,
 				A877E5CC185BFA960028CFFA /* LRLetterGenerator_Test.m */,
 				A846FB8A186E0489009DCEF4 /* LRLetterBlock_Test.m */,
+				A8E60A151881F6E300F60DF4 /* LRFallingEnvelopeSlotManager_Test.m */,
 				A877E5BD185BF8C30028CFFA /* Supporting Files */,
 			);
 			path = "Letter Go Tests";
@@ -622,6 +624,19 @@
 				A87BDD9A1853AFDC00845BB5 /* LRBezierPath.m */,
 			);
 			name = Bezier;
+			sourceTree = "<group>";
+		};
+		A8E60A141881E27900F60DF4 /* Reusable Classes */ = {
+			isa = PBXGroup;
+			children = (
+				00076E65186F819000287EF9 /* LRFont.h */,
+				00076E66186F819000287EF9 /* LRFont.m */,
+				00076E62186F798200287EF9 /* LRColor.h */,
+				00076E63186F798200287EF9 /* LRColor.m */,
+				A8E60A111881E25F00F60DF4 /* LRCappedStack.h */,
+				A8E60A121881E25F00F60DF4 /* LRCappedStack.m */,
+			);
+			name = "Reusable Classes";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -789,6 +804,7 @@
 				0055EC871826F21C00717DF7 /* LRMailman.m in Sources */,
 				00641EB3182D7BFF0098EC38 /* LRSliderLabelView.m in Sources */,
 				0049695517F8A75B00176F2D /* LRLetterBlockGenerator.m in Sources */,
+				A8E60A131881E25F00F60DF4 /* LRCappedStack.m in Sources */,
 				008428F318009F6300908E5D /* LRLetterGenerator.m in Sources */,
 				008428F61801EABB00908E5D /* LRSubmitButton.m in Sources */,
 				0049695917F8AB5D00176F2D /* LRCollisionManager.m in Sources */,
@@ -831,8 +847,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A846FB8B186E0489009DCEF4 /* LRLetterBlock_Test.m in Sources */,
-				A877E5C3185BF8C30028CFFA /* Letter_Go_Tests.m in Sources */,
 				A877E5CD185BFA960028CFFA /* LRLetterGenerator_Test.m in Sources */,
+				A8E60A161881F6E300F60DF4 /* LRFallingEnvelopeSlotManager_Test.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
