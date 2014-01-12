@@ -88,8 +88,13 @@
 
 - (NSString*) fileNameForEnvelopeSprite
 {
-    NSString *fileName = (self.loveLetter) ? @"Envelope_Love.png" : @"Envelope_Normal.png";
+    NSString *fileName = (self.loveLetter) ? @"Envelope_Love.png" : [self randomEnvelopeSprite];
     return fileName;
+}
+
+- (NSString*) randomEnvelopeSprite {
+    int suf = arc4random()%4 + 1;
+    return [NSString stringWithFormat:@"Envelope_Normal_%i.png", suf];
 }
 
 ///Checks if the letter is not a placeholder or empty

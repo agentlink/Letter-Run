@@ -27,6 +27,10 @@
 		0049695917F8AB5D00176F2D /* LRCollisionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049695817F8AB5D00176F2D /* LRCollisionManager.m */; };
 		0049695F17F8B5B900176F2D /* LRLetterSlot.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049695E17F8B5B900176F2D /* LRLetterSlot.m */; };
 		0049696517FA0CB400176F2D /* LRObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049696417FA0CB400176F2D /* LRObject.m */; };
+		0052356E187D0B9E00139CA1 /* Envelope_Normal_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 0052356A187D0B9E00139CA1 /* Envelope_Normal_1.png */; };
+		0052356F187D0B9E00139CA1 /* Envelope_Normal_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0052356B187D0B9E00139CA1 /* Envelope_Normal_2.png */; };
+		00523570187D0B9E00139CA1 /* Envelope_Normal_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 0052356C187D0B9E00139CA1 /* Envelope_Normal_3.png */; };
+		00523571187D0B9E00139CA1 /* Envelope_Normal_4.png in Resources */ = {isa = PBXBuildFile; fileRef = 0052356D187D0B9E00139CA1 /* Envelope_Normal_4.png */; };
 		0055EC871826F21C00717DF7 /* LRMailman.m in Sources */ = {isa = PBXBuildFile; fileRef = 0055EC861826F21C00717DF7 /* LRMailman.m */; };
 		00641EA9182C42D30098EC38 /* LRDevPauseMenuVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 00641EA7182C42D30098EC38 /* LRDevPauseMenuVC.m */; };
 		00641EAA182C42D30098EC38 /* LRDevPauseMenuVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 00641EA8182C42D30098EC38 /* LRDevPauseMenuVC.xib */; };
@@ -142,6 +146,10 @@
 		0049695E17F8B5B900176F2D /* LRLetterSlot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterSlot.m; sourceTree = "<group>"; };
 		0049696317FA0CB400176F2D /* LRObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRObject.h; sourceTree = "<group>"; };
 		0049696417FA0CB400176F2D /* LRObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRObject.m; sourceTree = "<group>"; };
+		0052356A187D0B9E00139CA1 /* Envelope_Normal_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Envelope_Normal_1.png; sourceTree = "<group>"; };
+		0052356B187D0B9E00139CA1 /* Envelope_Normal_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Envelope_Normal_2.png; sourceTree = "<group>"; };
+		0052356C187D0B9E00139CA1 /* Envelope_Normal_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Envelope_Normal_3.png; sourceTree = "<group>"; };
+		0052356D187D0B9E00139CA1 /* Envelope_Normal_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Envelope_Normal_4.png; sourceTree = "<group>"; };
 		0055EC851826F21C00717DF7 /* LRMailman.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRMailman.h; sourceTree = "<group>"; };
 		0055EC861826F21C00717DF7 /* LRMailman.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRMailman.m; sourceTree = "<group>"; };
 		00641EA6182C42D30098EC38 /* LRDevPauseMenuVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRDevPauseMenuVC.h; sourceTree = "<group>"; };
@@ -276,6 +284,10 @@
 				00AC280D182EEAD400B3C0EB /* Pause_Unselected.png */,
 				009B7277182991CB00A6CEA0 /* Manford.png */,
 				009B7276182991CB00A6CEA0 /* Envelope_Normal.png */,
+				0052356A187D0B9E00139CA1 /* Envelope_Normal_1.png */,
+				0052356B187D0B9E00139CA1 /* Envelope_Normal_2.png */,
+				0052356C187D0B9E00139CA1 /* Envelope_Normal_3.png */,
+				0052356D187D0B9E00139CA1 /* Envelope_Normal_4.png */,
 				00861282183819BF00C42AE0 /* Envelope_Love.png */,
 				0007FB31180B2FBB00E55B0D /* Background */,
 			);
@@ -726,9 +738,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				00523570187D0B9E00139CA1 /* Envelope_Normal_3.png in Resources */,
 				00641EAA182C42D30098EC38 /* LRDevPauseMenuVC.xib in Resources */,
 				009B727A182991CB00A6CEA0 /* Manford.png in Resources */,
 				00076E6118679AAE00287EF9 /* Background_Grass2.png in Resources */,
+				0052356E187D0B9E00139CA1 /* Envelope_Normal_1.png in Resources */,
 				000BC14F181C6B4600BEC563 /* Background_Mountains.png in Resources */,
 				008428F01800997800908E5D /* LetterProbabilities.plist in Resources */,
 				A8BBFFE5185E26590055A3FD /* Background_Mountains2.png in Resources */,
@@ -737,11 +751,13 @@
 				A8BBFFE6185E26590055A3FD /* Background_Sky2.png in Resources */,
 				00AC2804182EDAC100B3C0EB /* DifficultyVariables.plist in Resources */,
 				009B7279182991CB00A6CEA0 /* Envelope_Normal.png in Resources */,
+				00523571187D0B9E00139CA1 /* Envelope_Normal_4.png in Resources */,
 				00AC281D183178B800B3C0EB /* LRStatsPageViewController.xib in Resources */,
 				000BC15A1820351900BEC563 /* Background_Grass.png in Resources */,
 				000BC150181C6B4600BEC563 /* Background_Hills.png in Resources */,
 				009B727B182991CB00A6CEA0 /* Background_Cloud.png in Resources */,
 				00CDF14317F474EC003065F6 /* InfoPlist.strings in Resources */,
+				0052356F187D0B9E00139CA1 /* Envelope_Normal_2.png in Resources */,
 				00CDF15617F474EC003065F6 /* Images.xcassets in Resources */,
 				003C2670180F46C6003729D4 /* organizedDict.txt in Resources */,
 				00CDF14C17F474EC003065F6 /* Main.storyboard in Resources */,
@@ -965,10 +981,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Letter Go/Letter Go-Prefix.pch";
 				INFOPLIST_FILE = "Letter Go/Letter Go-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
 				WRAPPER_EXTENSION = app;
 			};
@@ -980,10 +998,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Letter Go/Letter Go-Prefix.pch";
 				INFOPLIST_FILE = "Letter Go/Letter Go-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
 				WRAPPER_EXTENSION = app;
 			};
