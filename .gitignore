@@ -1,5 +1,5 @@
 # Ignore user data
-/Letter\ Go/Letter\ Go.xcodeproj/xcuserdata
+/Letter\ Go/Letter\ Go.xcodeproj/xcuserdata/*
 
 Letter Go/Letter Go.xcodeproj/xcuserdata/Gabe.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
 Letter Go/Letter Go.xcodeproj/xcuserdata/Gabe.xcuserdatad/xcschemes/Letter Go.xcscheme

@@ -9,14 +9,31 @@
 #import <SpriteKit/SpriteKit.h>
 
 @interface LRScoreManager : SKNode
+
+/// An array of the words that have bee submitted this round in teh order they were submitted
+@property (readonly) NSMutableArray *submittedWords;
+
+/// The score required for the palyer to reach the next level
+@property (readonly) int scoreToNextLevel;
+
+///The shared instance of the score manager
 + (LRScoreManager*) shared;
 
-- (void) submitWord:(NSDictionary*)wordDict;
-- (int) score;
-+ (int) scoreForWord:(NSString*)word;
-+ (int) scoreForWordWithLoveLetters:(NSDictionary*)word;
+/*!
+ This functions submits a word for scoring/storing and returns the score as calculated by scoreForWordWithDict:(NSDictionary)dict
+ @param wordDict: Has word stored in "word" key and love letter indices scored in "loveLetters" set
+ @return The score for the word
+ */
+- (int) submitWord:(NSDictionary*)wordDict;
 
-@property (readonly) NSMutableArray *submittedWords;
-@property (readonly) int scoreToNextLevel;
+/*! This function calculates the score for a word, including bonuses for length and love letters
+ @param wordDict: Has word stored in "word" key and love letter indices scored in "loveLetters" set
+ @return The score for the word
+ */
++ (int) scoreForWordWithDict:(NSDictionary*)wordDict;
+
+/// Returns the player's current score
+- (int) score;
+
 
 @end

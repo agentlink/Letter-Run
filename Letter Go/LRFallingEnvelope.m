@@ -99,7 +99,7 @@
         curveArray = [NSMutableArray arrayWithArray:[LRCurveBuilder verticalFallingLetterActionsWithHeight:dropHeight andSwingCount:(arc4random()%3 + 3)]];
     }
     else {
-        curveArray = [NSMutableArray arrayWithArray:[LRCurveBuilder horizontalLetterActionForDistance:SCREEN_WIDTH + SIZE_LETTER_BLOCK * 2]];
+        curveArray = [NSMutableArray arrayWithArray:[LRCurveBuilder horizontalLetterActionForDistance:SCREEN_WIDTH + kLetterBlockDimension * 2]];
     }
     
     [curveArray addObject:[SKAction runBlock:^{
@@ -159,19 +159,19 @@
 {
     _slot = newSlot;
     if ([[LRDifficultyManager shared] lettersFallVertically]) {
-        CGFloat leftBuffer = SIZE_LETTER_BLOCK * 3 - SCREEN_WIDTH/2;
-        CGFloat letterDistance = SIZE_LETTER_BLOCK * 1.7;
+        CGFloat leftBuffer = kLetterBlockDimension * 3 - SCREEN_WIDTH/2;
+        CGFloat letterDistance = kLetterBlockDimension * 1.7;
         int offsetDegree = 10;
         int offset = arc4random()%(offsetDegree*2) - offsetDegree;
         self.position = CGPointMake(newSlot * letterDistance + leftBuffer + (float)offset, self.position.y);
     }
     else {
-        CGFloat grassHeight = SIZE_GRASS_HEIGHT;
-        CGFloat topBufferSize = SIZE_HEIGHT_HEALTH_SECTION + SIZE_LETTER_BLOCK/2;
-        CGFloat bottomBufferSize = SIZE_HEIGHT_LETTER_SECTION + SIZE_LETTER_BLOCK/2 + grassHeight;
+        CGFloat grassHeight = kParallaxHeightGrass;
+        CGFloat topBufferSize = kSectionHeightHealth + kLetterBlockDimension/2;
+        CGFloat bottomBufferSize = kSectionHeightLetterSection + kLetterBlockDimension/2 + grassHeight;
         CGFloat letterDistance = (SCREEN_HEIGHT - topBufferSize - bottomBufferSize) /(kNumberOfSlots - 1);
         
-        CGFloat xPos = SCREEN_WIDTH/2 + SIZE_LETTER_BLOCK;
+        CGFloat xPos = SCREEN_WIDTH/2 + kLetterBlockDimension;
         if ([[LRDifficultyManager shared] mailmanScreenSide] == MailmanScreenRight) {
             xPos *= -1;
         }

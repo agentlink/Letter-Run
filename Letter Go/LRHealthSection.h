@@ -11,9 +11,9 @@
 
 @interface LRHealthSection : LRScreenSection
 
-- (void) submitWord:(NSString*) word;
-
+- (void) addScore: (int)wordScore;
 - (CGFloat) percentHealth;
 - (void) moveHealthByPercent:(CGFloat)percent;
+
 
 @end

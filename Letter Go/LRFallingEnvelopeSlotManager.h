@@ -11,10 +11,11 @@
 #import <SpriteKit/SpriteKit.h>
 #import <Foundation/Foundation.h>
 
+static const int kSlotHistoryCapacity = 5;
+
 @interface LRFallingEnvelopeSlotManager : NSObject
 
 - (void) resetSlots;
 - (void) addEnvelope:(LRFallingEnvelope*)envelope;
-- (BOOL) removeEnvelope:(LRFallingEnvelope*)envelope;
 
 @end

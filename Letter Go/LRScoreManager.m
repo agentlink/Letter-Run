@@ -24,7 +24,6 @@ static LRScoreManager *_shared = nil;
 
 + (LRScoreManager*) shared
 {
-    //This @synchronized line is for multithreading
     @synchronized (self)
     {
 		if (!_shared) {
@@ -44,22 +43,64 @@ static LRScoreManager *_shared = nil;
     return self;
 }
 
-#pragma mark - Word Submission
+#pragma mark - Word Submission + Score Calculation
 
-- (void) submitWord:(NSDictionary*)wordDict
+- (int) submitWord:(NSDictionary*)wordDict
 {
     
     //Add to the score
-    int wordScore = [LRScoreManager scoreForWordWithLoveLetters:wordDict];
+    int wordScore = [LRScoreManager scoreForWordWithDict:wordDict];
     self.score += wordScore;
     NSMutableDictionary *updatedWordDict = [NSMutableDictionary dictionaryWithDictionary:wordDict];
     [updatedWordDict setObject:[NSNumber numberWithInt:wordScore] forKey:@"score"];
-
+    
     [submittedWords addObject:updatedWordDict];
-
+    
     //Check for level progression
     if (self.score >= scoreToNextLevel)
         [self progressLevel];
+    return wordScore;
+}
+
++ (int) scoreForWordWithDict:(NSDictionary*)wordDict
+{
+    NSString *word = [wordDict objectForKey:@"word"];
+    NSSet *loveLetterIndices = [wordDict objectForKey:@"loveLetters"];
+    
+    int scorePerLetter = [[LRDifficultyManager shared] scorePerLetter];
+    int loveLetterMultiplier = [[LRDifficultyManager shared] loveLetterMultiplier];
+    int wordLength = [word length];
+    int wordScore = 0;
+
+    //For every letter in the word...
+    for (int i = 0; i < wordLength; i++) {
+        //...set it equal to the base score...
+        int letterScore = scorePerLetter;
+        //...and if it's a love letter, multiply it by the love letter multiplier.
+        if ([loveLetterIndices containsObject:@(i)]) {
+            letterScore *= loveLetterMultiplier;
+        }
+        wordScore += letterScore;
+    }
+    
+    //Multiply it by the lenght multiplier
+    wordScore *= [LRScoreManager scoreMultiplierForLength:wordLength];
+    return wordScore;
+}
+
++ (CGFloat) scoreMultiplierForLength: (int)length
+{
+    CGFloat fLength = (CGFloat)length;
+    CGFloat multiplier = (fLength - 1)/2;
+    return multiplier;
+}
+
+#pragma mark - Game State and Level Progression
+
+- (void) newGame {
+    self.score = 0;
+    scoreToNextLevel  = [[LRDifficultyManager shared] initialNextLevelScore];
+    submittedWords = [NSMutableArray array];
 }
 
 - (void) progressLevel
@@ -82,42 +123,8 @@ static LRScoreManager *_shared = nil;
             scoreToNextLevel += self.lastScoreToNextLevel * [[LRDifficultyManager shared] levelScoreIncreaseFactor];
             break;
     }
-}
-
-#pragma mark - Getters + Setters
-+ (int) scoreForWord:(NSString*)word
-{
-    float scoreFactor = [[LRDifficultyManager shared] scoreLengthFactor];
-    float baseScore = [word length] * [[LRDifficultyManager shared] scorePerLetter];
+    NSLog(@"Level %i", [[LRDifficultyManager shared] level]);
     
-    if ([[LRDifficultyManager shared] scoreIncreaseStyle] == IncreaseStyle_Exponential)
-        //Should be greater than one
-        return pow(baseScore, scoreFactor);
-    else if ([[LRDifficultyManager shared] scoreIncreaseStyle] == IncreaseStyle_Linear)
-        //Should be less than one
-        return baseScore + (baseScore * scoreFactor * [word length]);
-    else if ([[LRDifficultyManager shared] scoreIncreaseStyle] == IncreaseStyle_None)
-        return baseScore;
-
-    return baseScore;
-}
-
-+ (int) scoreForWordWithLoveLetters:(NSDictionary *)wordDict
-{
-    int wordScore = [self scoreForWord:[wordDict objectForKey:@"word"]];
-    for (int i = 0; i < [(NSSet*)[wordDict objectForKey:@"loveLetters"] count]; i++)
-        wordScore += [[LRDifficultyManager shared] loveLetterBonus];
-    return wordScore;
-}
-
-- (int) score {
-    return _score;
-}
-
-- (void) newGame {
-    self.score = 0;
-    scoreToNextLevel  = [[LRDifficultyManager shared] initialNextLevelScore];
-    submittedWords = [NSMutableArray array];
 }
 
 

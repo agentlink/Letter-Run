@@ -65,7 +65,7 @@ static const CGFloat kLetterEntryPointY = -35.0;
 - (void)setScreenSide:(MailmanScreenSide)screenSide
 {
     CGFloat xPos = [self xPositionForScreenSide:screenSide];
-    CGFloat yPos = 0 - SCREEN_HEIGHT/2 + SIZE_HEIGHT_LETTER_SECTION + self.size.height/2;
+    CGFloat yPos = 0 - SCREEN_HEIGHT/2 + kSectionHeightLetterSection + self.size.height/2;
     self.position = CGPointMake(xPos, yPos);
     
     if (screenSide == MailmanScreenLeft) {

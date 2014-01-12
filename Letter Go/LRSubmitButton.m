@@ -19,10 +19,10 @@ static const CGFloat kSubmitButtonFontSize = 12;
 
 #pragma mark - Public Functions
 
-- (id) initWithColor:(UIColor *)color size:(CGSize)size
-{
-    if (self = [super initWithColor:color size:size])
-    {
+- (id) init {
+    self = [super initWithColor:[LRColor submitButtonDisabledColor]
+                           size:CGSizeMake(kLetterBlockDimension, kLetterBlockDimension)];
+    if (self) {
         [self addChild:self.label];
     }
     return self;

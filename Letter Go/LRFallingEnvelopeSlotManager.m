@@ -11,131 +11,132 @@
 #import "LRPositionConstants.h"
 #import "LRGameStateManager.h"
 #import "LRDifficultyManager.h"
+#import "LRCappedStack.h"
+#import "LRFallingEnvelopeSlotManager_Private.h"
 
-
-@interface LRFallingEnvelopeSlotManager ()
-
-@property NSMutableArray *slotSortedEnvelopeList;
-@property NSMutableArray *timeSortedEnvelopeList;
-@property CGFloat currentZIndex;
-
-
-@end
+static const int kNilSlotValue = -1;
 
 @implementation LRFallingEnvelopeSlotManager
-@synthesize slotSortedEnvelopeList, timeSortedEnvelopeList;
 #pragma mark - Overridden Functions
 
 - (id) init
 {
     //Initialize the array as a list of arrays
     if (self = [super init]) {
-        
-        slotSortedEnvelopeList = [NSMutableArray new];
-        timeSortedEnvelopeList = [NSMutableArray new];
-        
         self.currentZIndex = kEnvelopeZPositionMin;
-        
-        for (int i = 0; i < kNumberOfSlots; i++) {
-            [slotSortedEnvelopeList setObject:[NSMutableArray array] atIndexedSubscript:i];
-        }
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeEnvelopeFromNotification:) name:NOTIFICATION_LETTER_CLEARED object:nil];
     }
     return self;
 }
 
-#pragma mark - Letter Addition and Removal
+#pragma mark - Private Properties
+
+- (LRCappedStack*) slotHistory {
+    if (!_slotHistory) {
+        _slotHistory = [[LRCappedStack alloc] initWithCapacity:kSlotHistoryCapacity];
+    }
+    return _slotHistory;
+}
+
+- (NSMutableArray*) slotChanceTracker {
+    if (!_slotChanceTracker) {
+        _slotChanceTracker = [NSMutableArray new];
+        for (int i = 0; i < kNumberOfSlots; i++) {
+            [_slotChanceTracker addObject:@(kSlotHistoryCapacity)];
+        }
+    }
+    return _slotChanceTracker;
+}
+
+#pragma mark - Letter Addition
 
 - (void) addEnvelope:(LRFallingEnvelope*)envelope
 {
-    //Slot list
-    int slotIndex = [self getIndexOfNextSlot];
-    [envelope setSlot:slotIndex];
-    [self addObject:envelope atSlotIndex:slotIndex];
-    
-    //Time list
+    int slotIndexToDecrease = [self getIndexOfNextSlot];
+    int slotIndexToIncrease = kNilSlotValue;
+
+    [envelope setSlot:slotIndexToDecrease];
     [self setZPositionForEnvelope:envelope];
-    [self.timeSortedEnvelopeList addObject:envelope];
-}
-
-- (void) addObject:(id)anObject atSlotIndex:(NSUInteger)index
-{
-    NSMutableArray *slot = [slotSortedEnvelopeList objectAtIndex:index];
-    [slot addObject:anObject];
-}
-
-- (void) removeEnvelopeFromNotification:(NSNotification*)notification
-{
-    LRFallingEnvelope *envelope = [[notification userInfo] objectForKey:@"envelope"];
-    NSAssert(envelope, @"Error: notification does not include element.");
-    if (![[LRGameStateManager shared] isGameOver])
-        NSAssert ([self removeEnvelope:envelope], @"Error: envelope with letter %@ is not in slot or time list.", envelope.letter);
-
-}
-
-- (BOOL) removeEnvelope:(LRFallingEnvelope*)envelope
-{
-    //Time list
-    [timeSortedEnvelopeList removeObject:envelope];
     
-    //Slot list
-    NSMutableArray *slotArray = [slotSortedEnvelopeList objectAtIndex:envelope.slot];
-    BOOL retValue = [slotArray containsObject:envelope];
-    //Returns FALSE if envelope is not in the slot
-    [slotArray removeObject:envelope];
-    return retValue;
+    //Push the slot and get the number to decrease
+    NSNumber *slotToIncrease = [self.slotHistory pushObject:@(slotIndexToDecrease)];
+
+    //If the slot history is full...
+    if (slotToIncrease) {
+        //Push an object onto the history stack and see if anything gets popped off
+        slotIndexToIncrease = [slotToIncrease intValue];
+    }
+        //Manage the slot chances
+        [self increaseChanceForSlot:slotIndexToIncrease
+                 andDecreaseForSlot:slotIndexToDecrease];
+}
+
+- (void) increaseChanceForSlot:(int)increase andDecreaseForSlot:(int)decrease
+{
+
+
+    //Decrease the chance for one slot...
+    NSNumber *decreaseSlotOldValue = [self.slotChanceTracker objectAtIndex:decrease];
+    NSNumber *newDecreasedValue = @([decreaseSlotOldValue intValue] - 1);
+    [self.slotChanceTracker setObject:newDecreasedValue atIndexedSubscript:decrease];
+    
+    //...and possibly increase the chance for another
+    if (increase != kNilSlotValue) {
+        NSNumber *increaseSlotOldValue = [self.slotChanceTracker objectAtIndex:increase];
+        //Increase one slot value...
+        NSNumber *newIncreasedValue = @([increaseSlotOldValue intValue] + 1);
+        [self.slotChanceTracker setObject:newIncreasedValue atIndexedSubscript:increase];
+    }
 }
 
 #pragma mark - zPosition Function
 
 - (void) setZPositionForEnvelope:(LRFallingEnvelope*)envelope
 {
-    //If next zPosition would be in front of the grass layer, push them all back
+    /*
+     NOTE: Reaching this condition would take about 40 minutes of play. If this point ever got
+     reached, then newer letters would be behind older letters until all the letters on the
+     screen before this condition got reached flew away. It is such a deep bounds case
+     that it's not worth adding an observer to check for it.
+     */
     if (self.currentZIndex + zDiff_Envelope_Envelope >= kEnvelopeZPositionMax)
-        [self pushBackZIndices];
+        self.currentZIndex = kEnvelopeZPositionMin;
     self.currentZIndex += zDiff_Envelope_Envelope;
     envelope.zPosition = self.currentZIndex;
     
 }
 
-- (void) pushBackZIndices
-{
-    //Invariant: there are less than 1 / zDiff_Envelope_Envelope letters on the screen
-    for (int i = 0; i < [timeSortedEnvelopeList count]; i++) {
-        LRFallingEnvelope *envelope = timeSortedEnvelopeList[i];
-        self.currentZIndex = i * zDiff_Envelope_Envelope + kEnvelopeZPositionMin;
-        envelope.zPosition =  self.currentZIndex;
-    }
-}
-
-#pragma mark - Slot Index Functions
+#pragma mark - Next Slot Functions
 
 - (int) getIndexOfNextSlot
 {
-    //Get a list of the empty slots
-    NSMutableArray *emptySlots = [NSMutableArray array];
-    for (int i = 0; i < kNumberOfSlots; i++) {
-        if (![[slotSortedEnvelopeList objectAtIndex:i] count]) {
-            [emptySlots addObject:@(i)];
+    //If the slot history is not filled, generate slots randomly
+    if ([self.slotHistory count] != kSlotHistoryCapacity) {
+        return arc4random()%kNumberOfSlots;
+    }
+    int maxRandValue = (kNumberOfSlots - 1) * kSlotHistoryCapacity ;
+    int randValue = arc4random()%maxRandValue + 1;
+    int iterator = 0;
+    for (int i = 0; i < [self.slotChanceTracker count]; i++) {
+        int slotChance = [[self.slotChanceTracker objectAtIndex:i] intValue];
+        iterator += slotChance;
+        if (iterator >= randValue) {
+            return i;
         }
     }
-    //If there is an empty slot, return a random one of those
-    if (emptySlots.count) {
-        return [[emptySlots objectAtIndex:arc4random()%emptySlots.count] intValue];
-    }
-    
-    //Otherwise, return a random slot
-    //TODO: Implement method that then chooses the least full slot (or least recently dropped slot)
+    //TODO: Improve this error message
+    NSAssert(0, @"Error: generated number %i does not fit chance for any slot", randValue);
     return arc4random()%kNumberOfSlots;
 }
 
+
+
 #pragma mark - Reset Functions
+
 - (void) resetSlots
 {
-    for (NSMutableArray *slot in slotSortedEnvelopeList) {
-        [slot removeAllObjects];
-    }
-    [timeSortedEnvelopeList removeAllObjects];
+    self.slotHistory = nil;
+    self.slotChanceTracker = nil;
+    self.currentZIndex = kEnvelopeZPositionMin;
 }
 
 @end

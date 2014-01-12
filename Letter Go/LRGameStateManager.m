@@ -55,7 +55,7 @@ static LRGameStateManager *_shared = nil;
 - (BOOL) isLetterSectionFull
 {
     LRLetterSection *letterSection = [[(LRGameScene*)self.scene gamePlayLayer] letterSection];
-    return ([letterSection numLettersInSection] == LETTER_CAPACITY);
+    return ([letterSection numLettersInSection] == kWordMaximumLetterCount);
 }
 
 #pragma mark - Game State Functions

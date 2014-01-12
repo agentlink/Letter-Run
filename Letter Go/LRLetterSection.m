@@ -15,14 +15,11 @@
 #import "LRDictionaryChecker.h"
 #import "LRGameScene.h"
 
-//UICollectionView
-//868-Hack
-
 @interface LRLetterSection ()
 
-@property SKSpriteNode *letterSection;
-@property LRSubmitButton *submitButton;
-@property NSMutableArray *letterSlots;
+@property (nonatomic, strong) SKSpriteNode *letterSection;
+@property (nonatomic, strong) LRSubmitButton *submitButton;
+@property (nonatomic, strong) NSMutableArray *letterSlots;
 
 @property (nonatomic) LRLetterSlot  *currentSlot;
 @property LRSectionBlock *touchedBlock;
@@ -30,7 +27,8 @@
 @end
 
 @implementation LRLetterSection
-#pragma mark - Set Up
+
+#pragma mark - Set Up/Initialization
 
 - (id) initWithSize:(CGSize)size
 {
@@ -50,8 +48,48 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishRearrangement:) name:NOTIFICATION_REARRANGE_FINISH object:nil];
 }
 
-# pragma mark - Game State Functions
+- (void) createSectionContent
+{
+    [self addChild:self.letterSection];
+    [self addChild:self.submitButton];
+    
+    for (LRLetterSlot *slot in self.letterSlots) {
+        [self addChild:slot];
+    }
+}
 
+#pragma mark - Private Properties
+
+- (SKSpriteNode*) letterSection {
+    if (!_letterSection) {
+        _letterSection = [SKSpriteNode spriteNodeWithColor:[LRColor letterSectionColor] size:self.size];
+    }
+    return _letterSection;
+}
+
+- (LRSubmitButton*) submitButton {
+    if (!_submitButton) {
+        _submitButton = [LRSubmitButton new];
+        _submitButton.position = CGPointMake([self xPosFromSlotIndex:kWordMaximumLetterCount], 0);
+    }
+    return _submitButton;
+}
+
+- (NSMutableArray*) letterSlots {
+    if (!_letterSlots) {
+        _letterSlots = [NSMutableArray new];
+        
+        //Fill the letter slot array with LRSlots
+        for (int i = 0; i < kWordMaximumLetterCount; i++) {
+            LRLetterSlot *slot = [LRLetterSlot new];
+            slot.position = CGPointMake([self xPosFromSlotIndex:i], 0.0);
+            [_letterSlots addObject:slot];
+        }
+    }
+    return _letterSlots;
+}
+
+# pragma mark - Game State Functions
 - (void) clearLetterSection
 {
     for (LRLetterSlot *slot in self.letterSlots) {
@@ -60,37 +98,12 @@
     [self updateSubmitButton];
 }
 
-- (void) createSectionContent
-{
-    //The color will be replaced by a health bar sprite
-    self.letterSection = [SKSpriteNode spriteNodeWithColor:[LRColor letterSectionColor] size:self.size];
-    [self addChild:self.letterSection];
-    self.letterSlots = [[NSMutableArray alloc] initWithCapacity:LETTER_CAPACITY];
-    
-    
-    //Create the letter slots
-    for (int i = 0; i < LETTER_CAPACITY; i++)
-    {
-        float yOffSet = 0;
-        LRLetterSlot *slot = [[LRLetterSlot alloc] init];
-        slot.position = CGPointMake([self xPosFromSlotIndex:i], yOffSet);
-        [self.letterSlots addObject:slot];
-        [self addChild:slot];
-    }
-    
-    //Create submit button
-    LRSubmitButton *submitButton = [[LRSubmitButton alloc] initWithColor:[SKColor lightGrayColor] size:[[self.letterSlots objectAtIndex:0] size]];
-    submitButton.position = CGPointMake([self xPosFromSlotIndex:LETTER_CAPACITY], 0);
-    self.submitButton = submitButton;
-    [self addChild:submitButton];
-}
-
 - (CGFloat) xPosFromSlotIndex:(int) index {
     float slotMargin, edgeBuffer;
-    slotMargin = (IS_IPHONE_5) ? SIZE_LETTER_BLOCK/3.3 : SIZE_LETTER_BLOCK/4;
-    edgeBuffer = (self.size.width - (slotMargin + SIZE_LETTER_BLOCK) * LETTER_CAPACITY - SIZE_LETTER_BLOCK)/2;
+    slotMargin = (IS_IPHONE_5) ? kLetterBlockDimension/3.3 : kLetterBlockDimension/4;
+    edgeBuffer = (self.size.width - (slotMargin + kLetterBlockDimension) * kWordMaximumLetterCount - kLetterBlockDimension)/2;
 
-    float retVal = 0 - self.size.width/2 + edgeBuffer + SIZE_LETTER_BLOCK/2 + index * (SIZE_LETTER_BLOCK + slotMargin);
+    float retVal = 0 - self.size.width/2 + edgeBuffer + kLetterBlockDimension/2 + index * (kLetterBlockDimension + slotMargin);
     return retVal;
 }
 
@@ -159,18 +172,16 @@
 - (void) submitWord:(NSNotification*)notification
 {
     NSString *forcedWord = [[notification userInfo] objectForKey:@"forcedWord"];
-    if (!forcedWord) {
-        NSString *currentWord = [self getCurrentWord];
-        NSDictionary *wordDict = [NSDictionary dictionaryWithObjects:@[currentWord, [self loveLetterIndices]] forKeys:@[@"word", @"loveLetters"]];
-        
-        [[LRScoreManager shared] submitWord:wordDict];
-        [[[(LRGameScene*)[self scene] gamePlayLayer] healthSection] submitWord:currentWord];
-        
+    NSString *submittedWord = (forcedWord) ? forcedWord : [self getCurrentWord];
+    
+    
+    NSDictionary *wordDict = [NSDictionary dictionaryWithObjects:@[submittedWord, [self loveLetterIndices]] forKeys:@[@"word", @"loveLetters"]];
+    int wordScore = [[LRScoreManager shared] submitWord:wordDict];
+    if (!forcedWord)
+    {
+        LRHealthSection *healthSection = [[(LRGameScene*)[self scene] gamePlayLayer] healthSection];
+        [healthSection addScore:wordScore];
         [self clearLetterSection];
-    }
-    else {
-        NSDictionary *wordDict = [NSDictionary dictionaryWithObjects:@[forcedWord, [[NSSet alloc] init]] forKeys:@[@"word", @"loveLetters"]];
-        [[LRScoreManager shared] submitWord:wordDict];
     }
 }
 
@@ -207,7 +218,7 @@
         if ([(LRLetterSlot*)[self.letterSlots objectAtIndex:i] isLetterSlotEmpty])
             break;
     }
-    self.submitButton.userInteractionEnabled = (i >= LETTER_MINIMUM_COUNT && [[LRDictionaryChecker shared] checkForWordInDictionary:[self getCurrentWord]]);
+    self.submitButton.userInteractionEnabled = (i >= kWordMinimumLetterCount && [[LRDictionaryChecker shared] checkForWordInDictionary:[self getCurrentWord]]);
 }
 
 #pragma mark - Reordering Functions

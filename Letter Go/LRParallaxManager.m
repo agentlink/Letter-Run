@@ -23,7 +23,7 @@
 {
     if (self = [super init])
     {
-        self.initialTime = GAME_LOOP_RESET;
+        self.initialTime = kGameLoopResetValue;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(unpauseGame) name:GAME_STATE_CONTINUE_GAME object:nil];
     }
     return self;
@@ -43,10 +43,10 @@
 - (void) update:(NSTimeInterval)currentTime
 {
     if ([[LRGameStateManager shared] isGameOver] || [[LRGameStateManager shared] isGamePaused]) {
-        self.initialTime = GAME_LOOP_RESET;
+        self.initialTime = kGameLoopResetValue;
         return;
     }
-    else if (self.initialTime == GAME_LOOP_RESET) {
+    else if (self.initialTime == kGameLoopResetValue) {
         self.initialTime = currentTime;
         return;
     }
@@ -71,6 +71,6 @@
 #pragma mark - Game State Methods
 
 - (void) unpauseGame {
-    self.initialTime = GAME_LOOP_RESET;
+    self.initialTime = kGameLoopResetValue;
 }
 @end

@@ -15,7 +15,6 @@ typedef enum  {
     IncreaseStyle_Exponential
 } IncreaseStyle;
 
-static const int kNumberOfSlots = 4;
 
 @interface LRDifficultyManager : LRObject
 
@@ -30,7 +29,6 @@ static const int kNumberOfSlots = 4;
 @property int level;
 
 #pragma mark - Score Properties
-@property IncreaseStyle scoreIncreaseStyle;
 @property CGFloat scoreLengthFactor;
 @property int scorePerLetter;
 
@@ -53,12 +51,14 @@ static const int kNumberOfSlots = 4;
 @property CGFloat healthPercentIncreasePer100Pts;
 @property CGFloat initialHealthDropTime;
 @property CGFloat healthSpeedIncreaseFactor;
-@property IncreaseStyle healthSpeedIncreaseStyle;
 @property CGFloat healthBarMinDropTime;
+//Not saved
+@property CGFloat healthInFallenEnvelopes;
+
 
 #pragma mark - Mailman/Love Letter Properties
 @property CGFloat mailmanHitDamage;
-@property int loveLetterBonus;
+@property int loveLetterMultiplier;
 @property int percentLoveLetters;
 @property CGFloat flingLetterSpeed;
 
