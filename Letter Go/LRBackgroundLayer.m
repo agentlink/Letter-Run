@@ -50,22 +50,18 @@
         CGFloat grassHeightOffset = -2;
         switch (i) {
             case BackgroundIndex_Sky:
-                layer.xOffset = -10;
                 layer.zPosition = zPos_SkyLayer;
                 break;
             case BackgroundIndex_Mountains:
-                layer.xOffset = 0;
                 layer.zPosition = zPos_MountainLayer;
                 break;
             case BackgroundIndex_Hills:
                 layer.position = CGPointMake(layer.position.x, [layer repeatingSprite].size.height/4 - self.size.height/2);
-                layer.xOffset = -6;
                 layer.zPosition = zPos_HillsLayer;
                 break;
             case BackgroundIndex_Grass:
                 layer.position = CGPointMake(layer.position.x, [layer repeatingSprite].size.height/4 - self.size.height/2 + kSectionHeightLetterSection + grassHeightOffset);
                 layer.zPosition = zPos_GrassLayer;
-                layer.xOffset = -10;
                 break;
             default:
                 break;

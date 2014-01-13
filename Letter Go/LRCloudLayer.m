@@ -15,7 +15,7 @@
 - (id) init
 {
     if (self = [super initWithImageNamed:@""]) {
-        
+        self.xOffset = -10;
     }
     return self;
 }
