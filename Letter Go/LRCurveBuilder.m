@@ -51,8 +51,8 @@ typedef enum {
     
     for (int i = 0; i < swingCount; i++)
     {
-        CGPoint start = CGPointMake(0, 0);
-        CGPoint c1 = CGPointMake(0, 0);
+        CGPoint start = CGPointZero;
+        CGPoint c1 = CGPointZero;
         CGPoint c2 = CGPointMake(0, nextPosition.y);
         
         LRBezierPath *letterPath = [LRCurveBuilder bezierWithStart:start c1:c1 c2:c2 end:nextPosition];
@@ -89,8 +89,8 @@ typedef enum {
     if ([[LRDifficultyManager shared] mailmanScreenSide] == MailmanScreenLeft)
         distance *= -1;
     
-    CGPoint start = CGPointMake(0, 0);
-    CGPoint c1 = CGPointMake(0, 0);
+    CGPoint start = CGPointZero;
+    CGPoint c1 = CGPointZero;
     CGPoint c2 = CGPointMake(distance, -15);
     CGPoint end = CGPointMake(distance, 0);
     

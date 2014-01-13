@@ -25,7 +25,7 @@
     if (self = [super init])
     {
         self.size = CGSizeMake(SCREEN_WIDTH * 3, kParallaxHeightGrass);
-        self.yOffset = 0;
+        self.xOffset = 0;
         self.envelopeArray = [NSMutableArray array];
         
         [self addGrassSprites];
@@ -70,7 +70,7 @@
             sprite.position.x < 0 - self.scene.size.width - sprite.size.width/2)
         {
             SKSpriteNode *backSprite = [self.grassSpriteArray lastObject];
-            sprite.position = CGPointMake(backSprite.position.x + sprite.size.width + self.yOffset, sprite.position.y);
+            sprite.position = CGPointMake(backSprite.position.x + sprite.size.width + self.xOffset, sprite.position.y);
             swapGrass = TRUE;
         }
     }

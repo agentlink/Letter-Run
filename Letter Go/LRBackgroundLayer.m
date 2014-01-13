@@ -36,9 +36,9 @@
     [self addChild:self.parallaxManager];
     [self.parallaxManager addParallaxNode:[[LRCloudLayer alloc] init]
                                   toIndex:BackgroundIndex_Sky];
-    [self.parallaxManager addParallaxNode:[LRParallaxNode nodeWithImageNamed:@"Background_Mountains2.png"]
+    [self.parallaxManager addParallaxNode:[LRParallaxNode nodeWithImageNamed:@"Background_Mountains.png"]
                                   toIndex:BackgroundIndex_Mountains];
-    [self.parallaxManager addParallaxNode:[LRParallaxNode nodeWithImageNamed:@"Background_Hills2.png"]
+    [self.parallaxManager addParallaxNode:[LRParallaxNode nodeWithImageNamed:@"Background_Hills.png"]
                                   toIndex:BackgroundIndex_Hills];
     [self.parallaxManager addParallaxNode:[[LRGrassLayer alloc] init]
                                   toIndex:BackgroundIndex_Grass];
@@ -50,22 +50,22 @@
         CGFloat grassHeightOffset = -2;
         switch (i) {
             case BackgroundIndex_Sky:
-                layer.yOffset = -5;
+                layer.xOffset = -10;
                 layer.zPosition = zPos_SkyLayer;
                 break;
             case BackgroundIndex_Mountains:
-                layer.yOffset = -2;
+                layer.xOffset = 0;
                 layer.zPosition = zPos_MountainLayer;
                 break;
             case BackgroundIndex_Hills:
                 layer.position = CGPointMake(layer.position.x, [layer repeatingSprite].size.height/4 - self.size.height/2);
-                layer.yOffset = -10;
+                layer.xOffset = -6;
                 layer.zPosition = zPos_HillsLayer;
                 break;
             case BackgroundIndex_Grass:
                 layer.position = CGPointMake(layer.position.x, [layer repeatingSprite].size.height/4 - self.size.height/2 + kSectionHeightLetterSection + grassHeightOffset);
                 layer.zPosition = zPos_GrassLayer;
-                layer.yOffset = -10;
+                layer.xOffset = -10;
                 break;
             default:
                 break;

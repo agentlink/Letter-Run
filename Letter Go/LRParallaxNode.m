@@ -29,7 +29,7 @@
     if (self = [super init])
     {
         self.imageName = name;
-        self.yOffset = 0;
+        self.xOffset = 0;
         [self loadScrollingSprites];
     }
     return self;
@@ -57,19 +57,20 @@
 
 - (void) moveNodeBy:(CGFloat)distance
 {
-    BOOL swap = FALSE;
-    for (SKSpriteNode *sprite in self.scrollingSprites) {
-        sprite.position = CGPointMake(sprite.position.x + distance, sprite.position.y);
-        //If the sprite is off screen, move it to the back
-        if (sprite == [self.scrollingSprites objectAtIndex:0] &&
-            sprite.position.x < 0 - self.scene.size.width - sprite.size.width/2)
-        {
-            SKSpriteNode *secondSprite = [self.scrollingSprites objectAtIndex:1];
-            sprite.position = CGPointMake(secondSprite.position.x + sprite.size.width + self.yOffset, sprite.position.y);
-            swap = TRUE;
-        }
+    SKSpriteNode *sprite1 = [self.scrollingSprites objectAtIndex:0];
+    SKSpriteNode *sprite2 = [self.scrollingSprites objectAtIndex:1];
+
+    //Shift the sprites down
+    sprite1.position = CGPointMake(sprite1.position.x + distance, sprite1.position.y);
+    sprite2.position = CGPointMake(sprite2.position.x + distance, sprite2.position.y);
+    
+    //And if they have gone off screen, put them to the other side of the sprite that is still on screen
+    if (sprite1.position.x < -sprite1.size.width) {
+        sprite1.position = CGPointMake(sprite2.position.x + sprite1.size.width, sprite1.position.y);
     }
-    if (swap) [self.scrollingSprites exchangeObjectAtIndex:0 withObjectAtIndex:1];
+    if (sprite2.position.x < -sprite2.size.width) {
+        sprite2.position = CGPointMake(sprite1.position.x + sprite2.size.width, sprite2.position.y);
+    }
 }
 
 @end

@@ -54,7 +54,7 @@
         if ([incomingBlock parent])
             [incomingBlock removeFromParent];
         _currentBlock = incomingBlock;
-        _currentBlock.position = CGPointMake(0, 0);
+        _currentBlock.position = CGPointZero;
         [self addChild:_currentBlock];
     }
     _currentBlock.zPosition = zPos_SectionBlock;
