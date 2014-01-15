@@ -17,10 +17,10 @@
 
 @property (nonatomic, strong) LRHealthSection *healthSection;
 @property (nonatomic, strong) LRLetterSection *letterSection;
+@property (nonatomic, strong) LRScreenSection *mainSection;
+
 @property (nonatomic, strong) LRButton *pauseButton;
 
 @property (nonatomic, strong) LRDevPauseMenuVC *devPause;
-
-- (CGPoint) flungEnvelopeDestination;
 
 @end

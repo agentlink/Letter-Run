@@ -7,7 +7,7 @@
 //
 
 static const float zPos_HealthSection = 100;
-static const float zPos_GamePlayLayer = 1;
+static const float zPos_MainSection = 1;
 static const float zPos_LetterSection = 90;
 
 static const float zPos_SectionBlock = 95;

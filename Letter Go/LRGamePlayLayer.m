@@ -35,6 +35,7 @@
         self.pauseTime = kGameLoopResetValue;
         self.name = NAME_LAYER_GAME_PLAY;
         newGame = TRUE;
+        //TODO: Create LRMainSection and move this there
         self.letterSlots = [[LRFallingEnvelopeSlotManager alloc] init];
         [self createLayerContent];
     }
@@ -46,11 +47,12 @@
 {
     [self addChild:self.healthSection];
     [self addChild:self.letterSection];
+    [self addChild:self.mainSection];
     [self addChild:self.pauseButton];
 }
 
-#pragma mark - Layer Content Set Up
-
+#pragma mark - Layer Content Set Up -
+#pragma mark Sections
 - (LRHealthSection*) healthSection
 {
     if (!_healthSection) {
@@ -71,6 +73,16 @@
     return _letterSection;
 }
 
+- (LRScreenSection*) mainSection {
+    if (!_mainSection) {
+        float mainSectionHeight = SCREEN_HEIGHT - self.letterSection.frame.size.height - self.healthSection.frame.size.height;
+        float mainSectionWidth = SCREEN_WIDTH;
+        _mainSection = [[LRScreenSection alloc] initWithSize:CGSizeMake(mainSectionWidth, mainSectionHeight)];
+        _mainSection.zPosition = zPos_MainSection;
+    }
+    return _mainSection;
+}
+
 - (LRButton*) pauseButton
 {
     if (!_pauseButton) {
@@ -81,7 +93,6 @@
         _pauseButton.zPosition = zPos_PauseButton;
     }
     return _pauseButton;
-
 }
 
 - (void) pauseButtonPressed
@@ -132,15 +143,8 @@
 {
     LRFallingEnvelope *envelope = [LRLetterBlockGenerator createRandomEnvelope];
     [self.letterSlots addEnvelope:envelope];
-    [self addChild:envelope];
+    [self.mainSection addChild:envelope];
     [envelope dropEnvelopeWithSwing];
-}
-
-#pragma mark - Board Properties
-
-- (CGPoint) flungEnvelopeDestination
-{
-    return CGPointZero;
 }
 
 @end

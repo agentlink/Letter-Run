@@ -83,7 +83,7 @@
 - (void) dropEnvelopeWithSwing
 {
     //Get the height that the envelope has to fall
-    LRGamePlayLayer *gpl = [(LRGameScene*)[self scene] gamePlayLayer];
+    LRScreenSection *gpl = [[(LRGameScene*)[self scene] gamePlayLayer] mainSection];
     CGFloat gameSceneHeight = gpl.frame.size.height;
     
     __block CGFloat bottomEdgeHeight = 0;
@@ -183,7 +183,7 @@
 
 - (void) flingEnvelopeToMailmanWithCurve
 {
-    CGPoint end = [(LRGamePlayLayer*)self.parent flungEnvelopeDestination];
+    CGPoint end = CGPointZero;
     CGPoint start = self.position;
     CGPoint c1 = CGPointMake((start.x + end.x)/2, (start.y + end.y)/2);
     CGPoint c2 = CGPointMake((start.x + end.x)/4, end.y - end.y/4);

@@ -64,7 +64,7 @@ static LRGameStateManager *_shared = nil;
 {
     LRGamePlayLayer *gpl = [(LRGameScene*)[self scene] gamePlayLayer];
     if ([[[notification userInfo] objectForKey:@"devpause"] boolValue]) {
-        [gpl removeAllActions];
+        [gpl.mainSection removeAllActions];
     }
     
     [self clearBoard];
@@ -80,15 +80,15 @@ static LRGameStateManager *_shared = nil;
 
     //Remove all envelopes
     NSMutableArray *fallingEnvelopeArray = [NSMutableArray array];
-    for (SKNode *child in [gpl children])
+    for (SKNode *child in [gpl.mainSection children])
     {
         if ([child.name isEqualToString:NAME_SPRITE_FALLING_ENVELOPE])
             [fallingEnvelopeArray addObject:child];
     }
-    [gpl removeChildrenInArray:fallingEnvelopeArray];
+    [gpl.mainSection removeChildrenInArray:fallingEnvelopeArray];
     
     //Clear the letter section
-    [[gpl letterSection] clearLetterSection];
+    [gpl.letterSection clearLetterSection];
     
 }
 
@@ -108,6 +108,8 @@ static LRGameStateManager *_shared = nil;
     
     [gpl.pauseButton setIsEnabled:NO];
     [gpl removeAllActions];
+    //NOTE: is this necessary?
+    [gpl.mainSection removeAllActions];
 
     
     
@@ -127,12 +129,12 @@ static LRGameStateManager *_shared = nil;
     self.gameIsPaused = YES;
     LRGamePlayLayer *gpl = [(LRGameScene*)[self scene] gamePlayLayer];
     gpl.paused = YES;
-    [gpl enumerateChildNodesWithName:NAME_SPRITE_FALLING_ENVELOPE usingBlock:^(SKNode *node, BOOL *stop) {
+    [gpl.mainSection enumerateChildNodesWithName:NAME_SPRITE_FALLING_ENVELOPE usingBlock:^(SKNode *node, BOOL *stop) {
         [node setUserInteractionEnabled:NO];
         [[node actionForKey:ACTION_ENVELOPE_DROP] setSpeed:0];
         [[node actionForKey:ACTION_ENVELOPE_FLING] setSpeed:0];
     }];
-    [[gpl actionForKey:ACTION_ENVELOPE_LOOP] setSpeed:0];
+    [[gpl.mainSection actionForKey:ACTION_ENVELOPE_LOOP] setSpeed:0];
     [gpl.letterSection setUserInteractionEnabled:NO];
     [self setGameBoardObjectTouchability:NO];
     
@@ -153,12 +155,12 @@ static LRGameStateManager *_shared = nil;
         gpl.devPause = nil;
     }
     gpl.paused = NO;
-    [gpl enumerateChildNodesWithName:NAME_SPRITE_FALLING_ENVELOPE usingBlock:^(SKNode *node, BOOL *stop) {
+    [gpl.mainSection enumerateChildNodesWithName:NAME_SPRITE_FALLING_ENVELOPE usingBlock:^(SKNode *node, BOOL *stop) {
         [node setUserInteractionEnabled:YES];
         [[node actionForKey:ACTION_ENVELOPE_DROP] setSpeed:1];
         [[node actionForKey:ACTION_ENVELOPE_FLING] setSpeed:1];
     }];
-    [[gpl actionForKey:ACTION_ENVELOPE_LOOP] setSpeed:1];
+    [[gpl.mainSection actionForKey:ACTION_ENVELOPE_LOOP] setSpeed:1];
     [gpl.letterSection setUserInteractionEnabled:YES];
     [self setGameBoardObjectTouchability:YES];
 
