@@ -17,7 +17,6 @@
 
 @property (nonatomic, strong) LRHealthSection *healthSection;
 @property (nonatomic, strong) LRLetterSection *letterSection;
-@property (nonatomic, strong) LRMailman *mailman;
 @property (nonatomic, strong) LRButton *pauseButton;
 
 @property (nonatomic, strong) LRDevPauseMenuVC *devPause;

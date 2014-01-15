@@ -52,7 +52,6 @@
     self.physicsBody.dynamic = YES;
     self.physicsBody.friction = 1;
     [[LRCollisionManager shared] setBitMasksForSprite:self];
-    [[LRCollisionManager shared] addContactDetectionOfSpritesNamed:NAME_SPRITE_BOTTOM_EDGE toSprite:self];
 }
 
 - (void) removePhysics {

@@ -37,7 +37,6 @@
         newGame = TRUE;
         self.letterSlots = [[LRFallingEnvelopeSlotManager alloc] init];
         [self createLayerContent];
-        [self setUpPhysics];
     }
     return self;
 }
@@ -47,7 +46,6 @@
 {
     [self addChild:self.healthSection];
     [self addChild:self.letterSection];
-    [self addChild:self.mailman];
     [self addChild:self.pauseButton];
 }
 
@@ -73,16 +71,6 @@
     return _letterSection;
 }
 
-- (LRMailman*) mailman
-{
-    if (!_mailman) {
-        _mailman = [[LRMailman alloc] init];
-        _mailman.screenSide = [[LRDifficultyManager shared] mailmanScreenSide];
-        _mailman.zPosition = zPos_Mailman;
-    }
-    return _mailman;
-}
-
 - (LRButton*) pauseButton
 {
     if (!_pauseButton) {
@@ -94,25 +82,6 @@
     }
     return _pauseButton;
 
-}
-
-- (void) setUpPhysics
-{
-    //Add a line so that the block doesn't just fall forever
-    float edgeBuffer = 0;
-    
-    float edgeHeight = self.letterSection.position.y + self.letterSection.size.height/2 + edgeBuffer;
-    CGPoint leftScreen = CGPointMake(0 - self.size.width /2, 0);
-    CGPoint rightScreen = CGPointMake (self.size.width/2, 0);
-    
-    SKPhysicsBody *blockEdge = [SKPhysicsBody bodyWithEdgeFromPoint:leftScreen toPoint:rightScreen];
-    SKSpriteNode *blockEdgeSprite = [[SKSpriteNode alloc] initWithColor:[LRColor clearColor] size:CGSizeMake(SCREEN_WIDTH, 1)];
-    blockEdgeSprite.name = NAME_SPRITE_BOTTOM_EDGE;
-    blockEdgeSprite.physicsBody = blockEdge;
-    blockEdgeSprite.position = CGPointMake(0, edgeHeight);
-    
-    [[LRCollisionManager shared] setBitMasksForSprite:blockEdgeSprite];
-    [self addChild:blockEdgeSprite];
 }
 
 - (void) pauseButtonPressed
@@ -171,7 +140,7 @@
 
 - (CGPoint) flungEnvelopeDestination
 {
-    return [self.mailman letterEntryPoint];
+    return CGPointZero;
 }
 
 @end

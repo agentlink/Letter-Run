@@ -321,10 +321,6 @@
 			children = (
 				000BC152181C705D00BEC563 /* LRParallaxNode.h */,
 				000BC153181C705D00BEC563 /* LRParallaxNode.m */,
-				000BC15B1820356500BEC563 /* LRCloudLayer.h */,
-				000BC15C1820356500BEC563 /* LRCloudLayer.m */,
-				000BC15E18203F2A00BEC563 /* LRGrassLayer.h */,
-				000BC15F18203F2A00BEC563 /* LRGrassLayer.m */,
 			);
 			name = "Parallax Nodes";
 			sourceTree = "<group>";
@@ -334,8 +330,6 @@
 			children = (
 				0049696317FA0CB400176F2D /* LRObject.h */,
 				0049696417FA0CB400176F2D /* LRObject.m */,
-				0055EC851826F21C00717DF7 /* LRMailman.h */,
-				0055EC861826F21C00717DF7 /* LRMailman.m */,
 				00B43D90182834CF00261468 /* LRButton.h */,
 				00B43D91182834CF00261468 /* LRButton.m */,
 				0049695217F8A70B00176F2D /* Letter Blocks */,
@@ -346,13 +340,10 @@
 		0049695217F8A70B00176F2D /* Letter Blocks */ = {
 			isa = PBXGroup;
 			children = (
-				A87BDD9C1853B4AE00845BB5 /* Bezier */,
 				0049695317F8A75B00176F2D /* LRLetterBlockGenerator.h */,
 				0049695417F8A75B00176F2D /* LRLetterBlockGenerator.m */,
 				0049694F17F8A12B00176F2D /* LRLetterBlock.h */,
 				0049695017F8A12B00176F2D /* LRLetterBlock.m */,
-				0007FB3A180C79B600E55B0D /* LRFallingEnvelope.h */,
-				0007FB3B180C79B600E55B0D /* LRFallingEnvelope.m */,
 				0007FB3D180C7A1A00E55B0D /* LRSectionBlock.h */,
 				0007FB3E180C7A1A00E55B0D /* LRSectionBlock.m */,
 			);
@@ -469,6 +460,7 @@
 		00CDF12A17F474EC003065F6 = {
 			isa = PBXGroup;
 			children = (
+				A88118E618870261002489F5 /* DEPRECATED */,
 				A8E60A141881E27900F60DF4 /* Reusable Classes */,
 				0007FB30180B2FB600E55B0D /* Resources */,
 				008428EE1800992D00908E5D /* Property Lists */,
@@ -627,6 +619,30 @@
 				A87BDD9A1853AFDC00845BB5 /* LRBezierPath.m */,
 			);
 			name = Bezier;
+			sourceTree = "<group>";
+		};
+		A88118E618870261002489F5 /* DEPRECATED */ = {
+			isa = PBXGroup;
+			children = (
+				A88118E71887031B002489F5 /* REFACTOR */,
+				0055EC851826F21C00717DF7 /* LRMailman.h */,
+				0055EC861826F21C00717DF7 /* LRMailman.m */,
+				0007FB3A180C79B600E55B0D /* LRFallingEnvelope.h */,
+				0007FB3B180C79B600E55B0D /* LRFallingEnvelope.m */,
+				A87BDD9C1853B4AE00845BB5 /* Bezier */,
+			);
+			name = DEPRECATED;
+			sourceTree = "<group>";
+		};
+		A88118E71887031B002489F5 /* REFACTOR */ = {
+			isa = PBXGroup;
+			children = (
+				000BC15B1820356500BEC563 /* LRCloudLayer.h */,
+				000BC15C1820356500BEC563 /* LRCloudLayer.m */,
+				000BC15E18203F2A00BEC563 /* LRGrassLayer.h */,
+				000BC15F18203F2A00BEC563 /* LRGrassLayer.m */,
+			);
+			name = REFACTOR;
 			sourceTree = "<group>";
 		};
 		A8E60A141881E27900F60DF4 /* Reusable Classes */ = {
