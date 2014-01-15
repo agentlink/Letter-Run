@@ -7,12 +7,13 @@
 //
 
 static const float zPos_HealthSection = 100;
-static const float zPos_MainSection = 1;
+static const float zPos_mainGameSection = 1;
 static const float zPos_LetterSection = 90;
 
 static const float zPos_SectionBlock = 95;
 static const float zPos_FallingEnvelope = 35;
 
+//TODO: remove when background changes
 static const float zPos_SkyLayer = 10;
 static const float zPos_MountainLayer = 20;
 static const float zPos_HillsLayer = 30;

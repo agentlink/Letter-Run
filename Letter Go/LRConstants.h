@@ -30,6 +30,7 @@ static const int kGameLoopResetValue            =       -1;
 #define SCREEN_WIDTH                 ([[UIScreen mainScreen] bounds].size.height)
 
 #define NAME_SPRITE_FALLING_ENVELOPE                @"NAME_SPRITE_FALLING_ENVELOPE"
+#define NAME_SPRITE_MOVING_ENVELOPE                 @"NAME_SPRITE_MOVING_ENVELOPE"
 #define NAME_SPRITE_SECTION_LETTER_BLOCK            @"NAME_SPRITE_SECTION_LETTER_BLOCK"
 #define NAME_SPRITE_BOTTOM_EDGE                     @"NAME_SPRITE_BOTTOM_EDGE"
 #define NAME_SPRITE_LETTER_SLOT                     @"NAME_SPRITE_LETTER_SLOT"
@@ -39,7 +40,6 @@ static const int kGameLoopResetValue            =       -1;
 #define NAME_LAYER_BACKGROUND                       @"NAME_LAYER_BACKGROUND"
 
 #define NOTIFICATION_ADDED_LETTER                   @"Added letter to slot"
-#define NOTIFICATION_LETTER_CLEARED                 @"Letter has been removed from game play area"
 #define NOTIFICATION_DELETE_LETTER                  @"Deleted a letter"
 #define NOTIFICATION_SUBMIT_WORD                    @"Submit a word"
 

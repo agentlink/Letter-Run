@@ -35,7 +35,7 @@
         self.pauseTime = kGameLoopResetValue;
         self.name = NAME_LAYER_GAME_PLAY;
         newGame = TRUE;
-        //TODO: Create LRMainSection and move this there
+        //TODO: Create LRmainGameSection and move this there
         self.letterSlots = [[LRFallingEnvelopeSlotManager alloc] init];
         [self createLayerContent];
     }
@@ -47,7 +47,7 @@
 {
     [self addChild:self.healthSection];
     [self addChild:self.letterSection];
-    [self addChild:self.mainSection];
+    [self addChild:self.mainGameSection];
     [self addChild:self.pauseButton];
 }
 
@@ -73,14 +73,14 @@
     return _letterSection;
 }
 
-- (LRScreenSection*) mainSection {
-    if (!_mainSection) {
-        float mainSectionHeight = SCREEN_HEIGHT - self.letterSection.frame.size.height - self.healthSection.frame.size.height;
-        float mainSectionWidth = SCREEN_WIDTH;
-        _mainSection = [[LRScreenSection alloc] initWithSize:CGSizeMake(mainSectionWidth, mainSectionHeight)];
-        _mainSection.zPosition = zPos_MainSection;
+- (LRScreenSection*) mainGameSection {
+    if (!_mainGameSection) {
+        float mainGameSectionHeight = SCREEN_HEIGHT - self.letterSection.frame.size.height - self.healthSection.frame.size.height;
+        float mainGameSectionWidth = SCREEN_WIDTH;
+        _mainGameSection = [[LRMainGameSection alloc] initWithSize:CGSizeMake(mainGameSectionWidth, mainGameSectionHeight)];
+        _mainGameSection.zPosition = zPos_mainGameSection;
     }
-    return _mainSection;
+    return _mainGameSection;
 }
 
 - (LRButton*) pauseButton
@@ -141,10 +141,9 @@
 
 - (void) dropLetter
 {
-    LRFallingEnvelope *envelope = [LRLetterBlockGenerator createRandomEnvelope];
+    LRMovingBlock *envelope = [LRLetterBlockGenerator createRandomEnvelope];
     [self.letterSlots addEnvelope:envelope];
-    [self.mainSection addChild:envelope];
-    [envelope dropEnvelopeWithSwing];
+    [self.mainGameSection addMovingBlockToScreen:envelope];
 }
 
 @end

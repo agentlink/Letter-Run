@@ -73,7 +73,6 @@
     
     //If the box has been flung to the letter box section
     if (!(CGRectIntersectsRect(sceneRect, letterFrame))) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LETTER_CLEARED object:self userInfo:[self removeLetterDictionary]];
         [self removeFromParent];
     }
 }
@@ -83,7 +82,7 @@
 - (void) dropEnvelopeWithSwing
 {
     //Get the height that the envelope has to fall
-    LRScreenSection *gpl = [[(LRGameScene*)[self scene] gamePlayLayer] mainSection];
+    LRScreenSection *gpl = [[(LRGameScene*)[self scene] gamePlayLayer] mainGameSection];
     CGFloat gameSceneHeight = gpl.frame.size.height;
     
     __block CGFloat bottomEdgeHeight = 0;
@@ -171,9 +170,6 @@
         CGFloat letterDistance = (SCREEN_HEIGHT - topBufferSize - bottomBufferSize) /(kNumberOfSlots - 1);
         
         CGFloat xPos = SCREEN_WIDTH/2 + kLetterBlockDimension;
-        if ([[LRDifficultyManager shared] mailmanScreenSide] == MailmanScreenRight) {
-            xPos *= -1;
-        }
         
         self.position = CGPointMake(xPos, -SCREEN_HEIGHT/2 + bottomBufferSize + letterDistance * newSlot);
     }
@@ -225,7 +221,6 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_ADDED_LETTER object:self userInfo:[self addLetterDictionary]];
     
     //And notify that a new slot is empty
-    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LETTER_CLEARED object:self userInfo:[self removeLetterDictionary]];
     [self removeFromParent];
     
 }

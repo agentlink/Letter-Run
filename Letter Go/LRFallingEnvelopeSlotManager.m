@@ -7,6 +7,8 @@
 //
 
 #import "LRFallingEnvelopeSlotManager.h"
+#import "LRFallingEnvelope.h"
+
 #import "LRConstants.h"
 #import "LRPositionConstants.h"
 #import "LRGameStateManager.h"
@@ -49,7 +51,7 @@ static const int kNilSlotValue = -1;
 
 #pragma mark - Letter Addition
 
-- (void) addEnvelope:(LRFallingEnvelope*)envelope
+- (void) addEnvelope:(LRMovingBlock*)envelope
 {
     int slotIndexToDecrease = [self getIndexOfNextSlot];
     int slotIndexToIncrease = kNilSlotValue;
@@ -90,7 +92,7 @@ static const int kNilSlotValue = -1;
 
 #pragma mark - zPosition Function
 
-- (void) setZPositionForEnvelope:(LRFallingEnvelope*)envelope
+- (void) setZPositionForEnvelope:(LRMovingBlock*)envelope
 {
     /*
      NOTE: Reaching this condition would take about 40 minutes of play. If this point ever got

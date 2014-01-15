@@ -9,7 +9,7 @@
 #import "LRLayer.h"
 #import "LRHealthSection.h"
 #import "LRLetterSection.h"
-#import "LRMailman.h"
+#import "LRMainGameSection.h"
 #import "LRButton.h"
 #import "LRDevPauseMenuVC.h"
 
@@ -17,7 +17,7 @@
 
 @property (nonatomic, strong) LRHealthSection *healthSection;
 @property (nonatomic, strong) LRLetterSection *letterSection;
-@property (nonatomic, strong) LRScreenSection *mainSection;
+@property (nonatomic, strong) LRMainGameSection *mainGameSection;
 
 @property (nonatomic, strong) LRButton *pauseButton;
 

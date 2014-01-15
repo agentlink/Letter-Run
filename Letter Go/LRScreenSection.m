@@ -27,6 +27,7 @@
 
 - (void) createSectionContent
 {
-    //NSAssert(0, @"Error: createSectionContent should be overridden by section");
+    //OVERRIDE THIS
+    (void)0;
 }
 @end

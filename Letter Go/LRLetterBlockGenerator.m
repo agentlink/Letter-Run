@@ -14,19 +14,19 @@
 
 #pragma mark - Public Functions
 
-+ (LRFallingEnvelope*) createRandomEnvelope
++ (LRMovingBlock*) createRandomEnvelope
 {
     NSString *letter = [self generateLetter];
     BOOL love = [self isLoveLetter];
-    LRFallingEnvelope *envelope = [LRFallingEnvelope envelopeWithLetter:letter loveLetter:love];
+    LRMovingBlock *envelope = [LRMovingBlock movingBlockWithLetter:letter loveLetter:love];
     
     envelope.position = CGPointMake(0, 160 + envelope.frame.size.height/2);
     return envelope;
 }
 
-+ (LRFallingEnvelope*) createRandomEnvelopeAtSlot:(int)slot
++ (LRMovingBlock*) createRandomEnvelopeAtSlot:(int)slot
 {
-    LRFallingEnvelope *envelope = [self createRandomEnvelope];
+    LRMovingBlock *envelope = [self createRandomEnvelope];
     //Setting the slot also sets the position. For now, slots are 0 - 2
     envelope.slot = slot;
     return envelope;
