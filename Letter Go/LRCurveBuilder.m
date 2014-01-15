@@ -45,7 +45,6 @@ typedef enum {
     CGPoint nextPosition = CGPointMake(swingWidth * currentSwingDirection, swingDropHeight);
     
     CGFloat rotationPerSwing = 10;
-    //TODO: Get this from difficulty manager
     
     NSMutableArray *curveArray = [NSMutableArray array];
     

@@ -36,7 +36,6 @@ static const float kHealthBarRightMostEdgePos = 0.0;
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restartHealthBar) name:GAME_STATE_NEW_GAME object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(unpauseGame) name:GAME_STATE_CONTINUE_GAME object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mailmanHitWithLetterBlock:) name:NOTIFICATION_ENVELOPE_HIT_MAILMAN object:nil];
 }
 
 - (SKSpriteNode*) healthBar {
@@ -127,19 +126,6 @@ static const float kHealthBarRightMostEdgePos = 0.0;
     else if (newXPos < 0 - HEALTHBAR_WIDTH)
         newXPos = 0 - HEALTHBAR_WIDTH;
     self.healthBar.position = CGPointMake(newXPos, self.healthBar.position.y);
-}
-
-#pragma mark - Mailman Functions
-
-- (void) mailmanHitWithLetterBlock:(NSNotification*)notification
-{
-    if (![[LRDifficultyManager shared] mailmanReceivesDamage])
-        return;
-    LRFallingEnvelope *envelope = [(LRFallingEnvelope*)[notification userInfo] valueForKey:KEY_GET_LETTER_BLOCK];
-    if (envelope.blockState == BlockState_BlockFlung)
-        return;
-    CGFloat damageDistance = [[LRDifficultyManager shared] mailmanHitDamage];
-    self.healthBar.position = CGPointMake(self.healthBar.position.x - damageDistance, self.healthBar.position.y);
 }
 
 - (void) unpauseGame {

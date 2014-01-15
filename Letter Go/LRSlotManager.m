@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Gabe Nicholas. All rights reserved.
 //
 
-#import "LRFallingEnvelopeSlotManager.h"
+#import "LRSlotManager.h"
 #import "LRFallingEnvelope.h"
 
 #import "LRConstants.h"
@@ -14,11 +14,11 @@
 #import "LRGameStateManager.h"
 #import "LRDifficultyManager.h"
 #import "LRCappedStack.h"
-#import "LRFallingEnvelopeSlotManager_Private.h"
+#import "LRSlotManager_Private.h"
 
 static const int kNilSlotValue = -1;
 
-@implementation LRFallingEnvelopeSlotManager
+@implementation LRSlotManager
 #pragma mark - Overridden Functions
 
 - (id) init
@@ -125,8 +125,7 @@ static const int kNilSlotValue = -1;
             return i;
         }
     }
-    //TODO: Improve this error message
-    NSAssert(0, @"Error: generated number %i does not fit chance for any slot", randValue);
+    NSAssert(0, @"Error: slot decision function went outside bounds", randValue);
     return arc4random()%kNumberOfSlots;
 }
 

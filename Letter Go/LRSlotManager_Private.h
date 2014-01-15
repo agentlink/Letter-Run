@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Gabe Nicholas. All rights reserved.
 //
 
-#import "LRFallingEnvelopeSlotManager.h"
+#import "LRSlotManager.h"
 #import "LRCappedStack.h"
-@interface LRFallingEnvelopeSlotManager ()
+@interface LRSlotManager ()
 
 @property (nonatomic, strong) LRCappedStack *slotHistory;
 @property (nonatomic, strong) NSMutableArray *slotChanceTracker;

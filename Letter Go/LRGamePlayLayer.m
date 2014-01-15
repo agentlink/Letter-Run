@@ -11,11 +11,11 @@
 #import "LRCollisionManager.h"
 #import "LRGameStateManager.h"
 #import "LRDifficultyManager.h"
-#import "LRFallingEnvelopeSlotManager.h"
+#import "LRSlotManager.h"
 #import "LRPositionConstants.h"
 
 @interface LRGamePlayLayer ()
-@property LRFallingEnvelopeSlotManager *letterSlots;
+@property LRSlotManager *letterSlots;
 
 @property BOOL newGame;
 @property NSTimeInterval nextDropTime;
@@ -36,7 +36,7 @@
         self.name = NAME_LAYER_GAME_PLAY;
         newGame = TRUE;
         //TODO: Create LRmainGameSection and move this there
-        self.letterSlots = [[LRFallingEnvelopeSlotManager alloc] init];
+        self.letterSlots = [[LRSlotManager alloc] init];
         [self createLayerContent];
     }
     return self;

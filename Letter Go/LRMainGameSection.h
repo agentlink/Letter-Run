@@ -14,5 +14,6 @@
 @property (nonatomic) BOOL envelopeMovementPaused;
 
 - (void) addMovingBlockToScreen:(LRMovingBlock*)movingBlock;
-
+//TODO: implement this
+- (void) clearMainGameSection;
 @end

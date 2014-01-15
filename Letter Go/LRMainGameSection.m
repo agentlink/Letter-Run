@@ -36,7 +36,9 @@
 #pragma mark - Letter Addition/Removal -
 - (void) addMovingBlockToScreen:(LRMovingBlock *)movingBlock
 {
+    //Set the touch delegate
     movingBlock.touchDelegate = self;
+    //Add the envelope to teh screen and to the array
     [self.envelopesOnScreen addObject:movingBlock];
     [self addChild:movingBlock];
 }
@@ -44,26 +46,39 @@
 
 - (void) removeMovingBlockFromScreen:(LRMovingBlock*)letterBlock
 {
+    //Remove the envelope from the screen and the array
     [self.envelopesOnScreen removeObject:letterBlock];
     [self removeChildrenInArray:@[letterBlock]];
 }
 
 #pragma mark - Letter Movement/Touch -
+
 - (void) update:(NSTimeInterval)currentTime
 {
+    //If the game is over or paused
     if ([[LRGameStateManager shared] isGameOver] || [[LRGameStateManager shared] isGamePaused]) {
         self.initialTime = kGameLoopResetValue;
         return;
     }
+    //If its a new game or the game is unpaused
     else if (self.initialTime == kGameLoopResetValue) {
         self.initialTime = currentTime;
         return;
     }
     
-    NSMutableArray *blocksToRemove = [NSMutableArray new];
-    
     CGFloat timeDifference = currentTime - self.initialTime;
+    //Shift the envelopes...
+    [self shiftEnvelopesForTimeDifference:timeDifference];
+    //...and generate letters
+    //TODO: have MainGameSection handle envelope dropping
+    self.initialTime = currentTime;
+}
+
+- (void) shiftEnvelopesForTimeDifference:(CGFloat)timeDifference
+{
+    NSMutableArray *blocksToRemove = [NSMutableArray new];
     CGFloat secondsToCrossScreen = 5.0;
+    //TODO: get this from the difficulty manager
     CGFloat pixelsPerSecond = SCREEN_WIDTH / secondsToCrossScreen;
     for (LRMovingBlock* block in self.envelopesOnScreen) {
         //Shift the block down...
@@ -78,8 +93,6 @@
         }
     }
     [self removeChildrenInArray:blocksToRemove];
-    
-    self.initialTime = currentTime;
 }
 
 #pragma mark LRMovingBlockTouchDelegate Methods

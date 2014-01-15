@@ -33,10 +33,12 @@
 - (void) setSlot:(NSUInteger)slot
 {
     _slot = slot;
+    //Get the max and min heights
     CGFloat topBufferSize = kSectionHeightHealth + kLetterBlockDimension/2;
     CGFloat bottomBufferSize = kSectionHeightLetterSection + kLetterBlockDimension/2;
     CGFloat letterDistance = (SCREEN_HEIGHT - topBufferSize - bottomBufferSize) /(kNumberOfSlots - 1);
 
+    //Set teh position based on the slot
     CGFloat xPos = SCREEN_WIDTH/2 + kLetterBlockDimension;
     CGFloat yPos = -SCREEN_HEIGHT/2 + bottomBufferSize + letterDistance * slot;
     self.position = CGPointMake(xPos, yPos);
@@ -47,6 +49,10 @@
 
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    /*
+     Consider the letter touched if the player initially touches inside the letter.
+     It is still considered a touch if the end of the touch is outside the letter
+     */
     for (UITouch *touch in touches)
     {
         CGPoint location = [touch locationInNode:[self parent]];
@@ -59,6 +65,7 @@
 
 - (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    //If the eltter is touched, go to the delegate
     if (self.initialTouchInside)
         [self.touchDelegate playerSelectedMovingBlock:self];
 }

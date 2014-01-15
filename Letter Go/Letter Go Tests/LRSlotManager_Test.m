@@ -1,5 +1,5 @@
 //
-//  Letter_Go_Tests.m
+//  LRSlotManager_Test.m
 //  Letter Go Tests
 //
 //  Created by Gabriel Nicholas on 12/13/13.
@@ -7,16 +7,17 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "LRFallingEnvelopeSlotManager.h"
-#import "LRFallingEnvelopeSlotManager_Private.h"
+#import "LRSlotManager.h"
+#import "LRSlotManager_Private.h"
 #import "LRConstants.h"
+#import "LRMovingBlock.h"
 
 static const int kTestCount = 200;
 
-@interface Letter_Go_Tests : XCTestCase
+@interface LRSlotManager_Test : XCTestCase
 @end
 
-@implementation Letter_Go_Tests
+@implementation LRSlotManager_Test : XCTestCase
 
 - (void)setUp
 {
@@ -32,9 +33,9 @@ static const int kTestCount = 200;
 
 - (void)testSlotHistory
 {
-    LRFallingEnvelopeSlotManager *slotManager = [LRFallingEnvelopeSlotManager new];
+    LRSlotManager *slotManager = [LRSlotManager new];
     for (int i = 0; i < kTestCount; i++) {
-        [slotManager addEnvelope:[LRFallingEnvelope envelopeWithLetter:@"G" loveLetter:arc4random()%2]];
+        [slotManager addEnvelope:[LRMovingBlock movingBlockWithLetter:@"X" loveLetter:arc4random()%2]];
         int slotHistoryCount = [slotManager.slotHistory count];
         XCTAssertTrue(slotHistoryCount <= kSlotHistoryCapacity,
                       @"Error: slot history is over capacity");
@@ -45,10 +46,10 @@ static const int kTestCount = 200;
 }
 
 - (void)testSlotChances {
-    LRFallingEnvelopeSlotManager *slotManager = [LRFallingEnvelopeSlotManager new];
+    LRSlotManager *slotManager = [LRSlotManager new];
 
     for (int i = 0; i < kTestCount; i++) {
-        [slotManager addEnvelope:[LRFallingEnvelope envelopeWithLetter:@"X" loveLetter:arc4random()%2]];
+        [slotManager addEnvelope:[LRMovingBlock movingBlockWithLetter:@"X" loveLetter:arc4random()%2]];
         if (i < kSlotHistoryCapacity)
             continue;
         int slotChances = 0;

@@ -72,7 +72,7 @@
 		00CDF18917F4840F003065F6 /* LRHealthSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CDF18817F4840F003065F6 /* LRHealthSection.m */; };
 		00CDF18C17F4899B003065F6 /* LRLetterSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CDF18B17F4899B003065F6 /* LRLetterSection.m */; };
 		00F6F59717FF5234009EDADB /* LRGameStateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F6F59617FF5234009EDADB /* LRGameStateManager.m */; };
-		A82CA94C1855189F004ADD99 /* LRFallingEnvelopeSlotManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A82CA94B1855189F004ADD99 /* LRFallingEnvelopeSlotManager.m */; };
+		A82CA94C1855189F004ADD99 /* LRSlotManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A82CA94B1855189F004ADD99 /* LRSlotManager.m */; };
 		A846FB8B186E0489009DCEF4 /* LRLetterBlock_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = A846FB8A186E0489009DCEF4 /* LRLetterBlock_Test.m */; };
 		A876EC3B18836795000FA069 /* Background_Cloud.png in Resources */ = {isa = PBXBuildFile; fileRef = A876EC3A18836795000FA069 /* Background_Cloud.png */; };
 		A876EC3F188367AA000FA069 /* Background_Grass.png in Resources */ = {isa = PBXBuildFile; fileRef = A876EC3C188367AA000FA069 /* Background_Grass.png */; };
@@ -89,7 +89,7 @@
 		A88A4B371887308C00BC9905 /* LRMainGameSection.m in Sources */ = {isa = PBXBuildFile; fileRef = A88A4B361887308C00BC9905 /* LRMainGameSection.m */; };
 		A88A4B3B188734E400BC9905 /* LRMovingBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = A88A4B3A188734E400BC9905 /* LRMovingBlock.m */; };
 		A8E60A131881E25F00F60DF4 /* LRCappedStack.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E60A121881E25F00F60DF4 /* LRCappedStack.m */; };
-		A8E60A161881F6E300F60DF4 /* LRFallingEnvelopeSlotManager_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E60A151881F6E300F60DF4 /* LRFallingEnvelopeSlotManager_Test.m */; };
+		A8E60A161881F6E300F60DF4 /* LRSlotManager_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E60A151881F6E300F60DF4 /* LRSlotManager_Test.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -217,8 +217,8 @@
 		00CDF18B17F4899B003065F6 /* LRLetterSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterSection.m; sourceTree = "<group>"; };
 		00F6F59517FF5234009EDADB /* LRGameStateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRGameStateManager.h; sourceTree = "<group>"; };
 		00F6F59617FF5234009EDADB /* LRGameStateManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRGameStateManager.m; sourceTree = "<group>"; };
-		A82CA94A1855189F004ADD99 /* LRFallingEnvelopeSlotManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRFallingEnvelopeSlotManager.h; sourceTree = "<group>"; };
-		A82CA94B1855189F004ADD99 /* LRFallingEnvelopeSlotManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRFallingEnvelopeSlotManager.m; sourceTree = "<group>"; };
+		A82CA94A1855189F004ADD99 /* LRSlotManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRSlotManager.h; sourceTree = "<group>"; };
+		A82CA94B1855189F004ADD99 /* LRSlotManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRSlotManager.m; sourceTree = "<group>"; };
 		A82DD7E71857FB24007483A6 /* LRPositionConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LRPositionConstants.h; sourceTree = "<group>"; };
 		A846FB8A186E0489009DCEF4 /* LRLetterBlock_Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterBlock_Test.m; sourceTree = "<group>"; };
 		A876EC3A18836795000FA069 /* Background_Cloud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background_Cloud.png; sourceTree = "<group>"; };
@@ -242,8 +242,8 @@
 		A88A4B3A188734E400BC9905 /* LRMovingBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRMovingBlock.m; sourceTree = "<group>"; };
 		A8E60A111881E25F00F60DF4 /* LRCappedStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRCappedStack.h; sourceTree = "<group>"; };
 		A8E60A121881E25F00F60DF4 /* LRCappedStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRCappedStack.m; sourceTree = "<group>"; };
-		A8E60A151881F6E300F60DF4 /* LRFallingEnvelopeSlotManager_Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRFallingEnvelopeSlotManager_Test.m; sourceTree = "<group>"; };
-		A8E60A171881F89300F60DF4 /* LRFallingEnvelopeSlotManager_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LRFallingEnvelopeSlotManager_Private.h; sourceTree = "<group>"; };
+		A8E60A151881F6E300F60DF4 /* LRSlotManager_Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRSlotManager_Test.m; sourceTree = "<group>"; };
+		A8E60A171881F89300F60DF4 /* LRSlotManager_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LRSlotManager_Private.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -600,7 +600,7 @@
 			children = (
 				A877E5CC185BFA960028CFFA /* LRLetterGenerator_Test.m */,
 				A846FB8A186E0489009DCEF4 /* LRLetterBlock_Test.m */,
-				A8E60A151881F6E300F60DF4 /* LRFallingEnvelopeSlotManager_Test.m */,
+				A8E60A151881F6E300F60DF4 /* LRSlotManager_Test.m */,
 				A877E5BD185BF8C30028CFFA /* Supporting Files */,
 			);
 			path = "Letter Go Tests";
@@ -672,9 +672,9 @@
 		A88A4B3418872F7600BC9905 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				A82CA94A1855189F004ADD99 /* LRFallingEnvelopeSlotManager.h */,
-				A8E60A171881F89300F60DF4 /* LRFallingEnvelopeSlotManager_Private.h */,
-				A82CA94B1855189F004ADD99 /* LRFallingEnvelopeSlotManager.m */,
+				A82CA94A1855189F004ADD99 /* LRSlotManager.h */,
+				A8E60A171881F89300F60DF4 /* LRSlotManager_Private.h */,
+				A82CA94B1855189F004ADD99 /* LRSlotManager.m */,
 				00F6F59517FF5234009EDADB /* LRGameStateManager.h */,
 				00F6F59617FF5234009EDADB /* LRGameStateManager.m */,
 			);
@@ -884,7 +884,7 @@
 				000BC163182044DA00BEC563 /* LRParallaxManager.m in Sources */,
 				0007FB3F180C7A1A00E55B0D /* LRSectionBlock.m in Sources */,
 				00CDF14F17F474EC003065F6 /* LRViewController.m in Sources */,
-				A82CA94C1855189F004ADD99 /* LRFallingEnvelopeSlotManager.m in Sources */,
+				A82CA94C1855189F004ADD99 /* LRSlotManager.m in Sources */,
 				003E577E180E0D5D00B37B68 /* LRDifficultyManager.m in Sources */,
 				00AC28181830415E00B3C0EB /* LRIncreaseStyleSelector.m in Sources */,
 				00CDF18617F483E3003065F6 /* LRScreenSection.m in Sources */,
@@ -906,7 +906,7 @@
 			files = (
 				A846FB8B186E0489009DCEF4 /* LRLetterBlock_Test.m in Sources */,
 				A877E5CD185BFA960028CFFA /* LRLetterGenerator_Test.m in Sources */,
-				A8E60A161881F6E300F60DF4 /* LRFallingEnvelopeSlotManager_Test.m in Sources */,
+				A8E60A161881F6E300F60DF4 /* LRSlotManager_Test.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

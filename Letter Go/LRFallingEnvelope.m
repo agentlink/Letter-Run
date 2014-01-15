@@ -251,7 +251,6 @@ static inline CGFloat distanceBetweenPoints(CGPoint a, CGPoint b) {
     //Player cannot touch envelope once it has hit the mailman
     [self setUserInteractionEnabled:NO];
     
-    //TODO: replace this with explosion (currently a fade)
     SKAction *fade = [SKAction fadeAlphaTo:0 duration:1];
     SKAction *removeSelf = [SKAction runBlock: ^{
         [self removeFromParent];

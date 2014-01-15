@@ -141,7 +141,6 @@
     return layerSpeeds;
 }
 
-//TODO: Is this function necessary?
 - (void) setUserDefaults
 {
     //Health
