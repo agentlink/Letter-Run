@@ -13,7 +13,7 @@
 		0007FB3F180C7A1A00E55B0D /* LRSectionBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 0007FB3E180C7A1A00E55B0D /* LRSectionBlock.m */; };
 		000BC154181C705D00BEC563 /* LRParallaxNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 000BC153181C705D00BEC563 /* LRParallaxNode.m */; };
 		000BC15D1820356500BEC563 /* LRCloudLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 000BC15C1820356500BEC563 /* LRCloudLayer.m */; };
-		000BC16018203F2A00BEC563 /* LRGrassLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 000BC15F18203F2A00BEC563 /* LRGrassLayer.m */; };
+		000BC16018203F2A00BEC563 /* LRParallaxNode_SmallSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 000BC15F18203F2A00BEC563 /* LRParallaxNode_SmallSprite.m */; };
 		000BC163182044DA00BEC563 /* LRParallaxManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 000BC162182044DA00BEC563 /* LRParallaxManager.m */; };
 		0020001E18245B3E005DDD46 /* LRCollisionManager+ContactFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0020001D18245B3E005DDD46 /* LRCollisionManager+ContactFunctions.m */; };
 		003C2670180F46C6003729D4 /* organizedDict.txt in Resources */ = {isa = PBXBuildFile; fileRef = 003C266F180F46C6003729D4 /* organizedDict.txt */; };
@@ -120,8 +120,8 @@
 		000BC153181C705D00BEC563 /* LRParallaxNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRParallaxNode.m; sourceTree = "<group>"; };
 		000BC15B1820356500BEC563 /* LRCloudLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRCloudLayer.h; sourceTree = "<group>"; };
 		000BC15C1820356500BEC563 /* LRCloudLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRCloudLayer.m; sourceTree = "<group>"; };
-		000BC15E18203F2A00BEC563 /* LRGrassLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRGrassLayer.h; sourceTree = "<group>"; };
-		000BC15F18203F2A00BEC563 /* LRGrassLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRGrassLayer.m; sourceTree = "<group>"; };
+		000BC15E18203F2A00BEC563 /* LRParallaxNode_SmallSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRParallaxNode_SmallSprite.h; sourceTree = "<group>"; };
+		000BC15F18203F2A00BEC563 /* LRParallaxNode_SmallSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRParallaxNode_SmallSprite.m; sourceTree = "<group>"; };
 		000BC161182044DA00BEC563 /* LRParallaxManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRParallaxManager.h; sourceTree = "<group>"; };
 		000BC162182044DA00BEC563 /* LRParallaxManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRParallaxManager.m; sourceTree = "<group>"; };
 		0020001C18245B3E005DDD46 /* LRCollisionManager+ContactFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LRCollisionManager+ContactFunctions.h"; sourceTree = "<group>"; };
@@ -639,8 +639,8 @@
 			children = (
 				000BC15B1820356500BEC563 /* LRCloudLayer.h */,
 				000BC15C1820356500BEC563 /* LRCloudLayer.m */,
-				000BC15E18203F2A00BEC563 /* LRGrassLayer.h */,
-				000BC15F18203F2A00BEC563 /* LRGrassLayer.m */,
+				000BC15E18203F2A00BEC563 /* LRParallaxNode_SmallSprite.h */,
+				000BC15F18203F2A00BEC563 /* LRParallaxNode_SmallSprite.m */,
 			);
 			name = REFACTOR;
 			sourceTree = "<group>";
@@ -815,7 +815,7 @@
 				00CDF14917F474EC003065F6 /* LRAppDelegate.m in Sources */,
 				009CC29E180349E700C0423D /* LRDictionaryChecker.m in Sources */,
 				00CDF14517F474EC003065F6 /* main.m in Sources */,
-				000BC16018203F2A00BEC563 /* LRGrassLayer.m in Sources */,
+				000BC16018203F2A00BEC563 /* LRParallaxNode_SmallSprite.m in Sources */,
 				000BC154181C705D00BEC563 /* LRParallaxNode.m in Sources */,
 				0049696517FA0CB400176F2D /* LRObject.m in Sources */,
 				00CDF17F17F4799B003065F6 /* LRBackgroundLayer.m in Sources */,

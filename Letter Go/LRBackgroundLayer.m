@@ -10,7 +10,7 @@
 #import "LRBackgroundLayer.h"
 #import "LRParallaxNode.h"
 #import "LRCloudLayer.h"
-#import "LRGrassLayer.h"
+#import "LRParallaxNode_SmallSprite.h"
 #import "LRParallaxManager.h"
 
 @interface LRBackgroundLayer ()
@@ -40,7 +40,7 @@
                                   toIndex:BackgroundIndex_Mountains];
     [self.parallaxManager addParallaxNode:[LRParallaxNode nodeWithImageNamed:@"Background_Hills.png"]
                                   toIndex:BackgroundIndex_Hills];
-    [self.parallaxManager addParallaxNode:[[LRGrassLayer alloc] init]
+    [self.parallaxManager addParallaxNode:[LRParallaxNode_SmallSprite nodeWithImageNamed:@"Background_Grass2.png"]
                                   toIndex:BackgroundIndex_Grass];
     
     for (int i = 0; i < [self.parallaxManager count]; i++)

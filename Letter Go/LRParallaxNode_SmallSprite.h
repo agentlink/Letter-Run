@@ -8,6 +8,6 @@
 
 #import "LRParallaxNode.h"
 
-@interface LRGrassLayer : LRParallaxNode
+@interface LRParallaxNode_SmallSprite : LRParallaxNode
 
 @end
