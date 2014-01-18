@@ -41,7 +41,6 @@
 
 - (void) setUpNotifications
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeLetterFromSection:) name:NOTIFICATION_DELETE_LETTER object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(submitWord:) name:NOTIFICATION_SUBMIT_WORD object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rearrangementScheduler:) name:NOTIFICATION_REARRANGE_START object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishRearrangement:) name:NOTIFICATION_REARRANGE_FINISH object:nil];
@@ -106,11 +105,13 @@
     return retVal;
 }
 
-#pragma mark - LRLetterAdditionDelegate Methods
-- (void) addEnvelopeToLetterSection:(LRMovingBlock *)envelope
+#pragma mark - LRLetterAdditionDeletionDelegate Methods
+
+- (void) addEnvelopeToLetterSection:(id)envelope
 {
-    NSString *letter = envelope.letter;
-    BOOL isLoveLetter = envelope.loveLetter;
+    LRMovingBlock *newEnvelope = (LRMovingBlock*)envelope;
+    NSString *letter = newEnvelope.letter;
+    BOOL isLoveLetter = newEnvelope.loveLetter;
 
     LRLetterSlot *currentLetterSlot = nil;
     int letterCount = 0;
@@ -124,14 +125,16 @@
     }
     //If all the letter slots are not full
     if (currentLetterSlot) {
-        currentLetterSlot.currentBlock = [LRLetterBlockGenerator createBlockWithLetter:letter loveLetter:isLoveLetter];
+        LRSectionBlock *block = [LRLetterBlockGenerator createBlockWithLetter:letter loveLetter:isLoveLetter];
+        block.delegate = self;
+        currentLetterSlot.currentBlock = block;
     }
     [self updateSubmitButton];
 }
 
-- (void) removeLetterFromSection:(NSNotification*)notification
+- (void) removeEnvelopeFromLetterSection:(id)envelope
 {
-    LRSectionBlock *block = [[notification userInfo] objectForKey:KEY_GET_LETTER_BLOCK];
+    LRSectionBlock *block = (LRSectionBlock*)envelope;
     LRLetterSlot *selectedSlot = nil;
     //Check to see if it's a child of the letter section
     __block BOOL foundNode = NO;

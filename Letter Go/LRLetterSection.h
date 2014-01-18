@@ -7,10 +7,10 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-#import "LRMainGameSection.h"
+#import "LRLetterAdditionDeletionDelegate.h"
 #import "LRScreenSection.h"
 
-@interface LRLetterSection : LRScreenSection <LRLetterAdditionDelegate>
+@interface LRLetterSection : LRScreenSection <LRLetterAdditionDeletionDelegate>
 
 - (int) numLettersInSection;
 - (void) clearLetterSection;

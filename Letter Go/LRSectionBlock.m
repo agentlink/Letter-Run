@@ -84,9 +84,7 @@
         CGPoint location = [touch locationInNode:[self parent]];
         if (CGRectContainsPoint(self.frame, location) && !self.playerMovedTouch)
         {
-            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-            [dict setValue:self forKey:KEY_GET_LETTER_BLOCK];
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_DELETE_LETTER object:self userInfo:dict];
+            [self.delegate removeEnvelopeFromLetterSection:self];
         }
         self.zPosition -= 5;
         self.playerMovedTouch = FALSE;

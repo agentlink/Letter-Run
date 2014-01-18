@@ -39,8 +39,6 @@ static const int kGameLoopResetValue            =       -1;
 #define NAME_LAYER_GAME_PLAY                        @"NAME_LAYER_GAME_PLAY"
 #define NAME_LAYER_BACKGROUND                       @"NAME_LAYER_BACKGROUND"
 
-#define NOTIFICATION_ADDED_LETTER                   @"Added letter to slot"
-#define NOTIFICATION_DELETE_LETTER                  @"Deleted a letter"
 #define NOTIFICATION_SUBMIT_WORD                    @"Submit a word"
 
 #define NOTIFICATION_ENVELOPE_LANDED                @"Envelope hit the ground"
