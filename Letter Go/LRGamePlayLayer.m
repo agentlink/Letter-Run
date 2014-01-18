@@ -101,49 +101,4 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:notifName object:nil];
 }
 
-#pragma mark - Letter Drop Functions
-
-- (void) update:(NSTimeInterval)currentTime
-{
-    [super update:currentTime];
-    //If the game is over
-    if ([[LRGameStateManager shared] isGameOver]) {
-        newGame = TRUE;
-        //Reset the falling letters list
-        [self.letterSlots resetSlots];
-        return;
-    }
-    //If the game is paused
-    else if ([[LRGameStateManager shared] isGamePaused]) {
-        if (pauseTime != kGameLoopResetValue)
-            pauseTime = nextDropTime - currentTime;
-        return;
-    }
-    //If a new game has just begun
-    else if (newGame) {
-        nextDropTime = currentTime;
-        newGame = FALSE;
-    }
-    //If the game has just been unpaused
-    else if (pauseTime != kGameLoopResetValue) {
-        nextDropTime = currentTime + pauseTime;
-        pauseTime = kGameLoopResetValue;
-    }
-    
-    if (currentTime >= nextDropTime) {
-        int i = 0;
-        for (i = 0; i < [[LRDifficultyManager shared] numLettersPerDrop]; i++) {
-            [self dropLetter];
-        }
-        nextDropTime = currentTime + [[LRDifficultyManager shared] letterDropPeriod];
-    }
-}
-
-- (void) dropLetter
-{
-    LRMovingBlock *envelope = [LRLetterBlockGenerator createRandomEnvelope];
-    [self.letterSlots addEnvelope:envelope];
-    [self.mainGameSection addMovingBlockToScreen:envelope];
-}
-
 @end

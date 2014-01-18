@@ -67,6 +67,7 @@ static LRGameStateManager *_shared = nil;
         [gpl.mainGameSection removeAllActions];
     }
     
+    gpl.mainGameSection.envelopeTouchEnabled = YES;
     [self clearBoard];
     [[LRDifficultyManager shared] setLevel:1];
     self.gameIsOver = FALSE;
@@ -75,7 +76,6 @@ static LRGameStateManager *_shared = nil;
 
 - (void) clearBoard
 {
-    [self setGameBoardObjectTouchability:YES];
     LRGamePlayLayer *gpl = [(LRGameScene*)[self scene] gamePlayLayer];
 
     //Remove all envelopes
@@ -97,7 +97,6 @@ static LRGameStateManager *_shared = nil;
     self.gameIsOver = TRUE;
     NSLog(@"Game over");
     //Make all of the objects in the game non-touch responsive
-    [self setGameBoardObjectTouchability:NO];
 
     SKLabelNode *gameOverLabel = [[SKLabelNode alloc] init];
     gameOverLabel.text = @"Game Over";
@@ -107,10 +106,8 @@ static LRGameStateManager *_shared = nil;
     __block LRGamePlayLayer *gpl = [(LRGameScene*)[self scene] gamePlayLayer];
     
     [gpl.pauseButton setIsEnabled:NO];
-    [gpl removeAllActions];
-    //NOTE: is this necessary?
-    [gpl.mainGameSection removeAllActions];
-
+    gpl.mainGameSection.envelopeTouchEnabled = NO;
+    
     
     
     SKAction *showLabel = [SKAction runBlock:^{
@@ -129,14 +126,10 @@ static LRGameStateManager *_shared = nil;
     self.gameIsPaused = YES;
     LRGamePlayLayer *gpl = [(LRGameScene*)[self scene] gamePlayLayer];
     gpl.paused = YES;
-    [gpl.mainGameSection enumerateChildNodesWithName:NAME_SPRITE_FALLING_ENVELOPE usingBlock:^(SKNode *node, BOOL *stop) {
+    [gpl.mainGameSection enumerateChildNodesWithName:NAME_SPRITE_MOVING_ENVELOPE usingBlock:^(SKNode *node, BOOL *stop) {
         [node setUserInteractionEnabled:NO];
-        [[node actionForKey:ACTION_ENVELOPE_DROP] setSpeed:0];
-        [[node actionForKey:ACTION_ENVELOPE_FLING] setSpeed:0];
     }];
-    [[gpl.mainGameSection actionForKey:ACTION_ENVELOPE_LOOP] setSpeed:0];
     [gpl.letterSection setUserInteractionEnabled:NO];
-    [self setGameBoardObjectTouchability:NO];
     
     if (!gpl.devPause) {
         gpl.devPause = [[LRDevPauseMenuVC alloc] init];
@@ -155,23 +148,11 @@ static LRGameStateManager *_shared = nil;
         gpl.devPause = nil;
     }
     gpl.paused = NO;
-    [gpl.mainGameSection enumerateChildNodesWithName:NAME_SPRITE_FALLING_ENVELOPE usingBlock:^(SKNode *node, BOOL *stop) {
+    [gpl.mainGameSection enumerateChildNodesWithName:NAME_SPRITE_MOVING_ENVELOPE usingBlock:^(SKNode *node, BOOL *stop) {
         [node setUserInteractionEnabled:YES];
-        [[node actionForKey:ACTION_ENVELOPE_DROP] setSpeed:1];
-        [[node actionForKey:ACTION_ENVELOPE_FLING] setSpeed:1];
     }];
-    [[gpl.mainGameSection actionForKey:ACTION_ENVELOPE_LOOP] setSpeed:1];
     [gpl.letterSection setUserInteractionEnabled:YES];
-    [self setGameBoardObjectTouchability:YES];
 
-}
-
-- (void)setGameBoardObjectTouchability:(BOOL)value
-{
-    LRGamePlayLayer *gpl = [(LRGameScene*)[self scene] gamePlayLayer];
-    [gpl enumerateChildNodesWithName:@"*" usingBlock:^(SKNode *node, BOOL *stop) {
-        node.userInteractionEnabled = value;
-    }];
 }
 
 #pragma mark - Game State Properties
