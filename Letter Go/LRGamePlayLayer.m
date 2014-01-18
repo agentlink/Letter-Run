@@ -78,6 +78,7 @@
         float mainGameSectionHeight = SCREEN_HEIGHT - self.letterSection.frame.size.height - self.healthSection.frame.size.height;
         float mainGameSectionWidth = SCREEN_WIDTH;
         _mainGameSection = [[LRMainGameSection alloc] initWithSize:CGSizeMake(mainGameSectionWidth, mainGameSectionHeight)];
+        _mainGameSection.letterAdditionDelegate = self.letterSection;
         _mainGameSection.zPosition = zPos_mainGameSection;
     }
     return _mainGameSection;

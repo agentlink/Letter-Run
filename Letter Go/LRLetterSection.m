@@ -41,7 +41,6 @@
 
 - (void) setUpNotifications
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addLetterToSection:) name:NOTIFICATION_ADDED_LETTER object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeLetterFromSection:) name:NOTIFICATION_DELETE_LETTER object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(submitWord:) name:NOTIFICATION_SUBMIT_WORD object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rearrangementScheduler:) name:NOTIFICATION_REARRANGE_START object:nil];
@@ -107,13 +106,11 @@
     return retVal;
 }
 
-# pragma mark - Adding and Removing Letters
-
-- (void) addLetterToSection:(NSNotification*)notification
+#pragma mark - LRLetterAdditionDelegate Methods
+- (void) addEnvelopeToLetterSection:(LRMovingBlock *)envelope
 {
-    //Get the letter from the notificaiton
-    NSString *letter = [[notification userInfo] objectForKey:KEY_GET_LETTER];
-    BOOL isLoveLetter = [[[notification userInfo] objectForKey:KEY_GET_LOVE] boolValue];
+    NSString *letter = envelope.letter;
+    BOOL isLoveLetter = envelope.loveLetter;
 
     LRLetterSlot *currentLetterSlot = nil;
     int letterCount = 0;

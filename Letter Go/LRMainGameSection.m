@@ -19,15 +19,13 @@
 
 @property NSTimeInterval nextDropTime;
 @property NSTimeInterval timeOfPause;
-@property NSTimeInterval previousTime;
+@property NSTimeInterval previousDropTime;
 @property BOOL newGameWillBegin;
 
 @end
 
-static const float kPauseTimeResetValue = -0.0001;
-
 @implementation LRMainGameSection
-@synthesize nextDropTime, timeOfPause, newGameWillBegin;
+@synthesize nextDropTime, timeOfPause, previousDropTime, newGameWillBegin;
 #pragma mark - Initialization Methods -
 
 - (id) initWithSize:(CGSize)size
@@ -41,70 +39,28 @@ static const float kPauseTimeResetValue = -0.0001;
     return self;
 }
 
-- (void) createSectionContent
-{
-    
-}
 
-#pragma mark - Letter Addition/Removal -
-- (void) addMovingBlockToScreen:(LRMovingBlock *)movingBlock
-{
-    //Set the touch delegate
-    movingBlock.touchDelegate = self;
-    //Add the envelope to teh screen and to the array
-    [self.envelopesOnScreen addObject:movingBlock];
-    [self addChild:movingBlock];
-}
-
-
-- (void) removeMovingBlockFromScreen:(LRMovingBlock*)letterBlock
-{
-    //Remove the envelope from the screen and the array
-    [self.envelopesOnScreen removeObject:letterBlock];
-    [self removeChildrenInArray:@[letterBlock]];
-}
-
-#pragma mark - Letter Movement/Touch -
-
+#pragma mark - Update Loop Methods -
+#pragma mark Time Methods
 - (void) update:(NSTimeInterval)currentTime
 {
     [super update:currentTime];
     //Check whether the update loop should continue
     BOOL continueGameLoop = [self updateWithTimeAndContinue:currentTime];
-
+    
     if (continueGameLoop) {
         //Shift the envelopes...
-        CGFloat timeDifference = currentTime - self.previousTime;
+        CGFloat timeDifference = currentTime - previousDropTime;
         [self shiftEnvelopesForTimeDifference:timeDifference];
         //If the time to drop the envelopes has come, drop'em and get the next drop time
-        if (nextDropTime <= currentTime) {
+        if (nextDropTime <= currentTime &&
+            ![[LRGameStateManager shared] isGameOver]) {
             [self generateEnvelopes];
             float letterDropPeriod = [[LRDifficultyManager shared] letterDropPeriod];
             nextDropTime += letterDropPeriod;
         }
     }
-    self.previousTime = currentTime;
-}
-
-- (void) shiftEnvelopesForTimeDifference:(CGFloat)timeDifference
-{
-    NSMutableArray *blocksToRemove = [NSMutableArray new];
-    CGFloat secondsToCrossScreen = 5.0;
-    //TODO: get this from the difficulty manager
-    CGFloat pixelsPerSecond = SCREEN_WIDTH / secondsToCrossScreen;
-    for (LRMovingBlock* block in self.envelopesOnScreen) {
-        //Shift the block down...
-        CGFloat distance = pixelsPerSecond * timeDifference;
-        block.position = CGPointMake(block.position.x - distance,
-                                     block.position.y);
-        //...and remove it if it's off screen
-        if (!CGRectIntersectsRect(block.frame, self.frame) &&
-            block.frame.origin.x < 0)
-        {
-            [blocksToRemove addObject:block];
-        }
-    }
-    [self removeChildrenInArray:blocksToRemove];
+    previousDropTime = currentTime;
 }
 
 ///Returns whether or not the update loop should continue
@@ -135,10 +91,11 @@ static const float kPauseTimeResetValue = -0.0001;
         newGameWillBegin = FALSE;
         return YES;
     }
-
+    
     return YES;
 }
 
+#pragma mark Letter Addition and Removal
 - (void) generateEnvelopes
 {
     int i = 0;
@@ -146,7 +103,24 @@ static const float kPauseTimeResetValue = -0.0001;
         LRMovingBlock *envelope = [LRLetterBlockGenerator createRandomEnvelope];
         [self.letterSlotManager addEnvelope:envelope];
         [self addMovingBlockToScreen:envelope];
-   }
+    }
+}
+
+- (void) addMovingBlockToScreen:(LRMovingBlock *)movingBlock
+{
+    //Set the touch delegate
+    movingBlock.touchDelegate = self;
+    //Add the envelope to teh screen and to the array
+    [self.envelopesOnScreen addObject:movingBlock];
+    [self addChild:movingBlock];
+}
+
+
+- (void) removeMovingBlockFromScreen:(LRMovingBlock*)letterBlock
+{
+    //Remove the envelope from the screen and the array
+    [self.envelopesOnScreen removeObject:letterBlock];
+    [self removeChildrenInArray:@[letterBlock]];
 }
 
 - (void) clearMainGameSection
@@ -154,6 +128,29 @@ static const float kPauseTimeResetValue = -0.0001;
     [self.letterSlotManager resetSlots];
     [self removeChildrenInArray:self.envelopesOnScreen];
     [self.envelopesOnScreen removeAllObjects];
+}
+
+#pragma mark Letter Movement/Touch
+
+- (void) shiftEnvelopesForTimeDifference:(CGFloat)timeDifference
+{
+    NSMutableArray *blocksToRemove = [NSMutableArray new];
+    CGFloat secondsToCrossScreen = 5.0;
+    //TODO: get this from the difficulty manager
+    CGFloat pixelsPerSecond = SCREEN_WIDTH / secondsToCrossScreen;
+    for (LRMovingBlock* block in self.envelopesOnScreen) {
+        //Shift the block down...
+        CGFloat distance = pixelsPerSecond * timeDifference;
+        block.position = CGPointMake(block.position.x - distance,
+                                     block.position.y);
+        //...and remove it if it's off screen
+        if (!CGRectIntersectsRect(block.frame, self.frame) &&
+            block.frame.origin.x < 0)
+        {
+            [blocksToRemove addObject:block];
+        }
+    }
+    [self removeChildrenInArray:blocksToRemove];
 }
 
 - (void) setEnvelopeTouchEnabled:(BOOL)envelopeTouchEnabled
@@ -165,12 +162,14 @@ static const float kPauseTimeResetValue = -0.0001;
 }
 
 #pragma mark LRMovingBlockTouchDelegate Methods
+
 - (void) playerSelectedMovingBlock:(LRMovingBlock *)movingBlock
 {
     //TODO: replace this with direct access to letter section
-    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_ADDED_LETTER
+/*    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_ADDED_LETTER
                                                         object:self
-                                                      userInfo:[movingBlock addLetterDictionary]];
+                                                      userInfo:[movingBlock addLetterDictionary]];*/
+    [self.letterAdditionDelegate addEnvelopeToLetterSection:movingBlock];
     [self removeMovingBlockFromScreen:movingBlock];
 }
 

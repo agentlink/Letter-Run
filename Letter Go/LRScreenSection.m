@@ -27,7 +27,6 @@
 
 - (void) createSectionContent
 {
-    //OVERRIDE THIS
-    (void)0;
+    NSLog(@"Warning: createSectionContent should be overridden for class %@", [[self class] description]);
 }
 @end
