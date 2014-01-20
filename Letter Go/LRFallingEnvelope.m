@@ -218,7 +218,7 @@
 - (void) addLetterToLetterSection
 {
     //Add the letter
-    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_ADDED_LETTER object:self userInfo:[self addLetterDictionary]];
+ //   [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_ADDED_LETTER object:self userInfo:[self addLetterDictionary]];
     
     //And notify that a new slot is empty
     [self removeFromParent];

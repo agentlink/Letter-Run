@@ -8,14 +8,14 @@
 
 #import "LRScreenSection.h"
 #import "LRMovingBlock.h"
-#import "LRLetterAdditionDeletionDelegate.h"
+#import "LRLetterBlockControlDelegate.h"
 
 @interface LRMainGameSection : LRScreenSection
 
 ///Setting this pauses and unpauses the movement of letters
 @property (nonatomic) BOOL envelopeMovementPaused;
 @property (nonatomic) BOOL envelopeTouchEnabled;
-@property (nonatomic, weak) id <LRLetterAdditionDeletionDelegate> letterAdditionDelegate;
+@property (nonatomic, weak) id <LRLetterBlockControlDelegate> letterAdditionDelegate;
 
 - (void) addMovingBlockToScreen:(LRMovingBlock*)movingBlock;
 - (void) clearMainGameSection;

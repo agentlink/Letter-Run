@@ -63,6 +63,7 @@
 
 - (void) releaseBlockForRearrangement
 {
+    //Move the block from being the child of the letter slot to the child of the whole letter section
     LRLetterSection *letterSection = [[(LRGameScene*)[self scene] gamePlayLayer] letterSection];
     LRLetterSlot *parentSlot = (LRLetterSlot*)[self parent];
     CGPoint newPos = [self convertPoint:self.position toNode:letterSection];
@@ -70,7 +71,7 @@
     [parentSlot setEmptyLetterBlock];
     [letterSection addChild:self];
 
-    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_REARRANGE_START object:self userInfo:[NSDictionary dictionaryWithObject:self forKey:@"block"]];
+    [self.delegate rearrangementHasBegunWithLetterBlock:self];
 }
 
 - (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
@@ -78,7 +79,7 @@
     for (UITouch *touch in touches)
     {
         //Finish rearranging the letters
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_REARRANGE_FINISH object:self userInfo:[NSDictionary dictionaryWithObject:self forKey:@"block"]];
+        [self.delegate rearrangementHasFinishedWithLetterBlock:self];
 
         //If the player didn't move the block, delete it
         CGPoint location = [touch locationInNode:[self parent]];

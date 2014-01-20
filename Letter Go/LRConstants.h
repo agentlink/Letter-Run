@@ -40,10 +40,7 @@ static const int kGameLoopResetValue            =       -1;
 #define NAME_LAYER_BACKGROUND                       @"NAME_LAYER_BACKGROUND"
 
 #define NOTIFICATION_SUBMIT_WORD                    @"Submit a word"
-
-#define NOTIFICATION_ENVELOPE_LANDED                @"Envelope hit the ground"
 #define NOTIFICATION_ENVELOPE_HIT_MAILMAN           @"Envelope hit the mailman"
-
 #define NOTIFICATION_REARRANGE_START                @"Started rearranging letters"
 #define NOTIFICATION_REARRANGE_FINISH               @"Finished rearranging letters"
 

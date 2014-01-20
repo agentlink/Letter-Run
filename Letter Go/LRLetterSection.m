@@ -42,8 +42,6 @@
 - (void) setUpNotifications
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(submitWord:) name:NOTIFICATION_SUBMIT_WORD object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rearrangementScheduler:) name:NOTIFICATION_REARRANGE_START object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishRearrangement:) name:NOTIFICATION_REARRANGE_FINISH object:nil];
 }
 
 - (void) createSectionContent
@@ -105,8 +103,8 @@
     return retVal;
 }
 
-#pragma mark - LRLetterAdditionDeletionDelegate Methods
-
+#pragma mark - LRLetterBlockControlDelegate Methods
+#pragma mark Addition/Deletion
 - (void) addEnvelopeToLetterSection:(id)envelope
 {
     LRMovingBlock *newEnvelope = (LRMovingBlock*)envelope;
@@ -166,6 +164,22 @@
     [self updateSubmitButton];
 }
 
+#pragma mark Rearrangement
+- (void) rearrangementHasBegunWithLetterBlock:(id)letterBlock
+{
+    self.touchedBlock = (LRSectionBlock*)letterBlock;
+}
+
+- (void) rearrangementHasFinishedWithLetterBlock:(id)letterBlock
+{
+    LRLetterSlot *newLocation = [self getPlaceHolderSlot];
+    newLocation.currentBlock = (LRSectionBlock*)letterBlock;
+    self.currentSlot = nil;
+    self.touchedBlock = nil;
+    [self updateSubmitButton];
+}
+
+
 
 #pragma mark - Submit Word Functions
 
@@ -221,26 +235,13 @@
     self.submitButton.userInteractionEnabled = (i >= kWordMinimumLetterCount && [[LRDictionaryChecker shared] checkForWordInDictionary:[self getCurrentWord]]);
 }
 
-#pragma mark - Reordering Functions
+#pragma mark - Reordering Functions -
 
 - (void) update:(NSTimeInterval)currentTime
 {
     if (self.touchedBlock) {
         [self checkRearrangement];
     }
-}
-- (void) rearrangementScheduler:(NSNotification*)notification
-{
-    self.touchedBlock = [[notification userInfo] objectForKey:@"block"];
-}
-
-- (void) finishRearrangement:(NSNotification*)notification {
-
-    LRLetterSlot *newLocation = [self getPlaceHolderSlot];
-    newLocation.currentBlock = [[notification userInfo] objectForKey:@"block"];
-    self.currentSlot = nil;
-    self.touchedBlock = nil;
-    [self updateSubmitButton];
 }
 
 - (void) checkRearrangement
@@ -273,6 +274,8 @@
     }
     return NO;
 }
+
+#pragma mark Letter Swapping Functions
 
 - (void) swapLetterAtSlot:(LRLetterSlot*) slotA withLetterAtSlot:(LRLetterSlot*) slotB
 {

@@ -220,7 +220,7 @@
 		A82CA94A1855189F004ADD99 /* LRSlotManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRSlotManager.h; sourceTree = "<group>"; };
 		A82CA94B1855189F004ADD99 /* LRSlotManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRSlotManager.m; sourceTree = "<group>"; };
 		A82DD7E71857FB24007483A6 /* LRPositionConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LRPositionConstants.h; sourceTree = "<group>"; };
-		A8423117188B162300F1693E /* LRLetterAdditionDeletionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRLetterAdditionDeletionDelegate.h; sourceTree = "<group>"; };
+		A8423117188B162300F1693E /* LRLetterBlockControlDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRLetterBlockControlDelegate.h; sourceTree = "<group>"; };
 		A846FB8A186E0489009DCEF4 /* LRLetterBlock_Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterBlock_Test.m; sourceTree = "<group>"; };
 		A876EC3A18836795000FA069 /* Background_Cloud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background_Cloud.png; sourceTree = "<group>"; };
 		A876EC3C188367AA000FA069 /* Background_Grass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background_Grass.png; sourceTree = "<group>"; };
@@ -386,7 +386,7 @@
 		0049695C17F8B58F00176F2D /* Letter Section */ = {
 			isa = PBXGroup;
 			children = (
-				A8423117188B162300F1693E /* LRLetterAdditionDeletionDelegate.h */,
+				A842311A188DBE1B00F1693E /* Delegates */,
 				00CDF18A17F4899B003065F6 /* LRLetterSection.h */,
 				00CDF18B17F4899B003065F6 /* LRLetterSection.m */,
 				0049695D17F8B5B900176F2D /* LRLetterSlot.h */,
@@ -595,6 +595,14 @@
 				00CDF18317F483C4003065F6 /* Game Play Layer Sections */,
 			);
 			name = "Game Play Layer";
+			sourceTree = "<group>";
+		};
+		A842311A188DBE1B00F1693E /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				A8423117188B162300F1693E /* LRLetterBlockControlDelegate.h */,
+			);
+			name = Delegates;
 			sourceTree = "<group>";
 		};
 		A877E5BC185BF8C30028CFFA /* Letter Go Tests */ = {

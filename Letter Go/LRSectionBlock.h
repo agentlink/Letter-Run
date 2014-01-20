@@ -7,7 +7,7 @@
 //
 
 #import "LRLetterBlock.h"
-#import "LRLetterAdditionDeletionDelegate.h"
+#import "LRLetterBlockControlDelegate.h"
 
 @interface LRSectionBlock : LRLetterBlock
 
@@ -17,6 +17,5 @@
 - (BOOL) isLetterBlockEmpty;
 - (BOOL) isLetterBlockPlaceHolder;
 
-@property (nonatomic, weak) id <LRLetterAdditionDeletionDelegate> delegate;
-
+@property (nonatomic, weak) id <LRLetterBlockControlDelegate> delegate;
 @end
