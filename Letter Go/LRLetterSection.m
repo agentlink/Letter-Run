@@ -85,24 +85,6 @@
     return _letterSlots;
 }
 
-# pragma mark - Game State Functions
-- (void) clearLetterSection
-{
-    for (LRLetterSlot *slot in self.letterSlots) {
-        slot.currentBlock = [LRLetterBlockGenerator createEmptySectionBlock];
-    }
-    [self updateSubmitButton];
-}
-
-- (CGFloat) xPosFromSlotIndex:(int) index {
-    float slotMargin, edgeBuffer;
-    slotMargin = (IS_IPHONE_5) ? kLetterBlockDimension/3.3 : kLetterBlockDimension/4;
-    edgeBuffer = (self.size.width - (slotMargin + kLetterBlockDimension) * kWordMaximumLetterCount - kLetterBlockDimension)/2;
-
-    float retVal = 0 - self.size.width/2 + edgeBuffer + kLetterBlockDimension/2 + index * (kLetterBlockDimension + slotMargin);
-    return retVal;
-}
-
 #pragma mark - LRLetterBlockControlDelegate Methods
 #pragma mark Addition/Deletion
 - (void) addEnvelopeToLetterSection:(id)envelope
@@ -357,6 +339,23 @@
 }
 
 #pragma mark - Helper Functions
+
+- (void) clearLetterSection
+{
+    for (LRLetterSlot *slot in self.letterSlots) {
+        slot.currentBlock = [LRLetterBlockGenerator createEmptySectionBlock];
+    }
+    [self updateSubmitButton];
+}
+
+- (CGFloat) xPosFromSlotIndex:(int) index {
+    float slotMargin, edgeBuffer;
+    slotMargin = (IS_IPHONE_5) ? kLetterBlockDimension/3.3 : kLetterBlockDimension/4;
+    edgeBuffer = (self.size.width - (slotMargin + kLetterBlockDimension) * kWordMaximumLetterCount - kLetterBlockDimension)/2;
+    
+    float retVal = 0 - self.size.width/2 + edgeBuffer + kLetterBlockDimension/2 + index * (kLetterBlockDimension + slotMargin);
+    return retVal;
+}
 
 - (int) numLettersInSection
 {
