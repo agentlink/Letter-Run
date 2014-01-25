@@ -25,7 +25,7 @@
     return self;
 }
 
-- (id) initWithLetterBlock:(LRSectionBlock*)block
+- (id) initWithLetterBlock:(LRCollectedEnvelope*)block
 {
     if (self = [self init])
     {
@@ -39,7 +39,7 @@
     return [self.currentBlock isLetterBlockEmpty];
 }
 
-- (void) setCurrentBlock:(LRSectionBlock *)incomingBlock
+- (void) setCurrentBlock:(LRCollectedEnvelope *)incomingBlock
 {
     //If it's being initialized
     if (!_currentBlock)

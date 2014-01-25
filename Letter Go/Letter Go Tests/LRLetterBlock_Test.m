@@ -10,7 +10,7 @@
 #import "LRLetterBlock.h"
 #import "LRLetterBlockGenerator.h"
 #import "LRFallingEnvelope.h"
-#import "LRSectionBlock.h"
+#import "LRCollectedEnvelope.h"
 #import "LRConstants.h"
 
 @interface LRLetterBlock_Test : XCTestCase
@@ -35,9 +35,9 @@
 {
     NSString *letter = @"G";
     BOOL love = YES;
-    LRSectionBlock *emptyBlock = [LRLetterBlockGenerator createEmptySectionBlock];
-    LRSectionBlock *placeholderBlock = [LRLetterBlockGenerator createPlaceHolderBlock];
-    LRSectionBlock *gBlock = [LRLetterBlockGenerator createBlockWithLetter:letter loveLetter:love];
+    LRCollectedEnvelope *emptyBlock = [LRLetterBlockGenerator createEmptySectionBlock];
+    LRCollectedEnvelope *placeholderBlock = [LRLetterBlockGenerator createPlaceHolderBlock];
+    LRCollectedEnvelope *gBlock = [LRLetterBlockGenerator createBlockWithLetter:letter loveLetter:love];
 
     //Regular letter block tests
     XCTAssertEqual(letter, gBlock.letter, @"Error: section block should contain letter '%@' but instead contains '%@'", letter, gBlock.letter);

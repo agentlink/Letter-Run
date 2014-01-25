@@ -32,22 +32,22 @@
     return envelope;
 }
 
-+ (LRSectionBlock*) createEmptySectionBlock
++ (LRCollectedEnvelope*) createEmptySectionBlock
 {
-    LRSectionBlock *lb = [LRSectionBlock emptySectionBlock];
+    LRCollectedEnvelope *lb = [LRCollectedEnvelope emptySectionBlock];
     lb.color = [LRColor clearColor];
     return lb;
 }
 
-+ (LRSectionBlock*) createPlaceHolderBlock
++ (LRCollectedEnvelope*) createPlaceHolderBlock
 {
-    LRSectionBlock *lb = [LRLetterBlockGenerator createEmptySectionBlock];
+    LRCollectedEnvelope *lb = [LRLetterBlockGenerator createEmptySectionBlock];
     lb.letter = LETTER_PLACEHOLDER_TEXT;
     return lb;
 }
 
-+ (LRSectionBlock*) createBlockWithLetter:(NSString *)letter loveLetter:(BOOL)love {
-    return [LRSectionBlock sectionBlockWithLetter:letter loveLetter:love];
++ (LRCollectedEnvelope*) createBlockWithLetter:(NSString *)letter loveLetter:(BOOL)love {
+    return [LRCollectedEnvelope sectionBlockWithLetter:letter loveLetter:love];
 }
 
 #pragma mark - Private Functions

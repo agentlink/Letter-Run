@@ -9,10 +9,10 @@
 #import "LRLetterBlock.h"
 #import "LRLetterBlockControlDelegate.h"
 
-@interface LRSectionBlock : LRLetterBlock
+@interface LRCollectedEnvelope : LRLetterBlock
 
-+ (LRSectionBlock*) sectionBlockWithLetter:(NSString*)letter loveLetter:(BOOL)love;;
-+ (LRSectionBlock*) emptySectionBlock;
++ (LRCollectedEnvelope*) sectionBlockWithLetter:(NSString*)letter loveLetter:(BOOL)love;;
++ (LRCollectedEnvelope*) emptySectionBlock;
 
 - (BOOL) isLetterBlockEmpty;
 - (BOOL) isLetterBlockPlaceHolder;

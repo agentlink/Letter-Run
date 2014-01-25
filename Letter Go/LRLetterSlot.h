@@ -7,13 +7,13 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-#import "LRSectionBlock.h"
+#import "LRCollectedEnvelope.h"
 
 @interface LRLetterSlot : SKSpriteNode
 
-@property (nonatomic) LRSectionBlock *currentBlock;
+@property (nonatomic) LRCollectedEnvelope *currentBlock;
 
-- (id) initWithLetterBlock:(LRSectionBlock*)block;
+- (id) initWithLetterBlock:(LRCollectedEnvelope*)block;
 - (void) setEmptyLetterBlock;
 - (BOOL) isLetterSlotEmpty;
 

@@ -6,25 +6,25 @@
 //  Copyright (c) 2013 Gabe Nicholas. All rights reserved.
 //
 
-#import "LRSectionBlock.h"
+#import "LRCollectedEnvelope.h"
 #import "LRGameScene.h"
 #import "LRLetterSlot.h"
 
-@interface LRSectionBlock ()
+@interface LRCollectedEnvelope ()
 @property BOOL playerMovedTouch;
 @end
 
-@implementation LRSectionBlock
+@implementation LRCollectedEnvelope
 
 #pragma mark - Set Up
-+ (LRSectionBlock*) sectionBlockWithLetter:(NSString*)letter loveLetter:(BOOL)love
++ (LRCollectedEnvelope*) sectionBlockWithLetter:(NSString*)letter loveLetter:(BOOL)love
 {
-    return [[LRSectionBlock alloc] initWithLetter:letter loveLetter:love];
+    return [[LRCollectedEnvelope alloc] initWithLetter:letter loveLetter:love];
 }
 
-+ (LRSectionBlock*) emptySectionBlock
++ (LRCollectedEnvelope*) emptySectionBlock
 {
-    return [[LRSectionBlock alloc] initWithLetter:@"" loveLetter:false];
+    return [[LRCollectedEnvelope alloc] initWithLetter:@"" loveLetter:false];
 }
 
 - (id) initWithLetter:(NSString *)letter loveLetter:(BOOL)love

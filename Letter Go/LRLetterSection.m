@@ -22,7 +22,7 @@
 @property (nonatomic, strong) NSMutableArray *letterSlots;
 
 @property (nonatomic) LRLetterSlot  *currentSlot;
-@property LRSectionBlock *touchedBlock;
+@property LRCollectedEnvelope *touchedBlock;
 
 @end
 
@@ -105,7 +105,7 @@
     }
     //If all the letter slots are not full
     if (currentLetterSlot) {
-        LRSectionBlock *block = [LRLetterBlockGenerator createBlockWithLetter:letter loveLetter:isLoveLetter];
+        LRCollectedEnvelope *block = [LRLetterBlockGenerator createBlockWithLetter:letter loveLetter:isLoveLetter];
         block.delegate = self;
         currentLetterSlot.currentBlock = block;
     }
@@ -114,7 +114,7 @@
 
 - (void) removeEnvelopeFromLetterSection:(id)envelope
 {
-    LRSectionBlock *block = (LRSectionBlock*)envelope;
+    LRCollectedEnvelope *block = (LRCollectedEnvelope*)envelope;
     LRLetterSlot *selectedSlot = nil;
     //Check to see if it's a child of the letter section
     __block BOOL foundNode = NO;
@@ -149,13 +149,13 @@
 #pragma mark Rearrangement
 - (void) rearrangementHasBegunWithLetterBlock:(id)letterBlock
 {
-    self.touchedBlock = (LRSectionBlock*)letterBlock;
+    self.touchedBlock = (LRCollectedEnvelope*)letterBlock;
 }
 
 - (void) rearrangementHasFinishedWithLetterBlock:(id)letterBlock
 {
     LRLetterSlot *newLocation = [self getPlaceHolderSlot];
-    newLocation.currentBlock = (LRSectionBlock*)letterBlock;
+    newLocation.currentBlock = (LRCollectedEnvelope*)letterBlock;
     self.currentSlot = nil;
     self.touchedBlock = nil;
     [self updateSubmitButton];
@@ -298,8 +298,8 @@
     LRLetterSlot *slotA = [self.letterSlots objectAtIndex:a];
     LRLetterSlot *slotB = [self.letterSlots objectAtIndex:b];
     
-    LRSectionBlock *blockA = [slotA currentBlock];
-    LRSectionBlock *blockB = [slotB currentBlock];
+    LRCollectedEnvelope *blockA = [slotA currentBlock];
+    LRCollectedEnvelope *blockB = [slotB currentBlock];
     
     [slotA setCurrentBlock:blockB];
     [slotB setCurrentBlock:blockA];
@@ -319,7 +319,7 @@
 }
 
 ///Get the closest section block to a given position (provided by touch)
-- (LRLetterSlot*)getClosestSlotToBlock:(LRSectionBlock*)letterBlock
+- (LRLetterSlot*)getClosestSlotToBlock:(LRCollectedEnvelope*)letterBlock
 {
     CGPoint letterBlockPosition = [letterBlock convertPoint:self.position toNode:self];
     LRLetterSlot *closestSlot;

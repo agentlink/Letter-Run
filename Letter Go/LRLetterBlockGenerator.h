@@ -8,7 +8,7 @@
 
 #import <SpriteKit/SpriteKit.h>
 #import "LRFallingEnvelope.h"
-#import "LRSectionBlock.h"
+#import "LRCollectedEnvelope.h"
 #import "LRMovingBlock.h"
 
 @interface LRLetterBlockGenerator : SKNode
@@ -22,14 +22,14 @@
 
 #pragma mark - Letter Section Blocks
 ///Create an empty slot for the letter section
-+ (LRSectionBlock*) createEmptySectionBlock;
++ (LRCollectedEnvelope*) createEmptySectionBlock;
 ///Create a place holder block to be used during rearrangement
-+ (LRSectionBlock*) createPlaceHolderBlock;
++ (LRCollectedEnvelope*) createPlaceHolderBlock;
 /*!
  @param letter The letter the block should have
  @param love Whether or not the letter is a love letter
  @return A new instance of a section block
  */
-+ (LRSectionBlock*) createBlockWithLetter:(NSString *)letter loveLetter:(BOOL)love;
++ (LRCollectedEnvelope*) createBlockWithLetter:(NSString *)letter loveLetter:(BOOL)love;
 
 @end
