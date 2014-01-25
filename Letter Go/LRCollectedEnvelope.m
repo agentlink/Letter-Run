@@ -10,8 +10,18 @@
 #import "LRGameScene.h"
 #import "LRLetterSlot.h"
 
+typedef NS_ENUM(NSUInteger, MovementDirection)
+{
+    //Remove none if it doesn't get used
+    MovementDirectionNone = 0,
+    MovementDirectionHorizontal,
+    MovementDirectionVertical
+};
+
+
 @interface LRCollectedEnvelope ()
-@property BOOL playerMovedTouch;
+@property MovementDirection movementDirection;
+@property CGPoint touchOrigin;
 @end
 
 @implementation LRCollectedEnvelope
@@ -31,6 +41,7 @@
 {
     if (self = [super initWithLetter:letter loveLetter:love]) {
         self.name = NAME_SPRITE_SECTION_LETTER_BLOCK;
+        self.movementDirection = MovementDirectionNone;
     }
     return self;
 }
@@ -43,9 +54,12 @@
         CGPoint location = [touch locationInNode:[self parent]];
         if (CGRectContainsPoint(self.frame, location))
         {
-            self.playerMovedTouch = FALSE;
-            [self releaseBlockForRearrangement];
-            self.zPosition += 5;
+            self.touchOrigin = location;
+            self.movementDirection = MovementDirectionNone;
+
+            //Get the movement direction...
+            if (self.movementDirection == MovementDirectionHorizontal) {
+            }
         }
     }
 }
@@ -55,10 +69,48 @@
 {
     for (UITouch *touch in touches)
     {
-        self.playerMovedTouch = TRUE;
-        CGPoint location = [touch locationInNode:[self parent]];
-        self.position = CGPointMake(location.x, self.position.y);
+        CGPoint touchLoc = [touch locationInNode:[self parent]];
+        CGPoint envelopeLoc = self.position;
+        
+        //If the movement direction hasn't been set, calculate it
+        if (self.movementDirection == MovementDirectionNone) {
+            MovementDirection direction = [self movementDirectionFromPoint:envelopeLoc toPoint:touchLoc];
+            if (direction == MovementDirectionHorizontal) {
+                [self releaseBlockForRearrangement];
+                self.zPosition += 5;
+            }
+            else {
+                //vertical scroll release case
+            }
+            self.movementDirection = direction;
+        }
+
+        //Horizontal scroll case
+        else if (self.movementDirection == MovementDirectionHorizontal) {
+            self.position = CGPointMake(touchLoc.x, envelopeLoc.y);
+        }
+        //Vertical scroll case
+        else {
+            NSLog(@"Vert");
+            //while (code == code)
+                //code();
+        }
     }
+}
+
+- (MovementDirection) movementDirectionFromPoint:(CGPoint)origin toPoint:(CGPoint)newLoc
+{
+    CGFloat xDiff = ABS(newLoc.x - origin.x);
+    CGFloat yDiff = ABS(newLoc.y - origin.y);
+    /*
+     TODO: play with this value to figure out the optimal one.
+     */
+    //Make it more likely that the player will scroll horizontally
+    CGFloat xAdvantage = 1.3;
+    
+    if (xAdvantage * xDiff >= yDiff)
+        return MovementDirectionHorizontal;
+    return MovementDirectionVertical;
 }
 
 - (void) releaseBlockForRearrangement
@@ -78,17 +130,12 @@
 {
     for (UITouch *touch in touches)
     {
-        //Finish rearranging the letters
-        [self.delegate rearrangementHasFinishedWithLetterBlock:self];
-
-        //If the player didn't move the block, delete it
-        CGPoint location = [touch locationInNode:[self parent]];
-        if (CGRectContainsPoint(self.frame, location) && !self.playerMovedTouch)
-        {
-            [self.delegate removeEnvelopeFromLetterSection:self];
+        //If the scroll is horizontal, finish moving the letters
+        if (self.movementDirection == MovementDirectionHorizontal) {
+            [self.delegate rearrangementHasFinishedWithLetterBlock:self];
+            self.zPosition -= 5;
         }
-        self.zPosition -= 5;
-        self.playerMovedTouch = FALSE;
+        self.movementDirection = MovementDirectionNone;
     }
 }
 
