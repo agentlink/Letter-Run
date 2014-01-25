@@ -24,6 +24,15 @@
 {
     if (self = [super init])
     {
+        CGFloat backgroundHeight = SCREEN_HEIGHT - kSectionHeightLetterSection;
+        CGFloat backgroundWidth = SCREEN_WIDTH;
+        CGFloat backgroundXPos = self.size.width/2;
+        CGFloat backgroundYPos = (SCREEN_HEIGHT + kSectionHeightLetterSection)/2;
+
+        [self setSize:CGSizeMake(backgroundWidth, backgroundHeight)];
+        [self setPosition:CGPointMake(backgroundXPos, backgroundYPos)];
+        [self setUserInteractionEnabled:NO];
+        
         self.name = NAME_LAYER_BACKGROUND;
         [self createLayerContents];
     }

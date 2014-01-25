@@ -32,6 +32,10 @@
 {
     if (self = [super init])
     {
+        [self setSize:CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT)];
+        [self setPosition:CGPointMake(self.size.width/2, self.size.height/2)];
+        [self setUserInteractionEnabled:YES];
+        
         self.pauseTime = kGameLoopResetValue;
         self.name = NAME_LAYER_GAME_PLAY;
         newGame = TRUE;
@@ -75,11 +79,15 @@
 
 - (LRScreenSection*) mainGameSection {
     if (!_mainGameSection) {
-        float mainGameSectionHeight = SCREEN_HEIGHT - self.letterSection.frame.size.height - self.healthSection.frame.size.height;
-        float mainGameSectionWidth = SCREEN_WIDTH;
-        _mainGameSection = [[LRMainGameSection alloc] initWithSize:CGSizeMake(mainGameSectionWidth, mainGameSectionHeight)];
+        CGFloat mainGameSectionXPos = 0;
+        CGFloat mainGameSectionYPos = kSectionHeightLetterSection/2;
+        
+        _mainGameSection = [[LRMainGameSection alloc] initWithSize:CGSizeMake(SCREEN_WIDTH, kSectionHeightMainSection)];
+        _mainGameSection.position = CGPointMake(mainGameSectionXPos, mainGameSectionYPos);
         _mainGameSection.letterAdditionDelegate = self.letterSection;
-        _mainGameSection.zPosition = zPos_mainGameSection;
+        _mainGameSection.zPosition = zPos_MainGameSection;
+        _mainGameSection.color = [UIColor darkGrayColor];
+        
     }
     return _mainGameSection;
 }

@@ -34,14 +34,16 @@
 {
     _slot = slot;
     //Get the max and min heights
-    CGFloat topBufferSize = kSectionHeightHealth + kLetterBlockDimension/2;
-    CGFloat bottomBufferSize = kSectionHeightLetterSection + kLetterBlockDimension/2;
-    CGFloat letterDistance = (SCREEN_HEIGHT - topBufferSize - bottomBufferSize) /(kNumberOfSlots - 1);
+    CGFloat distanceFromEdge = 10.0;
+    CGFloat bufferSize = kLetterBlockDimension/2 + distanceFromEdge;
+    CGFloat letterDistance = (kSectionHeightMainSection - 2 * bufferSize) /(kNumberOfSlots - 1);
 
     //Set teh position based on the slot
     CGFloat xPos = SCREEN_WIDTH/2 + kLetterBlockDimension;
-    CGFloat yPos = -SCREEN_HEIGHT/2 + bottomBufferSize + letterDistance * slot;
+    CGFloat yPos = -kSectionHeightMainSection /2 + bufferSize + letterDistance * slot;
     self.position = CGPointMake(xPos, yPos);
+    
+
 }
 
 #pragma mark - Touch Functions + Helpers

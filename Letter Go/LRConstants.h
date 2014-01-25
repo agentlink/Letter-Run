@@ -9,6 +9,7 @@
 //Size constants
 static const float kSectionHeightLetterSection  =       (178 - 51)/2;
 static const float kSectionHeightHealth         =       7.0;
+static const float kSectionHeightMainSection    =       320.0 - kSectionHeightLetterSection;
 static const float kLetterBlockDimension        =       48.0;
 static const float kParallaxHeightGrass         =       26.6;
 

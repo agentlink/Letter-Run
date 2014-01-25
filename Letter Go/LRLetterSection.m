@@ -52,6 +52,39 @@
     for (LRLetterSlot *slot in self.letterSlots) {
         [self addChild:slot];
     }
+    
+    [self addVerticalBarriers];
+}
+
+/*!
+ Add sprites above and below the letter slots so vertical scroll
+ deletion goes behind the letter section but horizontal scroll
+ rearrangement does not.
+ */
+- (void) addVerticalBarriers
+{
+    SKSpriteNode *topBarrier, *bottomBarrier;
+    
+    CGFloat barrierHeight = (self.frame.size.height - kLetterBlockDimension) / 2;
+    CGFloat barrierWidth = self.size.width;
+    CGSize barrierSize = CGSizeMake(barrierWidth, barrierHeight);
+    
+    CGFloat barrierXPos = self.position.x;
+    CGFloat bottomBarrierYPos = self.frame.origin.y + barrierHeight/2;
+    CGFloat topBarrierYPos = bottomBarrierYPos + barrierHeight + kLetterBlockDimension;
+    
+    bottomBarrier = [SKSpriteNode spriteNodeWithColor:[LRColor letterSectionColor]
+                                                 size:barrierSize];
+    bottomBarrier.position = CGPointMake(barrierXPos, bottomBarrierYPos);
+    bottomBarrier.zPosition = zPos_LetterSectionBarrier;
+    [self addChild:bottomBarrier];
+    
+    topBarrier = [SKSpriteNode spriteNodeWithColor:[LRColor letterSectionColor]
+                                              size:barrierSize];
+    topBarrier.position = CGPointMake(barrierXPos, topBarrierYPos);
+    topBarrier.zPosition = zPos_LetterSectionBarrier;
+    [self addChild:topBarrier];
+    
 }
 
 #pragma mark - Private Properties

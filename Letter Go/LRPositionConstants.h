@@ -6,11 +6,13 @@
 //  Copyright (c) 2013 Gabe Nicholas. All rights reserved.
 //
 
-static const float zPos_HealthSection = 100;
-static const float zPos_mainGameSection = 1;
+static const float zPos_HealthSection = 110;
+static const float zPos_MainGameSection = 100;
 static const float zPos_LetterSection = 90;
 
-static const float zPos_SectionBlock = 95;
+static const float zPos_LetterSectionBarrier = 200;
+
+static const float zPos_SectionBlock = 1;
 static const float zPos_FallingEnvelope = 35;
 
 //TODO: remove when background changes

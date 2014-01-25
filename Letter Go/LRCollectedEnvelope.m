@@ -91,7 +91,7 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
         }
         //Vertical scroll case
         else {
-            NSLog(@"Vert");
+            self.position = CGPointMake(envelopeLoc.x, touchLoc.y);
             //while (code == code)
                 //code();
         }
@@ -106,7 +106,7 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
      TODO: play with this value to figure out the optimal one.
      */
     //Make it more likely that the player will scroll horizontally
-    CGFloat xAdvantage = 1.3;
+    CGFloat xAdvantage = 1;
     
     if (xAdvantage * xDiff >= yDiff)
         return MovementDirectionHorizontal;

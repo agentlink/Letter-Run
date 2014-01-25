@@ -14,9 +14,6 @@
     if (self = [super init])
     {
         //Layers should all be full screen and in the center
-        [self setSize:CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT)];
-        [self setPosition:CGPointMake(self.size.width/2, self.size.height/2)];
-        [self setUserInteractionEnabled:YES];
     }
     return self;
 }
