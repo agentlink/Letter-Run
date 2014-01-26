@@ -98,6 +98,30 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
     }
 }
 
+- (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    for (UITouch *touch in touches)
+    {
+        //If the scroll is horizontal, finish moving the letters
+        if (self.movementDirection == MovementDirectionHorizontal) {
+            [self.delegate rearrangementHasFinishedWithLetterBlock:self];
+      //      self.zPosition -= 5;
+        }
+        else {
+            if ([self shouldEnvelopeBeDeletedAtPosition:self.position])
+            {
+                [self.delegate removeEnvelopeFromLetterSection:self];
+            }
+            else {
+                self.position = CGPointZero;
+            }
+        }
+        self.movementDirection = MovementDirectionNone;
+    }
+}
+
+#pragma mark - Touch Helper Functions
+
 - (MovementDirection) movementDirectionFromPoint:(CGPoint)origin toPoint:(CGPoint)newLoc
 {
     CGFloat xDiff = ABS(newLoc.x - origin.x);
@@ -126,19 +150,18 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
     [self.delegate rearrangementHasBegunWithLetterBlock:self];
 }
 
-- (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (BOOL) shouldEnvelopeBeDeletedAtPosition:(CGPoint)pos
 {
-    for (UITouch *touch in touches)
-    {
-        //If the scroll is horizontal, finish moving the letters
-        if (self.movementDirection == MovementDirectionHorizontal) {
-            [self.delegate rearrangementHasFinishedWithLetterBlock:self];
-            self.zPosition -= 5;
-        }
-        self.movementDirection = MovementDirectionNone;
-    }
-}
+    CGFloat currentYPos = pos.y;
+    //#toy
+    CGFloat topOffScreenRatioForDeletion = .6;
+    CGFloat bottomOffScreenRatioForDeletion = .4;
+    CGFloat maxY = self.size.height * topOffScreenRatioForDeletion;
+    CGFloat minY = -self.size.height * bottomOffScreenRatioForDeletion;
+    
+    return (currentYPos > maxY || currentYPos < minY);
 
+}
 
 #pragma mark - Block State Checks
 

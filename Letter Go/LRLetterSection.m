@@ -149,31 +149,23 @@
 {
     LRCollectedEnvelope *block = (LRCollectedEnvelope*)envelope;
     LRLetterSlot *selectedSlot = nil;
-    //Check to see if it's a child of the letter section
-    __block BOOL foundNode = NO;
-    [self enumerateChildNodesWithName:NAME_SPRITE_SECTION_LETTER_BLOCK usingBlock:^(SKNode *node, BOOL *stop){
-        if (node == block) {
-            [node removeFromParent];
-            foundNode = YES;
-            return;
-        }
-    }];
+
     //Check to see if it exists within the letter slots
     for (int i = 0; i < self.letterSlots.count; i++)
     {
         LRLetterSlot *slot = [self.letterSlots objectAtIndex:i];
-        //Get the slot chosen
-        if ((!foundNode && slot.currentBlock == block) || (foundNode && [slot isLetterSlotEmpty] && !selectedSlot)) {
+        //If the slot his holding the deleted block
+        if (slot.currentBlock == block) {
             selectedSlot = slot;
         }
         if (selectedSlot) {
+            //If it's not the last block
             if (self.letterSlots.count - 1 > i) {
                 slot.currentBlock = [(LRLetterSlot*)[self.letterSlots objectAtIndex:i+1] currentBlock];
             }
             else
                 slot.currentBlock = [LRLetterBlockGenerator createEmptySectionBlock];
         }
-
     }
     NSAssert(selectedSlot, @"Error: slot does not exist within array");
     [self updateSubmitButton];
