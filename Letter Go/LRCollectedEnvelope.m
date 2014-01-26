@@ -74,12 +74,12 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
         
         //If the movement direction hasn't been set, calculate it
         if (self.movementDirection == MovementDirectionNone) {
-            MovementDirection direction = [self movementDirectionFromPoint:envelopeLoc toPoint:touchLoc];
+            MovementDirection direction = [self movementDirectionFromPoint:self.touchOrigin toPoint:touchLoc];
             if (direction == MovementDirectionHorizontal) {
                 [self releaseBlockForRearrangement];
                 self.zPosition += 5;
             }
-            else {
+            else if (direction == MovementDirectionVertical){
                 //vertical scroll release case
             }
             self.movementDirection = direction;
@@ -126,15 +126,13 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 {
     CGFloat xDiff = ABS(newLoc.x - origin.x);
     CGFloat yDiff = ABS(newLoc.y - origin.y);
-    /*
-     TODO: play with this value to figure out the optimal one.
-     */
-    //Make it more likely that the player will scroll horizontally
-    CGFloat xAdvantage = 1;
+    CGFloat scrollDetectionThreshold = 1.5;
     
-    if (xAdvantage * xDiff >= yDiff)
+    if (xDiff/yDiff > scrollDetectionThreshold)
         return MovementDirectionHorizontal;
-    return MovementDirectionVertical;
+    else if (yDiff/xDiff > scrollDetectionThreshold)
+        return MovementDirectionVertical;
+    return MovementDirectionNone;
 }
 
 - (void) releaseBlockForRearrangement
