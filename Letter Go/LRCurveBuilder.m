@@ -8,7 +8,6 @@
 
 #import "LRCurveBuilder.h"
 #import "LRDifficultyManager.h"
-#import "LRMailman.h"
 
 @implementation LRCurveBuilder
 
@@ -85,8 +84,8 @@ typedef enum {
 
 + (NSArray*) horizontalLetterActionForDistance:(CGFloat)distance;
 {
-    if ([[LRDifficultyManager shared] mailmanScreenSide] == MailmanScreenLeft)
-        distance *= -1;
+    //Since the mailman is on the left, reverse the distance
+    distance *= -1;
     
     CGPoint start = CGPointZero;
     CGPoint c1 = CGPointZero;

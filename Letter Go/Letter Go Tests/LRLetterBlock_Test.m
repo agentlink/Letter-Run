@@ -9,7 +9,6 @@
 #import <XCTest/XCTest.h>
 #import "LRLetterBlock.h"
 #import "LRLetterBlockGenerator.h"
-#import "LRFallingEnvelope.h"
 #import "LRCollectedEnvelope.h"
 #import "LRConstants.h"
 

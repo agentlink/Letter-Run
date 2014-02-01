@@ -10,7 +10,6 @@
 #import "LRScoreManager.h"
 #import "LRDifficultyManager.h"
 #import "LRGameStateManager.h"
-#import "LRFallingEnvelope.h"
 
 #define HEALTHBAR_WIDTH             SCREEN_WIDTH
 

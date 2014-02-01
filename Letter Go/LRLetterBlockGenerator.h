@@ -7,7 +7,6 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-#import "LRFallingEnvelope.h"
 #import "LRCollectedEnvelope.h"
 #import "LRMovingBlock.h"
 

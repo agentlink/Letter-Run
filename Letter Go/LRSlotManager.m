@@ -7,8 +7,6 @@
 //
 
 #import "LRSlotManager.h"
-#import "LRFallingEnvelope.h"
-
 #import "LRConstants.h"
 #import "LRPositionConstants.h"
 #import "LRGameStateManager.h"
@@ -17,6 +15,8 @@
 #import "LRSlotManager_Private.h"
 
 static const int kNilSlotValue = -1;
+static const CGFloat kEnvelopeZPositionMin = zPos_FallingEnvelope;
+static const CGFloat kEnvelopeZPositionMax = zPos_Mailman;
 
 @implementation LRSlotManager
 #pragma mark - Overridden Functions
