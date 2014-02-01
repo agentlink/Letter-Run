@@ -88,7 +88,7 @@ static LRGameStateManager *_shared = nil;
     [gpl.mainGameSection removeChildrenInArray:fallingEnvelopeArray];
     
     //Clear the letter section
-    [gpl.letterSection clearLetterSection];
+    [gpl.letterSection clearLetterSectionAnimated:NO];
     
 }
 

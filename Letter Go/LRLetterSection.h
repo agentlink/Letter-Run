@@ -13,6 +13,6 @@
 @interface LRLetterSection : LRScreenSection <LRLetterBlockControlDelegate>
 
 - (int) numLettersInSection;
-- (void) clearLetterSection;
+- (void) clearLetterSectionAnimated:(BOOL)animated;
 
 @end
