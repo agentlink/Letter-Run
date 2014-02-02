@@ -16,12 +16,13 @@
 #import "LRGameScene.h"
 #import "LREnvelopeAnimationBuilder.h"
 
+#define kSlotMarginWidth   kLetterBlockDimension / (IS_IPHONE_5 ? 3.3 : 4.0)
+
 typedef NS_ENUM(NSUInteger, LetterSectionState)
 {
     LetterSectionStateNormal = 0,
     LetterSectionStateDeletingLetters
 };
-
 
 typedef void(^CompletionBlockType)(void);
 
@@ -66,7 +67,7 @@ typedef void(^CompletionBlockType)(void);
         [self addChild:slot];
     }
     
-    [self addVerticalBarriers];
+    [self addBarriers];
 }
 
 /*!
@@ -74,6 +75,13 @@ typedef void(^CompletionBlockType)(void);
  deletion goes behind the letter section but horizontal scroll
  rearrangement does not.
  */
+
+- (void) addBarriers
+{
+    [self addVerticalBarriers];
+    [self addHorizontalBarriers];
+}
+
 - (void) addVerticalBarriers
 {
     SKSpriteNode *topBarrier, *bottomBarrier;
@@ -89,15 +97,35 @@ typedef void(^CompletionBlockType)(void);
     bottomBarrier = [SKSpriteNode spriteNodeWithColor:[LRColor letterSectionColor]
                                                  size:barrierSize];
     bottomBarrier.position = CGPointMake(barrierXPos, bottomBarrierYPos);
-    bottomBarrier.zPosition = zPos_LetterSectionBarrier;
+    bottomBarrier.zPosition = zPos_LetterSectionBarrier_Vert;
     [self addChild:bottomBarrier];
     
     topBarrier = [SKSpriteNode spriteNodeWithColor:[LRColor letterSectionColor]
                                               size:barrierSize];
     topBarrier.position = CGPointMake(barrierXPos, topBarrierYPos);
-    topBarrier.zPosition = zPos_LetterSectionBarrier;
+    topBarrier.zPosition = zPos_LetterSectionBarrier_Vert;
     [self addChild:topBarrier];
     
+}
+
+- (void) addHorizontalBarriers
+{
+    CGFloat barrierHeight = kLetterBlockDimension;
+    CGFloat barrierWidth = kSlotMarginWidth;
+    CGSize barrierSize = CGSizeMake(barrierWidth, barrierHeight);
+
+    CGPoint barrierPos;
+    barrierPos.y = self.position.y;
+    for (int i = 0; i < kWordMaximumLetterCount; i++)
+    {
+        barrierPos.x = [[self.letterSlots objectAtIndex:i] frame].origin.x - kSlotMarginWidth/2;
+        SKSpriteNode *horBarrier = [SKSpriteNode spriteNodeWithColor:[SKColor redColor]
+                                                                size:barrierSize];
+        horBarrier.position = barrierPos;
+        horBarrier.zPosition = zPos_LetterSectionBarrier_Hor;
+        horBarrier.alpha = .3;
+        [self addChild:horBarrier];
+    }
 }
 
 #pragma mark - Private Properties
@@ -231,10 +259,13 @@ typedef void(^CompletionBlockType)(void);
 - (void) rearrangementHasBegunWithLetterBlock:(id)letterBlock
 {
     self.touchedBlock = (LRCollectedEnvelope*)letterBlock;
+    self.touchedBlock.zPosition = zPos_SectionBlock_Selected;
 }
 
 - (void) rearrangementHasFinishedWithLetterBlock:(id)letterBlock
 {
+    self.touchedBlock.zPosition = zPos_SectionBlock_Unselected;
+
     LRLetterSlot *newLocation = [self getPlaceHolderSlot];
     newLocation.currentBlock = (LRCollectedEnvelope*)letterBlock;
     self.currentSlot = nil;
@@ -449,11 +480,15 @@ typedef void(^CompletionBlockType)(void);
 }
 
 - (CGFloat) xPosFromSlotIndex:(int) index {
-    float slotMargin, edgeBuffer;
-    slotMargin = (IS_IPHONE_5) ? kLetterBlockDimension/3.3 : kLetterBlockDimension/4;
-    edgeBuffer = (self.size.width - (slotMargin + kLetterBlockDimension) * kWordMaximumLetterCount - kLetterBlockDimension)/2;
-    
-    float retVal = 0 - self.size.width/2 + edgeBuffer + kLetterBlockDimension/2 + index * (kLetterBlockDimension + slotMargin);
+    //Calculate the distance between the edges of the screen and the first letter slot;
+    CGFloat slotMargin = kSlotMarginWidth;
+    CGFloat widthPerSlot = slotMargin + kLetterBlockDimension;
+    // +kLetterBlockDimension for the submit button
+    CGFloat letterSlotAreaWidth = widthPerSlot * kWordMaximumLetterCount + kLetterBlockDimension;
+    CGFloat edgeBuffer = (self.size.width - letterSlotAreaWidth)/2;
+
+    CGFloat leftOffset = -self.size.width/2 + (edgeBuffer + kLetterBlockDimension/2);
+    CGFloat retVal = leftOffset + index * widthPerSlot;
     return retVal;
 }
 

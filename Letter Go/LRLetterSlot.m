@@ -58,7 +58,7 @@
         _currentBlock.position = CGPointZero;
         [self addChild:_currentBlock];
     }
-    _currentBlock.zPosition = zPos_SectionBlock;
+    _currentBlock.zPosition = zPos_SectionBlock_Unselected;
 }
 
 - (void) setEmptyLetterBlock
