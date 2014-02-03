@@ -100,7 +100,7 @@
 ///Checks if the letter is not a placeholder or empty
 - (BOOL) isLetterAlphabetical
 {
-    if (![self.letter length] || [self.letter isEqualToString:LETTER_PLACEHOLDER_TEXT])
+    if (![self.letter length] || [self.letter isEqualToString:kLetterPlaceHolderText])
         return NO;
     return YES;
 }

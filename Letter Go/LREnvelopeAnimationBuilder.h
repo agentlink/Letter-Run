@@ -7,8 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "LRConstants.h"
 
 @interface LREnvelopeAnimationBuilder : NSObject
+
++ (SKAction*) shiftLetterInDirection:(kLRDireciton)direction;
++ (SKAction*) shiftLetterInDirection:(kLRDireciton)direction withDelayForIndex:(NSUInteger)index;
 
 + (SKAction*) submitWordActionWithLetterAtIndex:(NSUInteger)index;
 + (SKAction*) actionWithCompletionBlock:(SKAction*)action block:(void (^)(void))completion;

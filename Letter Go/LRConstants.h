@@ -6,23 +6,30 @@
 //  Copyright (c) 2013 Gabe Nicholas. All rights reserved.
 //
 
+typedef NS_ENUM(BOOL, kLRDireciton)
+{
+    //Remove none if it doesn't get used
+    kLeftDirection = FALSE,
+    kRightDirection
+};
+
 //Size constants
 static const float kSectionHeightLetterSection  =       (178 - 51)/2;
 static const float kSectionHeightHealth         =       7.0;
 static const float kSectionHeightMainSection    =       320.0 - kSectionHeightLetterSection;
 static const float kLetterBlockDimension        =       48.0;
 static const float kParallaxHeightGrass         =       26.6;
+#define kSlotMarginWidth                        kLetterBlockDimension / (IS_IPHONE_5 ? 3.3 : 4.0)
 
 //Letter constants
 static const int kWordMinimumLetterCount        =       3;
 static const int kWordMaximumLetterCount        =       7;
 static const int kNumberOfSlots                 =       4;
+static NSString* const kLetterPlaceHolderText   =       @" ";
+
 
 //Timing constants
 static const int kGameLoopResetValue            =       -1;
-
-
-#define LETTER_PLACEHOLDER_TEXT     @" "
 
 #define IS_IPHONE_5                 ([[UIScreen mainScreen] bounds].size.height == 568)
 #define IS_RETINA                   ([[UIScreen mainScreen] scale] == 2.0f)

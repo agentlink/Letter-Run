@@ -168,7 +168,7 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 }
 
 - (BOOL) isLetterBlockPlaceHolder {
-    return ([self.letter isEqualToString:LETTER_PLACEHOLDER_TEXT]);
+    return ([self.letter isEqualToString:kLetterPlaceHolderText]);
 }
 
 @end

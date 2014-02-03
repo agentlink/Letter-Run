@@ -10,6 +10,8 @@
 #import "LRDifficultyManager.h"
 #import "LRLetterGenerator.h"
 
+static const BOOL lgbDebugMode = NO;
+
 @implementation LRLetterBlockGenerator
 
 #pragma mark - Public Functions
@@ -35,14 +37,16 @@
 + (LRCollectedEnvelope*) createEmptySectionBlock
 {
     LRCollectedEnvelope *lb = [LRCollectedEnvelope emptySectionBlock];
-    lb.color = [LRColor clearColor];
+    lb.color = (lgbDebugMode) ? [SKColor purpleColor] : [LRColor clearColor];
     return lb;
 }
 
 + (LRCollectedEnvelope*) createPlaceHolderBlock
 {
     LRCollectedEnvelope *lb = [LRLetterBlockGenerator createEmptySectionBlock];
-    lb.letter = LETTER_PLACEHOLDER_TEXT;
+    lb.letter = kLetterPlaceHolderText;
+    if (lgbDebugMode)
+        lb.color = [SKColor greenColor];
     return lb;
 }
 
