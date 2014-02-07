@@ -223,18 +223,22 @@ typedef void(^CompletionBlockType)(void);
             }
             
             LRCollectedEnvelope *rightBlock;
+            CompletionBlockType shiftDone;
             //If it's not the last block
             if (i == self.letterSlots.count - 1) {
                 rightBlock = [LRLetterBlockGenerator createEmptySectionBlock];
-                self.letterSectionState = LetterSectionStateNormal;
-                [self addDelayedLetters];
+                shiftDone = ^{
+                    slot.currentBlock = rightBlock;
+                    self.letterSectionState = LetterSectionStateNormal;
+                    [self addDelayedLetters];
+                };
             }
             else {
                 rightBlock = [(LRLetterSlot*)[self.letterSlots objectAtIndex:i+1] currentBlock];
+                shiftDone = ^{
+                    slot.currentBlock = rightBlock;
+                };
             }
-            CompletionBlockType shiftDone = ^{
-                slot.currentBlock = rightBlock;
-            };
             
             SKAction *shiftAnimation = [LREnvelopeAnimationBuilder shiftLetterInDirection:kLeftDirection
                                                                         withDelayForIndex:i - deletionIndex];

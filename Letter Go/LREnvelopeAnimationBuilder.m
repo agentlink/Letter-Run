@@ -40,14 +40,12 @@ static CGFloat const kTotalDelayTime = 0.25;
 + (SKAction*) shiftLetterInDirection:(kLRDireciton)direction withDelayForIndex:(NSUInteger)index
 {
     CGFloat delayTime = [self delayForIndex:index leadingDirection:kLeftDirection];
-    CGFloat letterPostDelayTime = kTotalDelayTime - delayTime;
 
     SKAction *shift = [self shiftLetterInDirection:direction];
     //Get the pre and post delay times so that all the actions end at the same time
-    SKAction *preDelayAction = [SKAction waitForDuration:delayTime];
-    SKAction *postDelayAction = [SKAction waitForDuration:letterPostDelayTime];
+    SKAction *delayAction = [SKAction waitForDuration:delayTime];
     
-    SKAction *shiftWithDelay = [SKAction sequence:@[preDelayAction, shift, postDelayAction]];
+    SKAction *shiftWithDelay = [SKAction sequence:@[delayAction, shift]];
     return shiftWithDelay;
 }
 
