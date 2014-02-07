@@ -86,7 +86,7 @@
         _mainGameSection.position = CGPointMake(mainGameSectionXPos, mainGameSectionYPos);
         _mainGameSection.letterAdditionDelegate = self.letterSection;
         _mainGameSection.zPosition = zPos_MainGameSection;
-        _mainGameSection.color = [UIColor darkGrayColor];
+        _mainGameSection.color = [UIColor grayColor];
         
     }
     return _mainGameSection;

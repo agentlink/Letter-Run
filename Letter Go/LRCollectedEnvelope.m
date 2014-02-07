@@ -9,6 +9,7 @@
 #import "LRCollectedEnvelope.h"
 #import "LRGameScene.h"
 #import "LRLetterSlot.h"
+#import "LRCollisionManager.h"
 
 typedef NS_ENUM(NSUInteger, MovementDirection)
 {
@@ -22,6 +23,7 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 @interface LRCollectedEnvelope ()
 @property MovementDirection movementDirection;
 @property CGPoint touchOrigin;
+@property (nonatomic) BOOL physicsEnabled;
 @end
 
 @implementation LRCollectedEnvelope
@@ -42,8 +44,24 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
     if (self = [super initWithLetter:letter loveLetter:love]) {
         self.name = NAME_SPRITE_SECTION_LETTER_BLOCK;
         self.movementDirection = MovementDirectionNone;
+        [self setUpPhysics];
     }
     return self;
+}
+
+- (void) setUpPhysics
+{
+    self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.size];
+    self.physicsBody.dynamic = YES;
+    self.physicsBody.restitution = .65;
+    self.physicsBody.allowsRotation = NO;
+    self.physicsBody.friction = 1;
+    [[LRCollisionManager shared] setBitMasksForSprite:self];
+}
+
+- (void) setPhysicsEnabled:(BOOL)physicsEnabled
+{
+    self.physicsBody.affectedByGravity = physicsEnabled;
 }
 
 #pragma mark - Touch Functions
@@ -54,6 +72,8 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
         CGPoint location = [touch locationInNode:[self parent]];
         if (CGRectContainsPoint(self.frame, location))
         {
+            //TODO: handle the case of it's being touched while bouncing
+            self.physicsEnabled = NO;
             self.touchOrigin = location;
             self.movementDirection = MovementDirectionNone;
 
@@ -90,7 +110,7 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
             self.position = CGPointMake(touchLoc.x, envelopeLoc.y);
         }
         //Vertical scroll case
-        else {
+        else if (self.touchOrigin.y <= touchLoc.y) {
             self.position = CGPointMake(envelopeLoc.x, touchLoc.y);
             //while (code == code)
                 //code();
@@ -113,7 +133,8 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
                 [self.delegate removeEnvelopeFromLetterSection:self];
             }
             else {
-                self.position = CGPointZero;
+                self.physicsEnabled = YES;
+                //self.position = CGPointZero;
             }
         }
         self.movementDirection = MovementDirectionNone;
@@ -152,12 +173,12 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 {
     CGFloat currentYPos = pos.y;
     //#toy
-    CGFloat topOffScreenRatioForDeletion = .6;
-    CGFloat bottomOffScreenRatioForDeletion = .4;
+    CGFloat topOffScreenRatioForDeletion = .65;
     CGFloat maxY = self.size.height * topOffScreenRatioForDeletion;
-    CGFloat minY = -self.size.height * bottomOffScreenRatioForDeletion;
+//    CGFloat bottomOffScreenRatioForDeletion = .4;
+//    CGFloat minY = -self.size.height * bottomOffScreenRatioForDeletion;
     
-    return (currentYPos > maxY || currentYPos < minY);
+    return (currentYPos > maxY/* || currentYPos < minY*/);
 
 }
 
