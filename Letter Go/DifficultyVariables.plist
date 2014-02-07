@@ -281,24 +281,6 @@
 	<array>
 		<dict>
 			<key>description</key>
-			<string>How many letters are dropped at a time?</string>
-			<key>title</key>
-			<string>Envelopes Per Drop</string>
-			<key>initialValue</key>
-			<integer>1</integer>
-			<key>max</key>
-			<integer>4</integer>
-			<key>min</key>
-			<integer>0</integer>
-			<key>decimals</key>
-			<integer>0</integer>
-			<key>type</key>
-			<string>int</string>
-			<key>userDefaultTag</key>
-			<string>DV_DROP_NUM_LETTERS</string>
-		</dict>
-		<dict>
-			<key>description</key>
 			<string>What is the minimum drop rate a letter can fall at?</string>
 			<key>title</key>
 			<string>Minimum Drop Period</string>
@@ -332,6 +314,24 @@
 			<string>float</string>
 			<key>userDefaultTag</key>
 			<string>DV_DROP_PERIOD_DECREASE_FACTOR</string>
+		</dict>
+		<dict>
+			<key>description</key>
+			<string>How many letters are dropped at a time?</string>
+			<key>title</key>
+			<string>Envelopes Per Drop</string>
+			<key>initialValue</key>
+			<integer>1</integer>
+			<key>max</key>
+			<integer>4</integer>
+			<key>min</key>
+			<integer>0</integer>
+			<key>decimals</key>
+			<integer>0</integer>
+			<key>type</key>
+			<string>int</string>
+			<key>userDefaultTag</key>
+			<string>DV_DROP_NUM_LETTERS</string>
 		</dict>
 		<dict>
 			<key>description</key>

@@ -8,7 +8,6 @@
 
 #import "LRParallaxNode_SmallSprite.h"
 #import "LRCollisionManager.h"
-#import "LRFallingEnvelope.h"
 #import "LRDifficultyManager.h"
 
 @interface LRParallaxNode_SmallSprite ()

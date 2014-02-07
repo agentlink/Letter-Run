@@ -8,21 +8,35 @@
 
 #import "LRLetterSection.h"
 #import "LRLetterSlot.h"
-
+#import "LRPositionConstants.h"
 #import "LRLetterBlockGenerator.h"
 #import "LRSubmitButton.h"
 #import "LRScoreManager.h"
 #import "LRDictionaryChecker.h"
 #import "LRGameScene.h"
+#import "LREnvelopeAnimationBuilder.h"
+
+
+typedef NS_ENUM(NSUInteger, LetterSectionState)
+{
+    LetterSectionStateNormal = 0,
+    LetterSectionStateDeletingLetters,
+    LetterSectionStateSubmittingWord
+};
+
+typedef void(^CompletionBlockType)(void);
 
 @interface LRLetterSection ()
 
 @property (nonatomic, strong) SKSpriteNode *letterSection;
 @property (nonatomic, strong) LRSubmitButton *submitButton;
 @property (nonatomic, strong) NSMutableArray *letterSlots;
+@property (nonatomic, strong) NSMutableArray *delayedLetters;
 
 @property (nonatomic) LRLetterSlot  *currentSlot;
 @property LRCollectedEnvelope *touchedBlock;
+
+@property LetterSectionState letterSectionState;
 
 @end
 
@@ -53,7 +67,7 @@
         [self addChild:slot];
     }
     
-    [self addVerticalBarriers];
+    [self addBarriers];
 }
 
 /*!
@@ -61,6 +75,13 @@
  deletion goes behind the letter section but horizontal scroll
  rearrangement does not.
  */
+
+- (void) addBarriers
+{
+    [self addVerticalBarriers];
+    [self addHorizontalBarriers];
+}
+
 - (void) addVerticalBarriers
 {
     SKSpriteNode *topBarrier, *bottomBarrier;
@@ -76,15 +97,35 @@
     bottomBarrier = [SKSpriteNode spriteNodeWithColor:[LRColor letterSectionColor]
                                                  size:barrierSize];
     bottomBarrier.position = CGPointMake(barrierXPos, bottomBarrierYPos);
-    bottomBarrier.zPosition = zPos_LetterSectionBarrier;
+    bottomBarrier.zPosition = zPos_LetterSectionBarrier_Vert;
     [self addChild:bottomBarrier];
     
     topBarrier = [SKSpriteNode spriteNodeWithColor:[LRColor letterSectionColor]
                                               size:barrierSize];
     topBarrier.position = CGPointMake(barrierXPos, topBarrierYPos);
-    topBarrier.zPosition = zPos_LetterSectionBarrier;
+    topBarrier.zPosition = zPos_LetterSectionBarrier_Vert;
     [self addChild:topBarrier];
     
+}
+
+- (void) addHorizontalBarriers
+{
+    CGFloat barrierHeight = kLetterBlockDimension;
+    CGFloat barrierWidth = kSlotMarginWidth;
+    CGSize barrierSize = CGSizeMake(barrierWidth, barrierHeight);
+
+    CGPoint barrierPos;
+    barrierPos.y = self.position.y;
+    for (int i = 0; i < kWordMaximumLetterCount; i++)
+    {
+        barrierPos.x = [[self.letterSlots objectAtIndex:i] frame].origin.x - kSlotMarginWidth/2;
+        SKSpriteNode *horBarrier = [SKSpriteNode spriteNodeWithColor:[LRColor letterSectionColor]
+                                                                size:barrierSize];
+        horBarrier.position = barrierPos;
+        horBarrier.zPosition = zPos_LetterSectionBarrier_Hor;
+//        horBarrier.alpha = .5;
+        [self addChild:horBarrier];
+    }
 }
 
 #pragma mark - Private Properties
@@ -118,10 +159,23 @@
     return _letterSlots;
 }
 
+- (NSMutableArray*) delayedLetters {
+    if (!_delayedLetters) {
+        _delayedLetters = [NSMutableArray new];
+    }
+    return _delayedLetters;
+}
+
 #pragma mark - LRLetterBlockControlDelegate Methods
 #pragma mark Addition/Deletion
 - (void) addEnvelopeToLetterSection:(id)envelope
 {
+    //If letters are being deleted currently, add them when they're done being deleted
+    if (self.letterSectionState != LetterSectionStateNormal) {
+        [self.delayedLetters addObject:envelope];
+        return;
+    }
+    
     LRMovingBlock *newEnvelope = (LRMovingBlock*)envelope;
     NSString *letter = newEnvelope.letter;
     BOOL isLoveLetter = newEnvelope.loveLetter;
@@ -147,38 +201,77 @@
 
 - (void) removeEnvelopeFromLetterSection:(id)envelope
 {
-    LRCollectedEnvelope *block = (LRCollectedEnvelope*)envelope;
-    LRLetterSlot *selectedSlot = nil;
-
-    //Check to see if it exists within the letter slots
+    if (self.letterSectionState == LetterSectionStateDeletingLetters) {
+        return;
+    }
+    
+    LRCollectedEnvelope *envelopeToDelete = (LRCollectedEnvelope*)envelope;
+    LRLetterSlot *deletionSlot = nil;
+    int deletionIndex = 0;
     for (int i = 0; i < self.letterSlots.count; i++)
     {
         LRLetterSlot *slot = [self.letterSlots objectAtIndex:i];
-        //If the slot his holding the deleted block
-        if (slot.currentBlock == block) {
-            selectedSlot = slot;
+        if (slot.currentBlock == envelopeToDelete) {
+            deletionSlot = slot;
         }
-        if (selectedSlot) {
-            //If it's not the last block
-            if (self.letterSlots.count - 1 > i) {
-                slot.currentBlock = [(LRLetterSlot*)[self.letterSlots objectAtIndex:i+1] currentBlock];
+        //If the slot that has to be deleted has been reached
+        if (deletionSlot) {
+            //If the current slot is the one being deleted
+            if (deletionSlot == slot) {
+                deletionSlot.currentBlock = [LRLetterBlockGenerator createEmptySectionBlock];
+                deletionIndex = i;
             }
-            else
-                slot.currentBlock = [LRLetterBlockGenerator createEmptySectionBlock];
+            
+            LRCollectedEnvelope *rightBlock;
+            CompletionBlockType shiftDone;
+            //If it's not the last block
+            if (i == self.letterSlots.count - 1) {
+                rightBlock = [LRLetterBlockGenerator createEmptySectionBlock];
+                shiftDone = ^{
+                    slot.currentBlock = rightBlock;
+                    self.letterSectionState = LetterSectionStateNormal;
+                    [self addDelayedLetters];
+                };
+            }
+            else {
+                rightBlock = [(LRLetterSlot*)[self.letterSlots objectAtIndex:i+1] currentBlock];
+                shiftDone = ^{
+                    slot.currentBlock = rightBlock;
+                };
+            }
+            
+            SKAction *shiftAnimation = [LREnvelopeAnimationBuilder shiftLetterInDirection:kLeftDirection
+                                                                        withDelayForIndex:i - deletionIndex];
+            SKAction *shift = [LREnvelopeAnimationBuilder actionWithCompletionBlock:shiftAnimation
+                                                                              block:shiftDone];
+            [slot.currentBlock runAction:shift];
         }
     }
-    NSAssert(selectedSlot, @"Error: slot does not exist within array");
+
+    NSAssert(deletionSlot, @"Error: slot does not exist within array");
     [self updateSubmitButton];
+}
+
+- (void) addDelayedLetters
+{
+    for (id envelope in self.delayedLetters) {
+        [self addEnvelopeToLetterSection:envelope];
+    }
+    [self.delayedLetters removeAllObjects];
+    
 }
 
 #pragma mark Rearrangement
 - (void) rearrangementHasBegunWithLetterBlock:(id)letterBlock
 {
     self.touchedBlock = (LRCollectedEnvelope*)letterBlock;
+    self.touchedBlock.zPosition = zPos_SectionBlock_Selected;
 }
 
 - (void) rearrangementHasFinishedWithLetterBlock:(id)letterBlock
 {
+    self.touchedBlock.zPosition = zPos_SectionBlock_Unselected;
+
     LRLetterSlot *newLocation = [self getPlaceHolderSlot];
     newLocation.currentBlock = (LRCollectedEnvelope*)letterBlock;
     self.currentSlot = nil;
@@ -202,7 +295,7 @@
     {
         LRHealthSection *healthSection = [[(LRGameScene*)[self scene] gamePlayLayer] healthSection];
         [healthSection addScore:wordScore];
-        [self clearLetterSection];
+        [self clearLetterSectionAnimated:YES];
     }
 }
 
@@ -365,20 +458,43 @@
 
 #pragma mark - Helper Functions
 
-- (void) clearLetterSection
+- (void) clearLetterSectionAnimated:(BOOL)animated
 {
-    for (LRLetterSlot *slot in self.letterSlots) {
-        slot.currentBlock = [LRLetterBlockGenerator createEmptySectionBlock];
+    self.letterSectionState  = LetterSectionStateSubmittingWord;
+    for (int i = 0; i < [self.letterSlots count]; i++)
+    {
+        LRLetterSlot *slot = [self.letterSlots objectAtIndex:i];
+    
+        CompletionBlockType complete = ^{
+            slot.currentBlock = [LRLetterBlockGenerator createEmptySectionBlock];
+            if (i == 0) {
+                [self updateSubmitButton];
+                self.letterSectionState = LetterSectionStateNormal;
+                [self addDelayedLetters];
+            }
+        };
+        if (animated) {
+            SKAction *deletionAnimation = [LREnvelopeAnimationBuilder submitWordActionWithLetterAtIndex:i];
+            SKAction *deletionAction = [LREnvelopeAnimationBuilder actionWithCompletionBlock:deletionAnimation
+                                                                                       block:complete];
+            [slot.currentBlock runAction:deletionAction];
+        }
+        else {
+            complete();
+        }
     }
-    [self updateSubmitButton];
 }
 
 - (CGFloat) xPosFromSlotIndex:(int) index {
-    float slotMargin, edgeBuffer;
-    slotMargin = (IS_IPHONE_5) ? kLetterBlockDimension/3.3 : kLetterBlockDimension/4;
-    edgeBuffer = (self.size.width - (slotMargin + kLetterBlockDimension) * kWordMaximumLetterCount - kLetterBlockDimension)/2;
-    
-    float retVal = 0 - self.size.width/2 + edgeBuffer + kLetterBlockDimension/2 + index * (kLetterBlockDimension + slotMargin);
+    //Calculate the distance between the edges of the screen and the first letter slot;
+    CGFloat slotMargin = kSlotMarginWidth;
+    CGFloat widthPerSlot = slotMargin + kLetterBlockDimension;
+    // +kLetterBlockDimension for the submit button
+    CGFloat letterSlotAreaWidth = widthPerSlot * kWordMaximumLetterCount + kLetterBlockDimension;
+    CGFloat edgeBuffer = (self.size.width - letterSlotAreaWidth)/2;
+
+    CGFloat leftOffset = -self.size.width/2 + (edgeBuffer + kLetterBlockDimension/2);
+    CGFloat retVal = leftOffset + index * widthPerSlot;
     return retVal;
 }
 

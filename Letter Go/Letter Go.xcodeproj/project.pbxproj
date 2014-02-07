@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		00076E64186F798200287EF9 /* LRColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 00076E63186F798200287EF9 /* LRColor.m */; };
 		00076E67186F819000287EF9 /* LRFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 00076E66186F819000287EF9 /* LRFont.m */; };
-		0007FB3C180C79B600E55B0D /* LRFallingEnvelope.m in Sources */ = {isa = PBXBuildFile; fileRef = 0007FB3B180C79B600E55B0D /* LRFallingEnvelope.m */; };
 		0007FB3F180C7A1A00E55B0D /* LRCollectedEnvelope.m in Sources */ = {isa = PBXBuildFile; fileRef = 0007FB3E180C7A1A00E55B0D /* LRCollectedEnvelope.m */; };
 		000BC154181C705D00BEC563 /* LRParallaxNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 000BC153181C705D00BEC563 /* LRParallaxNode.m */; };
 		000BC15D1820356500BEC563 /* LRCloudLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 000BC15C1820356500BEC563 /* LRCloudLayer.m */; };
@@ -27,7 +26,6 @@
 		0052356F187D0B9E00139CA1 /* Envelope_Normal_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0052356B187D0B9E00139CA1 /* Envelope_Normal_2.png */; };
 		00523570187D0B9E00139CA1 /* Envelope_Normal_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 0052356C187D0B9E00139CA1 /* Envelope_Normal_3.png */; };
 		00523571187D0B9E00139CA1 /* Envelope_Normal_4.png in Resources */ = {isa = PBXBuildFile; fileRef = 0052356D187D0B9E00139CA1 /* Envelope_Normal_4.png */; };
-		0055EC871826F21C00717DF7 /* LRMailman.m in Sources */ = {isa = PBXBuildFile; fileRef = 0055EC861826F21C00717DF7 /* LRMailman.m */; };
 		00641EA9182C42D30098EC38 /* LRDevPauseMenuVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 00641EA7182C42D30098EC38 /* LRDevPauseMenuVC.m */; };
 		00641EAA182C42D30098EC38 /* LRDevPauseMenuVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 00641EA8182C42D30098EC38 /* LRDevPauseMenuVC.xib */; };
 		00641EB3182D7BFF0098EC38 /* LRSliderLabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00641EB2182D7BFF0098EC38 /* LRSliderLabelView.m */; };
@@ -88,6 +86,7 @@
 		A87BDD9B1853AFDC00845BB5 /* LRBezierPath.m in Sources */ = {isa = PBXBuildFile; fileRef = A87BDD9A1853AFDC00845BB5 /* LRBezierPath.m */; };
 		A88A4B371887308C00BC9905 /* LRMainGameSection.m in Sources */ = {isa = PBXBuildFile; fileRef = A88A4B361887308C00BC9905 /* LRMainGameSection.m */; };
 		A88A4B3B188734E400BC9905 /* LRMovingBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = A88A4B3A188734E400BC9905 /* LRMovingBlock.m */; };
+		A88CEB20189D87C600092C8A /* LREnvelopeAnimationBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = A88CEB1F189D87C600092C8A /* LREnvelopeAnimationBuilder.m */; };
 		A8E60A131881E25F00F60DF4 /* LRCappedStack.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E60A121881E25F00F60DF4 /* LRCappedStack.m */; };
 		A8E60A161881F6E300F60DF4 /* LRSlotManager_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E60A151881F6E300F60DF4 /* LRSlotManager_Test.m */; };
 /* End PBXBuildFile section */
@@ -114,8 +113,6 @@
 		00076E63186F798200287EF9 /* LRColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRColor.m; sourceTree = "<group>"; };
 		00076E65186F819000287EF9 /* LRFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRFont.h; sourceTree = "<group>"; };
 		00076E66186F819000287EF9 /* LRFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRFont.m; sourceTree = "<group>"; };
-		0007FB3A180C79B600E55B0D /* LRFallingEnvelope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRFallingEnvelope.h; sourceTree = "<group>"; };
-		0007FB3B180C79B600E55B0D /* LRFallingEnvelope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRFallingEnvelope.m; sourceTree = "<group>"; };
 		0007FB3D180C7A1A00E55B0D /* LRCollectedEnvelope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRCollectedEnvelope.h; sourceTree = "<group>"; };
 		0007FB3E180C7A1A00E55B0D /* LRCollectedEnvelope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRCollectedEnvelope.m; sourceTree = "<group>"; };
 		000BC152181C705D00BEC563 /* LRParallaxNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRParallaxNode.h; sourceTree = "<group>"; };
@@ -146,8 +143,6 @@
 		0052356B187D0B9E00139CA1 /* Envelope_Normal_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Envelope_Normal_2.png; sourceTree = "<group>"; };
 		0052356C187D0B9E00139CA1 /* Envelope_Normal_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Envelope_Normal_3.png; sourceTree = "<group>"; };
 		0052356D187D0B9E00139CA1 /* Envelope_Normal_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Envelope_Normal_4.png; sourceTree = "<group>"; };
-		0055EC851826F21C00717DF7 /* LRMailman.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRMailman.h; sourceTree = "<group>"; };
-		0055EC861826F21C00717DF7 /* LRMailman.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRMailman.m; sourceTree = "<group>"; };
 		00641EA6182C42D30098EC38 /* LRDevPauseMenuVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRDevPauseMenuVC.h; sourceTree = "<group>"; };
 		00641EA7182C42D30098EC38 /* LRDevPauseMenuVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRDevPauseMenuVC.m; sourceTree = "<group>"; };
 		00641EA8182C42D30098EC38 /* LRDevPauseMenuVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LRDevPauseMenuVC.xib; sourceTree = "<group>"; };
@@ -241,6 +236,8 @@
 		A88A4B38188732B500BC9905 /* LRParallaxConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LRParallaxConstants.h; sourceTree = "<group>"; };
 		A88A4B39188734E400BC9905 /* LRMovingBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRMovingBlock.h; sourceTree = "<group>"; };
 		A88A4B3A188734E400BC9905 /* LRMovingBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRMovingBlock.m; sourceTree = "<group>"; };
+		A88CEB1E189D87C600092C8A /* LREnvelopeAnimationBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LREnvelopeAnimationBuilder.h; sourceTree = "<group>"; };
+		A88CEB1F189D87C600092C8A /* LREnvelopeAnimationBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LREnvelopeAnimationBuilder.m; sourceTree = "<group>"; };
 		A8E60A111881E25F00F60DF4 /* LRCappedStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRCappedStack.h; sourceTree = "<group>"; };
 		A8E60A121881E25F00F60DF4 /* LRCappedStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRCappedStack.m; sourceTree = "<group>"; };
 		A8E60A151881F6E300F60DF4 /* LRSlotManager_Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRSlotManager_Test.m; sourceTree = "<group>"; };
@@ -348,8 +345,7 @@
 		0049695217F8A70B00176F2D /* Letter Blocks */ = {
 			isa = PBXGroup;
 			children = (
-				0049695317F8A75B00176F2D /* LRLetterBlockGenerator.h */,
-				0049695417F8A75B00176F2D /* LRLetterBlockGenerator.m */,
+				A88CEB1D189D87AE00092C8A /* Generators */,
 				0049694F17F8A12B00176F2D /* LRLetterBlock.h */,
 				0049695017F8A12B00176F2D /* LRLetterBlock.m */,
 				0007FB3D180C7A1A00E55B0D /* LRCollectedEnvelope.h */,
@@ -641,10 +637,6 @@
 			isa = PBXGroup;
 			children = (
 				A88118E71887031B002489F5 /* REFACTOR */,
-				0055EC851826F21C00717DF7 /* LRMailman.h */,
-				0055EC861826F21C00717DF7 /* LRMailman.m */,
-				0007FB3A180C79B600E55B0D /* LRFallingEnvelope.h */,
-				0007FB3B180C79B600E55B0D /* LRFallingEnvelope.m */,
 				A87BDD9C1853B4AE00845BB5 /* Bezier */,
 			);
 			name = DEPRECATED;
@@ -689,6 +681,17 @@
 				00F6F59617FF5234009EDADB /* LRGameStateManager.m */,
 			);
 			name = Managers;
+			sourceTree = "<group>";
+		};
+		A88CEB1D189D87AE00092C8A /* Generators */ = {
+			isa = PBXGroup;
+			children = (
+				0049695317F8A75B00176F2D /* LRLetterBlockGenerator.h */,
+				0049695417F8A75B00176F2D /* LRLetterBlockGenerator.m */,
+				A88CEB1E189D87C600092C8A /* LREnvelopeAnimationBuilder.h */,
+				A88CEB1F189D87C600092C8A /* LREnvelopeAnimationBuilder.m */,
+			);
+			name = Generators;
 			sourceTree = "<group>";
 		};
 		A8E60A141881E27900F60DF4 /* Reusable Classes */ = {
@@ -869,7 +872,6 @@
 				A88A4B3B188734E400BC9905 /* LRMovingBlock.m in Sources */,
 				0049695F17F8B5B900176F2D /* LRLetterSlot.m in Sources */,
 				00AC2807182EE1A300B3C0EB /* LRDifficultyManager+Notifications.m in Sources */,
-				0055EC871826F21C00717DF7 /* LRMailman.m in Sources */,
 				00641EB3182D7BFF0098EC38 /* LRSliderLabelView.m in Sources */,
 				0049695517F8A75B00176F2D /* LRLetterBlockGenerator.m in Sources */,
 				A8E60A131881E25F00F60DF4 /* LRCappedStack.m in Sources */,
@@ -883,8 +885,8 @@
 				00CDF18917F4840F003065F6 /* LRHealthSection.m in Sources */,
 				00CDF18C17F4899B003065F6 /* LRLetterSection.m in Sources */,
 				000BC15D1820356500BEC563 /* LRCloudLayer.m in Sources */,
-				0007FB3C180C79B600E55B0D /* LRFallingEnvelope.m in Sources */,
 				00641EA9182C42D30098EC38 /* LRDevPauseMenuVC.m in Sources */,
+				A88CEB20189D87C600092C8A /* LREnvelopeAnimationBuilder.m in Sources */,
 				00CDF17917F478D7003065F6 /* LRLayer.m in Sources */,
 				00CDF17517F478A1003065F6 /* LRGameScene.m in Sources */,
 				00076E67186F819000287EF9 /* LRFont.m in Sources */,

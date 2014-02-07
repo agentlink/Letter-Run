@@ -10,9 +10,11 @@ static const float zPos_HealthSection = 110;
 static const float zPos_MainGameSection = 100;
 static const float zPos_LetterSection = 90;
 
-static const float zPos_LetterSectionBarrier = 200;
+static const float zPos_LetterSectionBarrier_Vert = 200;
+static const float zPos_LetterSectionBarrier_Hor = 200;
 
-static const float zPos_SectionBlock = 1;
+static const float zPos_SectionBlock_Unselected = 1;
+static const float zPos_SectionBlock_Selected = 210;
 static const float zPos_FallingEnvelope = 35;
 
 //TODO: remove when background changes
@@ -28,6 +30,3 @@ static const float zPos_PauseButton = 300;
 
 static const float zDiff_Letter_Envelope = .001;
 static const float zDiff_Envelope_Envelope = .002;
-
-static const float zDiff_SectionBlock_LetterSection = 10;
-static const float zDiff_SelectedBlock_SectionBlock = 10;
