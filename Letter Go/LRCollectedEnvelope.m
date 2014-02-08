@@ -53,6 +53,7 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 {
     self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.size];
     self.physicsBody.dynamic = YES;
+    //#toy
     self.physicsBody.restitution = .65;
     self.physicsBody.allowsRotation = NO;
     self.physicsBody.friction = 1;
@@ -62,6 +63,7 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 - (void) setPhysicsEnabled:(BOOL)physicsEnabled
 {
     self.physicsBody.affectedByGravity = physicsEnabled;
+    self.physicsBody.velocity = CGVectorMake(0, 0);
 }
 
 #pragma mark - Touch Functions

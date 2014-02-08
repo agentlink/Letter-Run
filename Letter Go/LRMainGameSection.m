@@ -165,10 +165,6 @@
 
 - (void) playerSelectedMovingBlock:(LRMovingBlock *)movingBlock
 {
-    //TODO: replace this with direct access to letter section
-/*    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_ADDED_LETTER
-                                                        object:self
-                                                      userInfo:[movingBlock addLetterDictionary]];*/
     [self.letterAdditionDelegate addEnvelopeToLetterSection:movingBlock];
     [self removeMovingBlockFromScreen:movingBlock];
 }

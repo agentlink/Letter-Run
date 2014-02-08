@@ -39,8 +39,6 @@
         self.pauseTime = kGameLoopResetValue;
         self.name = NAME_LAYER_GAME_PLAY;
         newGame = TRUE;
-        //TODO: Create LRmainGameSection and move this there
-        self.letterSlots = [[LRSlotManager alloc] init];
         [self createLayerContent];
     }
     return self;
