@@ -140,6 +140,7 @@ typedef void(^CompletionBlockType)(void);
     bottomBarrier.name = NAME_SPRITE_BOTTOM_BARRIER;
     [[LRCollisionManager shared] setBitMasksForSprite:bottomBarrier];
     [[LRCollisionManager shared] addCollisionDetectionOfSpritesNamed:NAME_SPRITE_BOTTOM_BARRIER toSpritesNamed:NAME_SPRITE_SECTION_LETTER_BLOCK];
+    [[LRCollisionManager shared] addContactDetectionOfSpritesNamed:NAME_SPRITE_BOTTOM_BARRIER toSpritesNamed:NAME_SPRITE_SECTION_LETTER_BLOCK];
     
 }
 

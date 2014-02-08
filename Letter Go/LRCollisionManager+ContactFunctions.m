@@ -7,26 +7,43 @@
 //
 
 #import "LRCollisionManager+ContactFunctions.h"
+#import "LRCollectedEnvelope.h"
+
+typedef NS_ENUM(NSUInteger, LRCollisionType)
+{
+    kLRCollision_Undefined = 0,
+    kLRCollision_BottomBarrier_SectionBlock,
+};
 
 @implementation LRCollisionManager (ContactFunctions)
 
 - (void) didBeginContact:(SKPhysicsContact *)contact
 {
-    SKPhysicsBody *firstBody, *secondBody;
+    SKNode *firstBody, *secondBody;
+    
     if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask)
     {
-        firstBody = contact.bodyA;
-        secondBody = contact.bodyB;
+        firstBody = contact.bodyA.node;
+        secondBody = contact.bodyB.node;
     }
     else {
-        firstBody = contact.bodyB;
-        secondBody = contact.bodyA;
+        firstBody = contact.bodyB.node;
+        secondBody = contact.bodyA.node;
     }
-    NSSet *nameSet = [NSSet setWithObjects:firstBody.node.name, secondBody.node.name, nil];
-    if ([nameSet containsObject:NAME_SPRITE_FALLING_ENVELOPE])
-    {
-        //Code ;)
+    LRCollisionType collisionType = [self collisionTypeForNode:firstBody andNode:secondBody];
+    if (collisionType == kLRCollision_BottomBarrier_SectionBlock) {
+        LRCollectedEnvelope *envelope = (LRCollectedEnvelope*)secondBody;
+        [envelope envelopeHitBottomBarrier];
     }
+}
+
+- (LRCollisionType) collisionTypeForNode:(SKNode*)nodeA andNode:(SKNode*)nodeB
+{
+    if ([nodeA.name isEqualToString:NAME_SPRITE_BOTTOM_BARRIER] &&
+        [nodeB.name isEqualToString:NAME_SPRITE_SECTION_LETTER_BLOCK]) {
+        return kLRCollision_BottomBarrier_SectionBlock;
+    }
+    return kLRCollision_Undefined;
 }
 
 @end

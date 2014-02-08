@@ -19,10 +19,14 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
     MovementDirectionVertical
 };
 
+static const NSUInteger kMaxBounceCount = 2;
 
 @interface LRCollectedEnvelope ()
+
 @property MovementDirection movementDirection;
 @property CGPoint touchOrigin;
+
+@property (nonatomic) NSUInteger bounceCount;
 @property (nonatomic) BOOL physicsEnabled;
 @end
 
@@ -44,10 +48,13 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
     if (self = [super initWithLetter:letter loveLetter:love]) {
         self.name = NAME_SPRITE_SECTION_LETTER_BLOCK;
         self.movementDirection = MovementDirectionNone;
+        self.bounceCount = 0;
         [self setUpPhysics];
     }
     return self;
 }
+
+#pragma mark - Physics Phunctions
 
 - (void) setUpPhysics
 {
@@ -66,6 +73,26 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
     self.physicsBody.velocity = CGVectorMake(0, 0);
 }
 
+- (void) envelopeHitBottomBarrier
+{
+    //If the letter block has just been added, don't do anything
+    if (self.physicsBody.velocity.dy == 0) {
+        return;
+    }
+    self.bounceCount++;
+    //If the envelope has exceeded the bounce count, make it stop
+    if (self.bounceCount == kMaxBounceCount) {
+        [self resetEnvelopeToBaseState];
+        self.bounceCount = 0;
+    }
+}
+
+- (void) resetEnvelopeToBaseState
+{
+    self.position = CGPointZero;
+    self.physicsBody.velocity = CGVectorMake(0, 0);
+}
+
 #pragma mark - Touch Functions
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
@@ -74,14 +101,10 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
         CGPoint location = [touch locationInNode:[self parent]];
         if (CGRectContainsPoint(self.frame, location))
         {
-            //TODO: handle the case of it's being touched while bouncing
+            [self resetEnvelopeToBaseState];
             self.physicsEnabled = NO;
             self.touchOrigin = location;
             self.movementDirection = MovementDirectionNone;
-
-            //Get the movement direction...
-            if (self.movementDirection == MovementDirectionHorizontal) {
-            }
         }
     }
 }
