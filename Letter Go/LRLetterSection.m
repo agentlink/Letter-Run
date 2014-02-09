@@ -156,7 +156,7 @@ typedef void(^CompletionBlockType)(void);
 - (LRSubmitButton*) submitButton {
     if (!_submitButton) {
         _submitButton = [LRSubmitButton new];
-        _submitButton.position = CGPointMake([self xPosFromSlotIndex:kWordMaximumLetterCount], 0);
+        _submitButton.position = CGPointMake([self xPositionForSlotIndex:kWordMaximumLetterCount], 0);
     }
     return _submitButton;
 }
@@ -168,7 +168,7 @@ typedef void(^CompletionBlockType)(void);
         //Fill the letter slot array with LRSlots
         for (int i = 0; i < kWordMaximumLetterCount; i++) {
             LRLetterSlot *slot = [LRLetterSlot new];
-            slot.position = CGPointMake([self xPosFromSlotIndex:i], 0.0);
+            slot.position = CGPointMake([self xPositionForSlotIndex:i], 0.0);
             [_letterSlots addObject:slot];
         }
     }
@@ -238,32 +238,37 @@ typedef void(^CompletionBlockType)(void);
                 deletionIndex = i;
             }
             
-            LRCollectedEnvelope *rightBlock;
+            __block LRCollectedEnvelope *rightBlock;
             CompletionBlockType shiftDone;
             //If it's not the last block
             if (i == self.letterSlots.count - 1) {
-                rightBlock = [LRLetterBlockGenerator createEmptySectionBlock];
                 shiftDone = ^{
-                    slot.currentBlock = rightBlock;
+                    //Shift all the letter blocks down by one index
+                    for (int j = deletionIndex; j < self.letterSlots.count; j++) {
+                        LRLetterSlot *updatedSlot = [self.letterSlots objectAtIndex:j];
+                        if (j == self.letterSlots.count - 1)
+                            rightBlock = [LRLetterBlockGenerator createEmptySectionBlock];
+                        else
+                            rightBlock = [(LRLetterSlot*)[self.letterSlots objectAtIndex:j+1] currentBlock];
+                        updatedSlot.currentBlock = rightBlock;
+                    }
                     self.letterSectionState = LetterSectionStateNormal;
                     [self addDelayedLetters];
                 };
+                SKAction *shiftAnimation = [LREnvelopeAnimationBuilder shiftLetterInDirection:kLeftDirection
+                                                                            withDelayForIndex:i - deletionIndex];
+                SKAction *shift = [LREnvelopeAnimationBuilder actionWithCompletionBlock:shiftAnimation
+                                                                                  block:shiftDone];
+                [slot.currentBlock runAction: shift];
+
             }
             else {
-                rightBlock = [(LRLetterSlot*)[self.letterSlots objectAtIndex:i+1] currentBlock];
-                shiftDone = ^{
-                    slot.currentBlock = rightBlock;
-                };
+                SKAction *shiftAnimation = [LREnvelopeAnimationBuilder shiftLetterInDirection:kLeftDirection
+                                                                            withDelayForIndex:i - deletionIndex];
+                [slot.currentBlock runAction:shiftAnimation];
             }
-            
-            SKAction *shiftAnimation = [LREnvelopeAnimationBuilder shiftLetterInDirection:kLeftDirection
-                                                                        withDelayForIndex:i - deletionIndex];
-            SKAction *shift = [LREnvelopeAnimationBuilder actionWithCompletionBlock:shiftAnimation
-                                                                              block:shiftDone];
-            [slot.currentBlock runAction:shift];
         }
     }
-
     NSAssert(deletionSlot, @"Error: slot does not exist within array");
     [self updateSubmitButton];
 }
@@ -501,10 +506,13 @@ typedef void(^CompletionBlockType)(void);
     }
 }
 
-- (CGFloat) xPosFromSlotIndex:(int) index {
-    //Calculate the distance between the edges of the screen and the first letter slot;
-    CGFloat slotMargin = kSlotMarginWidth;
-    CGFloat widthPerSlot = slotMargin + kLetterBlockDimension;
++ (CGFloat) distanceBetweenSlots
+{
+    return kSlotMarginWidth + kLetterBlockDimension;
+}
+
+- (CGFloat) xPositionForSlotIndex:(int) index {
+    CGFloat widthPerSlot = [LRLetterSection distanceBetweenSlots];
     // +kLetterBlockDimension for the submit button
     CGFloat letterSlotAreaWidth = widthPerSlot * kWordMaximumLetterCount + kLetterBlockDimension;
     CGFloat edgeBuffer = (self.size.width - letterSlotAreaWidth)/2;

@@ -85,6 +85,7 @@
         _mainGameSection.letterAdditionDelegate = self.letterSection;
         _mainGameSection.zPosition = zPos_MainGameSection;
         _mainGameSection.color = [UIColor grayColor];
+        _mainGameSection.alpha = .5;
         
     }
     return _mainGameSection;
