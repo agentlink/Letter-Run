@@ -9,6 +9,7 @@
 #import "LRCollectedEnvelope.h"
 #import "LRGameScene.h"
 #import "LRLetterSlot.h"
+#import "LRCollisionManager.h"
 
 typedef NS_ENUM(NSUInteger, MovementDirection)
 {
@@ -18,10 +19,15 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
     MovementDirectionVertical
 };
 
+static const NSUInteger kMaxBounceCount = 2;
 
 @interface LRCollectedEnvelope ()
+
 @property MovementDirection movementDirection;
 @property CGPoint touchOrigin;
+
+@property (nonatomic) NSUInteger bounceCount;
+@property (nonatomic) BOOL physicsEnabled;
 @end
 
 @implementation LRCollectedEnvelope
@@ -42,8 +48,49 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
     if (self = [super initWithLetter:letter loveLetter:love]) {
         self.name = NAME_SPRITE_SECTION_LETTER_BLOCK;
         self.movementDirection = MovementDirectionNone;
+        self.bounceCount = 0;
+        [self setUpPhysics];
     }
     return self;
+}
+
+#pragma mark - Physics Phunctions
+
+- (void) setUpPhysics
+{
+    self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.size];
+    self.physicsBody.dynamic = YES;
+    //#toy
+    self.physicsBody.restitution = .65;
+    self.physicsBody.allowsRotation = NO;
+    self.physicsBody.friction = 1;
+    [[LRCollisionManager shared] setBitMasksForSprite:self];
+}
+
+- (void) setPhysicsEnabled:(BOOL)physicsEnabled
+{
+    self.physicsBody.affectedByGravity = physicsEnabled;
+    self.physicsBody.velocity = CGVectorMake(0, 0);
+}
+
+- (void) envelopeHitBottomBarrier
+{
+    //If the letter block has just been added, don't do anything
+    if (self.physicsBody.velocity.dy == 0) {
+        return;
+    }
+    self.bounceCount++;
+    //If the envelope has exceeded the bounce count, make it stop
+    if (self.bounceCount == kMaxBounceCount) {
+        [self resetEnvelopeToBaseState];
+        self.bounceCount = 0;
+    }
+}
+
+- (void) resetEnvelopeToBaseState
+{
+    self.position = CGPointZero;
+    self.physicsBody.velocity = CGVectorMake(0, 0);
 }
 
 #pragma mark - Touch Functions
@@ -54,12 +101,10 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
         CGPoint location = [touch locationInNode:[self parent]];
         if (CGRectContainsPoint(self.frame, location))
         {
+            [self resetEnvelopeToBaseState];
+            self.physicsEnabled = NO;
             self.touchOrigin = location;
             self.movementDirection = MovementDirectionNone;
-
-            //Get the movement direction...
-            if (self.movementDirection == MovementDirectionHorizontal) {
-            }
         }
     }
 }
@@ -90,7 +135,7 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
             self.position = CGPointMake(touchLoc.x, envelopeLoc.y);
         }
         //Vertical scroll case
-        else {
+        else if (self.touchOrigin.y <= touchLoc.y) {
             self.position = CGPointMake(envelopeLoc.x, touchLoc.y);
             //while (code == code)
                 //code();
@@ -113,7 +158,8 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
                 [self.delegate removeEnvelopeFromLetterSection:self];
             }
             else {
-                self.position = CGPointZero;
+                self.physicsEnabled = YES;
+                //self.position = CGPointZero;
             }
         }
         self.movementDirection = MovementDirectionNone;
@@ -152,12 +198,12 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 {
     CGFloat currentYPos = pos.y;
     //#toy
-    CGFloat topOffScreenRatioForDeletion = .6;
-    CGFloat bottomOffScreenRatioForDeletion = .4;
+    CGFloat topOffScreenRatioForDeletion = .65;
     CGFloat maxY = self.size.height * topOffScreenRatioForDeletion;
-    CGFloat minY = -self.size.height * bottomOffScreenRatioForDeletion;
+//    CGFloat bottomOffScreenRatioForDeletion = .4;
+//    CGFloat minY = -self.size.height * bottomOffScreenRatioForDeletion;
     
-    return (currentYPos > maxY || currentYPos < minY);
+    return (currentYPos > maxY/* || currentYPos < minY*/);
 
 }
 

@@ -39,8 +39,6 @@
         self.pauseTime = kGameLoopResetValue;
         self.name = NAME_LAYER_GAME_PLAY;
         newGame = TRUE;
-        //TODO: Create LRmainGameSection and move this there
-        self.letterSlots = [[LRSlotManager alloc] init];
         [self createLayerContent];
     }
     return self;
@@ -86,7 +84,7 @@
         _mainGameSection.position = CGPointMake(mainGameSectionXPos, mainGameSectionYPos);
         _mainGameSection.letterAdditionDelegate = self.letterSection;
         _mainGameSection.zPosition = zPos_MainGameSection;
-        _mainGameSection.color = [UIColor darkGrayColor];
+        _mainGameSection.color = [UIColor grayColor];
         
     }
     return _mainGameSection;

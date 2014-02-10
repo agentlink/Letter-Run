@@ -55,14 +55,17 @@ static LRCollisionManager *_shared = nil;
      dictionaries are also stored in a character's sub-dictionary.
      */
     
-    NSArray *spriteNameArray = [NSArray arrayWithObjects:NAME_SPRITE_FALLING_ENVELOPE, nil];
+    NSArray *spriteNameArray = [NSArray arrayWithObjects:
+                                NAME_SPRITE_BOTTOM_BARRIER,         // << 1
+                                NAME_SPRITE_SECTION_LETTER_BLOCK,   // << 2
+                                nil];
     self.bitMaskDictionary = [[NSMutableDictionary alloc] init];
     for (int i = 0; i < [spriteNameArray count]; i++) {
         NSMutableDictionary *spriteDict = [[NSMutableDictionary alloc] init];
         int bitMaskCategory = 0x1 << i;
-        [spriteDict setObject:[NSNumber numberWithInt:bitMaskCategory] forKey:BITMASK_KEY_CATEGORY];
-        [spriteDict setObject:[NSNumber numberWithInt:0] forKey:BITMASK_KEY_CONTACT];
-        [spriteDict setObject:[NSNumber numberWithInt:0] forKey:BITMASK_KEY_COLLISION];
+        [spriteDict setObject:@(bitMaskCategory) forKey:BITMASK_KEY_CATEGORY];
+        [spriteDict setObject:@(0) forKey:BITMASK_KEY_CONTACT];
+        [spriteDict setObject:@(0) forKey:BITMASK_KEY_COLLISION];
         [self.bitMaskDictionary setObject:spriteDict forKey:(NSString*)[spriteNameArray objectAtIndex:i]];
     }
 }
@@ -90,7 +93,7 @@ static LRCollisionManager *_shared = nil;
     uint32_t colliderCategoryMask = [self getCategoryMaskForSpriteWithName:colliderName];
     
     NSMutableDictionary* spriteDictionary = (NSMutableDictionary*)[self.bitMaskDictionary objectForKey:recipientName];
-    [spriteDictionary setObject:[NSNumber numberWithInt:(recipientCollisionMask | colliderCategoryMask)] forKey:BITMASK_KEY_COLLISION];
+    [spriteDictionary setObject:@(recipientCollisionMask | colliderCategoryMask) forKey:BITMASK_KEY_COLLISION];
 }
 
 - (void) addContactDetectionOfSpritesNamed:(NSString *)colliderName toSpritesNamed:(NSString *)recipientName
@@ -99,7 +102,7 @@ static LRCollisionManager *_shared = nil;
     uint32_t contacterBitMask = [self getCategoryMaskForSpriteWithName:colliderName];
     
     NSMutableDictionary* spriteDictionary = (NSMutableDictionary*)[self.bitMaskDictionary objectForKey:recipientName];
-    [spriteDictionary setObject:[NSNumber numberWithInt:(recipientContactMask | contacterBitMask)] forKey:BITMASK_KEY_CONTACT];
+    [spriteDictionary setObject:@(recipientContactMask | contacterBitMask) forKey:BITMASK_KEY_CONTACT];
 }
 
 #pragma mark - Adding Instance Collision/Contact Detection

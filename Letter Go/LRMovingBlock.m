@@ -72,19 +72,4 @@
         [self.touchDelegate playerSelectedMovingBlock:self];
 }
 
-#pragma mark - User Info Dictionary Functions
-///TODO: remove this function
-- (NSDictionary*) removeLetterDictionary
-{
-    NSDictionary *dict = [NSMutableDictionary dictionaryWithObject:self forKey:@"envelope"];
-    return dict;
-}
-
-///TODO: remove this function
-- (NSDictionary*) addLetterDictionary
-{
-    NSDictionary *dict = [NSDictionary dictionaryWithObjects:@[self.letter, [NSNumber numberWithBool:self.loveLetter]]
-                                                     forKeys:@[KEY_GET_LETTER, KEY_GET_LOVE]];
-    return dict;
-}
 @end

@@ -43,6 +43,8 @@ static const int kGameLoopResetValue            =       -1;
 #define NAME_SPRITE_BOTTOM_EDGE                     @"NAME_SPRITE_BOTTOM_EDGE"
 #define NAME_SPRITE_LETTER_SLOT                     @"NAME_SPRITE_LETTER_SLOT"
 #define NAME_SPRITE_MAILMAN                         @"NAME_SPRITE_MAILMAN"
+#define NAME_SPRITE_BOTTOM_BARRIER                  @"NAME_SPRITE_BOTTOM_BARRIER"
+
 
 #define NAME_LAYER_GAME_PLAY                        @"NAME_LAYER_GAME_PLAY"
 #define NAME_LAYER_BACKGROUND                       @"NAME_LAYER_BACKGROUND"

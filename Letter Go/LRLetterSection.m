@@ -15,7 +15,7 @@
 #import "LRDictionaryChecker.h"
 #import "LRGameScene.h"
 #import "LREnvelopeAnimationBuilder.h"
-
+#import "LRCollisionManager.h"
 
 typedef NS_ENUM(NSUInteger, LetterSectionState)
 {
@@ -33,6 +33,8 @@ typedef void(^CompletionBlockType)(void);
 @property (nonatomic, strong) NSMutableArray *letterSlots;
 @property (nonatomic, strong) NSMutableArray *delayedLetters;
 
+@property (nonatomic, strong) SKSpriteNode *bottomBarrier;
+
 @property (nonatomic) LRLetterSlot  *currentSlot;
 @property LRCollectedEnvelope *touchedBlock;
 
@@ -41,6 +43,7 @@ typedef void(^CompletionBlockType)(void);
 @end
 
 @implementation LRLetterSection
+@synthesize bottomBarrier;
 
 #pragma mark - Set Up/Initialization
 
@@ -84,7 +87,7 @@ typedef void(^CompletionBlockType)(void);
 
 - (void) addVerticalBarriers
 {
-    SKSpriteNode *topBarrier, *bottomBarrier;
+    SKSpriteNode *topBarrier;
     
     CGFloat barrierHeight = (self.frame.size.height - kLetterBlockDimension) / 2;
     CGFloat barrierWidth = self.size.width;
@@ -98,6 +101,7 @@ typedef void(^CompletionBlockType)(void);
                                                  size:barrierSize];
     bottomBarrier.position = CGPointMake(barrierXPos, bottomBarrierYPos);
     bottomBarrier.zPosition = zPos_LetterSectionBarrier_Vert;
+    [self setBarrierPhysics];
     [self addChild:bottomBarrier];
     
     topBarrier = [SKSpriteNode spriteNodeWithColor:[LRColor letterSectionColor]
@@ -105,7 +109,6 @@ typedef void(^CompletionBlockType)(void);
     topBarrier.position = CGPointMake(barrierXPos, topBarrierYPos);
     topBarrier.zPosition = zPos_LetterSectionBarrier_Vert;
     [self addChild:topBarrier];
-    
 }
 
 - (void) addHorizontalBarriers
@@ -123,9 +126,22 @@ typedef void(^CompletionBlockType)(void);
                                                                 size:barrierSize];
         horBarrier.position = barrierPos;
         horBarrier.zPosition = zPos_LetterSectionBarrier_Hor;
-//        horBarrier.alpha = .5;
+        horBarrier.alpha = .5;
         [self addChild:horBarrier];
     }
+}
+
+- (void) setBarrierPhysics
+{
+    bottomBarrier.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:bottomBarrier.size];
+    bottomBarrier.physicsBody.affectedByGravity = NO;
+    bottomBarrier.physicsBody.dynamic = NO;
+    bottomBarrier.physicsBody.friction = 1;
+    bottomBarrier.name = NAME_SPRITE_BOTTOM_BARRIER;
+    [[LRCollisionManager shared] setBitMasksForSprite:bottomBarrier];
+    [[LRCollisionManager shared] addCollisionDetectionOfSpritesNamed:NAME_SPRITE_BOTTOM_BARRIER toSpritesNamed:NAME_SPRITE_SECTION_LETTER_BLOCK];
+    [[LRCollisionManager shared] addContactDetectionOfSpritesNamed:NAME_SPRITE_BOTTOM_BARRIER toSpritesNamed:NAME_SPRITE_SECTION_LETTER_BLOCK];
+    
 }
 
 #pragma mark - Private Properties

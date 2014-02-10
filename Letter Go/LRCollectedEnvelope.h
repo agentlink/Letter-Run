@@ -14,6 +14,8 @@
 + (LRCollectedEnvelope*) sectionBlockWithLetter:(NSString*)letter loveLetter:(BOOL)love;;
 + (LRCollectedEnvelope*) emptySectionBlock;
 
+- (void) envelopeHitBottomBarrier;
+
 - (BOOL) isLetterBlockEmpty;
 - (BOOL) isLetterBlockPlaceHolder;
 
