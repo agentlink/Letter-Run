@@ -169,6 +169,7 @@ typedef void(^CompletionBlockType)(void);
         for (int i = 0; i < kWordMaximumLetterCount; i++) {
             LRLetterSlot *slot = [LRLetterSlot new];
             slot.position = CGPointMake([self xPositionForSlotIndex:i], 0.0);
+            slot.index = i;
             [_letterSlots addObject:slot];
         }
     }
@@ -221,57 +222,52 @@ typedef void(^CompletionBlockType)(void);
         return;
     }
     
-    LRCollectedEnvelope *envelopeToDelete = (LRCollectedEnvelope*)envelope;
-    LRLetterSlot *deletionSlot = nil;
-    int deletionIndex = 0;
-    for (int i = 0; i < self.letterSlots.count; i++)
-    {
-        LRLetterSlot *slot = [self.letterSlots objectAtIndex:i];
-        if (slot.currentBlock == envelopeToDelete) {
-            deletionSlot = slot;
-        }
-        //If the slot that has to be deleted has been reached
-        if (deletionSlot) {
-            //If the current slot is the one being deleted
-            if (deletionSlot == slot) {
-                deletionSlot.currentBlock = [LRLetterBlockGenerator createEmptySectionBlock];
-                deletionIndex = i;
-            }
-            
-            __block LRCollectedEnvelope *rightBlock;
-            CompletionBlockType shiftDone;
-            //If it's not the last block
-            if (i == self.letterSlots.count - 1) {
-                shiftDone = ^{
-                    //Shift all the letter blocks down by one index
-                    for (int j = deletionIndex; j < self.letterSlots.count; j++) {
-                        LRLetterSlot *updatedSlot = [self.letterSlots objectAtIndex:j];
-                        if (j == self.letterSlots.count - 1)
-                            rightBlock = [LRLetterBlockGenerator createEmptySectionBlock];
-                        else
-                            rightBlock = [(LRLetterSlot*)[self.letterSlots objectAtIndex:j+1] currentBlock];
-                        updatedSlot.currentBlock = rightBlock;
-                    }
-                    self.letterSectionState = LetterSectionStateNormal;
-                    [self addDelayedLetters];
-                };
-                SKAction *shiftAnimation = [LREnvelopeAnimationBuilder shiftLetterInDirection:kLeftDirection
-                                                                            withDelayForIndex:i - deletionIndex];
-                SKAction *shift = [LREnvelopeAnimationBuilder actionWithCompletionBlock:shiftAnimation
-                                                                                  block:shiftDone];
-                [slot.currentBlock runAction: shift];
+    //Set the envelope to an empty slot
 
-            }
-            else {
-                SKAction *shiftAnimation = [LREnvelopeAnimationBuilder shiftLetterInDirection:kLeftDirection
-                                                                            withDelayForIndex:i - deletionIndex];
-                [slot.currentBlock runAction:shiftAnimation];
-            }
+    LRCollectedEnvelope *envelopeToDelete = (LRCollectedEnvelope*)envelope;
+    __block int deletionIndex = envelopeToDelete.slotIndex;
+    LRLetterSlot *deletionSlot = [self.letterSlots objectAtIndex:deletionIndex];
+    deletionSlot.currentBlock = [LRLetterBlockGenerator createEmptySectionBlock];
+    
+
+    for (int i = deletionIndex; i < self.letterSlots.count; i++)
+    {
+        LRLetterSlot *slotToUpdate = [self.letterSlots objectAtIndex:i];
+        NSLog(@"Letter: %@", slotToUpdate.currentBlock.letter);
+
+        SKAction *shiftAnimation = [LREnvelopeAnimationBuilder shiftLetterInDirection:kLeftDirection
+                                                                    withDelayForIndex:i - deletionIndex];
+        __weak LRCollectedEnvelope *slidingEnvelope = slotToUpdate.currentBlock;
+
+        if (i != self.letterSlots.count - 1)
+        {
+            [slidingEnvelope runAction:shiftAnimation];
+        }
+        else
+        {
+            CompletionBlockType shiftDone = ^{
+                int letterSlotCount = self.letterSlots.count;
+                for (int k = deletionIndex; k < letterSlotCount - 1; k++)
+                {
+                    LRLetterSlot *updatedSlot = self.letterSlots[k];
+                    updatedSlot.currentBlock = [self.letterSlots[k + 1] currentBlock];
+                }
+                LRLetterSlot *lastSlot = self.letterSlots[letterSlotCount - 1];
+                lastSlot.currentBlock = [LRLetterBlockGenerator createEmptySectionBlock];
+                self.letterSectionState = LetterSectionStateNormal;
+                [self addDelayedLetters];
+            };
+            SKAction *shift = [LREnvelopeAnimationBuilder actionWithCompletionBlock:shiftAnimation
+                                                                              block:shiftDone];
+            [slidingEnvelope runAction: shift];
+
         }
     }
+    
     NSAssert(deletionSlot, @"Error: slot does not exist within array");
     [self updateSubmitButton];
 }
+
 
 - (void) addDelayedLetters
 {

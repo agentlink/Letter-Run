@@ -27,7 +27,6 @@ static const NSUInteger kMaxBounceCount = 2;
 @property CGPoint touchOrigin;
 
 @property (nonatomic) NSUInteger bounceCount;
-@property (nonatomic) BOOL physicsEnabled;
 @end
 
 @implementation LRCollectedEnvelope
@@ -49,7 +48,11 @@ static const NSUInteger kMaxBounceCount = 2;
         self.name = NAME_SPRITE_SECTION_LETTER_BLOCK;
         self.movementDirection = MovementDirectionNone;
         self.bounceCount = 0;
-        [self setUpPhysics];
+        self.slotIndex = kSlotIndexNone;
+        if (![self isLetterBlockEmpty] && ![self isLetterBlockPlaceHolder])
+        {
+            [self setUpPhysics];
+        }
     }
     return self;
 }
@@ -57,24 +60,28 @@ static const NSUInteger kMaxBounceCount = 2;
 #pragma mark - Physics Phunctions
 
 - (void) setUpPhysics
-{
+{/*
     self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.size];
     self.physicsBody.dynamic = YES;
     //#toy
     self.physicsBody.restitution = .65;
     self.physicsBody.allowsRotation = NO;
     self.physicsBody.friction = 1;
-    [[LRCollisionManager shared] setBitMasksForSprite:self];
+    [[LRCollisionManager shared] setBitMasksForSprite:self];*/
 }
 
 - (void) setPhysicsEnabled:(BOOL)physicsEnabled
-{
+{/*
+    if (!self.physicsBody) {
+        [self setUpPhysics];
+    }
     self.physicsBody.affectedByGravity = physicsEnabled;
-    self.physicsBody.velocity = CGVectorMake(0, 0);
+    self.physicsBody.velocity = CGVectorMake(0, 0);*/
 }
 
 - (void) envelopeHitBottomBarrier
-{
+{/*
+    
     //If the letter block has just been added, don't do anything
     if (self.physicsBody.velocity.dy == 0) {
         return;
@@ -84,7 +91,7 @@ static const NSUInteger kMaxBounceCount = 2;
     if (self.bounceCount == kMaxBounceCount) {
         [self resetEnvelopeToBaseState];
         self.bounceCount = 0;
-    }
+    }*/
 }
 
 - (void) resetEnvelopeToBaseState
@@ -205,6 +212,13 @@ static const NSUInteger kMaxBounceCount = 2;
     
     return (currentYPos > maxY/* || currentYPos < minY*/);
 
+}
+
+- (NSString *)description
+{
+    NSMutableString * descript = [[super description] mutableCopy];
+    [descript appendFormat:@"Letter: %@", self.letter];
+    return descript;
 }
 
 #pragma mark - Block State Checks
