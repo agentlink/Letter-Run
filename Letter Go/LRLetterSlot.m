@@ -55,7 +55,7 @@
         if ([incomingBlock parent])
             [incomingBlock removeFromParent];
         _currentBlock = incomingBlock;
-        _currentBlock.position = CGPointZero;
+            _currentBlock.position = CGPointZero;
         if (![_currentBlock isLetterBlockEmpty] && ![_currentBlock isLetterBlockPlaceHolder]) {
             [_currentBlock setPhysicsEnabled:YES];
         }

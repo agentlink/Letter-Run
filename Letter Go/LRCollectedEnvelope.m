@@ -49,10 +49,6 @@ static const NSUInteger kMaxBounceCount = 2;
         self.movementDirection = MovementDirectionNone;
         self.bounceCount = 0;
         self.slotIndex = kSlotIndexNone;
-        if (![self isLetterBlockEmpty] && ![self isLetterBlockPlaceHolder])
-        {
-            [self setUpPhysics];
-        }
     }
     return self;
 }
@@ -60,30 +56,32 @@ static const NSUInteger kMaxBounceCount = 2;
 #pragma mark - Physics Phunctions
 
 - (void) setUpPhysics
-{/*
+{
     self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.size];
     self.physicsBody.dynamic = YES;
     //#toy
     self.physicsBody.restitution = .65;
     self.physicsBody.allowsRotation = NO;
     self.physicsBody.friction = 1;
-    [[LRCollisionManager shared] setBitMasksForSprite:self];*/
+    [[LRCollisionManager shared] setBitMasksForSprite:self];
 }
 
 - (void) setPhysicsEnabled:(BOOL)physicsEnabled
-{/*
+{
     if (!self.physicsBody) {
         [self setUpPhysics];
     }
     self.physicsBody.affectedByGravity = physicsEnabled;
-    self.physicsBody.velocity = CGVectorMake(0, 0);*/
+    self.physicsBody.velocity = CGVectorMake(0, 0);
 }
 
 - (void) envelopeHitBottomBarrier
-{/*
+{
     
     //If the letter block has just been added, don't do anything
-    if (self.physicsBody.velocity.dy == 0) {
+    if (self.physicsBody.velocity.dy <= 0) {
+        //TODO: check if it's an issue that dX is changed to 0
+        self.physicsBody.velocity = CGVectorMake(0, 0);
         return;
     }
     self.bounceCount++;
@@ -91,7 +89,7 @@ static const NSUInteger kMaxBounceCount = 2;
     if (self.bounceCount == kMaxBounceCount) {
         [self resetEnvelopeToBaseState];
         self.bounceCount = 0;
-    }*/
+    }
 }
 
 - (void) resetEnvelopeToBaseState

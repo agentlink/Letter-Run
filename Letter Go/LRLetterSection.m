@@ -17,6 +17,8 @@
 #import "LREnvelopeAnimationBuilder.h"
 #import "LRCollisionManager.h"
 
+static NSString* const kTempCollectedEnvelopeName = @"sliding envelope temp";
+
 typedef NS_ENUM(NSUInteger, LetterSectionState)
 {
     LetterSectionStateNormal = 0,
@@ -184,7 +186,7 @@ typedef void(^CompletionBlockType)(void);
 }
 
 #pragma mark - LRLetterBlockControlDelegate Methods
-#pragma mark Addition/Deletion
+#pragma mark Addition
 - (void) addEnvelopeToLetterSection:(id)envelope
 {
     //If letters are being deleted currently, add them when they're done being deleted
@@ -216,6 +218,7 @@ typedef void(^CompletionBlockType)(void);
     [self updateSubmitButton];
 }
 
+#pragma mark Deletion
 - (void) removeEnvelopeFromLetterSection:(id)envelope
 {
     if (self.letterSectionState == LetterSectionStateDeletingLetters) {
@@ -223,7 +226,6 @@ typedef void(^CompletionBlockType)(void);
     }
     
     //Set the envelope to an empty slot
-
     LRCollectedEnvelope *envelopeToDelete = (LRCollectedEnvelope*)envelope;
     __block int deletionIndex = envelopeToDelete.slotIndex;
     LRLetterSlot *deletionSlot = [self.letterSlots objectAtIndex:deletionIndex];
@@ -232,42 +234,67 @@ typedef void(^CompletionBlockType)(void);
 
     for (int i = deletionIndex; i < self.letterSlots.count; i++)
     {
+        //Get the proper slot to update
         LRLetterSlot *slotToUpdate = [self.letterSlots objectAtIndex:i];
-        NSLog(@"Letter: %@", slotToUpdate.currentBlock.letter);
-
         SKAction *shiftAnimation = [LREnvelopeAnimationBuilder shiftLetterInDirection:kLeftDirection
                                                                     withDelayForIndex:i - deletionIndex];
-        __weak LRCollectedEnvelope *slidingEnvelope = slotToUpdate.currentBlock;
+        
+        //And make a copy of the envelope to do the animation with
+        LRCollectedEnvelope *slidingEnvelope = [slotToUpdate.currentBlock copy];
+        slidingEnvelope.physicsEnabled = NO;
+        slidingEnvelope.position = slotToUpdate.currentBlock.position;
+        slidingEnvelope.name = kTempCollectedEnvelopeName;
+        [slotToUpdate addChild:slidingEnvelope];
 
+        //Run the animation on the fake slots
+        CompletionBlockType shiftDone;
         if (i != self.letterSlots.count - 1)
         {
             [slidingEnvelope runAction:shiftAnimation];
         }
         else
         {
-            CompletionBlockType shiftDone = ^{
-                int letterSlotCount = self.letterSlots.count;
-                for (int k = deletionIndex; k < letterSlotCount - 1; k++)
-                {
-                    LRLetterSlot *updatedSlot = self.letterSlots[k];
-                    updatedSlot.currentBlock = [self.letterSlots[k + 1] currentBlock];
-                }
-                LRLetterSlot *lastSlot = self.letterSlots[letterSlotCount - 1];
-                lastSlot.currentBlock = [LRLetterBlockGenerator createEmptySectionBlock];
-                self.letterSectionState = LetterSectionStateNormal;
-                [self addDelayedLetters];
-            };
+            //When the action is done, reveal the shifted letters
+            shiftDone = ^{[self revealShiftedLetters];};
             SKAction *shift = [LREnvelopeAnimationBuilder actionWithCompletionBlock:shiftAnimation
                                                                               block:shiftDone];
             [slidingEnvelope runAction: shift];
-
         }
     }
-    
+    //And just as soon as the action starts, do the real shifting of the letters
+    [self shiftLettersFromDeletionIndex:deletionIndex];
     NSAssert(deletionSlot, @"Error: slot does not exist within array");
-    [self updateSubmitButton];
 }
 
+
+- (void) shiftLettersFromDeletionIndex:(int)deletionIndex
+{
+    for (int k = deletionIndex; k < kWordMaximumLetterCount; k++)
+    {
+        LRLetterSlot *updatedSlot = self.letterSlots[k];
+        //If it's the last slot, make it an empty block. Otherwise, make it the next block over
+        LRCollectedEnvelope *newEnvelope = (k == kWordMaximumLetterCount - 1) ? [LRLetterBlockGenerator createEmptySectionBlock] :  [self.letterSlots[k + 1] currentBlock];
+        newEnvelope.hidden = YES;
+        updatedSlot.currentBlock = newEnvelope;
+    }
+}
+
+- (void) revealShiftedLetters
+{
+    int letterSlotCount = kWordMaximumLetterCount;
+    for (int k = 0; k < letterSlotCount; k++)
+    {
+        LRLetterSlot *updatedSlot = self.letterSlots[k];
+        updatedSlot.currentBlock.hidden = NO;
+        [updatedSlot enumerateChildNodesWithName: kTempCollectedEnvelopeName usingBlock:^(SKNode *node, BOOL *stop) {
+            [node removeFromParent];
+        }];
+    }
+    
+    self.letterSectionState = LetterSectionStateNormal;
+    [self addDelayedLetters];
+    [self updateSubmitButton];
+}
 
 - (void) addDelayedLetters
 {
@@ -275,7 +302,6 @@ typedef void(^CompletionBlockType)(void);
         [self addEnvelopeToLetterSection:envelope];
     }
     [self.delayedLetters removeAllObjects];
-    
 }
 
 #pragma mark Rearrangement
