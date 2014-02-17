@@ -17,8 +17,6 @@
 #import "LREnvelopeAnimationBuilder.h"
 #import "LRCollisionManager.h"
 
-static NSString* const kTempCollectedEnvelopeName = @"sliding envelope temp";
-
 typedef NS_ENUM(NSUInteger, LetterSectionState)
 {
     LetterSectionStateNormal = 0,
@@ -212,10 +210,29 @@ typedef void(^CompletionBlockType)(void);
     //If all the letter slots are not full
     if (currentLetterSlot) {
         LRCollectedEnvelope *block = [LRLetterBlockGenerator createBlockWithLetter:letter loveLetter:isLoveLetter];
+        //Hide the block to make a fake one to run the animation with
+        block.hidden = YES;
         block.delegate = self;
         currentLetterSlot.currentBlock = block;
+        [self runAddLetterAnimationWithEnvelope:block];
+
     }
     [self updateSubmitButton];
+}
+
+- (void) runAddLetterAnimationWithEnvelope:(LRCollectedEnvelope*)origEnvelope
+{
+    LRCollectedEnvelope *animatedEnvelope = [origEnvelope copy];
+    animatedEnvelope.name = kTempCollectedEnvelopeName;
+    animatedEnvelope.hidden = NO;
+    animatedEnvelope.physicsEnabled = YES;
+    
+    CGPoint letterDropPos = origEnvelope.position;
+    letterDropPos.y += kLetterBlockDimension;
+    animatedEnvelope.position = letterDropPos;
+    
+    LRLetterSlot *parentSlot = self.letterSlots[origEnvelope.slotIndex];
+    [parentSlot addChild:animatedEnvelope];
 }
 
 #pragma mark Deletion

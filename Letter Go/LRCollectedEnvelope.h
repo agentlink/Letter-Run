@@ -10,8 +10,11 @@
 #import "LRLetterBlockControlDelegate.h"
 
 static const NSInteger kSlotIndexNone = -1;
+static NSString* const kTempCollectedEnvelopeName = @"NAME_SPRITE_SECTION_LETTER_BLOCK_TEMP";
 
 @interface LRCollectedEnvelope : LRLetterBlock
+
+
 
 + (LRCollectedEnvelope*) sectionBlockWithLetter:(NSString*)letter loveLetter:(BOOL)love;;
 + (LRCollectedEnvelope*) emptySectionBlock;

@@ -93,7 +93,7 @@
 }
 
 - (NSString*) randomEnvelopeSprite {
-    int suf = arc4random()%4 + 1;
+//    int suf = arc4random()%4 + 1;
 //    return [NSString stringWithFormat:@"Envelope_Normal_%i.png", suf];
     return @"Envelope_Normal.png";
 }

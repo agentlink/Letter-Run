@@ -60,7 +60,7 @@ static const NSUInteger kMaxBounceCount = 2;
     self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.size];
     self.physicsBody.dynamic = YES;
     //#toy
-    self.physicsBody.restitution = .65;
+    self.physicsBody.restitution = .58;
     self.physicsBody.allowsRotation = NO;
     self.physicsBody.friction = 1;
     [[LRCollisionManager shared] setBitMasksForSprite:self];
@@ -85,10 +85,24 @@ static const NSUInteger kMaxBounceCount = 2;
         return;
     }
     self.bounceCount++;
-    //If the envelope has exceeded the bounce count, make it stop
+    //If the envelope has exceeded the bounce count...
     if (self.bounceCount == kMaxBounceCount) {
         [self resetEnvelopeToBaseState];
-        self.bounceCount = 0;
+        //And if it's a non-temporary envelope...
+        if ([self.name isEqualToString: NAME_SPRITE_SECTION_LETTER_BLOCK]) {
+            //...make it stop bouncing
+            self.bounceCount = 0;
+        }
+        //But if it's a temporary envelope...
+        else if ([self.name isEqualToString:kTempCollectedEnvelopeName])
+        {
+            //Unhide the real envelope
+            [self.parent enumerateChildNodesWithName:NAME_SPRITE_SECTION_LETTER_BLOCK usingBlock:^(SKNode *node, BOOL *stop) {
+                node.hidden = NO;
+            }];
+            //...remove it after the max bounce count
+            [self removeFromParent];
+        }
     }
 }
 

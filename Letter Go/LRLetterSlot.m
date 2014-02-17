@@ -20,7 +20,6 @@
         self.name = NAME_SPRITE_LETTER_SLOT;
         self.size = self.currentBlock.size;
         self.color = [LRColor emptySlotColor];
-        self.alpha = .5;
         [self addChild:self.currentBlock];
     }
     return self;
