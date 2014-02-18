@@ -7,10 +7,13 @@
 //
 
 #import "LREnvelopeAnimationBuilder.h"
+#import "LRLetterSection.h"
 
 static CGFloat const kTotalDelayTime = 0.25;
 
 @implementation LREnvelopeAnimationBuilder
+
+//+ (SKAction*) shiftLetterToPositionOfLetter:
 
 + (SKAction*) submitWordActionWithLetterAtIndex:(NSUInteger)index
 {
@@ -30,7 +33,7 @@ static CGFloat const kTotalDelayTime = 0.25;
 + (SKAction*) shiftLetterInDirection:(kLRDireciton)direction
 {
     CGFloat animationTime = .2;
-    CGFloat shiftDistance = kLetterBlockDimension + kSlotMarginWidth;
+    CGFloat shiftDistance = [LRLetterSection distanceBetweenSlots];
     shiftDistance *= (direction == kLeftDirection) ? -1 : 1;
 
     SKAction *shiftLetter = [SKAction moveByX:shiftDistance y:0 duration:animationTime];

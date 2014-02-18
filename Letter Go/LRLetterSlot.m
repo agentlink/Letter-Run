@@ -10,7 +10,6 @@
 #import "LRLetterBlockGenerator.h"
 #import "LRPositionConstants.h"
 
-
 @implementation LRLetterSlot
 
 - (id) init
@@ -55,7 +54,11 @@
         if ([incomingBlock parent])
             [incomingBlock removeFromParent];
         _currentBlock = incomingBlock;
-        _currentBlock.position = CGPointZero;
+            _currentBlock.position = CGPointZero;
+        if (![_currentBlock isLetterBlockEmpty] && ![_currentBlock isLetterBlockPlaceHolder]) {
+            [_currentBlock setPhysicsEnabled:YES];
+        }
+        _currentBlock.slotIndex = self.index;
         [self addChild:_currentBlock];
     }
     _currentBlock.zPosition = zPos_SectionBlock_Unselected;

@@ -40,7 +40,7 @@ typedef NS_ENUM(NSUInteger, LRCollisionType)
 - (LRCollisionType) collisionTypeForNode:(SKNode*)nodeA andNode:(SKNode*)nodeB
 {
     if ([nodeA.name isEqualToString:NAME_SPRITE_BOTTOM_BARRIER] &&
-        [nodeB.name isEqualToString:NAME_SPRITE_SECTION_LETTER_BLOCK]) {
+        [nodeB.name rangeOfString:NAME_SPRITE_SECTION_LETTER_BLOCK].location != NSNotFound) {
         return kLRCollision_BottomBarrier_SectionBlock;
     }
     return kLRCollision_Undefined;

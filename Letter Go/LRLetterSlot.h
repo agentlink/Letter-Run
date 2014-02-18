@@ -11,7 +11,8 @@
 
 @interface LRLetterSlot : SKSpriteNode
 
-@property (nonatomic) LRCollectedEnvelope *currentBlock;
+@property (nonatomic, strong) LRCollectedEnvelope *currentBlock;
+@property (nonatomic) NSInteger index;
 
 - (id) initWithLetterBlock:(LRCollectedEnvelope*)block;
 - (void) setEmptyLetterBlock;

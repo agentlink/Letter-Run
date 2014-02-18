@@ -156,7 +156,7 @@ typedef void(^CompletionBlockType)(void);
 - (LRSubmitButton*) submitButton {
     if (!_submitButton) {
         _submitButton = [LRSubmitButton new];
-        _submitButton.position = CGPointMake([self xPosFromSlotIndex:kWordMaximumLetterCount], 0);
+        _submitButton.position = CGPointMake([self xPositionForSlotIndex:kWordMaximumLetterCount], 0);
     }
     return _submitButton;
 }
@@ -168,7 +168,8 @@ typedef void(^CompletionBlockType)(void);
         //Fill the letter slot array with LRSlots
         for (int i = 0; i < kWordMaximumLetterCount; i++) {
             LRLetterSlot *slot = [LRLetterSlot new];
-            slot.position = CGPointMake([self xPosFromSlotIndex:i], 0.0);
+            slot.position = CGPointMake([self xPositionForSlotIndex:i], 0.0);
+            slot.index = i;
             [_letterSlots addObject:slot];
         }
     }
@@ -183,7 +184,7 @@ typedef void(^CompletionBlockType)(void);
 }
 
 #pragma mark - LRLetterBlockControlDelegate Methods
-#pragma mark Addition/Deletion
+#pragma mark Addition
 - (void) addEnvelopeToLetterSection:(id)envelope
 {
     //If letters are being deleted currently, add them when they're done being deleted
@@ -209,62 +210,106 @@ typedef void(^CompletionBlockType)(void);
     //If all the letter slots are not full
     if (currentLetterSlot) {
         LRCollectedEnvelope *block = [LRLetterBlockGenerator createBlockWithLetter:letter loveLetter:isLoveLetter];
+        //Hide the block to make a fake one to run the animation with
+        block.hidden = YES;
         block.delegate = self;
         currentLetterSlot.currentBlock = block;
+        [self runAddLetterAnimationWithEnvelope:block];
+
     }
     [self updateSubmitButton];
 }
 
+- (void) runAddLetterAnimationWithEnvelope:(LRCollectedEnvelope*)origEnvelope
+{
+    LRCollectedEnvelope *animatedEnvelope = [origEnvelope copy];
+    animatedEnvelope.name = kTempCollectedEnvelopeName;
+    animatedEnvelope.hidden = NO;
+    animatedEnvelope.physicsEnabled = YES;
+    
+    CGPoint letterDropPos = origEnvelope.position;
+    letterDropPos.y += kLetterBlockDimension;
+    animatedEnvelope.position = letterDropPos;
+    
+    LRLetterSlot *parentSlot = self.letterSlots[origEnvelope.slotIndex];
+    [parentSlot addChild:animatedEnvelope];
+}
+
+#pragma mark Deletion
 - (void) removeEnvelopeFromLetterSection:(id)envelope
 {
     if (self.letterSectionState == LetterSectionStateDeletingLetters) {
         return;
     }
     
+    //Set the envelope to an empty slot
     LRCollectedEnvelope *envelopeToDelete = (LRCollectedEnvelope*)envelope;
-    LRLetterSlot *deletionSlot = nil;
-    int deletionIndex = 0;
-    for (int i = 0; i < self.letterSlots.count; i++)
+    __block int deletionIndex = envelopeToDelete.slotIndex;
+    LRLetterSlot *deletionSlot = [self.letterSlots objectAtIndex:deletionIndex];
+    deletionSlot.currentBlock = [LRLetterBlockGenerator createEmptySectionBlock];
+    
+
+    for (int i = deletionIndex; i < self.letterSlots.count; i++)
     {
-        LRLetterSlot *slot = [self.letterSlots objectAtIndex:i];
-        if (slot.currentBlock == envelopeToDelete) {
-            deletionSlot = slot;
+        //Get the proper slot to update
+        LRLetterSlot *slotToUpdate = [self.letterSlots objectAtIndex:i];
+        SKAction *shiftAnimation = [LREnvelopeAnimationBuilder shiftLetterInDirection:kLeftDirection
+                                                                    withDelayForIndex:i - deletionIndex];
+        
+        //And make a copy of the envelope to do the animation with
+        LRCollectedEnvelope *slidingEnvelope = [slotToUpdate.currentBlock copy];
+        slidingEnvelope.physicsEnabled = NO;
+        slidingEnvelope.position = slotToUpdate.currentBlock.position;
+        slidingEnvelope.name = kTempCollectedEnvelopeName;
+        [slotToUpdate addChild:slidingEnvelope];
+
+        //Run the animation on the fake slots
+        CompletionBlockType shiftDone;
+        if (i != self.letterSlots.count - 1)
+        {
+            [slidingEnvelope runAction:shiftAnimation];
         }
-        //If the slot that has to be deleted has been reached
-        if (deletionSlot) {
-            //If the current slot is the one being deleted
-            if (deletionSlot == slot) {
-                deletionSlot.currentBlock = [LRLetterBlockGenerator createEmptySectionBlock];
-                deletionIndex = i;
-            }
-            
-            LRCollectedEnvelope *rightBlock;
-            CompletionBlockType shiftDone;
-            //If it's not the last block
-            if (i == self.letterSlots.count - 1) {
-                rightBlock = [LRLetterBlockGenerator createEmptySectionBlock];
-                shiftDone = ^{
-                    slot.currentBlock = rightBlock;
-                    self.letterSectionState = LetterSectionStateNormal;
-                    [self addDelayedLetters];
-                };
-            }
-            else {
-                rightBlock = [(LRLetterSlot*)[self.letterSlots objectAtIndex:i+1] currentBlock];
-                shiftDone = ^{
-                    slot.currentBlock = rightBlock;
-                };
-            }
-            
-            SKAction *shiftAnimation = [LREnvelopeAnimationBuilder shiftLetterInDirection:kLeftDirection
-                                                                        withDelayForIndex:i - deletionIndex];
+        else
+        {
+            //When the action is done, reveal the shifted letters
+            shiftDone = ^{[self revealShiftedLetters];};
             SKAction *shift = [LREnvelopeAnimationBuilder actionWithCompletionBlock:shiftAnimation
                                                                               block:shiftDone];
-            [slot.currentBlock runAction:shift];
+            [slidingEnvelope runAction: shift];
         }
     }
-
+    //And just as soon as the action starts, do the real shifting of the letters
+    [self shiftLettersFromDeletionIndex:deletionIndex];
     NSAssert(deletionSlot, @"Error: slot does not exist within array");
+}
+
+
+- (void) shiftLettersFromDeletionIndex:(int)deletionIndex
+{
+    for (int k = deletionIndex; k < kWordMaximumLetterCount; k++)
+    {
+        LRLetterSlot *updatedSlot = self.letterSlots[k];
+        //If it's the last slot, make it an empty block. Otherwise, make it the next block over
+        LRCollectedEnvelope *newEnvelope = (k == kWordMaximumLetterCount - 1) ? [LRLetterBlockGenerator createEmptySectionBlock] :  [self.letterSlots[k + 1] currentBlock];
+        newEnvelope.hidden = YES;
+        updatedSlot.currentBlock = newEnvelope;
+    }
+}
+
+- (void) revealShiftedLetters
+{
+    int letterSlotCount = kWordMaximumLetterCount;
+    for (int k = 0; k < letterSlotCount; k++)
+    {
+        LRLetterSlot *updatedSlot = self.letterSlots[k];
+        updatedSlot.currentBlock.hidden = NO;
+        [updatedSlot enumerateChildNodesWithName: kTempCollectedEnvelopeName usingBlock:^(SKNode *node, BOOL *stop) {
+            [node removeFromParent];
+        }];
+    }
+    
+    self.letterSectionState = LetterSectionStateNormal;
+    [self addDelayedLetters];
     [self updateSubmitButton];
 }
 
@@ -274,7 +319,6 @@ typedef void(^CompletionBlockType)(void);
         [self addEnvelopeToLetterSection:envelope];
     }
     [self.delayedLetters removeAllObjects];
-    
 }
 
 #pragma mark Rearrangement
@@ -501,10 +545,13 @@ typedef void(^CompletionBlockType)(void);
     }
 }
 
-- (CGFloat) xPosFromSlotIndex:(int) index {
-    //Calculate the distance between the edges of the screen and the first letter slot;
-    CGFloat slotMargin = kSlotMarginWidth;
-    CGFloat widthPerSlot = slotMargin + kLetterBlockDimension;
++ (CGFloat) distanceBetweenSlots
+{
+    return kSlotMarginWidth + kLetterBlockDimension;
+}
+
+- (CGFloat) xPositionForSlotIndex:(int) index {
+    CGFloat widthPerSlot = [LRLetterSection distanceBetweenSlots];
     // +kLetterBlockDimension for the submit button
     CGFloat letterSlotAreaWidth = widthPerSlot * kWordMaximumLetterCount + kLetterBlockDimension;
     CGFloat edgeBuffer = (self.size.width - letterSlotAreaWidth)/2;
