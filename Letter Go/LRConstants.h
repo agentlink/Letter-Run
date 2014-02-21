@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Gabe Nicholas. All rights reserved.
 //
 
-typedef NS_ENUM(BOOL, kLRDireciton)
+typedef NS_ENUM(BOOL, kLRDirection)
 {
     //Remove none if it doesn't get used
     kLeftDirection = FALSE,

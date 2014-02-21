@@ -17,6 +17,7 @@
 #import "LREnvelopeAnimationBuilder.h"
 #import "LRCollisionManager.h"
 
+
 typedef NS_ENUM(NSUInteger, LetterSectionState)
 {
     LetterSectionStateNormal = 0,
@@ -253,8 +254,7 @@ typedef void(^CompletionBlockType)(void);
     {
         //Get the proper slot to update
         LRLetterSlot *slotToUpdate = [self.letterSlots objectAtIndex:i];
-        SKAction *shiftAnimation = [LREnvelopeAnimationBuilder shiftLetterInDirection:kLeftDirection
-                                                                    withDelayForIndex:i - deletionIndex];
+        SKAction *shiftAnimation = [LREnvelopeAnimationBuilder deletionAnimationWithDelayForIndex:i - deletionIndex];
         //Make sure all the envelopes have stopoped bouncing
         [slotToUpdate stopChildEnvelopeBouncing];
         
@@ -333,14 +333,33 @@ typedef void(^CompletionBlockType)(void);
 - (void) rearrangementHasFinishedWithLetterBlock:(id)letterBlock
 {
     self.touchedBlock.zPosition = zPos_SectionBlock_Unselected;
-
+    LRCollectedEnvelope *selectedEnvelope = (LRCollectedEnvelope*)letterBlock;
+    
     LRLetterSlot *newLocation = [self getPlaceHolderSlot];
+    [self runRearrangmentHasFinishedAnimatioWithEnvelope:selectedEnvelope toSlot:newLocation];
+
+    selectedEnvelope.hidden = YES;
     newLocation.currentBlock = (LRCollectedEnvelope*)letterBlock;
+
     self.currentSlot = nil;
     self.touchedBlock = nil;
     [self updateSubmitButton];
 }
 
+- (void) runRearrangmentHasFinishedAnimatioWithEnvelope:(LRCollectedEnvelope*)envelope toSlot:(LRLetterSlot*)destination
+{
+    LRCollectedEnvelope *animatedEnvelope = [envelope copy];
+    animatedEnvelope.name = kTempCollectedEnvelopeName;
+
+    CGPoint endPosition = destination.position;
+    SKAction *slideAction = [LREnvelopeAnimationBuilder rearrangementFinishedAnimationFromPoint:animatedEnvelope.position toPoint:endPosition];
+    SKAction *animationWithCompletion = [LREnvelopeAnimationBuilder actionWithCompletionBlock:slideAction block:^{
+        [self removeChildrenInArray:@[animatedEnvelope]];
+        destination.currentBlock.hidden = NO;
+     }];
+    [self addChild:animatedEnvelope];
+    [animatedEnvelope runAction:animationWithCompletion];
+}
 
 
 #pragma mark - Submit Word Functions
