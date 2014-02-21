@@ -255,6 +255,8 @@ typedef void(^CompletionBlockType)(void);
         LRLetterSlot *slotToUpdate = [self.letterSlots objectAtIndex:i];
         SKAction *shiftAnimation = [LREnvelopeAnimationBuilder shiftLetterInDirection:kLeftDirection
                                                                     withDelayForIndex:i - deletionIndex];
+        //Make sure all the envelopes have stopoped bouncing
+        [slotToUpdate stopChildEnvelopeBouncing];
         
         //And make a copy of the envelope to do the animation with
         LRCollectedEnvelope *slidingEnvelope = [slotToUpdate.currentBlock copy];

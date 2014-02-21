@@ -39,6 +39,14 @@
     return [self.currentBlock isLetterBlockEmpty];
 }
 
+- (void) stopChildEnvelopeBouncing
+{
+    [self.currentBlock stopEnvelopeBouncing];
+    [self enumerateChildNodesWithName:kTempCollectedEnvelopeName usingBlock:^(SKNode *node, BOOL *stop){
+        [node removeFromParent];
+    }];
+}
+
 - (void) setCurrentBlock:(LRCollectedEnvelope *)incomingBlock
 {
     //If it's being initialized

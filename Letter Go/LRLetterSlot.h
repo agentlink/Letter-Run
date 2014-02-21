@@ -17,5 +17,6 @@
 - (id) initWithLetterBlock:(LRCollectedEnvelope*)block;
 - (void) setEmptyLetterBlock;
 - (BOOL) isLetterSlotEmpty;
+- (void) stopChildEnvelopeBouncing;
 
 @end
