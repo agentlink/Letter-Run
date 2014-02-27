@@ -220,11 +220,8 @@ static const NSUInteger kMaxBounceCount = 2;
     //#toy
     CGFloat topOffScreenRatioForDeletion = .65;
     CGFloat maxY = self.size.height * topOffScreenRatioForDeletion;
-//    CGFloat bottomOffScreenRatioForDeletion = .4;
-//    CGFloat minY = -self.size.height * bottomOffScreenRatioForDeletion;
     
-    return (currentYPos > maxY/* || currentYPos < minY*/);
-
+    return (currentYPos > maxY);
 }
 
 - (NSString *)description

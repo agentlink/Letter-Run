@@ -9,11 +9,14 @@
 #import "LREnvelopeAnimationBuilder.h"
 #import "LRLetterSection.h"
 
+//#toy
 static CGFloat const kTotalDelayTimeSubmit = 0.4;
 static CGFloat const kTotalDelayTimeDelete = 0.27;
 
 //This value is equal to the time that the animation would take to cross the whole screen
-static CGFloat const kRearrangeAnimationMaxTime = .5;
+static CGFloat const kRearrangeFinishedAnimationMaxTime = .5;
+//This value is equal to the time that the animation takes to move one slot
+static CGFloat const kRearrangementSlotSwitchedMaxTime = .08;
 
 @implementation LREnvelopeAnimationBuilder
 
@@ -48,8 +51,17 @@ static CGFloat const kRearrangeAnimationMaxTime = .5;
 + (SKAction*) rearrangementFinishedAnimationFromPoint:(CGPoint)start toPoint:(CGPoint)destination
 {
     CGFloat distance = ABS(start.x - destination.x);
-    CGFloat duration = (distance * kRearrangeAnimationMaxTime) / SCREEN_WIDTH;
+    CGFloat duration = (distance * kRearrangeFinishedAnimationMaxTime) / SCREEN_WIDTH;
     SKAction *action = [SKAction moveTo:destination duration:duration];
+    return action;
+}
+
++ (SKAction*) rearrangementLetterShiftedSlotsFromPoint:(CGPoint)start toPoint:(CGPoint)destination
+{
+    CGFloat distance = ABS(start.x - destination.x);
+    CGFloat duration = distance * kRearrangementSlotSwitchedMaxTime / [LRLetterSection distanceBetweenSlots];
+    SKAction *action = [SKAction moveTo:destination duration:duration];
+    action.timingMode = SKActionTimingEaseInEaseOut;
     return action;
 }
 

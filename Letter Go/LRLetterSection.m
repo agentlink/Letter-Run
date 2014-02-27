@@ -46,7 +46,7 @@ typedef void(^CompletionBlockType)(void);
 @implementation LRLetterSection
 @synthesize bottomBarrier;
 
-#pragma mark - Set Up/Initialization
+#pragma mark - Set Up/Initialization -
 
 - (id) initWithSize:(CGSize)size
 {
@@ -127,7 +127,6 @@ typedef void(^CompletionBlockType)(void);
                                                                 size:barrierSize];
         horBarrier.position = barrierPos;
         horBarrier.zPosition = zPos_LetterSectionBarrier_Hor;
-        horBarrier.alpha = .5;
         [self addChild:horBarrier];
     }
 }
@@ -145,7 +144,7 @@ typedef void(^CompletionBlockType)(void);
     
 }
 
-#pragma mark - Private Properties
+#pragma mark - Private Properties -
 
 - (SKSpriteNode*) letterSection {
     if (!_letterSection) {
@@ -184,7 +183,7 @@ typedef void(^CompletionBlockType)(void);
     return _delayedLetters;
 }
 
-#pragma mark - LRLetterBlockControlDelegate Methods
+#pragma mark - LRLetterBlockControlDelegate Methods -
 #pragma mark Addition
 - (void) addEnvelopeToLetterSection:(id)envelope
 {
@@ -336,7 +335,7 @@ typedef void(^CompletionBlockType)(void);
     LRCollectedEnvelope *selectedEnvelope = (LRCollectedEnvelope*)letterBlock;
     
     LRLetterSlot *newLocation = [self getPlaceHolderSlot];
-    [self runRearrangmentHasFinishedAnimatioWithEnvelope:selectedEnvelope toSlot:newLocation];
+    [self runRearrangmentHasFinishedAnimationWithEnvelope:selectedEnvelope toSlot:newLocation];
 
     selectedEnvelope.hidden = YES;
     newLocation.currentBlock = (LRCollectedEnvelope*)letterBlock;
@@ -346,7 +345,7 @@ typedef void(^CompletionBlockType)(void);
     [self updateSubmitButton];
 }
 
-- (void) runRearrangmentHasFinishedAnimatioWithEnvelope:(LRCollectedEnvelope*)envelope toSlot:(LRLetterSlot*)destination
+- (void) runRearrangmentHasFinishedAnimationWithEnvelope:(LRCollectedEnvelope*)envelope toSlot:(LRLetterSlot*)destination
 {
     LRCollectedEnvelope *animatedEnvelope = [envelope copy];
     animatedEnvelope.name = kTempCollectedEnvelopeName;
@@ -362,7 +361,7 @@ typedef void(^CompletionBlockType)(void);
 }
 
 
-#pragma mark - Submit Word Functions
+#pragma mark Submit Word Functions
 
 - (void) submitWord:(NSNotification*)notification
 {
@@ -499,6 +498,20 @@ typedef void(^CompletionBlockType)(void);
     
     LRCollectedEnvelope *blockA = [slotA currentBlock];
     LRCollectedEnvelope *blockB = [slotB currentBlock];
+    LRCollectedEnvelope *nonEmptyEnvelope = [blockA isLetterBlockPlaceHolder] ? blockB : blockA;
+    LRCollectedEnvelope *emptyEnvelope = [blockA isLetterBlockPlaceHolder] ? blockA : blockB;
+    
+    //Run the letter swapping animation
+    SKAction *rearrangeAnimation = [LREnvelopeAnimationBuilder rearrangementLetterShiftedSlotsFromPoint:nonEmptyEnvelope.parent.position toPoint:emptyEnvelope.parent.position];
+    LRCollectedEnvelope *animatedEnvelope = [nonEmptyEnvelope copy];
+    animatedEnvelope.position = nonEmptyEnvelope.parent.position;
+    [self addChild:animatedEnvelope];
+    [animatedEnvelope runAction:rearrangeAnimation completion:^{
+        [self removeChildrenInArray:@[animatedEnvelope]];
+        nonEmptyEnvelope.hidden = NO;
+    }];
+    
+    nonEmptyEnvelope.hidden = YES;
     
     [slotA setCurrentBlock:blockB];
     [slotB setCurrentBlock:blockA];
