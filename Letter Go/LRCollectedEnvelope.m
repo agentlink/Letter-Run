@@ -60,7 +60,7 @@ static const NSUInteger kMaxBounceCount = 2;
     self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.size];
     self.physicsBody.dynamic = YES;
     //#toy
-    self.physicsBody.restitution = .58;
+    self.physicsBody.restitution = .5;
     self.physicsBody.allowsRotation = NO;
     self.physicsBody.friction = 1;
     [[LRCollisionManager shared] setBitMasksForSprite:self];
@@ -87,7 +87,7 @@ static const NSUInteger kMaxBounceCount = 2;
     self.bounceCount++;
     //If the envelope has exceeded the bounce count...
     if (self.bounceCount == kMaxBounceCount) {
-        [self resetEnvelopeToBaseState];
+        [self stopEnvelopeBouncing];
         //And if it's a non-temporary envelope...
         if ([self.name isEqualToString: NAME_SPRITE_SECTION_LETTER_BLOCK]) {
             //...make it stop bouncing
@@ -106,10 +106,11 @@ static const NSUInteger kMaxBounceCount = 2;
     }
 }
 
-- (void) resetEnvelopeToBaseState
+- (void) stopEnvelopeBouncing
 {
     self.position = CGPointZero;
-    self.physicsBody.velocity = CGVectorMake(0, 0);
+    //Only stops vertical movement
+    self.physicsBody.velocity = CGVectorMake(self.physicsBody.velocity.dx, 0);
 }
 
 #pragma mark - Touch Functions
@@ -120,7 +121,7 @@ static const NSUInteger kMaxBounceCount = 2;
         CGPoint location = [touch locationInNode:[self parent]];
         if (CGRectContainsPoint(self.frame, location))
         {
-            [self resetEnvelopeToBaseState];
+            [self stopEnvelopeBouncing];
             self.physicsEnabled = NO;
             self.touchOrigin = location;
             self.movementDirection = MovementDirectionNone;
@@ -219,11 +220,8 @@ static const NSUInteger kMaxBounceCount = 2;
     //#toy
     CGFloat topOffScreenRatioForDeletion = .65;
     CGFloat maxY = self.size.height * topOffScreenRatioForDeletion;
-//    CGFloat bottomOffScreenRatioForDeletion = .4;
-//    CGFloat minY = -self.size.height * bottomOffScreenRatioForDeletion;
     
-    return (currentYPos > maxY/* || currentYPos < minY*/);
-
+    return (currentYPos > maxY);
 }
 
 - (NSString *)description

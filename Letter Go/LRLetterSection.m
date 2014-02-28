@@ -17,6 +17,7 @@
 #import "LREnvelopeAnimationBuilder.h"
 #import "LRCollisionManager.h"
 
+
 typedef NS_ENUM(NSUInteger, LetterSectionState)
 {
     LetterSectionStateNormal = 0,
@@ -45,7 +46,7 @@ typedef void(^CompletionBlockType)(void);
 @implementation LRLetterSection
 @synthesize bottomBarrier;
 
-#pragma mark - Set Up/Initialization
+#pragma mark - Set Up/Initialization -
 
 - (id) initWithSize:(CGSize)size
 {
@@ -126,7 +127,6 @@ typedef void(^CompletionBlockType)(void);
                                                                 size:barrierSize];
         horBarrier.position = barrierPos;
         horBarrier.zPosition = zPos_LetterSectionBarrier_Hor;
-        horBarrier.alpha = .5;
         [self addChild:horBarrier];
     }
 }
@@ -144,7 +144,7 @@ typedef void(^CompletionBlockType)(void);
     
 }
 
-#pragma mark - Private Properties
+#pragma mark - Private Properties -
 
 - (SKSpriteNode*) letterSection {
     if (!_letterSection) {
@@ -183,7 +183,7 @@ typedef void(^CompletionBlockType)(void);
     return _delayedLetters;
 }
 
-#pragma mark - LRLetterBlockControlDelegate Methods
+#pragma mark - LRLetterBlockControlDelegate Methods -
 #pragma mark Addition
 - (void) addEnvelopeToLetterSection:(id)envelope
 {
@@ -253,8 +253,9 @@ typedef void(^CompletionBlockType)(void);
     {
         //Get the proper slot to update
         LRLetterSlot *slotToUpdate = [self.letterSlots objectAtIndex:i];
-        SKAction *shiftAnimation = [LREnvelopeAnimationBuilder shiftLetterInDirection:kLeftDirection
-                                                                    withDelayForIndex:i - deletionIndex];
+        SKAction *shiftAnimation = [LREnvelopeAnimationBuilder deletionAnimationWithDelayForIndex:i - deletionIndex];
+        //Make sure all the envelopes have stopoped bouncing
+        [slotToUpdate stopChildEnvelopeBouncing];
         
         //And make a copy of the envelope to do the animation with
         LRCollectedEnvelope *slidingEnvelope = [slotToUpdate.currentBlock copy];
@@ -331,17 +332,36 @@ typedef void(^CompletionBlockType)(void);
 - (void) rearrangementHasFinishedWithLetterBlock:(id)letterBlock
 {
     self.touchedBlock.zPosition = zPos_SectionBlock_Unselected;
-
+    LRCollectedEnvelope *selectedEnvelope = (LRCollectedEnvelope*)letterBlock;
+    
     LRLetterSlot *newLocation = [self getPlaceHolderSlot];
+    [self runRearrangmentHasFinishedAnimationWithEnvelope:selectedEnvelope toSlot:newLocation];
+
+    selectedEnvelope.hidden = YES;
     newLocation.currentBlock = (LRCollectedEnvelope*)letterBlock;
+
     self.currentSlot = nil;
     self.touchedBlock = nil;
     [self updateSubmitButton];
 }
 
+- (void) runRearrangmentHasFinishedAnimationWithEnvelope:(LRCollectedEnvelope*)envelope toSlot:(LRLetterSlot*)destination
+{
+    LRCollectedEnvelope *animatedEnvelope = [envelope copy];
+    animatedEnvelope.name = kTempCollectedEnvelopeName;
+
+    CGPoint endPosition = destination.position;
+    SKAction *slideAction = [LREnvelopeAnimationBuilder rearrangementFinishedAnimationFromPoint:animatedEnvelope.position toPoint:endPosition];
+    SKAction *animationWithCompletion = [LREnvelopeAnimationBuilder actionWithCompletionBlock:slideAction block:^{
+        [self removeChildrenInArray:@[animatedEnvelope]];
+        destination.currentBlock.hidden = NO;
+     }];
+    [self addChild:animatedEnvelope];
+    [animatedEnvelope runAction:animationWithCompletion];
+}
 
 
-#pragma mark - Submit Word Functions
+#pragma mark Submit Word Functions
 
 - (void) submitWord:(NSNotification*)notification
 {
@@ -478,6 +498,20 @@ typedef void(^CompletionBlockType)(void);
     
     LRCollectedEnvelope *blockA = [slotA currentBlock];
     LRCollectedEnvelope *blockB = [slotB currentBlock];
+    LRCollectedEnvelope *nonEmptyEnvelope = [blockA isLetterBlockPlaceHolder] ? blockB : blockA;
+    LRCollectedEnvelope *emptyEnvelope = [blockA isLetterBlockPlaceHolder] ? blockA : blockB;
+    
+    //Run the letter swapping animation
+    SKAction *rearrangeAnimation = [LREnvelopeAnimationBuilder rearrangementLetterShiftedSlotsFromPoint:nonEmptyEnvelope.parent.position toPoint:emptyEnvelope.parent.position];
+    LRCollectedEnvelope *animatedEnvelope = [nonEmptyEnvelope copy];
+    animatedEnvelope.position = nonEmptyEnvelope.parent.position;
+    [self addChild:animatedEnvelope];
+    [animatedEnvelope runAction:rearrangeAnimation completion:^{
+        [self removeChildrenInArray:@[animatedEnvelope]];
+        nonEmptyEnvelope.hidden = NO;
+    }];
+    
+    nonEmptyEnvelope.hidden = YES;
     
     [slotA setCurrentBlock:blockB];
     [slotB setCurrentBlock:blockA];

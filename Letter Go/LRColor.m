@@ -48,7 +48,7 @@
 
 //Background object colors
 + (SKColor*) skyColor {
-    return [LRColor rgbColorWithRed:174.0 green:227.0 blue:248.0 alpha:1];
+    return [LRColor rgbColorWithRed:135.0 green:206.0 blue:250.0 alpha:1];
 }
 + (SKColor*) letterSectionColor {
     return [LRColor rgbColorWithRed:152.0 green:104.0 blue:63.0 alpha:1];

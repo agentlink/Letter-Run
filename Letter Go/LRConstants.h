@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Gabe Nicholas. All rights reserved.
 //
 
-typedef NS_ENUM(BOOL, kLRDireciton)
+typedef NS_ENUM(BOOL, kLRDirection)
 {
     //Remove none if it doesn't get used
     kLeftDirection = FALSE,
@@ -53,12 +53,9 @@ static const int kGameLoopResetValue            =       -1;
 #define NOTIFICATION_ENVELOPE_HIT_MAILMAN           @"Envelope hit the mailman"
 #define NOTIFICATION_REARRANGE_START                @"Started rearranging letters"
 #define NOTIFICATION_REARRANGE_FINISH               @"Finished rearranging letters"
-
 #define NOTIFICATION_RESET_DIFFICULTIES             @"Reset difficulty values"
 
-#define ACTION_ENVELOPE_DROP                        @"Dropping the envelope"
-#define ACTION_ENVELOPE_LOOP                        @"Run envelope loop"
-#define ACTION_ENVELOPE_FLING                       @"Fling the envelope"
+#define ACTION_REARRANGE_SWITCH                     @"Rearrange action shift to block "
 
 #define GAME_STATE_GAME_OVER                        @"Game over"
 #define GAME_STATE_NEW_GAME                         @"New game"
