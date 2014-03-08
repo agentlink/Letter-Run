@@ -46,6 +46,7 @@ static const float kHealthBarRightMostEdgePos = 0.0;
 
 - (void) update:(NSTimeInterval)currentTime
 {
+    [super update:currentTime];
     //If the game is over, do nothing
     if ([[LRGameStateManager shared] isGameOver] || [[LRGameStateManager shared] isGamePaused]) {
         return;
