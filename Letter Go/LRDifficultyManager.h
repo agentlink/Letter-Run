@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Gabe Nicholas. All rights reserved.
 //
 
-#import "LRGameUpdateDelegate.h"
+#import "LRGameStateDelegate.h"
 #import "LRDifficultyConstants.h"
 
 typedef enum  {
@@ -16,7 +16,7 @@ typedef enum  {
 } IncreaseStyle;
 
 
-@interface LRDifficultyManager : SKSpriteNode <LRGameUpdateDelegate>
+@interface LRDifficultyManager : SKSpriteNode <LRGameStateDelegate>
 
 + (LRDifficultyManager*) shared;
 

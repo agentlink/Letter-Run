@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Gabe Nicholas. All rights reserved.
 //
 
-#import "LRGameUpdateDelegate.h"
-@interface LRButton : SKSpriteNode <LRGameUpdateDelegate>
+#import "LRGameStateDelegate.h"
+@interface LRButton : SKSpriteNode <LRGameStateDelegate>
 
 @property (nonatomic, readonly) SEL actionTouchUpInside;
 @property (nonatomic, readonly) SEL actionTouchDown;

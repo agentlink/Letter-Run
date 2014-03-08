@@ -13,8 +13,8 @@
 #import "LRDifficultyManager.h"
 
 @interface LRGameStateManager ()
-@property BOOL gameIsOver;
-@property BOOL gameIsPaused;
+@property (nonatomic) BOOL gameIsOver;
+@property (nonatomic) BOOL gameIsPaused;
 @end
 @implementation LRGameStateManager
 
@@ -62,12 +62,14 @@ static LRGameStateManager *_shared = nil;
 
 - (void) newGame:(NSNotification*)notification
 {
+    LRGameScene *scene = (LRGameScene*)[self scene];
+    [scene setGameState:LRGameStateNewGame];
+    
     LRGamePlayLayer *gpl = [(LRGameScene*)[self scene] gamePlayLayer];
     if ([[[notification userInfo] objectForKey:@"devpause"] boolValue]) {
         [gpl.mainGameSection removeAllActions];
     }
     
-    gpl.mainGameSection.envelopeTouchEnabled = YES;
     [self clearBoard];
     [[LRDifficultyManager shared] setLevel:1];
     self.gameIsOver = FALSE;
@@ -79,13 +81,13 @@ static LRGameStateManager *_shared = nil;
     LRGamePlayLayer *gpl = [(LRGameScene*)[self scene] gamePlayLayer];
 
     //Remove all envelopes
-    NSMutableArray *fallingEnvelopeArray = [NSMutableArray array];
-    for (SKNode *child in [gpl.mainGameSection children])
-    {
-        if ([child.name isEqualToString:NAME_SPRITE_FALLING_ENVELOPE])
-            [fallingEnvelopeArray addObject:child];
-    }
-    [gpl.mainGameSection removeChildrenInArray:fallingEnvelopeArray];
+//    NSMutableArray *fallingEnvelopeArray = [NSMutableArray array];
+//    for (SKNode *child in [gpl.mainGameSection children])
+//    {
+//        if ([child.name isEqualToString:NAME_SPRITE_FALLING_ENVELOPE])
+//            [fallingEnvelopeArray addObject:child];
+//    }
+//    [gpl.mainGameSection removeChildrenInArray:fallingEnvelopeArray];
     
     //Clear the letter section
     [gpl.letterSection clearLetterSectionAnimated:NO];
@@ -94,7 +96,11 @@ static LRGameStateManager *_shared = nil;
 
 - (void) gameOver:(NSNotification*)notification
 {
+    LRGameScene *scene = (LRGameScene*)[self scene];
+    scene.gameState = LRGameStateGameOver;
+
     self.gameIsOver = TRUE;
+    
     NSLog(@"Game over");
     //Make all of the objects in the game non-touch responsive
     if (![[[notification userInfo] objectForKey:@"devpause"] isEqual: @(true)]) {
@@ -106,7 +112,6 @@ static LRGameStateManager *_shared = nil;
         __block LRGamePlayLayer *gpl = [(LRGameScene*)[self scene] gamePlayLayer];
         
         [gpl.pauseButton setIsEnabled:NO];
-        gpl.mainGameSection.envelopeTouchEnabled = NO;
         
         
         
@@ -178,5 +183,6 @@ static LRGameStateManager *_shared = nil;
     LRHealthSection *health = [[(LRGameScene*)[self scene] gamePlayLayer] healthSection];
     [health moveHealthByPercent:percent];
 }
+
 
 @end

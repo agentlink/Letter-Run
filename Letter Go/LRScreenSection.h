@@ -7,8 +7,8 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-#import "LRGameUpdateDelegate.h"
-@interface LRScreenSection : SKSpriteNode <LRGameUpdateDelegate>
+#import "LRGameStateDelegate.h"
+@interface LRScreenSection : SKSpriteNode <LRGameStateDelegate>
 
 - (id) initWithSize:(CGSize)size;
 /// Instantiate all the properties and sprites the section needs

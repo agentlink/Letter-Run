@@ -9,7 +9,7 @@
 #import "LRGameScene.h"
 #import "LRCollisionManager.h"
 
-#import "LRGameUpdateDelegate.h"
+#import "LRGameStateDelegate.h"
 #import "LRGameStateManager.h"
 
 @implementation LRGameScene
@@ -43,14 +43,28 @@
     [self.physicsWorld setContactDelegate:[LRCollisionManager shared]];
 }
 
-#pragma mark - Run Loop Functions
+- (void) setGameState:(LRGameState)gameState
+{
+    switch (gameState) {
+        case LRGameStateNewGame:
+            [self newGame];
+            break;
+        case LRGameStateGameOver:
+            [self gameOver];
+            break;
+        default:
+            break;
+    }
+}
+
+#pragma mark - LRGameStateDelegate methods
 
 - (void) update:(NSTimeInterval)currentTime
 {
     [self enumerateChildNodesWithName:@"//*" usingBlock:^(SKNode *node, BOOL *stop) {
-        if ([node conformsToProtocol:@protocol(LRGameUpdateDelegate)])
+        if ([node conformsToProtocol:@protocol(LRGameStateDelegate)])
         {
-            SKNode <LRGameUpdateDelegate> *updatingNode = (SKNode <LRGameUpdateDelegate> *)node;
+            SKNode <LRGameStateDelegate> *updatingNode = (SKNode <LRGameStateDelegate> *)node;
             if ([updatingNode respondsToSelector:@selector(update:)]) {
                 [updatingNode update:currentTime];
             }
@@ -58,6 +72,36 @@
     }];
 }
 
+- (void) gameOver
+{
+    [self _sendAllNodesGameDelegateSelector:@selector(gameStateGameOver)];
+}
+
+- (void) newGame
+{
+    [self _sendAllNodesGameDelegateSelector:@selector(gameStateNewGame)];
+}
+
+- (void) _sendAllNodesGameDelegateSelector:(SEL)selector
+{
+    [self enumerateChildNodesWithName:@"//*" usingBlock:^(SKNode *node, BOOL *stop) {
+        if ([node conformsToProtocol:@protocol(LRGameStateDelegate)])
+        {
+            SKNode <LRGameStateDelegate> *updatingNode = (SKNode <LRGameStateDelegate> *)node;
+            if ([updatingNode respondsToSelector:selector] && selector) {
+            
+//                 NOTE: this is replacing the line below (and supressing a warning)
+//                [updatingNode performSelector:selector];
+//                 Article here: http://bit.ly/191N5Fh
+                
+                IMP imp = [updatingNode methodForSelector:selector];
+                void (*func)(id, SEL) = (void *)imp;
+                func(updatingNode, selector);
+            }
+        }
+    }];
+
+}
 #pragma mark - Scene Getters
 + (LRGameScene*) scene
 {

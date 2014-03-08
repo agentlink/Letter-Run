@@ -136,7 +136,7 @@
 		0049695B17F8AC6400176F2D /* LRConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LRConstants.h; sourceTree = "<group>"; };
 		0049695D17F8B5B900176F2D /* LRLetterSlot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRLetterSlot.h; sourceTree = "<group>"; };
 		0049695E17F8B5B900176F2D /* LRLetterSlot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterSlot.m; sourceTree = "<group>"; };
-		0049696317FA0CB400176F2D /* LRGameUpdateDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRGameUpdateDelegate.h; sourceTree = "<group>"; };
+		0049696317FA0CB400176F2D /* LRGameStateDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRGameStateDelegate.h; sourceTree = "<group>"; };
 		0052356A187D0B9E00139CA1 /* Envelope_Normal_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Envelope_Normal_1.png; sourceTree = "<group>"; };
 		0052356B187D0B9E00139CA1 /* Envelope_Normal_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Envelope_Normal_2.png; sourceTree = "<group>"; };
 		0052356C187D0B9E00139CA1 /* Envelope_Normal_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Envelope_Normal_3.png; sourceTree = "<group>"; };
@@ -331,7 +331,7 @@
 		0049694E17F8A10700176F2D /* Interactive Objects */ = {
 			isa = PBXGroup;
 			children = (
-				0049696317FA0CB400176F2D /* LRGameUpdateDelegate.h */,
+				0049696317FA0CB400176F2D /* LRGameStateDelegate.h */,
 				00B43D90182834CF00261468 /* LRButton.h */,
 				00B43D91182834CF00261468 /* LRButton.m */,
 				0049695217F8A70B00176F2D /* Letter Blocks */,

@@ -424,7 +424,7 @@
 			<key>title</key>
 			<string>Initial Health Bar Drop Time (Seconds)</string>
 			<key>initialValue</key>
-			<integer>60</integer>
+			<integer>10</integer>
 			<key>max</key>
 			<integer>100</integer>
 			<key>min</key>

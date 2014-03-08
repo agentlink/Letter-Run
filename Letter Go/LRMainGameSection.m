@@ -22,6 +22,7 @@
 @property NSTimeInterval previousDropTime;
 @property BOOL newGameWillBegin;
 
+
 @end
 
 @implementation LRMainGameSection
@@ -65,13 +66,8 @@
 ///Returns whether or not the update loop should continue
 - (BOOL) updateWithTimeAndContinue:(NSTimeInterval)currentTime
 {
-    //If the game is over, clear the board and say a new game will begin
-    if ([[LRGameStateManager shared] isGameOver]) {
-        newGameWillBegin = TRUE;
-        return YES;
-    }
     //If the game has just been paused, set the time of pause to the current time
-    else if ([[LRGameStateManager shared] isGamePaused]) {
+    if ([[LRGameStateManager shared] isGamePaused]) {
         if (timeOfPause == kGameLoopResetValue)
             timeOfPause = currentTime;
         return NO;
@@ -85,7 +81,6 @@
     }
     //If a new game has just begun, immediately drop letters
     else if (newGameWillBegin) {
-        [self clearMainGameSection];
         nextDropTime = currentTime;
         newGameWillBegin = FALSE;
         return YES;
@@ -160,6 +155,7 @@
     }
 }
 
+#pragma mark - Delegate Methods -
 #pragma mark LRMovingBlockTouchDelegate Methods
 
 - (void) playerSelectedMovingBlock:(LRMovingBlock *)movingBlock
@@ -168,5 +164,17 @@
     [self removeMovingBlockFromScreen:movingBlock];
 }
 
+#pragma mark LRGameStateDelegate Methods
 
+- (void)gameStateNewGame
+{
+    self.envelopeTouchEnabled = YES;
+    [self clearMainGameSection];
+}
+
+- (void)gameStateGameOver
+{
+    self.envelopeTouchEnabled = NO;
+    newGameWillBegin = YES;
+}
 @end

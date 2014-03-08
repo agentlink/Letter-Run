@@ -125,7 +125,7 @@
 
 - (IBAction) newGame:(id)sender {
     NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:TRUE] forKey:@"devpause"];
-    [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_GAME_OVER object:nil userInfo:userInfo];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_GAME_OVER object:nil userInfo:userInfo];
     [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_NEW_GAME object:nil userInfo:userInfo];
     [self reloadValues];
 }
