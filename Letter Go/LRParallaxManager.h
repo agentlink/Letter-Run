@@ -6,10 +6,10 @@
 //  Copyright (c) 2013 Gabe Nicholas. All rights reserved.
 //
 
-#import "LRObject.h"
+#import "LRGameUpdateDelegate.h"
 #import "LRParallaxNode.h"
 
-@interface LRParallaxManager : LRObject
+@interface LRParallaxManager : SKSpriteNode <LRGameUpdateDelegate>
 
 enum {
     BackgroundIndex_Sky = 0,

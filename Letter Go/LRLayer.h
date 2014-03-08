@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Gabe Nicholas. All rights reserved.
 //
 
-#import "LRObject.h"
+#import "LRGameUpdateDelegate.h"
 
-@interface LRLayer : LRObject
+@interface LRLayer : SKSpriteNode <LRGameUpdateDelegate>
 
 @end

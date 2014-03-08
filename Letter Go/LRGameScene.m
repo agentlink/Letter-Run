@@ -9,7 +9,7 @@
 #import "LRGameScene.h"
 #import "LRCollisionManager.h"
 
-#import "LRObject.h"
+#import "LRGameUpdateDelegate.h"
 #import "LRGameStateManager.h"
 
 @implementation LRGameScene
@@ -47,13 +47,15 @@
 
 - (void) update:(NSTimeInterval)currentTime
 {
-    for (SKSpriteNode *child in [self children])
-    {
-        if ([child isKindOfClass:[LRObject class]])
+    [self enumerateChildNodesWithName:@"//*" usingBlock:^(SKNode *node, BOOL *stop) {
+        if ([node conformsToProtocol:@protocol(LRGameUpdateDelegate)])
         {
-            [(LRObject*)child update:currentTime];
+            SKNode <LRGameUpdateDelegate> *updatingNode = (SKNode <LRGameUpdateDelegate> *)node;
+            if ([updatingNode respondsToSelector:@selector(update:)]) {
+                [updatingNode update:currentTime];
+            }
         }
-    }
+    }];
 }
 
 #pragma mark - Scene Getters

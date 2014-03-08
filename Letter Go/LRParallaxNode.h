@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Gabe Nicholas. All rights reserved.
 //
 
-#import "LRObject.h"
+#import "LRGameUpdateDelegate.h"
 
-@interface LRParallaxNode : LRObject
+@interface LRParallaxNode : SKSpriteNode <LRGameUpdateDelegate>
 
 + (LRParallaxNode*) nodeWithImageNamed:(NSString*)imageName;
 - (SKSpriteNode *) repeatingSprite;

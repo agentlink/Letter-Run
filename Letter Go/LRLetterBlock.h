@@ -7,11 +7,11 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-#import "LRObject.h"
+#import "LRGameUpdateDelegate.h"
 
 
 
-@interface LRLetterBlock : LRObject
+@interface LRLetterBlock : SKSpriteNode <LRGameUpdateDelegate>
 
 ///The alphabetical letter represented by the envelope
 @property (nonatomic, strong) NSString *letter;

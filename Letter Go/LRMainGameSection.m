@@ -44,7 +44,6 @@
 #pragma mark Time Methods
 - (void) update:(NSTimeInterval)currentTime
 {
-    [super update:currentTime];
     //Check whether the update loop should continue
     BOOL continueGameLoop = [self updateWithTimeAndContinue:currentTime];
     

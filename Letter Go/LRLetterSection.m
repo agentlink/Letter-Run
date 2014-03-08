@@ -419,7 +419,6 @@ typedef void(^CompletionBlockType)(void);
 
 - (void) update:(NSTimeInterval)currentTime
 {
-    [super update:currentTime];
     if (self.touchedBlock) {
         [self checkRearrangement];
     }

@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Gabe Nicholas. All rights reserved.
 //
 
-#import "LRObject.h"
-@interface LRSubmitButton : LRObject
+#import "LRGameUpdateDelegate.h"
+@interface LRSubmitButton : SKSpriteNode <LRGameUpdateDelegate>
 
 @end

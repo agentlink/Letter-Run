@@ -1,5 +1,5 @@
 //
-//  LRObject.h
+//  LRGameUpdateDelegate.h
 //  Letter Go
 //
 //  Created by Gabriel Nicholas on 9/30/13.
@@ -8,8 +8,7 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-@interface LRObject : SKSpriteNode
-
+@protocol LRGameUpdateDelegate <NSObject>
+@optional
 - (void) update:(NSTimeInterval)currentTime;
-
 @end

@@ -9,7 +9,7 @@
 #import <SpriteKit/SpriteKit.h>
 #import "LRScreenSection.h"
 
-@interface LRHealthSection : LRScreenSection
+@interface LRHealthSection : LRScreenSection <LRGameUpdateDelegate>
 
 - (void) addScore: (int)wordScore;
 - (CGFloat) percentHealth;
