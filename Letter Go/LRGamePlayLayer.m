@@ -17,14 +17,13 @@
 @interface LRGamePlayLayer ()
 @property LRSlotManager *letterSlots;
 
-@property BOOL newGame;
 @property NSTimeInterval nextDropTime;
 @property NSTimeInterval pauseTime;
 
 @end
 
 @implementation LRGamePlayLayer
-@synthesize newGame, pauseTime, nextDropTime;
+@synthesize pauseTime, nextDropTime;
 
 #pragma mark - Set Up/Initialization
 
@@ -38,7 +37,6 @@
         
         self.pauseTime = kGameLoopResetValue;
         self.name = NAME_LAYER_GAME_PLAY;
-        newGame = TRUE;
         [self createLayerContent];
     }
     return self;
@@ -85,8 +83,6 @@
         _mainGameSection.letterAdditionDelegate = self.letterSection;
         _mainGameSection.zPosition = zPos_MainGameSection;
         _mainGameSection.color = [LRColor skyColor];
-//        _mainGameSection.alpha = 1.0;
-        
     }
     return _mainGameSection;
 }

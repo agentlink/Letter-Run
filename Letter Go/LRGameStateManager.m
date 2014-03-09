@@ -76,8 +76,6 @@ static LRGameStateManager *_shared = nil;
 
 - (void) newGame:(NSNotification*)notification
 {
-    [self.gameScene setGameState:LRGameStateNewGame];
-    
     LRGamePlayLayer *gpl = [self.gameScene gamePlayLayer];
     if ([[[notification userInfo] objectForKey:@"devpause"] boolValue]) {
         [gpl.mainGameSection removeAllActions];
@@ -85,8 +83,9 @@ static LRGameStateManager *_shared = nil;
     
     [self clearBoard];
     [[LRDifficultyManager shared] setLevel:1];
-    self.gameIsOver = FALSE;
     [gpl.pauseButton setIsEnabled:YES];
+    [self.gameScene setGameState:LRGameStateNewGame];
+
 }
 
 - (void) clearBoard
@@ -97,10 +96,7 @@ static LRGameStateManager *_shared = nil;
 
 - (void) gameOver:(NSNotification*)notification
 {
-    LRGameScene *scene = (LRGameScene*)[self scene];
-    scene.gameState = LRGameStateGameOver;
-
-    self.gameIsOver = TRUE;
+    self.gameScene.gameState = LRGameStateGameOver;
     
     NSLog(@"Game over");
     //Make all of the objects in the game non-touch responsive
@@ -169,7 +165,7 @@ static LRGameStateManager *_shared = nil;
 #pragma mark - Game State Properties
 
 - (BOOL) isGameOver {
-    return self.gameIsOver;
+    return self.gameScene.gameState == LRGameStateGameOver;
 }
 
 - (BOOL) isGamePaused {

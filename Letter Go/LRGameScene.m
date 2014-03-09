@@ -55,6 +55,7 @@
         default:
             break;
     }
+    _gameState = gameState;
 }
 
 #pragma mark - LRGameStateDelegate methods

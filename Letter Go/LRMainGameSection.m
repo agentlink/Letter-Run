@@ -53,8 +53,7 @@
         CGFloat timeDifference = currentTime - previousDropTime;
         [self shiftEnvelopesForTimeDifference:timeDifference];
         //If the time to drop the envelopes has come, drop'em and get the next drop time
-        if (nextDropTime <= currentTime &&
-            ![[LRGameStateManager shared] isGameOver]) {
+        if (nextDropTime <= currentTime && ![[LRGameStateManager shared] isGameOver] && ![[LRGameStateManager shared] isGamePaused]) {
             [self generateEnvelopes];
             float letterDropPeriod = [[LRDifficultyManager shared] letterDropPeriod];
             nextDropTime += letterDropPeriod;
@@ -85,7 +84,6 @@
         newGameWillBegin = FALSE;
         return YES;
     }
-    
     return YES;
 }
 
