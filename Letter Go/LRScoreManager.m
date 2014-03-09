@@ -37,8 +37,7 @@ static LRScoreManager *_shared = nil;
 {
     if (self = [super init])
     {
-        [self newGame];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newGame) name:GAME_STATE_NEW_GAME object:nil];
+        [self _resetScoreForNewGame];
     }
     return self;
 }
@@ -97,7 +96,7 @@ static LRScoreManager *_shared = nil;
 
 #pragma mark - Game State and Level Progression
 
-- (void) newGame {
+- (void) _resetScoreForNewGame {
     self.score = 0;
     scoreToNextLevel  = [[LRDifficultyManager shared] initialNextLevelScore];
     submittedWords = [NSMutableArray array];
@@ -127,6 +126,11 @@ static LRScoreManager *_shared = nil;
     
 }
 
+#pragma mark - LRGameStateDelegate Methods
 
+- (void) gameStateNewGame
+{
+    [self _resetScoreForNewGame];
+}
 @end
 

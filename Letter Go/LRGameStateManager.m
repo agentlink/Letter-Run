@@ -11,8 +11,10 @@
 
 #import "LRDictionaryChecker.h"
 #import "LRDifficultyManager.h"
+#import "LRScoreManager.h"
 
 @interface LRGameStateManager ()
+@property SKNode *managerParent;
 @property (nonatomic) BOOL gameIsOver;
 @property (nonatomic) BOOL gameIsPaused;
 @end
@@ -39,17 +41,26 @@ static LRGameStateManager *_shared = nil;
     {
         //Set up the dictionary
         [LRDictionaryChecker shared];
-        [self setUpNotifications];
+        [self _setUpNotifications];
+        [self _setUpManagerHierarchy];
     }
     return self;
 }
 
-- (void) setUpNotifications
+- (void) _setUpNotifications
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameOver:) name:GAME_STATE_GAME_OVER object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pauseGame) name:GAME_STATE_PAUSE_GAME object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(unpauseGame) name:GAME_STATE_CONTINUE_GAME object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newGame:) name:GAME_STATE_NEW_GAME object:nil];
+}
+
+- (void) _setUpManagerHierarchy
+{
+    //This function makes the manager children so they can use the LRGameStateDelegate methods
+    _managerParent = [SKNode new];
+    [_managerParent addChild:[LRScoreManager shared]];
+    [self addChild:_managerParent];
 }
 
 - (BOOL) isLetterSectionFull
@@ -79,19 +90,7 @@ static LRGameStateManager *_shared = nil;
 - (void) clearBoard
 {
     LRGamePlayLayer *gpl = [(LRGameScene*)[self scene] gamePlayLayer];
-
-    //Remove all envelopes
-//    NSMutableArray *fallingEnvelopeArray = [NSMutableArray array];
-//    for (SKNode *child in [gpl.mainGameSection children])
-//    {
-//        if ([child.name isEqualToString:NAME_SPRITE_FALLING_ENVELOPE])
-//            [fallingEnvelopeArray addObject:child];
-//    }
-//    [gpl.mainGameSection removeChildrenInArray:fallingEnvelopeArray];
-    
-    //Clear the letter section
     [gpl.letterSection clearLetterSectionAnimated:NO];
-    
 }
 
 - (void) gameOver:(NSNotification*)notification
