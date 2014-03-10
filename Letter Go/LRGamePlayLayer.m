@@ -73,7 +73,7 @@
     return _letterSection;
 }
 
-- (LRScreenSection*) mainGameSection {
+- (LRMainGameSection*) mainGameSection {
     if (!_mainGameSection) {
         CGFloat mainGameSectionXPos = 0;
         CGFloat mainGameSectionYPos = kSectionHeightLetterSection/2;
@@ -103,6 +103,17 @@
 {
     NSString *notifName = ([[LRGameStateManager shared] isGamePaused]) ? GAME_STATE_CONTINUE_GAME : GAME_STATE_PAUSE_GAME;
     [[NSNotificationCenter defaultCenter] postNotificationName:notifName object:nil];
+}
+
+#pragma mark - LRGameUpdateDelegate
+- (void)gameStateNewGame
+{
+    self.pauseButton.isEnabled = YES;
+}
+
+- (void)gameStateGameOver
+{
+    self.pauseButton.isEnabled = NO;
 }
 
 @end

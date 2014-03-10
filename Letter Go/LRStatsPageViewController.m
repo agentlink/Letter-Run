@@ -52,7 +52,7 @@
     NSNumberFormatter *nf = [[NSNumberFormatter alloc] init];
     [nf setNumberStyle:NSNumberFormatterDecimalStyle];
     [nf setMaximumFractionDigits:1];
-    NSNumber *health = [NSNumber numberWithFloat:[[LRGameStateManager shared] percentHealth]];
+    NSNumber *health = [NSNumber numberWithFloat:[[self _healthSection] percentHealth]];
 
     healthLabel.text = [NSString stringWithFormat:@"%@%@", [nf stringFromNumber: health], @"%"];
     [self loadWordScores];
@@ -85,7 +85,7 @@
     levelStepper.maximumValue = 100;
     levelStepper.stepValue = 1;
     
-    healthStepper.value = [[LRGameStateManager shared] percentHealth];
+    healthStepper.value = [[self _healthSection] percentHealth];
     healthStepper.minimumValue = 0.0;
     healthStepper.maximumValue = 100.0;
     healthStepper.stepValue = 10;
@@ -98,11 +98,17 @@
 
 - (IBAction)healthChanged:(UIStepper*)sender
 {
-    float healthDiff = sender.value - [[LRGameStateManager shared] percentHealth];
-    [[LRGameStateManager shared] moveHealthByPercent:healthDiff];
+    float healthDiff = sender.value - [[self _healthSection] percentHealth];
+    [[self _healthSection] moveHealthByPercent:healthDiff];
     [self reloadValues];
 
 }
+
+- (LRHealthSection*)_healthSection
+{
+    return [[[[LRGameStateManager shared] gameScene] gamePlayLayer] healthSection];
+}
+
 #pragma mark - Switches
 - (void) loadSwitchValues
 {

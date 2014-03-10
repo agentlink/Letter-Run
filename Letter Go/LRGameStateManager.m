@@ -16,14 +16,15 @@
 @interface LRGameStateManager ()
 
 @property SKNode *managerParent;
-@property (nonatomic) BOOL gameIsOver;
-@property (nonatomic) BOOL gameIsPaused;
 @property (nonatomic) LRGameScene *gameScene;
 @end
 
 @implementation LRGameStateManager
 
 static LRGameStateManager *_shared = nil;
+
+#pragma mark - Public Properties
+
 
 + (LRGameStateManager*) shared
 {
@@ -50,12 +51,27 @@ static LRGameStateManager *_shared = nil;
     return self;
 }
 
+- (BOOL) isGameOver {
+    return self.gameScene.gameState == LRGameStateGameOver;
+}
+
+- (BOOL) isGamePaused {
+    return self.gameScene.gameState == LRGameStatePauseGame;
+}
+
+- (LRGameScene*)gameScene
+{
+    return (LRGameScene*)[self scene];
+}
+
+#pragma mark - Set Up
+
 - (void) _setUpNotifications
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameOver:) name:GAME_STATE_GAME_OVER object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pauseGame) name:GAME_STATE_PAUSE_GAME object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(unpauseGame) name:GAME_STATE_CONTINUE_GAME object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newGame:) name:GAME_STATE_NEW_GAME object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_gameOver:) name:GAME_STATE_GAME_OVER object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_pauseGame) name:GAME_STATE_PAUSE_GAME object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_unpauseGame) name:GAME_STATE_CONTINUE_GAME object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_newGame:) name:GAME_STATE_NEW_GAME object:nil];
 }
 
 - (void) _setUpManagerHierarchy
@@ -66,35 +82,21 @@ static LRGameStateManager *_shared = nil;
     [self addChild:_managerParent];
 }
 
-- (BOOL) isLetterSectionFull
-{
-    LRLetterSection *letterSection = [[self.gameScene gamePlayLayer] letterSection];
-    return ([letterSection numLettersInSection] == kWordMaximumLetterCount);
-}
-
 #pragma mark - Game State Functions
 
-- (void) newGame:(NSNotification*)notification
+- (void) _newGame:(NSNotification*)notification
 {
     LRGamePlayLayer *gpl = [self.gameScene gamePlayLayer];
     if ([[[notification userInfo] objectForKey:@"devpause"] boolValue]) {
         [gpl.mainGameSection removeAllActions];
     }
     
-    [self clearBoard];
     [[LRDifficultyManager shared] setLevel:1];
-    [gpl.pauseButton setIsEnabled:YES];
     [self.gameScene setGameState:LRGameStateNewGame];
 
 }
 
-- (void) clearBoard
-{
-    LRGamePlayLayer *gpl = [self.gameScene gamePlayLayer];
-    [gpl.letterSection clearLetterSectionAnimated:NO];
-}
-
-- (void) gameOver:(NSNotification*)notification
+- (void) _gameOver:(NSNotification*)notification
 {
     self.gameScene.gameState = LRGameStateGameOver;
     
@@ -105,6 +107,40 @@ static LRGameStateManager *_shared = nil;
 
     }
 }
+
+- (void) _pauseGame
+{
+    self.gameScene.gameState = LRGameStatePauseGame;
+    LRGamePlayLayer *gpl = [self.gameScene gamePlayLayer];
+    gpl.paused = YES;
+    [gpl.mainGameSection enumerateChildNodesWithName:NAME_SPRITE_MOVING_ENVELOPE usingBlock:^(SKNode *node, BOOL *stop) {
+        [node setUserInteractionEnabled:NO];
+    }];
+    [gpl.letterSection setUserInteractionEnabled:NO];
+    
+    if (!gpl.devPause) {
+        gpl.devPause = [[LRDevPauseMenuVC alloc] init];
+        CGRect devPauseFrame = gpl.devPause.view.frame;
+        devPauseFrame.size = CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT);
+        gpl.devPause.view.frame = devPauseFrame;        
+        [gpl.scene.view addSubview:gpl.devPause.view];
+    }
+}
+
+- (void) _unpauseGame
+{
+    self.gameScene.gameState = LRGameStateUnpauseGame;
+    LRGamePlayLayer *gpl = [self.gameScene gamePlayLayer];
+    if (gpl.devPause) {
+        gpl.devPause = nil;
+    }
+    gpl.paused = NO;
+    [gpl.mainGameSection enumerateChildNodesWithName:NAME_SPRITE_MOVING_ENVELOPE usingBlock:^(SKNode *node, BOOL *stop) {
+        [node setUserInteractionEnabled:YES];
+    }];
+    [gpl.letterSection setUserInteractionEnabled:YES];
+}
+
 
 - (void) _showGameOverLabel
 {
@@ -126,68 +162,6 @@ static LRGameStateManager *_shared = nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_NEW_GAME object:self];
     }];
     [self runAction:[SKAction sequence:@[showLabel, delay, restartLevel]]];
-}
-
-- (void) pauseGame
-{
-    self.gameIsPaused = YES;
-    LRGamePlayLayer *gpl = [self.gameScene gamePlayLayer];
-    gpl.paused = YES;
-    [gpl.mainGameSection enumerateChildNodesWithName:NAME_SPRITE_MOVING_ENVELOPE usingBlock:^(SKNode *node, BOOL *stop) {
-        [node setUserInteractionEnabled:NO];
-    }];
-    [gpl.letterSection setUserInteractionEnabled:NO];
-    
-    if (!gpl.devPause) {
-        gpl.devPause = [[LRDevPauseMenuVC alloc] init];
-        CGRect devPauseFrame = gpl.devPause.view.frame;
-        devPauseFrame.size = CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT);
-        gpl.devPause.view.frame = devPauseFrame;        
-        [gpl.scene.view addSubview:gpl.devPause.view];
-    }
-}
-
-- (void) unpauseGame
-{
-    self.gameIsPaused = NO;
-    LRGamePlayLayer *gpl = [self.gameScene gamePlayLayer];
-    if (gpl.devPause) {
-        gpl.devPause = nil;
-    }
-    gpl.paused = NO;
-    [gpl.mainGameSection enumerateChildNodesWithName:NAME_SPRITE_MOVING_ENVELOPE usingBlock:^(SKNode *node, BOOL *stop) {
-        [node setUserInteractionEnabled:YES];
-    }];
-    [gpl.letterSection setUserInteractionEnabled:YES];
-
-}
-
-#pragma mark - Game State Properties
-
-- (BOOL) isGameOver {
-    return self.gameScene.gameState == LRGameStateGameOver;
-}
-
-- (BOOL) isGamePaused {
-    return self.gameIsPaused;
-}
-
-#pragma mark - Health Functions
-- (CGFloat) percentHealth
-{
-    LRHealthSection *health = [[self.gameScene gamePlayLayer] healthSection];
-    return [health percentHealth];    
-}
-
-- (void) moveHealthByPercent:(CGFloat)percent
-{
-    LRHealthSection *health = [[self.gameScene gamePlayLayer] healthSection];
-    [health moveHealthByPercent:percent];
-}
-
-- (LRGameScene*)gameScene
-{
-    return (LRGameScene*)[self scene];
 }
 
 @end

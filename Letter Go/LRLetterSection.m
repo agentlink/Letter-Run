@@ -614,6 +614,16 @@ typedef void(^CompletionBlockType)(void);
     }
 }
 
+#pragma mark - LRGameStateDelegate Methods
+- (void)gameStateGameOver
+{
+    self.userInteractionEnabled = NO;
+}
+
+- (void)gameStateNewGame
+{
+    [self clearLetterSectionAnimated:NO];
+}
 //Debug function
 /*
 - (void) setCurrentSlot:(LRLetterSlot *)currentSlot
