@@ -111,11 +111,8 @@ static LRGameStateManager *_shared = nil;
 - (void) _pauseGame
 {
     self.gameScene.gameState = LRGameStatePauseGame;
+    self.gameScene.paused = YES;
     LRGamePlayLayer *gpl = [self.gameScene gamePlayLayer];
-    gpl.paused = YES;
-    [gpl.mainGameSection enumerateChildNodesWithName:NAME_SPRITE_MOVING_ENVELOPE usingBlock:^(SKNode *node, BOOL *stop) {
-        [node setUserInteractionEnabled:NO];
-    }];
     [gpl.letterSection setUserInteractionEnabled:NO];
     
     if (!gpl.devPause) {
@@ -130,14 +127,11 @@ static LRGameStateManager *_shared = nil;
 - (void) _unpauseGame
 {
     self.gameScene.gameState = LRGameStateUnpauseGame;
+    self.gameScene.paused = NO;
     LRGamePlayLayer *gpl = [self.gameScene gamePlayLayer];
     if (gpl.devPause) {
         gpl.devPause = nil;
     }
-    gpl.paused = NO;
-    [gpl.mainGameSection enumerateChildNodesWithName:NAME_SPRITE_MOVING_ENVELOPE usingBlock:^(SKNode *node, BOOL *stop) {
-        [node setUserInteractionEnabled:YES];
-    }];
     [gpl.letterSection setUserInteractionEnabled:YES];
 }
 

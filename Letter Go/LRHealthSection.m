@@ -27,13 +27,6 @@ static const float kHealthBarRightMostEdgePos = 0.0;
     //The color will be replaced by a health bar sprite
     [self addChild:self.healthBar];
     self.initialTime = kGameLoopResetValue;
-    [self setUpNotifications];
-
-}
-
-- (void) setUpNotifications
-{
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(unpauseGame) name:GAME_STATE_CONTINUE_GAME object:nil];
 }
 
 - (SKSpriteNode*) healthBar {
@@ -41,31 +34,6 @@ static const float kHealthBarRightMostEdgePos = 0.0;
         _healthBar = [SKSpriteNode spriteNodeWithColor:[LRColor healthBarColor] size:self.size];
     }
     return _healthBar;
-}
-
-#pragma - LRGameStateDelegate Methods
-
-- (void) update:(NSTimeInterval)currentTime
-{
-    //If the game is over, do nothing
-    if ([[LRGameStateManager shared] isGameOver] || [[LRGameStateManager shared] isGamePaused]) {
-        return;
-    }
-    //If the health bar has been toggled off, reset it
-    else if (![[LRDifficultyManager shared] healthBarFalls]) {
-        self.initialTime = kGameLoopResetValue;
-    }
-    else if (self.initialTime == kGameLoopResetValue) {
-        self.initialTime = currentTime;
-    }
-    else {
-        [self shiftHealthBarWithTimeInterval:currentTime];
-    }
-}
-
-- (void)gameStateNewGame
-{
-    [self _restartHealthBar];
 }
 
 /// This function animates the health bar
@@ -132,7 +100,32 @@ static const float kHealthBarRightMostEdgePos = 0.0;
     self.healthBar.position = CGPointMake(newXPos, self.healthBar.position.y);
 }
 
-- (void) unpauseGame {
+#pragma - LRGameStateDelegate Methods
+
+- (void) update:(NSTimeInterval)currentTime
+{
+    //If the game is over, do nothing
+    if ([[LRGameStateManager shared] isGameOver] || [[LRGameStateManager shared] isGamePaused]) {
+        return;
+    }
+    //If the health bar has been toggled off, reset it
+    else if (![[LRDifficultyManager shared] healthBarFalls]) {
+        self.initialTime = kGameLoopResetValue;
+    }
+    else if (self.initialTime == kGameLoopResetValue) {
+        self.initialTime = currentTime;
+    }
+    else {
+        [self shiftHealthBarWithTimeInterval:currentTime];
+    }
+}
+
+- (void)gameStateNewGame
+{
+    [self _restartHealthBar];
+}
+- (void)gameStateUnpaused:(NSTimeInterval)currentTime
+{
     self.initialTime = kGameLoopResetValue;
 }
 

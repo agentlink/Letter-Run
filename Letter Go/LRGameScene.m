@@ -66,11 +66,22 @@
         if ([node conformsToProtocol:@protocol(LRGameStateDelegate)])
         {
             SKNode <LRGameStateDelegate> *updatingNode = (SKNode <LRGameStateDelegate> *)node;
-            if ([updatingNode respondsToSelector:@selector(update:)]) {
+            if (self.gameState == LRGameStatePauseGame) {
+                if ([updatingNode respondsToSelector:@selector(gameStatePaused:)])
+                    [updatingNode gameStatePaused:currentTime];
+            }
+            else if (self.gameState == LRGameStateUnpauseGame) {
+                if ([updatingNode respondsToSelector:@selector(gameStateUnpaused:)])
+                    [updatingNode gameStateUnpaused:currentTime];
+            }
+            else if ([updatingNode respondsToSelector:@selector(update:)]) {
                 [updatingNode update:currentTime];
             }
         }
     }];
+    if (self.gameState == LRGameStateUnpauseGame) {
+        self.gameState = LRGameStatePlaying;
+    }
 }
 
 - (void) gameOver
