@@ -33,7 +33,6 @@ static const float kHealthBarRightMostEdgePos = 0.0;
 
 - (void) setUpNotifications
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restartHealthBar) name:GAME_STATE_NEW_GAME object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(unpauseGame) name:GAME_STATE_CONTINUE_GAME object:nil];
 }
 
@@ -43,6 +42,8 @@ static const float kHealthBarRightMostEdgePos = 0.0;
     }
     return _healthBar;
 }
+
+#pragma - LRGameStateDelegate Methods
 
 - (void) update:(NSTimeInterval)currentTime
 {
@@ -60,7 +61,11 @@ static const float kHealthBarRightMostEdgePos = 0.0;
     else {
         [self shiftHealthBarWithTimeInterval:currentTime];
     }
-    
+}
+
+- (void)gameStateNewGame
+{
+    [self _restartHealthBar];
 }
 
 /// This function animates the health bar
@@ -107,7 +112,7 @@ static const float kHealthBarRightMostEdgePos = 0.0;
     return wordDistance;
 }
 
-- (void) restartHealthBar
+- (void) _restartHealthBar
 {
     self.healthBar.position = CGPointMake(0, self.healthBar.position.y);
     self.initialTime = kGameLoopResetValue;

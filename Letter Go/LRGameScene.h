@@ -9,11 +9,13 @@
 #import <SpriteKit/SpriteKit.h>
 #import "LRBackgroundLayer.h"
 #import "LRGamePlayLayer.h"
+#import "LRGameStateDelegate.h"
 
 @interface LRGameScene : SKScene
 
 @property LRBackgroundLayer *backgroundLayer;
 @property LRGamePlayLayer *gamePlayLayer;
+@property (nonatomic) LRGameState gameState;
 
 + (LRGameScene*) scene;
 - (CGRect) window;

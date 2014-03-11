@@ -22,6 +22,7 @@
 @property NSTimeInterval previousDropTime;
 @property BOOL newGameWillBegin;
 
+
 @end
 
 @implementation LRMainGameSection
@@ -44,7 +45,6 @@
 #pragma mark Time Methods
 - (void) update:(NSTimeInterval)currentTime
 {
-    [super update:currentTime];
     //Check whether the update loop should continue
     BOOL continueGameLoop = [self updateWithTimeAndContinue:currentTime];
     
@@ -53,8 +53,7 @@
         CGFloat timeDifference = currentTime - previousDropTime;
         [self shiftEnvelopesForTimeDifference:timeDifference];
         //If the time to drop the envelopes has come, drop'em and get the next drop time
-        if (nextDropTime <= currentTime &&
-            ![[LRGameStateManager shared] isGameOver]) {
+        if (nextDropTime <= currentTime && ![[LRGameStateManager shared] isGameOver] && ![[LRGameStateManager shared] isGamePaused]) {
             [self generateEnvelopes];
             float letterDropPeriod = [[LRDifficultyManager shared] letterDropPeriod];
             nextDropTime += letterDropPeriod;
@@ -66,13 +65,8 @@
 ///Returns whether or not the update loop should continue
 - (BOOL) updateWithTimeAndContinue:(NSTimeInterval)currentTime
 {
-    //If the game is over, clear the board and say a new game will begin
-    if ([[LRGameStateManager shared] isGameOver]) {
-        newGameWillBegin = TRUE;
-        return YES;
-    }
     //If the game has just been paused, set the time of pause to the current time
-    else if ([[LRGameStateManager shared] isGamePaused]) {
+    if ([[LRGameStateManager shared] isGamePaused]) {
         if (timeOfPause == kGameLoopResetValue)
             timeOfPause = currentTime;
         return NO;
@@ -86,12 +80,10 @@
     }
     //If a new game has just begun, immediately drop letters
     else if (newGameWillBegin) {
-        [self clearMainGameSection];
         nextDropTime = currentTime;
         newGameWillBegin = FALSE;
         return YES;
     }
-    
     return YES;
 }
 
@@ -161,6 +153,7 @@
     }
 }
 
+#pragma mark - Delegate Methods -
 #pragma mark LRMovingBlockTouchDelegate Methods
 
 - (void) playerSelectedMovingBlock:(LRMovingBlock *)movingBlock
@@ -169,5 +162,17 @@
     [self removeMovingBlockFromScreen:movingBlock];
 }
 
+#pragma mark LRGameStateDelegate Methods
 
+- (void)gameStateNewGame
+{
+    self.envelopeTouchEnabled = YES;
+    [self clearMainGameSection];
+}
+
+- (void)gameStateGameOver
+{
+    self.envelopeTouchEnabled = NO;
+    newGameWillBegin = YES;
+}
 @end

@@ -7,6 +7,7 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import "LRGameStateDelegate.h"
 
 @interface LRGameStateManager : SKNode
 

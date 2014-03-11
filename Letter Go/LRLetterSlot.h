@@ -6,10 +6,10 @@
 //  Copyright (c) 2013 Gabe Nicholas. All rights reserved.
 //
 
-#import <SpriteKit/SpriteKit.h>
+#import "LRGameStateDelegate.h"
 #import "LRCollectedEnvelope.h"
 
-@interface LRLetterSlot : SKSpriteNode
+@interface LRLetterSlot : SKSpriteNode <LRGameStateDelegate>
 
 @property (nonatomic, strong) LRCollectedEnvelope *currentBlock;
 @property (nonatomic) NSInteger index;

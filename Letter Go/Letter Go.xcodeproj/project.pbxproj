@@ -21,7 +21,6 @@
 		0049695517F8A75B00176F2D /* LRLetterBlockGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049695417F8A75B00176F2D /* LRLetterBlockGenerator.m */; };
 		0049695917F8AB5D00176F2D /* LRCollisionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049695817F8AB5D00176F2D /* LRCollisionManager.m */; };
 		0049695F17F8B5B900176F2D /* LRLetterSlot.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049695E17F8B5B900176F2D /* LRLetterSlot.m */; };
-		0049696517FA0CB400176F2D /* LRObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049696417FA0CB400176F2D /* LRObject.m */; };
 		0052356E187D0B9E00139CA1 /* Envelope_Normal_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 0052356A187D0B9E00139CA1 /* Envelope_Normal_1.png */; };
 		0052356F187D0B9E00139CA1 /* Envelope_Normal_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0052356B187D0B9E00139CA1 /* Envelope_Normal_2.png */; };
 		00523570187D0B9E00139CA1 /* Envelope_Normal_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 0052356C187D0B9E00139CA1 /* Envelope_Normal_3.png */; };
@@ -137,8 +136,7 @@
 		0049695B17F8AC6400176F2D /* LRConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LRConstants.h; sourceTree = "<group>"; };
 		0049695D17F8B5B900176F2D /* LRLetterSlot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRLetterSlot.h; sourceTree = "<group>"; };
 		0049695E17F8B5B900176F2D /* LRLetterSlot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterSlot.m; sourceTree = "<group>"; };
-		0049696317FA0CB400176F2D /* LRObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRObject.h; sourceTree = "<group>"; };
-		0049696417FA0CB400176F2D /* LRObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRObject.m; sourceTree = "<group>"; };
+		0049696317FA0CB400176F2D /* LRGameStateDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRGameStateDelegate.h; sourceTree = "<group>"; };
 		0052356A187D0B9E00139CA1 /* Envelope_Normal_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Envelope_Normal_1.png; sourceTree = "<group>"; };
 		0052356B187D0B9E00139CA1 /* Envelope_Normal_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Envelope_Normal_2.png; sourceTree = "<group>"; };
 		0052356C187D0B9E00139CA1 /* Envelope_Normal_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Envelope_Normal_3.png; sourceTree = "<group>"; };
@@ -333,8 +331,7 @@
 		0049694E17F8A10700176F2D /* Interactive Objects */ = {
 			isa = PBXGroup;
 			children = (
-				0049696317FA0CB400176F2D /* LRObject.h */,
-				0049696417FA0CB400176F2D /* LRObject.m */,
+				0049696317FA0CB400176F2D /* LRGameStateDelegate.h */,
 				00B43D90182834CF00261468 /* LRButton.h */,
 				00B43D91182834CF00261468 /* LRButton.m */,
 				0049695217F8A70B00176F2D /* Letter Blocks */,
@@ -867,7 +864,6 @@
 				A88A4B371887308C00BC9905 /* LRMainGameSection.m in Sources */,
 				000BC16018203F2A00BEC563 /* LRParallaxNode_SmallSprite.m in Sources */,
 				000BC154181C705D00BEC563 /* LRParallaxNode.m in Sources */,
-				0049696517FA0CB400176F2D /* LRObject.m in Sources */,
 				00CDF17F17F4799B003065F6 /* LRBackgroundLayer.m in Sources */,
 				A88A4B3B188734E400BC9905 /* LRMovingBlock.m in Sources */,
 				0049695F17F8B5B900176F2D /* LRLetterSlot.m in Sources */,

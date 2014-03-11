@@ -7,14 +7,16 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import "LRGameStateDelegate.h"
 
-@interface LRScoreManager : SKNode
+@interface LRScoreManager : SKNode <LRGameStateDelegate>
 
 /// An array of the words that have bee submitted this round in teh order they were submitted
 @property (readonly) NSMutableArray *submittedWords;
-
 /// The score required for the palyer to reach the next level
 @property (readonly) int scoreToNextLevel;
+/// Returns the player's current score
+@property (readonly) int score;
 
 ///The shared instance of the score manager
 + (LRScoreManager*) shared;
@@ -31,9 +33,5 @@
  @return The score for the word
  */
 + (int) scoreForWordWithDict:(NSDictionary*)wordDict;
-
-/// Returns the player's current score
-- (int) score;
-
 
 @end

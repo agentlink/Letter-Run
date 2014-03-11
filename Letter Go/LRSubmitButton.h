@@ -6,8 +6,7 @@
 //  Copyright (c) 2013 Gabe Nicholas. All rights reserved.
 //
 
-#import <SpriteKit/SpriteKit.h>
-
-@interface LRSubmitButton : SKSpriteNode
+#import "LRGameStateDelegate.h"
+@interface LRSubmitButton : SKSpriteNode <LRGameStateDelegate>
 
 @end
