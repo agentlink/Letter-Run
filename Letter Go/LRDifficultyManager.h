@@ -18,7 +18,7 @@ typedef enum  {
 
 @interface LRDifficultyManager : SKSpriteNode <LRGameStateDelegate>
 
-+ (LRDifficultyManager*) shared;
++ (LRDifficultyManager *)shared;
 
 - (int) loveLetterProbability;
 - (CGFloat) letterDropPeriod;

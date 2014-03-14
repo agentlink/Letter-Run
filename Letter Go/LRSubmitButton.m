@@ -9,8 +9,6 @@
 #import "LRSubmitButton.h"
 #import "LRGameStateManager.h"
 
-static const CGFloat kSubmitButtonFontSize = 12;
-
 @interface LRSubmitButton ()
 @property (strong, nonatomic) SKLabelNode *label;
 @end
@@ -28,7 +26,7 @@ static const CGFloat kSubmitButtonFontSize = 12;
     return self;
 }
 
-- (void) setUserInteractionEnabled:(BOOL)userInteractionEnabled
+- (void)setUserInteractionEnabled:(BOOL)userInteractionEnabled
 {
     [super setUserInteractionEnabled:userInteractionEnabled];
     //Update the color
@@ -37,7 +35,7 @@ static const CGFloat kSubmitButtonFontSize = 12;
 
 #pragma mark - Private Functions
 
-- (SKLabelNode*) label
+- (SKLabelNode *)label
 {
     if (!_label) {
         UIFont *labelFont = [LRFont submitButtonFont];
@@ -51,7 +49,7 @@ static const CGFloat kSubmitButtonFontSize = 12;
 
 #pragma mark - Touch
 
-- (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     for (UITouch *touch in touches)
     {

@@ -45,7 +45,7 @@ static NSString* const kLetterQ = @"Q";
     return self;
 }
 
-- (void) setUpProbabilityDictionaries
+- (void)setUpProbabilityDictionaries
 {
     //Load general probability dictionary
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"LetterProbabilities" ofType:@"plist"];
@@ -69,7 +69,7 @@ static NSString* const kLetterQ = @"Q";
 
 static LRLetterGenerator *_shared = nil;
 
-+ (LRLetterGenerator*) shared
++ (LRLetterGenerator *)shared
 {
     //This @synchronized line is for multithreading
     @synchronized (self)
@@ -82,7 +82,7 @@ static LRLetterGenerator *_shared = nil;
 	return _shared;
 }
 
-- (NSString*)generateLetter
+- (NSString *)generateLetter
 {
     BOOL forceConsonant = FALSE;
     BOOL forceVowel = FALSE;
@@ -163,24 +163,24 @@ static LRLetterGenerator *_shared = nil;
     return letter;
 }
 
-+ (NSCharacterSet*) consonantSet
++ (NSCharacterSet *)consonantSet
 {
     return  [NSCharacterSet characterSetWithCharactersInString:@"BCDFGHJKLMNPQRSTVWXYZ"];
 }
 
-+ (NSCharacterSet*) vowelSet
++ (NSCharacterSet *)vowelSet
 {
     return [NSCharacterSet characterSetWithCharactersInString:@"AEIOU"];
 }
 
 #pragma mark - Private Functions
 
-- (NSString*) generateRandomLetter {
+- (NSString *)generateRandomLetter {
     int letterLocation = arc4random()%[self.letterProbabilities count];
     return [self.letterProbabilities objectAtIndex:letterLocation];
 }
 
-- (NSString*)generateVowel
+- (NSString *)generateVowel
 {
     NSString *letter = [self generateRandomLetter];
     while ([self letterTypeForString:letter] == LetterTypeConsonant)
@@ -188,7 +188,7 @@ static LRLetterGenerator *_shared = nil;
     return letter;
 }
 
-- (NSString*)generateConsonant
+- (NSString *)generateConsonant
 {
     NSString *letter = [self generateRandomLetter];
     while ([self letterTypeForString:letter] == LetterTypeVowel)
@@ -196,7 +196,7 @@ static LRLetterGenerator *_shared = nil;
     return letter;
 }
 
-- (LetterType) letterTypeForString:(NSString*)letter
+- (LetterType) letterTypeForString:(NSString *)letter
 {
     //If there is more than one letter...
     if ([letter length] > 1) {

@@ -19,12 +19,12 @@
     return self;
 }
 
-- (id) initWithFrame:(CGRect)frame andDictionary:(NSDictionary*)dict {
+- (id) initWithFrame:(CGRect)frame andDictionary:(NSDictionary *)dict {
     if (self = [super initWithFrame:frame]) {
     }
     return self;
 }
-- (void) reloadValue {
+- (void)reloadValue {
     NSAssert(0, @"Error: reloadValue should be overwritten");
 }
 

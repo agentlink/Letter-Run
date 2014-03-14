@@ -18,7 +18,7 @@
 @implementation LRIncreaseStyleSelector
 @synthesize variableTitle, segControl;
 
-- (id)initWithFrame:(CGRect)frame andDictionary:(NSDictionary*)dict
+- (id)initWithFrame:(CGRect)frame andDictionary:(NSDictionary *)dict
 {
 
     self = [super initWithFrame:frame andDictionary:dict];
@@ -32,7 +32,7 @@
     return self;
 }
 
-- (void) setUpSegments
+- (void)setUpSegments
 {
     segControl = [[UISegmentedControl alloc] initWithItems:self.segmentTitles];
     segControl.frame = CGRectMake(0, variableTitle.frame.size.height, self.frame.size.width, self.frame.size.height - variableTitle.frame.size.height);
@@ -41,7 +41,7 @@
     [self addSubview:segControl];
 }
 
-- (void) setUpLabel
+- (void)setUpLabel
 {
     variableTitle = [[UILabel alloc] init];
     variableTitle.font = [UIFont systemFontOfSize:10];
@@ -52,16 +52,16 @@
     [self addSubview:variableTitle];
 }
 
-- (int) indexOfSegmentFromTitle:(NSString*)title {
+- (int) indexOfSegmentFromTitle:(NSString *)title {
     return (int)[self.segmentTitles indexOfObject:title];
 }
 
-- (void) reloadValue {
+- (void)reloadValue {
     IncreaseStyle style = (IncreaseStyle)[[NSUserDefaults standardUserDefaults] integerForKey:[self.dataDict objectForKey:USER_DEFAULT_KEY]];
     [segControl setSelectedSegmentIndex:style];
 }
 
-- (void) updatedValue {
+- (void)updatedValue {
     NSString *notificationName = [self.dataDict objectForKey:USER_DEFAULT_KEY];
     NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithFloat:segControl.selectedSegmentIndex], [self.dataDict objectForKey:@"type"]] forKeys:@[notificationName, @"type"]];
     [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:userInfo];

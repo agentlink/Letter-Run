@@ -22,7 +22,7 @@
 @synthesize submittedWords, scoreToNextLevel;
 static LRScoreManager *_shared = nil;
 
-+ (LRScoreManager*) shared
++ (LRScoreManager *)shared
 {
     @synchronized (self)
     {
@@ -44,7 +44,7 @@ static LRScoreManager *_shared = nil;
 
 #pragma mark - Word Submission + Score Calculation
 
-- (int) submitWord:(NSDictionary*)wordDict
+- (int) submitWord:(NSDictionary *)wordDict
 {
     
     //Add to the score
@@ -61,7 +61,7 @@ static LRScoreManager *_shared = nil;
     return wordScore;
 }
 
-+ (int) scoreForWordWithDict:(NSDictionary*)wordDict
++ (int) scoreForWordWithDict:(NSDictionary *)wordDict
 {
     NSString *word = [wordDict objectForKey:@"word"];
     NSSet *loveLetterIndices = [wordDict objectForKey:@"loveLetters"];
@@ -96,13 +96,13 @@ static LRScoreManager *_shared = nil;
 
 #pragma mark - Game State and Level Progression
 
-- (void) _resetScoreForNewGame {
+- (void)_resetScoreForNewGame {
     self.score = 0;
     scoreToNextLevel  = [[LRDifficultyManager shared] initialNextLevelScore];
     submittedWords = [NSMutableArray array];
 }
 
-- (void) progressLevel
+- (void)progressLevel
 {
     int level = [[LRDifficultyManager shared] level];
     [[LRDifficultyManager shared] setLevel:level + 1];
@@ -128,7 +128,7 @@ static LRScoreManager *_shared = nil;
 
 #pragma mark - LRGameStateDelegate Methods
 
-- (void) gameStateNewGame
+- (void)gameStateNewGame
 {
     [self _resetScoreForNewGame];
 }

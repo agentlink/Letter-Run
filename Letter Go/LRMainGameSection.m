@@ -19,14 +19,14 @@
 
 @property NSTimeInterval nextDropTime;
 @property NSTimeInterval timeOfPause;
-@property NSTimeInterval previousDropTime;
+@property NSTimeInterval previousRunLoopTime;
 @property BOOL newGameWillBegin;
 
 
 @end
 
 @implementation LRMainGameSection
-@synthesize nextDropTime, timeOfPause, previousDropTime, newGameWillBegin;
+@synthesize nextDropTime, timeOfPause, previousRunLoopTime, newGameWillBegin;
 #pragma mark - Initialization Methods -
 
 - (id) initWithSize:(CGSize)size
@@ -36,6 +36,7 @@
         self.envelopesOnScreen = [NSMutableArray new];
         self.letterSlotManager = [LRSlotManager new];
         self.envelopeTouchEnabled = YES;
+        self.newGameWillBegin = YES;
     }
     return self;
 }
@@ -43,52 +44,36 @@
 
 #pragma mark - Update Loop Methods -
 #pragma mark Time Methods
-- (void) update:(NSTimeInterval)currentTime
+- (void)update:(NSTimeInterval)currentTime
 {
     //Check whether the update loop should continue
-    BOOL continueGameLoop = [self updateWithTimeAndContinue:currentTime];
-    
-    if (continueGameLoop) {
-        //Shift the envelopes...
-        CGFloat timeDifference = currentTime - previousDropTime;
+    if (newGameWillBegin) {
+        nextDropTime = currentTime;
+        newGameWillBegin = FALSE;
+    }
+
+    //Shift the envelopes...
+    if (previousRunLoopTime != kGameLoopResetValue) {
+        CGFloat timeDifference = currentTime - previousRunLoopTime;
         [self shiftEnvelopesForTimeDifference:timeDifference];
-        //If the time to drop the envelopes has come, drop'em and get the next drop time
-        if (nextDropTime <= currentTime && ![[LRGameStateManager shared] isGameOver] && ![[LRGameStateManager shared] isGamePaused]) {
+        if ([self _shouldGenerateEnvelopesForTime:currentTime]) {
             [self generateEnvelopes];
             float letterDropPeriod = [[LRDifficultyManager shared] letterDropPeriod];
             nextDropTime += letterDropPeriod;
         }
     }
-    previousDropTime = currentTime;
+    previousRunLoopTime = currentTime;
 }
 
-///Returns whether or not the update loop should continue
-- (BOOL) updateWithTimeAndContinue:(NSTimeInterval)currentTime
+- (BOOL)_shouldGenerateEnvelopesForTime:(NSTimeInterval)currentTime
 {
-    //If the game has just been paused, set the time of pause to the current time
-    if ([[LRGameStateManager shared] isGamePaused]) {
-        if (timeOfPause == kGameLoopResetValue)
-            timeOfPause = currentTime;
-        return NO;
-    }
-    //If the game has been unpaused, use the time of pause to calculate the new next drop time
-    else if (timeOfPause != kGameLoopResetValue) {
-        NSTimeInterval lengthOfPauseTime = currentTime - timeOfPause;
-        nextDropTime += lengthOfPauseTime;
-        timeOfPause = kGameLoopResetValue;
-        return YES;
-    }
-    //If a new game has just begun, immediately drop letters
-    else if (newGameWillBegin) {
-        nextDropTime = currentTime;
-        newGameWillBegin = FALSE;
-        return YES;
-    }
-    return YES;
+    return (nextDropTime <= currentTime &&
+            ![[LRGameStateManager shared] isGameOver] &&
+            ![[LRGameStateManager shared] isGamePaused]);
 }
 
 #pragma mark Letter Addition and Removal
-- (void) generateEnvelopes
+- (void)generateEnvelopes
 {
     int i = 0;
     for (i = 0; i < [[LRDifficultyManager shared] numLettersPerDrop]; i++) {
@@ -98,7 +83,7 @@
     }
 }
 
-- (void) addMovingBlockToScreen:(LRMovingBlock *)movingBlock
+- (void)addMovingBlockToScreen:(LRMovingBlock *)movingBlock
 {
     //Set the touch delegate
     movingBlock.touchDelegate = self;
@@ -108,14 +93,14 @@
 }
 
 
-- (void) removeMovingBlockFromScreen:(LRMovingBlock*)letterBlock
+- (void)removeMovingBlockFromScreen:(LRMovingBlock *)letterBlock
 {
     //Remove the envelope from the screen and the array
     [self.envelopesOnScreen removeObject:letterBlock];
     [self removeChildrenInArray:@[letterBlock]];
 }
 
-- (void) clearMainGameSection
+- (void)clearMainGameSection
 {
     [self.letterSlotManager resetSlots];
     [self removeChildrenInArray:self.envelopesOnScreen];
@@ -124,7 +109,7 @@
 
 #pragma mark Letter Movement/Touch
 
-- (void) shiftEnvelopesForTimeDifference:(CGFloat)timeDifference
+- (void)shiftEnvelopesForTimeDifference:(CGFloat)timeDifference
 {
     NSMutableArray *blocksToRemove = [NSMutableArray new];
     CGFloat secondsToCrossScreen = 5.0;
@@ -145,7 +130,7 @@
     [self removeChildrenInArray:blocksToRemove];
 }
 
-- (void) setEnvelopeTouchEnabled:(BOOL)envelopeTouchEnabled
+- (void)setEnvelopeTouchEnabled:(BOOL)envelopeTouchEnabled
 {
     _envelopeTouchEnabled = envelopeTouchEnabled;
     for (LRMovingBlock *envelope in self.envelopesOnScreen) {
@@ -156,7 +141,7 @@
 #pragma mark - Delegate Methods -
 #pragma mark LRMovingBlockTouchDelegate Methods
 
-- (void) playerSelectedMovingBlock:(LRMovingBlock *)movingBlock
+- (void)playerSelectedMovingBlock:(LRMovingBlock *)movingBlock
 {
     [self.letterAdditionDelegate addEnvelopeToLetterSection:movingBlock];
     [self removeMovingBlockFromScreen:movingBlock];
@@ -174,5 +159,30 @@
 {
     self.envelopeTouchEnabled = NO;
     newGameWillBegin = YES;
+}
+
+- (void)gameStatePaused:(NSTimeInterval)currentTime
+{
+    if (timeOfPause == kGameLoopResetValue) {
+        [self enumerateChildNodesWithName:NAME_SPRITE_MOVING_ENVELOPE usingBlock:^(SKNode *node, BOOL *stop) {
+            [node setUserInteractionEnabled:NO];
+        }];
+        timeOfPause = currentTime;
+    }
+}
+
+- (void)gameStateUnpaused:(NSTimeInterval)currentTime
+{
+    if (timeOfPause != kGameLoopResetValue) {
+        NSTimeInterval lengthOfPauseTime = currentTime - timeOfPause;
+        nextDropTime += lengthOfPauseTime;
+        previousRunLoopTime = kGameLoopResetValue;
+        timeOfPause = kGameLoopResetValue;
+        [self enumerateChildNodesWithName:NAME_SPRITE_MOVING_ENVELOPE usingBlock:^(SKNode *node, BOOL *stop) {
+            [node setUserInteractionEnabled:YES];
+        }];
+
+    }
+
 }
 @end

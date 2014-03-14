@@ -21,7 +21,7 @@ static CGFloat const kRearrangementSlotSwitchedMaxTime = .08;
 @implementation LREnvelopeAnimationBuilder
 
 #pragma mark - Public Functions
-+ (SKAction*) submitWordActionWithLetterAtIndex:(NSUInteger)index
++ (SKAction *)submitWordActionWithLetterAtIndex:(NSUInteger)index
 {
     //#toy
     CGFloat shrinkTime = 0.2;
@@ -36,19 +36,19 @@ static CGFloat const kRearrangementSlotSwitchedMaxTime = .08;
     return deleteLetter;
 }
 
-+ (SKAction*) deletionAnimationWithDelayForIndex:(NSUInteger)index;
++ (SKAction *)deletionAnimationWithDelayForIndex:(NSUInteger)index;
 {
     return [LREnvelopeAnimationBuilder _shiftLetterInDirection:kLeftDirection withDelayForIndex:index];
 }
 
-+ (SKAction*) actionWithCompletionBlock:(SKAction*)action block:(void (^)(void))completion
++ (SKAction *)actionWithCompletionBlock:(SKAction *)action block:(void (^)(void))completion
 {
     SKAction *blockAction = [SKAction runBlock:completion];
     SKAction *newBlock = [SKAction sequence:@[action, blockAction]];
     return newBlock;
 }
 
-+ (SKAction*) rearrangementFinishedAnimationFromPoint:(CGPoint)start toPoint:(CGPoint)destination
++ (SKAction *)rearrangementFinishedAnimationFromPoint:(CGPoint)start toPoint:(CGPoint)destination
 {
     CGFloat distance = ABS(start.x - destination.x);
     CGFloat duration = (distance * kRearrangeFinishedAnimationMaxTime) / SCREEN_WIDTH;
@@ -56,7 +56,7 @@ static CGFloat const kRearrangementSlotSwitchedMaxTime = .08;
     return action;
 }
 
-+ (SKAction*) rearrangementLetterShiftedSlotsFromPoint:(CGPoint)start toPoint:(CGPoint)destination
++ (SKAction *)rearrangementLetterShiftedSlotsFromPoint:(CGPoint)start toPoint:(CGPoint)destination
 {
     CGFloat distance = ABS(start.x - destination.x);
     CGFloat duration = distance * kRearrangementSlotSwitchedMaxTime / [LRLetterSection distanceBetweenSlots];
@@ -67,7 +67,7 @@ static CGFloat const kRearrangementSlotSwitchedMaxTime = .08;
 
 #pragma mark - Private Functions
 
-+ (SKAction*) _shiftLetterInDirection:(kLRDirection)direction
++ (SKAction *)_shiftLetterInDirection:(kLRDirection)direction
 {
     CGFloat animationTime = .2;
     CGFloat shiftDistance = [LRLetterSection distanceBetweenSlots];
@@ -77,7 +77,7 @@ static CGFloat const kRearrangementSlotSwitchedMaxTime = .08;
     return shiftLetter;
 }
 
-+ (SKAction*) _shiftLetterInDirection:(kLRDirection)direction withDelayForIndex:(NSUInteger)index
++ (SKAction *)_shiftLetterInDirection:(kLRDirection)direction withDelayForIndex:(NSUInteger)index
 {
     CGFloat delayTime = [self _delayForIndex:index  withTotalDelayTime:kTotalDelayTimeDelete leadingDirection:kLeftDirection];
     SKAction *shift = [self _shiftLetterInDirection:direction];

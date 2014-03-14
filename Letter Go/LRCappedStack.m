@@ -42,7 +42,7 @@
 
 #pragma mark - NSMutableArray Functions
 
-- (void) addObject:(id)anObject {
+- (void)addObject:(id)anObject {
     if ([self.array count] == self.cap) {
         [self.array removeLastObject];
     }
@@ -53,7 +53,7 @@
     return [self.array count];
 }
 
-- (void) removeAllObjects {
+- (void)removeAllObjects {
     [self.array removeAllObjects];
 }
 
@@ -61,7 +61,7 @@
     return [self.array objectAtIndex:index];
 }
 
-- (NSString*) description {
+- (NSString *)description {
     return [self.array description];
 }
 @end

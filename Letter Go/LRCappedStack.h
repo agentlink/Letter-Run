@@ -24,9 +24,9 @@
 
 #pragma mark - NSMutableArray functions
 - (unsigned) count;
-- (void) removeAllObjects;
+- (void)removeAllObjects;
 - (id) objectAtIndex:(NSUInteger)index;
-- (void) addObject:(id)anObject;
+- (void)addObject:(id)anObject;
 
 ///The capacity of the stack
 @property (nonatomic, readonly) NSUInteger cap;

@@ -39,7 +39,7 @@
     return self;
 }
 
-- (void) createLayerContents
+- (void)createLayerContents
 {
     self.parallaxManager = [[LRParallaxManager alloc] init];
     [self addChild:self.parallaxManager];

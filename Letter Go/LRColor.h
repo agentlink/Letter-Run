@@ -12,25 +12,25 @@
 @interface LRColor : NSObject
 
 ///Returns a color with the RGB values provided. Values must be below 255
-+ (SKColor*) rgbColorWithRed:(CGFloat)r green:(CGFloat)g blue:(CGFloat)b alpha:(CGFloat)alpha;
++ (SKColor *)rgbColorWithRed:(CGFloat)r green:(CGFloat)g blue:(CGFloat)b alpha:(CGFloat)alpha;
 
 //Basic colors
-+ (SKColor*) clearColor;
-+ (SKColor*) redColor;
++ (SKColor *)clearColor;
++ (SKColor *)redColor;
 
 //Game screen object colors
-+ (SKColor*) healthBarColor;
++ (SKColor *)healthBarColor;
 
-+ (SKColor*) submitButtonEnabledColor;
-+ (SKColor*) submitButtonDisabledColor;
-+ (SKColor*) submitButtonTextColor;
++ (SKColor *)submitButtonEnabledColor;
++ (SKColor *)submitButtonDisabledColor;
++ (SKColor *)submitButtonTextColor;
 
-+ (SKColor*) emptySlotColor;
-+ (SKColor*) letterBlockFontColor;
++ (SKColor *)emptySlotColor;
++ (SKColor *)letterBlockFontColor;
 
 //Background object colors
-+ (SKColor*) skyColor;
-+ (SKColor*) letterSectionColor;
++ (SKColor *)skyColor;
++ (SKColor *)letterSectionColor;
 
 
 //Font colors

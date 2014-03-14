@@ -17,9 +17,9 @@
 @property (nonatomic, readonly) BOOL loveLetter;
 
 ///Returns an initialized letter block
-+ (LRLetterBlock*) letterBlockWithLetter:(NSString*)letter loveLetter:(BOOL)love;
++ (LRLetterBlock *)letterBlockWithLetter:(NSString *)letter loveLetter:(BOOL)love;
 ///Initializes a letter block
-- (id) initWithLetter:(NSString*)letter loveLetter:(BOOL)love;
+- (id) initWithLetter:(NSString *)letter loveLetter:(BOOL)love;
 
 @end
 

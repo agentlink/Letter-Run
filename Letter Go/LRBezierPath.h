@@ -11,6 +11,6 @@
 @interface LRBezierPath : UIBezierPath
 
 @property CGPoint start, c1, c2, end;
-+ (LRBezierPath*) bezierPath;
++ (LRBezierPath *)bezierPath;
 
 @end

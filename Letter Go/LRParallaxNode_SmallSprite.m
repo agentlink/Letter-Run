@@ -22,7 +22,7 @@
 
 #pragma mark - Set Up/Initialization
 
-+ (LRParallaxNode_SmallSprite*) nodeWithImageNamed:(NSString*)imageName
++ (LRParallaxNode_SmallSprite *)nodeWithImageNamed:(NSString *)imageName
 {
     return [[LRParallaxNode_SmallSprite alloc] initWithImageNamed:imageName];
 }
@@ -59,7 +59,7 @@
     return self;
 }
 
-- (NSMutableArray*) spriteArray
+- (NSMutableArray *)spriteArray
 {
     if (!_spriteArray) {
         NSUInteger spriteCount = [self spriteCount];
@@ -105,7 +105,7 @@
 #pragma mark - Movement Functions
 
 
-- (void) moveNodeBy:(CGFloat)distance
+- (void)moveNodeBy:(CGFloat)distance
 {
     for (SKSpriteNode *sprite in self.spriteArray) {
         //Shift each sprite down by the distance

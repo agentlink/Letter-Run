@@ -11,12 +11,12 @@
 
 @interface LREnvelopeAnimationBuilder : NSObject
 
-+ (SKAction*) deletionAnimationWithDelayForIndex:(NSUInteger)index;
-+ (SKAction*) submitWordActionWithLetterAtIndex:(NSUInteger)index;
++ (SKAction *)deletionAnimationWithDelayForIndex:(NSUInteger)index;
++ (SKAction *)submitWordActionWithLetterAtIndex:(NSUInteger)index;
 
-+ (SKAction*) rearrangementLetterShiftedSlotsFromPoint:(CGPoint)start toPoint:(CGPoint)destination;
-+ (SKAction*) rearrangementFinishedAnimationFromPoint:(CGPoint)start toPoint:(CGPoint)destination;
++ (SKAction *)rearrangementLetterShiftedSlotsFromPoint:(CGPoint)start toPoint:(CGPoint)destination;
++ (SKAction *)rearrangementFinishedAnimationFromPoint:(CGPoint)start toPoint:(CGPoint)destination;
 
-+ (SKAction*) actionWithCompletionBlock:(SKAction*)action block:(void (^)(void))completion;
++ (SKAction *)actionWithCompletionBlock:(SKAction *)action block:(void (^)(void))completion;
 
 @end

@@ -8,18 +8,16 @@
 
 #import <SpriteKit/SpriteKit.h>
 #import "LRGameStateDelegate.h"
+#import "LRGameScene.h"
 
 @interface LRGameStateManager : SKNode
 
 @property (nonatomic, readonly) NSDictionary *letterProbabilities;
 
-+ (LRGameStateManager*) shared;
++ (LRGameStateManager *)shared;
+- (LRGameScene *)gameScene;
 
-- (BOOL) isLetterSectionFull;
 - (BOOL) isGameOver;
 - (BOOL) isGamePaused;
-
-- (CGFloat) percentHealth;
-- (void) moveHealthByPercent:(CGFloat)percent;
 
 @end

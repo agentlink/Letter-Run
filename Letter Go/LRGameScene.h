@@ -17,7 +17,7 @@
 @property LRGamePlayLayer *gamePlayLayer;
 @property (nonatomic) LRGameState gameState;
 
-+ (LRGameScene*) scene;
++ (LRGameScene *)scene;
 - (CGRect) window;
 
 @end

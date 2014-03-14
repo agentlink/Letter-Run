@@ -13,12 +13,12 @@
 
 @property (nonatomic, weak) id<LRMovingBlockTouchDelegate> touchDelegate;
 @property (nonatomic) NSUInteger slot;
-+ (LRMovingBlock*) movingBlockWithLetter:(NSString*)letter loveLetter:(BOOL)love;
++ (LRMovingBlock *)movingBlockWithLetter:(NSString *)letter loveLetter:(BOOL)love;
 
 @end
 
 @protocol LRMovingBlockTouchDelegate <NSObject>
 
-- (void) playerSelectedMovingBlock:(LRMovingBlock*)movingBlock;
+- (void)playerSelectedMovingBlock:(LRMovingBlock *)movingBlock;
 
 @end

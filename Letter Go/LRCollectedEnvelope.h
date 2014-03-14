@@ -15,12 +15,12 @@ static NSString* const kTempCollectedEnvelopeName = @"NAME_SPRITE_SECTION_LETTER
 @interface LRCollectedEnvelope : LRLetterBlock
 
 //Envelope Initializers
-+ (LRCollectedEnvelope*) sectionBlockWithLetter:(NSString*)letter loveLetter:(BOOL)love;;
-+ (LRCollectedEnvelope*) emptySectionBlock;
++ (LRCollectedEnvelope *)sectionBlockWithLetter:(NSString *)letter loveLetter:(BOOL)love;;
++ (LRCollectedEnvelope *)emptySectionBlock;
 
 //Physics
-- (void) envelopeHitBottomBarrier;
-- (void) stopEnvelopeBouncing;
+- (void)envelopeHitBottomBarrier;
+- (void)stopEnvelopeBouncing;
 
 //Letter State
 - (BOOL) isLetterBlockEmpty;

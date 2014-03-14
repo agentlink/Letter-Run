@@ -52,7 +52,7 @@ static const unsigned trialCount = 1000;
 
 
 
-- (NSArray*) generateLetterArrayWithCount:(NSUInteger)count
+- (NSArray *)generateLetterArrayWithCount:(NSUInteger)count
 {
     NSMutableArray *letterArray = [NSMutableArray new];
     for (int i = 0; i < count; i++)
@@ -63,7 +63,7 @@ static const unsigned trialCount = 1000;
     return letterArray;
 }
 
-- (void) testArrayForLetterType:(LetterType)letterType array:(NSArray*)letterArray
+- (void)testArrayForLetterType:(LetterType)letterType array:(NSArray *)letterArray
 {
     if (!letterArray)
         letterArray = [self generateLetterArrayWithCount:trialCount];
@@ -98,7 +98,7 @@ static const unsigned trialCount = 1000;
     }
 }
 
-- (void) testArrayForRepetition:(NSArray*)letterArray
+- (void)testArrayForRepetition:(NSArray *)letterArray
 {
     if (!letterArray)
         letterArray = [self generateLetterArrayWithCount:trialCount];
@@ -118,7 +118,7 @@ static const unsigned trialCount = 1000;
 
 }
 
-- (BOOL) arrayContainsIllegalCharactersFromSet:(NSCharacterSet*)charSet letterArray:(NSArray*)letterArray
+- (BOOL) arrayContainsIllegalCharactersFromSet:(NSCharacterSet *)charSet letterArray:(NSArray *)letterArray
 {
     //Get the list of consonants
     for (NSString *letter in letterArray)
@@ -131,7 +131,7 @@ static const unsigned trialCount = 1000;
     return true;
 }
 
-- (BOOL) arrayContainsAllRepeatingCharacters:(NSArray*)array
+- (BOOL) arrayContainsAllRepeatingCharacters:(NSArray *)array
 {
     NSSet *set = [NSSet setWithArray:array];
     return ([set count] <= 1);

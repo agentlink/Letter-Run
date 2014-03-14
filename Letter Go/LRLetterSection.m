@@ -16,7 +16,7 @@
 #import "LRGameScene.h"
 #import "LREnvelopeAnimationBuilder.h"
 #import "LRCollisionManager.h"
-
+#import "LRGameStateManager.h"
 
 typedef NS_ENUM(NSUInteger, LetterSectionState)
 {
@@ -29,6 +29,7 @@ typedef void(^CompletionBlockType)(void);
 
 @interface LRLetterSection ()
 
+@property (nonatomic) BOOL gameOverFinished;
 @property (nonatomic, strong) SKSpriteNode *letterSection;
 @property (nonatomic, strong) LRSubmitButton *submitButton;
 @property (nonatomic, strong) NSMutableArray *letterSlots;
@@ -36,8 +37,8 @@ typedef void(^CompletionBlockType)(void);
 
 @property (nonatomic, strong) SKSpriteNode *bottomBarrier;
 
-@property (nonatomic) LRLetterSlot  *currentSlot;
-@property LRCollectedEnvelope *touchedBlock;
+@property (nonatomic, weak) LRLetterSlot  *currentSlot;
+@property (nonatomic, weak) LRCollectedEnvelope *touchedBlock;
 
 @property LetterSectionState letterSectionState;
 
@@ -57,12 +58,12 @@ typedef void(^CompletionBlockType)(void);
     return self;
 }
 
-- (void) setUpNotifications
+- (void)setUpNotifications
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(submitWord:) name:NOTIFICATION_SUBMIT_WORD object:nil];
 }
 
-- (void) createSectionContent
+- (void)createSectionContent
 {
     [self addChild:self.letterSection];
     [self addChild:self.submitButton];
@@ -80,13 +81,13 @@ typedef void(^CompletionBlockType)(void);
  rearrangement does not.
  */
 
-- (void) addBarriers
+- (void)addBarriers
 {
     [self addVerticalBarriers];
     [self addHorizontalBarriers];
 }
 
-- (void) addVerticalBarriers
+- (void)addVerticalBarriers
 {
     SKSpriteNode *topBarrier;
     
@@ -112,7 +113,7 @@ typedef void(^CompletionBlockType)(void);
     [self addChild:topBarrier];
 }
 
-- (void) addHorizontalBarriers
+- (void)addHorizontalBarriers
 {
     CGFloat barrierHeight = kLetterBlockDimension;
     CGFloat barrierWidth = kSlotMarginWidth;
@@ -131,7 +132,7 @@ typedef void(^CompletionBlockType)(void);
     }
 }
 
-- (void) setBarrierPhysics
+- (void)setBarrierPhysics
 {
     bottomBarrier.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:bottomBarrier.size];
     bottomBarrier.physicsBody.affectedByGravity = NO;
@@ -146,14 +147,14 @@ typedef void(^CompletionBlockType)(void);
 
 #pragma mark - Private Properties -
 
-- (SKSpriteNode*) letterSection {
+- (SKSpriteNode *)letterSection {
     if (!_letterSection) {
         _letterSection = [SKSpriteNode spriteNodeWithColor:[LRColor letterSectionColor] size:self.size];
     }
     return _letterSection;
 }
 
-- (LRSubmitButton*) submitButton {
+- (LRSubmitButton *)submitButton {
     if (!_submitButton) {
         _submitButton = [LRSubmitButton new];
         _submitButton.position = CGPointMake([self xPositionForSlotIndex:kWordMaximumLetterCount], 0);
@@ -161,7 +162,7 @@ typedef void(^CompletionBlockType)(void);
     return _submitButton;
 }
 
-- (NSMutableArray*) letterSlots {
+- (NSMutableArray *)letterSlots {
     if (!_letterSlots) {
         _letterSlots = [NSMutableArray new];
         
@@ -176,7 +177,7 @@ typedef void(^CompletionBlockType)(void);
     return _letterSlots;
 }
 
-- (NSMutableArray*) delayedLetters {
+- (NSMutableArray *)delayedLetters {
     if (!_delayedLetters) {
         _delayedLetters = [NSMutableArray new];
     }
@@ -185,7 +186,7 @@ typedef void(^CompletionBlockType)(void);
 
 #pragma mark - LRLetterBlockControlDelegate Methods -
 #pragma mark Addition
-- (void) addEnvelopeToLetterSection:(id)envelope
+- (void)addEnvelopeToLetterSection:(id)envelope
 {
     //If letters are being deleted currently, add them when they're done being deleted
     if (self.letterSectionState != LetterSectionStateNormal) {
@@ -193,7 +194,7 @@ typedef void(^CompletionBlockType)(void);
         return;
     }
     
-    LRMovingBlock *newEnvelope = (LRMovingBlock*)envelope;
+    LRMovingBlock *newEnvelope = (LRMovingBlock *)envelope;
     NSString *letter = newEnvelope.letter;
     BOOL isLoveLetter = newEnvelope.loveLetter;
 
@@ -220,7 +221,7 @@ typedef void(^CompletionBlockType)(void);
     [self updateSubmitButton];
 }
 
-- (void) runAddLetterAnimationWithEnvelope:(LRCollectedEnvelope*)origEnvelope
+- (void)runAddLetterAnimationWithEnvelope:(LRCollectedEnvelope *)origEnvelope
 {
     LRCollectedEnvelope *animatedEnvelope = [origEnvelope copy];
     animatedEnvelope.name = kTempCollectedEnvelopeName;
@@ -236,14 +237,14 @@ typedef void(^CompletionBlockType)(void);
 }
 
 #pragma mark Deletion
-- (void) removeEnvelopeFromLetterSection:(id)envelope
+- (void)removeEnvelopeFromLetterSection:(id)envelope
 {
     if (self.letterSectionState == LetterSectionStateDeletingLetters) {
         return;
     }
     
     //Set the envelope to an empty slot
-    LRCollectedEnvelope *envelopeToDelete = (LRCollectedEnvelope*)envelope;
+    LRCollectedEnvelope *envelopeToDelete = (LRCollectedEnvelope *)envelope;
     __block int deletionIndex = envelopeToDelete.slotIndex;
     LRLetterSlot *deletionSlot = [self.letterSlots objectAtIndex:deletionIndex];
     deletionSlot.currentBlock = [LRLetterBlockGenerator createEmptySectionBlock];
@@ -285,7 +286,7 @@ typedef void(^CompletionBlockType)(void);
 }
 
 
-- (void) shiftLettersFromDeletionIndex:(int)deletionIndex
+- (void)shiftLettersFromDeletionIndex:(int)deletionIndex
 {
     for (int k = deletionIndex; k < kWordMaximumLetterCount; k++)
     {
@@ -297,7 +298,7 @@ typedef void(^CompletionBlockType)(void);
     }
 }
 
-- (void) revealShiftedLetters
+- (void)revealShiftedLetters
 {
     int letterSlotCount = kWordMaximumLetterCount;
     for (int k = 0; k < letterSlotCount; k++)
@@ -314,7 +315,7 @@ typedef void(^CompletionBlockType)(void);
     [self updateSubmitButton];
 }
 
-- (void) addDelayedLetters
+- (void)addDelayedLetters
 {
     for (id envelope in self.delayedLetters) {
         [self addEnvelopeToLetterSection:envelope];
@@ -323,29 +324,29 @@ typedef void(^CompletionBlockType)(void);
 }
 
 #pragma mark Rearrangement
-- (void) rearrangementHasBegunWithLetterBlock:(id)letterBlock
+- (void)rearrangementHasBegunWithLetterBlock:(id)letterBlock
 {
-    self.touchedBlock = (LRCollectedEnvelope*)letterBlock;
+    self.touchedBlock = (LRCollectedEnvelope *)letterBlock;
     self.touchedBlock.zPosition = zPos_SectionBlock_Selected;
 }
 
-- (void) rearrangementHasFinishedWithLetterBlock:(id)letterBlock
+- (void)rearrangementHasFinishedWithLetterBlock:(id)letterBlock
 {
     self.touchedBlock.zPosition = zPos_SectionBlock_Unselected;
-    LRCollectedEnvelope *selectedEnvelope = (LRCollectedEnvelope*)letterBlock;
+    LRCollectedEnvelope *selectedEnvelope = (LRCollectedEnvelope *)letterBlock;
     
     LRLetterSlot *newLocation = [self getPlaceHolderSlot];
     [self runRearrangmentHasFinishedAnimationWithEnvelope:selectedEnvelope toSlot:newLocation];
 
     selectedEnvelope.hidden = YES;
-    newLocation.currentBlock = (LRCollectedEnvelope*)letterBlock;
+    newLocation.currentBlock = (LRCollectedEnvelope *)letterBlock;
 
     self.currentSlot = nil;
     self.touchedBlock = nil;
     [self updateSubmitButton];
 }
 
-- (void) runRearrangmentHasFinishedAnimationWithEnvelope:(LRCollectedEnvelope*)envelope toSlot:(LRLetterSlot*)destination
+- (void)runRearrangmentHasFinishedAnimationWithEnvelope:(LRCollectedEnvelope *)envelope toSlot:(LRLetterSlot *)destination
 {
     LRCollectedEnvelope *animatedEnvelope = [envelope copy];
     animatedEnvelope.name = kTempCollectedEnvelopeName;
@@ -363,7 +364,7 @@ typedef void(^CompletionBlockType)(void);
 
 #pragma mark Submit Word Functions
 
-- (void) submitWord:(NSNotification*)notification
+- (void)submitWord:(NSNotification *)notification
 {
     NSString *forcedWord = [[notification userInfo] objectForKey:@"forcedWord"];
     NSString *submittedWord = (forcedWord) ? forcedWord : [self getCurrentWord];
@@ -373,14 +374,14 @@ typedef void(^CompletionBlockType)(void);
     int wordScore = [[LRScoreManager shared] submitWord:wordDict];
     if (!forcedWord)
     {
-        LRHealthSection *healthSection = [[(LRGameScene*)[self scene] gamePlayLayer] healthSection];
+        LRHealthSection *healthSection = [[(LRGameScene *)[self scene] gamePlayLayer] healthSection];
         [healthSection addScore:wordScore];
         [self clearLetterSectionAnimated:YES];
     }
 }
 
 
-- (NSString*)getCurrentWord
+- (NSString *)getCurrentWord
 {
     NSMutableString *currentWord = [[NSMutableString alloc] init];
     for (LRLetterSlot *slot in self.letterSlots)
@@ -392,7 +393,7 @@ typedef void(^CompletionBlockType)(void);
     return currentWord;
 }
 
-- (NSSet*) loveLetterIndices
+- (NSSet *)loveLetterIndices
 {
     NSMutableSet *indices = [NSMutableSet set];
     for (int i = 0; i < [self.letterSlots count]; i++) {
@@ -404,12 +405,12 @@ typedef void(^CompletionBlockType)(void);
     return indices;
 }
 
-- (void) updateSubmitButton
+- (void)updateSubmitButton
 {
     int i;
     for (i = 0; i < self.letterSlots.count; i++)
     {
-        if ([(LRLetterSlot*)[self.letterSlots objectAtIndex:i] isLetterSlotEmpty])
+        if ([(LRLetterSlot *)[self.letterSlots objectAtIndex:i] isLetterSlotEmpty])
             break;
     }
     self.submitButton.userInteractionEnabled = (i >= kWordMinimumLetterCount && [[LRDictionaryChecker shared] checkForWordInDictionary:[self getCurrentWord]]);
@@ -417,14 +418,14 @@ typedef void(^CompletionBlockType)(void);
 
 #pragma mark - Reordering Functions -
 
-- (void) update:(NSTimeInterval)currentTime
+- (void)update:(NSTimeInterval)currentTime
 {
     if (self.touchedBlock) {
         [self checkRearrangement];
     }
 }
 
-- (void) checkRearrangement
+- (void)checkRearrangement
 {
     LRLetterSlot *nearBySlot = [self getClosestSlotToBlock:self.touchedBlock];
     
@@ -446,7 +447,7 @@ typedef void(^CompletionBlockType)(void);
     }
 }
 
-- (BOOL) slotIsWithinRearrangementArea:(LRLetterSlot*)slot
+- (BOOL) slotIsWithinRearrangementArea:(LRLetterSlot *)slot
 {
     for (int i = 0; i < [self numLettersInSection]; i++) {
         if ([self.letterSlots objectAtIndex:i] == slot)
@@ -457,7 +458,7 @@ typedef void(^CompletionBlockType)(void);
 
 #pragma mark Letter Swapping Functions
 
-- (void) swapLetterAtSlot:(LRLetterSlot*) slotA withLetterAtSlot:(LRLetterSlot*) slotB
+- (void)swapLetterAtSlot:(LRLetterSlot *)slotA withLetterAtSlot:(LRLetterSlot *)slotB
 {
     //Get the location of the letter blocks with in the slot array
     int aLoc = -1;
@@ -491,7 +492,7 @@ typedef void(^CompletionBlockType)(void);
     }
 }
 
-- (void) swapBlocksAtIndexA:(int)a indexB:(int)b
+- (void)swapBlocksAtIndexA:(int)a indexB:(int)b
 {
     LRLetterSlot *slotA = [self.letterSlots objectAtIndex:a];
     LRLetterSlot *slotB = [self.letterSlots objectAtIndex:b];
@@ -517,7 +518,7 @@ typedef void(^CompletionBlockType)(void);
     [slotB setCurrentBlock:blockA];
 }
 
-- (LRLetterSlot*) getPlaceHolderSlot
+- (LRLetterSlot *)getPlaceHolderSlot
 {
     LRLetterSlot *retVal = nil;
     for (int i = 0; i < self.letterSlots.count; i++) {
@@ -531,7 +532,7 @@ typedef void(^CompletionBlockType)(void);
 }
 
 ///Get the closest section block to a given position (provided by touch)
-- (LRLetterSlot*)getClosestSlotToBlock:(LRCollectedEnvelope*)letterBlock
+- (LRLetterSlot *)getClosestSlotToBlock:(LRCollectedEnvelope *)letterBlock
 {
     CGPoint letterBlockPosition = [letterBlock convertPoint:self.position toNode:self];
     LRLetterSlot *closestSlot;
@@ -552,7 +553,7 @@ typedef void(^CompletionBlockType)(void);
 
 #pragma mark - Helper Functions
 
-- (void) clearLetterSectionAnimated:(BOOL)animated
+- (void)clearLetterSectionAnimated:(BOOL)animated
 {
     self.letterSectionState  = LetterSectionStateSubmittingWord;
     for (int i = 0; i < [self.letterSlots count]; i++)
@@ -606,7 +607,7 @@ typedef void(^CompletionBlockType)(void);
 }
 
 
-- (void) setUserInteractionEnabled:(BOOL)userInteractionEnabled
+- (void)setUserInteractionEnabled:(BOOL)userInteractionEnabled
 {
     for (LRLetterSlot *slot in self.letterSlots) {
         slot.userInteractionEnabled = userInteractionEnabled;
@@ -614,9 +615,42 @@ typedef void(^CompletionBlockType)(void);
     }
 }
 
+#pragma mark - LRGameStateDelegate Methods
+- (void)gameStateGameOver
+{
+    self.gameOverFinished = TRUE;
+    self.userInteractionEnabled = NO;
+}
+
+- (void)gameStateNewGame
+{
+    [self clearLetterSectionAnimated:NO];
+    [self _removeAllEnvelopes];
+    self.userInteractionEnabled = YES;
+}
+
+- (void)gameStatePaused:(NSTimeInterval)currentTime
+{
+    self.userInteractionEnabled = NO;
+}
+
+- (void)gameStateUnpaused:(NSTimeInterval)currentTime
+{
+    self.userInteractionEnabled = YES;
+}
+
+- (void)_removeAllEnvelopes
+{
+    if (self.touchedBlock)
+    {
+        [self removeChildrenInArray:@[self.touchedBlock]];
+        self.touchedBlock = nil;
+    }
+}
+
 //Debug function
 /*
-- (void) setCurrentSlot:(LRLetterSlot *)currentSlot
+- (void)setCurrentSlot:(LRLetterSlot *)currentSlot
 {
     [[self currentSlot] setColor:[UIColor whiteColor]];
     _currentSlot = currentSlot;

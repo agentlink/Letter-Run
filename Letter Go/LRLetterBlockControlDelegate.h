@@ -11,11 +11,11 @@
 
 @protocol LRLetterBlockControlDelegate <NSObject>
 
-- (void) addEnvelopeToLetterSection:(id)envelope;
-- (void) removeEnvelopeFromLetterSection:(id)envelope;
+- (void)addEnvelopeToLetterSection:(id)envelope;
+- (void)removeEnvelopeFromLetterSection:(id)envelope;
 
-- (void) rearrangementHasBegunWithLetterBlock:(id)letterBlock;
-- (void) rearrangementHasFinishedWithLetterBlock:(id)letterBlock;
+- (void)rearrangementHasBegunWithLetterBlock:(id)letterBlock;
+- (void)rearrangementHasFinishedWithLetterBlock:(id)letterBlock;
 
 
 @end

@@ -32,14 +32,14 @@ static const CGFloat kEnvelopeZPositionMax = zPos_Mailman;
 
 #pragma mark - Private Properties
 
-- (LRCappedStack*) slotHistory {
+- (LRCappedStack *)slotHistory {
     if (!_slotHistory) {
         _slotHistory = [[LRCappedStack alloc] initWithCapacity:kSlotHistoryCapacity];
     }
     return _slotHistory;
 }
 
-- (NSMutableArray*) slotChanceTracker {
+- (NSMutableArray *)slotChanceTracker {
     if (!_slotChanceTracker) {
         _slotChanceTracker = [NSMutableArray new];
         for (int i = 0; i < kNumberOfSlots; i++) {
@@ -51,7 +51,7 @@ static const CGFloat kEnvelopeZPositionMax = zPos_Mailman;
 
 #pragma mark - Letter Addition
 
-- (void) addEnvelope:(LRMovingBlock*)envelope
+- (void)addEnvelope:(LRMovingBlock *)envelope
 {
     int slotIndexToDecrease = [self getIndexOfNextSlot];
     int slotIndexToIncrease = kNilSlotValue;
@@ -72,7 +72,7 @@ static const CGFloat kEnvelopeZPositionMax = zPos_Mailman;
                  andDecreaseForSlot:slotIndexToDecrease];
 }
 
-- (void) increaseChanceForSlot:(int)increase andDecreaseForSlot:(int)decrease
+- (void)increaseChanceForSlot:(int)increase andDecreaseForSlot:(int)decrease
 {
 
 
@@ -92,7 +92,7 @@ static const CGFloat kEnvelopeZPositionMax = zPos_Mailman;
 
 #pragma mark - zPosition Function
 
-- (void) setZPositionForEnvelope:(LRMovingBlock*)envelope
+- (void)setZPositionForEnvelope:(LRMovingBlock *)envelope
 {
     /*
      NOTE: Reaching this condition would take about 40 minutes of play. If this point ever got
@@ -133,7 +133,7 @@ static const CGFloat kEnvelopeZPositionMax = zPos_Mailman;
 
 #pragma mark - Reset Functions
 
-- (void) resetSlots
+- (void)resetSlots
 {
     self.slotHistory = nil;
     self.slotChanceTracker = nil;

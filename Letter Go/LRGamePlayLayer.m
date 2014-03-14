@@ -43,7 +43,7 @@
 }
 
 
-- (void) createLayerContent
+- (void)createLayerContent
 {
     [self addChild:self.healthSection];
     [self addChild:self.letterSection];
@@ -53,7 +53,7 @@
 
 #pragma mark - Layer Content Set Up -
 #pragma mark Sections
-- (LRHealthSection*) healthSection
+- (LRHealthSection *)healthSection
 {
     if (!_healthSection) {
         _healthSection = [[LRHealthSection alloc] initWithSize:CGSizeMake(self.size.width, kSectionHeightHealth)];
@@ -63,7 +63,7 @@
     return _healthSection;
 }
 
-- (LRLetterSection*) letterSection
+- (LRLetterSection *)letterSection
 {
     if (!_letterSection) {
         _letterSection = [[LRLetterSection alloc] initWithSize:CGSizeMake(self.size.width, kSectionHeightLetterSection)];
@@ -73,7 +73,7 @@
     return _letterSection;
 }
 
-- (LRScreenSection*) mainGameSection {
+- (LRMainGameSection *)mainGameSection {
     if (!_mainGameSection) {
         CGFloat mainGameSectionXPos = 0;
         CGFloat mainGameSectionYPos = kSectionHeightLetterSection/2;
@@ -87,7 +87,7 @@
     return _mainGameSection;
 }
 
-- (LRButton*) pauseButton
+- (LRButton *)pauseButton
 {
     if (!_pauseButton) {
         _pauseButton = [[LRButton alloc] initWithImageNamedNormal:@"Pause_Selected.png" selected:@"Pause_Unselected.png"];
@@ -99,10 +99,21 @@
     return _pauseButton;
 }
 
-- (void) pauseButtonPressed
+- (void)pauseButtonPressed
 {
     NSString *notifName = ([[LRGameStateManager shared] isGamePaused]) ? GAME_STATE_CONTINUE_GAME : GAME_STATE_PAUSE_GAME;
     [[NSNotificationCenter defaultCenter] postNotificationName:notifName object:nil];
+}
+
+#pragma mark - LRGameUpdateDelegate
+- (void)gameStateNewGame
+{
+    self.pauseButton.isEnabled = YES;
+}
+
+- (void)gameStateGameOver
+{
+    self.pauseButton.isEnabled = NO;
 }
 
 @end

@@ -19,19 +19,19 @@
 @property (readonly) int score;
 
 ///The shared instance of the score manager
-+ (LRScoreManager*) shared;
++ (LRScoreManager *)shared;
 
 /*!
  This functions submits a word for scoring/storing and returns the score as calculated by scoreForWordWithDict:(NSDictionary)dict
  @param wordDict: Has word stored in "word" key and love letter indices scored in "loveLetters" set
  @return The score for the word
  */
-- (int) submitWord:(NSDictionary*)wordDict;
+- (int) submitWord:(NSDictionary *)wordDict;
 
 /*! This function calculates the score for a word, including bonuses for length and love letters
  @param wordDict: Has word stored in "word" key and love letter indices scored in "loveLetters" set
  @return The score for the word
  */
-+ (int) scoreForWordWithDict:(NSDictionary*)wordDict;
++ (int) scoreForWordWithDict:(NSDictionary *)wordDict;
 
 @end

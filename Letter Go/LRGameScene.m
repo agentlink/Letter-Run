@@ -24,7 +24,7 @@
     return self;
 }
 
-- (void) didMoveToView:(SKView *)view
+- (void)didMoveToView:(SKView *)view
 {
     [self setScaleMode:SKSceneScaleModeAspectFit];
     
@@ -37,13 +37,13 @@
     [self addChild:self.gamePlayLayer];
 }
 
-- (void) setUpPhysics
+- (void)setUpPhysics
 {
     [self.physicsWorld setGravity: CGVectorMake(0.0, -6.3)];
     [self.physicsWorld setContactDelegate:[LRCollisionManager shared]];
 }
 
-- (void) setGameState:(LRGameState)gameState
+- (void)setGameState:(LRGameState)gameState
 {
     switch (gameState) {
         case LRGameStateNewGame:
@@ -60,30 +60,41 @@
 
 #pragma mark - LRGameStateDelegate methods
 
-- (void) update:(NSTimeInterval)currentTime
+- (void)update:(NSTimeInterval)currentTime
 {
     [self enumerateChildNodesWithName:@"//*" usingBlock:^(SKNode *node, BOOL *stop) {
         if ([node conformsToProtocol:@protocol(LRGameStateDelegate)])
         {
             SKNode <LRGameStateDelegate> *updatingNode = (SKNode <LRGameStateDelegate> *)node;
-            if ([updatingNode respondsToSelector:@selector(update:)]) {
+            if (self.gameState == LRGameStatePauseGame) {
+                if ([updatingNode respondsToSelector:@selector(gameStatePaused:)])
+                    [updatingNode gameStatePaused:currentTime];
+            }
+            else if (self.gameState == LRGameStateUnpauseGame) {
+                if ([updatingNode respondsToSelector:@selector(gameStateUnpaused:)])
+                    [updatingNode gameStateUnpaused:currentTime];
+            }
+            else if ([updatingNode respondsToSelector:@selector(update:)]) {
                 [updatingNode update:currentTime];
             }
         }
     }];
+    if (self.gameState == LRGameStateUnpauseGame) {
+        self.gameState = LRGameStatePlaying;
+    }
 }
 
-- (void) gameOver
+- (void)gameOver
 {
     [self _sendAllNodesGameDelegateSelector:@selector(gameStateGameOver)];
 }
 
-- (void) newGame
+- (void)newGame
 {
     [self _sendAllNodesGameDelegateSelector:@selector(gameStateNewGame)];
 }
 
-- (void) _sendAllNodesGameDelegateSelector:(SEL)selector
+- (void)_sendAllNodesGameDelegateSelector:(SEL)selector
 {
     [self enumerateChildNodesWithName:@"//*" usingBlock:^(SKNode *node, BOOL *stop) {
         if ([node conformsToProtocol:@protocol(LRGameStateDelegate)])
@@ -104,7 +115,7 @@
 
 }
 #pragma mark - Scene Getters
-+ (LRGameScene*) scene
++ (LRGameScene *)scene
 {
     return [[self alloc] init];
 }
