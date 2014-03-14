@@ -29,6 +29,10 @@
     return [SKColor redColor];
 }
 
++ (SKColor *)healthBarBackgroundColor {
+    return [SKColor blueColor];
+}
+
 + (SKColor *)submitButtonEnabledColor {
     return [SKColor greenColor];
 }

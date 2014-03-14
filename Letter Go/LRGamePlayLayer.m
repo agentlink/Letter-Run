@@ -56,8 +56,9 @@
 - (LRHealthSection *)healthSection
 {
     if (!_healthSection) {
+        CGFloat healthSectionYPos = - self.size.height/2 + kSectionHeightLetterSection + kSectionHeightHealth/2;
         _healthSection = [[LRHealthSection alloc] initWithSize:CGSizeMake(self.size.width, kSectionHeightHealth)];
-        _healthSection.position = CGPointMake(0, self.size.height/2 - kSectionHeightHealth/2);
+        _healthSection.position = CGPointMake(0, healthSectionYPos);
         _healthSection.zPosition = zPos_HealthSection;
     }
     return _healthSection;
@@ -76,7 +77,7 @@
 - (LRMainGameSection *)mainGameSection {
     if (!_mainGameSection) {
         CGFloat mainGameSectionXPos = 0;
-        CGFloat mainGameSectionYPos = kSectionHeightLetterSection/2;
+        CGFloat mainGameSectionYPos = (kSectionHeightLetterSection + kSectionHeightHealth)/2;
         
         _mainGameSection = [[LRMainGameSection alloc] initWithSize:CGSizeMake(SCREEN_WIDTH, kSectionHeightMainSection)];
         _mainGameSection.position = CGPointMake(mainGameSectionXPos, mainGameSectionYPos);
@@ -93,7 +94,7 @@
         _pauseButton = [[LRButton alloc] initWithImageNamedNormal:@"Pause_Selected.png" selected:@"Pause_Unselected.png"];
         [_pauseButton setScale:.7];
         [_pauseButton setTouchUpInsideTarget:self action:@selector(pauseButtonPressed)];
-        _pauseButton.position = CGPointMake(0 - SCREEN_WIDTH/2 + _pauseButton.size.width/2, SCREEN_HEIGHT/2 - self.healthSection.size.height - _pauseButton.size.height/2);
+        _pauseButton.position = CGPointMake(0 - SCREEN_WIDTH/2 + _pauseButton.size.width/2, SCREEN_HEIGHT/2 - _pauseButton.size.height/2);
         _pauseButton.zPosition = zPos_PauseButton;
     }
     return _pauseButton;

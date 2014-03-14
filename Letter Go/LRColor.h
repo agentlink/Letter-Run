@@ -20,6 +20,7 @@
 
 //Game screen object colors
 + (SKColor *)healthBarColor;
++ (SKColor *)healthBarBackgroundColor;
 
 + (SKColor *)submitButtonEnabledColor;
 + (SKColor *)submitButtonDisabledColor;

@@ -71,6 +71,7 @@
 		00F6F59717FF5234009EDADB /* LRGameStateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F6F59617FF5234009EDADB /* LRGameStateManager.m */; };
 		A82CA94C1855189F004ADD99 /* LRSlotManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A82CA94B1855189F004ADD99 /* LRSlotManager.m */; };
 		A846FB8B186E0489009DCEF4 /* LRLetterBlock_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = A846FB8A186E0489009DCEF4 /* LRLetterBlock_Test.m */; };
+		A87274EF18D3623600C90C00 /* healthBar.png in Resources */ = {isa = PBXBuildFile; fileRef = A87274EE18D3623600C90C00 /* healthBar.png */; };
 		A876EC3B18836795000FA069 /* Background_Cloud.png in Resources */ = {isa = PBXBuildFile; fileRef = A876EC3A18836795000FA069 /* Background_Cloud.png */; };
 		A876EC3F188367AA000FA069 /* Background_Grass.png in Resources */ = {isa = PBXBuildFile; fileRef = A876EC3C188367AA000FA069 /* Background_Grass.png */; };
 		A876EC40188367AA000FA069 /* Background_Hills.png in Resources */ = {isa = PBXBuildFile; fileRef = A876EC3D188367AA000FA069 /* Background_Hills.png */; };
@@ -215,6 +216,7 @@
 		A82DD7E71857FB24007483A6 /* LRPositionConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LRPositionConstants.h; sourceTree = "<group>"; };
 		A8423117188B162300F1693E /* LRLetterBlockControlDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRLetterBlockControlDelegate.h; sourceTree = "<group>"; };
 		A846FB8A186E0489009DCEF4 /* LRLetterBlock_Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterBlock_Test.m; sourceTree = "<group>"; };
+		A87274EE18D3623600C90C00 /* healthBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = healthBar.png; sourceTree = "<group>"; };
 		A876EC3A18836795000FA069 /* Background_Cloud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background_Cloud.png; sourceTree = "<group>"; };
 		A876EC3C188367AA000FA069 /* Background_Grass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background_Grass.png; sourceTree = "<group>"; };
 		A876EC3D188367AA000FA069 /* Background_Hills.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background_Hills.png; sourceTree = "<group>"; };
@@ -280,6 +282,7 @@
 		0007FB30180B2FB600E55B0D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A87274EE18D3623600C90C00 /* healthBar.png */,
 				00861286183AD4D700C42AE0 /* Manford_Cover.png */,
 				00AC280C182EEAD400B3C0EB /* Pause_Selected.png */,
 				00AC280D182EEAD400B3C0EB /* Pause_Unselected.png */,
@@ -808,6 +811,7 @@
 			files = (
 				A876EC41188367AA000FA069 /* Background_Mountains.png in Resources */,
 				00523570187D0B9E00139CA1 /* Envelope_Normal_3.png in Resources */,
+				A87274EF18D3623600C90C00 /* healthBar.png in Resources */,
 				00641EAA182C42D30098EC38 /* LRDevPauseMenuVC.xib in Resources */,
 				009B727A182991CB00A6CEA0 /* Manford.png in Resources */,
 				0052356E187D0B9E00139CA1 /* Envelope_Normal_1.png in Resources */,

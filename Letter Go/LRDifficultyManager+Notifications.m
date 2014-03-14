@@ -62,14 +62,14 @@
     self.healthBarFalls = YES;
     self.lettersFallVertically = NO;
     
-    self.healthInFallenEnvelopes = 5.0;
+    self.healthInFallenEnvelopes = 15.0;
     self.QuEnabled = YES;
 }
 
 - (void)loadUserDefaults
 {
     //Health
-    self.initialHealthDropTime = 10;//[[NSUserDefaults standardUserDefaults] floatForKey:DV_HEALTHBAR_INITIAL_SPEED];
+    self.initialHealthDropTime = 30;//[[NSUserDefaults standardUserDefaults] floatForKey:DV_HEALTHBAR_INITIAL_SPEED];
     self.healthSpeedIncreaseFactor = [[NSUserDefaults standardUserDefaults] floatForKey:DV_HEALTHBAR_INCREASE_FACTOR];
     self.healthBarMinDropTime = [[NSUserDefaults standardUserDefaults] floatForKey:DV_HEALTHBAR_MAX_SPEED];
     self.healthPercentIncreasePer100Pts = [[NSUserDefaults standardUserDefaults] floatForKey:DV_HEALTHBAR_INCREASE_PER_WORD];

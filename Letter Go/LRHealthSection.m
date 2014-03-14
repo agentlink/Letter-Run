@@ -16,6 +16,8 @@
 static const float kHealthBarRightMostEdgePos = 0.0;
 
 @interface LRHealthSection ()
+@property (nonatomic, strong) SKSpriteNode *healthBarSkin;
+@property (nonatomic, strong) SKSpriteNode *healthBarBackground;
 @property (nonatomic, strong) SKSpriteNode *healthBar;
 @property NSTimeInterval initialTime;
 @end
@@ -25,7 +27,9 @@ static const float kHealthBarRightMostEdgePos = 0.0;
 - (void)createSectionContent
 {
     //The color will be replaced by a health bar sprite
+    [self addChild:self.healthBarBackground];
     [self addChild:self.healthBar];
+    [self addChild:self.healthBarSkin];
     self.initialTime = kGameLoopResetValue;
 }
 
@@ -34,6 +38,22 @@ static const float kHealthBarRightMostEdgePos = 0.0;
         _healthBar = [SKSpriteNode spriteNodeWithColor:[LRColor healthBarColor] size:self.size];
     }
     return _healthBar;
+}
+
+- (SKSpriteNode *)healthBarBackground {
+    if (!_healthBarBackground) {
+        _healthBarBackground = [SKSpriteNode spriteNodeWithColor:[LRColor healthBarBackgroundColor] size:self.size];
+    }
+    return _healthBarBackground;
+}
+
+- (SKSpriteNode *)healthBarSkin {
+    if (!_healthBarSkin) {
+        _healthBarSkin = [SKSpriteNode spriteNodeWithImageNamed:@"healthBar.png"];
+        _healthBarSkin.yScale = .5;
+        _healthBarSkin.xScale = .5 * (SCREEN_WIDTH / 480);
+    }
+    return _healthBarSkin;
 }
 
 /// This function animates the health bar
@@ -58,7 +78,6 @@ static const float kHealthBarRightMostEdgePos = 0.0;
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_GAME_OVER object:nil];
     }
-
 }
 
 - (void)addScore:(int) wordScore;
