@@ -16,7 +16,7 @@
 
 #pragma mark - Initialization/Setters -
 
-+ (LRMovingBlock*) movingBlockWithLetter:(NSString*)letter loveLetter:(BOOL)love
++ (LRMovingBlock *)movingBlockWithLetter:(NSString *)letter loveLetter:(BOOL)love
 {
     return [[LRMovingBlock alloc] initWithLetter:letter loveLetter:love];
 }
@@ -30,7 +30,7 @@
     return self;
 }
 
-- (void) setSlot:(NSUInteger)slot
+- (void)setSlot:(NSUInteger)slot
 {
     _slot = slot;
     //Get the max and min heights
@@ -49,7 +49,7 @@
 #pragma mark - Touch Functions + Helpers
 #pragma mark -
 
-- (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     /*
      Consider the letter touched if the player initially touches inside the letter.
@@ -65,7 +65,7 @@
     }
 }
 
-- (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     //If the eltter is touched, go to the delegate
     if (self.initialTouchInside)

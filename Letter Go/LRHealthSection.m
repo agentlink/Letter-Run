@@ -22,14 +22,14 @@ static const float kHealthBarRightMostEdgePos = 0.0;
 
 @implementation LRHealthSection
 
-- (void) createSectionContent
+- (void)createSectionContent
 {
     //The color will be replaced by a health bar sprite
     [self addChild:self.healthBar];
     self.initialTime = kGameLoopResetValue;
 }
 
-- (SKSpriteNode*) healthBar {
+- (SKSpriteNode *)healthBar {
     if (!_healthBar) {
         _healthBar = [SKSpriteNode spriteNodeWithColor:[LRColor healthBarColor] size:self.size];
     }
@@ -37,7 +37,7 @@ static const float kHealthBarRightMostEdgePos = 0.0;
 }
 
 /// This function animates the health bar
-- (void) shiftHealthBarWithTimeInterval: (NSTimeInterval)currentTime {
+- (void)shiftHealthBarWithTimeInterval: (NSTimeInterval)currentTime {
     //Calculate the distance the health bar should move...
     float healthBarDropPerSecond = HEALTHBAR_WIDTH/[[LRDifficultyManager shared] healthBarDropTime];
     float timeInterval = currentTime - self.initialTime;
@@ -61,7 +61,7 @@ static const float kHealthBarRightMostEdgePos = 0.0;
 
 }
 
-- (void) addScore:(int) wordScore;
+- (void)addScore:(int) wordScore;
 {
     float shiftDistance = [LRHealthSection healthBarDistanceForScore:wordScore];
     float newXValue = self.healthBar.position.x + shiftDistance;
@@ -80,7 +80,7 @@ static const float kHealthBarRightMostEdgePos = 0.0;
     return wordDistance;
 }
 
-- (void) _restartHealthBar
+- (void)_restartHealthBar
 {
     self.healthBar.position = CGPointMake(0, self.healthBar.position.y);
     self.initialTime = kGameLoopResetValue;
@@ -90,7 +90,7 @@ static const float kHealthBarRightMostEdgePos = 0.0;
     return 100 * (HEALTHBAR_WIDTH + self.healthBar.position.x)/HEALTHBAR_WIDTH;
 }
 
-- (void) moveHealthByPercent:(CGFloat)percent
+- (void)moveHealthByPercent:(CGFloat)percent
 {
     CGFloat newXPos = self.healthBar.position.x + (percent/100) * HEALTHBAR_WIDTH;
     if (newXPos > 0)
@@ -102,7 +102,7 @@ static const float kHealthBarRightMostEdgePos = 0.0;
 
 #pragma - LRGameStateDelegate Methods
 
-- (void) update:(NSTimeInterval)currentTime
+- (void)update:(NSTimeInterval)currentTime
 {
     //If the game is over, do nothing
     if ([[LRGameStateManager shared] isGameOver] || [[LRGameStateManager shared] isGamePaused]) {

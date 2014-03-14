@@ -15,20 +15,20 @@
 
 #pragma mark - Falling Envelopes
 ///Create an envelope with a weighted random letter and weighted chance of being a love letter
-+ (LRMovingBlock*) createRandomEnvelope;
++ (LRMovingBlock *)createRandomEnvelope;
 ///Create an envelope with a weighted random letter and weighted chance of being a love letter and put it at a slot
-+ (LRMovingBlock*) createRandomEnvelopeAtSlot:(int)slot;
++ (LRMovingBlock *)createRandomEnvelopeAtSlot:(int)slot;
 
 #pragma mark - Letter Section Blocks
 ///Create an empty slot for the letter section
-+ (LRCollectedEnvelope*) createEmptySectionBlock;
++ (LRCollectedEnvelope *)createEmptySectionBlock;
 ///Create a place holder block to be used during rearrangement
-+ (LRCollectedEnvelope*) createPlaceHolderBlock;
++ (LRCollectedEnvelope *)createPlaceHolderBlock;
 /*!
  @param letter The letter the block should have
  @param love Whether or not the letter is a love letter
  @return A new instance of a section block
  */
-+ (LRCollectedEnvelope*) createBlockWithLetter:(NSString *)letter loveLetter:(BOOL)love;
++ (LRCollectedEnvelope *)createBlockWithLetter:(NSString *)letter loveLetter:(BOOL)love;
 
 @end

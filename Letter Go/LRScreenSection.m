@@ -25,7 +25,7 @@
     return self;
 }
 
-- (void) createSectionContent
+- (void)createSectionContent
 {
     NSLog(@"Warning: createSectionContent should be overridden for class %@", [[self class] description]);
 }

@@ -17,7 +17,7 @@
 @property (nonatomic) BOOL envelopeTouchEnabled;
 @property (nonatomic, weak) id <LRLetterBlockControlDelegate> letterAdditionDelegate;
 
-- (void) addMovingBlockToScreen:(LRMovingBlock*)movingBlock;
-- (void) clearMainGameSection;
+- (void)addMovingBlockToScreen:(LRMovingBlock *)movingBlock;
+- (void)clearMainGameSection;
 
 @end

@@ -19,7 +19,7 @@
 
 #pragma mark - Initialization + Set Up Functions
 
-+ (LRParallaxNode*) nodeWithImageNamed:(NSString*)imageName
++ (LRParallaxNode *)nodeWithImageNamed:(NSString *)imageName
 {
     return [[LRParallaxNode alloc] initWithImageNamed:imageName];
 }
@@ -35,7 +35,7 @@
     return self;
 }
 
-- (void) loadScrollingSprites
+- (void)loadScrollingSprites
 {
     self.scrollingSprites = [[NSMutableArray alloc] init];
     SKSpriteNode *firstFrame = [self repeatingSprite];
@@ -48,14 +48,14 @@
     [self.scrollingSprites addObject:secondFrame];
 }
 
-- (SKSpriteNode*) repeatingSprite
+- (SKSpriteNode *)repeatingSprite
 {
     return [SKSpriteNode spriteNodeWithImageNamed:self.imageName];
 }
 
 #pragma mark - Movement Functions
 
-- (void) moveNodeBy:(CGFloat)distance
+- (void)moveNodeBy:(CGFloat)distance
 {
     SKSpriteNode *sprite1 = [self.scrollingSprites objectAtIndex:0];
     SKSpriteNode *sprite2 = [self.scrollingSprites objectAtIndex:1];

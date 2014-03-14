@@ -15,7 +15,7 @@ static const int kSlotHistoryCapacity = 5;
 
 @interface LRSlotManager : NSObject
 
-- (void) resetSlots;
-- (void) addEnvelope:(LRMovingBlock*)envelope;
+- (void)resetSlots;
+- (void)addEnvelope:(LRMovingBlock *)envelope;
 
 @end

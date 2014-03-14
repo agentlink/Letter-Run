@@ -17,7 +17,7 @@ typedef NS_ENUM(NSUInteger, LRCollisionType)
 
 @implementation LRCollisionManager (ContactFunctions)
 
-- (void) didBeginContact:(SKPhysicsContact *)contact
+- (void)didBeginContact:(SKPhysicsContact *)contact
 {
     SKNode *firstBody, *secondBody;
     
@@ -32,12 +32,12 @@ typedef NS_ENUM(NSUInteger, LRCollisionType)
     }
     LRCollisionType collisionType = [self collisionTypeForNode:firstBody andNode:secondBody];
     if (collisionType == kLRCollision_BottomBarrier_SectionBlock) {
-        LRCollectedEnvelope *envelope = (LRCollectedEnvelope*)secondBody;
+        LRCollectedEnvelope *envelope = (LRCollectedEnvelope *)secondBody;
         [envelope envelopeHitBottomBarrier];
     }
 }
 
-- (LRCollisionType) collisionTypeForNode:(SKNode*)nodeA andNode:(SKNode*)nodeB
+- (LRCollisionType) collisionTypeForNode:(SKNode *)nodeA andNode:(SKNode *)nodeB
 {
     if ([nodeA.name isEqualToString:NAME_SPRITE_BOTTOM_BARRIER] &&
         [nodeB.name rangeOfString:NAME_SPRITE_SECTION_LETTER_BLOCK].location != NSNotFound) {

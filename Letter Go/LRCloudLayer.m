@@ -20,7 +20,7 @@
     return self;
 }
 
-- (SKSpriteNode *) repeatingSprite
+- (SKSpriteNode *)repeatingSprite
 {
     SKSpriteNode *repeatingSprite = [[SKSpriteNode alloc]
                                      initWithColor:[LRColor skyColor]

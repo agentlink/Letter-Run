@@ -41,7 +41,7 @@
     return self;
 }
 
-- (void) loadDifficultyDictionary
+- (void)loadDifficultyDictionary
 {
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"DifficultyVariables" ofType:@"plist"];
     difficultyDict = [NSDictionary dictionaryWithContentsOfFile:plistPath];
@@ -78,7 +78,7 @@
 
 #pragma mark - Page Set Up Functions
 
-- (void) setUpPage:(int)pageNum inView:(UIView*)view
+- (void)setUpPage:(int)pageNum inView:(UIView *)view
 {
     if      (pageNum == 0) {    self.statsVC = [[LRStatsPageViewController alloc] init];
                                 [view addSubview:[self.statsVC view]];}
@@ -89,7 +89,7 @@
     else if (pageNum == 5)      [self loadVariablesFromCategory:CATEGORY_GENERATOIN toView:view];
 }
 
-- (void) loadVariablesFromCategory:(NSString*)category toView:(UIView*)view
+- (void)loadVariablesFromCategory:(NSString *)category toView:(UIView *)view
 {
     NSArray *variableNames = [difficultyDict objectForKey:category];
     NSAssert(variableNames, @"Error: now category for key %@", category);
@@ -116,7 +116,7 @@
 
 }
 
-- (NSString*)increaseStyleToString:(IncreaseStyle)style {
+- (NSString *)increaseStyleToString:(IncreaseStyle)style {
     if (style == IncreaseStyle_None)        return STYLE_NONE;
     if (style == IncreaseStyle_Linear)      return STYLE_LINEAR;
     if (style == IncreaseStyle_Exponential) return STYLE_EXPONENTIAL;
@@ -125,7 +125,7 @@
     return nil;
 }
 
-- (IncreaseStyle)stringToIncreaseStyle:(NSString*)string {
+- (IncreaseStyle)stringToIncreaseStyle:(NSString *)string {
     if ([string isEqualToString:STYLE_NONE])           return IncreaseStyle_None;
     if ([string isEqualToString:STYLE_LINEAR])         return IncreaseStyle_Linear;
     if ([string isEqualToString:STYLE_EXPONENTIAL])    return IncreaseStyle_Exponential;
@@ -136,12 +136,12 @@
 
 #pragma mark - Quit Button/Reload
 
-- (IBAction)quitButtonSelected:(UIButton*)sender{
+- (IBAction)quitButtonSelected:(UIButton *)sender{
     [self.view removeFromSuperview];
     [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_CONTINUE_GAME object:nil];
 }
 
-- (void) reloadSubviewValues {
+- (void)reloadSubviewValues {
     for (LRDevPauseSubView *subview in self.updatingViews) {
         [subview reloadValue];
     }

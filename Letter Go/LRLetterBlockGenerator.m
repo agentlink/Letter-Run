@@ -16,7 +16,7 @@ static const BOOL lgbDebugMode = NO;
 
 #pragma mark - Public Functions
 
-+ (LRMovingBlock*) createRandomEnvelope
++ (LRMovingBlock *)createRandomEnvelope
 {
     NSString *letter = [self generateLetter];
     BOOL love = [self isLoveLetter];
@@ -26,7 +26,7 @@ static const BOOL lgbDebugMode = NO;
     return envelope;
 }
 
-+ (LRMovingBlock*) createRandomEnvelopeAtSlot:(int)slot
++ (LRMovingBlock *)createRandomEnvelopeAtSlot:(int)slot
 {
     LRMovingBlock *envelope = [self createRandomEnvelope];
     //Setting the slot also sets the position. For now, slots are 0 - 2
@@ -34,14 +34,14 @@ static const BOOL lgbDebugMode = NO;
     return envelope;
 }
 
-+ (LRCollectedEnvelope*) createEmptySectionBlock
++ (LRCollectedEnvelope *)createEmptySectionBlock
 {
     LRCollectedEnvelope *lb = [LRCollectedEnvelope emptySectionBlock];
     lb.color = (lgbDebugMode) ? [SKColor purpleColor] : [LRColor clearColor];
     return lb;
 }
 
-+ (LRCollectedEnvelope*) createPlaceHolderBlock
++ (LRCollectedEnvelope *)createPlaceHolderBlock
 {
     LRCollectedEnvelope *lb = [LRLetterBlockGenerator createEmptySectionBlock];
     lb.letter = kLetterPlaceHolderText;
@@ -50,7 +50,7 @@ static const BOOL lgbDebugMode = NO;
     return lb;
 }
 
-+ (LRCollectedEnvelope*) createBlockWithLetter:(NSString *)letter loveLetter:(BOOL)love {
++ (LRCollectedEnvelope *)createBlockWithLetter:(NSString *)letter loveLetter:(BOOL)love {
     return [LRCollectedEnvelope sectionBlockWithLetter:letter loveLetter:love];
 }
 
@@ -62,7 +62,7 @@ static const BOOL lgbDebugMode = NO;
     return (chance < [[LRDifficultyManager shared] loveLetterProbability]);
 }
 
-+ (NSString*) generateLetter
++ (NSString *)generateLetter
 {
     NSString *letter = [[LRLetterGenerator shared] generateLetter];
     return letter;

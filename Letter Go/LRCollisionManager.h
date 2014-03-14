@@ -10,19 +10,19 @@
 
 @interface LRCollisionManager : SKNode <SKPhysicsContactDelegate>
 
-+ (LRCollisionManager *) shared;
-- (void) setBitMasksForSprite:(SKSpriteNode*)sprite;
++ (LRCollisionManager *)shared;
+- (void)setBitMasksForSprite:(SKSpriteNode *)sprite;
 
 //Add contact/collision detection to all future sprites with recipient name
-- (void) addCollisionDetectionOfSpritesNamed:(NSString *)colliderName toSpritesNamed:(NSString*) recipientName;
-- (void) addContactDetectionOfSpritesNamed:(NSString *)colliderName toSpritesNamed:(NSString*) recipientName;
+- (void)addCollisionDetectionOfSpritesNamed:(NSString *)colliderName toSpritesNamed:(NSString *)recipientName;
+- (void)addContactDetectionOfSpritesNamed:(NSString *)colliderName toSpritesNamed:(NSString *)recipientName;
 
 //Add contact/collision detection of all sprites with a name to a specific sprite
-- (void) addContactDetectionOfSpritesNamed:(NSString*)colliderName toSprite:(SKSpriteNode*)recipient;
-- (void) addCollisionDetectionOfSpritesNamed:(NSString*)colliderName toSprite:(SKSpriteNode*)recipient;
+- (void)addContactDetectionOfSpritesNamed:(NSString *)colliderName toSprite:(SKSpriteNode *)recipient;
+- (void)addCollisionDetectionOfSpritesNamed:(NSString *)colliderName toSprite:(SKSpriteNode *)recipient;
 
 //Remove contact/collision detection from a specific sprite
-- (void) removeCollisionDetectionOfSpritesNamed:(NSString *)colliderName toSprite:(SKSpriteNode *)recipient;
-- (void) removeContactDetectionOfSpritesNamed:(NSString *)colliderName toSprite:(SKSpriteNode *)recipient;
+- (void)removeCollisionDetectionOfSpritesNamed:(NSString *)colliderName toSprite:(SKSpriteNode *)recipient;
+- (void)removeContactDetectionOfSpritesNamed:(NSString *)colliderName toSprite:(SKSpriteNode *)recipient;
 
 @end

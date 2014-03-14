@@ -24,12 +24,12 @@
 @implementation LRLetterBlock
 
 #pragma mark - Initializers/Set Up
-+ (LRLetterBlock*) letterBlockWithLetter:(NSString*)letter loveLetter:(BOOL)love;
++ (LRLetterBlock *)letterBlockWithLetter:(NSString *)letter loveLetter:(BOOL)love;
 {
     return [[LRLetterBlock alloc] initWithLetter:letter loveLetter:love];
 }
 
-- (id) initWithLetter:(NSString*)letter loveLetter:(BOOL)love
+- (id) initWithLetter:(NSString *)letter loveLetter:(BOOL)love
 {
     if (self = [super initWithColor:[LRColor clearColor] size:CGSizeMake(kLetterBlockDimension, kLetterBlockDimension)]) {
         self.letter = letter;
@@ -39,7 +39,7 @@
     return self;
 }
 
-- (void) setLetter:(NSString *)letter
+- (void)setLetter:(NSString *)letter
 {
     _letter = letter;
     if ([self isLetterAlphabetical]) {
@@ -48,7 +48,7 @@
     }
 }
 
-- (void) setLoveLetter:(BOOL)loveLetter
+- (void)setLoveLetter:(BOOL)loveLetter
 {
     _loveLetter = loveLetter;
     if ([self isLetterAlphabetical]) {
@@ -58,7 +58,7 @@
 
 #pragma mark - Children Set Up
 
-- (SKLabelNode*) letterLabel
+- (SKLabelNode *)letterLabel
 {
     if (!_letterLabel) {
         UIFont *letterFont = [LRFont letterBlockFont];
@@ -72,7 +72,7 @@
     return _letterLabel;
 }
 
-- (SKSpriteNode*) envelopeSprite
+- (SKSpriteNode *)envelopeSprite
 {
     if (!_envelopeSprite) {
         NSString *fileName = [self fileNameForEnvelopeSprite];
@@ -86,13 +86,13 @@
 
 #pragma mark - Helper Functions
 
-- (NSString*) fileNameForEnvelopeSprite
+- (NSString *)fileNameForEnvelopeSprite
 {
     NSString *fileName = (self.loveLetter) ? @"Envelope_Love.png" : [self randomEnvelopeSprite];
     return fileName;
 }
 
-- (NSString*) randomEnvelopeSprite {
+- (NSString *)randomEnvelopeSprite {
 //    int suf = arc4random()%4 + 1;
 //    return [NSString stringWithFormat:@"Envelope_Normal_%i.png", suf];
     return @"Envelope_Normal.png";

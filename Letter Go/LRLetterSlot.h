@@ -14,9 +14,9 @@
 @property (nonatomic, strong) LRCollectedEnvelope *currentBlock;
 @property (nonatomic) NSInteger index;
 
-- (id) initWithLetterBlock:(LRCollectedEnvelope*)block;
-- (void) setEmptyLetterBlock;
+- (id) initWithLetterBlock:(LRCollectedEnvelope *)block;
+- (void)setEmptyLetterBlock;
 - (BOOL) isLetterSlotEmpty;
-- (void) stopChildEnvelopeBouncing;
+- (void)stopChildEnvelopeBouncing;
 
 @end

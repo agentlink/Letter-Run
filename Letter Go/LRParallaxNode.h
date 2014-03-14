@@ -10,10 +10,10 @@
 
 @interface LRParallaxNode : SKSpriteNode <LRGameStateDelegate>
 
-+ (LRParallaxNode*) nodeWithImageNamed:(NSString*)imageName;
-- (SKSpriteNode *) repeatingSprite;
++ (LRParallaxNode *)nodeWithImageNamed:(NSString *)imageName;
+- (SKSpriteNode *)repeatingSprite;
 
-- (void) moveNodeBy:(CGFloat)distance;
+- (void)moveNodeBy:(CGFloat)distance;
 
 @property (nonatomic) CGFloat relativeSpeed;
 @property (nonatomic) CGFloat xOffset;

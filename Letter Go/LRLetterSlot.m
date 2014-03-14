@@ -25,7 +25,7 @@
     return self;
 }
 
-- (id) initWithLetterBlock:(LRCollectedEnvelope*)block
+- (id) initWithLetterBlock:(LRCollectedEnvelope *)block
 {
     if (self = [self init])
     {
@@ -39,7 +39,7 @@
     return [self.currentBlock isLetterBlockEmpty];
 }
 
-- (void) stopChildEnvelopeBouncing
+- (void)stopChildEnvelopeBouncing
 {
     [self.currentBlock stopEnvelopeBouncing];
     [self enumerateChildNodesWithName:kTempCollectedEnvelopeName usingBlock:^(SKNode *node, BOOL *stop){
@@ -47,7 +47,7 @@
     }];
 }
 
-- (void) setCurrentBlock:(LRCollectedEnvelope *)incomingBlock
+- (void)setCurrentBlock:(LRCollectedEnvelope *)incomingBlock
 {
     //If it's being initialized
     if (!_currentBlock)
@@ -72,7 +72,7 @@
     _currentBlock.zPosition = zPos_SectionBlock_Unselected;
 }
 
-- (void) setEmptyLetterBlock
+- (void)setEmptyLetterBlock
 {
     self.currentBlock = [LRLetterBlockGenerator createEmptySectionBlock];
 }

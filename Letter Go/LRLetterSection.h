@@ -14,6 +14,6 @@
 
 + (CGFloat) distanceBetweenSlots;
 - (int) numLettersInSection;
-- (void) clearLetterSectionAnimated:(BOOL)animated;
+- (void)clearLetterSectionAnimated:(BOOL)animated;
 
 @end

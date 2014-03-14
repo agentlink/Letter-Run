@@ -10,7 +10,7 @@
 
 @interface LRFont : NSObject
 
-+ (UIFont*) submitButtonFont;
-+ (UIFont*) letterBlockFont;
++ (UIFont *)submitButtonFont;
++ (UIFont *)letterBlockFont;
 
 @end

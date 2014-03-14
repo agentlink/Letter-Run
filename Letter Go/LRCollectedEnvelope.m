@@ -32,12 +32,12 @@ static const NSUInteger kMaxBounceCount = 2;
 @implementation LRCollectedEnvelope
 
 #pragma mark - Set Up
-+ (LRCollectedEnvelope*) sectionBlockWithLetter:(NSString*)letter loveLetter:(BOOL)love
++ (LRCollectedEnvelope *)sectionBlockWithLetter:(NSString *)letter loveLetter:(BOOL)love
 {
     return [[LRCollectedEnvelope alloc] initWithLetter:letter loveLetter:love];
 }
 
-+ (LRCollectedEnvelope*) emptySectionBlock
++ (LRCollectedEnvelope *)emptySectionBlock
 {
     return [[LRCollectedEnvelope alloc] initWithLetter:@"" loveLetter:false];
 }
@@ -55,7 +55,7 @@ static const NSUInteger kMaxBounceCount = 2;
 
 #pragma mark - Physics Phunctions
 
-- (void) setUpPhysics
+- (void)setUpPhysics
 {
     self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.size];
     self.physicsBody.dynamic = YES;
@@ -66,7 +66,7 @@ static const NSUInteger kMaxBounceCount = 2;
     [[LRCollisionManager shared] setBitMasksForSprite:self];
 }
 
-- (void) setPhysicsEnabled:(BOOL)physicsEnabled
+- (void)setPhysicsEnabled:(BOOL)physicsEnabled
 {
     if (!self.physicsBody) {
         [self setUpPhysics];
@@ -75,7 +75,7 @@ static const NSUInteger kMaxBounceCount = 2;
     self.physicsBody.velocity = CGVectorMake(0, 0);
 }
 
-- (void) envelopeHitBottomBarrier
+- (void)envelopeHitBottomBarrier
 {
     
     //If the letter block has just been added, don't do anything
@@ -106,7 +106,7 @@ static const NSUInteger kMaxBounceCount = 2;
     }
 }
 
-- (void) stopEnvelopeBouncing
+- (void)stopEnvelopeBouncing
 {
     self.position = CGPointZero;
     //Only stops vertical movement
@@ -114,7 +114,7 @@ static const NSUInteger kMaxBounceCount = 2;
 }
 
 #pragma mark - Touch Functions
-- (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     for (UITouch *touch in touches)
     {
@@ -130,7 +130,7 @@ static const NSUInteger kMaxBounceCount = 2;
 }
 
 //Swipe function is done here by checking to see how far the player moved the block
-- (void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
     for (UITouch *touch in touches)
     {
@@ -163,27 +163,22 @@ static const NSUInteger kMaxBounceCount = 2;
     }
 }
 
-- (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    for (UITouch *touch in touches)
-    {
-        //If the scroll is horizontal, finish moving the letters
-        if (self.movementDirection == MovementDirectionHorizontal) {
-            [self.delegate rearrangementHasFinishedWithLetterBlock:self];
-      //      self.zPosition -= 5;
+    //If the scroll is horizontal, finish moving the letters
+    if (self.movementDirection == MovementDirectionHorizontal) {
+        [self.delegate rearrangementHasFinishedWithLetterBlock:self];
+    }
+    else {
+        if ([self shouldEnvelopeBeDeletedAtPosition:self.position])
+        {
+            [self.delegate removeEnvelopeFromLetterSection:self];
         }
         else {
-            if ([self shouldEnvelopeBeDeletedAtPosition:self.position])
-            {
-                [self.delegate removeEnvelopeFromLetterSection:self];
-            }
-            else {
-                self.physicsEnabled = YES;
-                //self.position = CGPointZero;
-            }
+            self.physicsEnabled = YES;
         }
-        self.movementDirection = MovementDirectionNone;
     }
+    self.movementDirection = MovementDirectionNone;
 }
 
 #pragma mark - Touch Helper Functions
@@ -201,11 +196,11 @@ static const NSUInteger kMaxBounceCount = 2;
     return MovementDirectionNone;
 }
 
-- (void) releaseBlockForRearrangement
+- (void)releaseBlockForRearrangement
 {
     //Move the block from being the child of the letter slot to the child of the whole letter section
-    LRLetterSection *letterSection = [[(LRGameScene*)[self scene] gamePlayLayer] letterSection];
-    LRLetterSlot *parentSlot = (LRLetterSlot*)[self parent];
+    LRLetterSection *letterSection = [[(LRGameScene *)[self scene] gamePlayLayer] letterSection];
+    LRLetterSlot *parentSlot = (LRLetterSlot *)[self parent];
     CGPoint newPos = [self convertPoint:self.position toNode:letterSection];
     self.position = newPos;
     [parentSlot setEmptyLetterBlock];

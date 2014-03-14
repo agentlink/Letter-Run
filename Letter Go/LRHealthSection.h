@@ -11,9 +11,9 @@
 
 @interface LRHealthSection : LRScreenSection <LRGameStateDelegate>
 
-- (void) addScore: (int)wordScore;
+- (void)addScore: (int)wordScore;
 - (CGFloat) percentHealth;
-- (void) moveHealthByPercent:(CGFloat)percent;
+- (void)moveHealthByPercent:(CGFloat)percent;
 
 
 @end

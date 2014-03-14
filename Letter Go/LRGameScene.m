@@ -24,7 +24,7 @@
     return self;
 }
 
-- (void) didMoveToView:(SKView *)view
+- (void)didMoveToView:(SKView *)view
 {
     [self setScaleMode:SKSceneScaleModeAspectFit];
     
@@ -37,13 +37,13 @@
     [self addChild:self.gamePlayLayer];
 }
 
-- (void) setUpPhysics
+- (void)setUpPhysics
 {
     [self.physicsWorld setGravity: CGVectorMake(0.0, -6.3)];
     [self.physicsWorld setContactDelegate:[LRCollisionManager shared]];
 }
 
-- (void) setGameState:(LRGameState)gameState
+- (void)setGameState:(LRGameState)gameState
 {
     switch (gameState) {
         case LRGameStateNewGame:
@@ -60,7 +60,7 @@
 
 #pragma mark - LRGameStateDelegate methods
 
-- (void) update:(NSTimeInterval)currentTime
+- (void)update:(NSTimeInterval)currentTime
 {
     [self enumerateChildNodesWithName:@"//*" usingBlock:^(SKNode *node, BOOL *stop) {
         if ([node conformsToProtocol:@protocol(LRGameStateDelegate)])
@@ -84,17 +84,17 @@
     }
 }
 
-- (void) gameOver
+- (void)gameOver
 {
     [self _sendAllNodesGameDelegateSelector:@selector(gameStateGameOver)];
 }
 
-- (void) newGame
+- (void)newGame
 {
     [self _sendAllNodesGameDelegateSelector:@selector(gameStateNewGame)];
 }
 
-- (void) _sendAllNodesGameDelegateSelector:(SEL)selector
+- (void)_sendAllNodesGameDelegateSelector:(SEL)selector
 {
     [self enumerateChildNodesWithName:@"//*" usingBlock:^(SKNode *node, BOOL *stop) {
         if ([node conformsToProtocol:@protocol(LRGameStateDelegate)])
@@ -115,7 +115,7 @@
 
 }
 #pragma mark - Scene Getters
-+ (LRGameScene*) scene
++ (LRGameScene *)scene
 {
     return [[self alloc] init];
 }

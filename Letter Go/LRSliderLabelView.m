@@ -19,7 +19,7 @@
 @implementation LRSliderLabelView
 @synthesize slider, textField, variableTitle, dataDict, resetButton;
 
-- (id) initWithFrame:(CGRect)frame andDictionary:(NSDictionary*)dict{
+- (id) initWithFrame:(CGRect)frame andDictionary:(NSDictionary *)dict{
     if (self = [super initWithFrame:frame andDictionary:dict]) {
         self.dataDict = dict;
         [self createContent];
@@ -27,7 +27,7 @@
     return self;
 }
 
-- (void) createContent
+- (void)createContent
 {
     [self setUpTitle];
     [self setUpResetButton];
@@ -38,7 +38,7 @@
 
 #pragma mark - Slider Functions
 
-- (void) setUpSlider
+- (void)setUpSlider
 {
     slider = [[UISlider alloc] init];
     CGAffineTransform rotate90 = CGAffineTransformMakeRotation(M_PI * -0.5);
@@ -62,7 +62,7 @@
 
 - (IBAction)sliderValueChanged:(id)sender
 {
-    [self setSliderText:[(UISlider*)sender value]];
+    [self setSliderText:[(UISlider *)sender value]];
 }
 
 - (IBAction)sliderFinishedMoving:(id)sender
@@ -71,20 +71,20 @@
 }
 
 #pragma mark - Data Management
-- (void) reloadValue {
+- (void)reloadValue {
     float value =[[NSUserDefaults standardUserDefaults] floatForKey:[dataDict objectForKey:USER_DEFAULT_KEY]];
     [self setSliderText:value];
     [slider setValue:value animated:NO];
 }
 
-- (void) saveData {
+- (void)saveData {
     NSString *notificationName = [dataDict objectForKey:USER_DEFAULT_KEY];
     NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithFloat:slider.value], [dataDict objectForKey:@"type"]] forKeys:@[notificationName, @"type"]];
     [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:userInfo];
 }
 
 #pragma mark - Text Field
-- (void) setUpTextField
+- (void)setUpTextField
 {
     CGFloat textWidth = self.frame.size.width/2;
     CGFloat textHeight = self.frame.size.width/4;
@@ -112,7 +112,7 @@
     textField.inputAccessoryView = toolbar;
 }
 
-- (void) setSliderText:(float)value
+- (void)setSliderText:(float)value
 {
     textField.text = [NSString stringWithFormat:@"%@", [self formattedFloat:value]];
     slider.value = [textField.text floatValue];
@@ -136,14 +136,14 @@
     return;
 }
 
-- (void) resetText {
+- (void)resetText {
     [textField endEditing:YES];
 }
 
 
 #pragma Other Set Up
 
-- (void) setUpTitle
+- (void)setUpTitle
 {
     variableTitle = [[UILabel alloc] init];
     variableTitle.font = [UIFont systemFontOfSize:10];
@@ -155,7 +155,7 @@
     [self addSubview:variableTitle];
 }
 
-- (void) setUpResetButton
+- (void)setUpResetButton
 {
     CGRect buttonFrame = CGRectMake(0, self.frame.size.height * .85, self.frame.size.width, self.frame.size.height * .15);
     resetButton = [[UIButton alloc] initWithFrame:buttonFrame];
@@ -166,7 +166,7 @@
     [self addSubview:resetButton];
 }
 
-- (void) resetToDefaultValue
+- (void)resetToDefaultValue
 {
     float value =[[dataDict objectForKey:INITIAL_VALUE_KEY] floatValue];
     [self setSliderText:value];
@@ -174,7 +174,7 @@
     [self saveData];
 }
 
-- (NSString*) formattedFloat:(float)input
+- (NSString *)formattedFloat:(float)input
 {
     NSNumberFormatter *nf = [[NSNumberFormatter alloc] init];
     [nf setNumberStyle:NSNumberFormatterDecimalStyle];
@@ -186,7 +186,7 @@
     return [nf stringFromNumber:num];
 }
 
-- (void) debug_colors
+- (void)debug_colors
 {
     self.backgroundColor = [UIColor redColor];
     slider.backgroundColor = [UIColor greenColor];

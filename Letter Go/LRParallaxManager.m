@@ -29,7 +29,7 @@
     return self;
 }
 
-- (void) addParallaxNode:(LRParallaxNode *)node toIndex:(uint)index;
+- (void)addParallaxNode:(LRParallaxNode *)node toIndex:(uint)index;
 {
     node.relativeSpeed = [[[[LRDifficultyManager shared] parallaxLayerSpeeds] objectAtIndex:index] floatValue];
     NSAssert(node.relativeSpeed <= 1, @"Error: relative speed should be a value less than one");
@@ -40,7 +40,7 @@
 }
 
 #pragma mark - Parallax Movement Functions
-- (void) update:(NSTimeInterval)currentTime
+- (void)update:(NSTimeInterval)currentTime
 {
     if ([[LRGameStateManager shared] isGameOver] || [[LRGameStateManager shared] isGamePaused]) {
         self.initialTime = kGameLoopResetValue;
@@ -60,7 +60,7 @@
 
 #pragma mark - Node Access Methods
 
-- (LRParallaxNode*) objectAtIndex:(NSUInteger)index {
+- (LRParallaxNode *)objectAtIndex:(NSUInteger)index {
     return [self.parallaxNodes objectAtIndex:index];
 }
 
@@ -70,7 +70,7 @@
 
 #pragma mark - Game State Methods
 
-- (void) unpauseGame {
+- (void)unpauseGame {
     self.initialTime = kGameLoopResetValue;
 }
 @end

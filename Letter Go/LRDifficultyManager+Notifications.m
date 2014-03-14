@@ -18,13 +18,13 @@
 
 @implementation LRDifficultyManager (Notifications)
 
-- (void) resetUserDefaults
+- (void)resetUserDefaults
 {
     [self writeUserDefaults];
     [self loadNotifications];
 }
 
-- (void) writeUserDefaults
+- (void)writeUserDefaults
 {
     for (NSArray *section in [self.difficultyDict allValues]) {
         for (NSDictionary *diffVar in section) {
@@ -46,7 +46,7 @@
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:TRUE] forKey:USER_DEFAULTS_LOADED];
 }
 
-- (void) loadNotifications
+- (void)loadNotifications
 {
     for (NSArray *section in [self.difficultyDict allValues])
         for (NSDictionary *diffVar in section)
@@ -56,7 +56,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetUserDefaults) name:NOTIFICATION_RESET_DIFFICULTIES object:nil];
 }
 
-- (void) loadUnsavedValues
+- (void)loadUnsavedValues
 {
     self.mailmanReceivesDamage = YES;
     self.healthBarFalls = YES;
@@ -66,7 +66,7 @@
     self.QuEnabled = YES;
 }
 
-- (void) loadUserDefaults
+- (void)loadUserDefaults
 {
     //Health
     self.initialHealthDropTime = 10;//[[NSUserDefaults standardUserDefaults] floatForKey:DV_HEALTHBAR_INITIAL_SPEED];
@@ -105,7 +105,7 @@
     self.scrollingSpeedIncrease = [[NSUserDefaults standardUserDefaults] floatForKey:DV_PARALLAX_SPEED_INCREASE];
 }
 
-- (void)updateValue:(NSNotification*)notification
+- (void)updateValue:(NSNotification *)notification
 {
     NSString *noteName = notification.name;
     NSString *typeName = [notification.userInfo objectForKey:KEY_TYPE];
@@ -127,7 +127,7 @@
     [self loadUserDefaults];
 }
 
-- (NSArray*) loadParallaxLayerSpeeds
+- (NSArray *)loadParallaxLayerSpeeds
 {
     //Load from data dict
     NSMutableArray *layerSpeeds = [NSMutableArray array];
@@ -139,7 +139,7 @@
     return layerSpeeds;
 }
 
-- (void) setUserDefaults
+- (void)setUserDefaults
 {
     //Health
     [[NSUserDefaults standardUserDefaults] setFloat:self.initialHealthDropTime forKey:DV_HEALTHBAR_INITIAL_SPEED];

@@ -44,7 +44,7 @@
 
 #pragma mark - Update Loop Methods -
 #pragma mark Time Methods
-- (void) update:(NSTimeInterval)currentTime
+- (void)update:(NSTimeInterval)currentTime
 {
     //Check whether the update loop should continue
     if (newGameWillBegin) {
@@ -73,7 +73,7 @@
 }
 
 #pragma mark Letter Addition and Removal
-- (void) generateEnvelopes
+- (void)generateEnvelopes
 {
     int i = 0;
     for (i = 0; i < [[LRDifficultyManager shared] numLettersPerDrop]; i++) {
@@ -83,7 +83,7 @@
     }
 }
 
-- (void) addMovingBlockToScreen:(LRMovingBlock *)movingBlock
+- (void)addMovingBlockToScreen:(LRMovingBlock *)movingBlock
 {
     //Set the touch delegate
     movingBlock.touchDelegate = self;
@@ -93,14 +93,14 @@
 }
 
 
-- (void) removeMovingBlockFromScreen:(LRMovingBlock*)letterBlock
+- (void)removeMovingBlockFromScreen:(LRMovingBlock *)letterBlock
 {
     //Remove the envelope from the screen and the array
     [self.envelopesOnScreen removeObject:letterBlock];
     [self removeChildrenInArray:@[letterBlock]];
 }
 
-- (void) clearMainGameSection
+- (void)clearMainGameSection
 {
     [self.letterSlotManager resetSlots];
     [self removeChildrenInArray:self.envelopesOnScreen];
@@ -109,7 +109,7 @@
 
 #pragma mark Letter Movement/Touch
 
-- (void) shiftEnvelopesForTimeDifference:(CGFloat)timeDifference
+- (void)shiftEnvelopesForTimeDifference:(CGFloat)timeDifference
 {
     NSMutableArray *blocksToRemove = [NSMutableArray new];
     CGFloat secondsToCrossScreen = 5.0;
@@ -130,7 +130,7 @@
     [self removeChildrenInArray:blocksToRemove];
 }
 
-- (void) setEnvelopeTouchEnabled:(BOOL)envelopeTouchEnabled
+- (void)setEnvelopeTouchEnabled:(BOOL)envelopeTouchEnabled
 {
     _envelopeTouchEnabled = envelopeTouchEnabled;
     for (LRMovingBlock *envelope in self.envelopesOnScreen) {
@@ -141,7 +141,7 @@
 #pragma mark - Delegate Methods -
 #pragma mark LRMovingBlockTouchDelegate Methods
 
-- (void) playerSelectedMovingBlock:(LRMovingBlock *)movingBlock
+- (void)playerSelectedMovingBlock:(LRMovingBlock *)movingBlock
 {
     [self.letterAdditionDelegate addEnvelopeToLetterSection:movingBlock];
     [self removeMovingBlockFromScreen:movingBlock];

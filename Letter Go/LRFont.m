@@ -10,11 +10,11 @@
 
 @implementation LRFont
 
-+ (UIFont*) submitButtonFont {
++ (UIFont *)submitButtonFont {
     return [UIFont fontWithName:@"Helvetica" size:12];
 }
 
-+ (UIFont*) letterBlockFont {
++ (UIFont *)letterBlockFont {
     return [UIFont fontWithName:@"Helvetica" size:32];
 }
 

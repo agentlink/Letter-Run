@@ -10,7 +10,7 @@
 
 @interface LRDevPauseSubView : UIView
 
-- (void) reloadValue;
-- (id) initWithFrame:(CGRect)frame andDictionary:(NSDictionary*)dict;
+- (void)reloadValue;
+- (id) initWithFrame:(CGRect)frame andDictionary:(NSDictionary *)dict;
 
 @end

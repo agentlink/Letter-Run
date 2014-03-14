@@ -20,16 +20,16 @@ typedef NS_ENUM(NSInteger, LRGameState)
 @protocol LRGameStateDelegate <NSObject>
 @optional
 ///Called when the game is over
-- (void) gameStateGameOver;
+- (void)gameStateGameOver;
 ///Called when a new game begins
-- (void) gameStateNewGame;
+- (void)gameStateNewGame;
 ///Called when the game is paused. This gets called in the update loop and passes the current time from there. If it is called, update: will not be called.
-- (void) gameStatePaused:(NSTimeInterval)currentTime;
+- (void)gameStatePaused:(NSTimeInterval)currentTime;
 ///Called when the game is unpaused. This gets called in the update loop and passes the current time from there. If it is called, update: will not be called.
-- (void) gameStateUnpaused:(NSTimeInterval)currentTime;
+- (void)gameStateUnpaused:(NSTimeInterval)currentTime;
 /*!
  @description Called every time the game loop runs
  @param currentTime The interval that the game loop is currently on
  */
-- (void) update:(NSTimeInterval)currentTime;
+- (void)update:(NSTimeInterval)currentTime;
 @end

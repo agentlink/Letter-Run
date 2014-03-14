@@ -43,7 +43,7 @@
 }
 
 #pragma mark - Labels
-- (void) loadLabelText
+- (void)loadLabelText
 {
     levelLabel.text = [NSString stringWithFormat:@"%i", [[LRDifficultyManager shared] level]];
     scoreLabel.text = [NSString stringWithFormat:@"%i", [[LRScoreManager shared] score]];
@@ -58,7 +58,7 @@
     [self loadWordScores];
 }
 
-- (void) loadWordScores
+- (void)loadWordScores
 {
     int numShownWords = 3;
     wordScoreLabel.text = @"";
@@ -78,7 +78,7 @@
 }
 
 #pragma mark - Steppers
-- (void) loadSteppers
+- (void)loadSteppers
 {
     levelStepper.value = [[LRDifficultyManager shared] level];
     levelStepper.minimumValue = 1;
@@ -91,12 +91,12 @@
     healthStepper.stepValue = 10;
 }
 
-- (IBAction) levelChanged:(UIStepper*)sender {
+- (IBAction) levelChanged:(UIStepper *)sender {
     [[LRDifficultyManager shared] setLevel:(int)sender.value];
     [self reloadValues];
 }
 
-- (IBAction)healthChanged:(UIStepper*)sender
+- (IBAction)healthChanged:(UIStepper *)sender
 {
     float healthDiff = sender.value - [[self _healthSection] percentHealth];
     [[self _healthSection] moveHealthByPercent:healthDiff];
@@ -104,24 +104,24 @@
 
 }
 
-- (LRHealthSection*)_healthSection
+- (LRHealthSection *)_healthSection
 {
     return [[[[LRGameStateManager shared] gameScene] gamePlayLayer] healthSection];
 }
 
 #pragma mark - Switches
-- (void) loadSwitchValues
+- (void)loadSwitchValues
 {
     [self.mailmanDamage setOn:[[LRDifficultyManager shared] mailmanReceivesDamage]];
     [self.healthBarDrops setOn:[[LRDifficultyManager shared] healthBarFalls]];
 }
 
 - (IBAction)mailmanDamageSwitched:(id)sender {
-    [[LRDifficultyManager shared] setMailmanReceivesDamage:[(UISwitch*)sender isOn]];
+    [[LRDifficultyManager shared] setMailmanReceivesDamage:[(UISwitch *)sender isOn]];
 }
 
 - (IBAction)healthDropsSwitched:(id)sender {
-    [[LRDifficultyManager shared] setHealthBarFalls:[(UISwitch*)sender isOn]];
+    [[LRDifficultyManager shared] setHealthBarFalls:[(UISwitch *)sender isOn]];
 }
 
 #pragma mark - Buttons
@@ -136,7 +136,7 @@
     [self reloadValues];
 }
 
-- (void) reloadValues {
+- (void)reloadValues {
     [self loadSteppers];
     [self loadLabelText];
     [self loadSwitchValues];
@@ -146,7 +146,7 @@
 
 #pragma mark - Text Fields
 
-- (void) loadTextFields
+- (void)loadTextFields
 {
     forceSubmitField.keyboardType = UIKeyboardTypeNamePhonePad;
     forceSubmitField.returnKeyType = UIReturnKeyDone;
@@ -157,7 +157,7 @@
     return NO;
 }
 
-- (IBAction)forceSubmitWord:(UITextField*)sender
+- (IBAction)forceSubmitWord:(UITextField *)sender
 {
     NSString *inputWord = [sender.text uppercaseString];
     sender.text = @"";
@@ -188,7 +188,7 @@
     [self reloadValues];
 }
 
-- (void) addSubviews {
+- (void)addSubviews {
     [self.view addSubview:self.resetDifficulty];
     [self.view addSubview:self.startNewGameButton];
     

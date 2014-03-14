@@ -23,7 +23,7 @@ typedef enum {
 
 #pragma mark - Curve Building Functions
 
-+ (LRBezierPath*) bezierWithStart:(CGPoint)start c1:(CGPoint)c1
++ (LRBezierPath *)bezierWithStart:(CGPoint)start c1:(CGPoint)c1
                                c2:(CGPoint)c2 end:(CGPoint)end
 {
     LRBezierPath *path = [LRBezierPath bezierPath];
@@ -33,7 +33,7 @@ typedef enum {
     return path;
 }
 
-+ (NSArray*) verticalFallingLetterActionsWithHeight:(CGFloat)height andSwingCount:(int)swingCount
++ (NSArray *)verticalFallingLetterActionsWithHeight:(CGFloat)height andSwingCount:(int)swingCount
 {
     //Set initial direction of the swing
     SwingDirection currentSwingDirection = kSwingLeft;
@@ -82,7 +82,7 @@ typedef enum {
     return curveArray;
 }
 
-+ (NSArray*) horizontalLetterActionForDistance:(CGFloat)distance;
++ (NSArray *)horizontalLetterActionForDistance:(CGFloat)distance;
 {
     //Since the mailman is on the left, reverse the distance
     distance *= -1;

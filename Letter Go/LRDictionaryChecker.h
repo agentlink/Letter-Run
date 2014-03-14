@@ -12,7 +12,7 @@
 
 //Futures (threading)
 
-+ (LRDictionaryChecker*) shared;
-- (BOOL)checkForWordInDictionary:(NSString*)word;
++ (LRDictionaryChecker *)shared;
+- (BOOL)checkForWordInDictionary:(NSString *)word;
 
 @end

@@ -26,7 +26,7 @@ static LRGameStateManager *_shared = nil;
 #pragma mark - Public Properties
 
 
-+ (LRGameStateManager*) shared
++ (LRGameStateManager *)shared
 {
     //This @synchronized line is for multithreading
     @synchronized (self)
@@ -59,14 +59,14 @@ static LRGameStateManager *_shared = nil;
     return self.gameScene.gameState == LRGameStatePauseGame;
 }
 
-- (LRGameScene*)gameScene
+- (LRGameScene *)gameScene
 {
-    return (LRGameScene*)[self scene];
+    return (LRGameScene *)[self scene];
 }
 
 #pragma mark - Set Up
 
-- (void) _setUpNotifications
+- (void)_setUpNotifications
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_gameOver:) name:GAME_STATE_GAME_OVER object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_pauseGame) name:GAME_STATE_PAUSE_GAME object:nil];
@@ -74,7 +74,7 @@ static LRGameStateManager *_shared = nil;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_newGame:) name:GAME_STATE_NEW_GAME object:nil];
 }
 
-- (void) _setUpManagerHierarchy
+- (void)_setUpManagerHierarchy
 {
     //This function makes the manager children so they can use the LRGameStateDelegate methods
     _managerParent = [SKNode new];
@@ -84,7 +84,7 @@ static LRGameStateManager *_shared = nil;
 
 #pragma mark - Game State Functions
 
-- (void) _newGame:(NSNotification*)notification
+- (void)_newGame:(NSNotification *)notification
 {
     LRGamePlayLayer *gpl = [self.gameScene gamePlayLayer];
     if ([[[notification userInfo] objectForKey:@"devpause"] boolValue]) {
@@ -96,7 +96,7 @@ static LRGameStateManager *_shared = nil;
 
 }
 
-- (void)_gameOver:(NSNotification*)notification
+- (void)_gameOver:(NSNotification *)notification
 {
     self.gameScene.gameState = LRGameStateGameOver;
     

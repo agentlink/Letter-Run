@@ -18,7 +18,7 @@
 
 static LRDictionaryChecker *_shared = nil;
 
-+ (LRDictionaryChecker*) shared
++ (LRDictionaryChecker *)shared
 {
     //This @synchronized line is for multithreading
     @synchronized (self)
@@ -45,7 +45,7 @@ static LRDictionaryChecker *_shared = nil;
     return self;
 }
 
-- (void) setUpDictionary
+- (void)setUpDictionary
 {
     NSString* path = [[NSBundle mainBundle] pathForResource:DICTIONARY_FILE_NAME
                                                      ofType:@"txt"];
@@ -58,7 +58,7 @@ static LRDictionaryChecker *_shared = nil;
     self.dictionary = [NSSet setWithArray:[fileContents componentsSeparatedByString:@"\n"]];
 }
 
-- (BOOL)checkForWordInDictionary:(NSString*)word
+- (BOOL)checkForWordInDictionary:(NSString *)word
 {
     //Capitalize the letters to handle Qu condition
     word = [word uppercaseString];

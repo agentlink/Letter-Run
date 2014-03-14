@@ -18,10 +18,10 @@ enum {
     BackgroundIndex_Grass
 };
 
-- (void) addParallaxNode:(LRParallaxNode *)node toIndex:(uint)index;
+- (void)addParallaxNode:(LRParallaxNode *)node toIndex:(uint)index;
 
 - (NSUInteger) count;
 
-- (LRParallaxNode*) objectAtIndex:(NSUInteger)index;
+- (LRParallaxNode *)objectAtIndex:(NSUInteger)index;
 
 @end

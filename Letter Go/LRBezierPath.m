@@ -11,13 +11,13 @@
 @implementation LRBezierPath
 @synthesize start, c1, c2, end;
 
-- (void) moveToPoint:(CGPoint)point
+- (void)moveToPoint:(CGPoint)point
 {
     [super moveToPoint:point];
     self.start = point;
 }
 
-- (void) addCurveToPoint:(CGPoint)endPoint controlPoint1:(CGPoint)controlPoint1 controlPoint2:(CGPoint)controlPoint2
+- (void)addCurveToPoint:(CGPoint)endPoint controlPoint1:(CGPoint)controlPoint1 controlPoint2:(CGPoint)controlPoint2
 {
     //Bezier curve creation source: http://tinyurl.com/beziercurveref
     
@@ -34,7 +34,7 @@
     return self;
 }
 
-+ (LRBezierPath*) bezierPath
++ (LRBezierPath *)bezierPath
 {
     return [[LRBezierPath alloc] init];
 }

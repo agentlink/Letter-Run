@@ -16,7 +16,7 @@
 
 # pragma mark - Init Functions
 static LRDifficultyManager *_shared = nil;
-+ (LRDifficultyManager*) shared
++ (LRDifficultyManager *)shared
 {
     @synchronized (self)
     {
@@ -43,7 +43,7 @@ static LRDifficultyManager *_shared = nil;
     return self;
 }
 
-- (void) loadDifficultyInfo
+- (void)loadDifficultyInfo
 {
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"DifficultyVariables" ofType:@"plist"];
     self.difficultyDict = [NSDictionary dictionaryWithContentsOfFile:plistPath];
