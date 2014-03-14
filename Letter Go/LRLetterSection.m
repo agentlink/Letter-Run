@@ -16,7 +16,7 @@
 #import "LRGameScene.h"
 #import "LREnvelopeAnimationBuilder.h"
 #import "LRCollisionManager.h"
-
+#import "LRGameStateManager.h"
 
 typedef NS_ENUM(NSUInteger, LetterSectionState)
 {
@@ -29,6 +29,7 @@ typedef void(^CompletionBlockType)(void);
 
 @interface LRLetterSection ()
 
+@property (nonatomic) BOOL gameOverFinished;
 @property (nonatomic, strong) SKSpriteNode *letterSection;
 @property (nonatomic, strong) LRSubmitButton *submitButton;
 @property (nonatomic, strong) NSMutableArray *letterSlots;
@@ -36,8 +37,8 @@ typedef void(^CompletionBlockType)(void);
 
 @property (nonatomic, strong) SKSpriteNode *bottomBarrier;
 
-@property (nonatomic) LRLetterSlot  *currentSlot;
-@property LRCollectedEnvelope *touchedBlock;
+@property (nonatomic, weak) LRLetterSlot  *currentSlot;
+@property (nonatomic, weak) LRCollectedEnvelope *touchedBlock;
 
 @property LetterSectionState letterSectionState;
 
@@ -552,7 +553,7 @@ typedef void(^CompletionBlockType)(void);
 
 #pragma mark - Helper Functions
 
-- (void) clearLetterSectionAnimated:(BOOL)animated
+- (void)clearLetterSectionAnimated:(BOOL)animated
 {
     self.letterSectionState  = LetterSectionStateSubmittingWord;
     for (int i = 0; i < [self.letterSlots count]; i++)
@@ -617,13 +618,36 @@ typedef void(^CompletionBlockType)(void);
 #pragma mark - LRGameStateDelegate Methods
 - (void)gameStateGameOver
 {
+    self.gameOverFinished = TRUE;
     self.userInteractionEnabled = NO;
 }
 
 - (void)gameStateNewGame
 {
     [self clearLetterSectionAnimated:NO];
+    [self _removeAllEnvelopes];
+    self.userInteractionEnabled = YES;
 }
+
+- (void)gameStatePaused:(NSTimeInterval)currentTime
+{
+    self.userInteractionEnabled = NO;
+}
+
+- (void)gameStateUnpaused:(NSTimeInterval)currentTime
+{
+    self.userInteractionEnabled = YES;
+}
+
+- (void)_removeAllEnvelopes
+{
+    if (self.touchedBlock)
+    {
+        [self removeChildrenInArray:@[self.touchedBlock]];
+        self.touchedBlock = nil;
+    }
+}
+
 //Debug function
 /*
 - (void) setCurrentSlot:(LRLetterSlot *)currentSlot

@@ -96,7 +96,7 @@ static LRGameStateManager *_shared = nil;
 
 }
 
-- (void) _gameOver:(NSNotification*)notification
+- (void)_gameOver:(NSNotification*)notification
 {
     self.gameScene.gameState = LRGameStateGameOver;
     
@@ -108,35 +108,41 @@ static LRGameStateManager *_shared = nil;
     }
 }
 
-- (void) _pauseGame
+- (void)_pauseGame
 {
     self.gameScene.gameState = LRGameStatePauseGame;
     self.gameScene.paused = YES;
-    LRGamePlayLayer *gpl = [self.gameScene gamePlayLayer];
-    [gpl.letterSection setUserInteractionEnabled:NO];
-    
-    if (!gpl.devPause) {
-        gpl.devPause = [[LRDevPauseMenuVC alloc] init];
-        CGRect devPauseFrame = gpl.devPause.view.frame;
-        devPauseFrame.size = CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT);
-        gpl.devPause.view.frame = devPauseFrame;        
-        [gpl.scene.view addSubview:gpl.devPause.view];
-    }
+    [self _toggleDevPauseMenuOn:YES];
 }
 
-- (void) _unpauseGame
+- (void)_unpauseGame
 {
     self.gameScene.gameState = LRGameStateUnpauseGame;
     self.gameScene.paused = NO;
-    LRGamePlayLayer *gpl = [self.gameScene gamePlayLayer];
-    if (gpl.devPause) {
-        gpl.devPause = nil;
-    }
-    [gpl.letterSection setUserInteractionEnabled:YES];
+    [self _toggleDevPauseMenuOn:NO];
 }
 
+- (void)_toggleDevPauseMenuOn:(BOOL)on
+{
+    LRGamePlayLayer *gpl = [self.gameScene gamePlayLayer];
+    if (on)
+    {
+        if (!gpl.devPause) {
+            gpl.devPause = [[LRDevPauseMenuVC alloc] init];
+            CGRect devPauseFrame = gpl.devPause.view.frame;
+            devPauseFrame.size = CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT);
+            gpl.devPause.view.frame = devPauseFrame;
+            [gpl.scene.view addSubview:gpl.devPause.view];
+        }
+    }
+    else
+    {
+        if (gpl.devPause)
+            gpl.devPause = nil;
+    }
+}
 
-- (void) _showGameOverLabel
+- (void)_showGameOverLabel
 {
     SKLabelNode *gameOverLabel = [[SKLabelNode alloc] init];
     gameOverLabel.text = @"Game Over";
