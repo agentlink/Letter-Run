@@ -13,27 +13,27 @@
 
 ///Returns a color with the RGB values provided. Values must be below 255
 + (SKColor *)rgbColorWithRed:(CGFloat)r green:(CGFloat)g blue:(CGFloat)b alpha:(CGFloat)alpha;
+///Returns a color with RGB values between the start and the end point by a given percentage
++ (SKColor *)colorBetweenStartColor:(UIColor *)startColor andEndColor:(UIColor *)endColor percent:(CGFloat)percent;
 
 //Basic colors
 + (SKColor *)clearColor;
 + (SKColor *)redColor;
 
-//Game screen object colors
-+ (SKColor *)healthBarColor;
-+ (SKColor *)healthBarBackgroundColor;
+//Health bar colors
++ (SKColor *)healthBarColorGreen;
++ (SKColor *)healthBarColorYellow;
++ (SKColor *)healtBarColorRed;
 
+//Submit button colors
 + (SKColor *)submitButtonEnabledColor;
 + (SKColor *)submitButtonDisabledColor;
 + (SKColor *)submitButtonTextColor;
 
+//Other colors
 + (SKColor *)emptySlotColor;
 + (SKColor *)letterBlockFontColor;
-
-//Background object colors
 + (SKColor *)skyColor;
 + (SKColor *)letterSectionColor;
-
-
-//Font colors
-
++ (SKColor *)gamePlayLayerBackgroundColor;
 @end

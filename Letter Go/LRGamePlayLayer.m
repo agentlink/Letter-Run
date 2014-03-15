@@ -13,6 +13,7 @@
 #import "LRDifficultyManager.h"
 #import "LRSlotManager.h"
 #import "LRPositionConstants.h"
+#import "LRColor.h"
 
 @interface LRGamePlayLayer ()
 @property LRSlotManager *letterSlots;
@@ -35,6 +36,7 @@
         [self setPosition:CGPointMake(self.size.width/2, self.size.height/2)];
         [self setUserInteractionEnabled:YES];
         
+        self.color = [LRColor gamePlayLayerBackgroundColor];
         self.pauseTime = kGameLoopResetValue;
         self.name = NAME_LAYER_GAME_PLAY;
         [self createLayerContent];
