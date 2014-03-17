@@ -245,12 +245,12 @@ typedef void(^CompletionBlockType)(void);
     
     //Set the envelope to an empty slot
     LRCollectedEnvelope *envelopeToDelete = (LRCollectedEnvelope *)envelope;
-    __block int deletionIndex = envelopeToDelete.slotIndex;
+    __block NSInteger deletionIndex = envelopeToDelete.slotIndex;
     LRLetterSlot *deletionSlot = [self.letterSlots objectAtIndex:deletionIndex];
     deletionSlot.currentBlock = [LRLetterBlockGenerator createEmptySectionBlock];
     
 
-    for (int i = deletionIndex; i < self.letterSlots.count; i++)
+    for (NSInteger i = deletionIndex; i < self.letterSlots.count; i++)
     {
         //Get the proper slot to update
         LRLetterSlot *slotToUpdate = [self.letterSlots objectAtIndex:i];
@@ -286,9 +286,9 @@ typedef void(^CompletionBlockType)(void);
 }
 
 
-- (void)shiftLettersFromDeletionIndex:(int)deletionIndex
+- (void)shiftLettersFromDeletionIndex:(NSInteger)deletionIndex
 {
-    for (int k = deletionIndex; k < kWordMaximumLetterCount; k++)
+    for (NSInteger k = deletionIndex; k < kWordMaximumLetterCount; k++)
     {
         LRLetterSlot *updatedSlot = self.letterSlots[k];
         //If it's the last slot, make it an empty block. Otherwise, make it the next block over
@@ -371,7 +371,7 @@ typedef void(^CompletionBlockType)(void);
     
     
     NSDictionary *wordDict = [NSDictionary dictionaryWithObjects:@[submittedWord, [self loveLetterIndices]] forKeys:@[@"word", @"loveLetters"]];
-    int wordScore = [[LRScoreManager shared] submitWord:wordDict];
+    NSInteger wordScore = [[LRScoreManager shared] submitWord:wordDict];
     if (!forcedWord)
     {
         LRHealthSection *healthSection = [[(LRGameScene *)[self scene] gamePlayLayer] healthSection];

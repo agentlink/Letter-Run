@@ -110,7 +110,7 @@
     NSString *noteName = notification.name;
     NSString *typeName = [notification.userInfo objectForKey:KEY_TYPE];
     if ([typeName isEqualToString:INT_TYPE]) {
-        int value = [[[notification userInfo] objectForKey:noteName] integerValue];
+        NSInteger value = [[[notification userInfo] objectForKey:noteName] integerValue];
         [[NSUserDefaults standardUserDefaults] setInteger:value forKey:noteName];
     }
     else if ([typeName isEqualToString:FLOAT_TYPE]) {

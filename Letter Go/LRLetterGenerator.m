@@ -99,8 +99,8 @@ static LRLetterGenerator *_shared = nil;
      Consonants are negative
     */
     
-    int maxConsonants = [[LRDifficultyManager shared] maxNumber_consonants];
-    int maxVowels = [[LRDifficultyManager shared] maxNumber_vowels];
+    NSInteger maxConsonants = [[LRDifficultyManager shared] maxNumber_consonants];
+    NSInteger maxVowels = [[LRDifficultyManager shared] maxNumber_vowels];
     
     //If it's a consonant and there is a max number of consonants
     if ([consonantSet characterIsMember:[letter characterAtIndex:0]] && maxConsonants > 0) {

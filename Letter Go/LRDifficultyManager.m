@@ -81,7 +81,7 @@ static LRDifficultyManager *_shared = nil;
     return healthSpeed;
 }
 
-- (int) loveLetterProbability
+- (NSInteger) loveLetterProbability
 {
     return self.percentLoveLetters;
 }

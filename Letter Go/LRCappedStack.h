@@ -23,7 +23,7 @@
 - (id) pushObject:(id)anObject;
 
 #pragma mark - NSMutableArray functions
-- (unsigned) count;
+- (NSUInteger) count;
 - (void)removeAllObjects;
 - (id) objectAtIndex:(NSUInteger)index;
 - (void)addObject:(id)anObject;

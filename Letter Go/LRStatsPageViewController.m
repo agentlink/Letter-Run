@@ -45,9 +45,9 @@
 #pragma mark - Labels
 - (void)loadLabelText
 {
-    levelLabel.text = [NSString stringWithFormat:@"%i", [[LRDifficultyManager shared] level]];
-    scoreLabel.text = [NSString stringWithFormat:@"%i", [[LRScoreManager shared] score]];
-    nextScoreLabel.text = [NSString stringWithFormat:@"%i", [[LRScoreManager shared] scoreToNextLevel]];
+    levelLabel.text = [NSString stringWithFormat:@"%li", [[LRDifficultyManager shared] level]];
+    scoreLabel.text = [NSString stringWithFormat:@"%li", [[LRScoreManager shared] score]];
+    nextScoreLabel.text = [NSString stringWithFormat:@"%li", [[LRScoreManager shared] scoreToNextLevel]];
     //Make there only one fraction digit
     NSNumberFormatter *nf = [[NSNumberFormatter alloc] init];
     [nf setNumberStyle:NSNumberFormatterDecimalStyle];

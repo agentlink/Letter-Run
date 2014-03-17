@@ -49,7 +49,7 @@
     [self.array insertObject:anObject atIndex:0];
 }
 
-- (unsigned) count {
+- (NSUInteger) count {
     return [self.array count];
 }
 

@@ -121,7 +121,7 @@
     if (style == IncreaseStyle_Linear)      return STYLE_LINEAR;
     if (style == IncreaseStyle_Exponential) return STYLE_EXPONENTIAL;
 
-    NSAssert(0, @"Invalid increase style provided: %i", style);
+    NSAssert(0, @"Invalid increase style provided: %li", style);
     return nil;
 }
 

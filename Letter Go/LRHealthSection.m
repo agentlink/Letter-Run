@@ -63,7 +63,7 @@ static const float kLRHealthSectionStartPercentYellow = .50;
 
 #pragma mark - Public Functions
 
-- (void)addScore:(int) wordScore;
+- (void)addScore:(NSInteger)wordScore;
 {
     float shiftDistance = [LRHealthSection _healthBarDistanceForScore:wordScore];
     float newXValue = self.healthBar.position.x + shiftDistance;
@@ -90,7 +90,7 @@ static const float kLRHealthSectionStartPercentYellow = .50;
 #pragma mark - Private Functions
 #pragma mark Health Bar Movement
 
-+ (CGFloat)_healthBarDistanceForScore:(int)score {
++ (CGFloat)_healthBarDistanceForScore:(NSInteger)score {
     float baseDistancePerLetter = HEALTHBAR_WIDTH / [[LRDifficultyManager shared] healthInFallenEnvelopes];
     float scorePerLetter = [[LRDifficultyManager shared] scorePerLetter];
     

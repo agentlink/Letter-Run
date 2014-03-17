@@ -9,33 +9,33 @@
 #import "LRGameStateDelegate.h"
 #import "LRDifficultyConstants.h"
 
-typedef enum  {
+typedef NS_ENUM(NSInteger, IncreaseStyle)  {
     IncreaseStyle_None,
     IncreaseStyle_Linear,
     IncreaseStyle_Exponential
-} IncreaseStyle;
+};
 
 
 @interface LRDifficultyManager : SKSpriteNode <LRGameStateDelegate>
 
 + (LRDifficultyManager *)shared;
 
-- (int) loveLetterProbability;
+- (NSInteger) loveLetterProbability;
 - (CGFloat) letterDropPeriod;
 - (CGFloat) healthBarDropTime;
 - (CGFloat) parallaxSpeedFactor;
 
 @property NSDictionary *difficultyDict;
-@property int level;
+@property NSInteger level;
 
 #pragma mark - Score Properties
 @property CGFloat scoreLengthFactor;
-@property int scorePerLetter;
+@property NSInteger scorePerLetter;
 
 
 #pragma mark - Level Up Properties
 @property IncreaseStyle levelScoreIncreaseStyle;
-@property int initialNextLevelScore;
+@property NSInteger initialNextLevelScore;
 @property CGFloat levelScoreIncreaseFactor;
 
 
@@ -43,7 +43,7 @@ typedef enum  {
 @property CGFloat initialLetterDropPeriod;
 @property CGFloat letterDropPeriodDecreaseRate;
 @property CGFloat minimumDropPeriod;
-@property int numLettersPerDrop;
+@property NSInteger numLettersPerDrop;
 @property IncreaseStyle letterDropDecreaseStyle;
 
 
@@ -58,14 +58,14 @@ typedef enum  {
 
 #pragma mark - Mailman/Love Letter Properties
 @property CGFloat mailmanHitDamage;
-@property int loveLetterMultiplier;
-@property int percentLoveLetters;
+@property NSInteger loveLetterMultiplier;
+@property NSInteger percentLoveLetters;
 @property CGFloat flingLetterSpeed;
 
 #pragma mark - Letter Generation Properties
-@property int maxNumber_consonants;
-@property int maxNumber_vowels;
-@property int maxNumber_sameLetters;
+@property NSInteger maxNumber_consonants;
+@property NSInteger maxNumber_vowels;
+@property NSInteger maxNumber_sameLetters;
 //Not saved
 @property BOOL QuEnabled;
 
