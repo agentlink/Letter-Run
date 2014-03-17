@@ -72,23 +72,16 @@ typedef void(^CompletionBlockType)(void);
         [self addChild:slot];
     }
     
-    [self addBarriers];
+    [self addVerticalBarriers];
 }
 
 /*!
- Add sprites above and below the letter slots so vertical scroll
- deletion goes behind the letter section but horizontal scroll
- rearrangement does not.
+ The bottom vertical barrier allows the dropped letters to bounce.
+ The top vertical barrier allows slid up letters to hide behind something.
  */
-
-- (void)addBarriers
-{
-    [self addVerticalBarriers];
-    [self addHorizontalBarriers];
-}
-
 - (void)addVerticalBarriers
 {
+    //TODO: Remove top barrier if we end up getting ride of the slide under from entry
     SKSpriteNode *topBarrier;
     
     CGFloat barrierHeight = (self.frame.size.height - kLetterBlockDimension) / 2;
@@ -113,25 +106,6 @@ typedef void(^CompletionBlockType)(void);
     [self addChild:topBarrier];
 }
 
-- (void)addHorizontalBarriers
-{
-    CGFloat barrierHeight = kLetterBlockDimension;
-    CGFloat barrierWidth = kSlotMarginWidth;
-    CGSize barrierSize = CGSizeMake(barrierWidth, barrierHeight);
-
-    CGPoint barrierPos;
-    barrierPos.y = self.position.y;
-    for (int i = 0; i < kWordMaximumLetterCount; i++)
-    {
-        barrierPos.x = [[self.letterSlots objectAtIndex:i] frame].origin.x - kSlotMarginWidth/2;
-        SKSpriteNode *horBarrier = [SKSpriteNode spriteNodeWithColor:[LRColor letterSectionColor]
-                                                                size:barrierSize];
-        horBarrier.position = barrierPos;
-        horBarrier.zPosition = zPos_LetterSectionBarrier_Hor;
-        [self addChild:horBarrier];
-    }
-}
-
 - (void)setBarrierPhysics
 {
     bottomBarrier.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:bottomBarrier.size];
@@ -149,7 +123,8 @@ typedef void(^CompletionBlockType)(void);
 
 - (SKSpriteNode *)letterSection {
     if (!_letterSection) {
-        _letterSection = [SKSpriteNode spriteNodeWithColor:[LRColor letterSectionColor] size:self.size];
+        _letterSection = [SKSpriteNode spriteNodeWithImageNamed:@"letterSection.png"];
+        _letterSection.size = self.size;
     }
     return _letterSection;
 }
@@ -582,7 +557,7 @@ typedef void(^CompletionBlockType)(void);
 
 + (CGFloat) distanceBetweenSlots
 {
-    return kSlotMarginWidth + kLetterBlockDimension;
+    return kDistanceBetweenSlots;
 }
 
 - (CGFloat) xPositionForSlotIndex:(int) index {

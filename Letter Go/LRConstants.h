@@ -19,7 +19,8 @@ static const float kSectionHeightHealth         =       18.0;
 static const float kSectionHeightMainSection    =       320.0 - kSectionHeightLetterSection - kSectionHeightHealth;
 static const float kLetterBlockDimension        =       48.0;
 static const float kParallaxHeightGrass         =       26.6;
-#define kSlotMarginWidth                        kLetterBlockDimension / (IS_IPHONE_5 ? 3.3 : 4.0)
+#define kDistanceBetweenSlots                           120.0 * SCREEN_WIDTH/960.0
+#define kDistanceBetweenSlotAndEdge                     66 * SCREEN_WIDTH/960.0
 
 //Letter constants
 static const int kWordMinimumLetterCount        =       3;

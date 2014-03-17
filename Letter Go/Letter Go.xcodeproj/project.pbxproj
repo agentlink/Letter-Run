@@ -71,6 +71,7 @@
 		00F6F59717FF5234009EDADB /* LRGameStateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F6F59617FF5234009EDADB /* LRGameStateManager.m */; };
 		A82CA94C1855189F004ADD99 /* LRSlotManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A82CA94B1855189F004ADD99 /* LRSlotManager.m */; };
 		A846FB8B186E0489009DCEF4 /* LRLetterBlock_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = A846FB8A186E0489009DCEF4 /* LRLetterBlock_Test.m */; };
+		A85A541518D75052007633BA /* letterSection.png in Resources */ = {isa = PBXBuildFile; fileRef = A85A541418D75052007633BA /* letterSection.png */; };
 		A87274EF18D3623600C90C00 /* healthBar.png in Resources */ = {isa = PBXBuildFile; fileRef = A87274EE18D3623600C90C00 /* healthBar.png */; };
 		A876EC3B18836795000FA069 /* Background_Cloud.png in Resources */ = {isa = PBXBuildFile; fileRef = A876EC3A18836795000FA069 /* Background_Cloud.png */; };
 		A876EC3F188367AA000FA069 /* Background_Grass.png in Resources */ = {isa = PBXBuildFile; fileRef = A876EC3C188367AA000FA069 /* Background_Grass.png */; };
@@ -216,6 +217,7 @@
 		A82DD7E71857FB24007483A6 /* LRPositionConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LRPositionConstants.h; sourceTree = "<group>"; };
 		A8423117188B162300F1693E /* LRLetterBlockControlDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRLetterBlockControlDelegate.h; sourceTree = "<group>"; };
 		A846FB8A186E0489009DCEF4 /* LRLetterBlock_Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterBlock_Test.m; sourceTree = "<group>"; };
+		A85A541418D75052007633BA /* letterSection.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = letterSection.png; sourceTree = "<group>"; };
 		A87274EE18D3623600C90C00 /* healthBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = healthBar.png; sourceTree = "<group>"; };
 		A876EC3A18836795000FA069 /* Background_Cloud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background_Cloud.png; sourceTree = "<group>"; };
 		A876EC3C188367AA000FA069 /* Background_Grass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background_Grass.png; sourceTree = "<group>"; };
@@ -283,6 +285,7 @@
 			isa = PBXGroup;
 			children = (
 				A87274EE18D3623600C90C00 /* healthBar.png */,
+				A85A541418D75052007633BA /* letterSection.png */,
 				00861286183AD4D700C42AE0 /* Manford_Cover.png */,
 				00AC280C182EEAD400B3C0EB /* Pause_Selected.png */,
 				00AC280D182EEAD400B3C0EB /* Pause_Unselected.png */,
@@ -831,6 +834,7 @@
 				00CDF15617F474EC003065F6 /* Images.xcassets in Resources */,
 				003C2670180F46C6003729D4 /* organizedDict.txt in Resources */,
 				00CDF14C17F474EC003065F6 /* Main.storyboard in Resources */,
+				A85A541518D75052007633BA /* letterSection.png in Resources */,
 				00AC280E182EEAD400B3C0EB /* Pause_Selected.png in Resources */,
 				00861287183AD4D700C42AE0 /* Manford_Cover.png in Resources */,
 			);
