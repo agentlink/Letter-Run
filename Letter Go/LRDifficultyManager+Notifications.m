@@ -62,7 +62,7 @@
     self.healthBarFalls = YES;
     self.lettersFallVertically = NO;
     
-    self.healthInFallenEnvelopes = 15.0;
+    self.healthInFallenEnvelopes = 25.0;
     self.QuEnabled = YES;
 }
 

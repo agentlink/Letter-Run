@@ -8,8 +8,8 @@
 
 #import "LRMovingBlock.h"
 
-static CGFloat const kFLKMovingBlockBetweenEnvelopeOffset = 12.0;
-static CGFloat const kFLKMovingBlockBottomOffset = 2.0;
+static CGFloat const kFLKMovingBlockBetweenEnvelopeOffset = 11.0;
+static CGFloat const kFLKMovingBlockBottomOffset = 3.0;
 
 @interface LRMovingBlock ()
 @property BOOL initialTouchInside;

@@ -72,6 +72,7 @@
 		A82CA94C1855189F004ADD99 /* LRSlotManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A82CA94B1855189F004ADD99 /* LRSlotManager.m */; };
 		A846FB8B186E0489009DCEF4 /* LRLetterBlock_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = A846FB8A186E0489009DCEF4 /* LRLetterBlock_Test.m */; };
 		A85A541518D75052007633BA /* letterSection.png in Resources */ = {isa = PBXBuildFile; fileRef = A85A541418D75052007633BA /* letterSection.png */; };
+		A85BD82718D96AB100C5EFB8 /* mainSection.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A85BD82618D96AB100C5EFB8 /* mainSection.jpg */; };
 		A87274EF18D3623600C90C00 /* healthBar.png in Resources */ = {isa = PBXBuildFile; fileRef = A87274EE18D3623600C90C00 /* healthBar.png */; };
 		A876EC3B18836795000FA069 /* Background_Cloud.png in Resources */ = {isa = PBXBuildFile; fileRef = A876EC3A18836795000FA069 /* Background_Cloud.png */; };
 		A876EC3F188367AA000FA069 /* Background_Grass.png in Resources */ = {isa = PBXBuildFile; fileRef = A876EC3C188367AA000FA069 /* Background_Grass.png */; };
@@ -218,6 +219,7 @@
 		A8423117188B162300F1693E /* LRLetterBlockControlDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRLetterBlockControlDelegate.h; sourceTree = "<group>"; };
 		A846FB8A186E0489009DCEF4 /* LRLetterBlock_Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterBlock_Test.m; sourceTree = "<group>"; };
 		A85A541418D75052007633BA /* letterSection.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = letterSection.png; sourceTree = "<group>"; };
+		A85BD82618D96AB100C5EFB8 /* mainSection.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mainSection.jpg; sourceTree = "<group>"; };
 		A87274EE18D3623600C90C00 /* healthBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = healthBar.png; sourceTree = "<group>"; };
 		A876EC3A18836795000FA069 /* Background_Cloud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background_Cloud.png; sourceTree = "<group>"; };
 		A876EC3C188367AA000FA069 /* Background_Grass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background_Grass.png; sourceTree = "<group>"; };
@@ -289,6 +291,7 @@
 				00861286183AD4D700C42AE0 /* Manford_Cover.png */,
 				00AC280C182EEAD400B3C0EB /* Pause_Selected.png */,
 				00AC280D182EEAD400B3C0EB /* Pause_Unselected.png */,
+				A85BD82618D96AB100C5EFB8 /* mainSection.jpg */,
 				009B7277182991CB00A6CEA0 /* Manford.png */,
 				009B7276182991CB00A6CEA0 /* Envelope_Normal.png */,
 				0052356A187D0B9E00139CA1 /* Envelope_Normal_1.png */,
@@ -828,6 +831,7 @@
 				009B7279182991CB00A6CEA0 /* Envelope_Normal.png in Resources */,
 				00523571187D0B9E00139CA1 /* Envelope_Normal_4.png in Resources */,
 				00AC281D183178B800B3C0EB /* LRStatsPageViewController.xib in Resources */,
+				A85BD82718D96AB100C5EFB8 /* mainSection.jpg in Resources */,
 				A876EC40188367AA000FA069 /* Background_Hills.png in Resources */,
 				00CDF14317F474EC003065F6 /* InfoPlist.strings in Resources */,
 				0052356F187D0B9E00139CA1 /* Envelope_Normal_2.png in Resources */,

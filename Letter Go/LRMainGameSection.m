@@ -14,6 +14,7 @@
 
 @interface LRMainGameSection () <LRMovingBlockTouchDelegate>
 
+@property SKSpriteNode *backgroundImage;
 @property LRSlotManager *letterSlotManager;
 @property NSMutableArray *envelopesOnScreen;
 
@@ -44,6 +45,12 @@
     return self;
 }
 
+- (void)createSectionContent
+{
+    self.backgroundImage = [[SKSpriteNode alloc] initWithImageNamed:@"mainSection.jpg"];
+    self.backgroundImage.size = self.size;
+    [self addChild:self.backgroundImage];
+}
 
 #pragma mark - Update Loop Methods -
 #pragma mark Time Methods
