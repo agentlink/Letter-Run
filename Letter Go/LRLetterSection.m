@@ -587,6 +587,8 @@ typedef void(^CompletionBlockType)(void);
 #pragma mark - LRGameStateDelegate Methods
 - (void)gameStateGameOver
 {
+    if (self.touchedBlock)
+        [self.touchedBlock touchesEnded:nil withEvent:nil];
     self.gameOverFinished = TRUE;
     self.userInteractionEnabled = NO;
 }

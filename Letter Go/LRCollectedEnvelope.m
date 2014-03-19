@@ -205,9 +205,6 @@ const CGFloat kLRCollectedEnvelopeHeight = kLetterBlockSpriteDimension + kLRColl
     LRLetterSection *letterSection = [[(LRGameScene *)[self scene] gamePlayLayer] letterSection];
     LRLetterSlot *parentSlot = (LRLetterSlot *)[self parent];
 
-//    CGPoint generalPosition = CGPointMake(self.position.x, parentSlot.position.y);
-//    CGPoint newPos = [self convertPoint:generalPosition toNode:letterSection];
-    
     CGPoint newPos = [self convertPoint:self.position toNode:letterSection];
     self.position = newPos;
     [parentSlot setEmptyLetterBlock];

@@ -11,11 +11,10 @@
 static CGFloat const kLRMovingBlockBetweenEnvelopeOffset = 11.0;
 static CGFloat const kLRMovingBlockBottomOffset = 3.0;
 
-static CGFloat const kLRMovingBlockExtraTouchWidth = 40.0;
+static CGFloat const kLRMovingBlockExtraTouchWidth = 70.0;
 static CGFloat const kLRMovingBlockExtraTouchHeight = 4.0;
 
 @interface LRMovingBlock ()
-@property BOOL initialTouchInside;
 @end
 
 @implementation LRMovingBlock
@@ -58,27 +57,16 @@ static CGFloat const kLRMovingBlockExtraTouchHeight = 4.0;
 #pragma mark - Touch Functions + Helpers
 #pragma mark -
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    /*
-     Consider the letter touched if the player initially touches inside the letter.
-     It is still considered a touch if the end of the touch is outside the letter
-     */
-    for (UITouch *touch in touches)
-    {
-        CGPoint location = [touch locationInNode:[self parent]];
-        if (CGRectContainsPoint(self.frame, location))
-        {
-            self.initialTouchInside = YES;
-        }
-    }
-}
-
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     //If the eltter is touched, go to the delegate
-    if (self.initialTouchInside)
-        [self.touchDelegate playerSelectedMovingBlock:self];
+    for (UITouch *touch in touches)
+    {
+        CGPoint location = [touch locationInNode:[self parent]];
+        if (CGRectContainsPoint(self.frame, location)) {
+            [self.touchDelegate playerSelectedMovingBlock:self];
+        }
+    }
 }
 
 @end
