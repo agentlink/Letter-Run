@@ -8,6 +8,9 @@
 
 #import "LRMovingBlock.h"
 
+static CGFloat const kFLKMovingBlockBetweenEnvelopeOffset = 12.0;
+static CGFloat const kFLKMovingBlockBottomOffset = 2.0;
+
 @interface LRMovingBlock ()
 @property BOOL initialTouchInside;
 @end
@@ -33,17 +36,19 @@
 - (void)setSlot:(NSUInteger)slot
 {
     _slot = slot;
-    //Get the max and min heights
-    CGFloat distanceFromEdge = 10.0;
-    CGFloat bufferSize = kLetterBlockDimension/2 + distanceFromEdge;
-    CGFloat letterDistance = (kSectionHeightMainSection - 2 * bufferSize) /(kNumberOfSlots - 1);
+    self.position = [LRMovingBlock positionForSlot:slot];
+}
 
-    //Set teh position based on the slot
-    CGFloat xPos = SCREEN_WIDTH/2 + kLetterBlockDimension;
-    CGFloat yPos = -kSectionHeightMainSection /2 + bufferSize + letterDistance * slot;
-    self.position = CGPointMake(xPos, yPos);
++ (CGPoint)positionForSlot:(NSUInteger)slot
+{
+    NSAssert(slot < kNumberOfSlots, @"Slot %i exceeds the proper number of slots", slot);
     
-
+    CGFloat lowestPosition = (kLetterBlockDimension - kSectionHeightMainSection)/2;
+    CGFloat betweenEnvelopeBuffer = kFLKMovingBlockBetweenEnvelopeOffset + kLetterBlockDimension;
+    CGFloat xPos = SCREEN_WIDTH/2 + kLetterBlockDimension;
+    CGFloat yPos = lowestPosition + kFLKMovingBlockBottomOffset + betweenEnvelopeBuffer * slot;
+    
+    return CGPointMake(xPos, yPos);
 }
 
 #pragma mark - Touch Functions + Helpers

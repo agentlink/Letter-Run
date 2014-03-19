@@ -74,8 +74,6 @@ static const CGFloat kEnvelopeZPositionMax = zPos_Mailman;
 
 - (void)increaseChanceForSlot:(int)increase andDecreaseForSlot:(int)decrease
 {
-
-
     //Decrease the chance for one slot...
     NSNumber *decreaseSlotOldValue = [self.slotChanceTracker objectAtIndex:decrease];
     NSNumber *newDecreasedValue = @([decreaseSlotOldValue intValue] - 1);
