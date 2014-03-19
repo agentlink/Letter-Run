@@ -59,7 +59,7 @@ static CGFloat const kRearrangementSlotSwitchedMaxTime = .08;
 + (SKAction *)rearrangementLetterShiftedSlotsFromPoint:(CGPoint)start toPoint:(CGPoint)destination
 {
     CGFloat distance = ABS(start.x - destination.x);
-    CGFloat duration = distance * kRearrangementSlotSwitchedMaxTime / [LRLetterSection distanceBetweenSlots];
+    CGFloat duration = distance * kRearrangementSlotSwitchedMaxTime / kDistanceBetweenSlots;
     SKAction *action = [SKAction moveTo:destination duration:duration];
     action.timingMode = SKActionTimingEaseInEaseOut;
     return action;
@@ -70,7 +70,7 @@ static CGFloat const kRearrangementSlotSwitchedMaxTime = .08;
 + (SKAction *)_shiftLetterInDirection:(kLRDirection)direction
 {
     CGFloat animationTime = .2;
-    CGFloat shiftDistance = [LRLetterSection distanceBetweenSlots];
+    CGFloat shiftDistance = kDistanceBetweenSlots;
     shiftDistance *= (direction == kLeftDirection) ? -1 : 1;
 
     SKAction *shiftLetter = [SKAction moveByX:shiftDistance y:0 duration:animationTime];

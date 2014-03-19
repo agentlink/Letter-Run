@@ -20,6 +20,8 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 };
 
 static const NSUInteger kMaxBounceCount = 2;
+static const CGFloat kLRCollectedEnvelopeExtraTouchHeight = 10.0;
+const CGFloat kLRCollectedEnvelopeHeight = kLetterBlockSpriteDimension + kLRCollectedEnvelopeExtraTouchHeight;
 
 @interface LRCollectedEnvelope ()
 
@@ -44,7 +46,8 @@ static const NSUInteger kMaxBounceCount = 2;
 
 - (id) initWithLetter:(NSString *)letter loveLetter:(BOOL)love
 {
-    if (self = [super initWithLetter:letter loveLetter:love]) {
+    CGSize extraTouchSize = CGSizeMake((kDistanceBetweenSlots - kLetterBlockSpriteDimension), kLRCollectedEnvelopeExtraTouchHeight);
+    if (self = [super initWithLetter:letter loveLetter:love extraTouchSize:extraTouchSize]) {
         self.name = NAME_SPRITE_SECTION_LETTER_BLOCK;
         self.movementDirection = MovementDirectionNone;
         self.bounceCount = 0;
@@ -201,6 +204,10 @@ static const NSUInteger kMaxBounceCount = 2;
     //Move the block from being the child of the letter slot to the child of the whole letter section
     LRLetterSection *letterSection = [[(LRGameScene *)[self scene] gamePlayLayer] letterSection];
     LRLetterSlot *parentSlot = (LRLetterSlot *)[self parent];
+
+//    CGPoint generalPosition = CGPointMake(self.position.x, parentSlot.position.y);
+//    CGPoint newPos = [self convertPoint:generalPosition toNode:letterSection];
+    
     CGPoint newPos = [self convertPoint:self.position toNode:letterSection];
     self.position = newPos;
     [parentSlot setEmptyLetterBlock];

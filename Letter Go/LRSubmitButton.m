@@ -19,7 +19,7 @@
 
 - (id) init {
     self = [super initWithColor:[LRColor submitButtonDisabledColor]
-                           size:CGSizeMake(kLetterBlockDimension, kLetterBlockDimension)];
+                           size:CGSizeMake(kLetterBlockSpriteDimension, kLetterBlockSpriteDimension)];
     if (self) {
         [self addChild:self.label];
     }

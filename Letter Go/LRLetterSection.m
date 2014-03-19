@@ -84,13 +84,13 @@ typedef void(^CompletionBlockType)(void);
     //TODO: Remove top barrier if we end up getting ride of the slide under from entry
     SKSpriteNode *topBarrier;
     
-    CGFloat barrierHeight = (self.frame.size.height - kLetterBlockDimension) / 2;
+    CGFloat barrierHeight = (self.frame.size.height - kLRCollectedEnvelopeHeight) / 2;
     CGFloat barrierWidth = self.size.width;
     CGSize barrierSize = CGSizeMake(barrierWidth, barrierHeight);
     
     CGFloat barrierXPos = self.position.x;
     CGFloat bottomBarrierYPos = self.frame.origin.y + barrierHeight/2;
-    CGFloat topBarrierYPos = bottomBarrierYPos + barrierHeight + kLetterBlockDimension;
+    CGFloat topBarrierYPos = bottomBarrierYPos + barrierHeight + kLetterBlockSpriteDimension;
     
     bottomBarrier = [SKSpriteNode spriteNodeWithColor:[LRColor letterSectionColor]
                                                  size:barrierSize];
@@ -204,7 +204,7 @@ typedef void(^CompletionBlockType)(void);
     animatedEnvelope.physicsEnabled = YES;
     
     CGPoint letterDropPos = origEnvelope.position;
-    letterDropPos.y += kLetterBlockDimension;
+    letterDropPos.y += kLetterBlockSpriteDimension;
     animatedEnvelope.position = letterDropPos;
     
     LRLetterSlot *parentSlot = self.letterSlots[origEnvelope.slotIndex];
@@ -555,19 +555,13 @@ typedef void(^CompletionBlockType)(void);
     }
 }
 
-+ (CGFloat) distanceBetweenSlots
-{
-    return kDistanceBetweenSlots;
-}
-
 - (CGFloat) xPositionForSlotIndex:(int) index {
-    CGFloat widthPerSlot = [LRLetterSection distanceBetweenSlots];
-    // +kLetterBlockDimension for the submit button
-    CGFloat letterSlotAreaWidth = widthPerSlot * kWordMaximumLetterCount + kLetterBlockDimension;
+    // +kLetterBlockSpriteDimension for the submit button
+    CGFloat letterSlotAreaWidth = kDistanceBetweenSlots * kWordMaximumLetterCount + kLetterBlockSpriteDimension;
     CGFloat edgeBuffer = (self.size.width - letterSlotAreaWidth)/2;
 
-    CGFloat leftOffset = -self.size.width/2 + (edgeBuffer + kLetterBlockDimension/2);
-    CGFloat retVal = leftOffset + index * widthPerSlot;
+    CGFloat leftOffset = -self.size.width/2 + (edgeBuffer + kLetterBlockSpriteDimension/2);
+    CGFloat retVal = leftOffset + index * kDistanceBetweenSlots;
     return retVal;
 }
 

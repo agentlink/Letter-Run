@@ -8,8 +8,11 @@
 
 #import "LRMovingBlock.h"
 
-static CGFloat const kFLKMovingBlockBetweenEnvelopeOffset = 11.0;
-static CGFloat const kFLKMovingBlockBottomOffset = 3.0;
+static CGFloat const kLRMovingBlockBetweenEnvelopeOffset = 11.0;
+static CGFloat const kLRMovingBlockBottomOffset = 3.0;
+
+static CGFloat const kLRMovingBlockExtraTouchWidth = 40.0;
+static CGFloat const kLRMovingBlockExtraTouchHeight = 4.0;
 
 @interface LRMovingBlock ()
 @property BOOL initialTouchInside;
@@ -26,7 +29,8 @@ static CGFloat const kFLKMovingBlockBottomOffset = 3.0;
 
 - (id) initWithLetter:(NSString *)letter loveLetter:(BOOL)love
 {
-    if (self = [super initWithLetter:letter loveLetter:love])
+    CGSize touchSize = CGSizeMake(kLRMovingBlockExtraTouchWidth, kLRMovingBlockExtraTouchHeight);
+    if (self = [super initWithLetter:letter loveLetter:love extraTouchSize:touchSize])
     {
         self.name = NAME_SPRITE_MOVING_ENVELOPE;
     }
@@ -43,10 +47,10 @@ static CGFloat const kFLKMovingBlockBottomOffset = 3.0;
 {
     NSAssert(slot < kNumberOfSlots, @"Slot %i exceeds the proper number of slots", slot);
     
-    CGFloat lowestPosition = (kLetterBlockDimension - kSectionHeightMainSection)/2;
-    CGFloat betweenEnvelopeBuffer = kFLKMovingBlockBetweenEnvelopeOffset + kLetterBlockDimension;
-    CGFloat xPos = SCREEN_WIDTH/2 + kLetterBlockDimension;
-    CGFloat yPos = lowestPosition + kFLKMovingBlockBottomOffset + betweenEnvelopeBuffer * slot;
+    CGFloat lowestPosition = (kLetterBlockSpriteDimension - kSectionHeightMainSection)/2;
+    CGFloat betweenEnvelopeBuffer = kLRMovingBlockBetweenEnvelopeOffset + kLetterBlockSpriteDimension;
+    CGFloat xPos = SCREEN_WIDTH/2 + kLetterBlockSpriteDimension;
+    CGFloat yPos = lowestPosition + kLRMovingBlockBottomOffset + betweenEnvelopeBuffer * slot;
     
     return CGPointMake(xPos, yPos);
 }

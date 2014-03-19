@@ -24,14 +24,13 @@
 @implementation LRLetterBlock
 
 #pragma mark - Initializers/Set Up
-+ (LRLetterBlock *)letterBlockWithLetter:(NSString *)letter loveLetter:(BOOL)love;
-{
-    return [[LRLetterBlock alloc] initWithLetter:letter loveLetter:love];
-}
 
-- (id) initWithLetter:(NSString *)letter loveLetter:(BOOL)love
+- (id) initWithLetter:(NSString *)letter loveLetter:(BOOL)love extraTouchSize:(CGSize)touchSize
 {
-    if (self = [super initWithColor:[LRColor clearColor] size:CGSizeMake(kLetterBlockDimension, kLetterBlockDimension)]) {
+    CGSize envelopeTouchSize = CGSizeMake(kLetterBlockSpriteDimension + touchSize.width,
+                                          kLetterBlockSpriteDimension + touchSize.height);
+    if (self = [super initWithColor:[LRColor clearColor] size:envelopeTouchSize])
+    {
         self.letter = letter;
         self.loveLetter = love;
         self.userInteractionEnabled = YES;
@@ -63,7 +62,7 @@
     if (!_letterLabel) {
         UIFont *letterFont = [LRFont letterBlockFont];
         _letterLabel = [SKLabelNode new];
-        _letterLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - kLetterBlockDimension/4);
+        _letterLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - kLetterBlockSpriteDimension/4);
         _letterLabel.fontSize = letterFont.pointSize;
         _letterLabel.fontName = letterFont.fontName;
         _letterLabel.fontColor = [LRColor letterBlockFontColor];
@@ -77,12 +76,12 @@
     if (!_envelopeSprite) {
         NSString *fileName = [self fileNameForEnvelopeSprite];
         _envelopeSprite = [SKSpriteNode spriteNodeWithImageNamed:fileName];
-        _envelopeSprite.xScale = kLetterBlockDimension/self.envelopeSprite.size.width;
-        _envelopeSprite.yScale = kLetterBlockDimension/self.envelopeSprite.size.height;
+        _envelopeSprite.size = CGSizeMake(kLetterBlockSpriteDimension, kLetterBlockSpriteDimension);
+        _envelopeSprite.xScale = kLetterBlockSpriteDimension/self.envelopeSprite.size.width;
+        _envelopeSprite.yScale = kLetterBlockSpriteDimension/self.envelopeSprite.size.height;
     }
     return _envelopeSprite;
 }
-
 
 #pragma mark - Helper Functions
 
@@ -92,9 +91,8 @@
     return fileName;
 }
 
-- (NSString *)randomEnvelopeSprite {
-//    int suf = arc4random()%4 + 1;
-//    return [NSString stringWithFormat:@"Envelope_Normal_%i.png", suf];
+- (NSString *)randomEnvelopeSprite
+{
     return @"Envelope_Normal.png";
 }
 

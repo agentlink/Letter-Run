@@ -12,7 +12,6 @@
 
 @interface LRLetterSection : LRScreenSection <LRLetterBlockControlDelegate>
 
-+ (CGFloat) distanceBetweenSlots;
 - (int) numLettersInSection;
 - (void)clearLetterSectionAnimated:(BOOL)animated;
 

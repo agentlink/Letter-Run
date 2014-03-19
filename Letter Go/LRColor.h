@@ -36,4 +36,7 @@
 + (SKColor *)skyColor;
 + (SKColor *)letterSectionColor;
 + (SKColor *)gamePlayLayerBackgroundColor;
+
++ (SKColor *)debugColor1;
++ (SKColor *)debugColor2;
 @end

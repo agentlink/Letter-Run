@@ -81,4 +81,14 @@
     return [SKColor whiteColor];
 }
 
++ (SKColor *)debugColor1 {
+    //Opaque green
+    return [SKColor colorWithRed:0.0 green:.7 blue:.1 alpha:.3];
+}
+
++ (SKColor *)debugColor2 {
+    //Opaque red
+    return [SKColor colorWithRed:0.7 green:0.0 blue:0.0 alpha:.3];
+}
+
 @end
