@@ -33,6 +33,11 @@
     {
         self.letter = letter;
         self.loveLetter = love;
+
+        self.envelopeSprite = [self _envelopeSpriteForLetter:letter loveLetter:love];
+        if (self.envelopeSprite) {
+            [self addChild:self.envelopeSprite];
+        }
         self.userInteractionEnabled = YES;
     }
     return self;
@@ -41,17 +46,9 @@
 - (void)setLetter:(NSString *)letter
 {
     _letter = letter;
-    if ([self isLetterAlphabetical]) {
+    if ([LRLetterBlock isLetterAlphabetical:letter]) {
         self.letterLabel.text = letter;
         [self addChild:self.letterLabel];
-    }
-}
-
-- (void)setLoveLetter:(BOOL)loveLetter
-{
-    _loveLetter = loveLetter;
-    if ([self isLetterAlphabetical]) {
-        [self addChild:self.envelopeSprite];
     }
 }
 
@@ -71,37 +68,39 @@
     return _letterLabel;
 }
 
-- (SKSpriteNode *)envelopeSprite
+- (SKSpriteNode *)_envelopeSpriteForLetter:(NSString *)letter loveLetter:(BOOL)love
 {
-    if (!_envelopeSprite) {
-        NSString *fileName = [self fileNameForEnvelopeSprite];
-        _envelopeSprite = [SKSpriteNode spriteNodeWithImageNamed:fileName];
-        _envelopeSprite.size = CGSizeMake(kLetterBlockSpriteDimension, kLetterBlockSpriteDimension);
-        _envelopeSprite.xScale = kLetterBlockSpriteDimension/self.envelopeSprite.size.width;
-        _envelopeSprite.yScale = kLetterBlockSpriteDimension/self.envelopeSprite.size.height;
+    BOOL placeholderBlock = [LRLetterBlock isLetterPlaceholder:letter];
+    SKSpriteNode *envelopeSprite;
+    NSString *fileName = nil;
+    if ([LRLetterBlock isLetterAlphabetical:letter]) {
+        fileName = (love) ? @"Envelope_Love.png" : @"Envelope_Normal.png";
     }
-    return _envelopeSprite;
+    else if (placeholderBlock) {
+        fileName = @"letterGlow.png";
+    }
+    if (fileName) {
+        envelopeSprite = [SKSpriteNode spriteNodeWithImageNamed:fileName];
+        envelopeSprite.size = CGSizeMake(kLetterBlockSpriteDimension, kLetterBlockSpriteDimension);
+        if (placeholderBlock) {
+            envelopeSprite.alpha = .2;
+        }
+    }
+
+    return envelopeSprite;
 }
 
 #pragma mark - Helper Functions
-
-- (NSString *)fileNameForEnvelopeSprite
-{
-    NSString *fileName = (self.loveLetter) ? @"Envelope_Love.png" : [self randomEnvelopeSprite];
-    return fileName;
-}
-
-- (NSString *)randomEnvelopeSprite
-{
-    return @"Envelope_Normal.png";
-}
-
 ///Checks if the letter is not a placeholder or empty
-- (BOOL) isLetterAlphabetical
++ (BOOL)isLetterAlphabetical:(NSString *)letter
 {
-    if (![self.letter length] || [self.letter isEqualToString:kLetterPlaceHolderText])
+    if (![letter length] || [letter isEqualToString:kLetterPlaceHolderText])
         return NO;
     return YES;
 }
 
++ (BOOL)isLetterPlaceholder:(NSString *)letter
+{
+    return [letter isEqualToString:kLetterPlaceHolderText];
+}
 @end

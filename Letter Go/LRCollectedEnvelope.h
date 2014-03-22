@@ -19,6 +19,7 @@ static NSString* const kTempCollectedEnvelopeName = @"NAME_SPRITE_SECTION_LETTER
 //Envelope Initializers
 + (LRCollectedEnvelope *)sectionBlockWithLetter:(NSString *)letter loveLetter:(BOOL)love;;
 + (LRCollectedEnvelope *)emptySectionBlock;
++ (LRCollectedEnvelope *)placeholderBlock;
 
 //Physics
 - (void)envelopeHitBottomBarrier;

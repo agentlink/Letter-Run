@@ -41,7 +41,12 @@ const CGFloat kLRCollectedEnvelopeHeight = kLetterBlockSpriteDimension + kLRColl
 
 + (LRCollectedEnvelope *)emptySectionBlock
 {
-    return [[LRCollectedEnvelope alloc] initWithLetter:@"" loveLetter:false];
+    return [[LRCollectedEnvelope alloc] initWithLetter:@"" loveLetter:NO];
+}
+
++ (LRCollectedEnvelope *)placeholderBlock
+{
+    return [[LRCollectedEnvelope alloc] initWithLetter:kLetterPlaceHolderText loveLetter:NO];
 }
 
 - (id) initWithLetter:(NSString *)letter loveLetter:(BOOL)love

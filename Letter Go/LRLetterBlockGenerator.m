@@ -43,10 +43,7 @@ static const BOOL lgbDebugMode = NO;
 
 + (LRCollectedEnvelope *)createPlaceHolderBlock
 {
-    LRCollectedEnvelope *lb = [LRLetterBlockGenerator createEmptySectionBlock];
-    lb.letter = kLetterPlaceHolderText;
-    if (lgbDebugMode)
-        lb.color = [SKColor greenColor];
+    LRCollectedEnvelope *lb = [LRCollectedEnvelope placeholderBlock];
     return lb;
 }
 
