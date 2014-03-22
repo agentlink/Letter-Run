@@ -340,7 +340,6 @@
 		0049694E17F8A10700176F2D /* Interactive Objects */ = {
 			isa = PBXGroup;
 			children = (
-				0049696317FA0CB400176F2D /* LRGameStateDelegate.h */,
 				00B43D90182834CF00261468 /* LRButton.h */,
 				00B43D91182834CF00261468 /* LRButton.m */,
 				0049695217F8A70B00176F2D /* Letter Blocks */,
@@ -351,7 +350,6 @@
 		0049695217F8A70B00176F2D /* Letter Blocks */ = {
 			isa = PBXGroup;
 			children = (
-				A88CEB1D189D87AE00092C8A /* Generators */,
 				0049694F17F8A12B00176F2D /* LRLetterBlock.h */,
 				0049695017F8A12B00176F2D /* LRLetterBlock.m */,
 				0007FB3D180C7A1A00E55B0D /* LRCollectedEnvelope.h */,
@@ -453,8 +451,6 @@
 		00AC280A182EEA3F00B3C0EB /* Letters + Words */ = {
 			isa = PBXGroup;
 			children = (
-				008428F118009F6300908E5D /* LRLetterGenerator.h */,
-				008428F218009F6300908E5D /* LRLetterGenerator.m */,
 				009CC29C180349E700C0423D /* LRDictionaryChecker.h */,
 				009CC29D180349E700C0423D /* LRDictionaryChecker.m */,
 			);
@@ -472,20 +468,20 @@
 		00CDF12A17F474EC003065F6 = {
 			isa = PBXGroup;
 			children = (
-				A88118E618870261002489F5 /* DEPRECATED */,
-				A8E60A141881E27900F60DF4 /* Reusable Classes */,
 				0007FB30180B2FB600E55B0D /* Resources */,
 				008428EE1800992D00908E5D /* Property Lists */,
 				0049695A17F8AC3D00176F2D /* Constants */,
 				0049695617F8AB3400176F2D /* Singletons */,
 				00AC280B182EEA7900B3C0EB /* Menus */,
+				A88A4B3418872F7600BC9905 /* Helper Objects */,
 				0049694E17F8A10700176F2D /* Interactive Objects */,
 				00CDF17217F477C1003065F6 /* Scenes */,
 				00CDF17617F478BA003065F6 /* Layers */,
 				00CDF13E17F474EC003065F6 /* Base */,
-				A877E5BC185BF8C30028CFFA /* Letter Go Tests */,
+				A877E5BC185BF8C30028CFFA /* Tests */,
 				00CDF13517F474EC003065F6 /* Frameworks */,
 				00CDF13417F474EC003065F6 /* Products */,
+				A88118E618870261002489F5 /* DEPRECATED */,
 			);
 			sourceTree = "<group>";
 		};
@@ -593,7 +589,6 @@
 			children = (
 				00CDF18017F48310003065F6 /* LRGamePlayLayer.h */,
 				00CDF18117F48310003065F6 /* LRGamePlayLayer.m */,
-				A88A4B3418872F7600BC9905 /* Managers */,
 				00CDF18317F483C4003065F6 /* Game Play Layer Sections */,
 			);
 			name = "Game Play Layer";
@@ -607,7 +602,7 @@
 			name = Delegates;
 			sourceTree = "<group>";
 		};
-		A877E5BC185BF8C30028CFFA /* Letter Go Tests */ = {
+		A877E5BC185BF8C30028CFFA /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				A877E5CC185BFA960028CFFA /* LRLetterGenerator_Test.m */,
@@ -615,6 +610,7 @@
 				A8E60A151881F6E300F60DF4 /* LRSlotManager_Test.m */,
 				A877E5BD185BF8C30028CFFA /* Supporting Files */,
 			);
+			name = Tests;
 			path = "Letter Go Tests";
 			sourceTree = "<group>";
 		};
@@ -677,16 +673,14 @@
 			name = "Main Section";
 			sourceTree = "<group>";
 		};
-		A88A4B3418872F7600BC9905 /* Managers */ = {
+		A88A4B3418872F7600BC9905 /* Helper Objects */ = {
 			isa = PBXGroup;
 			children = (
-				A82CA94A1855189F004ADD99 /* LRSlotManager.h */,
-				A8E60A171881F89300F60DF4 /* LRSlotManager_Private.h */,
-				A82CA94B1855189F004ADD99 /* LRSlotManager.m */,
-				00F6F59517FF5234009EDADB /* LRGameStateManager.h */,
-				00F6F59617FF5234009EDADB /* LRGameStateManager.m */,
+				A88CEB1D189D87AE00092C8A /* Generators */,
+				A88DE66E18DE1C6F00282AA8 /* Managers */,
+				A8E60A141881E27900F60DF4 /* Class Extensions */,
 			);
-			name = Managers;
+			name = "Helper Objects";
 			sourceTree = "<group>";
 		};
 		A88CEB1D189D87AE00092C8A /* Generators */ = {
@@ -696,11 +690,26 @@
 				0049695417F8A75B00176F2D /* LRLetterBlockGenerator.m */,
 				A88CEB1E189D87C600092C8A /* LREnvelopeAnimationBuilder.h */,
 				A88CEB1F189D87C600092C8A /* LREnvelopeAnimationBuilder.m */,
+				008428F118009F6300908E5D /* LRLetterGenerator.h */,
+				008428F218009F6300908E5D /* LRLetterGenerator.m */,
 			);
 			name = Generators;
 			sourceTree = "<group>";
 		};
-		A8E60A141881E27900F60DF4 /* Reusable Classes */ = {
+		A88DE66E18DE1C6F00282AA8 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				A82CA94A1855189F004ADD99 /* LRSlotManager.h */,
+				A8E60A171881F89300F60DF4 /* LRSlotManager_Private.h */,
+				A82CA94B1855189F004ADD99 /* LRSlotManager.m */,
+				00F6F59517FF5234009EDADB /* LRGameStateManager.h */,
+				00F6F59617FF5234009EDADB /* LRGameStateManager.m */,
+				0049696317FA0CB400176F2D /* LRGameStateDelegate.h */,
+			);
+			name = Managers;
+			sourceTree = "<group>";
+		};
+		A8E60A141881E27900F60DF4 /* Class Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				00076E65186F819000287EF9 /* LRFont.h */,
@@ -710,7 +719,7 @@
 				A8E60A111881E25F00F60DF4 /* LRCappedStack.h */,
 				A8E60A121881E25F00F60DF4 /* LRCappedStack.m */,
 			);
-			name = "Reusable Classes";
+			name = "Class Extensions";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
