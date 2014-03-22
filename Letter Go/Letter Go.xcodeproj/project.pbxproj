@@ -89,6 +89,8 @@
 		A88A4B371887308C00BC9905 /* LRMainGameSection.m in Sources */ = {isa = PBXBuildFile; fileRef = A88A4B361887308C00BC9905 /* LRMainGameSection.m */; };
 		A88A4B3B188734E400BC9905 /* LRMovingEnvelope.m in Sources */ = {isa = PBXBuildFile; fileRef = A88A4B3A188734E400BC9905 /* LRMovingEnvelope.m */; };
 		A88CEB20189D87C600092C8A /* LREnvelopeAnimationBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = A88CEB1F189D87C600092C8A /* LREnvelopeAnimationBuilder.m */; };
+		A88DE67118DE1DCB00282AA8 /* LRMailmanArea.m in Sources */ = {isa = PBXBuildFile; fileRef = A88DE67018DE1DCB00282AA8 /* LRMailmanArea.m */; };
+		A88DE67318DE25BB00282AA8 /* letterGlow.png in Resources */ = {isa = PBXBuildFile; fileRef = A88DE67218DE25BB00282AA8 /* letterGlow.png */; };
 		A8E60A131881E25F00F60DF4 /* LRCappedStack.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E60A121881E25F00F60DF4 /* LRCappedStack.m */; };
 		A8E60A161881F6E300F60DF4 /* LRSlotManager_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E60A151881F6E300F60DF4 /* LRSlotManager_Test.m */; };
 /* End PBXBuildFile section */
@@ -242,6 +244,9 @@
 		A88A4B3A188734E400BC9905 /* LRMovingEnvelope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRMovingEnvelope.m; sourceTree = "<group>"; };
 		A88CEB1E189D87C600092C8A /* LREnvelopeAnimationBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LREnvelopeAnimationBuilder.h; sourceTree = "<group>"; };
 		A88CEB1F189D87C600092C8A /* LREnvelopeAnimationBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LREnvelopeAnimationBuilder.m; sourceTree = "<group>"; };
+		A88DE66F18DE1DCB00282AA8 /* LRMailmanArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRMailmanArea.h; sourceTree = "<group>"; };
+		A88DE67018DE1DCB00282AA8 /* LRMailmanArea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRMailmanArea.m; sourceTree = "<group>"; };
+		A88DE67218DE25BB00282AA8 /* letterGlow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = letterGlow.png; sourceTree = "<group>"; };
 		A8E60A111881E25F00F60DF4 /* LRCappedStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRCappedStack.h; sourceTree = "<group>"; };
 		A8E60A121881E25F00F60DF4 /* LRCappedStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRCappedStack.m; sourceTree = "<group>"; };
 		A8E60A151881F6E300F60DF4 /* LRSlotManager_Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRSlotManager_Test.m; sourceTree = "<group>"; };
@@ -295,6 +300,7 @@
 				009B7277182991CB00A6CEA0 /* Manford.png */,
 				009B7276182991CB00A6CEA0 /* Envelope_Normal.png */,
 				0052356A187D0B9E00139CA1 /* Envelope_Normal_1.png */,
+				A88DE67218DE25BB00282AA8 /* letterGlow.png */,
 				0052356B187D0B9E00139CA1 /* Envelope_Normal_2.png */,
 				0052356C187D0B9E00139CA1 /* Envelope_Normal_3.png */,
 				0052356D187D0B9E00139CA1 /* Envelope_Normal_4.png */,
@@ -669,6 +675,8 @@
 			children = (
 				A88A4B351887308C00BC9905 /* LRMainGameSection.h */,
 				A88A4B361887308C00BC9905 /* LRMainGameSection.m */,
+				A88DE66F18DE1DCB00282AA8 /* LRMailmanArea.h */,
+				A88DE67018DE1DCB00282AA8 /* LRMailmanArea.m */,
 			);
 			name = "Main Section";
 			sourceTree = "<group>";
@@ -849,6 +857,7 @@
 				00CDF14C17F474EC003065F6 /* Main.storyboard in Resources */,
 				A85A541518D75052007633BA /* letterSection.png in Resources */,
 				00AC280E182EEAD400B3C0EB /* Pause_Selected.png in Resources */,
+				A88DE67318DE25BB00282AA8 /* letterGlow.png in Resources */,
 				00861287183AD4D700C42AE0 /* Manford_Cover.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -897,6 +906,7 @@
 				0049695917F8AB5D00176F2D /* LRCollisionManager.m in Sources */,
 				0020001E18245B3E005DDD46 /* LRCollisionManager+ContactFunctions.m in Sources */,
 				00AC282018317F7A00B3C0EB /* LRDevPauseSubView.m in Sources */,
+				A88DE67118DE1DCB00282AA8 /* LRMailmanArea.m in Sources */,
 				00F6F59717FF5234009EDADB /* LRGameStateManager.m in Sources */,
 				00CDF18217F48310003065F6 /* LRGamePlayLayer.m in Sources */,
 				00CDF18917F4840F003065F6 /* LRHealthSection.m in Sources */,

@@ -15,6 +15,7 @@ static CGFloat const kLRMovingBlockExtraTouchWidth = 70.0;
 static CGFloat const kLRMovingBlockExtraTouchHeight = 4.0;
 
 @interface LRMovingEnvelope ()
+@property (nonatomic, strong) SKSpriteNode *glow;
 @end
 
 @implementation LRMovingEnvelope
@@ -32,8 +33,22 @@ static CGFloat const kLRMovingBlockExtraTouchHeight = 4.0;
     if (self = [super initWithLetter:letter loveLetter:love extraTouchSize:touchSize])
     {
         self.name = NAME_SPRITE_MOVING_ENVELOPE;
+        [self _setGlowEnabled:NO];
+        [self addChild:self.glow];
+        
     }
     return self;
+}
+
+- (SKSpriteNode *)glow {
+    if (!_glow) {
+        _glow = [SKSpriteNode spriteNodeWithImageNamed:@"letterGlow.png"];
+        _glow.xScale = .5;
+        _glow.yScale = .5;
+        _glow.zPosition = -1;
+        _glow.alpha = 0.0;
+    }
+    return _glow;
 }
 
 - (void)setSlot:(NSUInteger)slot
@@ -67,6 +82,27 @@ static CGFloat const kLRMovingBlockExtraTouchHeight = 4.0;
             [self.touchDelegate playerSelectedMovingBlock:self];
         }
     }
+}
+
+- (void)setSelected:(BOOL)selected
+{
+    _selected = selected;
+    [self _setGlowEnabled:selected];
+}
+
+- (void)_setGlowEnabled:(BOOL)enabled
+{
+    CGFloat fadedAlpha = 0.7;
+    CGFloat fadeDuration = 0.15;
+
+    CGFloat newEnvelopeAlpha = (enabled) ? fadedAlpha : 1.0;
+    CGFloat newGlowAlpha = (enabled) ? fadedAlpha : 0.0;
+
+    SKAction *fadeEnvelope = [SKAction fadeAlphaTo:newEnvelopeAlpha duration:fadeDuration];
+    SKAction *fadeGlow = [SKAction fadeAlphaTo:newGlowAlpha duration:fadeDuration];
+    [self runAction:fadeEnvelope];
+    [self.glow runAction:fadeGlow];
+    
 }
 
 @end

@@ -12,18 +12,23 @@
 #import "LRSlotManager.h"
 #import "LRDifficultyManager.h"
 
+static const CGFloat kMailmanAreaWidth          = 70.0;
+
 @interface LRMainGameSection () <LRMovingBlockTouchDelegate>
 
+//Children
 @property SKSpriteNode *backgroundImage;
+
+//Slot logic
 @property LRSlotManager *letterSlotManager;
 @property NSMutableArray *envelopesOnScreen;
 
+//Pause and Game Over timing logic
 @property NSTimeInterval nextDropTime;
 @property NSTimeInterval dropDelayForAfterPause;
 @property NSTimeInterval previousRunLoopTime;
 @property NSTimeInterval previousDropTime;
 @property BOOL newGameWillBegin;
-
 
 @end
 
@@ -47,9 +52,16 @@
 
 - (void)createSectionContent
 {
+    //Background
     self.backgroundImage = [[SKSpriteNode alloc] initWithImageNamed:@"mainSection.jpg"];
     self.backgroundImage.size = self.size;
     [self addChild:self.backgroundImage];
+    
+    //Mailman section
+    LRMailmanArea *mailmanArea = [[LRMailmanArea alloc] initWithSize:CGSizeMake(kMailmanAreaWidth, self.size.height)];
+    mailmanArea.position = (CGPoint){(mailmanArea.size.width - self.size.width)/2, 0};
+    self.mailmanArea = mailmanArea;
+    [self addChild:self.mailmanArea];
 }
 
 #pragma mark - Update Loop Methods -
@@ -64,7 +76,8 @@
 
     //Shift the envelopes...
     CGFloat timeDifference = currentTime - previousRunLoopTime;
-    [self shiftEnvelopesForTimeDifference:timeDifference];
+    [self _shiftEnvelopesForTimeDifference:timeDifference];
+    [self _checkEnvelopesForRemoval];
     if ([self _shouldGenerateEnvelopesForTime:currentTime]) {
         [self generateEnvelopes];
         float letterDropPeriod = [[LRDifficultyManager shared] letterDropPeriod];
@@ -101,12 +114,12 @@
     [self addChild:movingBlock];
 }
 
-
-- (void)removeMovingBlockFromScreen:(LRMovingEnvelope *)letterBlock
+///Pass in an array of LRMovingBlocks to delete
+- (void)removeMovingBlocksFromScreen:(NSArray *)letterBlocks
 {
     //Remove the envelope from the screen and the array
-    [self.envelopesOnScreen removeObject:letterBlock];
-    [self removeChildrenInArray:@[letterBlock]];
+    [self.envelopesOnScreen removeObjectsInArray:letterBlocks];
+    [self removeChildrenInArray:letterBlocks];
 }
 
 - (void)clearMainGameSection
@@ -118,27 +131,6 @@
 
 #pragma mark Letter Movement/Touch
 
-- (void)shiftEnvelopesForTimeDifference:(CGFloat)timeDifference
-{
-    NSMutableArray *blocksToRemove = [NSMutableArray new];
-    CGFloat secondsToCrossScreen = 5.0;
-    //TODO: get this from the difficulty manager
-    CGFloat pixelsPerSecond = SCREEN_WIDTH / secondsToCrossScreen;
-    for (LRMovingEnvelope* block in self.envelopesOnScreen) {
-        //Shift the block down...
-        CGFloat distance = pixelsPerSecond * timeDifference;
-        block.position = CGPointMake(block.position.x - distance,
-                                     block.position.y);
-        //...and remove it if it's off screen
-        if (!CGRectIntersectsRect(block.frame, self.frame) &&
-            block.frame.origin.x < 0)
-        {
-            [blocksToRemove addObject:block];
-        }
-    }
-    [self removeChildrenInArray:blocksToRemove];
-}
-
 - (void)setEnvelopeTouchEnabled:(BOOL)envelopeTouchEnabled
 {
     _envelopeTouchEnabled = envelopeTouchEnabled;
@@ -147,13 +139,46 @@
     }
 }
 
+- (void)_shiftEnvelopesForTimeDifference:(CGFloat)timeDifference
+{
+    CGFloat secondsToCrossScreen = 5.0;
+    //TODO: get this from the difficulty manager
+    CGFloat pixelsPerSecond = SCREEN_WIDTH / secondsToCrossScreen;
+    for (LRMovingEnvelope* envelope in self.envelopesOnScreen) {
+        //Shift the block down...
+        CGFloat distance = pixelsPerSecond * timeDifference;
+        envelope.position = CGPointMake(envelope.position.x - distance,
+                                     envelope.position.y);
+    }
+}
+
+- (void)_checkEnvelopesForRemoval
+{
+    NSMutableArray *envelopesToRemove = [NSMutableArray new];
+    for (LRMovingEnvelope* envelope in self.envelopesOnScreen)
+    {
+        if ([self _envelopeHasCrossedCollectionThreshold:envelope])
+        {
+            if (envelope.selected) {
+                [self.letterAdditionDelegate addEnvelopeToLetterSection:envelope];
+            }
+            [envelopesToRemove addObject:envelope];
+        }
+    }
+    [self removeMovingBlocksFromScreen:envelopesToRemove];
+}
+
+- (BOOL)_envelopeHasCrossedCollectionThreshold:(LRMovingEnvelope *)envelope
+{
+    return (envelope.position.x < self.mailmanArea.position.x);
+}
+
 #pragma mark - Delegate Methods -
 #pragma mark LRMovingBlockTouchDelegate Methods
 
 - (void)playerSelectedMovingBlock:(LRMovingEnvelope *)movingBlock
 {
-    [self.letterAdditionDelegate addEnvelopeToLetterSection:movingBlock];
-    [self removeMovingBlockFromScreen:movingBlock];
+    movingBlock.selected = !movingBlock.selected;
 }
 
 #pragma mark LRGameStateDelegate Methods
