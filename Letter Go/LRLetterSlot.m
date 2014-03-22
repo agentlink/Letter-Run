@@ -40,10 +40,12 @@
 
 - (void)stopChildEnvelopeBouncing
 {
-    [self.currentBlock stopEnvelopeBouncing];
-    [self enumerateChildNodesWithName:kTempCollectedEnvelopeName usingBlock:^(SKNode *node, BOOL *stop){
-        [node removeFromParent];
-    }];
+    if (self.currentBlock) {
+        [self.currentBlock stopEnvelopeBouncing];
+        [self enumerateChildNodesWithName:kTempCollectedEnvelopeName usingBlock:^(SKNode *node, BOOL *stop){
+            [node removeFromParent];
+        }];
+    }
 }
 
 - (void)setCurrentBlock:(LRCollectedEnvelope *)incomingBlock

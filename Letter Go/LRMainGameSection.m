@@ -141,7 +141,7 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
 
 - (void)_shiftEnvelopesForTimeDifference:(CGFloat)timeDifference
 {
-    CGFloat secondsToCrossScreen = 5.0;
+    CGFloat secondsToCrossScreen = 4.5;
     //TODO: get this from the difficulty manager
     CGFloat pixelsPerSecond = SCREEN_WIDTH / secondsToCrossScreen;
     for (LRMovingEnvelope* envelope in self.envelopesOnScreen) {

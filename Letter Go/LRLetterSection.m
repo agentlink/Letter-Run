@@ -178,7 +178,16 @@ typedef void(^CompletionBlockType)(void);
     for (LRLetterSlot* slot in self.letterSlots)
     {
         letterCount++;
-        if ([slot isLetterSlotEmpty]) {
+        //If the slot is empty
+        if ([slot isLetterSlotEmpty]){
+            currentLetterSlot = slot;
+            break;
+        }
+        //If the last block is a place holder and the player is selecting a block
+        else if (letterCount == [self numLettersInSection] && [slot.currentBlock isLetterBlockPlaceHolder])
+        {
+            LRLetterSlot *letterSlot = [self.letterSlots objectAtIndex:letterCount + 1];
+            letterSlot.currentBlock = [LRLetterBlockGenerator createPlaceHolderBlock];
             currentLetterSlot = slot;
             break;
         }
@@ -436,6 +445,9 @@ typedef void(^CompletionBlockType)(void);
 - (void)swapLetterAtSlot:(LRLetterSlot *)slotA withLetterAtSlot:(LRLetterSlot *)slotB
 {
     //Get the location of the letter blocks with in the slot array
+    [slotA stopChildEnvelopeBouncing];
+    [slotB stopChildEnvelopeBouncing];
+    
     int aLoc = -1;
     int bLoc = -1;
     for (int i = 0; i < self.letterSlots.count; i++)
@@ -567,7 +579,7 @@ typedef void(^CompletionBlockType)(void);
 
 - (int) numLettersInSection
 {
-    int count = 0;;
+    int count = 0;
     for (LRLetterSlot *slot in self.letterSlots) {
         if (![[slot currentBlock] isLetterBlockEmpty])
             count++;
