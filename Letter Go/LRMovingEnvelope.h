@@ -9,16 +9,16 @@
 #import "LRLetterBlock.h"
 
 @protocol LRMovingBlockTouchDelegate;
-@interface LRMovingBlock : LRLetterBlock
+@interface LRMovingEnvelope : LRLetterBlock
 
 @property (nonatomic, weak) id<LRMovingBlockTouchDelegate> touchDelegate;
 @property (nonatomic) NSUInteger slot;
-+ (LRMovingBlock *)movingBlockWithLetter:(NSString *)letter loveLetter:(BOOL)love;
++ (LRMovingEnvelope *)movingBlockWithLetter:(NSString *)letter loveLetter:(BOOL)love;
 
 @end
 
 @protocol LRMovingBlockTouchDelegate <NSObject>
 
-- (void)playerSelectedMovingBlock:(LRMovingBlock *)movingBlock;
+- (void)playerSelectedMovingBlock:(LRMovingEnvelope *)movingBlock;
 
 @end

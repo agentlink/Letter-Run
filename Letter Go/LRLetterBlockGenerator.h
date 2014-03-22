@@ -8,16 +8,16 @@
 
 #import <SpriteKit/SpriteKit.h>
 #import "LRCollectedEnvelope.h"
-#import "LRMovingBlock.h"
+#import "LRMovingEnvelope.h"
 
 @interface LRLetterBlockGenerator : SKNode
 
 
 #pragma mark - Falling Envelopes
 ///Create an envelope with a weighted random letter and weighted chance of being a love letter
-+ (LRMovingBlock *)createRandomEnvelope;
++ (LRMovingEnvelope *)createRandomEnvelope;
 ///Create an envelope with a weighted random letter and weighted chance of being a love letter and put it at a slot
-+ (LRMovingBlock *)createRandomEnvelopeAtSlot:(int)slot;
++ (LRMovingEnvelope *)createRandomEnvelopeAtSlot:(int)slot;
 
 #pragma mark - Letter Section Blocks
 ///Create an empty slot for the letter section

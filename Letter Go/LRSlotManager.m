@@ -51,7 +51,7 @@ static const CGFloat kEnvelopeZPositionMax = zPos_Mailman;
 
 #pragma mark - Letter Addition
 
-- (void)addEnvelope:(LRMovingBlock *)envelope
+- (void)addEnvelope:(LRMovingEnvelope *)envelope
 {
     int slotIndexToDecrease = [self getIndexOfNextSlot];
     int slotIndexToIncrease = kNilSlotValue;
@@ -90,7 +90,7 @@ static const CGFloat kEnvelopeZPositionMax = zPos_Mailman;
 
 #pragma mark - zPosition Function
 
-- (void)setZPositionForEnvelope:(LRMovingBlock *)envelope
+- (void)setZPositionForEnvelope:(LRMovingEnvelope *)envelope
 {
     /*
      NOTE: Reaching this condition would take about 40 minutes of play. If this point ever got

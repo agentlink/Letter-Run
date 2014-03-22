@@ -86,13 +86,13 @@
 {
     int i = 0;
     for (i = 0; i < [[LRDifficultyManager shared] numLettersPerDrop]; i++) {
-        LRMovingBlock *envelope = [LRLetterBlockGenerator createRandomEnvelope];
+        LRMovingEnvelope *envelope = [LRLetterBlockGenerator createRandomEnvelope];
         [self.letterSlotManager addEnvelope:envelope];
         [self addMovingBlockToScreen:envelope];
     }
 }
 
-- (void)addMovingBlockToScreen:(LRMovingBlock *)movingBlock
+- (void)addMovingBlockToScreen:(LRMovingEnvelope *)movingBlock
 {
     //Set the touch delegate
     movingBlock.touchDelegate = self;
@@ -102,7 +102,7 @@
 }
 
 
-- (void)removeMovingBlockFromScreen:(LRMovingBlock *)letterBlock
+- (void)removeMovingBlockFromScreen:(LRMovingEnvelope *)letterBlock
 {
     //Remove the envelope from the screen and the array
     [self.envelopesOnScreen removeObject:letterBlock];
@@ -124,7 +124,7 @@
     CGFloat secondsToCrossScreen = 5.0;
     //TODO: get this from the difficulty manager
     CGFloat pixelsPerSecond = SCREEN_WIDTH / secondsToCrossScreen;
-    for (LRMovingBlock* block in self.envelopesOnScreen) {
+    for (LRMovingEnvelope* block in self.envelopesOnScreen) {
         //Shift the block down...
         CGFloat distance = pixelsPerSecond * timeDifference;
         block.position = CGPointMake(block.position.x - distance,
@@ -142,7 +142,7 @@
 - (void)setEnvelopeTouchEnabled:(BOOL)envelopeTouchEnabled
 {
     _envelopeTouchEnabled = envelopeTouchEnabled;
-    for (LRMovingBlock *envelope in self.envelopesOnScreen) {
+    for (LRMovingEnvelope *envelope in self.envelopesOnScreen) {
         envelope.userInteractionEnabled = envelopeTouchEnabled;
     }
 }
@@ -150,7 +150,7 @@
 #pragma mark - Delegate Methods -
 #pragma mark LRMovingBlockTouchDelegate Methods
 
-- (void)playerSelectedMovingBlock:(LRMovingBlock *)movingBlock
+- (void)playerSelectedMovingBlock:(LRMovingEnvelope *)movingBlock
 {
     [self.letterAdditionDelegate addEnvelopeToLetterSection:movingBlock];
     [self removeMovingBlockFromScreen:movingBlock];

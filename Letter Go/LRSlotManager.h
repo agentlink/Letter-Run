@@ -9,13 +9,13 @@
 
 #import <SpriteKit/SpriteKit.h>
 #import <Foundation/Foundation.h>
-#import "LRMovingBlock.h"
+#import "LRMovingEnvelope.h"
 
 static const int kSlotHistoryCapacity = 5;
 
 @interface LRSlotManager : NSObject
 
 - (void)resetSlots;
-- (void)addEnvelope:(LRMovingBlock *)envelope;
+- (void)addEnvelope:(LRMovingEnvelope *)envelope;
 
 @end

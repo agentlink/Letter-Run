@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Gabe Nicholas. All rights reserved.
 //
 
-#import "LRMovingBlock.h"
+#import "LRMovingEnvelope.h"
 
 static CGFloat const kLRMovingBlockBetweenEnvelopeOffset = 11.0;
 static CGFloat const kLRMovingBlockBottomOffset = 3.0;
@@ -14,16 +14,16 @@ static CGFloat const kLRMovingBlockBottomOffset = 3.0;
 static CGFloat const kLRMovingBlockExtraTouchWidth = 70.0;
 static CGFloat const kLRMovingBlockExtraTouchHeight = 4.0;
 
-@interface LRMovingBlock ()
+@interface LRMovingEnvelope ()
 @end
 
-@implementation LRMovingBlock
+@implementation LRMovingEnvelope
 
 #pragma mark - Initialization/Setters -
 
-+ (LRMovingBlock *)movingBlockWithLetter:(NSString *)letter loveLetter:(BOOL)love
++ (LRMovingEnvelope *)movingBlockWithLetter:(NSString *)letter loveLetter:(BOOL)love
 {
-    return [[LRMovingBlock alloc] initWithLetter:letter loveLetter:love];
+    return [[LRMovingEnvelope alloc] initWithLetter:letter loveLetter:love];
 }
 
 - (id) initWithLetter:(NSString *)letter loveLetter:(BOOL)love
@@ -39,7 +39,7 @@ static CGFloat const kLRMovingBlockExtraTouchHeight = 4.0;
 - (void)setSlot:(NSUInteger)slot
 {
     _slot = slot;
-    self.position = [LRMovingBlock positionForSlot:slot];
+    self.position = [LRMovingEnvelope positionForSlot:slot];
 }
 
 + (CGPoint)positionForSlot:(NSUInteger)slot

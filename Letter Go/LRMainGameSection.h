@@ -7,7 +7,7 @@
 //
 
 #import "LRScreenSection.h"
-#import "LRMovingBlock.h"
+#import "LRMovingEnvelope.h"
 #import "LRLetterBlockControlDelegate.h"
 
 @interface LRMainGameSection : LRScreenSection
@@ -17,7 +17,7 @@
 @property (nonatomic) BOOL envelopeTouchEnabled;
 @property (nonatomic, weak) id <LRLetterBlockControlDelegate> letterAdditionDelegate;
 
-- (void)addMovingBlockToScreen:(LRMovingBlock *)movingBlock;
+- (void)addMovingBlockToScreen:(LRMovingEnvelope *)movingBlock;
 - (void)clearMainGameSection;
 
 @end

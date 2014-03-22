@@ -10,7 +10,7 @@
 #import "LRSlotManager.h"
 #import "LRSlotManager_Private.h"
 #import "LRConstants.h"
-#import "LRMovingBlock.h"
+#import "LRMovingEnvelope.h"
 
 static const int kTestCount = 200;
 
@@ -35,7 +35,7 @@ static const int kTestCount = 200;
 {
     LRSlotManager *slotManager = [LRSlotManager new];
     for (int i = 0; i < kTestCount; i++) {
-        [slotManager addEnvelope:[LRMovingBlock movingBlockWithLetter:@"X" loveLetter:arc4random()%2]];
+        [slotManager addEnvelope:[LRMovingEnvelope movingBlockWithLetter:@"X" loveLetter:arc4random()%2]];
         int slotHistoryCount = [slotManager.slotHistory count];
         XCTAssertTrue(slotHistoryCount <= kSlotHistoryCapacity,
                       @"Error: slot history is over capacity");
@@ -49,7 +49,7 @@ static const int kTestCount = 200;
     LRSlotManager *slotManager = [LRSlotManager new];
 
     for (int i = 0; i < kTestCount; i++) {
-        [slotManager addEnvelope:[LRMovingBlock movingBlockWithLetter:@"X" loveLetter:arc4random()%2]];
+        [slotManager addEnvelope:[LRMovingEnvelope movingBlockWithLetter:@"X" loveLetter:arc4random()%2]];
         if (i < kSlotHistoryCapacity)
             continue;
         int slotChances = 0;

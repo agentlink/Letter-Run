@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "LRMovingBlock.h"
+#import "LRMovingEnvelope.h"
 
 @protocol LRLetterBlockControlDelegate <NSObject>
 

@@ -169,7 +169,7 @@ typedef void(^CompletionBlockType)(void);
         return;
     }
     
-    LRMovingBlock *newEnvelope = (LRMovingBlock *)envelope;
+    LRMovingEnvelope *newEnvelope = (LRMovingEnvelope *)envelope;
     NSString *letter = newEnvelope.letter;
     BOOL isLoveLetter = newEnvelope.loveLetter;
 

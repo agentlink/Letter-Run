@@ -16,19 +16,19 @@ static const BOOL lgbDebugMode = NO;
 
 #pragma mark - Public Functions
 
-+ (LRMovingBlock *)createRandomEnvelope
++ (LRMovingEnvelope *)createRandomEnvelope
 {
     NSString *letter = [self generateLetter];
     BOOL love = [self isLoveLetter];
-    LRMovingBlock *envelope = [LRMovingBlock movingBlockWithLetter:letter loveLetter:love];
+    LRMovingEnvelope *envelope = [LRMovingEnvelope movingBlockWithLetter:letter loveLetter:love];
     
     envelope.position = CGPointMake(0, 160 + envelope.frame.size.height/2);
     return envelope;
 }
 
-+ (LRMovingBlock *)createRandomEnvelopeAtSlot:(int)slot
++ (LRMovingEnvelope *)createRandomEnvelopeAtSlot:(int)slot
 {
-    LRMovingBlock *envelope = [self createRandomEnvelope];
+    LRMovingEnvelope *envelope = [self createRandomEnvelope];
     //Setting the slot also sets the position. For now, slots are 0 - 2
     envelope.slot = slot;
     return envelope;
