@@ -174,20 +174,20 @@ typedef void(^CompletionBlockType)(void);
     BOOL isLoveLetter = newEnvelope.loveLetter;
 
     LRLetterSlot *currentLetterSlot = nil;
-    int letterCount = 0;
     for (LRLetterSlot* slot in self.letterSlots)
     {
-        letterCount++;
         //If the slot is empty
         if ([slot isLetterSlotEmpty]){
             currentLetterSlot = slot;
             break;
         }
         //If the last block is a place holder and the player is selecting a block
-        else if (letterCount == [self numLettersInSection] && [slot.currentBlock isLetterBlockPlaceHolder])
+        else if (slot.index == ([self numLettersInSection] - 1)
+                 && [slot.currentBlock isLetterBlockPlaceHolder])
         {
-            LRLetterSlot *letterSlot = [self.letterSlots objectAtIndex:letterCount + 1];
+            LRLetterSlot *letterSlot = [self.letterSlots objectAtIndex:[self numLettersInSection]];
             letterSlot.currentBlock = [LRLetterBlockGenerator createPlaceHolderBlock];
+            self.currentSlot = letterSlot;
             currentLetterSlot = slot;
             break;
         }
@@ -413,7 +413,7 @@ typedef void(^CompletionBlockType)(void);
 {
     LRLetterSlot *nearBySlot = [self getClosestSlotToBlock:self.touchedBlock];
     
-    //Is there now a place holder block?
+    //Is there not a place holder block?
     if (!self.currentSlot && ![self getPlaceHolderSlot]) {
         nearBySlot.currentBlock = [LRLetterBlockGenerator createPlaceHolderBlock];
         self.currentSlot = nearBySlot;
@@ -577,6 +577,7 @@ typedef void(^CompletionBlockType)(void);
     return retVal;
 }
 
+/*! Returns the numbers of letters in the letter section, including placeholder blocks */
 - (int) numLettersInSection
 {
     int count = 0;
