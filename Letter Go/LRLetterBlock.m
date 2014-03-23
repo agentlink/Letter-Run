@@ -74,10 +74,10 @@
     SKSpriteNode *envelopeSprite;
     NSString *fileName = nil;
     if ([LRLetterBlock isLetterAlphabetical:letter]) {
-        fileName = (love) ? @"Envelope_Love.png" : @"Envelope_Normal.png";
+        fileName = (love) ? @"envelope-love" : @"envelope-normal" ;
     }
     else if (placeholderBlock) {
-        fileName = @"letterGlow.png";
+        fileName = @"envelope-glow";
     }
     if (fileName) {
         envelopeSprite = [SKSpriteNode spriteNodeWithImageNamed:fileName];

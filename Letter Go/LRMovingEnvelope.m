@@ -42,9 +42,7 @@ static CGFloat const kLRMovingBlockExtraTouchHeight = 4.0;
 
 - (SKSpriteNode *)glow {
     if (!_glow) {
-        _glow = [SKSpriteNode spriteNodeWithImageNamed:@"letterGlow.png"];
-        _glow.xScale = .5;
-        _glow.yScale = .5;
+        _glow = [SKSpriteNode spriteNodeWithImageNamed:@"envelope-glow"];
         _glow.zPosition = -1;
         _glow.alpha = 0.0;
     }

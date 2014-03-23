@@ -123,7 +123,7 @@ typedef void(^CompletionBlockType)(void);
 
 - (SKSpriteNode *)letterSection {
     if (!_letterSection) {
-        _letterSection = [SKSpriteNode spriteNodeWithImageNamed:@"letterSection.png"];
+        _letterSection = [SKSpriteNode spriteNodeWithImageNamed:@"letterSection-background"];
         _letterSection.size = self.size;
     }
     return _letterSection;

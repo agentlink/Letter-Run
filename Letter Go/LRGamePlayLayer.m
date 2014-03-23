@@ -93,7 +93,7 @@
 - (LRButton *)pauseButton
 {
     if (!_pauseButton) {
-        _pauseButton = [[LRButton alloc] initWithImageNamedNormal:@"Pause_Selected.png" selected:@"Pause_Unselected.png"];
+        _pauseButton = [[LRButton alloc] initWithImageNamedNormal:@"pause-unselected" selected:@"pause-selected"];
         [_pauseButton setScale:.7];
         [_pauseButton setTouchUpInsideTarget:self action:@selector(pauseButtonPressed)];
         _pauseButton.position = CGPointMake(0 - SCREEN_WIDTH/2 + _pauseButton.size.width/2, SCREEN_HEIGHT/2 - _pauseButton.size.height/2);

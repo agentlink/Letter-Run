@@ -68,9 +68,8 @@ static const float kLRHealthSectionStartPercentYellow = .50;
 
 - (SKSpriteNode *)healthBarSkin {
     if (!_healthBarSkin) {
-        _healthBarSkin = [SKSpriteNode spriteNodeWithImageNamed:@"healthBar.png"];
-        _healthBarSkin.yScale = .5;
-        _healthBarSkin.xScale = .5 * (SCREEN_WIDTH / 480);
+        _healthBarSkin = [SKSpriteNode spriteNodeWithImageNamed:@"healthSection-background"];
+        _healthBarSkin.xScale = (SCREEN_WIDTH / 480);
     }
     return _healthBarSkin;
 }
