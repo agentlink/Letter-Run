@@ -51,6 +51,13 @@
 }
 
 #pragma mark Image Initializer
+- (id)initWithImageNamed:(NSString *)name withDisabledOption:(BOOL)disabledOption
+{
+    NSString *normalName =  [NSString stringWithFormat:@"%@-unselected", name];
+    NSString *selectedName = [NSString stringWithFormat:@"%@-selected", name];
+    NSString *disabledName = (disabledOption) ? [NSString stringWithFormat:@"%@-disabled", name] : nil;
+    return [self initWithImageNamedNormal:normalName selected:selectedName disabled:disabledName];
+}
 
 - (id)initWithImageNamedNormal:(NSString *)normal selected:(NSString *)selected {
     return [self initWithImageNamedNormal:normal selected:selected disabled:nil];

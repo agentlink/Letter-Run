@@ -397,7 +397,7 @@ typedef void(^CompletionBlockType)(void);
         if ([(LRLetterSlot *)[self.letterSlots objectAtIndex:i] isLetterSlotEmpty])
             break;
     }
-    self.submitButton.userInteractionEnabled = (i >= kWordMinimumLetterCount && [[LRDictionaryChecker shared] checkForWordInDictionary:[self getCurrentWord]]);
+    self.submitButton.isEnabled = (i >= kWordMinimumLetterCount && [[LRDictionaryChecker shared] checkForWordInDictionary:[self getCurrentWord]]);
 }
 
 #pragma mark - Reordering Functions -
@@ -569,7 +569,7 @@ typedef void(^CompletionBlockType)(void);
 
 - (CGFloat) xPositionForSlotIndex:(int) index {
     // +kLetterBlockSpriteDimension for the submit button
-    CGFloat letterSlotAreaWidth = kDistanceBetweenSlots * kWordMaximumLetterCount + kLetterBlockSpriteDimension;
+    CGFloat letterSlotAreaWidth = kDistanceBetweenSlots * kWordMaximumLetterCount + self.submitButton.size.width;
     CGFloat edgeBuffer = (self.size.width - letterSlotAreaWidth)/2;
 
     CGFloat leftOffset = -self.size.width/2 + (edgeBuffer + kLetterBlockSpriteDimension/2);

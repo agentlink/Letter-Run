@@ -7,6 +7,7 @@
 //
 
 #import "LRGameStateDelegate.h"
-@interface LRSubmitButton : SKSpriteNode <LRGameStateDelegate>
+#import "LRButton.h"
+@interface LRSubmitButton : LRButton <LRGameStateDelegate>
 
 @end

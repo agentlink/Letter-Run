@@ -26,6 +26,8 @@
 - (id)initWithTextureNormal:(SKTexture *)normal selected:(SKTexture *)selected;
 - (id)initWithTextureNormal:(SKTexture *)normal selected:(SKTexture *)selected disabled:(SKTexture *)disabled; // Designated Initializer
 
+//Pass in the base name. If the button has a disabled option,
+- (id)initWithImageNamed:(NSString *)name withDisabledOption:(BOOL)disabledOption;
 - (id)initWithImageNamedNormal:(NSString *)normal selected:(NSString *)selected;
 - (id)initWithImageNamedNormal:(NSString *)normal selected:(NSString *)selected disabled:(NSString *)disabled;
 

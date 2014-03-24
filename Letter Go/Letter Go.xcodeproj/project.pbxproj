@@ -173,7 +173,7 @@
 		00CDF14B17F474EC003065F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		00CDF14D17F474EC003065F6 /* LRViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LRViewController.h; sourceTree = "<group>"; };
 		00CDF14E17F474EC003065F6 /* LRViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LRViewController.m; sourceTree = "<group>"; };
-		00CDF15517F474EC003065F6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		00CDF15517F474EC003065F6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Letter Go/Images.xcassets"; sourceTree = "<group>"; };
 		00CDF15B17F474EC003065F6 /* Letter GoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Letter GoTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		00CDF15C17F474EC003065F6 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		00CDF16417F474EC003065F6 /* Letter GoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Letter GoTests-Info.plist"; sourceTree = "<group>"; };
@@ -271,10 +271,11 @@
 		0007FB30180B2FB600E55B0D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				A85BD82618D96AB100C5EFB8 /* mainSection.jpg */,
+				00CDF15517F474EC003065F6 /* Images.xcassets */,
 				A8F171CA18DF7C5B00964C34 /* Scenery.xcassets */,
 				A8F171CC18DF7D4C00964C34 /* Envelopes.xcassets */,
 				A8F171CE18DF7D9300964C34 /* Buttons.xcassets */,
+				A85BD82618D96AB100C5EFB8 /* mainSection.jpg */,
 				0007FB31180B2FBB00E55B0D /* Background */,
 			);
 			name = Resources;
@@ -491,7 +492,6 @@
 				00CDF14A17F474EC003065F6 /* Main.storyboard */,
 				00CDF14D17F474EC003065F6 /* LRViewController.h */,
 				00CDF14E17F474EC003065F6 /* LRViewController.m */,
-				00CDF15517F474EC003065F6 /* Images.xcassets */,
 				00CDF16217F474EC003065F6 /* Letter GoTests */,
 				00CDF13F17F474EC003065F6 /* Supporting Files */,
 			);
