@@ -17,6 +17,8 @@
 + (SKAction *)rearrangementLetterShiftedSlotsFromPoint:(CGPoint)start toPoint:(CGPoint)destination;
 + (SKAction *)rearrangementFinishedAnimationFromPoint:(CGPoint)start toPoint:(CGPoint)destination;
 
++ (SKAction *)bubbleByScale:(CGFloat)overshootScale withDuration:(NSTimeInterval)duration;
+
 + (SKAction *)actionWithCompletionBlock:(SKAction *)action block:(void (^)(void))completion;
 
 @end

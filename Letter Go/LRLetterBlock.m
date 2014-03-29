@@ -17,6 +17,7 @@
 
 @property (nonatomic, strong) SKSpriteNode *envelopeSprite;
 @property (nonatomic, strong) SKLabelNode *letterLabel;
+@property (nonatomic, strong) NSString *letter;
 @property (nonatomic) CGSize extraTouchSize;
 @property (readwrite) BOOL loveLetter;
 

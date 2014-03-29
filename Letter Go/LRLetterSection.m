@@ -17,6 +17,7 @@
 #import "LREnvelopeAnimationBuilder.h"
 #import "LRCollisionManager.h"
 #import "LRGameStateManager.h"
+#import "LRColor.h"
 
 typedef NS_ENUM(NSUInteger, LetterSectionState)
 {
@@ -311,15 +312,11 @@ typedef void(^CompletionBlockType)(void);
 - (void)rearrangementHasBegunWithLetterBlock:(id)letterBlock
 {
     self.touchedBlock = (LRCollectedEnvelope *)letterBlock;
-    self.touchedBlock.xScale = 1.3;
-    self.touchedBlock.yScale = 1.3;
     self.touchedBlock.zPosition = zPos_SectionBlock_Selected;
 }
 
 - (void)rearrangementHasFinishedWithLetterBlock:(id)letterBlock
 {
-    self.touchedBlock.xScale = 1;
-    self.touchedBlock.yScale = 1;
 
     self.touchedBlock.zPosition = zPos_SectionBlock_Unselected;
     LRCollectedEnvelope *selectedEnvelope = (LRCollectedEnvelope *)letterBlock;

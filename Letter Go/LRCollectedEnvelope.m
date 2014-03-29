@@ -10,6 +10,7 @@
 #import "LRGameScene.h"
 #import "LRLetterSlot.h"
 #import "LRCollisionManager.h"
+#import "LREnvelopeAnimationBuilder.h"
 
 typedef NS_ENUM(NSUInteger, MovementDirection)
 {
@@ -19,9 +20,11 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
     MovementDirectionVertical
 };
 
+
 static const NSUInteger kMaxBounceCount = 2;
 static const CGFloat kLRCollectedEnvelopeExtraTouchHeight = 10.0;
 const CGFloat kLRCollectedEnvelopeHeight = kCollectedEnvelopeSpriteDimension + kLRCollectedEnvelopeExtraTouchHeight;
+
 
 @interface LRCollectedEnvelope ()
 

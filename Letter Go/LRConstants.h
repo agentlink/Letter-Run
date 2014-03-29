@@ -13,6 +13,11 @@ typedef NS_ENUM(BOOL, kLRDirection)
     kRightDirection
 };
 
+
+//TODO: Move these
+static CGFloat const kLRCollectedEnvelopeBubbleScale = 1.1;
+static CGFloat const kLRCollectedEnvelopeBubbleDuration = .33;
+
 //Size constants
 static const float kSectionHeightButtonSection  =       55;
 static const float kSectionHeightLetterSection  =       63;
@@ -20,7 +25,7 @@ static const float kSectionHeightHealth         =       18.0;
 
 #define kSectionHeightMainSection           (SCREEN_HEIGHT - kSectionHeightLetterSection - kSectionHeightHealth - kSectionHeightButtonSection)
 static const float kCollectedEnvelopeSpriteDimension  =       40.0;
-static const float kMovingEnvelopeLetterBlockSpriteDimension = 60.0;
+static const float kMovingEnvelopeLetterBlockSpriteDimension = 48.0;
 static const float kParallaxHeightGrass         =       26.6;
 #define kDistanceBetweenSlots                           SCREEN_WIDTH / kWordMaximumLetterCount
 #define kDistanceBetweenSlotAndEdge                     66 * SCREEN_WIDTH/960.0

@@ -15,7 +15,7 @@
 }
 
 + (UIFont *)letterBlockFont {
-    return [UIFont fontWithName:@"Helvetica" size:32];
+    return [UIFont fontWithName:@"GothamBold" size:32];
 }
 
 @end

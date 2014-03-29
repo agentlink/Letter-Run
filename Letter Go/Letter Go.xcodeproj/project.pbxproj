@@ -24,6 +24,7 @@
 		00641EA9182C42D30098EC38 /* LRDevPauseMenuVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 00641EA7182C42D30098EC38 /* LRDevPauseMenuVC.m */; };
 		00641EAA182C42D30098EC38 /* LRDevPauseMenuVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 00641EA8182C42D30098EC38 /* LRDevPauseMenuVC.xib */; };
 		00641EB3182D7BFF0098EC38 /* LRSliderLabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00641EB2182D7BFF0098EC38 /* LRSliderLabelView.m */; };
+		00719CE318E6D21D00DF66E6 /* GothamBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 00719CE218E6CFE500DF66E6 /* GothamBold.ttf */; };
 		008428F01800997800908E5D /* LetterProbabilities.plist in Resources */ = {isa = PBXBuildFile; fileRef = 008428EF1800997800908E5D /* LetterProbabilities.plist */; };
 		008428F318009F6300908E5D /* LRLetterGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 008428F218009F6300908E5D /* LRLetterGenerator.m */; };
 		008428F61801EABB00908E5D /* LRSubmitButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 008428F51801EABB00908E5D /* LRSubmitButton.m */; };
@@ -107,7 +108,7 @@
 		00076E62186F798200287EF9 /* LRColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRColor.h; sourceTree = "<group>"; };
 		00076E63186F798200287EF9 /* LRColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRColor.m; sourceTree = "<group>"; };
 		00076E65186F819000287EF9 /* LRFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRFont.h; sourceTree = "<group>"; };
-		00076E66186F819000287EF9 /* LRFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRFont.m; sourceTree = "<group>"; };
+		00076E66186F819000287EF9 /* LRFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LRFont.m; sourceTree = "<group>"; };
 		0007FB3D180C7A1A00E55B0D /* LRCollectedEnvelope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRCollectedEnvelope.h; sourceTree = "<group>"; };
 		0007FB3E180C7A1A00E55B0D /* LRCollectedEnvelope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRCollectedEnvelope.m; sourceTree = "<group>"; };
 		000BC152181C705D00BEC563 /* LRParallaxNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRParallaxNode.h; sourceTree = "<group>"; };
@@ -138,6 +139,7 @@
 		00641EA8182C42D30098EC38 /* LRDevPauseMenuVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LRDevPauseMenuVC.xib; sourceTree = "<group>"; };
 		00641EB1182D7BFF0098EC38 /* LRSliderLabelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRSliderLabelView.h; sourceTree = "<group>"; };
 		00641EB2182D7BFF0098EC38 /* LRSliderLabelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRSliderLabelView.m; sourceTree = "<group>"; };
+		00719CE218E6CFE500DF66E6 /* GothamBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GothamBold.ttf; sourceTree = "<group>"; };
 		008428EF1800997800908E5D /* LetterProbabilities.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = LetterProbabilities.plist; sourceTree = "<group>"; };
 		008428F118009F6300908E5D /* LRLetterGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRLetterGenerator.h; sourceTree = "<group>"; };
 		008428F218009F6300908E5D /* LRLetterGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterGenerator.m; sourceTree = "<group>"; };
@@ -280,6 +282,7 @@
 				A8F171CE18DF7D9300964C34 /* Buttons.xcassets */,
 				A85BD82618D96AB100C5EFB8 /* mainSection.jpg */,
 				0007FB31180B2FBB00E55B0D /* Background */,
+				00719CE118E6CFD500DF66E6 /* Fonts */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -394,6 +397,14 @@
 				00AC281F18317F7A00B3C0EB /* LRDevPauseSubView.m */,
 			);
 			name = "Dev Pause Menu";
+			sourceTree = "<group>";
+		};
+		00719CE118E6CFD500DF66E6 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				00719CE218E6CFE500DF66E6 /* GothamBold.ttf */,
+			);
+			name = Fonts;
 			sourceTree = "<group>";
 		};
 		008428EE1800992D00908E5D /* Property Lists */ = {
@@ -820,6 +831,7 @@
 				A8F171CB18DF7C5B00964C34 /* Scenery.xcassets in Resources */,
 				A85BD82718D96AB100C5EFB8 /* mainSection.jpg in Resources */,
 				A876EC40188367AA000FA069 /* Background_Hills.png in Resources */,
+				00719CE318E6D21D00DF66E6 /* GothamBold.ttf in Resources */,
 				00CDF14317F474EC003065F6 /* InfoPlist.strings in Resources */,
 				00CDF15617F474EC003065F6 /* Images.xcassets in Resources */,
 				003C2670180F46C6003729D4 /* organizedDict.txt in Resources */,

@@ -7,6 +7,7 @@
 //
 
 #import "LRMovingEnvelope.h"
+#import "LREnvelopeAnimationBuilder.h"
 
 static CGFloat const kLRMovingBlockBetweenEnvelopeOffset = 94.5;
 static CGFloat const kLRMovingBlockBottomOffset = 3.0;
@@ -88,7 +89,13 @@ static CGFloat const kLRMovingBlockExtraTouchHeight = 4.0;
 - (void)setSelected:(BOOL)selected
 {
     _selected = selected;
-    [self _setGlowEnabled:selected];
+    CGFloat bubbleScale = selected ? kLRCollectedEnvelopeBubbleScale : 1/kLRCollectedEnvelopeBubbleScale;
+    SKAction *bubbleAction = [LREnvelopeAnimationBuilder bubbleByScale:bubbleScale
+                                                          withDuration:kLRCollectedEnvelopeBubbleDuration];
+    [self runAction:bubbleAction];
+
+
+    //    [self _setGlowEnabled:selected];
 }
 
 - (void)_setGlowEnabled:(BOOL)enabled

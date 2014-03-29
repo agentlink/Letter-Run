@@ -12,9 +12,13 @@
 @interface LRLetterBlock : SKSpriteNode <LRGameStateDelegate>
 
 ///The alphabetical letter represented by the envelope
-@property (nonatomic, strong) NSString *letter;
+@property (nonatomic, readonly) NSString *letter;
 ///Whether or not the letter is a love letter
 @property (nonatomic, readonly) BOOL loveLetter;
+//The label containing the letter
+@property (nonatomic, readonly) SKLabelNode *letterLabel;
+//The sprite of the envelope
+@property (nonatomic, readonly) SKSpriteNode *envelopeSprite;
 
 /*!
  @description Use this method to initialize a collected envelope
