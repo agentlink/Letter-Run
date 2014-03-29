@@ -31,7 +31,7 @@ typedef void(^CompletionBlockType)(void);
 
 @property (nonatomic) BOOL gameOverFinished;
 @property (nonatomic, strong) SKSpriteNode *letterSection;
-@property (nonatomic, strong) LRSubmitButton *submitButton;
+@property (nonatomic, weak) LRSubmitButton *submitButton;
 @property (nonatomic, strong) NSMutableArray *letterSlots;
 @property (nonatomic, strong) NSMutableArray *delayedLetters;
 
@@ -66,7 +66,7 @@ typedef void(^CompletionBlockType)(void);
 - (void)createSectionContent
 {
     [self addChild:self.letterSection];
-    [self addChild:self.submitButton];
+//    [self addChild:self.submitButton];
     
     for (LRLetterSlot *slot in self.letterSlots) {
         [self addChild:slot];
@@ -90,16 +90,16 @@ typedef void(^CompletionBlockType)(void);
     
     CGFloat barrierXPos = self.position.x;
     CGFloat bottomBarrierYPos = self.frame.origin.y + barrierHeight/2;
-    CGFloat topBarrierYPos = bottomBarrierYPos + barrierHeight + kLetterBlockSpriteDimension;
+    CGFloat topBarrierYPos = bottomBarrierYPos + barrierHeight + kCollectedEnvelopeSpriteDimension;
     
-    bottomBarrier = [SKSpriteNode spriteNodeWithColor:[LRColor letterSectionColor]
+    bottomBarrier = [SKSpriteNode spriteNodeWithColor:[LRColor clearColor]
                                                  size:barrierSize];
     bottomBarrier.position = CGPointMake(barrierXPos, bottomBarrierYPos);
     bottomBarrier.zPosition = zPos_LetterSectionBarrier_Vert;
     [self setBarrierPhysics];
     [self addChild:bottomBarrier];
     
-    topBarrier = [SKSpriteNode spriteNodeWithColor:[LRColor letterSectionColor]
+    topBarrier = [SKSpriteNode spriteNodeWithColor:[LRColor clearColor]
                                               size:barrierSize];
     topBarrier.position = CGPointMake(barrierXPos, topBarrierYPos);
     topBarrier.zPosition = zPos_LetterSectionBarrier_Vert;
@@ -123,16 +123,16 @@ typedef void(^CompletionBlockType)(void);
 
 - (SKSpriteNode *)letterSection {
     if (!_letterSection) {
-        _letterSection = [SKSpriteNode spriteNodeWithImageNamed:@"letterSection-background"];
-        _letterSection.size = self.size;
+        _letterSection = [SKSpriteNode spriteNodeWithColor:[LRColor letterSectionColor] size:self.size];
+//        _letterSection = [SKSpriteNode spriteNodeWithImageNamed:@"letterSection-background"];
+//        _letterSection.size = self.size;
     }
     return _letterSection;
 }
 
 - (LRSubmitButton *)submitButton {
     if (!_submitButton) {
-        _submitButton = [LRSubmitButton new];
-        _submitButton.position = CGPointMake([self xPositionForSlotIndex:kWordMaximumLetterCount], 0);
+        _submitButton = [[[[[LRGameStateManager shared] gameScene] gamePlayLayer] buttonSection] submitButton];
     }
     return _submitButton;
 }
@@ -213,7 +213,7 @@ typedef void(^CompletionBlockType)(void);
     animatedEnvelope.physicsEnabled = YES;
     
     CGPoint letterDropPos = origEnvelope.position;
-    letterDropPos.y += kLetterBlockSpriteDimension;
+    letterDropPos.y += kCollectedEnvelopeSpriteDimension;
     animatedEnvelope.position = letterDropPos;
     
     LRLetterSlot *parentSlot = self.letterSlots[origEnvelope.slotIndex];
@@ -311,11 +311,16 @@ typedef void(^CompletionBlockType)(void);
 - (void)rearrangementHasBegunWithLetterBlock:(id)letterBlock
 {
     self.touchedBlock = (LRCollectedEnvelope *)letterBlock;
+    self.touchedBlock.xScale = 1.3;
+    self.touchedBlock.yScale = 1.3;
     self.touchedBlock.zPosition = zPos_SectionBlock_Selected;
 }
 
 - (void)rearrangementHasFinishedWithLetterBlock:(id)letterBlock
 {
+    self.touchedBlock.xScale = 1;
+    self.touchedBlock.yScale = 1;
+
     self.touchedBlock.zPosition = zPos_SectionBlock_Unselected;
     LRCollectedEnvelope *selectedEnvelope = (LRCollectedEnvelope *)letterBlock;
     
@@ -569,10 +574,10 @@ typedef void(^CompletionBlockType)(void);
 
 - (CGFloat) xPositionForSlotIndex:(int) index {
     // +kLetterBlockSpriteDimension for the submit button
-    CGFloat letterSlotAreaWidth = kDistanceBetweenSlots * kWordMaximumLetterCount + self.submitButton.size.width;
+    CGFloat letterSlotAreaWidth = kDistanceBetweenSlots * kWordMaximumLetterCount;
     CGFloat edgeBuffer = (self.size.width - letterSlotAreaWidth)/2;
 
-    CGFloat leftOffset = -self.size.width/2 + (edgeBuffer + kLetterBlockSpriteDimension/2);
+    CGFloat leftOffset = -self.size.width/2 + (edgeBuffer + kCollectedEnvelopeSpriteDimension/2);
     CGFloat retVal = leftOffset + index * kDistanceBetweenSlots;
     return retVal;
 }

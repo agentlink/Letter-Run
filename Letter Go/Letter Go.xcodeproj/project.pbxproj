@@ -74,6 +74,7 @@
 		A877E5CD185BFA960028CFFA /* LRLetterGenerator_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = A877E5CC185BFA960028CFFA /* LRLetterGenerator_Test.m */; };
 		A87BDD981853AC8D00845BB5 /* LRCurveBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = A87BDD971853AC8D00845BB5 /* LRCurveBuilder.m */; };
 		A87BDD9B1853AFDC00845BB5 /* LRBezierPath.m in Sources */ = {isa = PBXBuildFile; fileRef = A87BDD9A1853AFDC00845BB5 /* LRBezierPath.m */; };
+		A87E61A718E638EF00ADA439 /* LRButtonSection.m in Sources */ = {isa = PBXBuildFile; fileRef = A87E61A618E638EF00ADA439 /* LRButtonSection.m */; };
 		A88A4B371887308C00BC9905 /* LRMainGameSection.m in Sources */ = {isa = PBXBuildFile; fileRef = A88A4B361887308C00BC9905 /* LRMainGameSection.m */; };
 		A88A4B3B188734E400BC9905 /* LRMovingEnvelope.m in Sources */ = {isa = PBXBuildFile; fileRef = A88A4B3A188734E400BC9905 /* LRMovingEnvelope.m */; };
 		A88CEB20189D87C600092C8A /* LREnvelopeAnimationBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = A88CEB1F189D87C600092C8A /* LREnvelopeAnimationBuilder.m */; };
@@ -215,6 +216,8 @@
 		A87BDD971853AC8D00845BB5 /* LRCurveBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRCurveBuilder.m; sourceTree = "<group>"; };
 		A87BDD991853AFDC00845BB5 /* LRBezierPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRBezierPath.h; sourceTree = "<group>"; };
 		A87BDD9A1853AFDC00845BB5 /* LRBezierPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRBezierPath.m; sourceTree = "<group>"; };
+		A87E61A518E638EF00ADA439 /* LRButtonSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRButtonSection.h; sourceTree = "<group>"; };
+		A87E61A618E638EF00ADA439 /* LRButtonSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRButtonSection.m; sourceTree = "<group>"; };
 		A88A4B351887308C00BC9905 /* LRMainGameSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRMainGameSection.h; sourceTree = "<group>"; };
 		A88A4B361887308C00BC9905 /* LRMainGameSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRMainGameSection.m; sourceTree = "<group>"; };
 		A88A4B38188732B500BC9905 /* LRParallaxConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LRParallaxConstants.h; sourceTree = "<group>"; };
@@ -556,6 +559,8 @@
 				0049695C17F8B58F00176F2D /* Letter Section */,
 				00CDF18417F483E3003065F6 /* LRScreenSection.h */,
 				00CDF18517F483E3003065F6 /* LRScreenSection.m */,
+				A87E61A518E638EF00ADA439 /* LRButtonSection.h */,
+				A87E61A618E638EF00ADA439 /* LRButtonSection.m */,
 			);
 			name = "Game Play Layer Sections";
 			sourceTree = "<group>";
@@ -868,6 +873,7 @@
 				00AC282018317F7A00B3C0EB /* LRDevPauseSubView.m in Sources */,
 				A88DE67118DE1DCB00282AA8 /* LRMailmanArea.m in Sources */,
 				00F6F59717FF5234009EDADB /* LRGameStateManager.m in Sources */,
+				A87E61A718E638EF00ADA439 /* LRButtonSection.m in Sources */,
 				00CDF18217F48310003065F6 /* LRGamePlayLayer.m in Sources */,
 				00CDF18917F4840F003065F6 /* LRHealthSection.m in Sources */,
 				00CDF18C17F4899B003065F6 /* LRLetterSection.m in Sources */,

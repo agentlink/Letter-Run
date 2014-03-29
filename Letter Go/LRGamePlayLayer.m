@@ -47,6 +47,7 @@
 
 - (void)createLayerContent
 {
+    [self addChild:self.buttonSection];
     [self addChild:self.healthSection];
     [self addChild:self.letterSection];
     [self addChild:self.mainGameSection];
@@ -58,7 +59,7 @@
 - (LRHealthSection *)healthSection
 {
     if (!_healthSection) {
-        CGFloat healthSectionYPos = - self.size.height/2 + kSectionHeightLetterSection + kSectionHeightHealth/2;
+        CGFloat healthSectionYPos = - self.size.height/2 + kSectionHeightLetterSection + kSectionHeightButtonSection +kSectionHeightHealth/2;
         _healthSection = [[LRHealthSection alloc] initWithSize:CGSizeMake(self.size.width, kSectionHeightHealth)];
         _healthSection.position = CGPointMake(0, healthSectionYPos);
         _healthSection.zPosition = zPos_HealthSection;
@@ -70,7 +71,8 @@
 {
     if (!_letterSection) {
         _letterSection = [[LRLetterSection alloc] initWithSize:CGSizeMake(self.size.width, kSectionHeightLetterSection)];
-        _letterSection.position = CGPointMake(self.position.x - self.size.width/2, 0 - self.size.height/2 + self.letterSection.size.height/2);
+        _letterSection.position = CGPointMake(self.position.x - self.size.width/2,
+                                              0 - self.size.height/2 + self.letterSection.size.height/2 + kSectionHeightButtonSection);
         _letterSection.zPosition = zPos_LetterSection;
     }
     return _letterSection;
@@ -79,7 +81,7 @@
 - (LRMainGameSection *)mainGameSection {
     if (!_mainGameSection) {
         CGFloat mainGameSectionXPos = 0;
-        CGFloat mainGameSectionYPos = (kSectionHeightLetterSection + kSectionHeightHealth)/2;
+        CGFloat mainGameSectionYPos = (kSectionHeightLetterSection + kSectionHeightHealth + kSectionHeightButtonSection)/2;
         
         _mainGameSection = [[LRMainGameSection alloc] initWithSize:CGSizeMake(SCREEN_WIDTH, kSectionHeightMainSection)];
         _mainGameSection.position = CGPointMake(mainGameSectionXPos, mainGameSectionYPos);
@@ -88,6 +90,19 @@
         _mainGameSection.color = [LRColor skyColor];
     }
     return _mainGameSection;
+}
+
+- (LRButtonSection *)buttonSection
+{
+    if (!_buttonSection) {
+        CGFloat buttonSectionXPos = 0;
+        CGFloat buttonSectionYPos = -self.size.height/2 + kSectionHeightButtonSection/2;
+        _buttonSection = [[LRButtonSection alloc] initWithSize:CGSizeMake(SCREEN_WIDTH, kSectionHeightButtonSection)];
+        _buttonSection.position = CGPointMake(buttonSectionXPos, buttonSectionYPos);
+        _buttonSection.zPosition = 100;
+    }
+    return _buttonSection;
+    
 }
 
 - (LRButton *)pauseButton

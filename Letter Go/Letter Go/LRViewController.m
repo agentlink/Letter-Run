@@ -46,12 +46,12 @@
 
 - (NSUInteger)supportedInterfaceOrientations
 {
-    return UIInterfaceOrientationMaskLandscape;
+    return UIInterfaceOrientationMaskPortrait;
 }
 
 - (UIInterfaceOrientation) preferredInterfaceOrientationForPresentation
 {
-    return UIInterfaceOrientationLandscapeLeft;
+    return UIInterfaceOrientationPortrait;
 }
 
 - (void)didReceiveMemoryWarning

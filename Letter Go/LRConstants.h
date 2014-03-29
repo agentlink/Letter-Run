@@ -14,18 +14,21 @@ typedef NS_ENUM(BOOL, kLRDirection)
 };
 
 //Size constants
+static const float kSectionHeightButtonSection  =       55;
 static const float kSectionHeightLetterSection  =       63;
 static const float kSectionHeightHealth         =       18.0;
-static const float kSectionHeightMainSection    =       320.0 - kSectionHeightLetterSection - kSectionHeightHealth;
-static const float kLetterBlockSpriteDimension  =       48.0;
+
+#define kSectionHeightMainSection           (SCREEN_HEIGHT - kSectionHeightLetterSection - kSectionHeightHealth - kSectionHeightButtonSection)
+static const float kCollectedEnvelopeSpriteDimension  =       40.0;
+static const float kMovingEnvelopeLetterBlockSpriteDimension = 60.0;
 static const float kParallaxHeightGrass         =       26.6;
-#define kDistanceBetweenSlots                           SCREEN_WIDTH / (kWordMaximumLetterCount + 1)
+#define kDistanceBetweenSlots                           SCREEN_WIDTH / kWordMaximumLetterCount
 #define kDistanceBetweenSlotAndEdge                     66 * SCREEN_WIDTH/960.0
 
 //Letter constants
 static const int kWordMinimumLetterCount        =       3;
 static const int kWordMaximumLetterCount        =       7;
-static const int kNumberOfSlots                 =       3;
+static const int kNumberOfSlots                 =       4;
 static NSString* const kLetterPlaceHolderText   =       @" ";
 
 
@@ -35,8 +38,8 @@ static const int kGameLoopResetValue            =       -1;
 #define IS_IPHONE_5                 ([[UIScreen mainScreen] bounds].size.height == 568)
 #define IS_RETINA                   ([[UIScreen mainScreen] scale] == 2.0f)
 
-#define SCREEN_HEIGHT                ([[UIScreen mainScreen] bounds].size.width)
-#define SCREEN_WIDTH                 ([[UIScreen mainScreen] bounds].size.height)
+#define SCREEN_HEIGHT                ([[UIScreen mainScreen] bounds].size.height)
+#define SCREEN_WIDTH                 ([[UIScreen mainScreen] bounds].size.width)
 
 #define NAME_SPRITE_FALLING_ENVELOPE                @"NAME_SPRITE_FALLING_ENVELOPE"
 #define NAME_SPRITE_MOVING_ENVELOPE                 @"NAME_SPRITE_MOVING_ENVELOPE"

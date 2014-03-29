@@ -7,7 +7,8 @@
 //
 
 #import "LRScreenSection.h"
+#import "LRSubmitButton.h"
 
 @interface LRButtonSection : LRScreenSection
-
+@property (nonatomic, strong) LRSubmitButton *submitButton;
 @end

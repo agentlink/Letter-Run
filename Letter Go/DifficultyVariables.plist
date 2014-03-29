@@ -339,7 +339,7 @@
 			<key>title</key>
 			<string>Letter Drop Period (Sec)</string>
 			<key>initialValue</key>
-			<real>1.5</real>
+			<integer>1</integer>
 			<key>max</key>
 			<integer>4</integer>
 			<key>min</key>

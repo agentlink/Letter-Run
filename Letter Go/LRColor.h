@@ -35,6 +35,7 @@
 + (SKColor *)letterBlockFontColor;
 + (SKColor *)skyColor;
 + (SKColor *)letterSectionColor;
++ (SKColor *)buttonSectionColor;
 + (SKColor *)gamePlayLayerBackgroundColor;
 
 + (SKColor *)debugColor1;

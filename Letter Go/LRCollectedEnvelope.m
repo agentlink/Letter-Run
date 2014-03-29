@@ -21,7 +21,7 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 
 static const NSUInteger kMaxBounceCount = 2;
 static const CGFloat kLRCollectedEnvelopeExtraTouchHeight = 10.0;
-const CGFloat kLRCollectedEnvelopeHeight = kLetterBlockSpriteDimension + kLRCollectedEnvelopeExtraTouchHeight;
+const CGFloat kLRCollectedEnvelopeHeight = kCollectedEnvelopeSpriteDimension + kLRCollectedEnvelopeExtraTouchHeight;
 
 @interface LRCollectedEnvelope ()
 
@@ -51,8 +51,9 @@ const CGFloat kLRCollectedEnvelopeHeight = kLetterBlockSpriteDimension + kLRColl
 
 - (id) initWithLetter:(NSString *)letter loveLetter:(BOOL)love
 {
-    CGSize extraTouchSize = CGSizeMake((kDistanceBetweenSlots - kLetterBlockSpriteDimension), kLRCollectedEnvelopeExtraTouchHeight);
-    if (self = [super initWithLetter:letter loveLetter:love extraTouchSize:extraTouchSize]) {
+    CGSize extraTouchSize = CGSizeMake((kDistanceBetweenSlots - kCollectedEnvelopeSpriteDimension), kLRCollectedEnvelopeExtraTouchHeight);
+    CGSize envelopeSize = CGSizeMake(kCollectedEnvelopeSpriteDimension, kCollectedEnvelopeSpriteDimension);
+    if (self = [super initWithSize:envelopeSize letter:letter loveLetter:love extraTouchSize:extraTouchSize]) {
         self.name = NAME_SPRITE_SECTION_LETTER_BLOCK;
         self.movementDirection = MovementDirectionNone;
         self.bounceCount = 0;

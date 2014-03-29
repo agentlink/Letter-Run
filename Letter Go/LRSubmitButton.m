@@ -21,6 +21,7 @@
 {
     if (self = [super initWithImageNamed:@"submit" withDisabledOption:YES])
     {
+        self.xScale = 1.4;
         [self setTouchUpInsideTarget:self action:@selector(submitButtonSelected)];
         self.isEnabled = NO;
     }

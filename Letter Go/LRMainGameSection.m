@@ -53,7 +53,7 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
 - (void)createSectionContent
 {
     //Background
-    self.backgroundImage = [[SKSpriteNode alloc] initWithImageNamed:@"mainSection.jpg"];
+    self.backgroundImage = [[SKSpriteNode alloc] initWithImageNamed:@"mainSection-background"];
     self.backgroundImage.size = self.size;
     [self addChild:self.backgroundImage];
     
@@ -141,7 +141,7 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
 
 - (void)_shiftEnvelopesForTimeDifference:(CGFloat)timeDifference
 {
-    CGFloat secondsToCrossScreen = 4.5;
+    CGFloat secondsToCrossScreen = 3.2;
     //TODO: get this from the difficulty manager
     CGFloat pixelsPerSecond = SCREEN_WIDTH / secondsToCrossScreen;
     for (LRMovingEnvelope* envelope in self.envelopesOnScreen) {

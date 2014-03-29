@@ -17,6 +17,7 @@
 
 @property (nonatomic, strong) SKSpriteNode *envelopeSprite;
 @property (nonatomic, strong) SKLabelNode *letterLabel;
+@property (nonatomic) CGSize extraTouchSize;
 @property (readwrite) BOOL loveLetter;
 
 @end
@@ -27,13 +28,19 @@
 
 - (id) initWithLetter:(NSString *)letter loveLetter:(BOOL)love extraTouchSize:(CGSize)touchSize
 {
-    CGSize envelopeTouchSize = CGSizeMake(kLetterBlockSpriteDimension + touchSize.width,
-                                          kLetterBlockSpriteDimension + touchSize.height);
+    NSAssert(0, @"initWithLetter should be implemented by subclass");
+    return nil;
+}
+
+- (id) initWithSize:(CGSize)size letter:(NSString *)letter loveLetter:(BOOL)love extraTouchSize:(CGSize)touchSize
+{
+    CGSize envelopeTouchSize = CGSizeMake(size.width + touchSize.width,
+                                          size.height + touchSize.height);
     if (self = [super initWithColor:[LRColor clearColor] size:envelopeTouchSize])
     {
+        self.extraTouchSize = touchSize;
         self.letter = letter;
         self.loveLetter = love;
-
         self.envelopeSprite = [self _envelopeSpriteForLetter:letter loveLetter:love];
         if (self.envelopeSprite) {
             [self addChild:self.envelopeSprite];
@@ -41,6 +48,7 @@
         self.userInteractionEnabled = YES;
     }
     return self;
+
 }
 
 - (void)setLetter:(NSString *)letter
@@ -59,7 +67,8 @@
     if (!_letterLabel) {
         UIFont *letterFont = [LRFont letterBlockFont];
         _letterLabel = [SKLabelNode new];
-        _letterLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - kLetterBlockSpriteDimension/4);
+        _letterLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - (self.size.height - self.extraTouchSize.height)/4);
+        _letterLabel.color = [LRColor debugColor1];
         _letterLabel.fontSize = letterFont.pointSize;
         _letterLabel.fontName = letterFont.fontName;
         _letterLabel.fontColor = [LRColor letterBlockFontColor];
@@ -81,7 +90,8 @@
     }
     if (fileName) {
         envelopeSprite = [SKSpriteNode spriteNodeWithImageNamed:fileName];
-        envelopeSprite.size = CGSizeMake(kLetterBlockSpriteDimension, kLetterBlockSpriteDimension);
+        envelopeSprite.size = CGSizeMake(self.size.width - self.extraTouchSize.width,
+                                         self.size.height - self.extraTouchSize.height);
         if (placeholderBlock) {
             envelopeSprite.alpha = .2;
         }
