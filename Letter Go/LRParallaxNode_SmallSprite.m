@@ -48,7 +48,7 @@
 {
     if (self = [super init])
     {
-        self.size = CGSizeMake(SCREEN_WIDTH * 3, kParallaxHeightGrass);
+        self.size = CGSizeMake(SCREEN_WIDTH * 3, 0);
         self.xOffset = -8;
         //Add the sprites to the screen
         for (SKSpriteNode *grassBlock in self.spriteArray) {

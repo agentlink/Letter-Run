@@ -18,7 +18,7 @@
     {
         self.currentBlock = [LRLetterBlockGenerator createEmptySectionBlock];
         self.name = NAME_SPRITE_LETTER_SLOT;
-        self.size = self.currentBlock.size;
+        self.size = CGSizeMake(kDistanceBetweenSlots, kSectionHeightLetterSection);
         [self addChild:self.currentBlock];
     }
     return self;
@@ -68,6 +68,7 @@
             [_currentBlock setPhysicsEnabled:YES];
         }
         _currentBlock.slotIndex = self.index;
+        _currentBlock.extraTouchSize = self.size;
         [self addChild:_currentBlock];
     }
     _currentBlock.zPosition = zPos_SectionBlock_Unselected;

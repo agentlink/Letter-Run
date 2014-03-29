@@ -73,25 +73,22 @@ typedef void(^CompletionBlockType)(void);
         [self addChild:slot];
     }
     
-    [self addVerticalBarriers];
+    [self addBottomBarrier];
 }
 
-/*!
- The bottom vertical barrier allows the dropped letters to bounce.
- The top vertical barrier allows slid up letters to hide behind something.
- */
-- (void)addVerticalBarriers
+///The bottom vertical barrier allows the dropped letters to bounce.
+- (void)addBottomBarrier
 {
-    //TODO: Remove top barrier if we end up getting ride of the slide under from entry
-    SKSpriteNode *topBarrier;
-    
-    CGFloat barrierHeight = (self.frame.size.height - kLRCollectedEnvelopeHeight) / 2;
+    //Barrier Size
+    CGFloat slotHeight = [self.letterSlots[0] size].height ;
+    CGFloat envelopeSpriteHeight = kCollectedEnvelopeSpriteDimension;
+    CGFloat barrierHeight = (slotHeight - envelopeSpriteHeight)/2;
     CGFloat barrierWidth = self.size.width;
     CGSize barrierSize = CGSizeMake(barrierWidth, barrierHeight);
     
+    //Barrier position
     CGFloat barrierXPos = self.position.x;
     CGFloat bottomBarrierYPos = self.frame.origin.y + barrierHeight/2;
-    CGFloat topBarrierYPos = bottomBarrierYPos + barrierHeight + kCollectedEnvelopeSpriteDimension;
     
     bottomBarrier = [SKSpriteNode spriteNodeWithColor:[LRColor clearColor]
                                                  size:barrierSize];
@@ -99,12 +96,6 @@ typedef void(^CompletionBlockType)(void);
     bottomBarrier.zPosition = zPos_LetterSectionBarrier_Vert;
     [self setBarrierPhysics];
     [self addChild:bottomBarrier];
-    
-    topBarrier = [SKSpriteNode spriteNodeWithColor:[LRColor clearColor]
-                                              size:barrierSize];
-    topBarrier.position = CGPointMake(barrierXPos, topBarrierYPos);
-    topBarrier.zPosition = zPos_LetterSectionBarrier_Vert;
-    [self addChild:topBarrier];
 }
 
 - (void)setBarrierPhysics
