@@ -26,8 +26,8 @@ const CGFloat kLRCollectedEnvelopeHeight = kCollectedEnvelopeSpriteDimension + k
 @interface LRCollectedEnvelope ()
 
 @property MovementDirection movementDirection;
-@property CGPoint touchOrigin;
-
+@property (nonatomic) CGPoint touchOrigin;
+@property (nonatomic) CGSize envelopeSize;
 @property (nonatomic) NSUInteger bounceCount;
 @end
 
@@ -51,15 +51,25 @@ const CGFloat kLRCollectedEnvelopeHeight = kCollectedEnvelopeSpriteDimension + k
 
 - (id) initWithLetter:(NSString *)letter loveLetter:(BOOL)love
 {
-    CGSize extraTouchSize = CGSizeMake((kDistanceBetweenSlots - kCollectedEnvelopeSpriteDimension), kLRCollectedEnvelopeExtraTouchHeight);
-    CGSize envelopeSize = CGSizeMake(kCollectedEnvelopeSpriteDimension, kCollectedEnvelopeSpriteDimension);
-    if (self = [super initWithSize:envelopeSize letter:letter loveLetter:love extraTouchSize:extraTouchSize]) {
+    CGSize size = CGSizeMake(kCollectedEnvelopeSpriteDimension, kCollectedEnvelopeSpriteDimension);
+    if (self = [super initWithSize:size letter:letter loveLetter:love]) {
         self.name = NAME_SPRITE_SECTION_LETTER_BLOCK;
         self.movementDirection = MovementDirectionNone;
         self.bounceCount = 0;
         self.slotIndex = kSlotIndexNone;
+        self.envelopeSize = size;
     }
     return self;
+}
+
+#pragma mark - Getters and Setters
+
+- (void)setExtraTouchSize:(CGSize)extraTouchSize
+{
+    [super setExtraTouchSize:extraTouchSize];
+    self.size = extraTouchSize;
+    self.envelopeSprite.size = self.envelopeSize;
+
 }
 
 #pragma mark - Physics Phunctions

@@ -6,6 +6,9 @@
 //  Copyright (c) 2013 Gabe Nicholas. All rights reserved.
 //
 
+
+//TODO: Clean this page up, good lord
+
 typedef NS_ENUM(BOOL, kLRDirection)
 {
     //Remove none if it doesn't get used
@@ -16,12 +19,12 @@ typedef NS_ENUM(BOOL, kLRDirection)
 //Size constants
 static const float kSectionHeightButtonSection  =       55;
 static const float kSectionHeightLetterSection  =       63;
-static const float kSectionHeightHealth         =       18.0;
+static const float kSectionHeightHealthSection         =       18.0;
 
-#define kSectionHeightMainSection           (SCREEN_HEIGHT - kSectionHeightLetterSection - kSectionHeightHealth - kSectionHeightButtonSection)
+#define kSectionHeightMainSection           (SCREEN_HEIGHT - kSectionHeightLetterSection - kSectionHeightHealthSection - kSectionHeightButtonSection)
 static const float kCollectedEnvelopeSpriteDimension  =       40.0;
-static const float kMovingEnvelopeLetterBlockSpriteDimension = 60.0;
-static const float kParallaxHeightGrass         =       26.6;
+static const float kMovingEnvelopeSpriteDimension     =       60.0;
+static const float kParallaxHeightGrass               =       26.6;
 #define kDistanceBetweenSlots                           SCREEN_WIDTH / kWordMaximumLetterCount
 #define kDistanceBetweenSlotAndEdge                     66 * SCREEN_WIDTH/960.0
 

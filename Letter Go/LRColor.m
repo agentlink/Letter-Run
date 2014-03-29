@@ -95,4 +95,12 @@
     return [SKColor colorWithRed:0.7 green:0.0 blue:0.0 alpha:.3];
 }
 
++ (SKColor *)randomColorWithAlpha:(CGFloat)alpha {
+    int maxVal = 256;
+    return [LRColor rgbColorWithRed:arc4random()%maxVal
+                              green:arc4random()%maxVal
+                               blue:arc4random()%maxVal
+                              alpha:alpha];
+}
+
 @end

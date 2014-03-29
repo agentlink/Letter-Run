@@ -59,8 +59,8 @@
 - (LRHealthSection *)healthSection
 {
     if (!_healthSection) {
-        CGFloat healthSectionYPos = - self.size.height/2 + kSectionHeightLetterSection + kSectionHeightButtonSection +kSectionHeightHealth/2;
-        _healthSection = [[LRHealthSection alloc] initWithSize:CGSizeMake(self.size.width, kSectionHeightHealth)];
+        CGFloat healthSectionYPos = - self.size.height/2 + kSectionHeightLetterSection + kSectionHeightButtonSection +kSectionHeightHealthSection/2;
+        _healthSection = [[LRHealthSection alloc] initWithSize:CGSizeMake(self.size.width, kSectionHeightHealthSection)];
         _healthSection.position = CGPointMake(0, healthSectionYPos);
         _healthSection.zPosition = zPos_HealthSection;
     }
@@ -81,7 +81,7 @@
 - (LRMainGameSection *)mainGameSection {
     if (!_mainGameSection) {
         CGFloat mainGameSectionXPos = 0;
-        CGFloat mainGameSectionYPos = (kSectionHeightLetterSection + kSectionHeightHealth + kSectionHeightButtonSection)/2;
+        CGFloat mainGameSectionYPos = (kSectionHeightLetterSection + kSectionHeightHealthSection + kSectionHeightButtonSection)/2;
         
         _mainGameSection = [[LRMainGameSection alloc] initWithSize:CGSizeMake(SCREEN_WIDTH, kSectionHeightMainSection)];
         _mainGameSection.position = CGPointMake(mainGameSectionXPos, mainGameSectionYPos);
@@ -99,7 +99,7 @@
         CGFloat buttonSectionYPos = -self.size.height/2 + kSectionHeightButtonSection/2;
         _buttonSection = [[LRButtonSection alloc] initWithSize:CGSizeMake(SCREEN_WIDTH, kSectionHeightButtonSection)];
         _buttonSection.position = CGPointMake(buttonSectionXPos, buttonSectionYPos);
-        _buttonSection.zPosition = 100;
+        _buttonSection.zPosition = zPos_ButtonSection;
     }
     return _buttonSection;
     

@@ -11,9 +11,6 @@
 static CGFloat const kLRMovingBlockBetweenEnvelopeOffset = 94.5;
 static CGFloat const kLRMovingBlockBottomOffset = 3.0;
 
-static CGFloat const kLRMovingBlockExtraTouchWidth = 70.0;
-static CGFloat const kLRMovingBlockExtraTouchHeight = 4.0;
-
 #define kLRMovingBlockLowestPoint  (-kSectionHeightMainSection/2) + 42
 
 @interface LRMovingEnvelope ()
@@ -31,9 +28,8 @@ static CGFloat const kLRMovingBlockExtraTouchHeight = 4.0;
 
 - (id) initWithLetter:(NSString *)letter loveLetter:(BOOL)love
 {
-    CGSize envelopeSize = CGSizeMake(kMovingEnvelopeLetterBlockSpriteDimension, kMovingEnvelopeLetterBlockSpriteDimension);
-    CGSize touchSize = CGSizeMake(kLRMovingBlockExtraTouchWidth, kLRMovingBlockExtraTouchHeight);
-    if (self = [super initWithSize:envelopeSize letter:letter loveLetter:love extraTouchSize:touchSize])
+    CGSize size = CGSizeMake(kMovingEnvelopeSpriteDimension, kMovingEnvelopeSpriteDimension);
+    if (self = [super initWithSize:size letter:letter loveLetter:love])
     {
         self.name = NAME_SPRITE_MOVING_ENVELOPE;
         [self _setGlowEnabled:NO];
@@ -64,7 +60,7 @@ static CGFloat const kLRMovingBlockExtraTouchHeight = 4.0;
     
     CGFloat lowestPosition = kLRMovingBlockLowestPoint;
     CGFloat betweenEnvelopeBuffer = kLRMovingBlockBetweenEnvelopeOffset;
-    CGFloat xPos = SCREEN_WIDTH/2 + kMovingEnvelopeLetterBlockSpriteDimension;
+    CGFloat xPos = SCREEN_WIDTH/2 + kMovingEnvelopeSpriteDimension;
     CGFloat yPos = lowestPosition + kLRMovingBlockBottomOffset + betweenEnvelopeBuffer * slot;
     
     return CGPointMake(xPos, yPos);

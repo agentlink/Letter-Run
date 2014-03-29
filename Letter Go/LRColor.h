@@ -40,4 +40,6 @@
 
 + (SKColor *)debugColor1;
 + (SKColor *)debugColor2;
++ (SKColor *)randomColorWithAlpha:(CGFloat)alpha;
+
 @end

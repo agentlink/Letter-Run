@@ -15,9 +15,7 @@
 
 @interface LRLetterBlock ()
 
-@property (nonatomic, strong) SKSpriteNode *envelopeSprite;
 @property (nonatomic, strong) SKLabelNode *letterLabel;
-@property (nonatomic) CGSize extraTouchSize;
 @property (readwrite) BOOL loveLetter;
 
 @end
@@ -26,19 +24,16 @@
 
 #pragma mark - Initializers/Set Up
 
-- (id) initWithLetter:(NSString *)letter loveLetter:(BOOL)love extraTouchSize:(CGSize)touchSize
+- (id) initWithLetter:(NSString *)letter loveLetter:(BOOL)love
 {
     NSAssert(0, @"initWithLetter should be implemented by subclass");
     return nil;
 }
 
-- (id) initWithSize:(CGSize)size letter:(NSString *)letter loveLetter:(BOOL)love extraTouchSize:(CGSize)touchSize
+- (id) initWithSize:(CGSize)size letter:(NSString *)letter loveLetter:(BOOL)love
 {
-    CGSize envelopeTouchSize = CGSizeMake(size.width + touchSize.width,
-                                          size.height + touchSize.height);
-    if (self = [super initWithColor:[LRColor clearColor] size:envelopeTouchSize])
+    if (self = [super initWithColor:[LRColor clearColor] size:size])
     {
-        self.extraTouchSize = touchSize;
         self.letter = letter;
         self.loveLetter = love;
         self.envelopeSprite = [self _envelopeSpriteForLetter:letter loveLetter:love];
