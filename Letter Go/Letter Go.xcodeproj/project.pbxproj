@@ -62,6 +62,8 @@
 		00F6F59717FF5234009EDADB /* LRGameStateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F6F59617FF5234009EDADB /* LRGameStateManager.m */; };
 		A82CA94C1855189F004ADD99 /* LRSlotManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A82CA94B1855189F004ADD99 /* LRSlotManager.m */; };
 		A846FB8B186E0489009DCEF4 /* LRLetterBlock_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = A846FB8A186E0489009DCEF4 /* LRLetterBlock_Test.m */; };
+		A85A4CDA18E78BA100787D21 /* LeagueGothic-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = A85A4CD818E78BA100787D21 /* LeagueGothic-Italic.otf */; };
+		A85A4CDB18E78BA100787D21 /* LeagueGothic-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = A85A4CD918E78BA100787D21 /* LeagueGothic-Regular.otf */; };
 		A85BD82718D96AB100C5EFB8 /* mainSection.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A85BD82618D96AB100C5EFB8 /* mainSection.jpg */; };
 		A876EC3B18836795000FA069 /* Background_Cloud.png in Resources */ = {isa = PBXBuildFile; fileRef = A876EC3A18836795000FA069 /* Background_Cloud.png */; };
 		A876EC3F188367AA000FA069 /* Background_Grass.png in Resources */ = {isa = PBXBuildFile; fileRef = A876EC3C188367AA000FA069 /* Background_Grass.png */; };
@@ -203,6 +205,8 @@
 		A82DD7E71857FB24007483A6 /* LRPositionConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LRPositionConstants.h; sourceTree = "<group>"; };
 		A8423117188B162300F1693E /* LRLetterBlockControlDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRLetterBlockControlDelegate.h; sourceTree = "<group>"; };
 		A846FB8A186E0489009DCEF4 /* LRLetterBlock_Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterBlock_Test.m; sourceTree = "<group>"; };
+		A85A4CD818E78BA100787D21 /* LeagueGothic-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LeagueGothic-Italic.otf"; sourceTree = "<group>"; };
+		A85A4CD918E78BA100787D21 /* LeagueGothic-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LeagueGothic-Regular.otf"; sourceTree = "<group>"; };
 		A85BD82618D96AB100C5EFB8 /* mainSection.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mainSection.jpg; sourceTree = "<group>"; };
 		A876EC3A18836795000FA069 /* Background_Cloud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background_Cloud.png; sourceTree = "<group>"; };
 		A876EC3C188367AA000FA069 /* Background_Grass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background_Grass.png; sourceTree = "<group>"; };
@@ -403,6 +407,8 @@
 			isa = PBXGroup;
 			children = (
 				00719CE218E6CFE500DF66E6 /* GothamBold.ttf */,
+				A85A4CD818E78BA100787D21 /* LeagueGothic-Italic.otf */,
+				A85A4CD918E78BA100787D21 /* LeagueGothic-Regular.otf */,
 			);
 			name = Fonts;
 			sourceTree = "<group>";
@@ -826,12 +832,14 @@
 				A8F171CD18DF7D4C00964C34 /* Envelopes.xcassets in Resources */,
 				A8F171CF18DF7D9300964C34 /* Buttons.xcassets in Resources */,
 				00AC2804182EDAC100B3C0EB /* DifficultyVariables.plist in Resources */,
+				A85A4CDA18E78BA100787D21 /* LeagueGothic-Italic.otf in Resources */,
 				A876EC4318836838000FA069 /* Background_Grass2.png in Resources */,
 				00AC281D183178B800B3C0EB /* LRStatsPageViewController.xib in Resources */,
 				A8F171CB18DF7C5B00964C34 /* Scenery.xcassets in Resources */,
 				A85BD82718D96AB100C5EFB8 /* mainSection.jpg in Resources */,
 				A876EC40188367AA000FA069 /* Background_Hills.png in Resources */,
 				00719CE318E6D21D00DF66E6 /* GothamBold.ttf in Resources */,
+				A85A4CDB18E78BA100787D21 /* LeagueGothic-Regular.otf in Resources */,
 				00CDF14317F474EC003065F6 /* InfoPlist.strings in Resources */,
 				00CDF15617F474EC003065F6 /* Images.xcassets in Resources */,
 				003C2670180F46C6003729D4 /* organizedDict.txt in Resources */,

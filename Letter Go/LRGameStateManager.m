@@ -144,12 +144,16 @@ static LRGameStateManager *_shared = nil;
 
 - (void)_showGameOverLabel
 {
+    LRFont *displayFont = [LRFont displayTextFontWithSize:100];
     SKLabelNode *gameOverLabel = [[SKLabelNode alloc] init];
     gameOverLabel.text = @"Game Over";
-    gameOverLabel.fontColor = [LRColor redColor];
-    gameOverLabel.fontSize = 50;
+    gameOverLabel.fontName = displayFont.familyName;
+    gameOverLabel.fontSize = 80.0;
+    gameOverLabel.fontColor = [LRColor gameOverLabelColor];
     gameOverLabel.zPosition = 500;
+    gameOverLabel.position = CGPointMake(0, (SCREEN_HEIGHT - kSectionHeightMainSection)/2);
     __block LRGamePlayLayer *gpl = [self.gameScene gamePlayLayer];
+    
     
     [gpl.pauseButton setIsEnabled:NO];
     

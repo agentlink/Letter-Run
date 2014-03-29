@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface LRFont : NSObject
+@interface LRFont : UIFont
 
-+ (UIFont *)submitButtonFont;
-+ (UIFont *)letterBlockFont;
++ (LRFont *)displayTextFontWithSize:(CGFloat)size;
++ (LRFont *)letterBlockFont;
 
 @end

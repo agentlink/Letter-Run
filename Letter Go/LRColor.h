@@ -9,37 +9,38 @@
 #import <Foundation/Foundation.h>
 #import <SpriteKit/SpriteKit.h>
 
-@interface LRColor : NSObject
+@interface LRColor : SKColor
 
 ///Returns a color with the RGB values provided. Values must be below 255
-+ (SKColor *)rgbColorWithRed:(CGFloat)r green:(CGFloat)g blue:(CGFloat)b alpha:(CGFloat)alpha;
++ (LRColor *)rgbColorWithRed:(CGFloat)r green:(CGFloat)g blue:(CGFloat)b alpha:(CGFloat)alpha;
 ///Returns a color with RGB values between the start and the end point by a given percentage
-+ (SKColor *)colorBetweenStartColor:(UIColor *)startColor andEndColor:(UIColor *)endColor percent:(CGFloat)percent;
++ (LRColor *)colorBetweenStartColor:(UIColor *)startColor andEndColor:(UIColor *)endColor percent:(CGFloat)percent;
 
 //Basic colors
-+ (SKColor *)clearColor;
-+ (SKColor *)redColor;
++ (LRColor *)clearColor;
++ (LRColor *)redColor;
 
 //Health bar colors
-+ (SKColor *)healthBarColorGreen;
-+ (SKColor *)healthBarColorYellow;
-+ (SKColor *)healtBarColorRed;
++ (LRColor *)healthBarColorGreen;
++ (LRColor *)healthBarColorYellow;
++ (LRColor *)healtBarColorRed;
 
 //Submit button colors
-+ (SKColor *)submitButtonEnabledColor;
-+ (SKColor *)submitButtonDisabledColor;
-+ (SKColor *)submitButtonTextColor;
++ (LRColor *)submitButtonEnabledColor;
++ (LRColor *)submitButtonDisabledColor;
++ (LRColor *)submitButtonTextColor;
 
 //Other colors
-+ (SKColor *)emptySlotColor;
-+ (SKColor *)letterBlockFontColor;
-+ (SKColor *)skyColor;
-+ (SKColor *)letterSectionColor;
-+ (SKColor *)buttonSectionColor;
-+ (SKColor *)gamePlayLayerBackgroundColor;
++ (LRColor *)gameOverLabelColor;
++ (LRColor *)emptySlotColor;
++ (LRColor *)letterBlockFontColor;
++ (LRColor *)skyColor;
++ (LRColor *)letterSectionColor;
++ (LRColor *)buttonSectionColor;
++ (LRColor *)gamePlayLayerBackgroundColor;
 
-+ (SKColor *)debugColor1;
-+ (SKColor *)debugColor2;
-+ (SKColor *)randomColorWithAlpha:(CGFloat)alpha;
++ (LRColor *)debugColor1;
++ (LRColor *)debugColor2;
++ (LRColor *)randomColorWithAlpha:(CGFloat)alpha;
 
 @end

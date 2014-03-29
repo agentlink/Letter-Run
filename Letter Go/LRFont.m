@@ -10,12 +10,11 @@
 
 @implementation LRFont
 
-+ (UIFont *)submitButtonFont {
-    return [UIFont fontWithName:@"Helvetica" size:12];
++ (LRFont *)displayTextFontWithSize:(CGFloat)size {
+    return (LRFont *)[LRFont fontWithName:@"LeagueGothic-Italic" size:size];
 }
-
-+ (UIFont *)letterBlockFont {
-    return [UIFont fontWithName:@"GothamBold" size:32];
++ (LRFont *)letterBlockFont {
+    return (LRFont *)[UIFont fontWithName:@"GothamBold" size:32];
 }
 
 @end

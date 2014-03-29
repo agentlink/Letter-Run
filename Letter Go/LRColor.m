@@ -10,13 +10,13 @@
 
 @implementation LRColor
 
-+ (SKColor *)rgbColorWithRed:(CGFloat)r green:(CGFloat)g blue:(CGFloat)b alpha:(CGFloat)alpha{
++ (LRColor *)rgbColorWithRed:(CGFloat)r green:(CGFloat)g blue:(CGFloat)b alpha:(CGFloat)alpha{
     CGFloat base = 255.0;
     NSAssert(r <= base && b <= base && g <= base && alpha <= 1.0, @"Error: improper values provided to LRColor.");
-    return [SKColor colorWithRed:r/base green:g/base blue:b/base alpha:alpha];
+    return (LRColor *)[SKColor colorWithRed:r/base green:g/base blue:b/base alpha:alpha];
 }
 
-+ (SKColor *)colorBetweenStartColor:(UIColor *)startColor andEndColor:(UIColor *)endColor percent:(CGFloat)percent
++ (LRColor *)colorBetweenStartColor:(UIColor *)startColor andEndColor:(UIColor *)endColor percent:(CGFloat)percent
 {
     const CGFloat *startRGB = CGColorGetComponents(startColor.CGColor);
     const CGFloat *endRGB = CGColorGetComponents(endColor.CGColor);
@@ -27,75 +27,78 @@
     b = (startRGB[2] * (1.0 - percent)) + (endRGB[2] * percent);
     alpha = (startRGB[3] * (1.0 - percent)) + (endRGB[3] * percent);
     
-    return [SKColor colorWithRed:r green:g blue:b alpha:alpha];
+    return (LRColor *)[SKColor colorWithRed:r green:g blue:b alpha:alpha];
 }
 
 //Basic colors
-+ (SKColor *)clearColor {
-    return [SKColor clearColor];
++ (LRColor *)clearColor {
+    return (LRColor *)[SKColor clearColor];
 }
-+ (SKColor *)redColor {
-    return [SKColor redColor];
++ (LRColor *)redColor {
+    return (LRColor *)[SKColor redColor];
 }
 
 //Game screen object colors
-+ (SKColor *)submitButtonEnabledColor {
-    return [SKColor greenColor];
++ (LRColor *)submitButtonEnabledColor {
+    return (LRColor *)[SKColor greenColor];
 }
-+ (SKColor *)submitButtonDisabledColor {
-    return [SKColor lightGrayColor];
++ (LRColor *)submitButtonDisabledColor {
+    return (LRColor *)[SKColor lightGrayColor];
 }
-+ (SKColor *)submitButtonTextColor {
-    return [SKColor whiteColor];
++ (LRColor *)submitButtonTextColor {
+    return (LRColor *)[SKColor whiteColor];
 }
 
-+ (SKColor *)emptySlotColor {
++ (LRColor *)emptySlotColor {
     return [LRColor clearColor];
 }
-+ (SKColor *)letterBlockFontColor {
-    return [SKColor blackColor];
++ (LRColor *)letterBlockFontColor {
+    return (LRColor *)[SKColor blackColor];
 }
 
 //Health Bar Colors
-+ (SKColor *)healthBarColorGreen {
-    return [SKColor colorWithRed:0.0 green:0.75 blue:0.0 alpha:1.0];
++ (LRColor *)healthBarColorGreen {
+    return [LRColor rgbColorWithRed:0.0 green:192.0 blue:0.0 alpha:1.0];
 }
 
-+ (SKColor *)healthBarColorYellow {
-    return [SKColor colorWithRed:1.0 green:.9 blue:0.0 alpha:1.0];
++ (LRColor *)healthBarColorYellow {
+    return [LRColor rgbColorWithRed:255.0 green:140.0 blue:0.0 alpha:1.0];
 }
 
-+ (SKColor *)healtBarColorRed {
-    return [SKColor colorWithRed:0.75 green:0.0 blue:0.0 alpha:1.0];
++ (LRColor *)healtBarColorRed {
+    return [LRColor rgbColorWithRed:192.0 green:0.0 blue:0.0 alpha:1.0];
 }
 
 //Background object colors
-+ (SKColor *)skyColor {
++ (LRColor *)gameOverLabelColor {
+    return [LRColor rgbColorWithRed:179.0 green:0.0 blue:0.0 alpha:.85];
+}
++ (LRColor *)skyColor {
     return [LRColor rgbColorWithRed:135.0 green:206.0 blue:250.0 alpha:1];
 }
-+ (SKColor *)letterSectionColor {
++ (LRColor *)letterSectionColor {
     return [LRColor rgbColorWithRed:14 green:85 blue:129 alpha:.9];
 }
 
-+ (SKColor *)buttonSectionColor {
++ (LRColor *)buttonSectionColor {
     return [LRColor rgbColorWithRed:14 green:85 blue:129 alpha:.7];
 }
 
-+ (SKColor *)gamePlayLayerBackgroundColor {
-    return [SKColor whiteColor];
++ (LRColor *)gamePlayLayerBackgroundColor {
+    return (LRColor *)[SKColor whiteColor];
 }
 
-+ (SKColor *)debugColor1 {
++ (LRColor *)debugColor1 {
     //Opaque green
-    return [SKColor colorWithRed:0.0 green:.7 blue:.1 alpha:.3];
+    return [LRColor rgbColorWithRed:0.0 green:179.0 blue:26.0 alpha:.3];
 }
 
-+ (SKColor *)debugColor2 {
++ (LRColor *)debugColor2 {
     //Opaque red
-    return [SKColor colorWithRed:0.7 green:0.0 blue:0.0 alpha:.3];
+    return [LRColor rgbColorWithRed:179.0 green:0.0 blue:0.0 alpha:0.3];
 }
 
-+ (SKColor *)randomColorWithAlpha:(CGFloat)alpha {
++ (LRColor *)randomColorWithAlpha:(CGFloat)alpha {
     int maxVal = 256;
     return [LRColor rgbColorWithRed:arc4random()%maxVal
                               green:arc4random()%maxVal
