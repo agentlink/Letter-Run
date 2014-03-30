@@ -23,14 +23,12 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 
 static const NSUInteger kMaxBounceCount = 2;
 static const CGFloat kLRCollectedEnvelopeExtraTouchHeight = 10.0;
-const CGFloat kLRCollectedEnvelopeHeight = kCollectedEnvelopeSpriteDimension + kLRCollectedEnvelopeExtraTouchHeight;
 
 
 @interface LRCollectedEnvelope ()
 
 @property MovementDirection movementDirection;
 @property (nonatomic) CGPoint touchOrigin;
-@property (nonatomic) CGSize envelopeSize;
 @property (nonatomic) NSUInteger bounceCount;
 @end
 
@@ -60,19 +58,8 @@ const CGFloat kLRCollectedEnvelopeHeight = kCollectedEnvelopeSpriteDimension + k
         self.movementDirection = MovementDirectionNone;
         self.bounceCount = 0;
         self.slotIndex = kSlotIndexNone;
-        self.envelopeSize = size;
     }
     return self;
-}
-
-#pragma mark - Getters and Setters
-
-- (void)setExtraTouchSize:(CGSize)extraTouchSize
-{
-    [super setExtraTouchSize:extraTouchSize];
-    self.size = extraTouchSize;
-    self.envelopeSprite.size = self.envelopeSize;
-
 }
 
 #pragma mark - Physics Phunctions

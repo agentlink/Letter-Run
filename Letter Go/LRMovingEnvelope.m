@@ -11,6 +11,8 @@
 
 static CGFloat const kLRMovingBlockBetweenEnvelopeOffset = 94.5;
 static CGFloat const kLRMovingBlockBottomOffset = 3.0;
+static CGFloat const kLRMovingBlockTouchSizeExtraWidth = 25.0;
+static CGFloat const kLRMovingBlockTouchSizeExtraHeight = 35.0;
 
 #define kLRMovingBlockLowestPoint  (-kSectionHeightMainSection/2) + 42
 
@@ -36,6 +38,10 @@ static CGFloat const kLRMovingBlockBottomOffset = 3.0;
         [self _setGlowEnabled:NO];
         [self addChild:self.glow];
         
+        CGSize touchSize = self.size;
+        touchSize.width += kLRMovingBlockTouchSizeExtraWidth;
+        touchSize.height += kLRMovingBlockTouchSizeExtraHeight;
+        self.touchSize = touchSize;
     }
     return self;
 }

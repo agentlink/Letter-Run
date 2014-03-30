@@ -57,14 +57,23 @@
     }
 }
 
+- (void)setTouchSize:(CGSize)extraTouchSize
+{
+    CGSize envelopeSize = self.envelopeSprite.size;
+    _touchSize = extraTouchSize;
+    self.size = extraTouchSize;
+    self.envelopeSprite.size = envelopeSize;
+}
+
+
 #pragma mark - Children Set Up
 
 - (SKLabelNode *)letterLabel
 {
     if (!_letterLabel) {
-        UIFont *letterFont = [LRFont letterBlockFont];
+        LRFont *letterFont = [LRFont letterBlockFont];
         _letterLabel = [SKLabelNode new];
-        _letterLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - (self.size.height - self.extraTouchSize.height)/4);
+        _letterLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - (self.size.height - self.touchSize.height)/4);
         _letterLabel.color = [LRColor debugColor1];
         _letterLabel.fontSize = letterFont.pointSize;
         _letterLabel.fontName = letterFont.fontName;
@@ -87,8 +96,8 @@
     }
     if (fileName) {
         envelopeSprite = [SKSpriteNode spriteNodeWithImageNamed:fileName];
-        envelopeSprite.size = CGSizeMake(self.size.width - self.extraTouchSize.width,
-                                         self.size.height - self.extraTouchSize.height);
+        envelopeSprite.size = CGSizeMake(self.size.width - self.touchSize.width,
+                                         self.size.height - self.touchSize.height);
         if (placeholderBlock) {
             envelopeSprite.alpha = .2;
         }

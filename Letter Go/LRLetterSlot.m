@@ -68,7 +68,7 @@
             [_currentBlock setPhysicsEnabled:YES];
         }
         _currentBlock.slotIndex = self.index;
-        _currentBlock.extraTouchSize = self.size;
+        _currentBlock.touchSize = self.size;
         [self addChild:_currentBlock];
     }
     _currentBlock.zPosition = zPos_SectionBlock_Unselected;
