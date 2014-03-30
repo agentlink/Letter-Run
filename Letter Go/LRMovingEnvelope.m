@@ -97,7 +97,7 @@ static CGFloat const kLRMovingBlockTouchSizeExtraHeight = 35.0;
     [self runAction:bubbleAction];
 
 
-    //    [self _setGlowEnabled:selected];
+    [self _setGlowEnabled:selected];
 }
 
 - (void)_setGlowEnabled:(BOOL)enabled

@@ -20,7 +20,7 @@ static CGFloat const kRearrangementLetterShiftMaxDuration = .08;
 
 //#toy
 //The scale an envelope grows/shrinks to during it's overshoot
-static CGFloat const kBubbleToScaleRatioChange = 1.2;
+static CGFloat const kBubbleToScaleRatioChange = 1.15;
 //How much time the overshooting takes compared to the refractory
 static CGFloat const kBubbleToScaleUndershootDuration = .25;
 static CGFloat const kBubbleToScaleOvershootDurationRatio = .5;

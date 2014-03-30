@@ -134,6 +134,10 @@ static const CGFloat kLRCollectedEnvelopeExtraTouchHeight = 10.0;
             self.physicsEnabled = NO;
             self.touchOrigin = location;
             self.movementDirection = MovementDirectionNone;
+            
+            SKAction *bubble = [LREnvelopeAnimationBuilder bubbleByScale:kLRCollectedEnvelopeBubbleScale
+                                                            withDuration:kLRCollectedEnvelopeBubbleDuration];
+            [self runAction:bubble];
         }
     }
 }
@@ -187,6 +191,9 @@ static const CGFloat kLRCollectedEnvelopeExtraTouchHeight = 10.0;
             self.physicsEnabled = YES;
         }
     }
+    SKAction *bubble = [LREnvelopeAnimationBuilder bubbleByScale:1/kLRCollectedEnvelopeBubbleScale
+                                                    withDuration:kLRCollectedEnvelopeBubbleDuration];
+    [self runAction:bubble];
     self.movementDirection = MovementDirectionNone;
 }
 

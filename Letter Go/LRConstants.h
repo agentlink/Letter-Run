@@ -18,7 +18,7 @@ typedef NS_ENUM(BOOL, kLRDirection)
 
 //TODO: Move these
 static CGFloat const kLRCollectedEnvelopeBubbleScale = 1.1;
-static CGFloat const kLRCollectedEnvelopeBubbleDuration = .33;
+static CGFloat const kLRCollectedEnvelopeBubbleDuration = .25;
 
 //Size constants
 static const float kSectionHeightButtonSection  =       55;
