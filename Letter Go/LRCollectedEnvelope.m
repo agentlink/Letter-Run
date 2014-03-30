@@ -193,6 +193,7 @@ static const CGFloat kLRCollectedEnvelopeExtraTouchHeight = 10.0;
     }
     SKAction *bubble = [LREnvelopeAnimationBuilder bubbleByScale:1/kLRCollectedEnvelopeBubbleScale
                                                     withDuration:kLRCollectedEnvelopeBubbleDuration];
+
     [self runAction:bubble];
     self.movementDirection = MovementDirectionNone;
 }
@@ -217,9 +218,7 @@ static const CGFloat kLRCollectedEnvelopeExtraTouchHeight = 10.0;
     //Move the block from being the child of the letter slot to the child of the whole letter section
     LRLetterSection *letterSection = [[(LRGameScene *)[self scene] gamePlayLayer] letterSection];
     LRLetterSlot *parentSlot = (LRLetterSlot *)[self parent];
-
-    CGPoint newPos = [self convertPoint:self.position toNode:letterSection];
-    self.position = newPos;
+    self.position = parentSlot.position;
     [parentSlot setEmptyLetterBlock];
     [letterSection addChild:self];
 
