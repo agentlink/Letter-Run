@@ -26,10 +26,11 @@ static const float kSectionHeightLetterSection  =       63;
 static const float kSectionHeightHealthSection         =       18.0;
 
 #define kSectionHeightMainSection           (SCREEN_HEIGHT - kSectionHeightLetterSection - kSectionHeightHealthSection - kSectionHeightButtonSection)
-static const float kCollectedEnvelopeSpriteDimension  =       40.0;
 static const float kMovingEnvelopeSpriteDimension     =       48.0;
 static const float kParallaxHeightGrass               =       26.6;
 #define kDistanceBetweenSlots                           SCREEN_WIDTH / kWordMaximumLetterCount
+#define kCollectedEnvelopeSpriteDimension               SCREEN_WIDTH / kWordMaximumLetterCount
+
 #define kDistanceBetweenSlotAndEdge                     66 * SCREEN_WIDTH/960.0
 
 //Letter constants

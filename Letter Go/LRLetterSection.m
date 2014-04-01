@@ -561,12 +561,9 @@ typedef void(^CompletionBlockType)(void);
 }
 
 - (CGFloat) xPositionForSlotIndex:(int) index {
-    // +kLetterBlockSpriteDimension for the submit button
-    CGFloat letterSlotAreaWidth = kDistanceBetweenSlots * kWordMaximumLetterCount;
-    CGFloat edgeBuffer = (self.size.width - letterSlotAreaWidth)/2;
-
-    CGFloat leftOffset = -self.size.width/2 + (edgeBuffer + kCollectedEnvelopeSpriteDimension/2);
-    CGFloat retVal = leftOffset + index * kDistanceBetweenSlots;
+    CGFloat rightOffset = kCollectedEnvelopeSpriteDimension/2;
+    CGFloat leftOffset = -self.size.width/2;
+    CGFloat retVal = index * kDistanceBetweenSlots + leftOffset + rightOffset;
     return retVal;
 }
 

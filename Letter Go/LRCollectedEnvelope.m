@@ -22,8 +22,6 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 
 
 static const NSUInteger kMaxBounceCount = 2;
-static const CGFloat kLRCollectedEnvelopeExtraTouchHeight = 10.0;
-
 
 @interface LRCollectedEnvelope ()
 
