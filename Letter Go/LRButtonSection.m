@@ -15,12 +15,16 @@
 
 - (id) initWithSize:(CGSize)size
 {
-    if (self = [super initWithSize:size]) {
-        [self addChild:self.submitButton];
+    if (self = [super initWithSize:size])
+    {
         self.color = [LRColor buttonSectionColor];
-
     }
     return self;
+}
+
+- (void)createSectionContent
+{
+    [self addChild:self.submitButton];
 }
 
 - (LRSubmitButton *)submitButton {

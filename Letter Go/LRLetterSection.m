@@ -155,7 +155,7 @@ typedef void(^CompletionBlockType)(void);
         [self runAddLetterAnimationWithEnvelope:block];
 
     }
-    [self updateSubmitButton];
+    [self _updateSubmitButton];
 }
 
 - (void)runAddLetterAnimationWithEnvelope:(LRCollectedEnvelope *)origEnvelope
@@ -163,7 +163,6 @@ typedef void(^CompletionBlockType)(void);
     LRCollectedEnvelope *animatedEnvelope = [origEnvelope copy];
     animatedEnvelope.name = kTempCollectedEnvelopeName;
     animatedEnvelope.hidden = NO;
-    animatedEnvelope.physicsEnabled = YES;
     
     CGPoint letterDropPos = origEnvelope.position;
     letterDropPos.y -= kCollectedEnvelopeSpriteDimension;
@@ -186,32 +185,35 @@ typedef void(^CompletionBlockType)(void);
 #pragma mark Deletion
 - (void)removeEnvelopeFromLetterSection:(id)envelope
 {
-    if (self.letterSectionState == LetterSectionStateDeletingLetters) {
-        return;
-    }
-    
-    //Set the envelope to an empty slot
+    //Shift down all the letters in the letter section
     LRCollectedEnvelope *envelopeToDelete = (LRCollectedEnvelope *)envelope;
-    __block NSInteger deletionIndex = envelopeToDelete.slotIndex;
+    NSUInteger deletionIndex = self.currentSlot.index;
     LRLetterSlot *deletionSlot = [self.letterSlots objectAtIndex:deletionIndex];
     deletionSlot.currentBlock = [LRLetterBlockGenerator createEmptySectionBlock];
     
+    self.currentSlot = nil;
+    self.touchedBlock = nil;
 
+    [self _shiftNonDeletedEnvelopesFromIndex:deletionIndex];
+    [envelopeToDelete removeFromParent];
+}
+
+- (void)_shiftNonDeletedEnvelopesFromIndex:(NSUInteger)deletionIndex
+{
     for (NSInteger i = deletionIndex; i < self.letterSlots.count; i++)
     {
         //Get the proper slot to update
         LRLetterSlot *slotToUpdate = [self.letterSlots objectAtIndex:i];
         SKAction *shiftAnimation = [LREnvelopeAnimationBuilder deletionAnimationWithDelayForIndex:i - deletionIndex];
-        //Make sure all the envelopes have stopoped bouncing
+        //Make sure all the envelopes have stopoped their animations
         [slotToUpdate stopEnvelopeChildAnimation];
         
         //And make a copy of the envelope to do the animation with
         LRCollectedEnvelope *slidingEnvelope = [slotToUpdate.currentBlock copy];
-        slidingEnvelope.physicsEnabled = NO;
         slidingEnvelope.position = slotToUpdate.currentBlock.position;
         slidingEnvelope.name = kTempCollectedEnvelopeName;
         [slotToUpdate addChild:slidingEnvelope];
-
+        
         //Run the animation on the fake slots
         CompletionBlockType shiftDone;
         if (i != self.letterSlots.count - 1)
@@ -221,19 +223,17 @@ typedef void(^CompletionBlockType)(void);
         else
         {
             //When the action is done, reveal the shifted letters
-            shiftDone = ^{[self revealShiftedLetters];};
+            shiftDone = ^{[self _revealShiftedLetters];};
             SKAction *shift = [LREnvelopeAnimationBuilder actionWithCompletionBlock:shiftAnimation
                                                                               block:shiftDone];
             [slidingEnvelope runAction: shift];
         }
     }
     //And just as soon as the action starts, do the real shifting of the letters
-    [self shiftLettersFromDeletionIndex:deletionIndex];
-    NSAssert(deletionSlot, @"Error: slot does not exist within array");
+    [self _shiftLetterDataStructuresFromIndex:deletionIndex];
 }
 
-
-- (void)shiftLettersFromDeletionIndex:(NSInteger)deletionIndex
+- (void)_shiftLetterDataStructuresFromIndex:(NSInteger)deletionIndex
 {
     for (NSInteger k = deletionIndex; k < kWordMaximumLetterCount; k++)
     {
@@ -245,7 +245,7 @@ typedef void(^CompletionBlockType)(void);
     }
 }
 
-- (void)revealShiftedLetters
+- (void)_revealShiftedLetters
 {
     int letterSlotCount = kWordMaximumLetterCount;
     for (int k = 0; k < letterSlotCount; k++)
@@ -258,11 +258,11 @@ typedef void(^CompletionBlockType)(void);
     }
     
     self.letterSectionState = LetterSectionStateNormal;
-    [self addDelayedLetters];
-    [self updateSubmitButton];
+    [self _addDelayedLetters];
+    [self _updateSubmitButton];
 }
 
-- (void)addDelayedLetters
+- (void)_addDelayedLetters
 {
     for (id envelope in self.delayedLetters) {
         [self addEnvelopeToLetterSection:envelope];
@@ -291,7 +291,7 @@ typedef void(^CompletionBlockType)(void);
 
     self.currentSlot = nil;
     self.touchedBlock = nil;
-    [self updateSubmitButton];
+    [self _updateSubmitButton];
 }
 
 - (void)runRearrangmentHasFinishedAnimationWithEnvelope:(LRCollectedEnvelope *)envelope toSlot:(LRLetterSlot *)destination
@@ -353,7 +353,7 @@ typedef void(^CompletionBlockType)(void);
     return indices;
 }
 
-- (void)updateSubmitButton
+- (void)_updateSubmitButton
 {
     int i;
     for (i = 0; i < self.letterSlots.count; i++)
@@ -408,6 +408,7 @@ typedef void(^CompletionBlockType)(void);
 
 - (void)swapLetterAtSlot:(LRLetterSlot *)slotA withLetterAtSlot:(LRLetterSlot *)slotB
 {
+    NSLog(@"Swapping %@ and %@", slotA.currentBlock.letter, slotB.currentBlock.letter);
     //Get the location of the letter blocks with in the slot array
     [slotA stopEnvelopeChildAnimation];
     [slotB stopEnvelopeChildAnimation];
@@ -514,9 +515,9 @@ typedef void(^CompletionBlockType)(void);
         CompletionBlockType complete = ^{
             slot.currentBlock = [LRLetterBlockGenerator createEmptySectionBlock];
             if (i == 0) {
-                [self updateSubmitButton];
+                [self _updateSubmitButton];
                 self.letterSectionState = LetterSectionStateNormal;
-                [self addDelayedLetters];
+                [self _addDelayedLetters];
             }
         };
         if (animated) {

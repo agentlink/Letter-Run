@@ -65,9 +65,6 @@
             [incomingBlock removeFromParent];
         _currentBlock = incomingBlock;
         _currentBlock.position = CGPointZero;
-        if (![_currentBlock isLetterBlockEmpty] && ![_currentBlock isLetterBlockPlaceHolder]) {
-            [_currentBlock setPhysicsEnabled:YES];
-        }
         _currentBlock.slotIndex = self.index;
         _currentBlock.touchSize = self.size;
         [self addChild:_currentBlock];

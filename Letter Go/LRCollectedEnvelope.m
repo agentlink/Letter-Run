@@ -12,6 +12,9 @@
 #import "LRCollisionManager.h"
 #import "LREnvelopeAnimationBuilder.h"
 
+//How long it should take the collected envelope to cross the screen on the return animation
+static CGFloat const kLRCollectedEnvelopeCrossScreenTime = 2.0;
+
 typedef NS_ENUM(NSUInteger, MovementDirection)
 {
     //Remove none if it doesn't get used
@@ -21,13 +24,7 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 };
 
 
-static const NSUInteger kMaxBounceCount = 2;
-
 @interface LRCollectedEnvelope ()
-
-@property MovementDirection movementDirection;
-@property (nonatomic) CGPoint touchOrigin;
-@property (nonatomic) NSUInteger bounceCount;
 @end
 
 @implementation LRCollectedEnvelope
@@ -53,63 +50,9 @@ static const NSUInteger kMaxBounceCount = 2;
     CGSize size = CGSizeMake(kCollectedEnvelopeSpriteDimension, kCollectedEnvelopeSpriteDimension);
     if (self = [super initWithSize:size letter:letter loveLetter:love]) {
         self.name = NAME_SPRITE_SECTION_LETTER_BLOCK;
-        self.movementDirection = MovementDirectionNone;
-        self.bounceCount = 0;
         self.slotIndex = kSlotIndexNone;
     }
     return self;
-}
-
-#pragma mark - Physics Phunctions
-
-- (void)setUpPhysics
-{
-//    self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.size];
-//    self.physicsBody.dynamic = YES;
-//    //#toy
-//    self.physicsBody.restitution = .5;
-//    self.physicsBody.allowsRotation = NO;
-//    self.physicsBody.friction = 1;
-//    [[LRCollisionManager shared] setBitMasksForSprite:self];
-}
-
-- (void)setPhysicsEnabled:(BOOL)physicsEnabled
-{
-//    if (!self.physicsBody) {
-//        [self setUpPhysics];
-//    }
-//    self.physicsBody.affectedByGravity = physicsEnabled;
-//    self.physicsBody.velocity = CGVectorMake(0, 0);
-}
-
-- (void)envelopeHitBottomBarrier
-{
-    
-    //If the letter block has just been added, don't do anything
-    if (self.physicsBody.velocity.dy <= 0) {
-        //TODO: check if it's an issue that dX is changed to 0
-        self.physicsBody.velocity = CGVectorMake(0, 0);
-        return;
-    }
-    self.bounceCount++;
-    //If the envelope has exceeded the bounce count...
-    if (self.bounceCount == kMaxBounceCount) {
-        //And if it's a non-temporary envelope...
-        if ([self.name isEqualToString: NAME_SPRITE_SECTION_LETTER_BLOCK]) {
-            //...make it stop bouncing
-            self.bounceCount = 0;
-        }
-        //But if it's a temporary envelope...
-        else if ([self.name isEqualToString:kTempCollectedEnvelopeName])
-        {
-            //Unhide the real envelope
-            [self.parent enumerateChildNodesWithName:NAME_SPRITE_SECTION_LETTER_BLOCK usingBlock:^(SKNode *node, BOOL *stop) {
-                node.hidden = NO;
-            }];
-            //...remove it after the max bounce count
-            [self removeFromParent];
-        }
-    }
 }
 
 #pragma mark - Touch Functions
@@ -120,10 +63,7 @@ static const NSUInteger kMaxBounceCount = 2;
         CGPoint location = [touch locationInNode:[self parent]];
         if (CGRectContainsPoint(self.frame, location))
         {
-            self.physicsEnabled = NO;
-            self.touchOrigin = location;
-            self.movementDirection = MovementDirectionNone;
-            
+            [self releaseBlockForRearrangement];
             SKAction *bubble = [LREnvelopeAnimationBuilder bubbleByScale:kLRCollectedEnvelopeBubbleScale
                                                             withDuration:kLRCollectedEnvelopeBubbleDuration];
             [self runAction:bubble];
@@ -137,70 +77,31 @@ static const NSUInteger kMaxBounceCount = 2;
     for (UITouch *touch in touches)
     {
         CGPoint touchLoc = [touch locationInNode:[self parent]];
-        CGPoint envelopeLoc = self.position;
-        
-        //If the movement direction hasn't been set, calculate it
-        if (self.movementDirection == MovementDirectionNone) {
-            MovementDirection direction = [self movementDirectionFromPoint:self.touchOrigin toPoint:touchLoc];
-            if (direction == MovementDirectionHorizontal) {
-                [self releaseBlockForRearrangement];
-                self.zPosition += 5;
-            }
-            else if (direction == MovementDirectionVertical){
-                //vertical scroll release case
-            }
-            self.movementDirection = direction;
-        }
-
-        //Horizontal scroll case
-        else if (self.movementDirection == MovementDirectionHorizontal) {
-            self.position = CGPointMake(touchLoc.x, envelopeLoc.y);
-        }
-        //Vertical scroll case
-        else if (self.touchOrigin.y <= touchLoc.y) {
-            self.position = CGPointMake(envelopeLoc.x, touchLoc.y);
-            //while (code == code)
-                //code();
-        }
+        self.position = touchLoc;
+        self.alpha = ([self shouldEnvelopeBeDeletedAtPosition:self.position]) ? .5 : 1.0;
     }
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+
 {
-    //If the scroll is horizontal, finish moving the letters
-    if (self.movementDirection == MovementDirectionHorizontal) {
-        [self.delegate rearrangementHasFinishedWithLetterBlock:self];
+    if ([self shouldEnvelopeBeDeletedAtPosition:self.position])
+    {
+        [self.delegate removeEnvelopeFromLetterSection:self];
+//        [self removeFromParent];
     }
     else {
-        if ([self shouldEnvelopeBeDeletedAtPosition:self.position])
-        {
-            [self.delegate removeEnvelopeFromLetterSection:self];
-        }
-        else {
-            self.physicsEnabled = YES;
-        }
-    }
-    SKAction *bubble = [LREnvelopeAnimationBuilder bubbleByScale:1/kLRCollectedEnvelopeBubbleScale
+        [self.delegate rearrangementHasFinishedWithLetterBlock:self];
+        SKAction *returnToSlot = [SKAction moveTo:CGPointZero duration:1];
+        SKAction *bubble = [LREnvelopeAnimationBuilder bubbleByScale:1/kLRCollectedEnvelopeBubbleScale
                                                     withDuration:kLRCollectedEnvelopeBubbleDuration];
-
-    [self runAction:bubble];
-    self.movementDirection = MovementDirectionNone;
+        SKAction *bubbleAndReturn = [SKAction group:@[returnToSlot, bubble]];
+        [self runAction:bubbleAndReturn];
+        
+    }
 }
 
 #pragma mark - Touch Helper Functions
-
-- (MovementDirection) movementDirectionFromPoint:(CGPoint)origin toPoint:(CGPoint)newLoc
-{
-    CGFloat xDiff = ABS(newLoc.x - origin.x);
-    CGFloat yDiff = ABS(newLoc.y - origin.y);
-    CGFloat scrollDetectionThreshold = 1.5;
-    
-    if (xDiff/yDiff > scrollDetectionThreshold)
-        return MovementDirectionHorizontal;
-    else if (yDiff/xDiff > scrollDetectionThreshold)
-        return MovementDirectionVertical;
-    return MovementDirectionNone;
-}
 
 - (void)releaseBlockForRearrangement
 {
@@ -218,10 +119,12 @@ static const NSUInteger kMaxBounceCount = 2;
 {
     CGFloat currentYPos = pos.y;
     //#toy
-    CGFloat topOffScreenRatioForDeletion = .65;
-    CGFloat maxY = self.size.height * topOffScreenRatioForDeletion;
-    
-    return (currentYPos > maxY);
+    if ((currentYPos > (kSectionHeightLetterSection + kCollectedEnvelopeSpriteDimension)/2) ||
+         currentYPos < -kCollectedEnvelopeSpriteDimension) {
+        return YES;
+    }
+    return NO;
+
 }
 
 - (NSString *)description

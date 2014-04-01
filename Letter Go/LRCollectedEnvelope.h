@@ -21,15 +21,11 @@ static NSString* const kTempCollectedEnvelopeName = @"NAME_SPRITE_SECTION_LETTER
 + (LRCollectedEnvelope *)emptySectionBlock;
 + (LRCollectedEnvelope *)placeholderBlock;
 
-//Physics
-- (void)envelopeHitBottomBarrier;
-
 //Letter State
 - (BOOL) isLetterBlockEmpty;
 - (BOOL) isLetterBlockPlaceHolder;
 
 @property (nonatomic, weak) id <LRLetterBlockControlDelegate> delegate;
-@property (nonatomic) BOOL physicsEnabled;
-@property (nonatomic) NSInteger slotIndex;
+@property (nonatomic) NSUInteger slotIndex;
 
 @end
