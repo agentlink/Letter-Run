@@ -25,6 +25,7 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 
 
 @interface LRCollectedEnvelope ()
+@property (nonatomic) BOOL isAtDeletionPoint;
 @end
 
 @implementation LRCollectedEnvelope
@@ -78,7 +79,13 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
     {
         CGPoint touchLoc = [touch locationInNode:[self parent]];
         self.position = touchLoc;
-        self.alpha = ([self shouldEnvelopeBeDeletedAtPosition:self.position]) ? .5 : 1.0;
+        BOOL canDelete = [self shouldEnvelopeBeDeletedAtPosition:self.position];
+        if (canDelete != self.isAtDeletionPoint) {
+            self.isAtDeletionPoint = canDelete;
+            SKAction *animation = [LREnvelopeAnimationBuilder changeEnvelopeCanDeleteState:canDelete];
+            [self runAction:animation];
+        }
+//        self.alpha = ([self shouldEnvelopeBeDeletedAtPosition:self.position]) ? .5 : 1.0;
     }
 }
 
@@ -88,7 +95,6 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
     if ([self shouldEnvelopeBeDeletedAtPosition:self.position])
     {
         [self.delegate removeEnvelopeFromLetterSection:self];
-//        [self removeFromParent];
     }
     else {
         [self.delegate rearrangementHasFinishedWithLetterBlock:self];

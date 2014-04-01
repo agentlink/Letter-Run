@@ -28,6 +28,18 @@ static CGFloat const kBubbleToScaleOvershootDurationRatio = .5;
 @implementation LREnvelopeAnimationBuilder
 
 #pragma mark - Public Functions
+
++ (SKAction *)changeEnvelopeCanDeleteState:(BOOL)canDelete
+{
+    CGFloat duration = .2;
+    CGFloat angle = (canDelete) ? .087222222 : -.087222222;
+    CGFloat alpha = (canDelete) ? .5 : 1.0;
+
+    SKAction *fade = [SKAction fadeAlphaTo:alpha duration:duration];
+    SKAction *rotate = [SKAction rotateByAngle:angle duration:duration];
+    SKAction *rotateAndFade = [SKAction group:@[fade, rotate]];
+    return rotateAndFade;
+}
 + (SKAction *)submitWordActionWithLetterAtIndex:(NSUInteger)index
 {
     //#toy

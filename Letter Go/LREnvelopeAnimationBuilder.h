@@ -13,6 +13,7 @@ static NSString *kAddLetterAnimationName = @"addLetterAnimation";
 
 @interface LREnvelopeAnimationBuilder : NSObject
 
++ (SKAction *)changeEnvelopeCanDeleteState:(BOOL)canDelete;
 + (SKAction *)deletionAnimationWithDelayForIndex:(NSUInteger)index;
 + (SKAction *)submitWordActionWithLetterAtIndex:(NSUInteger)index;
 + (SKAction *)addLetterAnimation;
