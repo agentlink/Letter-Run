@@ -9,6 +9,7 @@
 #import "LRLetterSlot.h"
 #import "LRLetterBlockGenerator.h"
 #import "LRPositionConstants.h"
+#import "LREnvelopeAnimationBuilder.h"
 
 @implementation LRLetterSlot
 
@@ -38,10 +39,10 @@
     return [self.currentBlock isLetterBlockEmpty];
 }
 
-- (void)stopChildEnvelopeBouncing
+- (void)stopEnvelopeChildAnimation
 {
     if (self.currentBlock) {
-        [self.currentBlock stopEnvelopeBouncing];
+        [self.currentBlock removeActionForKey:kAddLetterAnimationName];
         [self enumerateChildNodesWithName:kTempCollectedEnvelopeName usingBlock:^(SKNode *node, BOOL *stop){
             [node removeFromParent];
         }];

@@ -81,7 +81,7 @@
 }
 
 + (LRColor *)buttonSectionColor {
-    return [LRColor rgbColorWithRed:14 green:85 blue:129 alpha:.7];
+    return [LRColor rgbColorWithRed:14 green:85 blue:129 alpha:1];
 }
 
 + (LRColor *)gamePlayLayerBackgroundColor {

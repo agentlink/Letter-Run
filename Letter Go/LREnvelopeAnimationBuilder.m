@@ -43,6 +43,23 @@ static CGFloat const kBubbleToScaleOvershootDurationRatio = .5;
     return deleteLetter;
 }
 
++ (SKAction *)addLetterAnimation;
+{
+    //#toy
+    CGFloat overshootDuration = .35;
+    CGFloat overshootHeight = 15;
+    CGFloat overshootActionDistance = kCollectedEnvelopeSpriteDimension + overshootHeight;
+    SKAction *overshootAction = [SKAction moveBy:CGVectorMake(0, overshootActionDistance) duration:overshootDuration];
+    overshootAction.timingMode = SKActionTimingEaseInEaseOut;
+    
+    CGFloat retractionDuration = .15;
+    SKAction *retractionAction = [SKAction moveBy:CGVectorMake(0, -overshootHeight) duration:retractionDuration];
+    retractionAction.timingMode = SKActionTimingEaseInEaseOut;
+    
+    SKAction *addLetter = [SKAction sequence:@[overshootAction, retractionAction]];
+    return addLetter;
+}
+
 + (SKAction *)deletionAnimationWithDelayForIndex:(NSUInteger)index;
 {
     return [LREnvelopeAnimationBuilder _shiftLetterInDirection:kLeftDirection withDelayForIndex:index];

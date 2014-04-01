@@ -9,10 +9,13 @@
 #import <Foundation/Foundation.h>
 #import "LRConstants.h"
 
+static NSString *kAddLetterAnimationName = @"addLetterAnimation";
+
 @interface LREnvelopeAnimationBuilder : NSObject
 
 + (SKAction *)deletionAnimationWithDelayForIndex:(NSUInteger)index;
 + (SKAction *)submitWordActionWithLetterAtIndex:(NSUInteger)index;
++ (SKAction *)addLetterAnimation;
 
 + (SKAction *)rearrangementLetterShiftedSlotsFromPoint:(CGPoint)start toPoint:(CGPoint)destination;
 + (SKAction *)rearrangementFinishedAnimationFromPoint:(CGPoint)start toPoint:(CGPoint)destination;

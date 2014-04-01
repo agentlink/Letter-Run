@@ -64,22 +64,22 @@ static const NSUInteger kMaxBounceCount = 2;
 
 - (void)setUpPhysics
 {
-    self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.size];
-    self.physicsBody.dynamic = YES;
-    //#toy
-    self.physicsBody.restitution = .5;
-    self.physicsBody.allowsRotation = NO;
-    self.physicsBody.friction = 1;
-    [[LRCollisionManager shared] setBitMasksForSprite:self];
+//    self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.size];
+//    self.physicsBody.dynamic = YES;
+//    //#toy
+//    self.physicsBody.restitution = .5;
+//    self.physicsBody.allowsRotation = NO;
+//    self.physicsBody.friction = 1;
+//    [[LRCollisionManager shared] setBitMasksForSprite:self];
 }
 
 - (void)setPhysicsEnabled:(BOOL)physicsEnabled
 {
-    if (!self.physicsBody) {
-        [self setUpPhysics];
-    }
-    self.physicsBody.affectedByGravity = physicsEnabled;
-    self.physicsBody.velocity = CGVectorMake(0, 0);
+//    if (!self.physicsBody) {
+//        [self setUpPhysics];
+//    }
+//    self.physicsBody.affectedByGravity = physicsEnabled;
+//    self.physicsBody.velocity = CGVectorMake(0, 0);
 }
 
 - (void)envelopeHitBottomBarrier
@@ -94,7 +94,6 @@ static const NSUInteger kMaxBounceCount = 2;
     self.bounceCount++;
     //If the envelope has exceeded the bounce count...
     if (self.bounceCount == kMaxBounceCount) {
-        [self stopEnvelopeBouncing];
         //And if it's a non-temporary envelope...
         if ([self.name isEqualToString: NAME_SPRITE_SECTION_LETTER_BLOCK]) {
             //...make it stop bouncing
@@ -113,13 +112,6 @@ static const NSUInteger kMaxBounceCount = 2;
     }
 }
 
-- (void)stopEnvelopeBouncing
-{
-    self.position = CGPointZero;
-    //Only stops vertical movement
-    self.physicsBody.velocity = CGVectorMake(self.physicsBody.velocity.dx, 0);
-}
-
 #pragma mark - Touch Functions
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
@@ -128,7 +120,6 @@ static const NSUInteger kMaxBounceCount = 2;
         CGPoint location = [touch locationInNode:[self parent]];
         if (CGRectContainsPoint(self.frame, location))
         {
-            [self stopEnvelopeBouncing];
             self.physicsEnabled = NO;
             self.touchOrigin = location;
             self.movementDirection = MovementDirectionNone;

@@ -23,7 +23,6 @@ static NSString* const kTempCollectedEnvelopeName = @"NAME_SPRITE_SECTION_LETTER
 
 //Physics
 - (void)envelopeHitBottomBarrier;
-- (void)stopEnvelopeBouncing;
 
 //Letter State
 - (BOOL) isLetterBlockEmpty;

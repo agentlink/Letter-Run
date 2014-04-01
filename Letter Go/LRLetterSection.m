@@ -66,49 +66,10 @@ typedef void(^CompletionBlockType)(void);
 
 - (void)createSectionContent
 {
-    [self addChild:self.letterSection];
-//    [self addChild:self.submitButton];
-    
+    [self addChild:self.letterSection];    
     for (LRLetterSlot *slot in self.letterSlots) {
         [self addChild:slot];
     }
-    
-    [self addBottomBarrier];
-}
-
-///The bottom vertical barrier allows the dropped letters to bounce.
-- (void)addBottomBarrier
-{
-    //Barrier Size
-    CGFloat slotHeight = [self.letterSlots[0] size].height ;
-    CGFloat envelopeSpriteHeight = kCollectedEnvelopeSpriteDimension;
-    CGFloat barrierHeight = (slotHeight - envelopeSpriteHeight)/2;
-    CGFloat barrierWidth = self.size.width;
-    CGSize barrierSize = CGSizeMake(barrierWidth, barrierHeight);
-    
-    //Barrier position
-    CGFloat barrierXPos = self.position.x;
-    CGFloat bottomBarrierYPos = self.frame.origin.y + barrierHeight/2;
-    
-    bottomBarrier = [SKSpriteNode spriteNodeWithColor:[LRColor clearColor]
-                                                 size:barrierSize];
-    bottomBarrier.position = CGPointMake(barrierXPos, bottomBarrierYPos);
-    bottomBarrier.zPosition = zPos_LetterSectionBarrier_Vert;
-    [self setBarrierPhysics];
-    [self addChild:bottomBarrier];
-}
-
-- (void)setBarrierPhysics
-{
-    bottomBarrier.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:bottomBarrier.size];
-    bottomBarrier.physicsBody.affectedByGravity = NO;
-    bottomBarrier.physicsBody.dynamic = NO;
-    bottomBarrier.physicsBody.friction = 1;
-    bottomBarrier.name = NAME_SPRITE_BOTTOM_BARRIER;
-    [[LRCollisionManager shared] setBitMasksForSprite:bottomBarrier];
-    [[LRCollisionManager shared] addCollisionDetectionOfSpritesNamed:NAME_SPRITE_BOTTOM_BARRIER toSpritesNamed:NAME_SPRITE_SECTION_LETTER_BLOCK];
-    [[LRCollisionManager shared] addContactDetectionOfSpritesNamed:NAME_SPRITE_BOTTOM_BARRIER toSpritesNamed:NAME_SPRITE_SECTION_LETTER_BLOCK];
-    
 }
 
 #pragma mark - Private Properties -
@@ -205,11 +166,21 @@ typedef void(^CompletionBlockType)(void);
     animatedEnvelope.physicsEnabled = YES;
     
     CGPoint letterDropPos = origEnvelope.position;
-    letterDropPos.y += kCollectedEnvelopeSpriteDimension;
+    letterDropPos.y -= kCollectedEnvelopeSpriteDimension;
     animatedEnvelope.position = letterDropPos;
+    SKAction *addEnvelopeAction = [LREnvelopeAnimationBuilder addLetterAnimation];
+    SKAction *addLetterWithCompletion = [LREnvelopeAnimationBuilder actionWithCompletionBlock:addEnvelopeAction block:^{
+        //...remove it after the max bounce count
+        origEnvelope.hidden = NO;
+        [animatedEnvelope removeFromParent];
+    }];
+
     
+
     LRLetterSlot *parentSlot = self.letterSlots[origEnvelope.slotIndex];
     [parentSlot addChild:animatedEnvelope];
+    [animatedEnvelope runAction:addLetterWithCompletion withKey:kAddLetterAnimationName];
+
 }
 
 #pragma mark Deletion
@@ -232,7 +203,7 @@ typedef void(^CompletionBlockType)(void);
         LRLetterSlot *slotToUpdate = [self.letterSlots objectAtIndex:i];
         SKAction *shiftAnimation = [LREnvelopeAnimationBuilder deletionAnimationWithDelayForIndex:i - deletionIndex];
         //Make sure all the envelopes have stopoped bouncing
-        [slotToUpdate stopChildEnvelopeBouncing];
+        [slotToUpdate stopEnvelopeChildAnimation];
         
         //And make a copy of the envelope to do the animation with
         LRCollectedEnvelope *slidingEnvelope = [slotToUpdate.currentBlock copy];
@@ -438,8 +409,8 @@ typedef void(^CompletionBlockType)(void);
 - (void)swapLetterAtSlot:(LRLetterSlot *)slotA withLetterAtSlot:(LRLetterSlot *)slotB
 {
     //Get the location of the letter blocks with in the slot array
-    [slotA stopChildEnvelopeBouncing];
-    [slotB stopChildEnvelopeBouncing];
+    [slotA stopEnvelopeChildAnimation];
+    [slotB stopEnvelopeChildAnimation];
     
     int aLoc = -1;
     int bLoc = -1;
