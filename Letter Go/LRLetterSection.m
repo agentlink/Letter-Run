@@ -38,7 +38,7 @@ typedef void(^CompletionBlockType)(void);
 
 @property (nonatomic, strong) SKSpriteNode *bottomBarrier;
 
-@property (nonatomic, weak) LRLetterSlot  *currentSlot;
+//@property (nonatomic, weak) LRLetterSlot  *currentSlot;
 @property (nonatomic, weak) LRCollectedEnvelope *touchedBlock;
 
 @property LetterSectionState letterSectionState;
@@ -126,24 +126,14 @@ typedef void(^CompletionBlockType)(void);
     NSString *letter = newEnvelope.letter;
     BOOL isLoveLetter = newEnvelope.loveLetter;
 
-    LRLetterSlot *currentLetterSlot = nil;
-    for (LRLetterSlot* slot in self.letterSlots)
-    {
-        //If the slot is empty
-        if ([slot isLetterSlotEmpty]){
-            currentLetterSlot = slot;
-            break;
-        }
-    }
-    //If all the letter slots are not full
-    if (currentLetterSlot) {
+    LRLetterSlot *firstEmptySlot = [self _firstEmptySlot];
+    if (firstEmptySlot) {
         LRCollectedEnvelope *block = [LRLetterBlockGenerator createBlockWithLetter:letter loveLetter:isLoveLetter];
         //Hide the block to make a fake one to run the animation with
         block.hidden = YES;
         block.delegate = self;
-        currentLetterSlot.currentBlock = block;
+        firstEmptySlot.currentBlock = block;
         [self runAddLetterAnimationWithEnvelope:block];
-
     }
     [self _updateSubmitButton];
 }
@@ -164,8 +154,6 @@ typedef void(^CompletionBlockType)(void);
         [animatedEnvelope removeFromParent];
     }];
 
-    
-
     LRLetterSlot *parentSlot = self.letterSlots[origEnvelope.slotIndex];
     [parentSlot addChild:animatedEnvelope];
     [animatedEnvelope runAction:addLetterWithCompletion withKey:kAddLetterAnimationName];
@@ -177,15 +165,8 @@ typedef void(^CompletionBlockType)(void);
 {
     //Shift down all the letters in the letter section
     LRCollectedEnvelope *envelopeToDelete = (LRCollectedEnvelope *)envelope;
-    NSUInteger deletionIndex = self.currentSlot.index;
-    LRLetterSlot *deletionSlot = [self.letterSlots objectAtIndex:deletionIndex];
-    deletionSlot.currentBlock = [LRLetterBlockGenerator createEmptySectionBlock];
-    
-    self.currentSlot = nil;
-    self.touchedBlock = nil;
-
-    [self _shiftNonDeletedEnvelopesFromIndex:deletionIndex];
     [envelopeToDelete removeFromParent];
+    self.touchedBlock = nil;
 }
 
 - (void)_shiftNonDeletedEnvelopesFromIndex:(NSUInteger)deletionIndex
@@ -269,17 +250,14 @@ typedef void(^CompletionBlockType)(void);
 
 - (void)rearrangementHasFinishedWithLetterBlock:(id)letterBlock
 {
-
-    self.touchedBlock.zPosition = zPos_SectionBlock_Unselected;
     LRCollectedEnvelope *selectedEnvelope = (LRCollectedEnvelope *)letterBlock;
     
-    LRLetterSlot *newLocation = [self getPlaceHolderSlot];
+    LRLetterSlot *newLocation = [self _placeholderSlot];
     [self runRearrangmentHasFinishedAnimationWithEnvelope:selectedEnvelope toSlot:newLocation];
 
     selectedEnvelope.hidden = YES;
     newLocation.currentBlock = (LRCollectedEnvelope *)letterBlock;
 
-    self.currentSlot = nil;
     self.touchedBlock = nil;
     [self _updateSubmitButton];
 }
@@ -358,34 +336,30 @@ typedef void(^CompletionBlockType)(void);
 
 - (void)update:(NSTimeInterval)currentTime
 {
-    if (self.touchedBlock) {
-        [self checkRearrangement];
+    if (self.touchedBlock && !self.touchedBlock.isAtDeletionPoint) {
+        [self _checkRearrangement];
     }
 }
 
-- (void)checkRearrangement
+- (void)_checkRearrangement
 {
-    LRLetterSlot *nearBySlot = [self getClosestSlotToBlock:self.touchedBlock];
-    
-    //Is there not a place holder block?
-    if (!self.currentSlot && ![self getPlaceHolderSlot]) {
-        nearBySlot.currentBlock = [LRLetterBlockGenerator createPlaceHolderBlock];
-        self.currentSlot = nearBySlot;
+    LRLetterSlot *nearBySlot = [self _closestSlotToBlock:self.touchedBlock];
+    LRLetterSlot *placeholderSlot = [self _placeholderSlot];
+    //If the rearrangment has just started and a placeholder has not been set
+    if (!placeholderSlot)
+    {
+        nearBySlot.currentBlock = [LRCollectedEnvelope placeholderCollectedEnvelope];
     }
-    //Check if the place holder is not in the proper place
-    else if (![nearBySlot.currentBlock isCollectedEnvelopePlaceholder]) {
-        //Make sure that either its new location or old location are within the rearrangement area
-        [self swapLetterAtSlot:self.currentSlot withLetterAtSlot:nearBySlot];
-        if ([self slotIsWithinRearrangementArea:nearBySlot]) {
-            self.currentSlot = nearBySlot;
+    //If the current placeholder slot is not aligned with the location of the touched block
+    else if (nearBySlot != placeholderSlot)
+    {
+        if ([self _slotIsWithinRearrangementArea:nearBySlot]) {
+            [self swapBlocksAtIndexA:nearBySlot.index indexB:placeholderSlot.index];
         }
-        else
-            self.currentSlot = [self.letterSlots objectAtIndex:[self numLettersInSection] - 1];
-        return;
     }
 }
 
-- (BOOL) slotIsWithinRearrangementArea:(LRLetterSlot *)slot
+- (BOOL) _slotIsWithinRearrangementArea:(LRLetterSlot *)slot
 {
     for (int i = 0; i < [self numLettersInSection]; i++) {
         if ([self.letterSlots objectAtIndex:i] == slot)
@@ -434,7 +408,7 @@ typedef void(^CompletionBlockType)(void);
     }
 }
 
-- (void)swapBlocksAtIndexA:(int)a indexB:(int)b
+- (void)swapBlocksAtIndexA:(NSUInteger)a indexB:(NSUInteger)b
 {
     LRLetterSlot *slotA = [self.letterSlots objectAtIndex:a];
     LRLetterSlot *slotB = [self.letterSlots objectAtIndex:b];
@@ -460,7 +434,7 @@ typedef void(^CompletionBlockType)(void);
     [slotB setCurrentBlock:blockA];
 }
 
-- (LRLetterSlot *)getPlaceHolderSlot
+- (LRLetterSlot *)_placeholderSlot
 {
     LRLetterSlot *retVal = nil;
     for (int i = 0; i < self.letterSlots.count; i++) {
@@ -473,8 +447,22 @@ typedef void(^CompletionBlockType)(void);
     return retVal;
 }
 
+- (LRLetterSlot *)_firstEmptySlot
+{
+    LRLetterSlot *empty = nil;
+    for (LRLetterSlot* slot in self.letterSlots)
+    {
+        //If the slot is empty
+        if ([slot isLetterSlotEmpty]){
+            empty = slot;
+            break;
+        }
+    }
+    return empty;
+}
+
 ///Get the closest section block to a given position (provided by touch)
-- (LRLetterSlot *)getClosestSlotToBlock:(LRCollectedEnvelope *)letterBlock
+- (LRLetterSlot *)_closestSlotToBlock:(LRCollectedEnvelope *)letterBlock
 {
     CGPoint letterBlockPosition = [letterBlock convertPoint:self.position toNode:self];
     LRLetterSlot *closestSlot;

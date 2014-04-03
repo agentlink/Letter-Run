@@ -11,8 +11,4 @@
 #import "LRScreenSection.h"
 
 @interface LRLetterSection : LRScreenSection <LRLetterBlockControlDelegate>
-
-- (int) numLettersInSection;
-- (void)clearLetterSectionAnimated:(BOOL)animated;
-
 @end

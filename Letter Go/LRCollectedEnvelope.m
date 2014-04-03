@@ -12,9 +12,6 @@
 #import "LRCollisionManager.h"
 #import "LREnvelopeAnimationBuilder.h"
 
-//How long it should take the collected envelope to cross the screen on the return animation
-static CGFloat const kLRCollectedEnvelopeCrossScreenTime = 2.0;
-
 typedef NS_ENUM(NSUInteger, MovementDirection)
 {
     //Remove none if it doesn't get used
@@ -25,7 +22,6 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 
 
 @interface LRCollectedEnvelope ()
-@property (nonatomic) BOOL isAtDeletionPoint;
 @end
 
 @implementation LRCollectedEnvelope
@@ -36,12 +32,12 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
     return [[LRCollectedEnvelope alloc] initWithLetter:letter loveLetter:love];
 }
 
-+ (LRCollectedEnvelope *)emptySectionBlock
++ (LRCollectedEnvelope *)emptyCollectedEnvelope
 {
     return [[LRCollectedEnvelope alloc] initWithLetter:@"" loveLetter:NO];
 }
 
-+ (LRCollectedEnvelope *)placeholderBlock
++ (LRCollectedEnvelope *)placeholderCollectedEnvelope
 {
     return [[LRCollectedEnvelope alloc] initWithLetter:kLetterPlaceHolderText loveLetter:NO];
 }

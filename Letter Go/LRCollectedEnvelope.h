@@ -18,13 +18,15 @@ static NSString* const kTempCollectedEnvelopeName = @"NAME_SPRITE_SECTION_LETTER
 
 //Envelope Initializers
 + (LRCollectedEnvelope *)collectedEnvelopeWithLetter:(NSString *)letter loveLetter:(BOOL)love;;
-+ (LRCollectedEnvelope *)emptySectionBlock;
-+ (LRCollectedEnvelope *)placeholderBlock;
++ (LRCollectedEnvelope *)emptyCollectedEnvelope;
++ (LRCollectedEnvelope *)placeholderCollectedEnvelope;
 
 //Letter State
 - (BOOL) isCollectedEnvelopeEmpty;
 - (BOOL) isCollectedEnvelopePlaceholder;
 
+///This is TRUE if the envelope is at a point wherein if it is not touched, it will be deleted
+@property (nonatomic) BOOL isAtDeletionPoint;
 @property (nonatomic, weak) id <LRLetterBlockControlDelegate> delegate;
 @property (nonatomic) NSUInteger slotIndex;
 

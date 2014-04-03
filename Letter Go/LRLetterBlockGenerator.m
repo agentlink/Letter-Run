@@ -36,14 +36,14 @@ static const BOOL lgbDebugMode = NO;
 
 + (LRCollectedEnvelope *)createEmptySectionBlock
 {
-    LRCollectedEnvelope *lb = [LRCollectedEnvelope emptySectionBlock];
+    LRCollectedEnvelope *lb = [LRCollectedEnvelope emptyCollectedEnvelope];
     lb.color = (lgbDebugMode) ? [SKColor purpleColor] : [LRColor clearColor];
     return lb;
 }
 
 + (LRCollectedEnvelope *)createPlaceHolderBlock
 {
-    LRCollectedEnvelope *lb = [LRCollectedEnvelope placeholderBlock];
+    LRCollectedEnvelope *lb = [LRCollectedEnvelope placeholderCollectedEnvelope];
     return lb;
 }
 
