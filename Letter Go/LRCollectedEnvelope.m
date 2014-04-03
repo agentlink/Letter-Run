@@ -31,7 +31,7 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 @implementation LRCollectedEnvelope
 
 #pragma mark - Set Up
-+ (LRCollectedEnvelope *)sectionBlockWithLetter:(NSString *)letter loveLetter:(BOOL)love
++ (LRCollectedEnvelope *)collectedEnvelopeWithLetter:(NSString *)letter loveLetter:(BOOL)love
 {
     return [[LRCollectedEnvelope alloc] initWithLetter:letter loveLetter:love];
 }
@@ -142,11 +142,11 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 
 #pragma mark - Block State Checks
 
-- (BOOL) isLetterBlockEmpty {
+- (BOOL) isCollectedEnvelopeEmpty {
     return ![[self letter] length];
 }
 
-- (BOOL) isLetterBlockPlaceHolder {
+- (BOOL) isCollectedEnvelopePlaceholder {
     return ([self.letter isEqualToString:kLetterPlaceHolderText]);
 }
 

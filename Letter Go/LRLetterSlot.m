@@ -36,7 +36,7 @@
 
 - (BOOL) isLetterSlotEmpty
 {
-    return [self.currentBlock isLetterBlockEmpty];
+    return [self.currentBlock isCollectedEnvelopeEmpty];
 }
 
 - (void)stopEnvelopeChildAnimation

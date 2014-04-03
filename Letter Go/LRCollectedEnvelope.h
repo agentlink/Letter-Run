@@ -17,13 +17,13 @@ static NSString* const kTempCollectedEnvelopeName = @"NAME_SPRITE_SECTION_LETTER
 @interface LRCollectedEnvelope : LRLetterBlock
 
 //Envelope Initializers
-+ (LRCollectedEnvelope *)sectionBlockWithLetter:(NSString *)letter loveLetter:(BOOL)love;;
++ (LRCollectedEnvelope *)collectedEnvelopeWithLetter:(NSString *)letter loveLetter:(BOOL)love;;
 + (LRCollectedEnvelope *)emptySectionBlock;
 + (LRCollectedEnvelope *)placeholderBlock;
 
 //Letter State
-- (BOOL) isLetterBlockEmpty;
-- (BOOL) isLetterBlockPlaceHolder;
+- (BOOL) isCollectedEnvelopeEmpty;
+- (BOOL) isCollectedEnvelopePlaceholder;
 
 @property (nonatomic, weak) id <LRLetterBlockControlDelegate> delegate;
 @property (nonatomic) NSUInteger slotIndex;

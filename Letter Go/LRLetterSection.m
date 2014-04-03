@@ -134,16 +134,6 @@ typedef void(^CompletionBlockType)(void);
             currentLetterSlot = slot;
             break;
         }
-        //If the last block is a place holder and the player is selecting a block
-        else if (slot.index == ([self numLettersInSection] - 1)
-                 && [slot.currentBlock isLetterBlockPlaceHolder])
-        {
-            LRLetterSlot *letterSlot = [self.letterSlots objectAtIndex:[self numLettersInSection]];
-            letterSlot.currentBlock = [LRLetterBlockGenerator createPlaceHolderBlock];
-            self.currentSlot = letterSlot;
-            currentLetterSlot = slot;
-            break;
-        }
     }
     //If all the letter slots are not full
     if (currentLetterSlot) {
@@ -334,7 +324,7 @@ typedef void(^CompletionBlockType)(void);
     NSMutableString *currentWord = [[NSMutableString alloc] init];
     for (LRLetterSlot *slot in self.letterSlots)
     {
-        if ([slot isLetterSlotEmpty] || [slot.currentBlock isLetterBlockPlaceHolder])
+        if ([slot isLetterSlotEmpty] || [slot.currentBlock isCollectedEnvelopePlaceholder])
             break;
         [currentWord appendString:[slot.currentBlock letter]];
     }
@@ -346,7 +336,7 @@ typedef void(^CompletionBlockType)(void);
     NSMutableSet *indices = [NSMutableSet set];
     for (int i = 0; i < [self.letterSlots count]; i++) {
         LRLetterSlot *slot = [self.letterSlots objectAtIndex:i];
-        if (![slot.currentBlock isLetterBlockEmpty] && [slot.currentBlock loveLetter]) {
+        if (![slot.currentBlock isCollectedEnvelopeEmpty] && [slot.currentBlock loveLetter]) {
             [indices addObject:[NSNumber numberWithInt:i]];
         }
     }
@@ -383,7 +373,7 @@ typedef void(^CompletionBlockType)(void);
         self.currentSlot = nearBySlot;
     }
     //Check if the place holder is not in the proper place
-    else if (![nearBySlot.currentBlock isLetterBlockPlaceHolder]) {
+    else if (![nearBySlot.currentBlock isCollectedEnvelopePlaceholder]) {
         //Make sure that either its new location or old location are within the rearrangement area
         [self swapLetterAtSlot:self.currentSlot withLetterAtSlot:nearBySlot];
         if ([self slotIsWithinRearrangementArea:nearBySlot]) {
@@ -422,7 +412,7 @@ typedef void(^CompletionBlockType)(void);
             aLoc = i;
         }
         //If the block has been moved to the right, past edge of filled blocks
-        else if (aLoc >= 0 && bLoc == -1 && [[tempSlot currentBlock] isLetterBlockEmpty]) {
+        else if (aLoc >= 0 && bLoc == -1 && [[tempSlot currentBlock] isCollectedEnvelopeEmpty]) {
             bLoc = i - 1;
             break;
         }
@@ -451,8 +441,8 @@ typedef void(^CompletionBlockType)(void);
     
     LRCollectedEnvelope *blockA = [slotA currentBlock];
     LRCollectedEnvelope *blockB = [slotB currentBlock];
-    LRCollectedEnvelope *nonEmptyEnvelope = [blockA isLetterBlockPlaceHolder] ? blockB : blockA;
-    LRCollectedEnvelope *emptyEnvelope = [blockA isLetterBlockPlaceHolder] ? blockA : blockB;
+    LRCollectedEnvelope *nonEmptyEnvelope = [blockA isCollectedEnvelopePlaceholder] ? blockB : blockA;
+    LRCollectedEnvelope *emptyEnvelope = [blockA isCollectedEnvelopePlaceholder] ? blockA : blockB;
     
     //Run the letter swapping animation
     SKAction *rearrangeAnimation = [LREnvelopeAnimationBuilder rearrangementLetterShiftedSlotsFromPoint:nonEmptyEnvelope.parent.position toPoint:emptyEnvelope.parent.position];
@@ -475,7 +465,7 @@ typedef void(^CompletionBlockType)(void);
     LRLetterSlot *retVal = nil;
     for (int i = 0; i < self.letterSlots.count; i++) {
         LRLetterSlot *tempSlot = [self.letterSlots objectAtIndex:i];
-        if ([[tempSlot currentBlock] isLetterBlockPlaceHolder]) {
+        if ([[tempSlot currentBlock] isCollectedEnvelopePlaceholder]) {
             NSAssert(!retVal, @"Error: multiple place holder slots");
             retVal = tempSlot;
         }
@@ -544,7 +534,7 @@ typedef void(^CompletionBlockType)(void);
 {
     int count = 0;
     for (LRLetterSlot *slot in self.letterSlots) {
-        if (![[slot currentBlock] isLetterBlockEmpty])
+        if (![[slot currentBlock] isCollectedEnvelopeEmpty])
             count++;
     }
     return count;

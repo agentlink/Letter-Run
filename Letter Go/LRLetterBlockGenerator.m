@@ -48,7 +48,7 @@ static const BOOL lgbDebugMode = NO;
 }
 
 + (LRCollectedEnvelope *)createBlockWithLetter:(NSString *)letter loveLetter:(BOOL)love {
-    return [LRCollectedEnvelope sectionBlockWithLetter:letter loveLetter:love];
+    return [LRCollectedEnvelope collectedEnvelopeWithLetter:letter loveLetter:love];
 }
 
 #pragma mark - Private Functions
