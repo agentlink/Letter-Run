@@ -194,14 +194,15 @@ typedef void(^CompletionBlockType)(void);
         }
         newLocation.currentBlock.hidden = YES;
     }
+    //If it's shifting to the right, put the placeholder at the slot closest to where the touched block is
     if (direction == kLRDirectionRight) {
         LRLetterSlot *placeholderSlot = self.letterSlots[endVal];
         placeholderSlot.currentBlock = [LRCollectedEnvelope placeholderCollectedEnvelope];
     }
+    //If it's shifting to the left and there is a placeholder block at the end, get rid of it
     else if ([self _placeholderSlot].index == [self numLettersInSection] - 1 && direction == kLRDirectionLeft)
     {
         [self _placeholderSlot].currentBlock = [LRCollectedEnvelope emptyCollectedEnvelope];
-        NSLog(@"GOT'EM");
     }
 }
 
@@ -286,7 +287,7 @@ typedef void(^CompletionBlockType)(void);
     {
         //Build the animation based off of the relative slot
         currentSlot = self.letterSlots[i];
-        int relativeIndex = i - initialIndex;
+        int relativeIndex = (direction == kLRDirectionLeft) ? i - initialIndex : endcount - i;
         SKAction *shiftAnimation = [LREnvelopeAnimationBuilder shiftLetterInDirection:direction withDelayForIndex:relativeIndex];
         
         //Create a copy of the envelope to run the animation on
@@ -330,8 +331,6 @@ typedef void(^CompletionBlockType)(void);
     LRCollectedEnvelope *envelope = [[slot currentBlock] copy];
     envelope.name = kTempCollectedEnvelopeName;
     envelope.position = slot.currentBlock.position;
-    envelope.color = [LRColor debugColor1];
-    envelope.alpha = .5;
     return envelope;
 }
 
