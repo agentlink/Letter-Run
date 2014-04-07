@@ -198,6 +198,11 @@ typedef void(^CompletionBlockType)(void);
         LRLetterSlot *placeholderSlot = self.letterSlots[endVal];
         placeholderSlot.currentBlock = [LRCollectedEnvelope placeholderCollectedEnvelope];
     }
+    else if ([self _placeholderSlot].index == [self numLettersInSection] - 1 && direction == kLRDirectionLeft)
+    {
+        [self _placeholderSlot].currentBlock = [LRCollectedEnvelope emptyCollectedEnvelope];
+        NSLog(@"GOT'EM");
+    }
 }
 
 - (void)_revealShiftedLetters
@@ -265,7 +270,6 @@ typedef void(^CompletionBlockType)(void);
     NSUInteger length = [self numLettersInSection] - firstBlockIndex;
     LRDirection direction = deletable ? kLRDirectionLeft : kLRDirectionRight;
     NSRange letterRange = NSMakeRange(firstBlockIndex, length);
-    NSLog(@"Starting point: %i", firstBlockIndex);
     [self _shiftEnvelopesInRange:letterRange direction:direction];
 }
 
