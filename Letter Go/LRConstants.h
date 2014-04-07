@@ -8,11 +8,11 @@
 
 
 //TODO: Clean this page up, good lord
-typedef NS_ENUM(BOOL, kLRDirection)
+typedef NS_ENUM(NSInteger, LRDirection)
 {
     //Remove none if it doesn't get used
-    kLeftDirection = FALSE,
-    kRightDirection
+    kLRDirectionRight = -1,
+    kLRDirectionLeft = 1
 };
 
 

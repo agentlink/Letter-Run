@@ -25,4 +25,7 @@ static NSString *kAddLetterAnimationName = @"addLetterAnimation";
 
 + (SKAction *)actionWithCompletionBlock:(SKAction *)action block:(void (^)(void))completion;
 
++ (SKAction *)shiftLetterInDirection:(LRDirection)direction;
++ (SKAction *)shiftLetterInDirection:(LRDirection)direction withDelayForIndex:(NSUInteger)index;
+
 @end

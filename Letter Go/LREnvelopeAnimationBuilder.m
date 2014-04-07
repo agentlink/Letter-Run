@@ -31,8 +31,10 @@ static CGFloat const kBubbleToScaleOvershootDurationRatio = .5;
 
 + (SKAction *)changeEnvelopeCanDeleteState:(BOOL)canDelete
 {
+    //TODO: write a degree to radian function
+    CGFloat baseAngle = .087222222; //5 degrees in radians
     CGFloat duration = .2;
-    CGFloat angle = (canDelete) ? .087222222 : -.087222222;
+    CGFloat angle = (canDelete) ? baseAngle: -baseAngle;
     CGFloat alpha = (canDelete) ? .5 : 1.0;
 
     SKAction *fade = [SKAction fadeAlphaTo:alpha duration:duration];
@@ -44,7 +46,7 @@ static CGFloat const kBubbleToScaleOvershootDurationRatio = .5;
 {
     //#toy
     CGFloat shrinkTime = 0.2;
-    CGFloat letterDelayTime = [self _delayForIndex:index withTotalDelayTime:kTotalDelayTimeSubmit leadingDirection:kRightDirection];
+    CGFloat letterDelayTime = [self _delayForIndex:index withTotalDelayTime:kTotalDelayTimeSubmit leadingDirection:kLRDirectionRight];
     SKAction *deleteLetter;
     
     SKAction *delay = [SKAction waitForDuration:letterDelayTime];
@@ -74,7 +76,7 @@ static CGFloat const kBubbleToScaleOvershootDurationRatio = .5;
 
 + (SKAction *)deletionAnimationWithDelayForIndex:(NSUInteger)index;
 {
-    return [LREnvelopeAnimationBuilder _shiftLetterInDirection:kLeftDirection withDelayForIndex:index];
+    return [LREnvelopeAnimationBuilder shiftLetterInDirection:kLRDirectionLeft withDelayForIndex:index];
 }
 
 + (SKAction *)actionWithCompletionBlock:(SKAction *)action block:(void (^)(void))completion
@@ -127,20 +129,20 @@ static CGFloat const kBubbleToScaleOvershootDurationRatio = .5;
 
 #pragma mark - Private Functions
 
-+ (SKAction *)_shiftLetterInDirection:(kLRDirection)direction
++ (SKAction *)shiftLetterInDirection:(LRDirection)direction
 {
     CGFloat animationTime = .2;
     CGFloat shiftDistance = kDistanceBetweenSlots;
-    shiftDistance *= (direction == kLeftDirection) ? -1 : 1;
+    shiftDistance *= (direction == kLRDirectionLeft) ? -1 : 1;
 
     SKAction *shiftLetter = [SKAction moveByX:shiftDistance y:0 duration:animationTime];
     return shiftLetter;
 }
 
-+ (SKAction *)_shiftLetterInDirection:(kLRDirection)direction withDelayForIndex:(NSUInteger)index
++ (SKAction *)shiftLetterInDirection:(LRDirection)direction withDelayForIndex:(NSUInteger)index
 {
-    CGFloat delayTime = [self _delayForIndex:index  withTotalDelayTime:kTotalDelayTimeDelete leadingDirection:kLeftDirection];
-    SKAction *shift = [self _shiftLetterInDirection:direction];
+    CGFloat delayTime = [self _delayForIndex:index  withTotalDelayTime:kTotalDelayTimeDelete leadingDirection:kLRDirectionLeft];
+    SKAction *shift = [self shiftLetterInDirection:direction];
     //Get the pre and post delay times so that all the actions end at the same time
     SKAction *delayAction = [SKAction waitForDuration:delayTime];
     
@@ -148,9 +150,9 @@ static CGFloat const kBubbleToScaleOvershootDurationRatio = .5;
     return shiftWithDelay;
 }
 
-+ (CGFloat) _delayForIndex:(NSUInteger)index withTotalDelayTime:(CGFloat)totalDelay leadingDirection:(kLRDirection)direction
++ (CGFloat) _delayForIndex:(NSUInteger)index withTotalDelayTime:(CGFloat)totalDelay leadingDirection:(LRDirection)direction
 {
-    CGFloat directionVal = (direction == kRightDirection) ? (kWordMaximumLetterCount - index) : index + 1;
+    CGFloat directionVal = (direction == kLRDirectionRight) ? (kWordMaximumLetterCount - index) : index + 1;
     CGFloat delay = totalDelay * directionVal/kWordMaximumLetterCount;
     return delay;
 }

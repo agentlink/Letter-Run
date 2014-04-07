@@ -169,50 +169,34 @@ typedef void(^CompletionBlockType)(void);
     self.touchedBlock = nil;
 }
 
-- (void)_shiftNonDeletedEnvelopesFromIndex:(NSUInteger)deletionIndex
+- (void)_shiftLetterDataStructuresInRange:(NSRange)range direction:(LRDirection)direction
 {
-    for (NSInteger i = deletionIndex; i < self.letterSlots.count; i++)
+    //Make sure this works for both left and right. Maybe do something with changing the direciton using the new LRDirection values
+    //TODO: Add assertsions
+    
+    /*
+     
+     If you are shifting to the right, start from left side and set each slot to the value of the envelope on its right
+     If you are shifting to the left, start from the right side and set each slot to the value of the envelope on its left
+     */
+    int startVal = (direction == kLRDirectionRight) ? kWordMaximumLetterCount - 1: range.location - 1;
+    int endVal = (direction == kLRDirectionRight) ? range.location : kWordMaximumLetterCount;
+    
+    for (int i = startVal; i != endVal; i += direction)
     {
-        //Get the proper slot to update
-        LRLetterSlot *slotToUpdate = [self.letterSlots objectAtIndex:i];
-        SKAction *shiftAnimation = [LREnvelopeAnimationBuilder deletionAnimationWithDelayForIndex:i - deletionIndex];
-        //Make sure all the envelopes have stopoped their animations
-        [slotToUpdate stopEnvelopeChildAnimation];
-        
-        //And make a copy of the envelope to do the animation with
-        LRCollectedEnvelope *slidingEnvelope = [slotToUpdate.currentBlock copy];
-        slidingEnvelope.position = slotToUpdate.currentBlock.position;
-        slidingEnvelope.name = kTempCollectedEnvelopeName;
-        [slotToUpdate addChild:slidingEnvelope];
-        
-        //Run the animation on the fake slots
-        CompletionBlockType shiftDone;
-        if (i != self.letterSlots.count - 1)
-        {
-            [slidingEnvelope runAction:shiftAnimation];
+        LRLetterSlot *newLocation = self.letterSlots[i];
+        if (i == kWordMaximumLetterCount - 1 && direction == kLRDirectionLeft) {
+            newLocation.currentBlock = [LRLetterBlockGenerator createEmptySectionBlock];
         }
-        else
-        {
-            //When the action is done, reveal the shifted letters
-            shiftDone = ^{[self _revealShiftedLetters];};
-            SKAction *shift = [LREnvelopeAnimationBuilder actionWithCompletionBlock:shiftAnimation
-                                                                              block:shiftDone];
-            [slidingEnvelope runAction: shift];
+        else {
+            LRLetterSlot *formerLocation = self.letterSlots[i + direction];
+            newLocation.currentBlock = formerLocation.currentBlock;
         }
+        newLocation.currentBlock.hidden = YES;
     }
-    //And just as soon as the action starts, do the real shifting of the letters
-    [self _shiftLetterDataStructuresFromIndex:deletionIndex];
-}
-
-- (void)_shiftLetterDataStructuresFromIndex:(NSInteger)deletionIndex
-{
-    for (NSInteger k = deletionIndex; k < kWordMaximumLetterCount; k++)
-    {
-        LRLetterSlot *updatedSlot = self.letterSlots[k];
-        //If it's the last slot, make it an empty block. Otherwise, make it the next block over
-        LRCollectedEnvelope *newEnvelope = (k == kWordMaximumLetterCount - 1) ? [LRLetterBlockGenerator createEmptySectionBlock] :  [self.letterSlots[k + 1] currentBlock];
-        newEnvelope.hidden = YES;
-        updatedSlot.currentBlock = newEnvelope;
+    if (direction == kLRDirectionRight) {
+        LRLetterSlot *placeholderSlot = self.letterSlots[endVal];
+        placeholderSlot.currentBlock = [LRCollectedEnvelope placeholderCollectedEnvelope];
     }
 }
 
@@ -229,6 +213,7 @@ typedef void(^CompletionBlockType)(void);
     }
     
     self.letterSectionState = LetterSectionStateNormal;
+    //TODO: Test if this call is now screwed up
     [self _addDelayedLetters];
     [self _updateSubmitButton];
 }
@@ -246,6 +231,10 @@ typedef void(^CompletionBlockType)(void);
 {
     self.touchedBlock = (LRCollectedEnvelope *)letterBlock;
     self.touchedBlock.zPosition = zPos_SectionBlock_Selected;
+    
+    NSAssert(![self _placeholderSlot], @"Should not be placeholder slot if rearrangement hasn't started yet");
+    LRLetterSlot *newPlaceholderSlot = self.letterSlots[self.touchedBlock.slotIndex];
+    newPlaceholderSlot.currentBlock = [LRCollectedEnvelope placeholderCollectedEnvelope];
 }
 
 - (void)rearrangementHasFinishedWithLetterBlock:(id)letterBlock
@@ -260,6 +249,60 @@ typedef void(^CompletionBlockType)(void);
 
     self.touchedBlock = nil;
     [self _updateSubmitButton];
+}
+
+- (void)deletabilityHasChangeTo:(BOOL)deletable forLetterBlock:(id)letterBlock
+{
+    //Write a shiftEnvelopes:(NSArray)env inDirection:(LRDirection) function
+    LRCollectedEnvelope *collected = letterBlock;
+    NSUInteger nearbySlotIndex = [self _closestSlotToBlock:collected].index;
+    if (nearbySlotIndex >= [self numLettersInSection]) {
+        nearbySlotIndex = [self _firstEmptySlot].index;
+    }
+    collected.slotIndex = nearbySlotIndex;
+
+    NSUInteger firstBlockIndex = deletable ? collected.slotIndex + 1 : collected.slotIndex;
+    NSUInteger length = [self numLettersInSection] - firstBlockIndex;
+    LRDirection direction = deletable ? kLRDirectionLeft : kLRDirectionRight;
+    NSRange letterRange = NSMakeRange(firstBlockIndex, length);
+    NSLog(@"Starting point: %i", firstBlockIndex);
+    [self _shiftEnvelopesInRange:letterRange direction:direction];
+}
+
+
+- (void)_shiftEnvelopesInRange:(NSRange)slotRange direction:(LRDirection)direction
+{
+    //TODO: add other assertions here
+    NSAssert(slotRange.length + slotRange.location <= kWordMaximumLetterCount, @"Shift envelope range exceeds max letter count");
+    int endcount = kWordMaximumLetterCount;//slotRange.length + slotRange.location;
+    int initialIndex = slotRange.location;
+    LRLetterSlot *currentSlot;
+    
+    for (int i = initialIndex; i < endcount; i++)
+    {
+        //Build the animation based off of the relative slot
+        currentSlot = self.letterSlots[i];
+        int relativeIndex = i - initialIndex;
+        SKAction *shiftAnimation = [LREnvelopeAnimationBuilder shiftLetterInDirection:direction withDelayForIndex:relativeIndex];
+        
+        //Create a copy of the envelope to run the animation on
+        LRCollectedEnvelope *animatedEnvelope = [self _copyOfEnvelopeFromSlot:currentSlot];
+        [currentSlot addChild:animatedEnvelope];
+        CompletionBlockType shiftDone;
+        //Reveal the real letters after the last block has shifted
+        if (i == endcount - 1)
+        {
+            shiftDone = ^{[self _revealShiftedLetters];};
+            SKAction *shift = [LREnvelopeAnimationBuilder actionWithCompletionBlock:shiftAnimation
+                                                                              block:shiftDone];
+            [animatedEnvelope runAction: shift];
+        }
+        else
+        {
+            [animatedEnvelope runAction:shiftAnimation];
+        }
+    }
+    [self _shiftLetterDataStructuresInRange:slotRange direction:direction];
 }
 
 - (void)runRearrangmentHasFinishedAnimationWithEnvelope:(LRCollectedEnvelope *)envelope toSlot:(LRLetterSlot *)destination
@@ -277,6 +320,16 @@ typedef void(^CompletionBlockType)(void);
     [animatedEnvelope runAction:animationWithCompletion];
 }
 
+- (LRCollectedEnvelope *)_copyOfEnvelopeFromSlot:(LRLetterSlot *)slot
+{
+    NSParameterAssert(slot);
+    LRCollectedEnvelope *envelope = [[slot currentBlock] copy];
+    envelope.name = kTempCollectedEnvelopeName;
+    envelope.position = slot.currentBlock.position;
+    envelope.color = [LRColor debugColor1];
+    envelope.alpha = .5;
+    return envelope;
+}
 
 #pragma mark Submit Word Functions
 
@@ -345,13 +398,9 @@ typedef void(^CompletionBlockType)(void);
 {
     LRLetterSlot *nearBySlot = [self _closestSlotToBlock:self.touchedBlock];
     LRLetterSlot *placeholderSlot = [self _placeholderSlot];
-    //If the rearrangment has just started and a placeholder has not been set
-    if (!placeholderSlot)
-    {
-        nearBySlot.currentBlock = [LRCollectedEnvelope placeholderCollectedEnvelope];
-    }
+    NSAssert(placeholderSlot, @"Placeholder slot cannot be nil if rearranging");
     //If the current placeholder slot is not aligned with the location of the touched block
-    else if (nearBySlot != placeholderSlot)
+    if (nearBySlot != placeholderSlot)
     {
         if ([self _slotIsWithinRearrangementArea:nearBySlot]) {
             [self swapBlocksAtIndexA:nearBySlot.index indexB:placeholderSlot.index];

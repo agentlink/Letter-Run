@@ -81,7 +81,6 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
             SKAction *animation = [LREnvelopeAnimationBuilder changeEnvelopeCanDeleteState:canDelete];
             [self runAction:animation];
         }
-//        self.alpha = ([self shouldEnvelopeBeDeletedAtPosition:self.position]) ? .5 : 1.0;
     }
 }
 
@@ -94,11 +93,9 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
     }
     else {
         [self.delegate rearrangementHasFinishedWithLetterBlock:self];
-        SKAction *returnToSlot = [SKAction moveTo:CGPointZero duration:1];
         SKAction *bubble = [LREnvelopeAnimationBuilder bubbleByScale:1/kLRCollectedEnvelopeBubbleScale
                                                     withDuration:kLRCollectedEnvelopeBubbleDuration];
-        SKAction *bubbleAndReturn = [SKAction group:@[returnToSlot, bubble]];
-        [self runAction:bubbleAndReturn];
+        [self runAction:bubble];
         
     }
 }
@@ -146,4 +143,9 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
     return ([self.letter isEqualToString:kLetterPlaceHolderText]);
 }
 
+- (void)setIsAtDeletionPoint:(BOOL)isAtDeletionPoint
+{
+    [self.delegate deletabilityHasChangeTo:isAtDeletionPoint forLetterBlock:self];
+    _isAtDeletionPoint = isAtDeletionPoint;
+}
 @end
