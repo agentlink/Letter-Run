@@ -145,7 +145,7 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 
 - (void)setIsAtDeletionPoint:(BOOL)isAtDeletionPoint
 {
-    [self.delegate deletabilityHasChangeTo:isAtDeletionPoint forLetterBlock:self];
     _isAtDeletionPoint = isAtDeletionPoint;
+    [self.delegate deletabilityHasChangeTo:isAtDeletionPoint forLetterBlock:self];
 }
 @end

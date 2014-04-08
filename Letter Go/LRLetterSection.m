@@ -164,6 +164,7 @@ typedef void(^CompletionBlockType)(void);
 - (void)removeEnvelopeFromLetterSection:(id)envelope
 {
     //Shift down all the letters in the letter section
+    NSAssert(envelope == self.touchedBlock, @"Only the touched block should be removed");
     LRCollectedEnvelope *envelopeToDelete = (LRCollectedEnvelope *)envelope;
     [envelopeToDelete removeFromParent];
     self.touchedBlock = nil;
@@ -245,6 +246,7 @@ typedef void(^CompletionBlockType)(void);
 
 - (void)rearrangementHasFinishedWithLetterBlock:(id)letterBlock
 {
+    NSAssert(letterBlock == self.touchedBlock, @"Rearrangment should only start and finish with touched block");
     LRCollectedEnvelope *selectedEnvelope = (LRCollectedEnvelope *)letterBlock;
     
     LRLetterSlot *newLocation = [self _placeholderSlot];
@@ -260,12 +262,15 @@ typedef void(^CompletionBlockType)(void);
 - (void)deletabilityHasChangeTo:(BOOL)deletable forLetterBlock:(id)letterBlock
 {
     //Write a shiftEnvelopes:(NSArray)env inDirection:(LRDirection) function
+    NSAssert(letterBlock == self.touchedBlock, @"Deletability should only change with touched block");
     LRCollectedEnvelope *collected = letterBlock;
-    NSUInteger nearbySlotIndex = [self _closestSlotToBlock:collected].index;
-    if (nearbySlotIndex >= [self numLettersInSection]) {
-        nearbySlotIndex = [self _firstEmptySlot].index;
+    if (!deletable) {
+        NSUInteger nearbySlotIndex = [self _closestSlotToBlock:collected].index;
+        if (nearbySlotIndex >= [self numLettersInSection]) {
+            nearbySlotIndex = [self _firstEmptySlot].index;
+        }
+        collected.slotIndex = nearbySlotIndex;
     }
-    collected.slotIndex = nearbySlotIndex;
 
     NSUInteger firstBlockIndex = deletable ? collected.slotIndex + 1 : collected.slotIndex;
     NSUInteger length = [self numLettersInSection] - firstBlockIndex;
