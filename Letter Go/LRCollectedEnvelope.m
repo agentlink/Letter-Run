@@ -60,6 +60,7 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
         CGPoint location = [touch locationInNode:[self parent]];
         if (CGRectContainsPoint(self.frame, location))
         {
+            self.position = location;
             [self releaseBlockForRearrangement];
             SKAction *bubble = [LREnvelopeAnimationBuilder bubbleByScale:kLRCollectedEnvelopeBubbleScale
                                                             withDuration:kLRCollectedEnvelopeBubbleDuration];
@@ -73,21 +74,28 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 {
     for (UITouch *touch in touches)
     {
-        CGPoint touchLoc = [touch locationInNode:[self parent]];
-        self.position = touchLoc;
         BOOL canDelete = [self shouldEnvelopeBeDeletedAtPosition:self.position];
         if (canDelete != self.isAtDeletionPoint) {
             self.isAtDeletionPoint = canDelete;
             SKAction *animation = [LREnvelopeAnimationBuilder changeEnvelopeCanDeleteState:canDelete];
             [self runAction:animation];
         }
+        CGPoint touchLoc = [touch locationInNode:[self parent]];
+        self.position = touchLoc;
     }
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-
 {
-    if ([self shouldEnvelopeBeDeletedAtPosition:self.position])
+    //Do one more check to see if it's at the deletion point but don't run an animation
+    CGPoint touchLoc = [[touches anyObject] locationInNode:[self parent]];
+    self.position = touchLoc;
+    BOOL canDelete = [self shouldEnvelopeBeDeletedAtPosition:self.position];
+    if (canDelete != self.isAtDeletionPoint) {
+        self.isAtDeletionPoint = canDelete;
+    }
+
+    if (self.isAtDeletionPoint)
     {
         [self.delegate removeEnvelopeFromLetterSection:self];
     }
@@ -118,8 +126,7 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 {
     CGFloat currentYPos = pos.y;
     //#toy
-    if ((currentYPos > (kSectionHeightLetterSection + kCollectedEnvelopeSpriteDimension)/2) ||
-         currentYPos < -kCollectedEnvelopeSpriteDimension) {
+    if (currentYPos > (kSectionHeightLetterSection + kCollectedEnvelopeSpriteDimension)/2) {
         return YES;
     }
     return NO;
@@ -146,6 +153,6 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 - (void)setIsAtDeletionPoint:(BOOL)isAtDeletionPoint
 {
     _isAtDeletionPoint = isAtDeletionPoint;
-    [self.delegate deletabilityHasChangeTo:isAtDeletionPoint forLetterBlock:self];
+    [self.delegate deletabilityHasChangedTo:isAtDeletionPoint forLetterBlock:self];
 }
 @end

@@ -16,6 +16,6 @@
 
 - (void)rearrangementHasBegunWithLetterBlock:(id)letterBlock;
 - (void)rearrangementHasFinishedWithLetterBlock:(id)letterBlock;
-- (void)deletabilityHasChangeTo:(BOOL)deletable forLetterBlock:(id)letterBlock;
+- (void)deletabilityHasChangedTo:(BOOL)deletable forLetterBlock:(id)letterBlock;
 
 @end

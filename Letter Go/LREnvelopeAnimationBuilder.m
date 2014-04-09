@@ -16,7 +16,7 @@ static CGFloat const kTotalDelayTimeDelete = 0.27;
 //The time that the animation would take to cross the whole screen
 static CGFloat const kRearrangementFinishedMaxDuration = .5;
 //The time that the animation takes to move one slot
-static CGFloat const kRearrangementLetterShiftMaxDuration = .08;
+static CGFloat const kRearrangementLetterShiftMaxDuration = .09;
 
 //#toy
 //The scale an envelope grows/shrinks to during it's overshoot
@@ -96,8 +96,7 @@ static CGFloat const kBubbleToScaleOvershootDurationRatio = .5;
 
 + (SKAction *)rearrangementLetterShiftedSlotsFromPoint:(CGPoint)start toPoint:(CGPoint)destination
 {
-    CGFloat distance = ABS(start.x - destination.x);
-    CGFloat duration = distance * kRearrangementLetterShiftMaxDuration / kDistanceBetweenSlots;
+    CGFloat duration = kRearrangementLetterShiftMaxDuration;
     SKAction *action = [SKAction moveTo:destination duration:duration];
     action.timingMode = SKActionTimingEaseInEaseOut;
     return action;

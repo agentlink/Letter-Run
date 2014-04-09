@@ -163,8 +163,9 @@ typedef void(^CompletionBlockType)(void);
 #pragma mark Deletion
 - (void)removeEnvelopeFromLetterSection:(id)envelope
 {
-    //Shift down all the letters in the letter section
     NSAssert(envelope == self.touchedBlock, @"Only the touched block should be removed");
+    NSAssert(![self _placeholderSlot], @"Should not be a placeholder slot if removing");
+
     LRCollectedEnvelope *envelopeToDelete = (LRCollectedEnvelope *)envelope;
     [envelopeToDelete removeFromParent];
     self.touchedBlock = nil;
@@ -180,8 +181,8 @@ typedef void(^CompletionBlockType)(void);
      If you are shifting to the right, start from left side and set each slot to the value of the envelope on its right
      If you are shifting to the left, start from the right side and set each slot to the value of the envelope on its left
      */
-    int startVal = (direction == kLRDirectionRight) ? kWordMaximumLetterCount - 1: range.location - 1;
-    int endVal = (direction == kLRDirectionRight) ? range.location : kWordMaximumLetterCount;
+    NSInteger startVal = (direction == kLRDirectionRight) ? kWordMaximumLetterCount - 1: range.location - 1;
+    NSInteger endVal = (direction == kLRDirectionRight) ? range.location : kWordMaximumLetterCount;
     
     for (int i = startVal; i != endVal; i += direction)
     {
@@ -233,6 +234,12 @@ typedef void(^CompletionBlockType)(void);
     [self.delayedLetters removeAllObjects];
 }
 
+- (void) setTouchedBlock:(LRCollectedEnvelope *)touchedBlock
+{
+    NSAssert(!(_touchedBlock && touchedBlock), @"Touched block should only be set if it is nil");
+    _touchedBlock = touchedBlock;
+}
+
 #pragma mark Rearrangement
 - (void)rearrangementHasBegunWithLetterBlock:(id)letterBlock
 {
@@ -248,7 +255,6 @@ typedef void(^CompletionBlockType)(void);
 {
     NSAssert(letterBlock == self.touchedBlock, @"Rearrangment should only start and finish with touched block");
     LRCollectedEnvelope *selectedEnvelope = (LRCollectedEnvelope *)letterBlock;
-    
     LRLetterSlot *newLocation = [self _placeholderSlot];
     [self runRearrangmentHasFinishedAnimationWithEnvelope:selectedEnvelope toSlot:newLocation];
 
@@ -259,24 +265,23 @@ typedef void(^CompletionBlockType)(void);
     [self _updateSubmitButton];
 }
 
-- (void)deletabilityHasChangeTo:(BOOL)deletable forLetterBlock:(id)letterBlock
+- (void)deletabilityHasChangedTo:(BOOL)deletable forLetterBlock:(id)letterBlock
 {
-    //Write a shiftEnvelopes:(NSArray)env inDirection:(LRDirection) function
     NSAssert(letterBlock == self.touchedBlock, @"Deletability should only change with touched block");
     LRCollectedEnvelope *collected = letterBlock;
-    if (!deletable) {
-        NSUInteger nearbySlotIndex = [self _closestSlotToBlock:collected].index;
-        if (nearbySlotIndex >= [self numLettersInSection]) {
-            nearbySlotIndex = [self _firstEmptySlot].index;
-        }
-        collected.slotIndex = nearbySlotIndex;
+    
+    //Set the slot index to the nearest letter
+    NSUInteger nearbySlotIndex = [self _closestSlotToBlock:collected].index;
+    if (nearbySlotIndex >= [self numLettersInSection]) {
+        nearbySlotIndex = [self _firstEmptySlot].index;
     }
-
+    collected.slotIndex = nearbySlotIndex;
+    
     NSUInteger firstBlockIndex = deletable ? collected.slotIndex + 1 : collected.slotIndex;
     NSUInteger length = [self numLettersInSection] - firstBlockIndex;
     LRDirection direction = deletable ? kLRDirectionLeft : kLRDirectionRight;
     NSRange letterRange = NSMakeRange(firstBlockIndex, length);
-    [self _shiftEnvelopesInRange:letterRange direction:direction];
+    [self _shiftEnvelopesInRange:letterRange direction:direction];    
 }
 
 
@@ -313,6 +318,7 @@ typedef void(^CompletionBlockType)(void);
         }
     }
     [self _shiftLetterDataStructuresInRange:slotRange direction:direction];
+
 }
 
 - (void)runRearrangmentHasFinishedAnimationWithEnvelope:(LRCollectedEnvelope *)envelope toSlot:(LRLetterSlot *)destination
@@ -426,45 +432,6 @@ typedef void(^CompletionBlockType)(void);
 }
 
 #pragma mark Letter Swapping Functions
-
-- (void)swapLetterAtSlot:(LRLetterSlot *)slotA withLetterAtSlot:(LRLetterSlot *)slotB
-{
-    NSLog(@"Swapping %@ and %@", slotA.currentBlock.letter, slotB.currentBlock.letter);
-    //Get the location of the letter blocks with in the slot array
-    [slotA stopEnvelopeChildAnimation];
-    [slotB stopEnvelopeChildAnimation];
-    
-    int aLoc = -1;
-    int bLoc = -1;
-    for (int i = 0; i < self.letterSlots.count; i++)
-    {
-        LRLetterSlot *tempSlot = [self.letterSlots objectAtIndex:i];
-        if (tempSlot == slotA) {
-            aLoc = i;
-        }
-        //If the block has been moved to the right, past edge of filled blocks
-        else if (aLoc >= 0 && bLoc == -1 && [[tempSlot currentBlock] isCollectedEnvelopeEmpty]) {
-            bLoc = i - 1;
-            break;
-        }
-        else if (tempSlot == slotB) {
-            bLoc = i;
-        }
-    }
-    
-    //Swap either to the left or right
-    if (aLoc < bLoc) {
-        for (int i = aLoc; i < bLoc; i++) {
-            [self swapBlocksAtIndexA:i indexB:i+1];
-        }
-    }
-    else if (aLoc > bLoc) {
-        for (int i = aLoc; i > bLoc; i--) {
-            [self swapBlocksAtIndexA:i indexB:i-1];
-        }
-    }
-}
-
 - (void)swapBlocksAtIndexA:(NSUInteger)a indexB:(NSUInteger)b
 {
     LRLetterSlot *slotA = [self.letterSlots objectAtIndex:a];
@@ -477,7 +444,7 @@ typedef void(^CompletionBlockType)(void);
     
     //Run the letter swapping animation
     SKAction *rearrangeAnimation = [LREnvelopeAnimationBuilder rearrangementLetterShiftedSlotsFromPoint:nonEmptyEnvelope.parent.position toPoint:emptyEnvelope.parent.position];
-    LRCollectedEnvelope *animatedEnvelope = [nonEmptyEnvelope copy];
+    LRCollectedEnvelope *animatedEnvelope = [self _copyOfEnvelopeFromSlot:self.letterSlots[nonEmptyEnvelope.slotIndex]];
     animatedEnvelope.position = nonEmptyEnvelope.parent.position;
     [self addChild:animatedEnvelope];
     [animatedEnvelope runAction:rearrangeAnimation completion:^{
@@ -629,13 +596,4 @@ typedef void(^CompletionBlockType)(void);
     }
 }
 
-//Debug function
-/*
-- (void)setCurrentSlot:(LRLetterSlot *)currentSlot
-{
-    [[self currentSlot] setColor:[UIColor whiteColor]];
-    _currentSlot = currentSlot;
-    currentSlot.color = [UIColor redColor];
-}
-*/
 @end
