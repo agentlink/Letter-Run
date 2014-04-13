@@ -552,20 +552,13 @@ typedef void(^CompletionBlockType)(void);
     return count;
 }
 
-
-- (void)setUserInteractionEnabled:(BOOL)userInteractionEnabled
-{
-    for (LRLetterSlot *slot in self.letterSlots) {
-        slot.userInteractionEnabled = userInteractionEnabled;
-        slot.currentBlock.userInteractionEnabled = userInteractionEnabled;
-    }
-}
-
 #pragma mark - LRGameStateDelegate Methods
 - (void)gameStateGameOver
 {
-    if (self.touchedBlock)
+    if (self.touchedBlock) {
         [self.touchedBlock touchesEnded:nil withEvent:nil];
+        self.touchedBlock.userInteractionEnabled = NO;
+    }
     self.gameOverFinished = TRUE;
     self.userInteractionEnabled = NO;
 }

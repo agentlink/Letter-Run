@@ -140,6 +140,11 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
     return descript;
 }
 
+- (void)gameStateGameOver
+{
+    self.userInteractionEnabled = NO;
+}
+
 #pragma mark - Block State Checks
 
 - (BOOL) isCollectedEnvelopeEmpty {

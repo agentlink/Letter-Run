@@ -49,6 +49,8 @@
     }
 }
 
+#pragma mark - Setters and Getters
+
 - (void)setCurrentBlock:(LRCollectedEnvelope *)incomingBlock
 {
     //If it's being initialized
@@ -75,5 +77,11 @@
 - (void)setEmptyLetterBlock
 {
     self.currentBlock = [LRLetterBlockGenerator createEmptySectionBlock];
+}
+
+#pragma LRGameStateDelegate Functions
+- (void)gameStateGameOver
+{
+    self.userInteractionEnabled = NO;
 }
 @end
