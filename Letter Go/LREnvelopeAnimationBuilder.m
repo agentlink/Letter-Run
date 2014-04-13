@@ -16,11 +16,11 @@ static CGFloat const kTotalDelayTimeDelete = 0.27;
 //The time that the animation would take to cross the whole screen
 static CGFloat const kRearrangementFinishedMaxDuration = .5;
 //The time that the animation takes to move one slot
-static CGFloat const kRearrangementLetterShiftMaxDuration = .09;
+static CGFloat const kSwapEnvelopeAnimationDuration = .1;
 
 //#toy
 //The scale an envelope grows/shrinks to during it's overshoot
-static CGFloat const kBubbleToScaleRatioChange = 1.15;
+static CGFloat const kBubbleToScale = 1.15;
 //How much time the overshooting takes compared to the refractory
 static CGFloat const kBubbleToScaleUndershootDuration = .25;
 static CGFloat const kBubbleToScaleOvershootDurationRatio = .5;
@@ -31,17 +31,40 @@ static CGFloat const kBubbleToScaleOvershootDurationRatio = .5;
 
 + (SKAction *)changeEnvelopeCanDeleteState:(BOOL)canDelete
 {
-    //TODO: write a degree to radian function
-    CGFloat baseAngle = .087222222; //5 degrees in radians
-    CGFloat duration = .2;
-    CGFloat angle = (canDelete) ? baseAngle: -baseAngle;
+    CGFloat angle = (canDelete) ? .1 /*6 degrees in radians*/: 0;
     CGFloat alpha = (canDelete) ? .5 : 1.0;
+    CGFloat duration = .2;
 
     SKAction *fade = [SKAction fadeAlphaTo:alpha duration:duration];
-    SKAction *rotate = [SKAction rotateByAngle:angle duration:duration];
+    SKAction *rotate = [SKAction rotateToAngle:angle duration:duration];
     SKAction *rotateAndFade = [SKAction group:@[fade, rotate]];
-    return rotateAndFade;
+    
+    if (!canDelete) {
+        return rotateAndFade;
+    }
+    
+    //If it's not being deleted, make it wiggle back and forth forever
+    CGFloat wiggleDuration = .5;
+    SKAction *rotateTo = [SKAction rotateToAngle:angle duration:wiggleDuration];
+    rotateTo.timingMode = SKActionTimingEaseInEaseOut;
+    SKAction *rotateFrom = [SKAction rotateToAngle:-angle duration:wiggleDuration];
+    rotateFrom.timingMode = SKActionTimingEaseInEaseOut;
+    SKAction *wiggleForever = [SKAction repeatActionForever:[SKAction sequence:@[rotateFrom, rotateTo]]];
+    SKAction *rotateAndWiggle = [SKAction sequence:@[rotateAndFade, wiggleForever]];
+    
+    return rotateAndWiggle;
 }
+
++ (SKAction *)changeEnvelopeToTouchedState:(BOOL)envelopeTouched
+{
+    CGFloat scale = (envelopeTouched) ? kBubbleToScale : 1/kBubbleToScale;
+    CGFloat duration = .1;
+    SKAction *scaleAction = [SKAction scaleTo:scale duration:duration];
+    scaleAction.timingMode = SKActionTimingEaseInEaseOut;
+    
+    return scaleAction;
+}
+
 + (SKAction *)submitWordActionWithLetterAtIndex:(NSUInteger)index
 {
     //#toy
@@ -94,9 +117,9 @@ static CGFloat const kBubbleToScaleOvershootDurationRatio = .5;
     return action;
 }
 
-+ (SKAction *)rearrangementLetterShiftedSlotsFromPoint:(CGPoint)start toPoint:(CGPoint)destination
++ (SKAction *)swapEnvelopeFromPoint:(CGPoint)start toPoint:(CGPoint)destination
 {
-    CGFloat duration = kRearrangementLetterShiftMaxDuration;
+    CGFloat duration = kSwapEnvelopeAnimationDuration;
     SKAction *action = [SKAction moveTo:destination duration:duration];
     action.timingMode = SKActionTimingEaseInEaseOut;
     return action;
@@ -107,23 +130,40 @@ static CGFloat const kBubbleToScaleOvershootDurationRatio = .5;
     NSAssert(kBubbleToScaleOvershootDurationRatio <= 1.0 &&
              kBubbleToScaleOvershootDurationRatio >= 0.0, @"Over shoot duration must be less than 1");
 
-    CGFloat undershootScale = 1/kBubbleToScaleRatioChange;
+    CGFloat undershootScale = 1/kBubbleToScale;
     CGFloat undershootDuration = duration * kBubbleToScaleUndershootDuration;
     SKAction *undershootAnimation = [SKAction scaleBy:undershootScale duration:undershootDuration];
     undershootAnimation.timingMode = SKActionTimingEaseIn;
     
     CGFloat overshootDuration = duration * kBubbleToScaleOvershootDurationRatio;
-    CGFloat overshootScale = scale *  pow(kBubbleToScaleRatioChange, 2);
+    CGFloat overshootScale = scale *  pow(kBubbleToScale, 2);
     SKAction *overshotScaleAnimation = [SKAction scaleBy:overshootScale duration:overshootDuration];
     overshotScaleAnimation.timingMode = SKActionTimingEaseOut;
 
     CGFloat refractoryDuration = duration - overshootDuration;
-    CGFloat refractoryScale = scale / kBubbleToScaleRatioChange;
+    CGFloat refractoryScale = scale / kBubbleToScale;
     SKAction *refractoryScaleAnimation = [SKAction scaleBy:refractoryScale  duration:refractoryDuration];
     refractoryScaleAnimation.timingMode = SKActionTimingEaseIn;
 
     SKAction *bubble = [SKAction sequence: @[undershootAnimation, overshotScaleAnimation, refractoryScaleAnimation]];
     return bubble;
+}
+
++ (SKAction *)unbubbleWithDuration:(NSTimeInterval)duration
+{
+    CGFloat overshootDuration = duration * (kBubbleToScaleOvershootDurationRatio + kBubbleToScaleUndershootDuration/2);
+    CGFloat overshootScale = 1/kBubbleToScale;
+    SKAction *overshotScaleAnimation = [SKAction scaleTo:overshootScale duration:overshootDuration];
+    overshotScaleAnimation.timingMode = SKActionTimingEaseIn;
+    
+    CGFloat refractoryDuration = duration - overshootDuration;
+    CGFloat refractoryScale = 1;
+    SKAction *refractoryScaleAnimation = [SKAction scaleTo:refractoryScale  duration:refractoryDuration];
+    refractoryScaleAnimation.timingMode = SKActionTimingEaseOut;
+
+    SKAction *bubble = [SKAction sequence: @[overshotScaleAnimation, refractoryScaleAnimation]];
+    return bubble;
+    
 }
 
 #pragma mark - Private Functions

@@ -74,13 +74,15 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [super touchesMoved:touches withEvent:event];
+    NSString *kRotateActionName = @"kRotateActionName";
     for (UITouch *touch in touches)
     {
         BOOL canDelete = [self shouldEnvelopeBeDeletedAtPosition:self.position];
         if (canDelete != self.isAtDeletionPoint) {
             self.isAtDeletionPoint = canDelete;
+            [self removeActionForKey:kRotateActionName];
             SKAction *animation = [LREnvelopeAnimationBuilder changeEnvelopeCanDeleteState:canDelete];
-            [self runAction:animation];
+            [self runAction:animation withKey:kRotateActionName];
         }
         CGPoint touchLoc = [touch locationInNode:[self parent]];
         self.position = touchLoc;
@@ -93,8 +95,8 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
         return;
     [super touchesEnded:touches withEvent:event];
     //Do one more check to see if it's at the deletion point but don't run an animation
-    CGPoint touchLoc = [[touches anyObject] locationInNode:[self parent]];
-    self.position = touchLoc;
+//    CGPoint touchLoc = [[touches anyObject] locationInNode:[self parent]];
+//    self.position = touchLoc;
     BOOL canDelete = [self shouldEnvelopeBeDeletedAtPosition:self.position];
     if (canDelete != self.isAtDeletionPoint) {
         self.isAtDeletionPoint = canDelete;
@@ -106,8 +108,7 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
     }
     else {
         [self.delegate rearrangementHasFinishedWithLetterBlock:self];
-        SKAction *bubble = [LREnvelopeAnimationBuilder bubbleByScale:1/kLRCollectedEnvelopeBubbleScale
-                                                    withDuration:kLRCollectedEnvelopeBubbleDuration];
+        SKAction *bubble = [LREnvelopeAnimationBuilder unbubbleWithDuration:kLRCollectedEnvelopeBubbleDuration];
         [self runAction:bubble];
     }
 }

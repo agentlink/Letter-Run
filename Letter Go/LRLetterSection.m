@@ -443,7 +443,7 @@ typedef void(^CompletionBlockType)(void);
     LRCollectedEnvelope *emptyEnvelope = [blockA isCollectedEnvelopePlaceholder] ? blockA : blockB;
     
     //Run the letter swapping animation
-    SKAction *rearrangeAnimation = [LREnvelopeAnimationBuilder rearrangementLetterShiftedSlotsFromPoint:nonEmptyEnvelope.parent.position toPoint:emptyEnvelope.parent.position];
+    SKAction *rearrangeAnimation = [LREnvelopeAnimationBuilder swapEnvelopeFromPoint:nonEmptyEnvelope.parent.position toPoint:emptyEnvelope.parent.position];
     LRCollectedEnvelope *animatedEnvelope = [self _copyOfEnvelopeFromSlot:self.letterSlots[nonEmptyEnvelope.slotIndex]];
     animatedEnvelope.position = nonEmptyEnvelope.parent.position;
     [self addChild:animatedEnvelope];

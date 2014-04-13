@@ -13,19 +13,24 @@ static NSString *kAddLetterAnimationName = @"addLetterAnimation";
 
 @interface LREnvelopeAnimationBuilder : NSObject
 
+#pragma Letter State Change
 + (SKAction *)changeEnvelopeCanDeleteState:(BOOL)canDelete;
-+ (SKAction *)deletionAnimationWithDelayForIndex:(NSUInteger)index;
-+ (SKAction *)submitWordActionWithLetterAtIndex:(NSUInteger)index;
++ (SKAction *)changeEnvelopeToTouchedState:(BOOL)envelopeTouched;
+
+#pragma Letter Addition/Removal
 + (SKAction *)addLetterAnimation;
 
-+ (SKAction *)rearrangementLetterShiftedSlotsFromPoint:(CGPoint)start toPoint:(CGPoint)destination;
+#pragma Rearrangement
++ (SKAction *)swapEnvelopeFromPoint:(CGPoint)start toPoint:(CGPoint)destination;
 + (SKAction *)rearrangementFinishedAnimationFromPoint:(CGPoint)start toPoint:(CGPoint)destination;
-
-+ (SKAction *)bubbleByScale:(CGFloat)overshootScale withDuration:(NSTimeInterval)duration;
-
-+ (SKAction *)actionWithCompletionBlock:(SKAction *)action block:(void (^)(void))completion;
-
-+ (SKAction *)shiftLetterInDirection:(LRDirection)direction;
 + (SKAction *)shiftLetterInDirection:(LRDirection)direction withDelayForIndex:(NSUInteger)index;
++ (SKAction *)bubbleByScale:(CGFloat)overshootScale withDuration:(NSTimeInterval)duration;
++ (SKAction *)unbubbleWithDuration:(NSTimeInterval)duration;
+
+#pragma Submission
++ (SKAction *)submitWordActionWithLetterAtIndex:(NSUInteger)index;
+
+#pragma Helper
++ (SKAction *)actionWithCompletionBlock:(SKAction *)action block:(void (^)(void))completion;
 
 @end
