@@ -21,8 +21,8 @@ static CGFloat const kLRCollectedEnvelopeBubbleScale = 1.1;
 static CGFloat const kLRCollectedEnvelopeBubbleDuration = .25;
 
 //Size constants
-static const float kSectionHeightButtonSection  =       55;
-static const float kSectionHeightLetterSection  =       63;
+static const float kSectionHeightButtonSection  =       65;
+static const float kSectionHeightLetterSection  =       65;
 static const float kSectionHeightHealthSection         =       18.0;
 
 #define kSectionHeightMainSection           (SCREEN_HEIGHT - kSectionHeightLetterSection - kSectionHeightHealthSection - kSectionHeightButtonSection)

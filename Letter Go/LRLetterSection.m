@@ -297,6 +297,8 @@ typedef void(^CompletionBlockType)(void);
     {
         //Build the animation based off of the relative slot
         currentSlot = self.letterSlots[i];
+        //Stop the addition animation if it's happening
+        [currentSlot stopEnvelopeChildAnimation];
         int relativeIndex = (direction == kLRDirectionLeft) ? i - initialIndex : endcount - i;
         SKAction *shiftAnimation = [LREnvelopeAnimationBuilder shiftLetterInDirection:direction withDelayForIndex:relativeIndex];
         
