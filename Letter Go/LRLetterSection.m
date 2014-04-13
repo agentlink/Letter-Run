@@ -436,6 +436,8 @@ typedef void(^CompletionBlockType)(void);
 {
     LRLetterSlot *slotA = [self.letterSlots objectAtIndex:a];
     LRLetterSlot *slotB = [self.letterSlots objectAtIndex:b];
+    [slotA stopEnvelopeChildAnimation];
+    [slotB stopEnvelopeChildAnimation];
     
     LRCollectedEnvelope *blockA = [slotA currentBlock];
     LRCollectedEnvelope *blockB = [slotB currentBlock];
