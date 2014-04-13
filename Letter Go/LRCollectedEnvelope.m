@@ -55,6 +55,7 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 #pragma mark - Touch Functions
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    [super touchesBegan:touches withEvent:event];
     for (UITouch *touch in touches)
     {
         CGPoint location = [touch locationInNode:[self parent]];
@@ -72,6 +73,7 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 //Swipe function is done here by checking to see how far the player moved the block
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    [super touchesMoved:touches withEvent:event];
     for (UITouch *touch in touches)
     {
         BOOL canDelete = [self shouldEnvelopeBeDeletedAtPosition:self.position];
@@ -87,6 +89,9 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    if (!self.isTouched)
+        return;
+    [super touchesEnded:touches withEvent:event];
     //Do one more check to see if it's at the deletion point but don't run an animation
     CGPoint touchLoc = [[touches anyObject] locationInNode:[self parent]];
     self.position = touchLoc;
@@ -104,7 +109,6 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
         SKAction *bubble = [LREnvelopeAnimationBuilder bubbleByScale:1/kLRCollectedEnvelopeBubbleScale
                                                     withDuration:kLRCollectedEnvelopeBubbleDuration];
         [self runAction:bubble];
-        
     }
 }
 
@@ -147,11 +151,11 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 
 #pragma mark - Block State Checks
 
-- (BOOL) isCollectedEnvelopeEmpty {
+- (BOOL)isCollectedEnvelopeEmpty {
     return ![[self letter] length];
 }
 
-- (BOOL) isCollectedEnvelopePlaceholder {
+- (BOOL)isCollectedEnvelopePlaceholder {
     return ([self.letter isEqualToString:kLetterPlaceHolderText]);
 }
 

@@ -19,7 +19,7 @@
 @property (nonatomic, strong) SKLabelNode *letterLabel;
 @property (nonatomic, strong) NSString *letter;
 @property (readwrite) BOOL loveLetter;
-
+@property (readwrite) BOOL isTouched;
 @end
 
 @implementation LRLetterBlock
@@ -106,8 +106,20 @@
     return envelopeSprite;
 }
 
+#pragma mark - Touch Functions
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    self.isTouched = YES;
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    self.isTouched = NO;
+}
+
 #pragma mark - Helper Functions
 ///Checks if the letter is not a placeholder or empty
+
 + (BOOL)isLetterAlphabetical:(NSString *)letter
 {
     if (![letter length] || [letter isEqualToString:kLetterPlaceHolderText])

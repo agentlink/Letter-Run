@@ -22,6 +22,9 @@
 //The sprite of the envelope
 @property (nonatomic, readonly) SKSpriteNode *envelopeSprite;
 
+//Returns TRUE if the letter is currently being touched
+@property (nonatomic, readonly) BOOL isTouched;
+
 /*!
  @description Use this method to initialize a collected envelope
  @param size The size of the envelope as it appears on the screen

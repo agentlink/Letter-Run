@@ -29,5 +29,4 @@ static NSString* const kTempCollectedEnvelopeName = @"NAME_SPRITE_SECTION_LETTER
 @property (nonatomic) BOOL isAtDeletionPoint;
 @property (nonatomic, weak) id <LRLetterBlockControlDelegate> delegate;
 @property (nonatomic) NSUInteger slotIndex;
-
 @end
