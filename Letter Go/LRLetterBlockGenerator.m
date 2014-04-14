@@ -19,8 +19,8 @@ static const BOOL lgbDebugMode = NO;
 + (LRMovingEnvelope *)createRandomEnvelope
 {
     NSString *letter = [self generateLetter];
-    BOOL love = [self isLoveLetter];
-    LRMovingEnvelope *envelope = [LRMovingEnvelope movingBlockWithLetter:letter loveLetter:love];
+    LRPaperColor paperColor = [self generatePaperColor];
+    LRMovingEnvelope *envelope = [LRMovingEnvelope movingBlockWithLetter:letter paperColor:paperColor];
     
     envelope.position = CGPointMake(0, 160 + envelope.frame.size.height/2);
     return envelope;
@@ -47,16 +47,15 @@ static const BOOL lgbDebugMode = NO;
     return lb;
 }
 
-+ (LRCollectedEnvelope *)createBlockWithLetter:(NSString *)letter loveLetter:(BOOL)love {
-    return [LRCollectedEnvelope collectedEnvelopeWithLetter:letter loveLetter:love];
++ (LRCollectedEnvelope *)createBlockWithLetter:(NSString *)letter paperColor:(LRPaperColor)paperColor {
+    return [LRCollectedEnvelope collectedEnvelopeWithLetter:letter paperColor:paperColor];
 }
 
 #pragma mark - Private Functions
 
-+ (BOOL) isLoveLetter
++ (LRPaperColor)generatePaperColor
 {
-    int chance = arc4random()%100;
-    return (chance < [[LRDifficultyManager shared] loveLetterProbability]);
+    return arc4random()%(kLRPaperColorYellow + 1);
 }
 
 + (NSString *)generateLetter

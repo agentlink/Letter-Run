@@ -85,7 +85,7 @@
 		A8E60A131881E25F00F60DF4 /* LRCappedStack.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E60A121881E25F00F60DF4 /* LRCappedStack.m */; };
 		A8E60A161881F6E300F60DF4 /* LRSlotManager_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E60A151881F6E300F60DF4 /* LRSlotManager_Test.m */; };
 		A8F171CB18DF7C5B00964C34 /* Scenery.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8F171CA18DF7C5B00964C34 /* Scenery.xcassets */; };
-		A8F171CD18DF7D4C00964C34 /* Envelopes.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8F171CC18DF7D4C00964C34 /* Envelopes.xcassets */; };
+		A8F171CD18DF7D4C00964C34 /* Letters.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8F171CC18DF7D4C00964C34 /* Letters.xcassets */; };
 		A8F171CF18DF7D9300964C34 /* Buttons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8F171CE18DF7D9300964C34 /* Buttons.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -238,7 +238,7 @@
 		A8E60A151881F6E300F60DF4 /* LRSlotManager_Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRSlotManager_Test.m; sourceTree = "<group>"; };
 		A8E60A171881F89300F60DF4 /* LRSlotManager_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LRSlotManager_Private.h; sourceTree = "<group>"; };
 		A8F171CA18DF7C5B00964C34 /* Scenery.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Scenery.xcassets; sourceTree = "<group>"; };
-		A8F171CC18DF7D4C00964C34 /* Envelopes.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Envelopes.xcassets; sourceTree = "<group>"; };
+		A8F171CC18DF7D4C00964C34 /* Letters.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Letters.xcassets; sourceTree = "<group>"; };
 		A8F171CE18DF7D9300964C34 /* Buttons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Buttons.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -282,7 +282,7 @@
 			children = (
 				00CDF15517F474EC003065F6 /* Images.xcassets */,
 				A8F171CA18DF7C5B00964C34 /* Scenery.xcassets */,
-				A8F171CC18DF7D4C00964C34 /* Envelopes.xcassets */,
+				A8F171CC18DF7D4C00964C34 /* Letters.xcassets */,
 				A8F171CE18DF7D9300964C34 /* Buttons.xcassets */,
 				A85BD82618D96AB100C5EFB8 /* mainSection.jpg */,
 				0007FB31180B2FBB00E55B0D /* Background */,
@@ -829,7 +829,7 @@
 				A876EC3F188367AA000FA069 /* Background_Grass.png in Resources */,
 				A876EC3B18836795000FA069 /* Background_Cloud.png in Resources */,
 				008428F01800997800908E5D /* LetterProbabilities.plist in Resources */,
-				A8F171CD18DF7D4C00964C34 /* Envelopes.xcassets in Resources */,
+				A8F171CD18DF7D4C00964C34 /* Letters.xcassets in Resources */,
 				A8F171CF18DF7D9300964C34 /* Buttons.xcassets in Resources */,
 				00AC2804182EDAC100B3C0EB /* DifficultyVariables.plist in Resources */,
 				A85A4CDA18E78BA100787D21 /* LeagueGothic-Italic.otf in Resources */,

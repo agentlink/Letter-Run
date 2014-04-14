@@ -15,7 +15,7 @@
 @property (nonatomic) NSUInteger slot;
 @property (nonatomic) BOOL selected;
 
-+ (LRMovingEnvelope *)movingBlockWithLetter:(NSString *)letter loveLetter:(BOOL)love;
++ (LRMovingEnvelope *)movingBlockWithLetter:(NSString *)letter paperColor:(LRPaperColor)paperColor;
 
 @end
 

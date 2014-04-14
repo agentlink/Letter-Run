@@ -15,10 +15,8 @@
 
 @interface LRLetterBlock ()
 
-@property (nonatomic, strong) SKSpriteNode *envelopeSprite;
 @property (nonatomic, strong) SKLabelNode *letterLabel;
 @property (nonatomic, strong) NSString *letter;
-@property (readwrite) BOOL loveLetter;
 @property (readwrite) BOOL isTouched;
 @end
 
@@ -26,28 +24,22 @@
 
 #pragma mark - Initializers/Set Up
 
-- (id) initWithLetter:(NSString *)letter loveLetter:(BOOL)love
+- (id) initWithLetter:(NSString *)letter paperColor:(LRPaperColor)paperColor
 {
     NSAssert(0, @"initWithLetter should be implemented by subclass");
     return nil;
 }
 
-- (id) initWithSize:(CGSize)size letter:(NSString *)letter loveLetter:(BOOL)love
+- (id) initWithLetter:(NSString *)letter paperColor:(LRPaperColor)paperColor size:(CGSize)size
 {
     if (self = [super initWithColor:[LRColor clearColor] size:size])
     {
         self.letter = letter;
-        self.loveLetter = love;
-        self.envelopeSprite = [self _envelopeSpriteForLetter:letter loveLetter:love];
-        if (self.envelopeSprite) {
-            [self addChild:self.envelopeSprite];
-        }
         self.userInteractionEnabled = YES;
     }
     return self;
 
 }
-
 - (void)setLetter:(NSString *)letter
 {
     _letter = letter;
@@ -65,6 +57,11 @@
     self.envelopeSprite.size = envelopeSize;
 }
 
+- (NSString *)stringFromPaperColor:(LRPaperColor)paperColor
+{
+    NSAssert(0, @"stringFromPaperColor should be overridden by subclass");
+    return nil;
+}
 
 #pragma mark - Children Set Up
 
@@ -83,29 +80,6 @@
     return _letterLabel;
 }
 
-- (SKSpriteNode *)_envelopeSpriteForLetter:(NSString *)letter loveLetter:(BOOL)love
-{
-    BOOL placeholderBlock = [LRLetterBlock isLetterPlaceholder:letter];
-    SKSpriteNode *envelopeSprite;
-    NSString *fileName = nil;
-    if ([LRLetterBlock isLetterAlphabetical:letter]) {
-        fileName = (love) ? @"envelope-love" : @"envelope-normal" ;
-    }
-    else if (placeholderBlock) {
-        fileName = @"envelope-glow";
-    }
-    if (fileName) {
-        envelopeSprite = [SKSpriteNode spriteNodeWithImageNamed:fileName];
-        envelopeSprite.size = CGSizeMake(self.size.width - self.touchSize.width,
-                                         self.size.height - self.touchSize.height);
-        if (placeholderBlock) {
-            envelopeSprite.alpha = .2;
-        }
-    }
-
-    return envelopeSprite;
-}
-
 #pragma mark - Touch Functions
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
@@ -117,18 +91,16 @@
     self.isTouched = NO;
 }
 
-#pragma mark - Helper Functions
 ///Checks if the letter is not a placeholder or empty
-
 + (BOOL)isLetterAlphabetical:(NSString *)letter
 {
-    if (![letter length] || [letter isEqualToString:kLetterPlaceHolderText])
+    if (![letter length] || [letter isEqualToString:kLetterBlockHolderText])
         return NO;
     return YES;
 }
 
 + (BOOL)isLetterPlaceholder:(NSString *)letter
 {
-    return [letter isEqualToString:kLetterPlaceHolderText];
+    return [letter isEqualToString:kLetterBlockHolderText];
 }
 @end

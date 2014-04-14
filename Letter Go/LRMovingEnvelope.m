@@ -18,23 +18,25 @@ static CGFloat const kLRMovingBlockTouchSizeExtraHeight = 35.0;
 
 @interface LRMovingEnvelope ()
 @property (nonatomic, strong) SKSpriteNode *glow;
+@property (nonatomic, strong) SKSpriteNode *envelopeSprite;
 @end
 
 @implementation LRMovingEnvelope
 
 #pragma mark - Initialization/Setters -
 
-+ (LRMovingEnvelope *)movingBlockWithLetter:(NSString *)letter loveLetter:(BOOL)love
++ (LRMovingEnvelope *)movingBlockWithLetter:(NSString *)letter paperColor:(LRPaperColor)paperColor
 {
-    return [[LRMovingEnvelope alloc] initWithLetter:letter loveLetter:love];
+    return [[LRMovingEnvelope alloc] initWithLetter:letter paperColor:paperColor];
 }
 
-- (id) initWithLetter:(NSString *)letter loveLetter:(BOOL)love
+- (id)initWithLetter:(NSString *)letter paperColor:(LRPaperColor)paperColor
 {
     CGSize size = CGSizeMake(kMovingEnvelopeSpriteDimension, kMovingEnvelopeSpriteDimension);
-    if (self = [super initWithSize:size letter:letter loveLetter:love])
+    if (self = [super initWithLetter:letter paperColor:paperColor size:size])
     {
         self.name = NAME_SPRITE_MOVING_ENVELOPE;
+        self.envelopeSprite = [self _envelopeSpriteForLetter:letter paperColor:paperColor];
         [self _setGlowEnabled:NO];
         [self addChild:self.glow];
         
@@ -71,6 +73,24 @@ static CGFloat const kLRMovingBlockTouchSizeExtraHeight = 35.0;
     CGFloat yPos = lowestPosition + kLRMovingBlockBottomOffset + betweenEnvelopeBuffer * slot;
     
     return CGPointMake(xPos, yPos);
+}
+
+- (SKSpriteNode *)_envelopeSpriteForLetter:(NSString *)letter paperColor:(LRPaperColor)paperColor
+{
+    BOOL placeholderBlock = [LRLetterBlock isLetterPlaceholder:letter];
+    SKSpriteNode *envelopeSprite;
+    NSString *fileName = [self stringFromPaperColor:paperColor];
+    
+    if (fileName) {
+        envelopeSprite = [SKSpriteNode spriteNodeWithImageNamed:fileName];
+        envelopeSprite.size = CGSizeMake(self.size.width - self.touchSize.width,
+                                         self.size.height - self.touchSize.height);
+        if (placeholderBlock) {
+            envelopeSprite.alpha = .2;
+        }
+    }
+    
+    return envelopeSprite;
 }
 
 #pragma mark - Touch Functions + Helpers
@@ -113,6 +133,27 @@ static CGFloat const kLRMovingBlockTouchSizeExtraHeight = 35.0;
     [self runAction:fadeEnvelope];
     [self.glow runAction:fadeGlow];
     
+}
+
+- (NSString *)stringFromPaperColor:(LRPaperColor)paperColor
+{
+    switch (paperColor) {
+        case kLRPaperColorBlue:
+            return @"envelope-blue";
+            break;
+        case kLRPaperColorPink:
+            return @"envelope-pink";
+            break;
+        case kLRPaperColorYellow:
+            return @"envelope-yellow";
+            break;
+        case kLRPaperColorNone:
+            return @"envelope-glow";
+            break;
+        default:
+            return nil;
+            break;
+    }
 }
 
 @end

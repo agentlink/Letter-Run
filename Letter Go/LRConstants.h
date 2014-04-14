@@ -37,7 +37,6 @@ static const float kParallaxHeightGrass               =       26.6;
 static const int kWordMinimumLetterCount        =       3;
 static const int kWordMaximumLetterCount        =       7;
 static const int kNumberOfSlots                 =       4;
-static NSString* const kLetterPlaceHolderText   =       @" ";
 
 
 //Timing constants

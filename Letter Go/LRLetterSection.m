@@ -122,13 +122,13 @@ typedef void(^CompletionBlockType)(void);
         return;
     }
     
+    //Converting from a moving envelope to a collected envelope...
     LRMovingEnvelope *newEnvelope = (LRMovingEnvelope *)envelope;
     NSString *letter = newEnvelope.letter;
-    BOOL isLoveLetter = newEnvelope.loveLetter;
 
     LRLetterSlot *firstEmptySlot = [self _firstEmptySlot];
     if (firstEmptySlot) {
-        LRCollectedEnvelope *block = [LRLetterBlockGenerator createBlockWithLetter:letter loveLetter:isLoveLetter];
+        LRCollectedEnvelope *block = [LRLetterBlockGenerator createBlockWithLetter:letter paperColor:newEnvelope.paperColor];
         //Hide the block to make a fake one to run the animation with
         block.hidden = YES;
         block.delegate = self;
@@ -380,14 +380,15 @@ typedef void(^CompletionBlockType)(void);
 
 - (NSSet *)loveLetterIndices
 {
-    NSMutableSet *indices = [NSMutableSet set];
-    for (int i = 0; i < [self.letterSlots count]; i++) {
-        LRLetterSlot *slot = [self.letterSlots objectAtIndex:i];
-        if (![slot.currentBlock isCollectedEnvelopeEmpty] && [slot.currentBlock loveLetter]) {
-            [indices addObject:[NSNumber numberWithInt:i]];
-        }
-    }
-    return indices;
+    return [NSSet set];
+//    NSMutableSet *indices = [NSMutableSet set];
+//    for (int i = 0; i < [self.letterSlots count]; i++) {
+//        LRLetterSlot *slot = [self.letterSlots objectAtIndex:i];
+//        if (![slot.currentBlock isCollectedEnvelopeEmpty] && [slot.currentBlock loveLetter]) {
+//            [indices addObject:[NSNumber numberWithInt:i]];
+//        }
+//    }
+//    return indices;
 }
 
 - (void)_updateSubmitButton

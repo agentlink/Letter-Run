@@ -17,7 +17,7 @@ static NSString* const kTempCollectedEnvelopeName = @"NAME_SPRITE_SECTION_LETTER
 @interface LRCollectedEnvelope : LRLetterBlock
 
 //Envelope Initializers
-+ (LRCollectedEnvelope *)collectedEnvelopeWithLetter:(NSString *)letter loveLetter:(BOOL)love;;
++ (LRCollectedEnvelope *)collectedEnvelopeWithLetter:(NSString *)letter paperColor:(LRPaperColor)paper;
 + (LRCollectedEnvelope *)emptyCollectedEnvelope;
 + (LRCollectedEnvelope *)placeholderCollectedEnvelope;
 
@@ -29,4 +29,5 @@ static NSString* const kTempCollectedEnvelopeName = @"NAME_SPRITE_SECTION_LETTER
 @property (nonatomic) BOOL isAtDeletionPoint;
 @property (nonatomic, weak) id <LRLetterBlockControlDelegate> delegate;
 @property (nonatomic) NSUInteger slotIndex;
+
 @end

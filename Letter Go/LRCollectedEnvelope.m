@@ -22,36 +22,63 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 
 
 @interface LRCollectedEnvelope ()
+@property (nonatomic, strong) SKSpriteNode *envelopeSprite;
 @end
 
 @implementation LRCollectedEnvelope
 
-#pragma mark - Set Up
-+ (LRCollectedEnvelope *)collectedEnvelopeWithLetter:(NSString *)letter loveLetter:(BOOL)love
+#pragma mark - Public Functions
+
++ (LRCollectedEnvelope *)collectedEnvelopeWithLetter:(NSString *)letter paperColor:(LRPaperColor)paperColor
 {
-    return [[LRCollectedEnvelope alloc] initWithLetter:letter loveLetter:love];
+    return [[LRCollectedEnvelope alloc] initWithLetter:letter paperColor:paperColor];
 }
 
 + (LRCollectedEnvelope *)emptyCollectedEnvelope
 {
-    return [[LRCollectedEnvelope alloc] initWithLetter:@"" loveLetter:NO];
+    return [[LRCollectedEnvelope alloc] initWithLetter:@"" paperColor:kLRPaperColorNone];
 }
 
 + (LRCollectedEnvelope *)placeholderCollectedEnvelope
 {
-    return [[LRCollectedEnvelope alloc] initWithLetter:kLetterPlaceHolderText loveLetter:NO];
+    return [[LRCollectedEnvelope alloc] initWithLetter:kLetterBlockHolderText paperColor:kLRPaperColorNone];
 }
 
-- (id) initWithLetter:(NSString *)letter loveLetter:(BOOL)love
+#pragma mark - Helper Functions
+- (NSString *)stringFromPaperColor:(LRPaperColor)paperColor
+{
+    switch (paperColor) {
+        case kLRPaperColorBlue:
+            return @"envelope-blue";
+            break;
+        case kLRPaperColorPink:
+            return @"envelope-pink";
+            break;
+        case kLRPaperColorYellow:
+            return @"envelope-yellow";
+            break;
+        case kLRPaperColorNone:
+            return @"";
+            break;
+        default:
+            return nil;
+            break;
+    }
+}
+
+- (id) initWithLetter:(NSString *)letter paperColor:(LRPaperColor)paperColor
 {
     CGSize size = CGSizeMake(kCollectedEnvelopeSpriteDimension, kCollectedEnvelopeSpriteDimension);
-    if (self = [super initWithSize:size letter:letter loveLetter:love]) {
+    if (self = [super initWithLetter:letter paperColor:paperColor size:size]) {
         self.name = NAME_SPRITE_SECTION_LETTER_BLOCK;
         self.slotIndex = kSlotIndexNone;
+        NSString *imageName = [self stringFromPaperColor:paperColor];
+        if (imageName) {
+            self.envelopeSprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
+        }
     }
     return self;
 }
-
 #pragma mark - Touch Functions
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
@@ -157,7 +184,7 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 }
 
 - (BOOL)isCollectedEnvelopePlaceholder {
-    return ([self.letter isEqualToString:kLetterPlaceHolderText]);
+    return ([self.letter isEqualToString:kLetterBlockHolderText]);
 }
 
 - (void)setIsAtDeletionPoint:(BOOL)isAtDeletionPoint
