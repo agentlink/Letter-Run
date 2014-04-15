@@ -34,6 +34,7 @@
 {
     if (self = [super initWithColor:[LRColor clearColor] size:size])
     {
+        self.paperColor = paperColor;
         self.letter = letter;
         self.userInteractionEnabled = YES;
     }

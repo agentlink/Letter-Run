@@ -49,18 +49,15 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 {
     switch (paperColor) {
         case kLRPaperColorBlue:
-            return @"envelope-blue";
+            return @"paper-blue";
             break;
         case kLRPaperColorPink:
-            return @"envelope-pink";
+            return @"paper-pink";
             break;
         case kLRPaperColorYellow:
-            return @"envelope-yellow";
+            return @"paper-yellow";
             break;
         case kLRPaperColorNone:
-            return @"";
-            break;
-        default:
             return nil;
             break;
     }
@@ -75,6 +72,7 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
         NSString *imageName = [self stringFromPaperColor:paperColor];
         if (imageName) {
             self.envelopeSprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
+            [self addChild:self.envelopeSprite];
         }
     }
     return self;

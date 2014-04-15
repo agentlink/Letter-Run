@@ -33,7 +33,7 @@ typedef NS_ENUM(NSInteger, LRPaperColor)
 @property (nonatomic, readonly) BOOL isTouched;
 
 ///The paper color of letter or envelope. Correlates with both the envelope's score value and sprite color
-@property (nonatomic, readonly) LRPaperColor paperColor;
+@property (nonatomic) LRPaperColor paperColor;
 
 ///The sprite of the envelope
 @property (nonatomic, strong) SKSpriteNode *envelopeSprite;

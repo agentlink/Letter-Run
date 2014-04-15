@@ -36,10 +36,15 @@ static CGFloat const kLRMovingBlockTouchSizeExtraHeight = 35.0;
     if (self = [super initWithLetter:letter paperColor:paperColor size:size])
     {
         self.name = NAME_SPRITE_MOVING_ENVELOPE;
-        self.envelopeSprite = [self _envelopeSpriteForLetter:letter paperColor:paperColor];
+
+        SKSpriteNode *envelopeSprite = [self _envelopeSpriteForLetter:letter paperColor:paperColor];
+        if (envelopeSprite) {
+            self.envelopeSprite = envelopeSprite;
+            [self addChild:self.envelopeSprite];
+        }
         [self _setGlowEnabled:NO];
         [self addChild:self.glow];
-        
+
         CGSize touchSize = self.size;
         touchSize.width += kLRMovingBlockTouchSizeExtraWidth;
         touchSize.height += kLRMovingBlockTouchSizeExtraHeight;
