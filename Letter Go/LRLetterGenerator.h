@@ -7,6 +7,7 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import "LRLetterBlock.h"
 
 
 typedef NS_ENUM(NSUInteger, LetterType)
@@ -25,14 +26,14 @@ static NSString* const kLetterQu = @"Qu";
 + (LRLetterGenerator *)shared;
 
 ///Returns a letter generated from the limitations set in the difficulty manager
-- (NSString *)generateLetter;
+- (NSString *)generateLetterForPaperColor:(LRPaperColor)color;
 
 ///Returns the set of all consonants
 + (NSCharacterSet *)consonantSet;
 ///Returns the set of all vowels
 + (NSCharacterSet *)vowelSet;
 ///Returns whether the string is a consonant or vowel
-- (LetterType) letterTypeForString:(NSString *)letter;
+- (LetterType)letterTypeForString:(NSString *)letter;
 
 @property NSMutableArray *forceDropLetters;
 

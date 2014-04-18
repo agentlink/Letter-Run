@@ -9,23 +9,24 @@
 #import "LRLetterGenerator.h"
 #import "LRDifficultyManager.h"
 
-#define PROBABILITY_DICT            @"Scrabble"
+#define kLRLetterProbabilityDictionaryBasic          @"letter_basic"
+#define kLRLetterProbabilityDictionaryChallenging    @"letter_challenging"
+#define kLRLetterProbabilityDictionaryImpossible     @"letter_impossible"
+
 
 static NSString* const kLetterQ = @"Q";
+static LRPaperColor const kMostCommonPaperColor = kLRPaperColorYellow;
 
 @interface LRLetterGenerator ()
-@property NSArray *letterProbabilities;
 
 @property NSCharacterSet *consonantSet;
 @property NSCharacterSet *vowelSet;
-
-// Vowel-Consonant Tracking
+/// Vowel-Consonant Tracking
 @property int vowelConstCount;
-
 // Repeat letter tracking
 @property NSString *lastLetter;
 @property int repeatCount;
-
+@property NSDictionary *letterProbabilityDictionaries;
 @end
 
 @implementation LRLetterGenerator
@@ -49,17 +50,23 @@ static NSString* const kLetterQ = @"Q";
 {
     //Load general probability dictionary
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"LetterProbabilities" ofType:@"plist"];
-    NSDictionary *probabilityDict = [[NSDictionary dictionaryWithContentsOfFile:plistPath] objectForKey:PROBABILITY_DICT];
-    NSMutableArray *letterArray = [NSMutableArray array];
-    for (NSString* key in [probabilityDict allKeys])
-    {
-        int letterProbability = [[probabilityDict objectForKey:key] intValue];
-        for (int i = 0; i < letterProbability; i++)
+    NSArray *letterDictionaryNames = @[kLRLetterProbabilityDictionaryBasic, kLRLetterProbabilityDictionaryChallenging, kLRLetterProbabilityDictionaryImpossible];
+    NSMutableDictionary *_letterProbabilities = [NSMutableDictionary new];
+    
+    for (NSString *dictName in letterDictionaryNames) {
+        NSDictionary *probabilityDict = [[NSDictionary dictionaryWithContentsOfFile:plistPath] objectForKey:dictName];
+        NSMutableArray *letterArray = [NSMutableArray array];
+        for (NSString* key in [probabilityDict allKeys])
         {
-            [letterArray addObject:key];
+            int letterProbability = [[probabilityDict objectForKey:key] intValue];
+            for (int i = 0; i < letterProbability; i++)
+            {
+                [letterArray addObject:key];
+            }
         }
+        _letterProbabilities[dictName] = letterArray;
     }
-    self.letterProbabilities = letterArray;
+    self.letterProbabilityDictionaries = _letterProbabilities;
     consonantSet = [[self class] consonantSet];
     vowelSet = [[self class] vowelSet];
 
@@ -82,13 +89,15 @@ static LRLetterGenerator *_shared = nil;
 	return _shared;
 }
 
-- (NSString *)generateLetter
+- (NSString *)generateLetterForPaperColor:(LRPaperColor)color
 {
     BOOL forceConsonant = FALSE;
     BOOL forceVowel = FALSE;
     if ([forceDropLetters count])
         return [forceDropLetters objectAtIndex:0];
-    NSString *letter = [self generateRandomLetter];
+    
+    NSArray *probabilityArray = [self dictionaryForPaperColor:color];
+    NSString *letter = [self generateRandomLetterFromProbabiltyArray:probabilityArray];
     
     /*
      vowelConstCount works by consonants being negative and vowels being positive.
@@ -99,15 +108,15 @@ static LRLetterGenerator *_shared = nil;
      Consonants are negative
     */
     
-    NSInteger maxConsonants = [[LRDifficultyManager shared] maxNumber_consonants];
-    NSInteger maxVowels = [[LRDifficultyManager shared] maxNumber_vowels];
+    NSInteger maxConsonants = (color == kMostCommonPaperColor) ? [[LRDifficultyManager shared] maxNumber_consonants] : INT32_MAX;
+    NSInteger maxVowels = (color == kMostCommonPaperColor) ? [[LRDifficultyManager shared] maxNumber_vowels] : INT32_MAX;
     
     //If it's a consonant and there is a max number of consonants
     if ([consonantSet characterIsMember:[letter characterAtIndex:0]] && maxConsonants > 0) {
         //...and that max has been exceeded...
         if (vowelConstCount <= 0 - maxConsonants){
             //...generate a vowel
-            letter = [self generateVowel];
+            letter = [self generateVowelFromProbabilityArray:probabilityArray];
             forceVowel = TRUE;
         }
         //If the last letter was a vowel, set it to a consonant count of 1
@@ -121,7 +130,7 @@ static LRLetterGenerator *_shared = nil;
         //...and that max has been exceeded...
         if (vowelConstCount >= maxVowels) {
             //...generate a consonant
-            letter = [self generateConsonant];
+            letter = [self generateConsonantFromProbabilityArray:probabilityArray];
             forceConsonant = TRUE;
         }
         //If the last letter was a consonant, set it to a vowel count of one
@@ -136,11 +145,11 @@ static LRLetterGenerator *_shared = nil;
         if (repeatCount >= [[LRDifficultyManager shared] maxNumber_sameLetters]) {
             //Check to see if a certain letter type is being forced
             if (forceVowel)
-                letter = [self generateVowel];
+                letter = [self generateVowelFromProbabilityArray:probabilityArray];
             else if (forceConsonant)
-                letter = [self generateConsonant];
+                letter = [self generateConsonantFromProbabilityArray:probabilityArray];
             else
-                letter = [self generateLetter];
+                letter = [self generateRandomLetterFromProbabiltyArray:probabilityArray];
             repeatCount = 1;
         }
         else {
@@ -175,28 +184,29 @@ static LRLetterGenerator *_shared = nil;
 
 #pragma mark - Private Functions
 
-- (NSString *)generateRandomLetter {
-    int letterLocation = arc4random()%[self.letterProbabilities count];
-    return [self.letterProbabilities objectAtIndex:letterLocation];
+- (NSString *)generateRandomLetterFromProbabiltyArray:(NSArray *)probabilityArray
+{
+    int letterLocation = arc4random()%[probabilityArray count];
+    return [probabilityArray objectAtIndex:letterLocation];
 }
 
-- (NSString *)generateVowel
+- (NSString *)generateVowelFromProbabilityArray:(NSArray *)probabilityArray
 {
-    NSString *letter = [self generateRandomLetter];
+    NSString *letter = [self generateRandomLetterFromProbabiltyArray:probabilityArray];
     while ([self letterTypeForString:letter] == LetterTypeConsonant)
-        letter = [self generateLetter];
+        letter = [self generateRandomLetterFromProbabiltyArray:probabilityArray];
     return letter;
 }
 
-- (NSString *)generateConsonant
+- (NSString *)generateConsonantFromProbabilityArray:(NSArray *)probabilityArray
 {
-    NSString *letter = [self generateRandomLetter];
+    NSString *letter = [self generateRandomLetterFromProbabiltyArray:probabilityArray];
     while ([self letterTypeForString:letter] == LetterTypeVowel)
-        letter = [self generateLetter];
+        letter = [self generateRandomLetterFromProbabiltyArray:probabilityArray];
     return letter;
 }
 
-- (LetterType) letterTypeForString:(NSString *)letter
+- (LetterType)letterTypeForString:(NSString *)letter
 {
     //If there is more than one letter...
     if ([letter length] > 1) {
@@ -218,4 +228,23 @@ static LRLetterGenerator *_shared = nil;
     return LetterTypeNone;
 }
 
+- (NSArray *)dictionaryForPaperColor:(LRPaperColor)color
+{
+    NSString *dictName;
+    switch (color) {
+        case kLRPaperColorYellow:
+            dictName = kLRLetterProbabilityDictionaryBasic;
+            break;
+        case kLRPaperColorBlue:
+            dictName = kLRLetterProbabilityDictionaryChallenging;
+            break;
+        case kLRPaperColorPink:
+            dictName = kLRLetterProbabilityDictionaryImpossible;
+            break;
+        default:
+            NSAssert(0, @"Should not generate a letter with an empty paper color");
+            break;
+    }
+    return self.letterProbabilityDictionaries[dictName];
+}
 @end

@@ -381,14 +381,6 @@ typedef void(^CompletionBlockType)(void);
 - (NSSet *)loveLetterIndices
 {
     return [NSSet set];
-//    NSMutableSet *indices = [NSMutableSet set];
-//    for (int i = 0; i < [self.letterSlots count]; i++) {
-//        LRLetterSlot *slot = [self.letterSlots objectAtIndex:i];
-//        if (![slot.currentBlock isCollectedEnvelopeEmpty] && [slot.currentBlock loveLetter]) {
-//            [indices addObject:[NSNumber numberWithInt:i]];
-//        }
-//    }
-//    return indices;
 }
 
 - (void)_updateSubmitButton

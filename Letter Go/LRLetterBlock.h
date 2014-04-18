@@ -17,9 +17,9 @@ static NSString * const kLetterBlockHolderText   = @" ";
 typedef NS_ENUM(NSInteger, LRPaperColor)
 {
     kLRPaperColorNone = -1,
-    kLRPaperColorBlue = 0,
+    kLRPaperColorYellow = 0,
+    kLRPaperColorBlue,
     kLRPaperColorPink,
-    kLRPaperColorYellow,
 };
 
 ///The additional size around the edges that the player can touch and have the envelope respond. For example, if this were {10, 5}, then the width of the touchable area would increase by 5 on either side and the height increased by 2.5 Initializes a letter block

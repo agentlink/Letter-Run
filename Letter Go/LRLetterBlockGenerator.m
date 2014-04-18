@@ -10,6 +10,13 @@
 #import "LRDifficultyManager.h"
 #import "LRLetterGenerator.h"
 
+
+typedef NS_ENUM(NSInteger, LRLetterProbability) {
+    kLRLetterProbabilityBasic          = 15,
+    kLRLetterProbabilityChallenging    = 17,
+    kLRLetterProbabilityImpossible     = 18,
+};
+
 static const BOOL lgbDebugMode = NO;
 
 @implementation LRLetterBlockGenerator
@@ -18,8 +25,8 @@ static const BOOL lgbDebugMode = NO;
 
 + (LRMovingEnvelope *)createRandomEnvelope
 {
-    NSString *letter = [self generateLetter];
     LRPaperColor paperColor = [self generatePaperColor];
+    NSString *letter = [self generateLetterForPaperColor:paperColor];
     LRMovingEnvelope *envelope = [LRMovingEnvelope movingBlockWithLetter:letter paperColor:paperColor];
     
     envelope.position = CGPointMake(0, 160 + envelope.frame.size.height/2);
@@ -55,12 +62,24 @@ static const BOOL lgbDebugMode = NO;
 
 + (LRPaperColor)generatePaperColor
 {
-    return arc4random()%(kLRPaperColorYellow + 1);
+    int maxVal = kLRLetterProbabilityImpossible + 1;
+    int val = arc4random()%maxVal;
+    
+    if (val <= kLRLetterProbabilityBasic) {
+        return kLRPaperColorYellow;
+    }
+    else if (val <= kLRLetterProbabilityChallenging) {
+        return kLRPaperColorBlue;
+    }
+    else {
+        return kLRPaperColorPink;
+    }
+
 }
 
-+ (NSString *)generateLetter
++ (NSString *)generateLetterForPaperColor:(LRPaperColor)paperColor
 {
-    NSString *letter = [[LRLetterGenerator shared] generateLetter];
+    NSString *letter = [[LRLetterGenerator shared] generateLetterForPaperColor:paperColor];
     return letter;
 }
 
