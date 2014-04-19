@@ -7,7 +7,7 @@
 //
 
 #import "LRLetterSlot.h"
-#import "LRLetterBlockGenerator.h"
+#import "LRLetterBlockBuilder.h"
 #import "LRPositionConstants.h"
 #import "LREnvelopeAnimationBuilder.h"
 
@@ -17,7 +17,7 @@
 {
     if (self = [super init])
     {
-        self.currentBlock = [LRLetterBlockGenerator createEmptySectionBlock];
+        self.currentBlock = [LRLetterBlockBuilder createEmptySectionBlock];
         self.name = NAME_SPRITE_LETTER_SLOT;
         self.size = CGSizeMake(kDistanceBetweenSlots, kSectionHeightLetterSection);
         [self addChild:self.currentBlock];
@@ -76,7 +76,7 @@
 
 - (void)setEmptyLetterBlock
 {
-    self.currentBlock = [LRLetterBlockGenerator createEmptySectionBlock];
+    self.currentBlock = [LRLetterBlockBuilder createEmptySectionBlock];
 }
 
 #pragma LRGameStateDelegate Functions

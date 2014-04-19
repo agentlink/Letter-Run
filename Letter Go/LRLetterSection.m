@@ -9,7 +9,7 @@
 #import "LRLetterSection.h"
 #import "LRLetterSlot.h"
 #import "LRPositionConstants.h"
-#import "LRLetterBlockGenerator.h"
+#import "LRLetterBlockBuilder.h"
 #import "LRSubmitButton.h"
 #import "LRScoreManager.h"
 #import "LRDictionaryChecker.h"
@@ -128,7 +128,7 @@ typedef void(^CompletionBlockType)(void);
 
     LRLetterSlot *firstEmptySlot = [self _firstEmptySlot];
     if (firstEmptySlot) {
-        LRCollectedEnvelope *block = [LRLetterBlockGenerator createBlockWithLetter:letter paperColor:newEnvelope.paperColor];
+        LRCollectedEnvelope *block = [LRLetterBlockBuilder createBlockWithLetter:letter paperColor:newEnvelope.paperColor];
         //Hide the block to make a fake one to run the animation with
         block.hidden = YES;
         block.delegate = self;
@@ -188,7 +188,7 @@ typedef void(^CompletionBlockType)(void);
     {
         LRLetterSlot *newLocation = self.letterSlots[i];
         if (i == kWordMaximumLetterCount - 1 && direction == kLRDirectionLeft) {
-            newLocation.currentBlock = [LRLetterBlockGenerator createEmptySectionBlock];
+            newLocation.currentBlock = [LRLetterBlockBuilder createEmptySectionBlock];
         }
         else {
             LRLetterSlot *formerLocation = self.letterSlots[i + direction];
@@ -512,7 +512,7 @@ typedef void(^CompletionBlockType)(void);
         LRLetterSlot *slot = [self.letterSlots objectAtIndex:i];
     
         CompletionBlockType complete = ^{
-            slot.currentBlock = [LRLetterBlockGenerator createEmptySectionBlock];
+            slot.currentBlock = [LRLetterBlockBuilder createEmptySectionBlock];
             if (i == 0) {
                 [self _updateSubmitButton];
                 self.letterSectionState = LetterSectionStateNormal;

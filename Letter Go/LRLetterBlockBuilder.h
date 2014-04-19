@@ -10,7 +10,7 @@
 #import "LRCollectedEnvelope.h"
 #import "LRMovingEnvelope.h"
 
-@interface LRLetterBlockGenerator : SKNode
+@interface LRLetterBlockBuilder : SKNode
 
 
 #pragma mark - Falling Envelopes

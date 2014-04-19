@@ -81,13 +81,6 @@
     self.levelScoreIncreaseFactor = [[NSUserDefaults standardUserDefaults] floatForKey:DV_SCORE_LEVEL_PROGRESS_INCREASE_FACTOR];
     self.levelScoreIncreaseStyle = [[NSUserDefaults standardUserDefaults] integerForKey:DV_SCORE_LEVEL_PROGRESS_INCREASE_STYLE];
     
-    //Letter Drop
-    self.initialLetterDropPeriod = [[NSUserDefaults standardUserDefaults] floatForKey:DV_DROP_INITIAL_PERIOD];
-    self.letterDropPeriodDecreaseRate = [[NSUserDefaults standardUserDefaults] floatForKey:DV_DROP_PERIOD_DECREASE_FACTOR];
-    self.minimumDropPeriod = [[NSUserDefaults standardUserDefaults] floatForKey:DV_DROP_MINIMUM_PERIOD];
-    self.letterDropDecreaseStyle = [[NSUserDefaults standardUserDefaults] integerForKey:DV_DROP_DECREASE_STYLE];
-    self.numLettersPerDrop = [[NSUserDefaults standardUserDefaults] integerForKey:DV_DROP_NUM_LETTERS];
-    
     //Mailman + Love Letters
     self.mailmanHitDamage = [[NSUserDefaults standardUserDefaults] floatForKey:DV_MAILMAN_LETTER_DAMAGE];
     self.loveLetterMultiplier = [[NSUserDefaults standardUserDefaults] integerForKey:DV_MAILMAN_LOVE_BONUS];
@@ -153,13 +146,6 @@
     [[NSUserDefaults standardUserDefaults] setInteger:self.initialNextLevelScore forKey:DV_SCORE_INITIAL_LEVEL_PROGRESSION];
     [[NSUserDefaults standardUserDefaults] setFloat:self.levelScoreIncreaseFactor forKey:DV_SCORE_LEVEL_PROGRESS_INCREASE_FACTOR];
     [[NSUserDefaults standardUserDefaults] setInteger:self.levelScoreIncreaseStyle forKey:DV_SCORE_LEVEL_PROGRESS_INCREASE_STYLE];
-    
-    //Letter Drop
-    [[NSUserDefaults standardUserDefaults] setFloat:self.initialLetterDropPeriod forKey:DV_DROP_INITIAL_PERIOD];
-    [[NSUserDefaults standardUserDefaults] setFloat:self.letterDropPeriodDecreaseRate forKey:DV_DROP_PERIOD_DECREASE_FACTOR];
-    [[NSUserDefaults standardUserDefaults] setFloat:self.minimumDropPeriod forKey:DV_DROP_MINIMUM_PERIOD];
-    [[NSUserDefaults standardUserDefaults] setInteger:self.letterDropDecreaseStyle forKey:DV_DROP_DECREASE_STYLE];
-    [[NSUserDefaults standardUserDefaults] setInteger:self.numLettersPerDrop forKey:DV_DROP_NUM_LETTERS];
     
     //Mailman + Love Letters
     [[NSUserDefaults standardUserDefaults] setFloat:self.mailmanHitDamage forKey:DV_MAILMAN_LETTER_DAMAGE];

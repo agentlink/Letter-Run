@@ -8,7 +8,7 @@
 
 #import "LRMainGameSection.h"
 #import "LRGameStateManager.h"
-#import "LRLetterBlockGenerator.h"
+#import "LRLetterBlockBuilder.h"
 #import "LRSlotManager.h"
 #import "LRDifficultyManager.h"
 
@@ -18,22 +18,14 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
 
 //Children
 @property SKSpriteNode *backgroundImage;
-
 //Slot logic
 @property LRSlotManager *letterSlotManager;
 @property NSMutableArray *envelopesOnScreen;
-
-//Pause and Game Over timing logic
-@property NSTimeInterval nextDropTime;
-@property NSTimeInterval dropDelayForAfterPause;
-@property NSTimeInterval previousRunLoopTime;
-@property NSTimeInterval previousDropTime;
-@property BOOL newGameWillBegin;
+@property LRMovingBlockBuilder *envelopeBuilder;
 
 @end
 
 @implementation LRMainGameSection
-@synthesize nextDropTime, dropDelayForAfterPause, previousRunLoopTime, newGameWillBegin, previousDropTime;
 #pragma mark - Initialization Methods -
 
 - (id) initWithSize:(CGSize)size
@@ -43,9 +35,6 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
         self.envelopesOnScreen = [NSMutableArray new];
         self.letterSlotManager = [LRSlotManager new];
         self.envelopeTouchEnabled = YES;
-        self.newGameWillBegin = YES;
-        previousDropTime = 0.0;
-        dropDelayForAfterPause = kGameLoopResetValue;
     }
     return self;
 }
@@ -62,54 +51,29 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
     mailmanArea.position = (CGPoint){(mailmanArea.size.width - self.size.width)/2, 0};
     self.mailmanArea = mailmanArea;
     [self addChild:self.mailmanArea];
+    
 }
 
 #pragma mark - Update Loop Methods -
 #pragma mark Time Methods
 - (void)update:(NSTimeInterval)currentTime
 {
-    //Check whether the update loop should continue
-    if (newGameWillBegin) {
-        nextDropTime = currentTime;
-        newGameWillBegin = FALSE;
+    if (!self.envelopeBuilder) {
+        self.envelopeBuilder = [LRMovingBlockBuilder shared];
+        self.envelopeBuilder.delegate = self;
+        [self addChild:self.envelopeBuilder];
+        [self.envelopeBuilder startMovingBlockGeneration];
     }
-
-    //Shift the envelopes...
-    CGFloat timeDifference = currentTime - previousRunLoopTime;
-    [self _shiftEnvelopesForTimeDifference:timeDifference];
     [self _checkEnvelopesForRemoval];
-    if ([self _shouldGenerateEnvelopesForTime:currentTime]) {
-        [self generateEnvelopes];
-        float letterDropPeriod = [[LRDifficultyManager shared] letterDropPeriod];
-        nextDropTime += letterDropPeriod;
-        previousDropTime = currentTime;
-    }
-    previousRunLoopTime = currentTime;
-}
-
-- (BOOL)_shouldGenerateEnvelopesForTime:(NSTimeInterval)currentTime
-{
-    return (nextDropTime <= currentTime &&
-            ![[LRGameStateManager shared] isGameOver] &&
-            ![[LRGameStateManager shared] isGamePaused]);
 }
 
 #pragma mark Letter Addition and Removal
-- (void)generateEnvelopes
-{
-    int i = 0;
-    for (i = 0; i < [[LRDifficultyManager shared] numLettersPerDrop]; i++) {
-        LRMovingEnvelope *envelope = [LRLetterBlockGenerator createRandomEnvelope];
-        [self.letterSlotManager addEnvelope:envelope];
-        [self addMovingBlockToScreen:envelope];
-    }
-}
-
+#pragma mark LRMovingBlockBuilderDelegate
 - (void)addMovingBlockToScreen:(LRMovingEnvelope *)movingBlock
 {
-    //Set the touch delegate
+    //Add the object to the slot manager
+    [self.letterSlotManager addEnvelope:movingBlock];
     movingBlock.touchDelegate = self;
-    //Add the envelope to teh screen and to the array
     [self.envelopesOnScreen addObject:movingBlock];
     [self addChild:movingBlock];
 }
@@ -192,7 +156,6 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
 - (void)gameStateGameOver
 {
     self.envelopeTouchEnabled = NO;
-    newGameWillBegin = YES;
 }
 
 - (void)gameStatePaused:(NSTimeInterval)currentTime
@@ -200,15 +163,10 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
     [self enumerateChildNodesWithName:NAME_SPRITE_MOVING_ENVELOPE usingBlock:^(SKNode *node, BOOL *stop) {
         [node setUserInteractionEnabled:NO];
     }];
-    if (dropDelayForAfterPause == kGameLoopResetValue)
-        dropDelayForAfterPause = currentTime - previousDropTime;
 }
 
 - (void)gameStateUnpaused:(NSTimeInterval)currentTime
 {
-    nextDropTime = currentTime + dropDelayForAfterPause;
-    previousRunLoopTime = currentTime;
-    dropDelayForAfterPause = kGameLoopResetValue;
     [self enumerateChildNodesWithName:NAME_SPRITE_MOVING_ENVELOPE usingBlock:^(SKNode *node, BOOL *stop) {
         [node setUserInteractionEnabled:YES];
     }];

@@ -7,7 +7,7 @@
 //
 
 #import "LRGamePlayLayer.h"
-#import "LRLetterBlockGenerator.h"
+#import "LRLetterBlockBuilder.h"
 #import "LRCollisionManager.h"
 #import "LRGameStateManager.h"
 #import "LRDifficultyManager.h"

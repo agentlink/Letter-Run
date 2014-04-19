@@ -18,7 +18,7 @@
 		003C2670180F46C6003729D4 /* organizedDict.txt in Resources */ = {isa = PBXBuildFile; fileRef = 003C266F180F46C6003729D4 /* organizedDict.txt */; };
 		003E577E180E0D5D00B37B68 /* LRDifficultyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 003E577D180E0D5D00B37B68 /* LRDifficultyManager.m */; };
 		0049695117F8A12B00176F2D /* LRLetterBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049695017F8A12B00176F2D /* LRLetterBlock.m */; };
-		0049695517F8A75B00176F2D /* LRLetterBlockGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049695417F8A75B00176F2D /* LRLetterBlockGenerator.m */; };
+		0049695517F8A75B00176F2D /* LRLetterBlockBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049695417F8A75B00176F2D /* LRLetterBlockBuilder.m */; };
 		0049695917F8AB5D00176F2D /* LRCollisionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049695817F8AB5D00176F2D /* LRCollisionManager.m */; };
 		0049695F17F8B5B900176F2D /* LRLetterSlot.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049695E17F8B5B900176F2D /* LRLetterSlot.m */; };
 		00641EA9182C42D30098EC38 /* LRDevPauseMenuVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 00641EA7182C42D30098EC38 /* LRDevPauseMenuVC.m */; };
@@ -82,6 +82,7 @@
 		A88A4B3B188734E400BC9905 /* LRMovingEnvelope.m in Sources */ = {isa = PBXBuildFile; fileRef = A88A4B3A188734E400BC9905 /* LRMovingEnvelope.m */; };
 		A88CEB20189D87C600092C8A /* LREnvelopeAnimationBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = A88CEB1F189D87C600092C8A /* LREnvelopeAnimationBuilder.m */; };
 		A88DE67118DE1DCB00282AA8 /* LRMailmanArea.m in Sources */ = {isa = PBXBuildFile; fileRef = A88DE67018DE1DCB00282AA8 /* LRMailmanArea.m */; };
+		A8B6B7221903243600E130A6 /* LRMovingBlockBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B6B7211903243600E130A6 /* LRMovingBlockBuilder.m */; };
 		A8E60A131881E25F00F60DF4 /* LRCappedStack.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E60A121881E25F00F60DF4 /* LRCappedStack.m */; };
 		A8E60A161881F6E300F60DF4 /* LRSlotManager_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E60A151881F6E300F60DF4 /* LRSlotManager_Test.m */; };
 		A8F171CB18DF7C5B00964C34 /* Scenery.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8F171CA18DF7C5B00964C34 /* Scenery.xcassets */; };
@@ -128,8 +129,8 @@
 		003E577D180E0D5D00B37B68 /* LRDifficultyManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRDifficultyManager.m; sourceTree = "<group>"; };
 		0049694F17F8A12B00176F2D /* LRLetterBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRLetterBlock.h; sourceTree = "<group>"; };
 		0049695017F8A12B00176F2D /* LRLetterBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterBlock.m; sourceTree = "<group>"; };
-		0049695317F8A75B00176F2D /* LRLetterBlockGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRLetterBlockGenerator.h; sourceTree = "<group>"; };
-		0049695417F8A75B00176F2D /* LRLetterBlockGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterBlockGenerator.m; sourceTree = "<group>"; };
+		0049695317F8A75B00176F2D /* LRLetterBlockBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRLetterBlockBuilder.h; sourceTree = "<group>"; };
+		0049695417F8A75B00176F2D /* LRLetterBlockBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterBlockBuilder.m; sourceTree = "<group>"; };
 		0049695717F8AB5D00176F2D /* LRCollisionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRCollisionManager.h; sourceTree = "<group>"; };
 		0049695817F8AB5D00176F2D /* LRCollisionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRCollisionManager.m; sourceTree = "<group>"; };
 		0049695B17F8AC6400176F2D /* LRConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LRConstants.h; sourceTree = "<group>"; };
@@ -233,6 +234,8 @@
 		A88CEB1F189D87C600092C8A /* LREnvelopeAnimationBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LREnvelopeAnimationBuilder.m; sourceTree = "<group>"; };
 		A88DE66F18DE1DCB00282AA8 /* LRMailmanArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRMailmanArea.h; sourceTree = "<group>"; };
 		A88DE67018DE1DCB00282AA8 /* LRMailmanArea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRMailmanArea.m; sourceTree = "<group>"; };
+		A8B6B7201903243600E130A6 /* LRMovingBlockBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRMovingBlockBuilder.h; sourceTree = "<group>"; };
+		A8B6B7211903243600E130A6 /* LRMovingBlockBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRMovingBlockBuilder.m; sourceTree = "<group>"; };
 		A8E60A111881E25F00F60DF4 /* LRCappedStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRCappedStack.h; sourceTree = "<group>"; };
 		A8E60A121881E25F00F60DF4 /* LRCappedStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRCappedStack.m; sourceTree = "<group>"; };
 		A8E60A151881F6E300F60DF4 /* LRSlotManager_Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRSlotManager_Test.m; sourceTree = "<group>"; };
@@ -686,12 +689,14 @@
 		A88CEB1D189D87AE00092C8A /* Generators */ = {
 			isa = PBXGroup;
 			children = (
-				0049695317F8A75B00176F2D /* LRLetterBlockGenerator.h */,
-				0049695417F8A75B00176F2D /* LRLetterBlockGenerator.m */,
+				0049695317F8A75B00176F2D /* LRLetterBlockBuilder.h */,
+				0049695417F8A75B00176F2D /* LRLetterBlockBuilder.m */,
 				A88CEB1E189D87C600092C8A /* LREnvelopeAnimationBuilder.h */,
 				A88CEB1F189D87C600092C8A /* LREnvelopeAnimationBuilder.m */,
 				008428F118009F6300908E5D /* LRLetterGenerator.h */,
 				008428F218009F6300908E5D /* LRLetterGenerator.m */,
+				A8B6B7201903243600E130A6 /* LRMovingBlockBuilder.h */,
+				A8B6B7211903243600E130A6 /* LRMovingBlockBuilder.m */,
 			);
 			name = Generators;
 			sourceTree = "<group>";
@@ -884,7 +889,7 @@
 				0049695F17F8B5B900176F2D /* LRLetterSlot.m in Sources */,
 				00AC2807182EE1A300B3C0EB /* LRDifficultyManager+Notifications.m in Sources */,
 				00641EB3182D7BFF0098EC38 /* LRSliderLabelView.m in Sources */,
-				0049695517F8A75B00176F2D /* LRLetterBlockGenerator.m in Sources */,
+				0049695517F8A75B00176F2D /* LRLetterBlockBuilder.m in Sources */,
 				A8E60A131881E25F00F60DF4 /* LRCappedStack.m in Sources */,
 				008428F318009F6300908E5D /* LRLetterGenerator.m in Sources */,
 				008428F61801EABB00908E5D /* LRSubmitButton.m in Sources */,
@@ -906,6 +911,7 @@
 				00B43D92182834CF00261468 /* LRButton.m in Sources */,
 				A87BDD981853AC8D00845BB5 /* LRCurveBuilder.m in Sources */,
 				0049695117F8A12B00176F2D /* LRLetterBlock.m in Sources */,
+				A8B6B7221903243600E130A6 /* LRMovingBlockBuilder.m in Sources */,
 				000BC163182044DA00BEC563 /* LRParallaxManager.m in Sources */,
 				0007FB3F180C7A1A00E55B0D /* LRCollectedEnvelope.m in Sources */,
 				00CDF14F17F474EC003065F6 /* LRViewController.m in Sources */,

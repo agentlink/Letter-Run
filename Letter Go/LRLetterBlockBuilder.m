@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Gabe Nicholas. All rights reserved.
 //
 
-#import "LRLetterBlockGenerator.h"
+#import "LRLetterBlockBuilder.h"
 #import "LRDifficultyManager.h"
 #import "LRLetterGenerator.h"
 
@@ -19,7 +19,7 @@ typedef NS_ENUM(NSInteger, LRLetterProbability) {
 
 static const BOOL lgbDebugMode = NO;
 
-@implementation LRLetterBlockGenerator
+@implementation LRLetterBlockBuilder
 
 #pragma mark - Public Functions
 

@@ -31,7 +31,7 @@ static LRDifficultyManager *_shared = nil;
 {
     if (self = [super init]) {
         [self loadDifficultyInfo];
-
+        self.level = 1;
         //Check to see if NSUserDefaults have been loaded
         if (![[NSUserDefaults standardUserDefaults] objectForKey:USER_DEFAULTS_LOADED]) {
             [self writeUserDefaults];
@@ -50,21 +50,21 @@ static LRDifficultyManager *_shared = nil;
 }
 
 #pragma mark - Speed Factor Calculators
-
-- (CGFloat) letterDropPeriod {
-    float dropPeriod = self.initialLetterDropPeriod;
-    for (int i = 1; i < self.level; i++) {
-        if (self.letterDropDecreaseStyle == IncreaseStyle_Linear) {
-            dropPeriod-= self.letterDropPeriodDecreaseRate;
-        }
-        else if (self.letterDropPeriodDecreaseRate == IncreaseStyle_Exponential) {
-            dropPeriod/= self.letterDropPeriodDecreaseRate;
-        }
-    }
-    if (self.minimumDropPeriod > dropPeriod)
-        return self.minimumDropPeriod;
-    return self.initialLetterDropPeriod;
-}
+//
+//- (CGFloat) letterDropPeriod {
+//    float dropPeriod = self.initialLetterDropPeriod;
+//    for (int i = 1; i < self.level; i++) {
+//        if (self.letterDropDecreaseStyle == IncreaseStyle_Linear) {
+//            dropPeriod-= self.letterDropPeriodDecreaseRate;
+//        }
+//        else if (self.letterDropPeriodDecreaseRate == IncreaseStyle_Exponential) {
+//            dropPeriod/= self.letterDropPeriodDecreaseRate;
+//        }
+//    }
+//    if (self.minimumDropPeriod > dropPeriod)
+//        return self.minimumDropPeriod;
+//    return self.initialLetterDropPeriod;
+//}
 
 - (CGFloat) parallaxSpeedFactor
 {
@@ -74,7 +74,7 @@ static LRDifficultyManager *_shared = nil;
 - (CGFloat) healthBarDropTime
 {
     //Unit: letters allowed to drop without a response
-    CGFloat healthSpeed = self.letterDropPeriod * self.healthInFallenEnvelopes;
+    CGFloat healthSpeed = self.healthInFallenEnvelopes;
 
     if (healthSpeed < self.healthBarMinDropTime)
         return self.healthBarMinDropTime;
