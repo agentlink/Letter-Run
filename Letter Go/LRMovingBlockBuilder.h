@@ -16,7 +16,6 @@
 + (LRMovingBlockBuilder *)shared;
 @property (nonatomic, weak) id <LRMovingBlockBuilderDelegate> screenDelegate;
 @property (nonatomic, weak) id <LRLetterBlockControlDelegate> letterAdditionDelegate;
-@property (nonatomic) BOOL generationPaused;
 
 - (void)startMovingBlockGeneration;
 - (void)stopMovingBlockGeneration;

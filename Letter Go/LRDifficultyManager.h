@@ -44,7 +44,7 @@ typedef NS_ENUM(NSInteger, IncreaseStyle)  {
 @property CGFloat healthSpeedIncreaseFactor;
 @property CGFloat healthBarMinDropTime;
 //Not saved
-@property CGFloat healthInFallenEnvelopes;
+@property CGFloat healthInEnvelopes;
 
 
 #pragma mark - Mailman/Love Letter Properties

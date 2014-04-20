@@ -96,12 +96,14 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
 
 - (void)gameStateNewGame
 {
+    [self.envelopeBuilder startMovingBlockGeneration];
     self.envelopeTouchEnabled = YES;
     [self clearMainGameSection];
 }
 
 - (void)gameStateGameOver
 {
+    [self.envelopeBuilder stopMovingBlockGeneration];
     self.envelopeTouchEnabled = NO;
 }
 
@@ -110,6 +112,7 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
     [self enumerateChildNodesWithName:NAME_SPRITE_MOVING_ENVELOPE usingBlock:^(SKNode *node, BOOL *stop) {
         [node setUserInteractionEnabled:NO];
     }];
+    self.envelopeBuilder.paused = YES;
 }
 
 - (void)gameStateUnpaused:(NSTimeInterval)currentTime
@@ -117,6 +120,7 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
     [self enumerateChildNodesWithName:NAME_SPRITE_MOVING_ENVELOPE usingBlock:^(SKNode *node, BOOL *stop) {
         [node setUserInteractionEnabled:YES];
     }];
+    self.envelopeBuilder.paused = NO;
 }
 
 - (void)setEnvelopeTouchEnabled:(BOOL)envelopeTouchEnabled

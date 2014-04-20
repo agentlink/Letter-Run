@@ -104,7 +104,7 @@ static const float kLRHealthSectionStartPercentYellow = .50;
 #pragma mark Health Bar Movement
 
 + (CGFloat)_healthBarDistanceForScore:(NSInteger)score {
-    float baseDistancePerLetter = HEALTHBAR_WIDTH / [[LRDifficultyManager shared] healthInFallenEnvelopes];
+    float baseDistancePerLetter = HEALTHBAR_WIDTH / [[LRDifficultyManager shared] healthInEnvelopes];
     float scorePerLetter = [[LRDifficultyManager shared] scorePerLetter];
     
     float wordDistance = (score * baseDistancePerLetter) / scorePerLetter;

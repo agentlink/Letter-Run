@@ -49,12 +49,6 @@ static LRMovingBlockBuilder *_shared = nil;
     [self removeAllActions];
 }
 
-- (void)setGenerationPaused:(BOOL)generationPaused
-{
-    _generationPaused = generationPaused;
-    self.paused = generationPaused;
-}
-
 #pragma mark - Private Functions
 
 - (void)_generateEnvelope
