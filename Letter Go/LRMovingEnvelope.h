@@ -13,6 +13,7 @@
 
 @property (nonatomic, weak) id<LRMovingBlockTouchDelegate> touchDelegate;
 @property (nonatomic) NSUInteger slot;
+///The player has selected the envelope while on the main game screen
 @property (nonatomic) BOOL selected;
 
 + (LRMovingEnvelope *)movingBlockWithLetter:(NSString *)letter paperColor:(LRPaperColor)paperColor;

@@ -8,12 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import "LRMovingEnvelope.h"
+#import "LRLetterBlockControlDelegate.h"
 
 @protocol LRMovingBlockBuilderDelegate;
 
 @interface LRMovingBlockBuilder : SKNode
 + (LRMovingBlockBuilder *)shared;
-@property (nonatomic, weak) SKSpriteNode <LRMovingBlockBuilderDelegate> *delegate;
+@property (nonatomic, weak) id <LRMovingBlockBuilderDelegate> screenDelegate;
+@property (nonatomic, weak) id <LRLetterBlockControlDelegate> letterAdditionDelegate;
 @property (nonatomic) BOOL generationPaused;
 
 - (void)startMovingBlockGeneration;
@@ -23,4 +25,5 @@
 
 @protocol LRMovingBlockBuilderDelegate <NSObject>
 - (void)addMovingBlockToScreen:(LRMovingEnvelope *)envelope;
+- (void)removeMovingBlockFromScreen:(LRMovingEnvelope *)envelope;
 @end

@@ -35,6 +35,11 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
         self.envelopesOnScreen = [NSMutableArray new];
         self.letterSlotManager = [LRSlotManager new];
         self.envelopeTouchEnabled = YES;
+        
+        self.envelopeBuilder = [LRMovingBlockBuilder shared];
+        self.envelopeBuilder.screenDelegate = self;
+        [self addChild:self.envelopeBuilder];
+        [self.envelopeBuilder startMovingBlockGeneration];
     }
     return self;
 }
@@ -51,23 +56,18 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
     mailmanArea.position = (CGPoint){(mailmanArea.size.width - self.size.width)/2, 0};
     self.mailmanArea = mailmanArea;
     [self addChild:self.mailmanArea];
-    
-}
-
-#pragma mark - Update Loop Methods -
-#pragma mark Time Methods
-- (void)update:(NSTimeInterval)currentTime
-{
-    if (!self.envelopeBuilder) {
-        self.envelopeBuilder = [LRMovingBlockBuilder shared];
-        self.envelopeBuilder.delegate = self;
-        [self addChild:self.envelopeBuilder];
-        [self.envelopeBuilder startMovingBlockGeneration];
-    }
-    [self _checkEnvelopesForRemoval];
 }
 
 #pragma mark Letter Addition and Removal
+- (void)clearMainGameSection
+{
+    [self.letterSlotManager resetSlots];
+    [self removeChildrenInArray:self.envelopesOnScreen];
+    [self.envelopesOnScreen removeAllObjects];
+}
+
+
+#pragma mark - Delegate Methods -
 #pragma mark LRMovingBlockBuilderDelegate
 - (void)addMovingBlockToScreen:(LRMovingEnvelope *)movingBlock
 {
@@ -78,66 +78,13 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
     [self addChild:movingBlock];
 }
 
-///Pass in an array of LRMovingBlocks to delete
-- (void)removeMovingBlocksFromScreen:(NSArray *)letterBlocks
+- (void)removeMovingBlockFromScreen:(LRMovingEnvelope *)envelope
 {
-    //Remove the envelope from the screen and the array
-    [self.envelopesOnScreen removeObjectsInArray:letterBlocks];
-    [self removeChildrenInArray:letterBlocks];
+    [self.envelopesOnScreen removeObject:envelope];
+    [self removeChildrenInArray:@[envelope]];
 }
 
-- (void)clearMainGameSection
-{
-    [self.letterSlotManager resetSlots];
-    [self removeChildrenInArray:self.envelopesOnScreen];
-    [self.envelopesOnScreen removeAllObjects];
-}
 
-#pragma mark Letter Movement/Touch
-
-- (void)setEnvelopeTouchEnabled:(BOOL)envelopeTouchEnabled
-{
-    _envelopeTouchEnabled = envelopeTouchEnabled;
-    for (LRMovingEnvelope *envelope in self.envelopesOnScreen) {
-        envelope.userInteractionEnabled = envelopeTouchEnabled;
-    }
-}
-
-- (void)_shiftEnvelopesForTimeDifference:(CGFloat)timeDifference
-{
-    CGFloat secondsToCrossScreen = 3.2;
-    //TODO: get this from the difficulty manager
-    CGFloat pixelsPerSecond = SCREEN_WIDTH / secondsToCrossScreen;
-    for (LRMovingEnvelope* envelope in self.envelopesOnScreen) {
-        //Shift the block down...
-        CGFloat distance = pixelsPerSecond * timeDifference;
-        envelope.position = CGPointMake(envelope.position.x - distance,
-                                     envelope.position.y);
-    }
-}
-
-- (void)_checkEnvelopesForRemoval
-{
-    NSMutableArray *envelopesToRemove = [NSMutableArray new];
-    for (LRMovingEnvelope* envelope in self.envelopesOnScreen)
-    {
-        if ([self _envelopeHasCrossedCollectionThreshold:envelope])
-        {
-            if (envelope.selected) {
-                [self.letterAdditionDelegate addEnvelopeToLetterSection:envelope];
-            }
-            [envelopesToRemove addObject:envelope];
-        }
-    }
-    [self removeMovingBlocksFromScreen:envelopesToRemove];
-}
-
-- (BOOL)_envelopeHasCrossedCollectionThreshold:(LRMovingEnvelope *)envelope
-{
-    return (envelope.position.x < self.mailmanArea.position.x);
-}
-
-#pragma mark - Delegate Methods -
 #pragma mark LRMovingBlockTouchDelegate Methods
 
 - (void)playerSelectedMovingBlock:(LRMovingEnvelope *)movingBlock
@@ -171,4 +118,13 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
         [node setUserInteractionEnabled:YES];
     }];
 }
+
+- (void)setEnvelopeTouchEnabled:(BOOL)envelopeTouchEnabled
+{
+    _envelopeTouchEnabled = envelopeTouchEnabled;
+    for (LRMovingEnvelope *envelope in self.envelopesOnScreen) {
+        envelope.userInteractionEnabled = envelopeTouchEnabled;
+    }
+}
+
 @end

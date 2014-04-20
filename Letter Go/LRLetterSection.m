@@ -18,6 +18,7 @@
 #import "LRCollisionManager.h"
 #import "LRGameStateManager.h"
 #import "LRColor.h"
+#import "LRMovingBlockBuilder.h"
 
 typedef NS_ENUM(NSUInteger, LetterSectionState)
 {
@@ -55,6 +56,7 @@ typedef void(^CompletionBlockType)(void);
     if (self = [super initWithSize:size])
     {
         [self setUpNotifications];
+        [LRMovingBlockBuilder shared].letterAdditionDelegate = self;
     }
     return self;
 }

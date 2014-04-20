@@ -18,7 +18,6 @@
 ///Setting this pauses and unpauses the movement of letters
 @property (nonatomic) BOOL envelopeMovementPaused;
 @property (nonatomic) BOOL envelopeTouchEnabled;
-@property (nonatomic, weak) id <LRLetterBlockControlDelegate> letterAdditionDelegate;
 
 - (void)addMovingBlockToScreen:(LRMovingEnvelope *)movingBlock;
 - (void)clearMainGameSection;

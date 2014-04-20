@@ -85,7 +85,6 @@
         
         _mainGameSection = [[LRMainGameSection alloc] initWithSize:CGSizeMake(SCREEN_WIDTH, kSectionHeightMainSection)];
         _mainGameSection.position = CGPointMake(mainGameSectionXPos, mainGameSectionYPos);
-        _mainGameSection.letterAdditionDelegate = self.letterSection;
         _mainGameSection.zPosition = zPos_MainGameSection;
         _mainGameSection.color = [LRColor skyColor];
     }

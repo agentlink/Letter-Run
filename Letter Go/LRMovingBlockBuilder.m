@@ -46,7 +46,6 @@ static LRMovingBlockBuilder *_shared = nil;
 
 - (void)stopMovingBlockGeneration
 {
-    
     [self removeAllActions];
 }
 
@@ -61,16 +60,37 @@ static LRMovingBlockBuilder *_shared = nil;
 - (void)_generateEnvelope
 {
     LRMovingEnvelope *envelope = [LRLetterBlockBuilder createRandomEnvelope];
-    NSLog(@"Adding moving block: %@", envelope.letter);
-    SKAction *moveAcrossScreen = [SKAction moveBy:CGVectorMake(-500, 0) duration:3.5];
-    [self.delegate addMovingBlockToScreen:envelope];
-    [envelope runAction:moveAcrossScreen];
-
+    //TODO: get duration from some calculation
+    SKAction *moveAcrossScreen = [SKAction moveBy:CGVectorMake(-SCREEN_WIDTH, 0) duration:3];
+    
+    [self.screenDelegate addMovingBlockToScreen:envelope];
+    [envelope runAction:moveAcrossScreen completion:^{
+        SKAction *removalAction = envelope.selected ? [LRMovingBlockBuilder _collectedAction] : [LRMovingBlockBuilder _discardedAction];
+        [envelope runAction:removalAction completion:^{
+            if (envelope.selected) {
+                [self.letterAdditionDelegate addEnvelopeToLetterSection:envelope];
+            }
+            [self.screenDelegate removeMovingBlockFromScreen:envelope];
+        }];
+    }];
 }
 
 + (CGFloat)_envelopeGenerationIntervalForLevel:(int)level
 {
     return kLRMovingBlockBuilderIntialDropInterval/powf(kLRMovingBlockBuilderIntervalRatio, level - 1);
+}
+
++ (SKAction *)_collectedAction
+{
+    SKAction *fade = [SKAction fadeAlphaTo:0 duration:.3];
+    return fade;
+}
+
++ (SKAction *)_discardedAction
+{
+    SKAction *moveOff = [SKAction moveBy:CGVectorMake(-kCollectedEnvelopeSpriteDimension, 0) duration:.2];
+    moveOff.timingMode = SKActionTimingEaseOut;
+    return moveOff;
 }
 
 @end
