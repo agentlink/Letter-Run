@@ -14,7 +14,7 @@
 //#toy
 static CGFloat const kLRMovingBlockBuilderIntialDropInterval = 1.0;
 static CGFloat const kLRMovingBlockBuilderIntervalRatio = 1.15;
-
+static CGFloat const kLRMovingBlockBuilderCrossTime = 3.0;
 @implementation LRMovingBlockBuilder
 
 #pragma mark - Public Functions
@@ -55,7 +55,7 @@ static LRMovingBlockBuilder *_shared = nil;
 {
     LRMovingEnvelope *envelope = [LRLetterBlockBuilder createRandomEnvelope];
     //TODO: get duration from some calculation
-    SKAction *moveAcrossScreen = [SKAction moveBy:CGVectorMake(-SCREEN_WIDTH, 0) duration:3];
+    SKAction *moveAcrossScreen = [SKAction moveBy:CGVectorMake(-SCREEN_WIDTH, 0) duration:kLRMovingBlockBuilderCrossTime];
     
     [self.screenDelegate addMovingBlockToScreen:envelope];
     [envelope runAction:moveAcrossScreen completion:^{
@@ -82,8 +82,8 @@ static LRMovingBlockBuilder *_shared = nil;
 
 + (SKAction *)_discardedAction
 {
-    SKAction *moveOff = [SKAction moveBy:CGVectorMake(-kCollectedEnvelopeSpriteDimension, 0) duration:.2];
-    moveOff.timingMode = SKActionTimingEaseOut;
+    SKAction *moveOff = [SKAction moveBy:CGVectorMake(-kCollectedEnvelopeSpriteDimension, 0)
+                                duration:kLRMovingBlockBuilderCrossTime * (SCREEN_WIDTH/kCollectedEnvelopeSpriteDimension)];
     return moveOff;
 }
 
