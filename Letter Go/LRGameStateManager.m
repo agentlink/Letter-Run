@@ -17,6 +17,7 @@
 
 @property SKNode *managerParent;
 @property (nonatomic) LRGameScene *gameScene;
+@property (nonatomic) LRDevPauseViewController *devPauseVC;
 @end
 
 @implementation LRGameStateManager
@@ -110,35 +111,46 @@ static LRGameStateManager *_shared = nil;
 
 - (void)_pauseGame
 {
+    [self showPauseMenu:YES];
+    [[[LRGameStateManager shared] gameScene] blurSceneWithCompletion:^{
+    }];
     self.gameScene.gameState = LRGameStatePauseGame;
-    self.gameScene.paused = YES;
-    [self _toggleDevPauseMenuOn:YES];
+    self.gameScene.gamePlayLayer.paused = YES;
+
 }
 
 - (void)_unpauseGame
 {
-    self.gameScene.gameState = LRGameStateUnpauseGame;
-    self.gameScene.paused = NO;
-    [self _toggleDevPauseMenuOn:NO];
+    [self showPauseMenu:NO];
+    [[[LRGameStateManager shared] gameScene] unblurSceneWithCompletion:^{
+        self.gameScene.gameState = LRGameStateUnpauseGame;
+        self.gameScene.gamePlayLayer.paused = NO;
+    }];
 }
 
-- (void)_toggleDevPauseMenuOn:(BOOL)on
+- (void)showPauseMenu:(BOOL)show
 {
-    LRGamePlayLayer *gpl = [self.gameScene gamePlayLayer];
-    if (on)
-    {
-        if (!gpl.devPause) {
-            gpl.devPause = [[LRDevPauseMenuVC alloc] init];
-            CGRect devPauseFrame = gpl.devPause.view.frame;
-            devPauseFrame.size = CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT);
-            gpl.devPause.view.frame = devPauseFrame;
-            [gpl.scene.view addSubview:gpl.devPause.view];
-        }
+    
+    /*
+     if (!gpl.devPause) {
+     gpl.devPause = [[LRDevPauseMenuVC alloc] init];
+     CGRect devPauseFrame = gpl.devPause.view.frame;
+     devPauseFrame.size = CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT);
+     gpl.devPause.view.frame = devPauseFrame;
+     [gpl.scene.view addSubview:gpl.devPause.view];
+     }
+*/
+    
+    if (!self.devPauseVC) {
+        self.devPauseVC = [[LRDevPauseViewController alloc] init];
+//        self.devPauseVC.view.frame =  self.gameScene.view.frame;
     }
-    else
-    {
-        if (gpl.devPause)
-            gpl.devPause = nil;
+    if (show) {
+        [self.gameScene.view addSubview:self.devPauseVC.view];
+        [self.gameScene.view bringSubviewToFront:self.devPauseVC.view];
+    }
+    else {
+        [self.devPauseVC.view removeFromSuperview];
     }
 }
 

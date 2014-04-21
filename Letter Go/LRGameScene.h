@@ -20,4 +20,8 @@
 + (LRGameScene *)scene;
 - (CGRect) window;
 
+///Use this to blur the main game scene
+-(void)blurSceneWithCompletion:(void (^)())handler;
+-(void)unblurSceneWithCompletion:(void (^)())handler;
+
 @end

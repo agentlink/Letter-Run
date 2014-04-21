@@ -116,12 +116,7 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if (!self.isTouched)
-        return;
     [super touchesEnded:touches withEvent:event];
-    //Do one more check to see if it's at the deletion point but don't run an animation
-//    CGPoint touchLoc = [[touches anyObject] locationInNode:[self parent]];
-//    self.position = touchLoc;
     BOOL canDelete = [self shouldEnvelopeBeDeletedAtPosition:self.position];
     if (canDelete != self.isAtDeletionPoint) {
         self.isAtDeletionPoint = canDelete;

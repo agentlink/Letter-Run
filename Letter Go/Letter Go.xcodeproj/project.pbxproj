@@ -30,6 +30,7 @@
 		008428F61801EABB00908E5D /* LRSubmitButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 008428F51801EABB00908E5D /* LRSubmitButton.m */; };
 		008428F91801F46C00908E5D /* LRScoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 008428F81801F46C00908E5D /* LRScoreManager.m */; };
 		009CC29E180349E700C0423D /* LRDictionaryChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 009CC29D180349E700C0423D /* LRDictionaryChecker.m */; };
+		00A6886E1904AA0E0074632F /* LRDevPauseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00A6886D1904AA0E0074632F /* LRDevPauseViewController.m */; };
 		00AC2804182EDAC100B3C0EB /* DifficultyVariables.plist in Resources */ = {isa = PBXBuildFile; fileRef = 00AC2803182EDAC100B3C0EB /* DifficultyVariables.plist */; };
 		00AC2807182EE1A300B3C0EB /* LRDifficultyManager+Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = 00AC2806182EE1A300B3C0EB /* LRDifficultyManager+Notifications.m */; };
 		00AC28181830415E00B3C0EB /* LRIncreaseStyleSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 00AC28171830415E00B3C0EB /* LRIncreaseStyleSelector.m */; };
@@ -152,6 +153,8 @@
 		008428F81801F46C00908E5D /* LRScoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRScoreManager.m; sourceTree = "<group>"; };
 		009CC29C180349E700C0423D /* LRDictionaryChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRDictionaryChecker.h; sourceTree = "<group>"; };
 		009CC29D180349E700C0423D /* LRDictionaryChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRDictionaryChecker.m; sourceTree = "<group>"; };
+		00A6886C1904AA0E0074632F /* LRDevPauseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRDevPauseViewController.h; sourceTree = "<group>"; };
+		00A6886D1904AA0E0074632F /* LRDevPauseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRDevPauseViewController.m; sourceTree = "<group>"; };
 		00AC2802182ED98800B3C0EB /* LRDifficultyConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LRDifficultyConstants.h; sourceTree = "<group>"; };
 		00AC2803182EDAC100B3C0EB /* DifficultyVariables.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DifficultyVariables.plist; sourceTree = "<group>"; };
 		00AC2805182EE1A300B3C0EB /* LRDifficultyManager+Notifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LRDifficultyManager+Notifications.h"; sourceTree = "<group>"; };
@@ -390,18 +393,9 @@
 		00641EA5182C2C210098EC38 /* Dev Pause Menu */ = {
 			isa = PBXGroup;
 			children = (
-				00641EA6182C42D30098EC38 /* LRDevPauseMenuVC.h */,
-				00641EA7182C42D30098EC38 /* LRDevPauseMenuVC.m */,
-				00641EA8182C42D30098EC38 /* LRDevPauseMenuVC.xib */,
-				00AC2819183178B700B3C0EB /* LRStatsPageViewController.h */,
-				00AC281A183178B800B3C0EB /* LRStatsPageViewController.m */,
-				00AC281B183178B800B3C0EB /* LRStatsPageViewController.xib */,
-				00641EB1182D7BFF0098EC38 /* LRSliderLabelView.h */,
-				00641EB2182D7BFF0098EC38 /* LRSliderLabelView.m */,
-				00AC28161830415E00B3C0EB /* LRIncreaseStyleSelector.h */,
-				00AC28171830415E00B3C0EB /* LRIncreaseStyleSelector.m */,
-				00AC281E18317F7A00B3C0EB /* LRDevPauseSubView.h */,
-				00AC281F18317F7A00B3C0EB /* LRDevPauseSubView.m */,
+				00A6886B1904A9B90074632F /* Eww... */,
+				00A6886C1904AA0E0074632F /* LRDevPauseViewController.h */,
+				00A6886D1904AA0E0074632F /* LRDevPauseViewController.m */,
 			);
 			name = "Dev Pause Menu";
 			sourceTree = "<group>";
@@ -424,6 +418,25 @@
 				003C266F180F46C6003729D4 /* organizedDict.txt */,
 			);
 			name = "Property Lists";
+			sourceTree = "<group>";
+		};
+		00A6886B1904A9B90074632F /* Eww... */ = {
+			isa = PBXGroup;
+			children = (
+				00641EA6182C42D30098EC38 /* LRDevPauseMenuVC.h */,
+				00641EA7182C42D30098EC38 /* LRDevPauseMenuVC.m */,
+				00641EA8182C42D30098EC38 /* LRDevPauseMenuVC.xib */,
+				00AC2819183178B700B3C0EB /* LRStatsPageViewController.h */,
+				00AC281A183178B800B3C0EB /* LRStatsPageViewController.m */,
+				00AC281B183178B800B3C0EB /* LRStatsPageViewController.xib */,
+				00641EB1182D7BFF0098EC38 /* LRSliderLabelView.h */,
+				00641EB2182D7BFF0098EC38 /* LRSliderLabelView.m */,
+				00AC28161830415E00B3C0EB /* LRIncreaseStyleSelector.h */,
+				00AC28171830415E00B3C0EB /* LRIncreaseStyleSelector.m */,
+				00AC281E18317F7A00B3C0EB /* LRDevPauseSubView.h */,
+				00AC281F18317F7A00B3C0EB /* LRDevPauseSubView.m */,
+			);
+			name = Eww...;
 			sourceTree = "<group>";
 		};
 		00AC2808182EEA1300B3C0EB /* Collision Manager */ = {
@@ -916,6 +929,7 @@
 				0007FB3F180C7A1A00E55B0D /* LRCollectedEnvelope.m in Sources */,
 				00CDF14F17F474EC003065F6 /* LRViewController.m in Sources */,
 				A82CA94C1855189F004ADD99 /* LRSlotManager.m in Sources */,
+				00A6886E1904AA0E0074632F /* LRDevPauseViewController.m in Sources */,
 				003E577E180E0D5D00B37B68 /* LRDifficultyManager.m in Sources */,
 				00AC28181830415E00B3C0EB /* LRIncreaseStyleSelector.m in Sources */,
 				00CDF18617F483E3003065F6 /* LRScreenSection.m in Sources */,

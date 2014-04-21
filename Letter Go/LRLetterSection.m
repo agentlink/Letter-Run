@@ -255,7 +255,10 @@ typedef void(^CompletionBlockType)(void);
 
 - (void)rearrangementHasFinishedWithLetterBlock:(id)letterBlock
 {
-    NSAssert(letterBlock == self.touchedBlock, @"Rearrangment should only start and finish with touched block");
+    if (letterBlock != self.touchedBlock) {
+        NSLog(@"Batooot");
+    }
+//    NSAssert(letterBlock == self.touchedBlock, @"Rearrangment should only start and finish with touched block");
     LRCollectedEnvelope *selectedEnvelope = (LRCollectedEnvelope *)letterBlock;
     LRLetterSlot *newLocation = [self _placeholderSlot];
     [self runRearrangmentHasFinishedAnimationWithEnvelope:selectedEnvelope toSlot:newLocation];
