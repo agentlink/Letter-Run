@@ -27,10 +27,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    //Animate its appearance
     self.view.backgroundColor = [UIColor clearColor];
     [UIView animateWithDuration:.4 animations:^{
         self.view.backgroundColor = [UIColor colorWithWhite:.5 alpha:.7];
     }];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning

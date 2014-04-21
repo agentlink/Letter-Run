@@ -130,20 +130,8 @@ static LRGameStateManager *_shared = nil;
 
 - (void)showPauseMenu:(BOOL)show
 {
-    
-    /*
-     if (!gpl.devPause) {
-     gpl.devPause = [[LRDevPauseMenuVC alloc] init];
-     CGRect devPauseFrame = gpl.devPause.view.frame;
-     devPauseFrame.size = CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT);
-     gpl.devPause.view.frame = devPauseFrame;
-     [gpl.scene.view addSubview:gpl.devPause.view];
-     }
-*/
-    
     if (!self.devPauseVC) {
         self.devPauseVC = [[LRDevPauseViewController alloc] init];
-//        self.devPauseVC.view.frame =  self.gameScene.view.frame;
     }
     if (show) {
         [self.gameScene.view addSubview:self.devPauseVC.view];
