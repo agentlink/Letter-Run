@@ -13,7 +13,7 @@
 #import "LRMainGameSection.h"
 #import "LRButton.h"
 #import "LRDevPauseMenuVC.h"
-
+#import "LRDevPauseViewController.h"
 @interface LRGamePlayLayer : LRLayer
 
 @property (nonatomic, strong) LRHealthSection *healthSection;
@@ -23,6 +23,6 @@
 
 @property (nonatomic, strong) LRButton *pauseButton;
 
-@property (nonatomic, strong) LRDevPauseMenuVC *devPause;
+@property (nonatomic, strong) LRDevPauseViewController *devPause;
 
 @end

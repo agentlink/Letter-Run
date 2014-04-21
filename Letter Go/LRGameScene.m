@@ -12,6 +12,13 @@
 #import "LRGameStateDelegate.h"
 #import "LRGameStateManager.h"
 
+static CGFloat const kLRGameSceneBlurEffectIntensity = 12.0;
+static CGFloat const kLRGameSceneBlurEffectDuration = .4;
+
+@interface LRGameScene ()
+@property (nonatomic, weak) SKEffectNode *rootEffectNode;
+@end
+
 @implementation LRGameScene
 
 #pragma mark - Initialization and Set Up
@@ -24,6 +31,15 @@
     return self;
 }
 
++ (SKEffectNode *)blurEffectNode
+{
+    SKEffectNode *node = [SKEffectNode node];
+    [node setShouldEnableEffects:NO];
+    CIFilter *blur = [CIFilter filterWithName:@"CIGaussianBlur" keysAndValues:@"inputRadius", @1.0f, nil];
+    [node setFilter:blur];
+    return node;
+}
+
 - (void)didMoveToView:(SKView *)view
 {
     [self setScaleMode:SKSceneScaleModeAspectFit];
@@ -34,7 +50,9 @@
     self.gamePlayLayer = [[LRGamePlayLayer alloc] init];
     
     //[self addChild:self.backgroundLayer];
-    [self addChild:self.gamePlayLayer];
+    self.rootEffectNode = [LRGameScene blurEffectNode];
+    [self.rootEffectNode addChild:self.gamePlayLayer];
+    [self addChild:self.rootEffectNode];
 }
 
 - (void)setUpPhysics
@@ -112,6 +130,26 @@
             }
         }
     }];
+
+}
+
+#pragma mark - Blur View
+-(void)blurSceneWithCompletion:(void (^)())handler
+{
+    [[self rootEffectNode] setShouldRasterize:NO];
+    [[self rootEffectNode] setShouldEnableEffects:YES];
+    [[self rootEffectNode] runAction:[SKAction customActionWithDuration:kLRGameSceneBlurEffectDuration actionBlock:^(SKNode *node, CGFloat elapsedTime){
+        NSNumber *radius = [NSNumber numberWithFloat:(elapsedTime/kLRGameSceneBlurEffectDuration) * kLRGameSceneBlurEffectIntensity];
+        [[(SKEffectNode *)node filter] setValue:radius forKey:@"inputRadius"];
+    }] completion:handler];
+}
+
+-(void)unblurSceneWithCompletion:(void (^)())handler
+{
+    [[self rootEffectNode] runAction:[SKAction customActionWithDuration:kLRGameSceneBlurEffectDuration actionBlock:^(SKNode *node, CGFloat elapsedTime){
+        NSNumber *radius = [NSNumber numberWithFloat:(1 - elapsedTime/kLRGameSceneBlurEffectDuration) * kLRGameSceneBlurEffectIntensity];
+        [[(SKEffectNode *)node filter] setValue:radius forKey:@"inputRadius"];
+    }] completion:handler];
 
 }
 #pragma mark - Scene Getters
