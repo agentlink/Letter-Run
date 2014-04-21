@@ -30,11 +30,18 @@
 
     //Animate its appearance
     self.view.backgroundColor = [UIColor clearColor];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
     [UIView animateWithDuration:.4 animations:^{
         self.view.backgroundColor = [UIColor colorWithWhite:.5 alpha:.7];
     }];
-    
-    
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    self.view.backgroundColor = [UIColor clearColor];
 }
 
 - (void)didReceiveMemoryWarning
