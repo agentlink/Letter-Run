@@ -11,6 +11,7 @@
 #import "LRLetterBlockBuilder.h"
 #import "LRSlotManager.h"
 #import "LRDifficultyManager.h"
+#import "LRPositionConstants.h"
 
 static const CGFloat kMailmanAreaWidth          = 70.0;
 
@@ -19,9 +20,10 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
 //Children
 @property SKSpriteNode *backgroundImage;
 //Slot logic
-@property LRSlotManager *letterSlotManager;
+@property LRSlotManager *slotManager;
 @property NSMutableArray *envelopesOnScreen;
 @property LRMovingBlockBuilder *envelopeBuilder;
+@property int envelopeZPosition;
 
 @end
 
@@ -33,13 +35,14 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
     if (self = [super initWithSize:size])
     {
         self.envelopesOnScreen = [NSMutableArray new];
-        self.letterSlotManager = [LRSlotManager new];
+        self.slotManager = [LRSlotManager new];
         self.envelopeTouchEnabled = YES;
         
         self.envelopeBuilder = [LRMovingBlockBuilder shared];
         self.envelopeBuilder.screenDelegate = self;
         [self addChild:self.envelopeBuilder];
         [self.envelopeBuilder startMovingBlockGeneration];
+        self.envelopeZPosition = zPos_MovingEnvelope_Initial;
     }
     return self;
 }
@@ -61,7 +64,7 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
 #pragma mark Letter Addition and Removal
 - (void)clearMainGameSection
 {
-    [self.letterSlotManager resetSlots];
+    [self.slotManager resetLastSlot];
     [self removeChildrenInArray:self.envelopesOnScreen];
     [self.envelopesOnScreen removeAllObjects];
 }
@@ -72,7 +75,7 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
 - (void)addMovingBlockToScreen:(LRMovingEnvelope *)movingBlock
 {
     //Add the object to the slot manager
-    [self.letterSlotManager addEnvelope:movingBlock];
+    movingBlock.slot = [self.slotManager generateNextSlot];
     movingBlock.touchDelegate = self;
     [self.envelopesOnScreen addObject:movingBlock];
     [self addChild:movingBlock];
@@ -123,6 +126,8 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
     self.envelopeBuilder.paused = NO;
 }
 
+#pragma mark - Helper Methods
+
 - (void)setEnvelopeTouchEnabled:(BOOL)envelopeTouchEnabled
 {
     _envelopeTouchEnabled = envelopeTouchEnabled;
@@ -130,5 +135,13 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
         envelope.userInteractionEnabled = envelopeTouchEnabled;
     }
 }
+
+- (CGFloat)zPositionForNextEnvelope
+{
+    CGFloat retVal = self.envelopeZPosition;
+    self.envelopeZPosition += zDiff_Envelope_Envelope;
+    return retVal;
+}
+
 
 @end

@@ -36,7 +36,6 @@ static const float kParallaxHeightGrass               =       26.6;
 //Letter constants
 static const int kWordMinimumLetterCount        =       3;
 static const int kWordMaximumLetterCount        =       7;
-static const int kNumberOfSlots                 =       4;
 
 
 //Timing constants

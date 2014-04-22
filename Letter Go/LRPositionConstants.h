@@ -16,7 +16,7 @@ static const float zPos_LetterSectionBarrier_Hor = 200;
 
 static const float zPos_SectionBlock_Unselected = 1;
 static const float zPos_SectionBlock_Selected = 210;
-static const float zPos_FallingEnvelope = 35;
+static const float zPos_MovingEnvelope_Initial = 35;
 
 //TODO: remove when background changes
 static const float zPos_SkyLayer = 10;
