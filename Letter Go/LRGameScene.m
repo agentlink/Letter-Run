@@ -149,7 +149,10 @@ static CGFloat const kLRGameSceneBlurEffectDuration = .4;
     [[self rootEffectNode] runAction:[SKAction customActionWithDuration:kLRGameSceneBlurEffectDuration actionBlock:^(SKNode *node, CGFloat elapsedTime){
         NSNumber *radius = [NSNumber numberWithFloat:(1 - elapsedTime/kLRGameSceneBlurEffectDuration) * kLRGameSceneBlurEffectIntensity];
         [[(SKEffectNode *)node filter] setValue:radius forKey:@"inputRadius"];
-    }] completion:handler];
+    }] completion:^{
+        [[self rootEffectNode] setShouldEnableEffects:NO];
+        handler();
+    }];
 
 }
 #pragma mark - Scene Getters
