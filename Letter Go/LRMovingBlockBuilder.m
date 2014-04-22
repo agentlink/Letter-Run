@@ -14,7 +14,7 @@
 //#toy
 static CGFloat const kLRMovingBlockBuilderIntialDropInterval = 1.0;
 static CGFloat const kLRMovingBlockBuilderIntervalRatio = 1.15;
-static CGFloat const kLRMovingBlockBuilderCrossTime = 3.0;
+static CGFloat const kLRMovingBlockBuilderCrossTime = 3.5;
 @implementation LRMovingBlockBuilder
 
 #pragma mark - Public Functions
@@ -55,10 +55,16 @@ static LRMovingBlockBuilder *_shared = nil;
 {
     LRMovingEnvelope *envelope = [LRLetterBlockBuilder createRandomEnvelope];
     //TODO: get duration from some calculation
-    SKAction *moveAcrossScreen = [SKAction moveBy:CGVectorMake(-SCREEN_WIDTH, 0) duration:kLRMovingBlockBuilderCrossTime];
-    
+    CGFloat distance = SCREEN_WIDTH + kCollectedEnvelopeSpriteDimension;
+    SKAction *moveAcrossScreen = [SKAction moveBy:CGVectorMake(-distance, 0) duration:kLRMovingBlockBuilderCrossTime];
     [self.screenDelegate addMovingBlockToScreen:envelope];
-    [envelope runAction:moveAcrossScreen completion:^{
+    [envelope runAction:moveAcrossScreen];
+    
+    //Determines when the collection animation runs
+    CGFloat collectionPause = kLRMovingBlockBuilderCrossTime* (SCREEN_WIDTH/distance);
+    SKAction *pauseForCollectionCheck = [SKAction waitForDuration:collectionPause];
+    
+    [envelope runAction:pauseForCollectionCheck completion:^{
         SKAction *removalAction = envelope.selected ? [LRMovingBlockBuilder _collectedAction] : [LRMovingBlockBuilder _discardedAction];
         [envelope runAction:removalAction completion:^{
             if (envelope.selected) {
