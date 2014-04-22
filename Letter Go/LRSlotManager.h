@@ -11,11 +11,12 @@
 #import <Foundation/Foundation.h>
 #import "LRMovingEnvelope.h"
 
-static const int kSlotHistoryCapacity = 5;
-
+static const int kLRSlotManagerNumberOfSlots = 4;
 @interface LRSlotManager : NSObject
 
-- (void)resetSlots;
-- (void)addEnvelope:(LRMovingEnvelope *)envelope;
+///Returns the slot that the next letter should be in
+- (int)generateNextSlot;
+///Resets the slot values. Call this after a game over
+- (void)resetLastSlot;
 
 @end

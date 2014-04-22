@@ -84,7 +84,6 @@
 		A88CEB20189D87C600092C8A /* LREnvelopeAnimationBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = A88CEB1F189D87C600092C8A /* LREnvelopeAnimationBuilder.m */; };
 		A88DE67118DE1DCB00282AA8 /* LRMailmanArea.m in Sources */ = {isa = PBXBuildFile; fileRef = A88DE67018DE1DCB00282AA8 /* LRMailmanArea.m */; };
 		A8B6B7221903243600E130A6 /* LRMovingBlockBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B6B7211903243600E130A6 /* LRMovingBlockBuilder.m */; };
-		A8E60A131881E25F00F60DF4 /* LRCappedStack.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E60A121881E25F00F60DF4 /* LRCappedStack.m */; };
 		A8E60A161881F6E300F60DF4 /* LRSlotManager_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E60A151881F6E300F60DF4 /* LRSlotManager_Test.m */; };
 		A8F171CB18DF7C5B00964C34 /* Scenery.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8F171CA18DF7C5B00964C34 /* Scenery.xcassets */; };
 		A8F171CD18DF7D4C00964C34 /* Letters.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8F171CC18DF7D4C00964C34 /* Letters.xcassets */; };
@@ -239,10 +238,7 @@
 		A88DE67018DE1DCB00282AA8 /* LRMailmanArea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRMailmanArea.m; sourceTree = "<group>"; };
 		A8B6B7201903243600E130A6 /* LRMovingBlockBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRMovingBlockBuilder.h; sourceTree = "<group>"; };
 		A8B6B7211903243600E130A6 /* LRMovingBlockBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRMovingBlockBuilder.m; sourceTree = "<group>"; };
-		A8E60A111881E25F00F60DF4 /* LRCappedStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRCappedStack.h; sourceTree = "<group>"; };
-		A8E60A121881E25F00F60DF4 /* LRCappedStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRCappedStack.m; sourceTree = "<group>"; };
 		A8E60A151881F6E300F60DF4 /* LRSlotManager_Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRSlotManager_Test.m; sourceTree = "<group>"; };
-		A8E60A171881F89300F60DF4 /* LRSlotManager_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LRSlotManager_Private.h; sourceTree = "<group>"; };
 		A8F171CA18DF7C5B00964C34 /* Scenery.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Scenery.xcassets; sourceTree = "<group>"; };
 		A8F171CC18DF7D4C00964C34 /* Letters.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Letters.xcassets; sourceTree = "<group>"; };
 		A8F171CE18DF7D9300964C34 /* Buttons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Buttons.xcassets; sourceTree = "<group>"; };
@@ -718,7 +714,6 @@
 			isa = PBXGroup;
 			children = (
 				A82CA94A1855189F004ADD99 /* LRSlotManager.h */,
-				A8E60A171881F89300F60DF4 /* LRSlotManager_Private.h */,
 				A82CA94B1855189F004ADD99 /* LRSlotManager.m */,
 				00F6F59517FF5234009EDADB /* LRGameStateManager.h */,
 				00F6F59617FF5234009EDADB /* LRGameStateManager.m */,
@@ -734,8 +729,6 @@
 				00076E66186F819000287EF9 /* LRFont.m */,
 				00076E62186F798200287EF9 /* LRColor.h */,
 				00076E63186F798200287EF9 /* LRColor.m */,
-				A8E60A111881E25F00F60DF4 /* LRCappedStack.h */,
-				A8E60A121881E25F00F60DF4 /* LRCappedStack.m */,
 			);
 			name = "Class Extensions";
 			sourceTree = "<group>";
@@ -903,7 +896,6 @@
 				00AC2807182EE1A300B3C0EB /* LRDifficultyManager+Notifications.m in Sources */,
 				00641EB3182D7BFF0098EC38 /* LRSliderLabelView.m in Sources */,
 				0049695517F8A75B00176F2D /* LRLetterBlockBuilder.m in Sources */,
-				A8E60A131881E25F00F60DF4 /* LRCappedStack.m in Sources */,
 				008428F318009F6300908E5D /* LRLetterGenerator.m in Sources */,
 				008428F61801EABB00908E5D /* LRSubmitButton.m in Sources */,
 				0049695917F8AB5D00176F2D /* LRCollisionManager.m in Sources */,

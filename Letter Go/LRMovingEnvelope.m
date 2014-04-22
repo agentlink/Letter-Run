@@ -8,6 +8,7 @@
 
 #import "LRMovingEnvelope.h"
 #import "LREnvelopeAnimationBuilder.h"
+#import "LRSlotManager.h"
 
 static CGFloat const kLRMovingBlockBetweenEnvelopeOffset = 94.5;
 static CGFloat const kLRMovingBlockBottomOffset = 3.0;
@@ -70,7 +71,7 @@ static CGFloat const kLRMovingBlockTouchSizeExtraHeight = 35.0;
 
 + (CGPoint)positionForSlot:(NSUInteger)slot
 {
-    NSAssert(slot < kNumberOfSlots, @"Slot %i exceeds the proper number of slots", slot);
+    NSAssert(slot < kLRSlotManagerNumberOfSlots, @"Slot %i exceeds the proper number of slots", slot);
     
     CGFloat lowestPosition = kLRMovingBlockLowestPoint;
     CGFloat betweenEnvelopeBuffer = kLRMovingBlockBetweenEnvelopeOffset;
