@@ -87,14 +87,8 @@ static LRGameStateManager *_shared = nil;
 
 - (void)_newGame:(NSNotification *)notification
 {
-    LRGamePlayLayer *gpl = [self.gameScene gamePlayLayer];
-    if ([[[notification userInfo] objectForKey:@"devpause"] boolValue]) {
-        [gpl.mainGameSection removeAllActions];
-    }
-    
     [[LRDifficultyManager shared] setLevel:1];
     [self.gameScene setGameState:LRGameStateNewGame];
-
 }
 
 - (void)_gameOver:(NSNotification *)notification
