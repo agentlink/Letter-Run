@@ -13,7 +13,7 @@
 
 //#toy
 static CGFloat const kLRMovingBlockBuilderIntialDropInterval = 1.0;
-static CGFloat const kLRMovingBlockBuilderIntervalRatio = 1.15;
+static CGFloat const kLRMovingBlockBuilderIntervalRatio = 1.1;
 static CGFloat const kLRMovingBlockBuilderCrossTime = 3.5;
 @implementation LRMovingBlockBuilder
 
@@ -49,6 +49,20 @@ static LRMovingBlockBuilder *_shared = nil;
     [self removeAllActions];
 }
 
+
+- (CGFloat)blockGenerationInterval
+{
+    return [LRMovingBlockBuilder _envelopeGenerationIntervalForLevel:[[LRDifficultyManager shared] level]];
+}
+
+///Returns how long it takes the block to move across the screen
+- (CGFloat)blockScreenCrossTime
+{
+    return kLRMovingBlockBuilderCrossTime;
+}
+
+
+
 #pragma mark - Private Functions
 
 - (void)_generateEnvelope
@@ -56,7 +70,7 @@ static LRMovingBlockBuilder *_shared = nil;
     LRMovingEnvelope *envelope = [LRLetterBlockBuilder createRandomEnvelope];
     //TODO: get duration from some calculation
     CGFloat distance = SCREEN_WIDTH + kCollectedEnvelopeSpriteDimension;
-    SKAction *moveAcrossScreen = [SKAction moveBy:CGVectorMake(-distance, 0) duration:kLRMovingBlockBuilderCrossTime];
+    SKAction *moveAcrossScreen = [SKAction moveBy:CGVectorMake(-distance, 0) duration:[self blockScreenCrossTime]];
     [self.screenDelegate addMovingBlockToScreen:envelope];
     [envelope runAction:moveAcrossScreen];
     
@@ -65,7 +79,7 @@ static LRMovingBlockBuilder *_shared = nil;
     SKAction *pauseForCollectionCheck = [SKAction waitForDuration:collectionPause];
     
     [envelope runAction:pauseForCollectionCheck completion:^{
-        SKAction *removalAction = envelope.selected ? [LRMovingBlockBuilder _collectedAction] : [LRMovingBlockBuilder _discardedAction];
+        SKAction *removalAction = envelope.selected ? [self _collectedAction] : [self _discardedAction];
         [envelope runAction:removalAction completion:^{
             if (envelope.selected) {
                 [self.letterAdditionDelegate addEnvelopeToLetterSection:envelope];
@@ -80,16 +94,16 @@ static LRMovingBlockBuilder *_shared = nil;
     return kLRMovingBlockBuilderIntialDropInterval/powf(kLRMovingBlockBuilderIntervalRatio, level - 1);
 }
 
-+ (SKAction *)_collectedAction
+- (SKAction *)_collectedAction
 {
     SKAction *fade = [SKAction fadeAlphaTo:0 duration:.3];
     return fade;
 }
 
-+ (SKAction *)_discardedAction
+- (SKAction *)_discardedAction
 {
     SKAction *moveOff = [SKAction moveBy:CGVectorMake(-kCollectedEnvelopeSpriteDimension, 0)
-                                duration:kLRMovingBlockBuilderCrossTime * (SCREEN_WIDTH/kCollectedEnvelopeSpriteDimension)];
+                                duration:[self blockScreenCrossTime] * (SCREEN_WIDTH/kCollectedEnvelopeSpriteDimension)];
     return moveOff;
 }
 

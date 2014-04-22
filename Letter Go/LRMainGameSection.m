@@ -50,8 +50,7 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
 - (void)createSectionContent
 {
     //Background
-    self.backgroundImage = [[SKSpriteNode alloc] initWithImageNamed:@"mainSection-background"];
-    self.backgroundImage.size = self.size;
+    self.backgroundImage = [[SKSpriteNode alloc] initWithColor:[LRColor mainScreenRoad] size:self.size];
     [self addChild:self.backgroundImage];
     
     //Mailman section
@@ -59,6 +58,30 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
     mailmanArea.position = (CGPoint){(mailmanArea.size.width - self.size.width)/2, 0};
     self.mailmanArea = mailmanArea;
     [self addChild:self.mailmanArea];
+    
+    [self _addStripes];
+}
+
+- (void)_addStripes
+{
+    CGFloat diffY = kSectionHeightMainSection / (kLRSlotManagerNumberOfSlots + 1);
+    CGFloat diffX = 100;
+    CGFloat startY = diffY - self.size.height/2;
+    CGFloat xPos = (self.size.width - diffX)/2;
+    CGFloat yPos = startY;
+    int stripesPerRow = self.size.width/diffX + 1;
+    
+    for (int j = 0; j < stripesPerRow; j++) {
+        for (int i = 0; i < kLRSlotManagerNumberOfSlots; i++)
+        {
+            SKSpriteNode *stripe = [[SKSpriteNode alloc ] initWithImageNamed:@"mainSection-stripe"];
+            [self addChild:stripe];
+            stripe.position = CGPointMake(xPos, yPos);
+            yPos += diffY;
+        }
+        xPos -= diffX;
+        yPos = startY;
+    }
 }
 
 #pragma mark Letter Addition and Removal

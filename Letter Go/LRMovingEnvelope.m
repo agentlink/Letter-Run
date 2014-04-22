@@ -10,12 +10,8 @@
 #import "LREnvelopeAnimationBuilder.h"
 #import "LRSlotManager.h"
 
-static CGFloat const kLRMovingBlockBetweenEnvelopeOffset = 94.5;
-static CGFloat const kLRMovingBlockBottomOffset = 3.0;
 static CGFloat const kLRMovingBlockTouchSizeExtraWidth = 25.0;
 static CGFloat const kLRMovingBlockTouchSizeExtraHeight = 35.0;
-
-#define kLRMovingBlockLowestPoint  (-kSectionHeightMainSection/2) + 42
 
 @interface LRMovingEnvelope ()
 @property (nonatomic, strong) SKSpriteNode *glow;
@@ -73,10 +69,10 @@ static CGFloat const kLRMovingBlockTouchSizeExtraHeight = 35.0;
 {
     NSAssert(slot < kLRSlotManagerNumberOfSlots, @"Slot %i exceeds the proper number of slots", slot);
     
-    CGFloat lowestPosition = kLRMovingBlockLowestPoint;
-    CGFloat betweenEnvelopeBuffer = kLRMovingBlockBetweenEnvelopeOffset;
+    CGFloat yDiff = kSectionHeightMainSection/(kLRSlotManagerNumberOfSlots + 1);
+    CGFloat lowestPosition = 0 - kSectionHeightMainSection/2 + yDiff * .5;
     CGFloat xPos = SCREEN_WIDTH/2 + kMovingEnvelopeSpriteDimension;
-    CGFloat yPos = lowestPosition + kLRMovingBlockBottomOffset + betweenEnvelopeBuffer * slot;
+    CGFloat yPos = lowestPosition + yDiff * slot;
     
     return CGPointMake(xPos, yPos);
 }
