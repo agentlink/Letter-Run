@@ -87,8 +87,9 @@
 
 - (void)_restartGame
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_NEW_GAME object:nil userInfo:nil];
-
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:TRUE] forKey:@"devpause"];
+    [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_GAME_OVER object:nil userInfo:userInfo];
+    [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_NEW_GAME object:nil userInfo:userInfo];
 }
 /*
 #pragma mark - Navigation
