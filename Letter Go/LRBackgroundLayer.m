@@ -8,77 +8,92 @@
 
 #import "LRPositionConstants.h"
 #import "LRBackgroundLayer.h"
-#import "LRParallaxNode.h"
-#import "LRCloudLayer.h"
-#import "LRParallaxNode_SmallSprite.h"
-#import "LRParallaxManager.h"
+#import "LRSlotManager.h"
+#import "LRMainGameSection.h"
+
+//Number of seconds it takes for stripes to cross teh screen at level one
+static CGFloat kLRBackgroundLayerStripeInitialSpeed = 3.0;
 
 @interface LRBackgroundLayer ()
-@property LRParallaxManager *parallaxManager;
-@property NSMutableArray *backgroundLayers;
+@property SKSpriteNode *mainGameSectionBackground;
+@property (nonatomic, weak) NSArray *roadStripes;
 @end
 
 @implementation LRBackgroundLayer
 
 - (id) init
 {
-    if (self = [super init])
+    if (self = [super initWithColor:[UIColor clearColor] size:CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT)])
     {
-        CGFloat backgroundHeight = SCREEN_HEIGHT - kSectionHeightLetterSection;
-        CGFloat backgroundWidth = SCREEN_WIDTH;
-        CGFloat backgroundXPos = self.size.width/2;
-        CGFloat backgroundYPos = (SCREEN_HEIGHT + kSectionHeightLetterSection)/2;
-
-        [self setSize:CGSizeMake(backgroundWidth, backgroundHeight)];
-        [self setPosition:CGPointMake(backgroundXPos, backgroundYPos)];
-        [self setUserInteractionEnabled:NO];
-        
-        self.name = NAME_LAYER_BACKGROUND;
-        [self createLayerContents];
+        [self setPosition:CGPointMake(self.size.width/2, self.size.height/2)];
+        self.mainGameSectionBackground = [[SKSpriteNode alloc] initWithColor:[LRColor mainScreenRoad]
+                                                                        size:CGSizeMake(SCREEN_WIDTH, kSectionHeightMainSection)];
+        self.roadStripes = [self _stripesForRoadSprite:self.mainGameSectionBackground];
+        [self createSectionContent];
     }
     return self;
 }
 
-- (void)createLayerContents
+- (void)createSectionContent
 {
-    self.parallaxManager = [[LRParallaxManager alloc] init];
-    [self addChild:self.parallaxManager];
-    [self.parallaxManager addParallaxNode:[[LRCloudLayer alloc] init]
-                                  toIndex:BackgroundIndex_Sky];
-    [self.parallaxManager addParallaxNode:[LRParallaxNode nodeWithImageNamed:@"Background_Mountains.png"]
-                                  toIndex:BackgroundIndex_Mountains];
-    [self.parallaxManager addParallaxNode:[LRParallaxNode nodeWithImageNamed:@"Background_Hills.png"]
-                                  toIndex:BackgroundIndex_Hills];
-    [self.parallaxManager addParallaxNode:[LRParallaxNode_SmallSprite nodeWithImageNamed:@"Background_Grass2.png"]
-                                  toIndex:BackgroundIndex_Grass];
+    //TODO: Fix how this is done
+    CGFloat mainGameSectionXPos = 0;
+    CGFloat mainGameSectionYPos = (kSectionHeightLetterSection + kSectionHeightHealthSection + kSectionHeightButtonSection)/2;
+    self.mainGameSectionBackground.position = CGPointMake(mainGameSectionXPos, mainGameSectionYPos);
+    [self addChild:self.mainGameSectionBackground];
+    for (SKSpriteNode *stripe in self.roadStripes) {
+        [self.mainGameSectionBackground addChild:stripe];
+    }
+    [self startStripeMovement];
+}
+
+- (NSArray *)_stripesForRoadSprite:(SKSpriteNode *)road
+{
+    NSMutableArray *allStripes = [NSMutableArray new];
+    CGFloat diffY = road.size.height / (kLRSlotManagerNumberOfSlots + 1);
+    CGFloat diffX = 100;
+    CGFloat startY = diffY - road.size.height/2;
+    CGFloat xPos = (road.size.width - diffX)/2;
+    CGFloat yPos = startY;
+    int stripesPerRow = road.size.width/diffX + 1;
     
-    for (int i = 0; i < [self.parallaxManager count]; i++)
-    {
-        LRParallaxNode *layer = [self.parallaxManager objectAtIndex:i];
-        [layer setScale:.5];
-        CGFloat grassHeightOffset = -2;
-        switch (i) {
-            case BackgroundIndex_Sky:
-                layer.zPosition = zPos_SkyLayer;
-                break;
-            case BackgroundIndex_Mountains:
-                layer.zPosition = zPos_MountainLayer;
-                break;
-            case BackgroundIndex_Hills:
-                layer.position = CGPointMake(layer.position.x, [layer repeatingSprite].size.height/4 - self.size.height/2);
-                layer.zPosition = zPos_HillsLayer;
-                break;
-            case BackgroundIndex_Grass:
-                layer.position = CGPointMake(layer.position.x, [layer repeatingSprite].size.height/4 - self.size.height/2 + kSectionHeightLetterSection + grassHeightOffset);
-                layer.zPosition = zPos_GrassLayer;
-                break;
-            default:
-                break;
+    for (int j = 0; j < stripesPerRow; j++) {
+        for (int i = 0; i < kLRSlotManagerNumberOfSlots; i++)
+        {
+            SKSpriteNode *stripe = [[SKSpriteNode alloc ] initWithImageNamed:@"mainSection-stripe"];
+            stripe.position = CGPointMake(xPos, yPos);
+            yPos += diffY;
+            [allStripes addObject:stripe];
         }
-        [self addChild:layer];
+        xPos -= diffX;
+        yPos = startY;
+    }
+    return allStripes;
+}
+
+- (void)startStripeMovement
+{
+    for (SKSpriteNode *stripe in self.roadStripes) {
+        [self _runRecursiveMovementOnStripe:stripe];
     }
 }
 
+- (void)_runRecursiveMovementOnStripe:(SKSpriteNode *)stripe
+{
+    SKAction *initialMove = [LRBackgroundLayer _movementForStripe:stripe];
+    [stripe runAction:initialMove completion:^{
+        stripe.position = CGPointMake(-(SCREEN_WIDTH/2 + stripe.size.width), stripe.position.y);
+        [self _runRecursiveMovementOnStripe:stripe];
+    }];
+}
 
-
++ (SKAction *)_movementForStripe:(SKSpriteNode *)stripe
+{
+    //Get how far the stripe is from the right edge
+    CGPoint endPoint = CGPointMake(SCREEN_WIDTH/2 + stripe.size.width, stripe.position.y);
+    CGFloat distance = endPoint.x - stripe.position.x;
+    CGFloat duration = (distance/SCREEN_WIDTH) * kLRBackgroundLayerStripeInitialSpeed;
+    
+    return [SKAction moveBy:CGVectorMake(distance, 0) duration:duration];
+}
 @end

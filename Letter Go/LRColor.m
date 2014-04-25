@@ -91,7 +91,7 @@
 }
 
 + (LRColor *)gamePlayLayerBackgroundColor {
-    return (LRColor *)[SKColor whiteColor];
+    return (LRColor *)[SKColor clearColor];
 }
 
 + (LRColor *)debugColor1 {

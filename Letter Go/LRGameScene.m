@@ -51,6 +51,7 @@ static CGFloat const kLRGameSceneBlurEffectDuration = .4;
     
     //[self addChild:self.backgroundLayer];
     self.rootEffectNode = [LRGameScene blurEffectNode];
+    [self.rootEffectNode addChild:self.backgroundLayer];
     [self.rootEffectNode addChild:self.gamePlayLayer];
     [self addChild:self.rootEffectNode];
 }
