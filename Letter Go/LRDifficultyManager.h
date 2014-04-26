@@ -20,13 +20,9 @@ typedef NS_ENUM(NSInteger, IncreaseStyle)  {
 
 + (LRDifficultyManager *)shared;
 
-- (NSInteger) loveLetterProbability;
 - (CGFloat) healthBarDropTime;
-- (CGFloat) parallaxSpeedFactor;
 
 @property NSDictionary *difficultyDict;
-//TODO: Remove this from difficulty manager
-@property NSInteger level;
 
 #pragma mark - Score Properties
 @property CGFloat scoreLengthFactor;

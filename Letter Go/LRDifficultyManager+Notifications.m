@@ -7,7 +7,6 @@
 //
 
 #import "LRDifficultyManager+Notifications.h"
-#import "LRParallaxManager.h"
 
 #define KEY_TYPE            @"type"
 #define KEY_VALUE           @"initialValue"
@@ -118,18 +117,6 @@
         
     [[NSUserDefaults standardUserDefaults] synchronize];
     [self loadUserDefaults];
-}
-
-- (NSArray *)loadParallaxLayerSpeeds
-{
-    //Load from data dict
-    NSMutableArray *layerSpeeds = [NSMutableArray array];
-    [layerSpeeds insertObject:[NSNumber numberWithFloat:.14] atIndex:BackgroundIndex_Sky];
-    [layerSpeeds insertObject:[NSNumber numberWithFloat:.36] atIndex:BackgroundIndex_Mountains];
-    [layerSpeeds insertObject:[NSNumber numberWithFloat:.56] atIndex:BackgroundIndex_Hills];
-    [layerSpeeds insertObject:[NSNumber numberWithFloat:.74] atIndex:BackgroundIndex_Grass];
-    
-    return layerSpeeds;
 }
 
 - (void)setUserDefaults

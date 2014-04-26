@@ -7,19 +7,16 @@
 //
 
 #import "LRScoreManager.h"
-
+#import "LRProgressManager.h"
 #import "LRGameScene.h"
 #import "LRDifficultyManager.h"
 
 @interface LRScoreManager ()
 @property (nonatomic) NSUInteger score;
-@property (readwrite) NSUInteger scoreToNextLevel;
-@property NSUInteger lastScoreToNextLevel;
-
 @end
 
 @implementation LRScoreManager
-@synthesize submittedWords, scoreToNextLevel;
+@synthesize submittedWords;
 static LRScoreManager *_shared = nil;
 
 + (LRScoreManager *)shared
@@ -52,12 +49,14 @@ static LRScoreManager *_shared = nil;
     self.score += wordScore;
     NSMutableDictionary *updatedWordDict = [NSMutableDictionary dictionaryWithDictionary:wordDict];
     [updatedWordDict setObject:[NSNumber numberWithInteger:wordScore] forKey:@"score"];
+    NSLog(@"%@", updatedWordDict);
     
     [submittedWords addObject:updatedWordDict];
     
     //Check for level progression
-    if (self.score >= scoreToNextLevel)
-        [self progressLevel];
+    if ([[LRProgressManager shared] increasedLevelForScore:self.score]) {
+        NSLog(@"Level %u", [[LRProgressManager shared] level]);
+    }
     return wordScore;
 }
 
@@ -98,32 +97,7 @@ static LRScoreManager *_shared = nil;
 
 - (void)_resetScoreForNewGame {
     self.score = 0;
-    scoreToNextLevel  = [[LRDifficultyManager shared] initialNextLevelScore];
     submittedWords = [NSMutableArray array];
-}
-
-- (void)progressLevel
-{
-    NSInteger level = [[LRDifficultyManager shared] level];
-    [[LRDifficultyManager shared] setLevel:level + 1];
-    
-    self.lastScoreToNextLevel = scoreToNextLevel;
-    IncreaseStyle levelScoreIncrease = [[LRDifficultyManager shared] levelScoreIncreaseStyle];
-    
-    //Increase the score needed for the next level based on the increase style
-    switch (levelScoreIncrease) {
-        case IncreaseStyle_None:
-            scoreToNextLevel += [[LRDifficultyManager shared] initialNextLevelScore];
-            break;
-        case IncreaseStyle_Linear:
-            scoreToNextLevel += self.lastScoreToNextLevel + [[LRDifficultyManager shared] levelScoreIncreaseFactor];
-            break;
-        case IncreaseStyle_Exponential:
-            scoreToNextLevel += self.lastScoreToNextLevel * [[LRDifficultyManager shared] levelScoreIncreaseFactor];
-            break;
-    }
-    NSLog(@"Level %lu", [[LRDifficultyManager shared] level]);
-    
 }
 
 #pragma mark - LRGameStateDelegate Methods

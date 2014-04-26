@@ -10,6 +10,7 @@
 #import "LRDevPauseSubView.h"
 #import "LRConstants.h"
 #import "LRDifficultyManager.h"
+#import "LRProgressManager.h"
 #import "LRScoreManager.h"
 #import "LRGameStateManager.h"
 #import "LRDictionaryChecker.h"
@@ -45,9 +46,8 @@
 #pragma mark - Labels
 - (void)loadLabelText
 {
-    levelLabel.text = [NSString stringWithFormat:@"%li", [[LRDifficultyManager shared] level]];
+    levelLabel.text = [NSString stringWithFormat:@"%li", [[LRProgressManager shared] level]];
     scoreLabel.text = [NSString stringWithFormat:@"%li", [[LRScoreManager shared] score]];
-    nextScoreLabel.text = [NSString stringWithFormat:@"%li", [[LRScoreManager shared] scoreToNextLevel]];
     //Make there only one fraction digit
     NSNumberFormatter *nf = [[NSNumberFormatter alloc] init];
     [nf setNumberStyle:NSNumberFormatterDecimalStyle];
@@ -80,7 +80,7 @@
 #pragma mark - Steppers
 - (void)loadSteppers
 {
-    levelStepper.value = [[LRDifficultyManager shared] level];
+    levelStepper.value = [[LRProgressManager shared] level];
     levelStepper.minimumValue = 1;
     levelStepper.maximumValue = 100;
     levelStepper.stepValue = 1;
@@ -92,8 +92,7 @@
 }
 
 - (IBAction) levelChanged:(UIStepper *)sender {
-    [[LRDifficultyManager shared] setLevel:(int)sender.value];
-    [self reloadValues];
+    NSLog(@"Sorry, changing the level doesn't work right now :(");
 }
 
 - (IBAction)healthChanged:(UIStepper *)sender

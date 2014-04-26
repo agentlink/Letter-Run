@@ -31,7 +31,6 @@ static LRDifficultyManager *_shared = nil;
 {
     if (self = [super init]) {
         [self loadDifficultyInfo];
-        self.level = 1;
         //Check to see if NSUserDefaults have been loaded
         if (![[NSUserDefaults standardUserDefaults] objectForKey:USER_DEFAULTS_LOADED]) {
             [self writeUserDefaults];
@@ -51,11 +50,6 @@ static LRDifficultyManager *_shared = nil;
 
 #pragma mark - Speed Factor Calculators
 
-- (CGFloat) parallaxSpeedFactor
-{
-    return self.baseParallaxPixelsPerSecond + self.scrollingSpeedIncrease * self.level;
-}
-
 - (CGFloat) healthBarDropTime
 {
     //Unit: letters allowed to drop without a response
@@ -64,11 +58,6 @@ static LRDifficultyManager *_shared = nil;
     if (healthSpeed < self.healthBarMinDropTime)
         return self.healthBarMinDropTime;
     return healthSpeed;
-}
-
-- (NSInteger) loveLetterProbability
-{
-    return self.percentLoveLetters;
 }
 
 @end

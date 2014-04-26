@@ -9,7 +9,7 @@
 #import "LRMovingBlockBuilder.h"
 #import "LRLetterBlockBuilder.h"
 #import "LRGameStateManager.h"
-#import "LRDifficultyManager.h"
+#import "LRProgressManager.h"
 
 //#toy
 static CGFloat const kLRMovingBlockBuilderIntialDropInterval = 1.0;
@@ -34,7 +34,7 @@ static LRMovingBlockBuilder *_shared = nil;
 
 - (void)startMovingBlockGeneration
 {
-    SKAction *delay = [SKAction waitForDuration:[LRMovingBlockBuilder _envelopeGenerationIntervalForLevel:[[LRDifficultyManager shared] level]]];
+    SKAction *delay = [SKAction waitForDuration:[self blockGenerationInterval]];
     SKAction *generate = [SKAction runBlock:^{
         [self _generateEnvelope];
     }];
@@ -49,19 +49,16 @@ static LRMovingBlockBuilder *_shared = nil;
     [self removeAllActions];
 }
 
-
 - (CGFloat)blockGenerationInterval
 {
-    return [LRMovingBlockBuilder _envelopeGenerationIntervalForLevel:[[LRDifficultyManager shared] level]];
+    NSUInteger level = [[LRProgressManager shared] level];
+    return kLRMovingBlockBuilderIntialDropInterval/powf(kLRMovingBlockBuilderIntervalRatio, level - 1);
 }
 
-///Returns how long it takes the block to move across the screen
 - (CGFloat)blockScreenCrossTime
 {
     return kLRMovingBlockBuilderCrossTime;
 }
-
-
 
 #pragma mark - Private Functions
 
@@ -87,11 +84,6 @@ static LRMovingBlockBuilder *_shared = nil;
             [self.screenDelegate removeMovingBlockFromScreen:envelope];
         }];
     }];
-}
-
-+ (CGFloat)_envelopeGenerationIntervalForLevel:(int)level
-{
-    return kLRMovingBlockBuilderIntialDropInterval/powf(kLRMovingBlockBuilderIntervalRatio, level - 1);
 }
 
 - (SKAction *)_collectedAction

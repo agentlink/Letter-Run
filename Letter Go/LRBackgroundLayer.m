@@ -10,9 +10,7 @@
 #import "LRBackgroundLayer.h"
 #import "LRSlotManager.h"
 #import "LRMainGameSection.h"
-
-//Number of seconds it takes for stripes to cross teh screen at level one
-static CGFloat kLRBackgroundLayerStripeInitialSpeed = 3.0;
+#import "LRMovingBlockBuilder.h"
 
 @interface LRBackgroundLayer ()
 @property SKSpriteNode *mainGameSectionBackground;
@@ -92,7 +90,9 @@ static CGFloat kLRBackgroundLayerStripeInitialSpeed = 3.0;
     //Get how far the stripe is from the right edge
     CGPoint endPoint = CGPointMake(SCREEN_WIDTH/2 + stripe.size.width, stripe.position.y);
     CGFloat distance = endPoint.x - stripe.position.x;
-    CGFloat duration = (distance/SCREEN_WIDTH) * kLRBackgroundLayerStripeInitialSpeed;
+    //Make the duration the same as the letter cross time
+    CGFloat totalCrossTime = [[LRMovingBlockBuilder shared] blockScreenCrossTime];
+    CGFloat duration = (distance/(SCREEN_WIDTH + stripe.size.width)) * totalCrossTime;
     
     return [SKAction moveBy:CGVectorMake(distance, 0) duration:duration];
 }
