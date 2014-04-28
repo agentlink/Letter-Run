@@ -10,7 +10,7 @@
 #import "LRGameScene.h"
 
 #import "LRDictionaryChecker.h"
-#import "LRDifficultyManager.h"
+#import "LRProgressManager.h"
 #import "LRScoreManager.h"
 
 @interface LRGameStateManager ()
@@ -87,7 +87,12 @@ static LRGameStateManager *_shared = nil;
 
 - (void)_newGame:(NSNotification *)notification
 {
-    [[LRDifficultyManager shared] setLevel:1];
+    LRGamePlayLayer *gpl = [self.gameScene gamePlayLayer];
+    if ([[[notification userInfo] objectForKey:@"devpause"] boolValue]) {
+        [gpl.mainGameSection removeAllActions];
+    }
+    
+    [[LRProgressManager shared] resetRoundProgress];
     [self.gameScene setGameState:LRGameStateNewGame];
 }
 

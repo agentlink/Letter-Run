@@ -16,13 +16,12 @@
 #import "LRDevPauseViewController.h"
 @interface LRGamePlayLayer : LRLayer
 
-@property (nonatomic, strong) LRHealthSection *healthSection;
-@property (nonatomic, strong) LRLetterSection *letterSection;
-@property (nonatomic, strong) LRMainGameSection *mainGameSection;
-@property (nonatomic, strong) LRButtonSection *buttonSection;
+@property (nonatomic, readonly) LRHealthSection *healthSection;
+@property (nonatomic, readonly) LRLetterSection *letterSection;
+@property (nonatomic, readonly) LRMainGameSection *mainGameSection;
 
-@property (nonatomic, strong) LRButton *pauseButton;
-
-@property (nonatomic, strong) LRDevPauseViewController *devPause;
+@property (nonatomic, readonly) LRButtonSection *buttonSection;
+@property (nonatomic, readonly) LRButton *pauseButton;
+@property (nonatomic, readonly) LRDevPauseViewController *devPause;
 
 @end

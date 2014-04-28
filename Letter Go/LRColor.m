@@ -56,6 +56,12 @@
     return (LRColor *)[SKColor blackColor];
 }
 
+//Main Screen Colors
++ (LRColor *)mainScreenRoad
+{
+    return [LRColor rgbColorWithRed:178 green:180 blue:165 alpha:1];
+}
+
 //Health Bar Colors
 + (LRColor *)healthBarColorGreen {
     return [LRColor rgbColorWithRed:0.0 green:192.0 blue:0.0 alpha:1.0];
@@ -85,7 +91,7 @@
 }
 
 + (LRColor *)gamePlayLayerBackgroundColor {
-    return (LRColor *)[SKColor whiteColor];
+    return (LRColor *)[SKColor clearColor];
 }
 
 + (LRColor *)debugColor1 {

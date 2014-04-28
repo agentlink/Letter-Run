@@ -13,8 +13,6 @@
 
 /// An array of the words that have bee submitted this round in teh order they were submitted
 @property (readonly) NSMutableArray *submittedWords;
-/// The score required for the palyer to reach the next level
-@property (readonly) NSUInteger scoreToNextLevel;
 /// Returns the player's current score
 @property (readonly) NSUInteger score;
 

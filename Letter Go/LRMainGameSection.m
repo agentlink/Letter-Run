@@ -49,17 +49,13 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
 
 - (void)createSectionContent
 {
-    //Background
-    self.backgroundImage = [[SKSpriteNode alloc] initWithImageNamed:@"mainSection-background"];
-    self.backgroundImage.size = self.size;
-    [self addChild:self.backgroundImage];
-    
     //Mailman section
     LRMailmanArea *mailmanArea = [[LRMailmanArea alloc] initWithSize:CGSizeMake(kMailmanAreaWidth, self.size.height)];
     mailmanArea.position = (CGPoint){(mailmanArea.size.width - self.size.width)/2, 0};
     self.mailmanArea = mailmanArea;
     [self addChild:self.mailmanArea];
 }
+
 
 #pragma mark Letter Addition and Removal
 - (void)clearMainGameSection

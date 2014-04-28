@@ -21,6 +21,13 @@
 @property NSTimeInterval nextDropTime;
 @property NSTimeInterval pauseTime;
 
+@property (nonatomic, strong) LRHealthSection *healthSection;
+@property (nonatomic, strong) LRLetterSection *letterSection;
+@property (nonatomic, strong) LRMainGameSection *mainGameSection;
+@property (nonatomic, strong) LRButtonSection *buttonSection;
+@property (nonatomic, strong) LRButton *pauseButton;
+@property (nonatomic, strong) LRDevPauseViewController *devPause;
+
 @end
 
 @implementation LRGamePlayLayer
@@ -86,7 +93,7 @@
         _mainGameSection = [[LRMainGameSection alloc] initWithSize:CGSizeMake(SCREEN_WIDTH, kSectionHeightMainSection)];
         _mainGameSection.position = CGPointMake(mainGameSectionXPos, mainGameSectionYPos);
         _mainGameSection.zPosition = zPos_MainGameSection;
-        _mainGameSection.color = [LRColor skyColor];
+        _mainGameSection.color = [LRColor clearColor];
     }
     return _mainGameSection;
 }

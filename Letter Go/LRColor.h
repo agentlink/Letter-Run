@@ -30,6 +30,9 @@
 + (LRColor *)submitButtonDisabledColor;
 + (LRColor *)submitButtonTextColor;
 
+//Main Screen Colors
++ (LRColor *)mainScreenRoad;
+
 //Other colors
 + (LRColor *)gameOverLabelColor;
 + (LRColor *)emptySlotColor;
