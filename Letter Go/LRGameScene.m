@@ -54,6 +54,8 @@ static CGFloat const kLRGameSceneBlurEffectDuration = .4;
     [self.rootEffectNode addChild:self.backgroundLayer];
     [self.rootEffectNode addChild:self.gamePlayLayer];
     [self addChild:self.rootEffectNode];
+    
+    [self _addGameStateDelegateListeners];
 }
 
 - (void)setUpPhysics
@@ -62,76 +64,42 @@ static CGFloat const kLRGameSceneBlurEffectDuration = .4;
     [self.physicsWorld setContactDelegate:[LRCollisionManager shared]];
 }
 
-- (void)setGameState:(LRGameState)gameState
+- (void)_addGameStateDelegateListeners
 {
-    switch (gameState) {
-        case LRGameStateNewGame:
-            [self newGame];
-            break;
-        case LRGameStateGameOver:
-            [self gameOver];
-            break;
-        default:
-            break;
-    }
-    _gameState = gameState;
+    [self enumerateChildNodesWithName:@"//*" usingBlock:^(SKNode *node, BOOL *stop) {
+        if ([node respondsToSelector:@selector(gameStateNewGame)]) {
+            [[NSNotificationCenter defaultCenter] addObserver:node selector:@selector(gameStateNewGame) name:GAME_STATE_NEW_GAME object:nil];
+        }
+        if ([node respondsToSelector:@selector(gameStateGameOver)]) {
+            [[NSNotificationCenter defaultCenter] addObserver:node selector:@selector(gameStateGameOver) name:GAME_STATE_GAME_OVER object:nil];
+        }
+        if ([node respondsToSelector:@selector(gameStatePaused)]) {
+            [[NSNotificationCenter defaultCenter] addObserver:node selector:@selector(gameStatePaused) name:GAME_STATE_PAUSE_GAME object:nil];
+        }
+        if ([node respondsToSelector:@selector(gameStateUnpaused)]) {
+            [[NSNotificationCenter defaultCenter] addObserver:node selector:@selector(gameStateUnpaused) name:GAME_STATE_CONTINUE_GAME object:nil];
+        }
+    }];
 }
-
 #pragma mark - LRGameStateDelegate methods
 
 - (void)update:(NSTimeInterval)currentTime
 {
-    [self enumerateChildNodesWithName:@"//*" usingBlock:^(SKNode *node, BOOL *stop) {
-        if ([node conformsToProtocol:@protocol(LRGameStateDelegate)])
-        {
-            SKNode <LRGameStateDelegate> *updatingNode = (SKNode <LRGameStateDelegate> *)node;
-            if (self.gameState == LRGameStatePauseGame) {
-                if ([updatingNode respondsToSelector:@selector(gameStatePaused:)])
-                    [updatingNode gameStatePaused:currentTime];
-            }
-            else if (self.gameState == LRGameStateUnpauseGame) {
-                if ([updatingNode respondsToSelector:@selector(gameStateUnpaused:)])
-                    [updatingNode gameStateUnpaused:currentTime];
-            }
-            else if ([updatingNode respondsToSelector:@selector(update:)]) {
+    for (NSString *nodeName in [LRGameScene _updateNodeNames]) {
+        NSString *regex = [NSString stringWithFormat:@"//%@", nodeName];
+        [self enumerateChildNodesWithName:regex usingBlock:^(SKNode *node, BOOL *stop) {
+            if ([node conformsToProtocol:@protocol(LRGameStateDelegate)])
+            {
+                SKNode <LRGameStateDelegate> *updatingNode = (SKNode <LRGameStateDelegate> *)node;
                 [updatingNode update:currentTime];
             }
-        }
-    }];
-    if (self.gameState == LRGameStateUnpauseGame) {
-        self.gameState = LRGameStatePlaying;
+        }];
     }
 }
 
-- (void)gameOver
++ (NSArray *)_updateNodeNames
 {
-    [self _sendAllNodesGameDelegateSelector:@selector(gameStateGameOver)];
-}
-
-- (void)newGame
-{
-    [self _sendAllNodesGameDelegateSelector:@selector(gameStateNewGame)];
-}
-
-- (void)_sendAllNodesGameDelegateSelector:(SEL)selector
-{
-    [self enumerateChildNodesWithName:@"//*" usingBlock:^(SKNode *node, BOOL *stop) {
-        if ([node conformsToProtocol:@protocol(LRGameStateDelegate)])
-        {
-            SKNode <LRGameStateDelegate> *updatingNode = (SKNode <LRGameStateDelegate> *)node;
-            if ([updatingNode respondsToSelector:selector] && selector) {
-            
-//                 NOTE: this is replacing the line below (and supressing a warning)
-//                [updatingNode performSelector:selector];
-//                 Article here: http://bit.ly/191N5Fh
-                
-                IMP imp = [updatingNode methodForSelector:selector];
-                void (*func)(id, SEL) = (void *)imp;
-                func(updatingNode, selector);
-            }
-        }
-    }];
-
+    return @[kLRGamePlayLayerHealthSectionName, kLRGamePlayLayerLetterSectionName];
 }
 
 #pragma mark - Blur View

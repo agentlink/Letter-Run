@@ -15,6 +15,10 @@
 #import "LRPositionConstants.h"
 #import "LRColor.h"
 
+NSString * const kLRGamePlayLayerHealthSectionName = @"healthSection";
+NSString * const kLRGamePlayLayerLetterSectionName = @"letterSection";
+
+
 @interface LRGamePlayLayer ()
 @property LRSlotManager *letterSlots;
 
@@ -70,6 +74,7 @@
         _healthSection = [[LRHealthSection alloc] initWithSize:CGSizeMake(self.size.width, kSectionHeightHealthSection)];
         _healthSection.position = CGPointMake(0, healthSectionYPos);
         _healthSection.zPosition = zPos_HealthSection;
+        _healthSection.name = kLRGamePlayLayerHealthSectionName;
     }
     return _healthSection;
 }
@@ -81,6 +86,7 @@
         _letterSection.position = CGPointMake(self.position.x - self.size.width/2,
                                               0 - self.size.height/2 + self.letterSection.size.height/2 + kSectionHeightButtonSection);
         _letterSection.zPosition = zPos_LetterSection;
+        _letterSection.name = kLRGamePlayLayerLetterSectionName;
     }
     return _letterSection;
 }

@@ -185,4 +185,9 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
     _isAtDeletionPoint = isAtDeletionPoint;
     [self.delegate deletabilityHasChangedTo:isAtDeletionPoint forLetterBlock:self];
 }
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 @end

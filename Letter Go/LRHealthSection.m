@@ -195,7 +195,7 @@ static const float kLRHealthSectionStartPercentYellow = .50;
 {
     [self _restartHealthBar];
 }
-- (void)gameStateUnpaused:(NSTimeInterval)currentTime
+- (void)gameStateUnpaused
 {
     self.initialTime = kGameLoopResetValue;
 }

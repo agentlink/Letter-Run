@@ -84,4 +84,9 @@
 {
     self.userInteractionEnabled = NO;
 }
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 @end

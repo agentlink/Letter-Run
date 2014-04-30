@@ -14,6 +14,10 @@
 #import "LRButton.h"
 #import "LRDevPauseMenuVC.h"
 #import "LRDevPauseViewController.h"
+
+extern NSString * const kLRGamePlayLayerHealthSectionName;
+extern NSString * const kLRGamePlayLayerLetterSectionName;
+
 @interface LRGamePlayLayer : LRLayer
 
 @property (nonatomic, readonly) LRHealthSection *healthSection;

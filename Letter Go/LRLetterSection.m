@@ -569,12 +569,12 @@ typedef void(^CompletionBlockType)(void);
     self.userInteractionEnabled = YES;
 }
 
-- (void)gameStatePaused:(NSTimeInterval)currentTime
+- (void)gameStatePaused
 {
     self.userInteractionEnabled = NO;
 }
 
-- (void)gameStateUnpaused:(NSTimeInterval)currentTime
+- (void)gameStateUnpaused
 {
     self.userInteractionEnabled = YES;
 }

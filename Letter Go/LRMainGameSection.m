@@ -106,7 +106,7 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
     self.envelopeTouchEnabled = NO;
 }
 
-- (void)gameStatePaused:(NSTimeInterval)currentTime
+- (void)gameStatePaused
 {
     [self enumerateChildNodesWithName:NAME_SPRITE_MOVING_ENVELOPE usingBlock:^(SKNode *node, BOOL *stop) {
         [node setUserInteractionEnabled:NO];
@@ -114,7 +114,7 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
     self.envelopeBuilder.paused = YES;
 }
 
-- (void)gameStateUnpaused:(NSTimeInterval)currentTime
+- (void)gameStateUnpaused
 {
     [self enumerateChildNodesWithName:NAME_SPRITE_MOVING_ENVELOPE usingBlock:^(SKNode *node, BOOL *stop) {
         [node setUserInteractionEnabled:YES];
