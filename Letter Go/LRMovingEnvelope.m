@@ -81,7 +81,7 @@ static CGFloat const kLRMovingBlockTouchSizeExtraHeight = 35.0;
 {
     BOOL placeholderBlock = [LRLetterBlock isLetterPlaceholder:letter];
     SKSpriteNode *envelopeSprite;
-    NSString *fileName = [self stringFromPaperColor:paperColor];
+    NSString *fileName = [LRMovingEnvelope stringFromPaperColor:paperColor];
     
     if (fileName) {
         envelopeSprite = [SKSpriteNode spriteNodeWithImageNamed:fileName];
@@ -112,16 +112,29 @@ static CGFloat const kLRMovingBlockTouchSizeExtraHeight = 35.0;
 
 - (void)setSelected:(BOOL)selected
 {
+    [self.envelopeSprite runAction:[self _selectedAnimation]];
     _selected = selected;
-    CGFloat bubbleScale = selected ? kLRCollectedEnvelopeBubbleScale : 1/kLRCollectedEnvelopeBubbleScale;
-    SKAction *bubbleAction = [LREnvelopeAnimationBuilder bubbleByScale:bubbleScale
-                                                          withDuration:kLRCollectedEnvelopeBubbleDuration];
-    [self runAction:bubbleAction];
 
-
-    [self _setGlowEnabled:selected];
+    
+//    [self _setGlowEnabled:selected];
 }
 
+- (SKAction *)_selectedAnimation
+{
+    NSMutableArray *textures = [NSMutableArray new];
+    NSString *baseTextureName = [LRMovingEnvelope stringFromPaperColor:self.paperColor];
+    int endCount = (self.selected) ? 1 : 4;
+    int startCount = (self.selected) ? 4 : 1;
+    int diff = (self.selected) ? -1 : 1;
+    for (int i = startCount; i != endCount + diff; i+= diff) {
+        NSString *textureName = [baseTextureName stringByReplacingCharactersInRange:NSMakeRange(baseTextureName.length - 1, 1)withString:[NSString stringWithFormat:@"%i", i]];
+        SKTexture *texture = [SKTexture textureWithImageNamed:textureName];
+        [textures addObject:texture];
+    }
+    
+    SKAction *animation = [SKAction animateWithTextures:textures timePerFrame:.04 resize:YES restore:NO];
+    return animation;
+}
 - (void)_setGlowEnabled:(BOOL)enabled
 {
     CGFloat fadedAlpha = 0.7;
@@ -137,17 +150,17 @@ static CGFloat const kLRMovingBlockTouchSizeExtraHeight = 35.0;
     
 }
 
-- (NSString *)stringFromPaperColor:(LRPaperColor)paperColor
++ (NSString *)stringFromPaperColor:(LRPaperColor)paperColor
 {
     switch (paperColor) {
         case kLRPaperColorBlue:
-            return @"envelope-blue";
+            return @"envelope-blue-1";
             break;
         case kLRPaperColorPink:
-            return @"envelope-pink";
+            return @"envelope-pink-1";
             break;
         case kLRPaperColorYellow:
-            return @"envelope-yellow";
+            return @"envelope-yellow-1";
             break;
         case kLRPaperColorNone:
             return @"envelope-glow";
