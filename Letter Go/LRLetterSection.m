@@ -142,27 +142,25 @@ typedef void(^CompletionBlockType)(void);
 
 - (void)runAddLetterAnimationWithEnvelope:(LRCollectedEnvelope *)origEnvelope
 {
-    LRMovingEnvelope *animatedEnvelope = [self _animatedEnvelopeForLetter:origEnvelope];
-    LRCollectedEnvelope *animatedLetter = [self _animatedCollectedLetterForLetter:origEnvelope];
+    LRMovingEnvelope *animatedEnvelope = [self _animatedMovingEnvelopeForLetter:origEnvelope];
     [self addChild:animatedEnvelope];
-    SKAction *moveUp = [SKAction moveByX:0 y:75 duration:.23];
-    SKAction *moveDown = [SKAction moveByX:0 y:-75 duration:.23];
-    [animatedEnvelope runAction:[SKAction sequence:@[moveUp, moveDown]] completion:^{[animatedEnvelope removeFromParent];}];
-    
+    SKAction *envelopeAction = [self _movingEnvelopeAnimationForEnvelope:animatedEnvelope];
 
-    SKAction *addEnvelopeAction = [LREnvelopeAnimationBuilder addLetterAnimation];
+    LRCollectedEnvelope *animatedLetter = [self _animatedCollectedLetterForLetter:origEnvelope];
+    [self addChild:animatedLetter];
+
+    SKAction *addEnvelopeAction = [self _collectedLetterAnimationForLetter:animatedLetter];
     SKAction *addLetterWithCompletion = [LREnvelopeAnimationBuilder actionWithCompletionBlock:addEnvelopeAction block:^{
-        //...remove it after the max bounce count
         origEnvelope.hidden = NO;
         [animatedLetter removeFromParent];
     }];
 
-    LRLetterSlot *parentSlot = self.letterSlots[origEnvelope.slotIndex];
-    [parentSlot addChild:animatedLetter];
+    
+    [animatedEnvelope runAction:envelopeAction completion:^{[animatedEnvelope removeFromParent];}];
     [animatedLetter runAction:addLetterWithCompletion withKey:kAddLetterAnimationName];
 }
 
-- (LRMovingEnvelope *)_animatedEnvelopeForLetter:(LRCollectedEnvelope *)letter
+- (LRMovingEnvelope *)_animatedMovingEnvelopeForLetter:(LRCollectedEnvelope *)letter
 {
     LRMovingEnvelope *animatedEnvelope = [LRMovingEnvelope movingBlockWithLetter:@"  " paperColor:letter.paperColor];
     animatedEnvelope.envelopeOpen = YES;
@@ -181,11 +179,46 @@ typedef void(^CompletionBlockType)(void);
     LRCollectedEnvelope *animatedLetter = [letter copy];
     animatedLetter.name = kTempCollectedEnvelopeName;
     animatedLetter.hidden = NO;
+    animatedLetter.userInteractionEnabled = NO;
+    animatedLetter.zPosition = 99;
+    LRLetterSlot *parentSlot = self.letterSlots[letter.slotIndex];
     
-    CGPoint letterDropPos = letter.position;
-    letterDropPos.y -= kCollectedEnvelopeSpriteDimension;
+    CGPoint letterDropPos = parentSlot.position;
+    letterDropPos.y -= kCollectedEnvelopeSpriteDimension + kSectionHeightButtonSection;
     animatedLetter.position = letterDropPos;
     return animatedLetter;
+}
+
+- (SKAction *)_movingEnvelopeAnimationForEnvelope:(LRMovingEnvelope *)envelope
+{
+    return [self _parabolicCurveActionWithSprite:envelope
+                                       maxHeight:-30
+                                        duration:1];
+}
+
+- (SKAction *)_collectedLetterAnimationForLetter:(LRCollectedEnvelope *)letter
+{
+    return [self _parabolicCurveActionWithSprite:letter
+                                       maxHeight:25
+                                        duration:1];
+}
+
+- (SKAction *)_parabolicCurveActionWithSprite:(SKSpriteNode *)node maxHeight:(CGFloat)maxHeight duration:(double) duration
+{
+    CGPoint yIntercept= CGPointMake(0, node.position.y);
+    CGPoint vertex = CGPointMake(duration/2, maxHeight);
+    double a = (yIntercept.y - vertex.y)/pow((yIntercept.x - vertex.x), 2);
+    
+    SKAction *parabola = [SKAction customActionWithDuration:duration actionBlock:^(SKNode *node, CGFloat elapsedTime) {
+        CGFloat y = quadratic_equation(a, vertex, elapsedTime);
+        node.position = CGPointMake(node.position.x, y);
+    }];
+    return parabola;
+}
+
+static inline double quadratic_equation (double a, CGPoint vertex, double x)
+{
+    return a * pow((x - vertex.x), 2) + vertex.y;
 }
 
 #pragma mark Deletion
