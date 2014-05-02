@@ -69,9 +69,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [UIView animateWithDuration:.4 animations:^{
-        self.view.backgroundColor = [UIColor colorWithWhite:.5 alpha:.7];
+        self.view.backgroundColor = [UIColor colorWithWhite:1.0 alpha:.5];
     }];
-    
+    NSLog(@"Pause blur time: %@", [NSDate date]);
 }
 
 - (void)viewWillDisappear:(BOOL)animated

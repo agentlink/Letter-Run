@@ -111,6 +111,7 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
     [self enumerateChildNodesWithName:NAME_SPRITE_MOVING_ENVELOPE usingBlock:^(SKNode *node, BOOL *stop) {
         [node setUserInteractionEnabled:NO];
     }];
+    self.paused = YES;
     self.envelopeBuilder.paused = YES;
 }
 
@@ -119,6 +120,7 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
     [self enumerateChildNodesWithName:NAME_SPRITE_MOVING_ENVELOPE usingBlock:^(SKNode *node, BOOL *stop) {
         [node setUserInteractionEnabled:YES];
     }];
+    self.paused = YES;
     self.envelopeBuilder.paused = NO;
 }
 

@@ -571,11 +571,13 @@ typedef void(^CompletionBlockType)(void);
 
 - (void)gameStatePaused
 {
+    self.paused = YES;
     self.userInteractionEnabled = NO;
 }
 
 - (void)gameStateUnpaused
 {
+    self.paused = NO;
     self.userInteractionEnabled = YES;
 }
 

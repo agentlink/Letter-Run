@@ -12,7 +12,7 @@
 
 @protocol LRMovingBlockBuilderDelegate;
 
-@interface LRMovingBlockBuilder : SKNode
+@interface LRMovingBlockBuilder : SKNode <LRGameStateDelegate>
 + (LRMovingBlockBuilder *)shared;
 @property (nonatomic, weak) id <LRMovingBlockBuilderDelegate> screenDelegate;
 @property (nonatomic, weak) id <LRLetterBlockControlDelegate> letterAdditionDelegate;

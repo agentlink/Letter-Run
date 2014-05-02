@@ -99,4 +99,18 @@ static LRMovingBlockBuilder *_shared = nil;
     return moveOff;
 }
 
+#pragma mark - Game State Delegate
+
+- (void)gameStatePaused
+{
+    self.paused = YES;
+}
+
+- (void)gameStateUnpaused
+{
+    self.paused = NO;
+}
+
+
+
 @end
