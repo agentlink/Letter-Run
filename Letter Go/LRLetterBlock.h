@@ -49,7 +49,6 @@ typedef NS_ENUM(NSInteger, LRPaperColor)
 - (id) initWithLetter:(NSString *)letter paperColor:(LRPaperColor)paperColor;
 
 #pragma Helper Functions
-- (NSString *) stringFromPaperColor:(LRPaperColor)paperColor;
 
 ///Returns YES if the letter is not a placeholder or and empty block
 + (BOOL)isLetterAlphabetical:(NSString *)letter;

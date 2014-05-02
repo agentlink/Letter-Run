@@ -25,6 +25,10 @@ static NSString* const kTempCollectedEnvelopeName = @"NAME_SPRITE_SECTION_LETTER
 - (BOOL) isCollectedEnvelopeEmpty;
 - (BOOL) isCollectedEnvelopePlaceholder;
 
+//Helper Functions
+- (NSString *)stringFromPaperColor:(LRPaperColor)paperColor;
+
+
 ///This is TRUE if the envelope is at a point wherein if it is not touched, it will be deleted
 @property (nonatomic) BOOL isAtDeletionPoint;
 @property (nonatomic, weak) id <LRLetterBlockControlDelegate> delegate;

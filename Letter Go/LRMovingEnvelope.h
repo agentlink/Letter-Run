@@ -15,8 +15,12 @@
 @property (nonatomic) NSUInteger slot;
 ///The player has selected the envelope while on the main game screen
 @property (nonatomic) BOOL selected;
+///If this is YES, show the open letter sprite
+@property (nonatomic) BOOL envelopeOpen;
 
 + (LRMovingEnvelope *)movingBlockWithLetter:(NSString *)letter paperColor:(LRPaperColor)paperColor;
++ (NSString *)stringFromPaperColor:(LRPaperColor)paperColor open:(BOOL)open;
+
 
 @end
 

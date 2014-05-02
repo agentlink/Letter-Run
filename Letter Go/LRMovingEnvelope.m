@@ -81,7 +81,7 @@ static CGFloat const kLRMovingBlockTouchSizeExtraHeight = 35.0;
 {
     BOOL placeholderBlock = [LRLetterBlock isLetterPlaceholder:letter];
     SKSpriteNode *envelopeSprite;
-    NSString *fileName = [LRMovingEnvelope stringFromPaperColor:paperColor];
+    NSString *fileName = [LRMovingEnvelope stringFromPaperColor:paperColor open:NO];
     
     if (fileName) {
         envelopeSprite = [SKSpriteNode spriteNodeWithImageNamed:fileName];
@@ -114,15 +114,18 @@ static CGFloat const kLRMovingBlockTouchSizeExtraHeight = 35.0;
 {
     [self.envelopeSprite runAction:[self _selectedAnimation]];
     _selected = selected;
+}
 
-    
-//    [self _setGlowEnabled:selected];
+- (void)setEnvelopeOpen:(BOOL)envelopeOpen
+{
+    self.envelopeSprite.texture = [SKTexture textureWithImageNamed:[LRMovingEnvelope stringFromPaperColor:self.paperColor open:envelopeOpen]];
+    _envelopeOpen = envelopeOpen;
 }
 
 - (SKAction *)_selectedAnimation
 {
     NSMutableArray *textures = [NSMutableArray new];
-    NSString *baseTextureName = [LRMovingEnvelope stringFromPaperColor:self.paperColor];
+    NSString *baseTextureName = [LRMovingEnvelope stringFromPaperColor:self.paperColor open:self.selected];
     int endCount = (self.selected) ? 1 : 4;
     int startCount = (self.selected) ? 4 : 1;
     int diff = (self.selected) ? -1 : 1;
@@ -150,25 +153,28 @@ static CGFloat const kLRMovingBlockTouchSizeExtraHeight = 35.0;
     
 }
 
-+ (NSString *)stringFromPaperColor:(LRPaperColor)paperColor
++ (NSString *)stringFromPaperColor:(LRPaperColor)paperColor open:(BOOL)open
 {
+    NSString *spriteName;
     switch (paperColor) {
         case kLRPaperColorBlue:
-            return @"envelope-blue-1";
+            spriteName = @"envelope-blue";
             break;
         case kLRPaperColorPink:
-            return @"envelope-pink-1";
+            spriteName = @"envelope-pink";
             break;
         case kLRPaperColorYellow:
-            return @"envelope-yellow-1";
+            spriteName = @"envelope-yellow";
             break;
         case kLRPaperColorNone:
-            return @"envelope-glow";
-            break;
-        default:
-            return nil;
+            spriteName = @"envelope-glow";
             break;
     }
+    if (paperColor != kLRPaperColorNone) {
+        int append = open ? 4 : 1;
+        spriteName = [spriteName stringByAppendingString:[NSString stringWithFormat:@"-%i", append]];
+    }
+    return spriteName;
 }
 
 @end

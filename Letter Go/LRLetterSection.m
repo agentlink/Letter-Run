@@ -142,24 +142,50 @@ typedef void(^CompletionBlockType)(void);
 
 - (void)runAddLetterAnimationWithEnvelope:(LRCollectedEnvelope *)origEnvelope
 {
-    LRCollectedEnvelope *animatedEnvelope = [origEnvelope copy];
-    animatedEnvelope.name = kTempCollectedEnvelopeName;
-    animatedEnvelope.hidden = NO;
+    LRMovingEnvelope *animatedEnvelope = [self _animatedEnvelopeForLetter:origEnvelope];
+    LRCollectedEnvelope *animatedLetter = [self _animatedCollectedLetterForLetter:origEnvelope];
+    [self addChild:animatedEnvelope];
+    SKAction *moveUp = [SKAction moveByX:0 y:75 duration:.23];
+    SKAction *moveDown = [SKAction moveByX:0 y:-75 duration:.23];
+    [animatedEnvelope runAction:[SKAction sequence:@[moveUp, moveDown]] completion:^{[animatedEnvelope removeFromParent];}];
     
-    CGPoint letterDropPos = origEnvelope.position;
-    letterDropPos.y -= kCollectedEnvelopeSpriteDimension;
-    animatedEnvelope.position = letterDropPos;
+
     SKAction *addEnvelopeAction = [LREnvelopeAnimationBuilder addLetterAnimation];
     SKAction *addLetterWithCompletion = [LREnvelopeAnimationBuilder actionWithCompletionBlock:addEnvelopeAction block:^{
         //...remove it after the max bounce count
         origEnvelope.hidden = NO;
-        [animatedEnvelope removeFromParent];
+        [animatedLetter removeFromParent];
     }];
 
     LRLetterSlot *parentSlot = self.letterSlots[origEnvelope.slotIndex];
-    [parentSlot addChild:animatedEnvelope];
-    [animatedEnvelope runAction:addLetterWithCompletion withKey:kAddLetterAnimationName];
+    [parentSlot addChild:animatedLetter];
+    [animatedLetter runAction:addLetterWithCompletion withKey:kAddLetterAnimationName];
+}
 
+- (LRMovingEnvelope *)_animatedEnvelopeForLetter:(LRCollectedEnvelope *)letter
+{
+    LRMovingEnvelope *animatedEnvelope = [LRMovingEnvelope movingBlockWithLetter:@"  " paperColor:letter.paperColor];
+    animatedEnvelope.envelopeOpen = YES;
+    LRLetterSlot *parentSlot = self.letterSlots[letter.slotIndex];
+
+    animatedEnvelope.userInteractionEnabled = NO;
+    CGPoint envelopeStartPos = parentSlot.position;
+    envelopeStartPos.y -= kCollectedEnvelopeSpriteDimension + kSectionHeightButtonSection;
+    animatedEnvelope.position = envelopeStartPos;
+    animatedEnvelope.zPosition = 100;
+    return animatedEnvelope;
+}
+
+- (LRCollectedEnvelope *)_animatedCollectedLetterForLetter:(LRCollectedEnvelope *)letter
+{
+    LRCollectedEnvelope *animatedLetter = [letter copy];
+    animatedLetter.name = kTempCollectedEnvelopeName;
+    animatedLetter.hidden = NO;
+    
+    CGPoint letterDropPos = letter.position;
+    letterDropPos.y -= kCollectedEnvelopeSpriteDimension;
+    animatedLetter.position = letterDropPos;
+    return animatedLetter;
 }
 
 #pragma mark Deletion
@@ -179,7 +205,6 @@ typedef void(^CompletionBlockType)(void);
     //TODO: Add assertsions
     
     /*
-     
      If you are shifting to the right, start from left side and set each slot to the value of the envelope on its right
      If you are shifting to the left, start from the right side and set each slot to the value of the envelope on its left
      */

@@ -58,12 +58,6 @@
     self.envelopeSprite.size = envelopeSize;
 }
 
-- (NSString *)stringFromPaperColor:(LRPaperColor)paperColor
-{
-    NSAssert(0, @"stringFromPaperColor should be overridden by subclass");
-    return nil;
-}
-
 #pragma mark - Children Set Up
 
 - (SKLabelNode *)letterLabel
