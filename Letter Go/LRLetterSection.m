@@ -191,33 +191,43 @@ typedef void(^CompletionBlockType)(void);
 
 - (SKAction *)_movingEnvelopeAnimationForEnvelope:(LRMovingEnvelope *)envelope
 {
-    return [self _parabolicCurveActionWithSprite:envelope
-                                       maxHeight:-30
-                                        duration:1];
-}
-
-- (SKAction *)_collectedLetterAnimationForLetter:(LRCollectedEnvelope *)letter
-{
-    return [self _parabolicCurveActionWithSprite:letter
-                                       maxHeight:25
-                                        duration:1];
-}
-
-- (SKAction *)_parabolicCurveActionWithSprite:(SKSpriteNode *)node maxHeight:(CGFloat)maxHeight duration:(double) duration
-{
-    CGPoint yIntercept= CGPointMake(0, node.position.y);
+    CGFloat duration = .8;
+    CGFloat maxHeight = -35.0;
+    CGPoint yIntercept= CGPointMake(0, envelope.position.y);
     CGPoint vertex = CGPointMake(duration/2, maxHeight);
     double a = (yIntercept.y - vertex.y)/pow((yIntercept.x - vertex.x), 2);
     
     SKAction *parabola = [SKAction customActionWithDuration:duration actionBlock:^(SKNode *node, CGFloat elapsedTime) {
-        CGFloat y = quadratic_equation(a, vertex, elapsedTime);
+        CGFloat y = quadratic_equation_y(a, vertex, elapsedTime);
         node.position = CGPointMake(node.position.x, y);
     }];
     return parabola;
 }
 
-static inline double quadratic_equation (double a, CGPoint vertex, double x)
+- (SKAction *)_collectedLetterAnimationForLetter:(LRCollectedEnvelope *)letter
 {
+    CGFloat duration = .8;
+    CGFloat midpoint = .58;
+    CGFloat maxHeight = 25.0;
+    CGPoint yIntercept= CGPointMake(duration, [self.letterSlots[letter.slotIndex] position].y);
+    CGPoint vertex = CGPointMake(midpoint, maxHeight);
+    double a = (yIntercept.y - vertex.y)/pow((yIntercept.x - vertex.x), 2);
+    __block BOOL crossedVertex;
+    __block CGFloat endY = [self.letterSlots[letter.slotIndex] position].y;
+    
+    SKAction *parabola = [SKAction customActionWithDuration:duration actionBlock:^(SKNode *node, CGFloat elapsedTime) {
+        CGFloat y = quadratic_equation_y(a, vertex, elapsedTime);
+        crossedVertex = (elapsedTime > vertex.x);
+        if (crossedVertex && y < endY) {
+            node.position = CGPointMake(node.position.x, endY);
+        }
+        else {
+            node.position = CGPointMake(node.position.x, y);
+        }
+    }];
+    return parabola;}
+
+static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
     return a * pow((x - vertex.x), 2) + vertex.y;
 }
 
