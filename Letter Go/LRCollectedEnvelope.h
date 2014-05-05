@@ -8,11 +8,12 @@
 
 #import "LRLetterBlock.h"
 #import "LRLetterBlockControlDelegate.h"
+@class LRLetterSlot;
 
 extern CGFloat const kLRCollectedEnvelopeHeight;
+extern NSString * const kTempCollectedEnvelopeName;
 
 static NSInteger const kSlotIndexNone = -1;
-static NSString* const kTempCollectedEnvelopeName = @"NAME_SPRITE_SECTION_LETTER_BLOCK_TEMP";
 
 @interface LRCollectedEnvelope : LRLetterBlock
 
@@ -27,11 +28,12 @@ static NSString* const kTempCollectedEnvelopeName = @"NAME_SPRITE_SECTION_LETTER
 
 //Helper Functions
 - (NSString *)stringFromPaperColor:(LRPaperColor)paperColor;
-
+- (LRCollectedEnvelope *)animatableCopyOfEnvelope;
 
 ///This is TRUE if the envelope is at a point wherein if it is not touched, it will be deleted
 @property (nonatomic) BOOL isAtDeletionPoint;
 @property (nonatomic, weak) id <LRLetterBlockControlDelegate> delegate;
 @property (nonatomic) NSUInteger slotIndex;
+@property (nonatomic, readonly, weak) LRLetterSlot *parentSlot;
 
 @end

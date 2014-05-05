@@ -31,7 +31,6 @@ typedef void(^CompletionBlockType)(void);
 
 @interface LRLetterSection ()
 
-@property (nonatomic) BOOL gameOverFinished;
 @property (nonatomic, strong) SKSpriteNode *letterSection;
 @property (nonatomic, weak) LRSubmitButton *submitButton;
 @property (nonatomic, strong) NSMutableArray *letterSlots;
@@ -164,7 +163,7 @@ typedef void(^CompletionBlockType)(void);
 {
     LRMovingEnvelope *animatedEnvelope = [LRMovingEnvelope movingBlockWithLetter:@"  " paperColor:letter.paperColor];
     animatedEnvelope.envelopeOpen = YES;
-    LRLetterSlot *parentSlot = self.letterSlots[letter.slotIndex];
+    LRLetterSlot *parentSlot = letter.parentSlot;
 
     animatedEnvelope.userInteractionEnabled = NO;
     CGPoint envelopeStartPos = parentSlot.position;
@@ -176,12 +175,10 @@ typedef void(^CompletionBlockType)(void);
 
 - (LRCollectedEnvelope *)_animatedCollectedLetterForLetter:(LRCollectedEnvelope *)letter
 {
-    LRCollectedEnvelope *animatedLetter = [letter copy];
-    animatedLetter.name = kTempCollectedEnvelopeName;
+    LRCollectedEnvelope *animatedLetter = [letter animatableCopyOfEnvelope];
     animatedLetter.hidden = NO;
-    animatedLetter.userInteractionEnabled = NO;
     animatedLetter.zPosition = 99;
-    LRLetterSlot *parentSlot = self.letterSlots[letter.slotIndex];
+    LRLetterSlot *parentSlot = letter.parentSlot;
     
     CGPoint letterDropPos = parentSlot.position;
     letterDropPos.y -= kCollectedEnvelopeSpriteDimension + kSectionHeightButtonSection;
@@ -191,7 +188,7 @@ typedef void(^CompletionBlockType)(void);
 
 - (SKAction *)_movingEnvelopeAnimationForEnvelope:(LRMovingEnvelope *)envelope
 {
-    CGFloat duration = .8;
+    CGFloat duration = .5;
     CGFloat maxHeight = -35.0;
     CGPoint yIntercept= CGPointMake(0, envelope.position.y);
     CGPoint vertex = CGPointMake(duration/2, maxHeight);
@@ -206,8 +203,8 @@ typedef void(^CompletionBlockType)(void);
 
 - (SKAction *)_collectedLetterAnimationForLetter:(LRCollectedEnvelope *)letter
 {
-    CGFloat duration = .8;
-    CGFloat midpoint = .58;
+    CGFloat duration = .7;
+    CGFloat midpoint = duration * .7;
     CGFloat maxHeight = 25.0;
     CGPoint yIntercept= CGPointMake(duration, [self.letterSlots[letter.slotIndex] position].y);
     CGPoint vertex = CGPointMake(midpoint, maxHeight);
@@ -234,9 +231,8 @@ static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
 #pragma mark Deletion
 - (void)removeEnvelopeFromLetterSection:(id)envelope
 {
-    NSAssert(envelope == self.touchedBlock, @"Only the touched block should be removed");
     NSAssert(![self _placeholderSlot], @"Should not be a placeholder slot if removing");
-
+    NSAssert(envelope == self.touchedBlock || [[LRGameStateManager shared] isGameOver], @"Only the touched block should be removed");
     LRCollectedEnvelope *envelopeToDelete = (LRCollectedEnvelope *)envelope;
     [envelopeToDelete removeFromParent];
     self.touchedBlock = nil;
@@ -306,7 +302,10 @@ static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
 
 - (void) setTouchedBlock:(LRCollectedEnvelope *)touchedBlock
 {
+    NSAssert(![touchedBlock isCollectedEnvelopeEmpty], @"Touched blocks should not be empty");
+    NSAssert(![touchedBlock isCollectedEnvelopePlaceholder], @"Touched bocks should not be placeholders");
     NSAssert(!(_touchedBlock && touchedBlock), @"Touched block should only be set if it is nil");
+    NSAssert(![_touchedBlock.name isEqualToString:kTempCollectedEnvelopeName], @"Animated block should not be touched");
     _touchedBlock = touchedBlock;
 }
 
@@ -360,16 +359,16 @@ static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
     //TODO: add other assertions here
     NSAssert(slotRange.length + slotRange.location <= kWordMaximumLetterCount, @"Shift envelope range exceeds max letter count");
     int endcount = kWordMaximumLetterCount;//slotRange.length + slotRange.location;
-    int initialIndex = slotRange.location;
+    NSUInteger initialIndex = slotRange.location;
     LRLetterSlot *currentSlot;
     
-    for (int i = initialIndex; i < endcount; i++)
+    for (NSUInteger i = initialIndex; i < endcount; i++)
     {
         //Build the animation based off of the relative slot
         currentSlot = self.letterSlots[i];
         //Stop the addition animation if it's happening
         [currentSlot stopEnvelopeChildAnimation];
-        int relativeIndex = (direction == kLRDirectionLeft) ? i - initialIndex : endcount - i;
+        NSUInteger relativeIndex = (direction == kLRDirectionLeft) ? i - initialIndex : endcount - i;
         SKAction *shiftAnimation = [LREnvelopeAnimationBuilder shiftLetterInDirection:direction withDelayForIndex:relativeIndex];
         
         //Create a copy of the envelope to run the animation on
@@ -395,8 +394,7 @@ static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
 
 - (void)runRearrangmentHasFinishedAnimationWithEnvelope:(LRCollectedEnvelope *)envelope toSlot:(LRLetterSlot *)destination
 {
-    LRCollectedEnvelope *animatedEnvelope = [envelope copy];
-    animatedEnvelope.name = kTempCollectedEnvelopeName;
+    LRCollectedEnvelope *animatedEnvelope = [envelope animatableCopyOfEnvelope];
 
     CGPoint endPosition = destination.position;
     SKAction *slideAction = [LREnvelopeAnimationBuilder rearrangementFinishedAnimationFromPoint:animatedEnvelope.position toPoint:endPosition];
@@ -411,8 +409,7 @@ static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
 - (LRCollectedEnvelope *)_copyOfEnvelopeFromSlot:(LRLetterSlot *)slot
 {
     NSParameterAssert(slot);
-    LRCollectedEnvelope *envelope = [[slot currentBlock] copy];
-    envelope.name = kTempCollectedEnvelopeName;
+    LRCollectedEnvelope *envelope = [[slot currentBlock] animatableCopyOfEnvelope];
     envelope.position = slot.currentBlock.position;
     return envelope;
 }
@@ -510,9 +507,9 @@ static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
     LRCollectedEnvelope *emptyEnvelope = [blockA isCollectedEnvelopePlaceholder] ? blockA : blockB;
     
     //Run the letter swapping animation
-    SKAction *rearrangeAnimation = [LREnvelopeAnimationBuilder swapEnvelopeFromPoint:nonEmptyEnvelope.parent.position toPoint:emptyEnvelope.parent.position];
+    SKAction *rearrangeAnimation = [LREnvelopeAnimationBuilder swapEnvelopeFromPoint:nonEmptyEnvelope.parentSlot.position toPoint:emptyEnvelope.parentSlot.position];
     LRCollectedEnvelope *animatedEnvelope = [self _copyOfEnvelopeFromSlot:self.letterSlots[nonEmptyEnvelope.slotIndex]];
-    animatedEnvelope.position = nonEmptyEnvelope.parent.position;
+    animatedEnvelope.position = nonEmptyEnvelope.parentSlot.position;
     [self addChild:animatedEnvelope];
     [animatedEnvelope runAction:rearrangeAnimation completion:^{
         [self removeChildrenInArray:@[animatedEnvelope]];
@@ -626,14 +623,21 @@ static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
         [self.touchedBlock touchesEnded:nil withEvent:nil];
         self.touchedBlock.userInteractionEnabled = NO;
     }
-    self.gameOverFinished = TRUE;
+    for (LRLetterSlot *slot in self.letterSlots) {
+        slot.currentBlock.userInteractionEnabled = NO;
+    }
     self.userInteractionEnabled = NO;
 }
 
 - (void)gameStateNewGame
 {
     [self clearLetterSectionAnimated:NO];
-    [self _removeAllEnvelopes];
+    //Remove all envelopes
+    if (self.touchedBlock)
+    {
+        [self removeChildrenInArray:@[self.touchedBlock]];
+        self.touchedBlock = nil;
+    }
     self.userInteractionEnabled = YES;
 }
 
@@ -647,15 +651,6 @@ static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
 {
     self.paused = NO;
     self.userInteractionEnabled = YES;
-}
-
-- (void)_removeAllEnvelopes
-{
-    if (self.touchedBlock)
-    {
-        [self removeChildrenInArray:@[self.touchedBlock]];
-        self.touchedBlock = nil;
-    }
 }
 
 @end

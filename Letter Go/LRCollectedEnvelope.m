@@ -11,6 +11,10 @@
 #import "LRLetterSlot.h"
 #import "LRCollisionManager.h"
 #import "LREnvelopeAnimationBuilder.h"
+#import "LRLetterSlot.h"
+#import "LRGameStateManager.h"
+
+NSString* const kTempCollectedEnvelopeName = @"NAME_SPRITE_SECTION_LETTER_BLOCK_TEMP";
 
 typedef NS_ENUM(NSUInteger, MovementDirection)
 {
@@ -23,6 +27,8 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 
 @interface LRCollectedEnvelope ()
 @property (nonatomic, strong) SKSpriteNode *envelopeSprite;
+@property (nonatomic, readwrite, weak) LRLetterSlot *parentSlot;
+@property (nonatomic) BOOL touchedAfterGameOver;
 @end
 
 @implementation LRCollectedEnvelope
@@ -45,6 +51,7 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 }
 
 #pragma mark - Helper Functions
+
 - (NSString *)stringFromPaperColor:(LRPaperColor)paperColor
 {
     switch (paperColor) {
@@ -63,6 +70,14 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
     }
 }
 
+- (LRCollectedEnvelope *)animatableCopyOfEnvelope
+{
+    LRCollectedEnvelope *animatableEnvelopeCopy = [self copy];
+    animatableEnvelopeCopy.name = kTempCollectedEnvelopeName;
+    animatableEnvelopeCopy.userInteractionEnabled = NO;
+    return animatableEnvelopeCopy;
+}
+
 - (id) initWithLetter:(NSString *)letter paperColor:(LRPaperColor)paperColor
 {
     CGSize size = CGSizeMake(kCollectedEnvelopeSpriteDimension, kCollectedEnvelopeSpriteDimension);
@@ -77,13 +92,22 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
     }
     return self;
 }
+
+- (LRLetterSlot *)parentSlot
+{
+    if ([[self parent] isKindOfClass:[LRLetterSlot class]]) {
+        return (LRLetterSlot *)[self parent];
+    }
+    return nil;
+}
+
 #pragma mark - Touch Functions
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [super touchesBegan:touches withEvent:event];
     for (UITouch *touch in touches)
     {
-        CGPoint location = [touch locationInNode:[self parent]];
+        CGPoint location = [touch locationInNode:self.parent];
         if (CGRectContainsPoint(self.frame, location))
         {
             self.position = location;
@@ -109,13 +133,16 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
             SKAction *animation = [LREnvelopeAnimationBuilder changeEnvelopeCanDeleteState:canDelete];
             [self runAction:animation withKey:kRotateActionName];
         }
-        CGPoint touchLoc = [touch locationInNode:[self parent]];
+        CGPoint touchLoc = [touch locationInNode:self.parent];
         self.position = touchLoc;
     }
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    if (self.touchedAfterGameOver)
+        return;
+
     [super touchesEnded:touches withEvent:event];
     BOOL canDelete = [self shouldEnvelopeBeDeletedAtPosition:self.position];
     if (canDelete != self.isAtDeletionPoint) {
@@ -131,6 +158,7 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
         SKAction *bubble = [LREnvelopeAnimationBuilder unbubbleWithDuration:kLRCollectedEnvelopeBubbleDuration];
         [self runAction:bubble];
     }
+    self.touchedAfterGameOver = [[LRGameStateManager shared] isGameOver];
 }
 
 #pragma mark - Touch Helper Functions
@@ -139,12 +167,15 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 {
     //Move the block from being the child of the letter slot to the child of the whole letter section
     LRLetterSection *letterSection = [[(LRGameScene *)[self scene] gamePlayLayer] letterSection];
-    LRLetterSlot *parentSlot = (LRLetterSlot *)[self parent];
-    self.position = parentSlot.position;
-    [parentSlot setEmptyLetterBlock];
-    [letterSection addChild:self];
-
-    [self.delegate rearrangementHasBegunWithLetterBlock:self];
+    if (self.parentSlot) {
+        self.position = self.parentSlot.position;
+        [self.parentSlot setEmptyLetterBlock];
+        [letterSection addChild:self];
+        [self.delegate rearrangementHasBegunWithLetterBlock:self];
+    }
+    else {
+        NSLog(@"Should this be happening!?");
+    }
 }
 
 - (BOOL) shouldEnvelopeBeDeletedAtPosition:(CGPoint)pos
@@ -163,11 +194,6 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
     NSMutableString * descript = [[super description] mutableCopy];
     [descript appendFormat:@"Letter: %@", self.letter];
     return descript;
-}
-
-- (void)gameStateGameOver
-{
-    self.userInteractionEnabled = NO;
 }
 
 #pragma mark - Block State Checks

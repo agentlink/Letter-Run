@@ -44,6 +44,7 @@ static const BOOL lgbDebugMode = NO;
 + (LRCollectedEnvelope *)createEmptySectionBlock
 {
     LRCollectedEnvelope *lb = [LRCollectedEnvelope emptyCollectedEnvelope];
+    lb.userInteractionEnabled = NO;
     lb.color = (lgbDebugMode) ? [SKColor purpleColor] : [LRColor clearColor];
     return lb;
 }
