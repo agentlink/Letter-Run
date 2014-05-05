@@ -78,8 +78,6 @@ typedef void(^CompletionBlockType)(void);
 - (SKSpriteNode *)letterSection {
     if (!_letterSection) {
         _letterSection = [SKSpriteNode spriteNodeWithColor:[LRColor letterSectionColor] size:self.size];
-//        _letterSection = [SKSpriteNode spriteNodeWithImageNamed:@"letterSection-background"];
-//        _letterSection.size = self.size;
     }
     return _letterSection;
 }
@@ -131,7 +129,7 @@ typedef void(^CompletionBlockType)(void);
     if (firstEmptySlot) {
         LRCollectedEnvelope *block = [LRLetterBlockBuilder createBlockWithLetter:letter paperColor:newEnvelope.paperColor];
         //Hide the block to make a fake one to run the animation with
-        block.hidden = YES;
+//        block.hidden = YES;
         block.delegate = self;
         firstEmptySlot.currentBlock = block;
         [self runAddLetterAnimationWithEnvelope:block];
@@ -145,18 +143,13 @@ typedef void(^CompletionBlockType)(void);
     [self addChild:animatedEnvelope];
     SKAction *envelopeAction = [self _movingEnvelopeAnimationForEnvelope:animatedEnvelope];
 
-    LRCollectedEnvelope *animatedLetter = [self _animatedCollectedLetterForLetter:origEnvelope];
-    [self addChild:animatedLetter];
+    LRCollectedEnvelope *animatedLetter = origEnvelope;//[self _animatedCollectedLetterForLetter:origEnvelope];
+    animatedLetter.position = [self convertPoint:animatedEnvelope.position toNode:origEnvelope.parentSlot];
+//    [self addChild:animatedLetter];
 
-    SKAction *addEnvelopeAction = [self _collectedLetterAnimationForLetter:animatedLetter];
-    SKAction *addLetterWithCompletion = [LREnvelopeAnimationBuilder actionWithCompletionBlock:addEnvelopeAction block:^{
-        origEnvelope.hidden = NO;
-        [animatedLetter removeFromParent];
-    }];
-
-    
+    SKAction *letterAction = [self _collectedLetterAnimationForLetter:animatedLetter];
     [animatedEnvelope runAction:envelopeAction completion:^{[animatedEnvelope removeFromParent];}];
-    [animatedLetter runAction:addLetterWithCompletion withKey:kAddLetterAnimationName];
+    [animatedLetter runAction:letterAction withKey:kAddLetterAnimationName];
 }
 
 - (LRMovingEnvelope *)_animatedMovingEnvelopeForLetter:(LRCollectedEnvelope *)letter
@@ -361,6 +354,7 @@ static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
     int endcount = kWordMaximumLetterCount;//slotRange.length + slotRange.location;
     NSUInteger initialIndex = slotRange.location;
     LRLetterSlot *currentSlot;
+    [self hideAllAnimatedEnvelopes];
     
     for (NSUInteger i = initialIndex; i < endcount; i++)
     {
@@ -598,11 +592,18 @@ static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
     }
 }
 
-- (CGFloat) xPositionForSlotIndex:(int) index {
+- (CGFloat)xPositionForSlotIndex:(int) index {
     CGFloat rightOffset = kCollectedEnvelopeSpriteDimension/2;
     CGFloat leftOffset = -self.size.width/2;
     CGFloat retVal = index * kDistanceBetweenSlots + leftOffset + rightOffset;
     return retVal;
+}
+
+- (void)hideAllAnimatedEnvelopes
+{
+    [self enumerateChildNodesWithName:kTempCollectedEnvelopeName usingBlock:^(SKNode *node, BOOL *stop) {
+        node.hidden = YES;
+    }];
 }
 
 /*! Returns the numbers of letters in the letter section, including placeholder blocks */
@@ -617,6 +618,7 @@ static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
 }
 
 #pragma mark - LRGameStateDelegate Methods
+
 - (void)gameStateGameOver
 {
     if (self.touchedBlock) {
