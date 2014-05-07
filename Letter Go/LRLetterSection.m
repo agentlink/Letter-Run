@@ -126,10 +126,9 @@ typedef void(^CompletionBlockType)(void);
     NSString *letter = newEnvelope.letter;
 
     LRLetterSlot *firstEmptySlot = [self _firstEmptySlot];
+    //If there is an empty slot for the letter to appear in
     if (firstEmptySlot) {
         LRCollectedEnvelope *block = [LRLetterBlockBuilder createBlockWithLetter:letter paperColor:newEnvelope.paperColor];
-        //Hide the block to make a fake one to run the animation with
-//        block.hidden = YES;
         block.delegate = self;
         firstEmptySlot.currentBlock = block;
         [self runAddLetterAnimationWithEnvelope:block];
@@ -139,10 +138,12 @@ typedef void(^CompletionBlockType)(void);
 
 - (void)runAddLetterAnimationWithEnvelope:(LRCollectedEnvelope *)origEnvelope
 {
+    //Bouncing envelope
     LRMovingEnvelope *animatedEnvelope = [self _animatedMovingEnvelopeForLetter:origEnvelope];
     [self addChild:animatedEnvelope];
     SKAction *envelopeAction = [self _movingEnvelopeAnimationForEnvelope:animatedEnvelope];
 
+    //Letter moving into slot is the real envelope
     LRCollectedEnvelope *animatedLetter = origEnvelope;
     animatedLetter.position = [self convertPoint:animatedEnvelope.position toNode:origEnvelope.parentSlot];
 
