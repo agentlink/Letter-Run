@@ -9,8 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "LRConstants.h"
 
-static NSString *kAddLetterAnimationName = @"addLetterAnimation";
-
 @interface LREnvelopeAnimationBuilder : NSObject
 
 #pragma Letter State Change

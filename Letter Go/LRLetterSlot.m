@@ -41,12 +41,7 @@
 
 - (void)stopEnvelopeChildAnimation
 {
-    if (self.currentBlock) {
-        [self.currentBlock removeActionForKey:kAddLetterAnimationName];
-        [self enumerateChildNodesWithName:kTempCollectedEnvelopeName usingBlock:^(SKNode *node, BOOL *stop){
-            [node removeFromParent];
-        }];
-    }
+    self.currentBlock.position = CGPointZero;
 }
 
 #pragma mark - Setters and Getters

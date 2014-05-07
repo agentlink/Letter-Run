@@ -143,13 +143,12 @@ typedef void(^CompletionBlockType)(void);
     [self addChild:animatedEnvelope];
     SKAction *envelopeAction = [self _movingEnvelopeAnimationForEnvelope:animatedEnvelope];
 
-    LRCollectedEnvelope *animatedLetter = origEnvelope;//[self _animatedCollectedLetterForLetter:origEnvelope];
+    LRCollectedEnvelope *animatedLetter = origEnvelope;
     animatedLetter.position = [self convertPoint:animatedEnvelope.position toNode:origEnvelope.parentSlot];
-//    [self addChild:animatedLetter];
 
     SKAction *letterAction = [self _collectedLetterAnimationForLetter:animatedLetter];
     [animatedEnvelope runAction:envelopeAction completion:^{[animatedEnvelope removeFromParent];}];
-    [animatedLetter runAction:letterAction withKey:kAddLetterAnimationName];
+    [animatedLetter runAction:letterAction];
 }
 
 - (LRMovingEnvelope *)_animatedMovingEnvelopeForLetter:(LRCollectedEnvelope *)letter
