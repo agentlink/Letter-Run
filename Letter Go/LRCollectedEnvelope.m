@@ -123,6 +123,10 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [super touchesMoved:touches withEvent:event];
+    if (self.touchedAfterGameOver) {
+        return;
+    }
+    
     NSString *kRotateActionName = @"kRotateActionName";
     for (UITouch *touch in touches)
     {
@@ -136,6 +140,7 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
         CGPoint touchLoc = [touch locationInNode:self.parent];
         self.position = touchLoc;
     }
+    self.touchedAfterGameOver = [[LRGameStateManager shared] isGameOver];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
@@ -167,15 +172,12 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 {
     //Move the block from being the child of the letter slot to the child of the whole letter section
     LRLetterSection *letterSection = [[(LRGameScene *)[self scene] gamePlayLayer] letterSection];
-    if (self.parentSlot) {
-        self.position = self.parentSlot.position;
-        [self.parentSlot setEmptyLetterBlock];
-        [letterSection addChild:self];
-        [self.delegate rearrangementHasBegunWithLetterBlock:self];
-    }
-    else {
-        NSLog(@"Should this be happening!?");
-    }
+    NSAssert(self.parent, @"Only blocks in slots should be rearranged.");
+
+    self.position = self.parentSlot.position;
+    [self.parentSlot setEmptyLetterBlock];
+    [letterSection addChild:self];
+    [self.delegate rearrangementHasBegunWithLetterBlock:self];
 }
 
 - (BOOL) shouldEnvelopeBeDeletedAtPosition:(CGPoint)pos

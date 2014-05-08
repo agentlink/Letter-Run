@@ -315,7 +315,9 @@ static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
 
 - (void)rearrangementHasFinishedWithLetterBlock:(id)letterBlock
 {
-    NSAssert(letterBlock == self.touchedBlock, @"Rearrangment should only start and finish with touched block");
+    if (letterBlock != self.touchedBlock) {
+        NSAssert(letterBlock == self.touchedBlock, @"Rearrangment should only start and finish with touched block");
+    }
     LRCollectedEnvelope *selectedEnvelope = (LRCollectedEnvelope *)letterBlock;
     LRLetterSlot *newLocation = [self _placeholderSlot];
     [self runRearrangmentHasFinishedAnimationWithEnvelope:selectedEnvelope toSlot:newLocation];
@@ -329,7 +331,9 @@ static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
 
 - (void)deletabilityHasChangedTo:(BOOL)deletable forLetterBlock:(id)letterBlock
 {
-    NSAssert(letterBlock == self.touchedBlock, @"Deletability should only change with touched block");
+    if (letterBlock != self.touchedBlock) {
+        NSAssert(letterBlock == self.touchedBlock, @"Deletability should only change with touched block");
+    }
     LRCollectedEnvelope *collected = letterBlock;
     
     //Set the slot index to the nearest letter
@@ -351,7 +355,8 @@ static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
 {
     //TODO: add other assertions here
     NSAssert(slotRange.length + slotRange.location <= kWordMaximumLetterCount, @"Shift envelope range exceeds max letter count");
-    int endcount = kWordMaximumLetterCount;//slotRange.length + slotRange.location;
+    NSAssert(slotRange.length != 0, @"More than one envelope should be shifted");
+    int endcount = kWordMaximumLetterCount;
     NSUInteger initialIndex = slotRange.location;
     LRLetterSlot *currentSlot;
     [self hideAllAnimatedEnvelopes];
@@ -560,6 +565,7 @@ static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
             location = i;
         }
     }
+    NSAssert(closestSlot, @"Closest slot should not be nil");
     return closestSlot;
 }
 
