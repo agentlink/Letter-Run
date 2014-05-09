@@ -9,6 +9,9 @@
 #import <SpriteKit/SpriteKit.h>
 #import "LRLetterBlock.h"
 
+extern const NSUInteger kLRLetterGeneratorMaxConsonants;
+extern const NSUInteger kLRLetterGeneratorMaxVowels;
+extern const NSUInteger kLRLetterGeneratorMaxRepeatLetters;
 
 typedef NS_ENUM(NSUInteger, LetterType)
 {

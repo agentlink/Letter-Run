@@ -8,7 +8,6 @@
 
 #import <XCTest/XCTest.h>
 #import "LRLetterGenerator.h"
-#import "LRDifficultyManager.h"
 
 @interface LRLetterGenerator_Test : XCTestCase
 
@@ -57,7 +56,7 @@ static const unsigned trialCount = 1000;
     NSMutableArray *letterArray = [NSMutableArray new];
     for (int i = 0; i < count; i++)
     {
-        NSString *letter = [[LRLetterGenerator shared] generateLetter];
+        NSString *letter = [[LRLetterGenerator shared] generateLetterForPaperColor:kLRPaperColorYellow];
         [letterArray addObject:letter];
     }
     return letterArray;
@@ -73,12 +72,12 @@ static const unsigned trialCount = 1000;
     NSCharacterSet *letterSet;
     NSString *letterTypeDescriptor;
     if (letterType == LetterTypeConsonant) {
-        maxLetterCount = [[LRDifficultyManager shared] maxNumber_consonants];
+        maxLetterCount = kLRLetterGeneratorMaxConsonants;
         letterSet = [LRLetterGenerator consonantSet];
         letterTypeDescriptor = @"consonant";
     }
     else {
-        maxLetterCount = [[LRDifficultyManager shared] maxNumber_vowels];
+        maxLetterCount = kLRLetterGeneratorMaxVowels;
         letterSet = [LRLetterGenerator vowelSet];
         letterTypeDescriptor = @"vowel";
     }
@@ -104,7 +103,7 @@ static const unsigned trialCount = 1000;
         letterArray = [self generateLetterArrayWithCount:trialCount];
     
     //Declare letter type dependent variables
-    NSUInteger maxLetterCount = [[LRDifficultyManager shared] maxNumber_sameLetters];
+    NSUInteger maxLetterCount = kLRLetterGeneratorMaxRepeatLetters;
     NSUInteger checkArraySize = maxLetterCount + 1;
     NSMutableArray *checkArray = [NSMutableArray arrayWithCapacity:checkArraySize];
     

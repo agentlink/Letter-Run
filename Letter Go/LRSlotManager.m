@@ -10,7 +10,6 @@
 #import "LRConstants.h"
 #import "LRPositionConstants.h"
 #import "LRGameStateManager.h"
-#import "LRDifficultyManager.h"
 
 @implementation LRSlotManager
 {

@@ -7,11 +7,14 @@
 //
 
 #import "LRLetterGenerator.h"
-#import "LRDifficultyManager.h"
 
 #define kLRLetterProbabilityDictionaryBasic          @"letter_basic"
 #define kLRLetterProbabilityDictionaryChallenging    @"letter_challenging"
 #define kLRLetterProbabilityDictionaryImpossible     @"letter_impossible"
+
+const NSUInteger kLRLetterGeneratorMaxConsonants     = 3;
+const NSUInteger kLRLetterGeneratorMaxVowels         = 3;
+const NSUInteger kLRLetterGeneratorMaxRepeatLetters  = 2;
 
 
 static NSString* const kLetterQ = @"Q";
@@ -27,6 +30,7 @@ static LRPaperColor const kMostCommonPaperColor = kLRPaperColorYellow;
 @property NSString *lastLetter;
 @property int repeatCount;
 @property NSDictionary *letterProbabilityDictionaries;
+@property (nonatomic, readonly) BOOL quEnabled;
 @end
 
 @implementation LRLetterGenerator
@@ -108,8 +112,10 @@ static LRLetterGenerator *_shared = nil;
      Consonants are negative
     */
     
-    NSInteger maxConsonants = (color == kMostCommonPaperColor) ? [[LRDifficultyManager shared] maxNumber_consonants] : INT32_MAX;
-    NSInteger maxVowels = (color == kMostCommonPaperColor) ? [[LRDifficultyManager shared] maxNumber_vowels] : INT32_MAX;
+    //TODO: When fixing paper color generation, reinstate the max number of vowels and consonants correctly
+    
+    NSInteger maxConsonants = (color == kMostCommonPaperColor) ? kLRLetterGeneratorMaxConsonants : INT32_MAX;
+    NSInteger maxVowels = (color == kMostCommonPaperColor) ? kLRLetterGeneratorMaxVowels : INT32_MAX;
     
     //If it's a consonant and there is a max number of consonants
     if ([consonantSet characterIsMember:[letter characterAtIndex:0]] && maxConsonants > 0) {
@@ -140,9 +146,8 @@ static LRLetterGenerator *_shared = nil;
     }
 
     //Repeated letters case
-    if ([lastLetter isEqualToString:letter] &&
-        [[LRDifficultyManager shared] maxNumber_sameLetters] != 0) {
-        if (repeatCount >= [[LRDifficultyManager shared] maxNumber_sameLetters]) {
+    if ([lastLetter isEqualToString:letter]) {
+        if (repeatCount >= kLRLetterGeneratorMaxRepeatLetters) {
             //Check to see if a certain letter type is being forced
             if (forceVowel)
                 letter = [self generateVowelFromProbabilityArray:probabilityArray];
@@ -164,7 +169,7 @@ static LRLetterGenerator *_shared = nil;
     
     
     //Handle Qu
-    if ([letter isEqualToString:kLetterQ] && [[LRDifficultyManager shared] QuEnabled]) {
+    if ([letter isEqualToString:kLetterQ] && [self quEnabled]) {
         letter = kLetterQu;
     }
     
@@ -211,7 +216,7 @@ static LRLetterGenerator *_shared = nil;
     //If there is more than one letter...
     if ([letter length] > 1) {
         //...and that letter is not Qu
-        if ([[LRDifficultyManager shared] QuEnabled] && [letter isEqualToString:kLetterQu]) {
+        if ([self quEnabled] && [letter isEqualToString:kLetterQu]) {
             return LetterTypeConsonant;
         }
         //...return LetterTypeNone
@@ -246,5 +251,10 @@ static LRLetterGenerator *_shared = nil;
             break;
     }
     return self.letterProbabilityDictionaries[dictName];
+}
+
+- (BOOL)quEnabled
+{
+    return YES;
 }
 @end

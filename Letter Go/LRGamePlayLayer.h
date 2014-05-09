@@ -12,7 +12,6 @@
 #import "LRButtonSection.h"
 #import "LRMainGameSection.h"
 #import "LRButton.h"
-#import "LRDevPauseMenuVC.h"
 #import "LRDevPauseViewController.h"
 
 extern NSString * const kLRGamePlayLayerHealthSectionName;

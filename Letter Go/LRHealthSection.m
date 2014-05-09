@@ -8,13 +8,13 @@
 
 #import "LRHealthSection.h"
 #import "LRScoreManager.h"
-#import "LRDifficultyManager.h"
 #import "LRGameStateManager.h"
 
 #define HEALTHBAR_WIDTH             SCREEN_WIDTH
 
-static const float kLRHealthSectionRightMostEdge = 0.0;
-static const float kLRHealthSectionStartPercentYellow = .50;
+static const CGFloat kLRHealthSectionInitialDropTime = 40.0;
+static const CGFloat kLRHealthSectionRightMostEdge = 0.0;
+static const CGFloat kLRHealthSectionStartPercentYellow = .50;
 
 @interface LRHealthSection ()
 ///The background color of the health bar
@@ -104,7 +104,7 @@ static const float kLRHealthSectionStartPercentYellow = .50;
 #pragma mark Health Bar Movement
 
 + (CGFloat)_healthBarDistanceForScore:(NSInteger)score {
-    float baseDistancePerLetter = HEALTHBAR_WIDTH / [[LRDifficultyManager shared] healthInEnvelopes];
+    float baseDistancePerLetter = HEALTHBAR_WIDTH / kLRHealthSectionInitialDropTime;
     
     float wordDistance = (score * baseDistancePerLetter) / kLRScoreManagerScorePerLetter;
     return wordDistance;
@@ -120,7 +120,7 @@ static const float kLRHealthSectionStartPercentYellow = .50;
 /// This function animates the health bar
 - (void)_shiftHealthBarWithTimeInterval: (NSTimeInterval)currentTime {
     //Calculate the distance the health bar should move...
-    float healthBarDropPerSecond = HEALTHBAR_WIDTH/[[LRDifficultyManager shared] healthBarDropTime];
+    float healthBarDropPerSecond = HEALTHBAR_WIDTH/[self _healthBarDropTime];
     float timeInterval = currentTime - self.initialTime;
     float healthBarXShift = timeInterval * healthBarDropPerSecond;
     
@@ -139,6 +139,10 @@ static const float kLRHealthSectionStartPercentYellow = .50;
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_GAME_OVER object:nil];
     }
+}
+- (CGFloat)_healthBarDropTime
+{
+    return kLRHealthSectionInitialDropTime;
 }
 
 #pragma mark Health Bar Color Change
@@ -169,6 +173,10 @@ static const float kLRHealthSectionStartPercentYellow = .50;
     [self.healthBarShadingLayer setColor:newColor];
 }
 
+- (BOOL)_healthBarFalls
+{
+    return YES;
+}
 #pragma mark - LRGameStateDelegate Methods
 
 - (void)update:(NSTimeInterval)currentTime
@@ -178,7 +186,7 @@ static const float kLRHealthSectionStartPercentYellow = .50;
         return;
     }
     //If the health bar has been toggled off, reset it
-    else if (![[LRDifficultyManager shared] healthBarFalls]) {
+    else if (![self _healthBarFalls]) {
         self.initialTime = kGameLoopResetValue;
     }
     else if (self.initialTime == kGameLoopResetValue) {

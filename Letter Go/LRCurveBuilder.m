@@ -7,7 +7,6 @@
 //
 
 #import "LRCurveBuilder.h"
-#import "LRDifficultyManager.h"
 
 @implementation LRCurveBuilder
 

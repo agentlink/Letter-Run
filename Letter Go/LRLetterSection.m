@@ -421,7 +421,7 @@ static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
     NSString *submittedWord = (forcedWord) ? forcedWord : [self getCurrentWord];
     
     
-    NSDictionary *wordDict = [NSDictionary dictionaryWithObjects:@[submittedWord, [self loveLetterIndices]] forKeys:@[@"word", @"loveLetters"]];
+    NSDictionary *wordDict = [NSDictionary dictionaryWithObject:submittedWord forKey:@"word"];
     NSInteger wordScore = [[LRScoreManager shared] submitWord:wordDict];
     if (!forcedWord)
     {
@@ -442,11 +442,6 @@ static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
         [currentWord appendString:[slot.currentBlock letter]];
     }
     return currentWord;
-}
-
-- (NSSet *)loveLetterIndices
-{
-    return [NSSet set];
 }
 
 - (void)_updateSubmitButton

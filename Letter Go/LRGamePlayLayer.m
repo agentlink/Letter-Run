@@ -10,7 +10,6 @@
 #import "LRLetterBlockBuilder.h"
 #import "LRCollisionManager.h"
 #import "LRGameStateManager.h"
-#import "LRDifficultyManager.h"
 #import "LRSlotManager.h"
 #import "LRPositionConstants.h"
 #import "LRColor.h"

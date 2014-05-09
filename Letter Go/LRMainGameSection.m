@@ -10,7 +10,6 @@
 #import "LRGameStateManager.h"
 #import "LRLetterBlockBuilder.h"
 #import "LRSlotManager.h"
-#import "LRDifficultyManager.h"
 #import "LRPositionConstants.h"
 
 static const CGFloat kMailmanAreaWidth          = 70.0;
