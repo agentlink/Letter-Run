@@ -9,6 +9,8 @@
 #import <SpriteKit/SpriteKit.h>
 #import "LRGameStateDelegate.h"
 
+extern NSUInteger const kLRScoreManagerScorePerLetter;
+
 @interface LRScoreManager : SKNode <LRGameStateDelegate>
 
 /// An array of the words that have bee submitted this round in teh order they were submitted

@@ -11,6 +11,8 @@
 #import "LRGameScene.h"
 #import "LRDifficultyManager.h"
 
+NSUInteger const kLRScoreManagerScorePerLetter = 10;
+
 @interface LRScoreManager ()
 @property (nonatomic) NSUInteger score;
 @end
@@ -65,7 +67,6 @@ static LRScoreManager *_shared = nil;
     NSString *word = [wordDict objectForKey:@"word"];
     NSSet *loveLetterIndices = [wordDict objectForKey:@"loveLetters"];
     
-    NSInteger scorePerLetter = [[LRDifficultyManager shared] scorePerLetter];
     NSInteger loveLetterMultiplier = [[LRDifficultyManager shared] loveLetterMultiplier];
     NSUInteger wordLength = [word length];
     NSUInteger wordScore = 0;
@@ -73,7 +74,7 @@ static LRScoreManager *_shared = nil;
     //For every letter in the word...
     for (int i = 0; i < wordLength; i++) {
         //...set it equal to the base score...
-        NSInteger letterScore = scorePerLetter;
+        NSInteger letterScore = kLRScoreManagerScorePerLetter;
         //...and if it's a love letter, multiply it by the love letter multiplier.
         if ([loveLetterIndices containsObject:@(i)]) {
             letterScore *= loveLetterMultiplier;

@@ -105,9 +105,8 @@ static const float kLRHealthSectionStartPercentYellow = .50;
 
 + (CGFloat)_healthBarDistanceForScore:(NSInteger)score {
     float baseDistancePerLetter = HEALTHBAR_WIDTH / [[LRDifficultyManager shared] healthInEnvelopes];
-    float scorePerLetter = [[LRDifficultyManager shared] scorePerLetter];
     
-    float wordDistance = (score * baseDistancePerLetter) / scorePerLetter;
+    float wordDistance = (score * baseDistancePerLetter) / kLRScoreManagerScorePerLetter;
     return wordDistance;
 }
 

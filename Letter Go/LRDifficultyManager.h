@@ -24,16 +24,6 @@ typedef NS_ENUM(NSInteger, IncreaseStyle)  {
 
 @property NSDictionary *difficultyDict;
 
-#pragma mark - Score Properties
-@property CGFloat scoreLengthFactor;
-@property NSInteger scorePerLetter;
-
-
-#pragma mark - Level Up Properties
-@property IncreaseStyle levelScoreIncreaseStyle;
-@property NSInteger initialNextLevelScore;
-@property CGFloat levelScoreIncreaseFactor;
-
 #pragma mark - Health Bar Properties
 @property CGFloat healthPercentIncreasePer100Pts;
 @property CGFloat initialHealthDropTime;

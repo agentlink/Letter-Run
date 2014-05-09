@@ -73,13 +73,6 @@
     self.healthBarMinDropTime = [[NSUserDefaults standardUserDefaults] floatForKey:DV_HEALTHBAR_MAX_SPEED];
     self.healthPercentIncreasePer100Pts = [[NSUserDefaults standardUserDefaults] floatForKey:DV_HEALTHBAR_INCREASE_PER_WORD];
     
-    //Score
-    self.scorePerLetter = [[NSUserDefaults standardUserDefaults] integerForKey:DV_SCORE_PER_LETTER];
-    self.scoreLengthFactor = [[NSUserDefaults standardUserDefaults] floatForKey:DV_SCORE_WORD_LENGTH_FACTOR];
-    self.initialNextLevelScore = [[NSUserDefaults standardUserDefaults] integerForKey:DV_SCORE_INITIAL_LEVEL_PROGRESSION];
-    self.levelScoreIncreaseFactor = [[NSUserDefaults standardUserDefaults] floatForKey:DV_SCORE_LEVEL_PROGRESS_INCREASE_FACTOR];
-    self.levelScoreIncreaseStyle = [[NSUserDefaults standardUserDefaults] integerForKey:DV_SCORE_LEVEL_PROGRESS_INCREASE_STYLE];
-    
     //Mailman + Love Letters
     self.mailmanHitDamage = [[NSUserDefaults standardUserDefaults] floatForKey:DV_MAILMAN_LETTER_DAMAGE];
     self.loveLetterMultiplier = [[NSUserDefaults standardUserDefaults] integerForKey:DV_MAILMAN_LOVE_BONUS];
@@ -126,13 +119,6 @@
     [[NSUserDefaults standardUserDefaults] setFloat:self.healthSpeedIncreaseFactor forKey:DV_HEALTHBAR_INCREASE_FACTOR];
     [[NSUserDefaults standardUserDefaults] setFloat:self.healthBarMinDropTime forKey:DV_HEALTHBAR_MAX_SPEED];
     [[NSUserDefaults standardUserDefaults] setFloat:self.healthPercentIncreasePer100Pts forKey:DV_HEALTHBAR_INCREASE_PER_WORD];
-    
-    //Score
-    [[NSUserDefaults standardUserDefaults] setInteger:self.scorePerLetter forKey:DV_SCORE_PER_LETTER];
-    [[NSUserDefaults standardUserDefaults] setFloat:self.scoreLengthFactor forKey:DV_SCORE_WORD_LENGTH_FACTOR];
-    [[NSUserDefaults standardUserDefaults] setInteger:self.initialNextLevelScore forKey:DV_SCORE_INITIAL_LEVEL_PROGRESSION];
-    [[NSUserDefaults standardUserDefaults] setFloat:self.levelScoreIncreaseFactor forKey:DV_SCORE_LEVEL_PROGRESS_INCREASE_FACTOR];
-    [[NSUserDefaults standardUserDefaults] setInteger:self.levelScoreIncreaseStyle forKey:DV_SCORE_LEVEL_PROGRESS_INCREASE_STYLE];
     
     //Mailman + Love Letters
     [[NSUserDefaults standardUserDefaults] setFloat:self.mailmanHitDamage forKey:DV_MAILMAN_LETTER_DAMAGE];
