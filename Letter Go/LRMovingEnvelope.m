@@ -15,6 +15,7 @@ static CGFloat const kLRMovingBlockTouchSizeExtraWidth = 25.0;
 static CGFloat const kLRMovingBlockTouchSizeExtraHeight = 35.0;
 
 @interface LRMovingEnvelope ()
+@property (nonatomic, weak) id<LRManfordAIManagerSelectionDelegate> aiDelegate;
 @property (nonatomic, strong) SKSpriteNode *glow;
 @property (nonatomic, strong) SKSpriteNode *envelopeSprite;
 @property (nonatomic, readwrite) NSUInteger envelopeID;
@@ -48,6 +49,7 @@ static CGFloat const kLRMovingBlockTouchSizeExtraHeight = 35.0;
         touchSize.width += kLRMovingBlockTouchSizeExtraWidth;
         touchSize.height += kLRMovingBlockTouchSizeExtraHeight;
         self.touchSize = touchSize;
+        self.aiDelegate = [LRManfordAIManager shared];
     }
     return self;
 }
@@ -66,6 +68,11 @@ static CGFloat const kLRMovingBlockTouchSizeExtraHeight = 35.0;
     _row = row;
     self.position = [LRMovingEnvelope positionForRow:row];
     self.envelopeID = [[LRManfordAIManager shared] nextEnvelopeIDForRow:row];
+}
+
+- (void)updateForRemoval
+{
+    [self.aiDelegate envelopeCollectedWithID:self.envelopeID];
 }
 
 + (CGPoint)positionForRow:(NSUInteger)slot
@@ -117,6 +124,7 @@ static CGFloat const kLRMovingBlockTouchSizeExtraHeight = 35.0;
 {
     [self.envelopeSprite runAction:[self _selectedAnimation]];
     _selected = selected;
+    [self.aiDelegate envelopeSelectedChanged:selected withID:self.envelopeID];
 }
 
 - (void)setEnvelopeOpen:(BOOL)envelopeOpen

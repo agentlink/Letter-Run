@@ -8,7 +8,13 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-@interface LRManfordAIManager : SKNode
+///The delegate that communicates between the moving envelope and the selected
+@protocol LRManfordAIManagerSelectionDelegate <NSObject>
+- (void)envelopeSelectedChanged:(BOOL)selected withID:(NSUInteger)uniqueID;
+- (void)envelopeCollectedWithID:(NSUInteger)uniqueID;
+@end
+
+@interface LRManfordAIManager : SKNode <LRManfordAIManagerSelectionDelegate>
 
 ///The shared Manford AI Manager
 + (LRManfordAIManager *)shared;
@@ -18,6 +24,8 @@
  @return The value of the next envelopeID
  */
 - (NSUInteger)nextEnvelopeIDForRow:(NSUInteger)row;
-
-
+///@return Returns the row with a selected envelope closest to the mailman
+- (NSUInteger)rowWithNextSelectedSlot;
+///@description Called when the game is over. It empties the selected envelopes data structure
+- (void)resetEnvelopeIDs;
 @end

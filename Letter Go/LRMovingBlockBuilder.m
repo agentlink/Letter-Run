@@ -77,6 +77,7 @@ static LRMovingBlockBuilder *_shared = nil;
     
     [envelope runAction:pauseForCollectionCheck completion:^{
         SKAction *removalAction = envelope.selected ? [self _collectedAction] : [self _discardedAction];
+        [envelope updateForRemoval];
         [envelope runAction:removalAction completion:^{
             if (envelope.selected) {
                 [self.letterAdditionDelegate addEnvelopeToLetterSection:envelope];

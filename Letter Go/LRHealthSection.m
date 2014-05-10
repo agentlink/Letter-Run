@@ -12,7 +12,7 @@
 
 #define HEALTHBAR_WIDTH             SCREEN_WIDTH
 
-static const CGFloat kLRHealthSectionInitialDropTime = 40.0;
+static const CGFloat kLRHealthSectionInitialDropTime = 10.0;
 static const CGFloat kLRHealthSectionRightMostEdge = 0.0;
 static const CGFloat kLRHealthSectionStartPercentYellow = .50;
 

@@ -24,11 +24,11 @@
 + (LRMovingEnvelope *)movingBlockWithLetter:(NSString *)letter paperColor:(LRPaperColor)paperColor;
 + (NSString *)stringFromPaperColor:(LRPaperColor)paperColor open:(BOOL)open;
 
+///Call this when the envelope is past the point where its colelcted state can be changed
+- (void)updateForRemoval;
 
 @end
 
 @protocol LRMovingBlockTouchDelegate <NSObject>
-
 - (void)playerSelectedMovingBlock:(LRMovingEnvelope *)movingBlock;
-
 @end

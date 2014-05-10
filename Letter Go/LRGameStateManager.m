@@ -12,6 +12,7 @@
 #import "LRDictionaryChecker.h"
 #import "LRProgressManager.h"
 #import "LRScoreManager.h"
+#import "LRManfordAIManager.h"
 
 @interface LRGameStateManager ()
 
@@ -99,7 +100,7 @@ static LRGameStateManager *_shared = nil;
 - (void)_gameOver:(NSNotification *)notification
 {
     self.gameScene.gameState = LRGameStateGameOver;
-    
+    [[LRManfordAIManager shared] resetEnvelopeIDs];
     NSLog(@"Game over");
     //Make all of the objects in the game non-touch responsive
     if (![[[notification userInfo] objectForKey:@"devpause"] isEqual: @(true)]) {
