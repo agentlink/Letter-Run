@@ -9,7 +9,7 @@
 #import "LRMainGameSection.h"
 #import "LRGameStateManager.h"
 #import "LRLetterBlockBuilder.h"
-#import "LRSlotManager.h"
+#import "LRRowManager.h"
 #import "LRPositionConstants.h"
 
 static const CGFloat kMailmanAreaWidth          = 70.0;
@@ -18,8 +18,8 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
 
 //Children
 @property SKSpriteNode *backgroundImage;
-//Slot logic
-@property LRSlotManager *slotManager;
+//Row logic
+@property LRRowManager *rowManager;
 @property NSMutableArray *envelopesOnScreen;
 @property LRMovingBlockBuilder *envelopeBuilder;
 @property int envelopeZPosition;
@@ -34,7 +34,7 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
     if (self = [super initWithSize:size])
     {
         self.envelopesOnScreen = [NSMutableArray new];
-        self.slotManager = [LRSlotManager new];
+        self.rowManager = [LRRowManager new];
         self.envelopeTouchEnabled = YES;
         
         self.envelopeBuilder = [LRMovingBlockBuilder shared];
@@ -59,7 +59,7 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
 #pragma mark Letter Addition and Removal
 - (void)clearMainGameSection
 {
-    [self.slotManager resetLastSlot];
+    [self.rowManager resetLastRow];
     [self removeChildrenInArray:self.envelopesOnScreen];
     [self.envelopesOnScreen removeAllObjects];
 }
@@ -70,7 +70,7 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
 - (void)addMovingBlockToScreen:(LRMovingEnvelope *)movingBlock
 {
     //Add the object to the slot manager
-    movingBlock.slot = [self.slotManager generateNextSlot];
+    movingBlock.row = [self.rowManager generateNextRow];
     movingBlock.touchDelegate = self;
     [self.envelopesOnScreen addObject:movingBlock];
     [self addChild:movingBlock];

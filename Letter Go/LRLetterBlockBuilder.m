@@ -36,7 +36,7 @@ static const BOOL lgbDebugMode = NO;
 {
     LRMovingEnvelope *envelope = [self createRandomEnvelope];
     //Setting the slot also sets the position. For now, slots are 0 - 2
-    envelope.slot = slot;
+    envelope.row = slot;
     return envelope;
 }
 

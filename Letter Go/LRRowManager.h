@@ -11,12 +11,12 @@
 #import <Foundation/Foundation.h>
 #import "LRMovingEnvelope.h"
 
-static const int kLRSlotManagerNumberOfSlots = 4;
-@interface LRSlotManager : NSObject
+static const int kLRRowManagerNumberOfRows = 4;
+@interface LRRowManager : NSObject
 
-///Returns the slot that the next letter should be in
-- (int)generateNextSlot;
-///Resets the slot values. Call this after a game over
-- (void)resetLastSlot;
+///Returns the row that the next letter should be in
+- (int)generateNextRow;
+///Resets the row values. Call this after a game over
+- (void)resetLastRow;
 
 @end

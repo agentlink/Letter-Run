@@ -10,7 +10,7 @@
 #import "LRLetterBlockBuilder.h"
 #import "LRCollisionManager.h"
 #import "LRGameStateManager.h"
-#import "LRSlotManager.h"
+#import "LRRowManager.h"
 #import "LRPositionConstants.h"
 #import "LRColor.h"
 
@@ -19,7 +19,7 @@ NSString * const kLRGamePlayLayerLetterSectionName = @"letterSection";
 
 
 @interface LRGamePlayLayer ()
-@property LRSlotManager *letterSlots;
+@property LRRowManager *letterSlots;
 
 @property NSTimeInterval nextDropTime;
 @property NSTimeInterval pauseTime;

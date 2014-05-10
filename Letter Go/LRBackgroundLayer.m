@@ -8,7 +8,7 @@
 
 #import "LRPositionConstants.h"
 #import "LRBackgroundLayer.h"
-#import "LRSlotManager.h"
+#import "LRRowManager.h"
 #import "LRMainGameSection.h"
 #import "LRMovingBlockBuilder.h"
 
@@ -48,7 +48,7 @@
 - (NSArray *)_stripesForRoadSprite:(SKSpriteNode *)road
 {
     NSMutableArray *allStripes = [NSMutableArray new];
-    CGFloat diffY = road.size.height / (kLRSlotManagerNumberOfSlots + 1);
+    CGFloat diffY = road.size.height / (kLRRowManagerNumberOfRows + 1);
     CGFloat diffX = 100;
     CGFloat startY = diffY - road.size.height/2;
     CGFloat xPos = (road.size.width - diffX)/2;
@@ -56,7 +56,7 @@
     int stripesPerRow = road.size.width/diffX + 1;
     
     for (int j = 0; j < stripesPerRow; j++) {
-        for (int i = 0; i < kLRSlotManagerNumberOfSlots; i++)
+        for (int i = 0; i < kLRRowManagerNumberOfRows; i++)
         {
             SKSpriteNode *stripe = [[SKSpriteNode alloc ] initWithImageNamed:@"mainSection-stripe"];
             stripe.position = CGPointMake(xPos, yPos);

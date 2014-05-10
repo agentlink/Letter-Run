@@ -8,7 +8,8 @@
 
 #import "LRMovingEnvelope.h"
 #import "LREnvelopeAnimationBuilder.h"
-#import "LRSlotManager.h"
+#import "LRRowManager.h"
+#import "LRManfordAIManager.h"
 
 static CGFloat const kLRMovingBlockTouchSizeExtraWidth = 25.0;
 static CGFloat const kLRMovingBlockTouchSizeExtraHeight = 35.0;
@@ -16,6 +17,7 @@ static CGFloat const kLRMovingBlockTouchSizeExtraHeight = 35.0;
 @interface LRMovingEnvelope ()
 @property (nonatomic, strong) SKSpriteNode *glow;
 @property (nonatomic, strong) SKSpriteNode *envelopeSprite;
+@property (nonatomic, readwrite) NSUInteger envelopeID;
 @end
 
 @implementation LRMovingEnvelope
@@ -59,17 +61,18 @@ static CGFloat const kLRMovingBlockTouchSizeExtraHeight = 35.0;
     return _glow;
 }
 
-- (void)setSlot:(NSUInteger)slot
+- (void)setRow:(NSUInteger)row
 {
-    _slot = slot;
-    self.position = [LRMovingEnvelope positionForSlot:slot];
+    _row = row;
+    self.position = [LRMovingEnvelope positionForRow:row];
+    self.envelopeID = [[LRManfordAIManager shared] nextEnvelopeIDForRow:row];
 }
 
-+ (CGPoint)positionForSlot:(NSUInteger)slot
++ (CGPoint)positionForRow:(NSUInteger)slot
 {
-    NSAssert(slot < kLRSlotManagerNumberOfSlots, @"Slot %i exceeds the proper number of slots", slot);
+    NSAssert(slot < kLRRowManagerNumberOfRows, @"Slot %i exceeds the proper number of slots", slot);
     
-    CGFloat yDiff = kSectionHeightMainSection/(kLRSlotManagerNumberOfSlots + 1);
+    CGFloat yDiff = kSectionHeightMainSection/(kLRRowManagerNumberOfRows + 1);
     CGFloat lowestPosition = 0 - kSectionHeightMainSection/2 + yDiff * .5;
     CGFloat xPos = SCREEN_WIDTH/2 + kMovingEnvelopeSpriteDimension;
     CGFloat yPos = lowestPosition + yDiff * slot;

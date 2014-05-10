@@ -6,12 +6,12 @@
 //  Copyright (c) 2013 Gabe Nicholas. All rights reserved.
 //
 
-#import "LRSlotManager.h"
+#import "LRRowManager.h"
 #import "LRConstants.h"
 #import "LRPositionConstants.h"
 #import "LRGameStateManager.h"
 
-@implementation LRSlotManager
+@implementation LRRowManager
 {
     int _lastSlot;
 }
@@ -21,16 +21,16 @@
 {
     //Initialize the array as a list of arrays
     if (self = [super init]) {
-        [self resetLastSlot];
+        [self resetLastRow];
     }
     return self;
 }
 
-- (int)generateNextSlot
+- (int)generateNextRow
 {
     int nextSlot = _lastSlot;
-    if (_lastSlot == kLRSlotManagerNumberOfSlots - 1) {
-        nextSlot = kLRSlotManagerNumberOfSlots - 2;
+    if (_lastSlot == kLRRowManagerNumberOfRows - 1) {
+        nextSlot = kLRRowManagerNumberOfRows - 2;
     }
     else if (_lastSlot == 0) {
         nextSlot = 1;
@@ -43,9 +43,9 @@
     return nextSlot;
 }
 
-- (void)resetLastSlot
+- (void)resetLastRow
 {
-    _lastSlot = arc4random()%kLRSlotManagerNumberOfSlots;
+    _lastSlot = arc4random()%kLRRowManagerNumberOfRows;
 }
 
 @end

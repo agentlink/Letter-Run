@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "LRSlotManager.h"
+#import "LRRowManager.h"
 
 static const int kTestCount = 200;
 
@@ -30,10 +30,10 @@ static const int kTestCount = 200;
 
 - (void)testSlotHistory
 {
-    LRSlotManager *slotManager = [LRSlotManager new];
-    int val = [slotManager generateNextSlot];
+    LRRowManager *slotManager = [LRRowManager new];
+    int val = [slotManager generateNextRow];
     for (int i = 0; i < kTestCount; i++) {
-        int temp = [slotManager generateNextSlot];
+        int temp = [slotManager generateNextRow];
         XCTAssertNotEqual(temp, val, @"Slot manager should not generate the same slot twice");
         temp = val;
     }
