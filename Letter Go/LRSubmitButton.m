@@ -33,8 +33,8 @@
 {
     if (![[LRGameStateManager shared] isGameOver]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_SUBMIT_WORD object:nil];
-
     }
+    self.isEnabled = NO;
 }
 
 @end
