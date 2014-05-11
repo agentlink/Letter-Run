@@ -15,6 +15,7 @@ typedef NS_ENUM(NSInteger, LRDirection)
     kLRDirectionLeft = 1
 };
 
+static NSUInteger const kLRRowManagerNumberOfRows = 4;
 
 //TODO: Move these
 static CGFloat const kLRCollectedEnvelopeBubbleScale = 1.1;
@@ -27,7 +28,6 @@ static const float kSectionHeightHealthSection         =       18.0;
 
 #define kSectionHeightMainSection           (SCREEN_HEIGHT - kSectionHeightLetterSection - kSectionHeightHealthSection - kSectionHeightButtonSection)
 static const float kMovingEnvelopeSpriteDimension     =       48.0;
-static const float kParallaxHeightGrass               =       26.6;
 #define kDistanceBetweenSlots                           SCREEN_WIDTH / kWordMaximumLetterCount
 #define kCollectedEnvelopeSpriteDimension               SCREEN_WIDTH / kWordMaximumLetterCount
 

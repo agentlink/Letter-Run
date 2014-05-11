@@ -13,7 +13,7 @@
 
 //#toy
 static CGFloat const kLRMovingBlockBuilderIntialDropInterval = 1.0;
-static CGFloat const kLRMovingBlockBuilderIntervalRatio = 1.1;
+static CGFloat const kLRMovingBlockBuilderIntervalRatio = 1.07;
 static CGFloat const kLRMovingBlockBuilderCrossTime = 3.5;
 @implementation LRMovingBlockBuilder
 

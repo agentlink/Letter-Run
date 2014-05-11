@@ -9,7 +9,7 @@
 #import "LRManfordAIManager.h"
 #import "LRRowManager.h"
 
-static NSUInteger const kLRManfordAIManagerEmptyRow = INT32_MAX;
+NSUInteger const kLRManfordAIManagerEmptyRow = INT32_MAX;
 
 @interface LRManfordAIManager ()
 @property (nonatomic, readwrite) NSUInteger previousEnvelopeID;
@@ -48,7 +48,8 @@ static LRManfordAIManager *_shared = nil;
     return nextID;
 }
 
-- (NSUInteger)rowWithNextSelectedSlot
+#pragma mark - Private Methods
+- (NSUInteger)_rowWithNextSelectedSlot
 {
     if ([self.selectedEnvelopes count] == 0) {
         return kLRManfordAIManagerEmptyRow;
@@ -57,7 +58,7 @@ static LRManfordAIManager *_shared = nil;
     return [nextID unsignedIntegerValue]%kLRRowManagerNumberOfRows;
 }
 
-#pragma mark - Private Methods
+
 - (NSUInteger)_generateEnvelopeIDForRow:(NSUInteger)row
 {
     NSUInteger previous = self.previousEnvelopeID;
@@ -66,6 +67,14 @@ static LRManfordAIManager *_shared = nil;
     
     envID += row;
     return envID;
+}
+
+- (void)_checkNextRowChangedFromRow:(NSUInteger)row
+{
+    NSUInteger nextRow = [self _rowWithNextSelectedSlot];
+    if (row != nextRow) {
+        [self.movementDelegate nextEnvelopeRowChangedToRow:nextRow];
+    }
 }
 
 - (void)resetEnvelopeIDs
@@ -77,17 +86,18 @@ static LRManfordAIManager *_shared = nil;
 #pragma mark - LRManfordAIManagerSelectionDelegate Methods
 - (void)envelopeSelectedChanged:(BOOL)selected withID:(NSUInteger)uniqueID;
 {
+    NSUInteger nextRow = [self _rowWithNextSelectedSlot];
     NSNumber *newID = @(uniqueID);
     selected ? [self.selectedEnvelopes addObject:newID] : [self.selectedEnvelopes removeObject:newID];
-    NSLog(@"Next envelope location: %u", (unsigned)[self rowWithNextSelectedSlot]);
+    [self _checkNextRowChangedFromRow:nextRow];
 }
 
 - (void)envelopeCollectedWithID:(NSUInteger)uniqueID
 {
+    NSUInteger lastRow = [self _rowWithNextSelectedSlot];
     NSNumber *removedID = @(uniqueID);
     [self.selectedEnvelopes removeObject:removedID];
-    NSLog(@"Next envelope location: %u", (unsigned)[self rowWithNextSelectedSlot]);
-
+    [self _checkNextRowChangedFromRow:lastRow];
 }
 
 @end

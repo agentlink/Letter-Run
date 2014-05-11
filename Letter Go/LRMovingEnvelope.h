@@ -21,8 +21,12 @@
 ///A unique ID for the envelope that contains information on its slot and order in generation
 @property (nonatomic,readonly) NSUInteger envelopeID;
 
+///Creates an instance of LRMovingEnvelope with a specific letter and color of paper
 + (LRMovingEnvelope *)movingBlockWithLetter:(NSString *)letter paperColor:(LRPaperColor)paperColor;
+///Returns the file name ofr a given paper color
 + (NSString *)stringFromPaperColor:(LRPaperColor)paperColor open:(BOOL)open;
+///Returns the position of an enveope at a given row
++ (CGPoint)envelopePositionForRow:(NSUInteger)row;
 
 ///Call this when the envelope is past the point where its colelcted state can be changed
 - (void)updateForRemoval;

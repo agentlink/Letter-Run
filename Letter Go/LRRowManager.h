@@ -11,7 +11,6 @@
 #import <Foundation/Foundation.h>
 #import "LRMovingEnvelope.h"
 
-static const int kLRRowManagerNumberOfRows = 4;
 @interface LRRowManager : NSObject
 
 ///Returns the row that the next letter should be in

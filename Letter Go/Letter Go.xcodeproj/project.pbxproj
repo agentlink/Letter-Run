@@ -51,7 +51,6 @@
 		A846FB8B186E0489009DCEF4 /* LRLetterBlock_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = A846FB8A186E0489009DCEF4 /* LRLetterBlock_Test.m */; };
 		A85A4CDA18E78BA100787D21 /* LeagueGothic-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = A85A4CD818E78BA100787D21 /* LeagueGothic-Italic.otf */; };
 		A85A4CDB18E78BA100787D21 /* LeagueGothic-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = A85A4CD918E78BA100787D21 /* LeagueGothic-Regular.otf */; };
-		A85BD82718D96AB100C5EFB8 /* mainSection.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A85BD82618D96AB100C5EFB8 /* mainSection.jpg */; };
 		A876EC3B18836795000FA069 /* Background_Cloud.png in Resources */ = {isa = PBXBuildFile; fileRef = A876EC3A18836795000FA069 /* Background_Cloud.png */; };
 		A876EC3F188367AA000FA069 /* Background_Grass.png in Resources */ = {isa = PBXBuildFile; fileRef = A876EC3C188367AA000FA069 /* Background_Grass.png */; };
 		A876EC40188367AA000FA069 /* Background_Hills.png in Resources */ = {isa = PBXBuildFile; fileRef = A876EC3D188367AA000FA069 /* Background_Hills.png */; };
@@ -71,6 +70,8 @@
 		A88DE67118DE1DCB00282AA8 /* LRMailmanArea.m in Sources */ = {isa = PBXBuildFile; fileRef = A88DE67018DE1DCB00282AA8 /* LRMailmanArea.m */; };
 		A88DECE2190C39C10076EDE9 /* LRProgressManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A88DECE1190C39C10076EDE9 /* LRProgressManager.m */; };
 		A8A34420191EC73C006C5C55 /* LRManfordAIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A8A3441F191EC73C006C5C55 /* LRManfordAIManager.m */; };
+		A8A3442219202AB3006C5C55 /* Mailman.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8A3442119202AB3006C5C55 /* Mailman.xcassets */; };
+		A8A3442619202C8D006C5C55 /* LRMailman.m in Sources */ = {isa = PBXBuildFile; fileRef = A8A3442519202C8D006C5C55 /* LRMailman.m */; };
 		A8B6B7221903243600E130A6 /* LRMovingBlockBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B6B7211903243600E130A6 /* LRMovingBlockBuilder.m */; };
 		A8E60A161881F6E300F60DF4 /* LRSlotManager_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E60A151881F6E300F60DF4 /* LRSlotManager_Test.m */; };
 		A8F171CB18DF7C5B00964C34 /* Scenery.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8F171CA18DF7C5B00964C34 /* Scenery.xcassets */; };
@@ -172,7 +173,6 @@
 		A846FB8A186E0489009DCEF4 /* LRLetterBlock_Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterBlock_Test.m; sourceTree = "<group>"; };
 		A85A4CD818E78BA100787D21 /* LeagueGothic-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LeagueGothic-Italic.otf"; sourceTree = "<group>"; };
 		A85A4CD918E78BA100787D21 /* LeagueGothic-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LeagueGothic-Regular.otf"; sourceTree = "<group>"; };
-		A85BD82618D96AB100C5EFB8 /* mainSection.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mainSection.jpg; sourceTree = "<group>"; };
 		A876EC3A18836795000FA069 /* Background_Cloud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background_Cloud.png; sourceTree = "<group>"; };
 		A876EC3C188367AA000FA069 /* Background_Grass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background_Grass.png; sourceTree = "<group>"; };
 		A876EC3D188367AA000FA069 /* Background_Hills.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background_Hills.png; sourceTree = "<group>"; };
@@ -201,6 +201,9 @@
 		A88DECE1190C39C10076EDE9 /* LRProgressManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRProgressManager.m; sourceTree = "<group>"; };
 		A8A3441E191EC73C006C5C55 /* LRManfordAIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRManfordAIManager.h; sourceTree = "<group>"; };
 		A8A3441F191EC73C006C5C55 /* LRManfordAIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRManfordAIManager.m; sourceTree = "<group>"; };
+		A8A3442119202AB3006C5C55 /* Mailman.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Mailman.xcassets; sourceTree = "<group>"; };
+		A8A3442419202C8D006C5C55 /* LRMailman.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRMailman.h; sourceTree = "<group>"; };
+		A8A3442519202C8D006C5C55 /* LRMailman.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRMailman.m; sourceTree = "<group>"; };
 		A8B6B7201903243600E130A6 /* LRMovingBlockBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRMovingBlockBuilder.h; sourceTree = "<group>"; };
 		A8B6B7211903243600E130A6 /* LRMovingBlockBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRMovingBlockBuilder.m; sourceTree = "<group>"; };
 		A8E60A151881F6E300F60DF4 /* LRSlotManager_Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRSlotManager_Test.m; sourceTree = "<group>"; };
@@ -251,7 +254,7 @@
 				A8F171CA18DF7C5B00964C34 /* Scenery.xcassets */,
 				A8F171CC18DF7D4C00964C34 /* Letters.xcassets */,
 				A8F171CE18DF7D9300964C34 /* Buttons.xcassets */,
-				A85BD82618D96AB100C5EFB8 /* mainSection.jpg */,
+				A8A3442119202AB3006C5C55 /* Mailman.xcassets */,
 				0007FB31180B2FBB00E55B0D /* Background */,
 				00719CE118E6CFD500DF66E6 /* Fonts */,
 			);
@@ -282,6 +285,7 @@
 		0049694E17F8A10700176F2D /* Interactive Objects */ = {
 			isa = PBXGroup;
 			children = (
+				A8A3442319202C74006C5C55 /* Mailman */,
 				00B43D90182834CF00261468 /* LRButton.h */,
 				00B43D91182834CF00261468 /* LRButton.m */,
 				0049695217F8A70B00176F2D /* Letter Blocks */,
@@ -648,6 +652,15 @@
 			name = "AI Managers";
 			sourceTree = "<group>";
 		};
+		A8A3442319202C74006C5C55 /* Mailman */ = {
+			isa = PBXGroup;
+			children = (
+				A8A3442419202C8D006C5C55 /* LRMailman.h */,
+				A8A3442519202C8D006C5C55 /* LRMailman.m */,
+			);
+			name = Mailman;
+			sourceTree = "<group>";
+		};
 		A8E60A141881E27900F60DF4 /* Class Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -761,6 +774,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A8A3442219202AB3006C5C55 /* Mailman.xcassets in Resources */,
 				A876EC41188367AA000FA069 /* Background_Mountains.png in Resources */,
 				A876EC3F188367AA000FA069 /* Background_Grass.png in Resources */,
 				A876EC3B18836795000FA069 /* Background_Cloud.png in Resources */,
@@ -770,7 +784,6 @@
 				A85A4CDA18E78BA100787D21 /* LeagueGothic-Italic.otf in Resources */,
 				A876EC4318836838000FA069 /* Background_Grass2.png in Resources */,
 				A8F171CB18DF7C5B00964C34 /* Scenery.xcassets in Resources */,
-				A85BD82718D96AB100C5EFB8 /* mainSection.jpg in Resources */,
 				A876EC40188367AA000FA069 /* Background_Hills.png in Resources */,
 				00719CE318E6D21D00DF66E6 /* GothamBold.ttf in Resources */,
 				A85A4CDB18E78BA100787D21 /* LeagueGothic-Regular.otf in Resources */,
@@ -840,6 +853,7 @@
 				00A6886E1904AA0E0074632F /* LRDevPauseViewController.m in Sources */,
 				00CDF18617F483E3003065F6 /* LRScreenSection.m in Sources */,
 				A87BDD9B1853AFDC00845BB5 /* LRBezierPath.m in Sources */,
+				A8A3442619202C8D006C5C55 /* LRMailman.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -11,6 +11,7 @@
 #import "LRLetterBlockBuilder.h"
 #import "LRRowManager.h"
 #import "LRPositionConstants.h"
+#import "LRMailman.h"
 
 static const CGFloat kMailmanAreaWidth          = 70.0;
 
@@ -53,6 +54,10 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
     mailmanArea.position = (CGPoint){(mailmanArea.size.width - self.size.width)/2, 0};
     self.mailmanArea = mailmanArea;
     [self addChild:self.mailmanArea];
+    
+    LRMailman *manford = [LRMailman new];
+    [self.mailmanArea addChild:manford];
+    
 }
 
 

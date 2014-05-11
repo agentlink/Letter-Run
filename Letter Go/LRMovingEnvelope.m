@@ -66,23 +66,24 @@ static CGFloat const kLRMovingBlockTouchSizeExtraHeight = 35.0;
 - (void)setRow:(NSUInteger)row
 {
     _row = row;
-    self.position = [LRMovingEnvelope positionForRow:row];
+    self.position = [LRMovingEnvelope envelopePositionForRow:row];
     self.envelopeID = [[LRManfordAIManager shared] nextEnvelopeIDForRow:row];
 }
 
 - (void)updateForRemoval
 {
     [self.aiDelegate envelopeCollectedWithID:self.envelopeID];
+    self.userInteractionEnabled = NO;
 }
 
-+ (CGPoint)positionForRow:(NSUInteger)slot
++ (CGPoint)envelopePositionForRow:(NSUInteger)row
 {
-    NSAssert(slot < kLRRowManagerNumberOfRows, @"Slot %i exceeds the proper number of slots", slot);
+    NSAssert(row < kLRRowManagerNumberOfRows, @"Slot %i exceeds the proper number of rows", row);
     
     CGFloat yDiff = kSectionHeightMainSection/(kLRRowManagerNumberOfRows + 1);
     CGFloat lowestPosition = 0 - kSectionHeightMainSection/2 + yDiff * .5;
     CGFloat xPos = SCREEN_WIDTH/2 + kMovingEnvelopeSpriteDimension;
-    CGFloat yPos = lowestPosition + yDiff * slot;
+    CGFloat yPos = lowestPosition + yDiff * row;
     
     return CGPointMake(xPos, yPos);
 }
