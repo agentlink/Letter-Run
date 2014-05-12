@@ -10,6 +10,7 @@
 #import "LRScoreManager.h"
 #import "LRGameStateManager.h"
 
+static const NSInteger kLRHealthSectionLoopResetValue = -1;
 #define HEALTHBAR_WIDTH             SCREEN_WIDTH
 
 static const CGFloat kLRHealthSectionInitialDropTime = 40.0;
@@ -37,7 +38,7 @@ static const CGFloat kLRHealthSectionStartPercentYellow = .50;
     [self addChild:self.healthBarShadingLayer];
     [self addChild:self.healthBarColored];
     [self addChild:self.healthBarSkin];
-    self.initialTime = kGameLoopResetValue;
+    self.initialTime = kLRHealthSectionLoopResetValue;
 }
 
 
@@ -113,7 +114,7 @@ static const CGFloat kLRHealthSectionStartPercentYellow = .50;
 - (void)_restartHealthBar
 {
     self.healthBarColored.position = CGPointMake(0, self.healthBarColored.position.y);
-    self.initialTime = kGameLoopResetValue;
+    self.initialTime = kLRHealthSectionLoopResetValue;
 }
 
 
@@ -187,9 +188,9 @@ static const CGFloat kLRHealthSectionStartPercentYellow = .50;
     }
     //If the health bar has been toggled off, reset it
     else if (![self _healthBarFalls]) {
-        self.initialTime = kGameLoopResetValue;
+        self.initialTime = kLRHealthSectionLoopResetValue;
     }
-    else if (self.initialTime == kGameLoopResetValue) {
+    else if (self.initialTime == kLRHealthSectionLoopResetValue) {
         self.initialTime = currentTime;
     }
     else {
@@ -204,7 +205,7 @@ static const CGFloat kLRHealthSectionStartPercentYellow = .50;
 }
 - (void)gameStateUnpaused
 {
-    self.initialTime = kGameLoopResetValue;
+    self.initialTime = kLRHealthSectionLoopResetValue;
 }
 
 @end

@@ -7,7 +7,6 @@
 //
 
 #import "LREnvelopeAnimationBuilder.h"
-#import "LRLetterSection.h"
 
 //#toy
 static CGFloat const kTotalDelayTimeSubmit = 0.4;
@@ -125,6 +124,13 @@ static CGFloat const kBubbleToScaleOvershootDurationRatio = .5;
     return action;
 }
 
++ (SKAction *)animateToScale:(CGFloat)scale withDuration:(NSTimeInterval)duration
+{
+    SKAction *scaleAction = [SKAction scaleTo:scale duration:duration];
+    scaleAction.timingMode = SKActionTimingEaseInEaseOut;
+    return scaleAction;
+}
+
 + (SKAction *)bubbleByScale:(CGFloat)scale withDuration:(NSTimeInterval)duration
 {
     NSAssert(kBubbleToScaleOvershootDurationRatio <= 1.0 &&
@@ -191,8 +197,8 @@ static CGFloat const kBubbleToScaleOvershootDurationRatio = .5;
 
 + (CGFloat) _delayForIndex:(NSUInteger)index withTotalDelayTime:(CGFloat)totalDelay leadingDirection:(LRDirection)direction
 {
-    CGFloat directionVal = (direction == kLRDirectionRight) ? (kWordMaximumLetterCount - index) : index + 1;
-    CGFloat delay = totalDelay * directionVal/kWordMaximumLetterCount;
+    CGFloat directionVal = (direction == kLRDirectionRight) ? (kLRLetterSectionCapacity - index) : index + 1;
+    CGFloat delay = totalDelay * directionVal/kLRLetterSectionCapacity;
     return delay;
 }
 @end

@@ -8,7 +8,6 @@
 
 #import "LRGamePlayLayer.h"
 #import "LRLetterBlockBuilder.h"
-#import "LRCollisionManager.h"
 #import "LRGameStateManager.h"
 #import "LRRowManager.h"
 #import "LRPositionConstants.h"
@@ -21,9 +20,6 @@ NSString * const kLRGamePlayLayerLetterSectionName = @"letterSection";
 @interface LRGamePlayLayer ()
 @property LRRowManager *letterSlots;
 
-@property NSTimeInterval nextDropTime;
-@property NSTimeInterval pauseTime;
-
 @property (nonatomic, strong) LRHealthSection *healthSection;
 @property (nonatomic, strong) LRLetterSection *letterSection;
 @property (nonatomic, strong) LRMainGameSection *mainGameSection;
@@ -34,7 +30,6 @@ NSString * const kLRGamePlayLayerLetterSectionName = @"letterSection";
 @end
 
 @implementation LRGamePlayLayer
-@synthesize pauseTime, nextDropTime;
 
 #pragma mark - Set Up/Initialization
 
@@ -47,8 +42,6 @@ NSString * const kLRGamePlayLayerLetterSectionName = @"letterSection";
         [self setUserInteractionEnabled:YES];
         
         self.color = [LRColor gamePlayLayerBackgroundColor];
-        self.pauseTime = kGameLoopResetValue;
-        self.name = NAME_LAYER_GAME_PLAY;
         [self createLayerContent];
     }
     return self;

@@ -15,7 +15,6 @@
 #import "LRDictionaryChecker.h"
 #import "LRGameScene.h"
 #import "LREnvelopeAnimationBuilder.h"
-#import "LRCollisionManager.h"
 #import "LRGameStateManager.h"
 #import "LRColor.h"
 #import "LRMovingBlockBuilder.h"
@@ -62,7 +61,7 @@ typedef void(^CompletionBlockType)(void);
 
 - (void)setUpNotifications
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(submitWord:) name:NOTIFICATION_SUBMIT_WORD object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(submitWord:) name:kNotificationSubmitWord object:nil];
 }
 
 - (void)createSectionContent
@@ -94,7 +93,7 @@ typedef void(^CompletionBlockType)(void);
         _letterSlots = [NSMutableArray new];
         
         //Fill the letter slot array with LRSlots
-        for (int i = 0; i < kWordMaximumLetterCount; i++) {
+        for (int i = 0; i < kLRLetterSectionCapacity; i++) {
             LRLetterSlot *slot = [LRLetterSlot new];
             slot.position = CGPointMake([self xPositionForSlotIndex:i], 0.0);
             slot.index = i;
@@ -240,13 +239,13 @@ static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
      If you are shifting to the right, start from left side and set each slot to the value of the envelope on its right
      If you are shifting to the left, start from the right side and set each slot to the value of the envelope on its left
      */
-    NSInteger startVal = (direction == kLRDirectionRight) ? kWordMaximumLetterCount - 1: range.location - 1;
-    NSInteger endVal = (direction == kLRDirectionRight) ? range.location : kWordMaximumLetterCount;
+    NSInteger startVal = (direction == kLRDirectionRight) ? kLRLetterSectionCapacity - 1: range.location - 1;
+    NSInteger endVal = (direction == kLRDirectionRight) ? range.location : kLRLetterSectionCapacity;
     
     for (int i = startVal; i != endVal; i += direction)
     {
         LRLetterSlot *newLocation = self.letterSlots[i];
-        if (i == kWordMaximumLetterCount - 1 && direction == kLRDirectionLeft) {
+        if (i == kLRLetterSectionCapacity - 1 && direction == kLRDirectionLeft) {
             newLocation.currentBlock = [LRLetterBlockBuilder createEmptySectionBlock];
         }
         else {
@@ -269,12 +268,12 @@ static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
 
 - (void)_revealShiftedLetters
 {
-    int letterSlotCount = kWordMaximumLetterCount;
+    int letterSlotCount = kLRLetterSectionCapacity;
     for (int k = 0; k < letterSlotCount; k++)
     {
         LRLetterSlot *updatedSlot = self.letterSlots[k];
         updatedSlot.currentBlock.hidden = NO;
-        [updatedSlot enumerateChildNodesWithName: kTempCollectedEnvelopeName usingBlock:^(SKNode *node, BOOL *stop) {
+        [updatedSlot enumerateChildNodesWithName: kLRCollectedEnvelopeTemporaryName usingBlock:^(SKNode *node, BOOL *stop) {
             [node removeFromParent];
         }];
     }
@@ -298,7 +297,7 @@ static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
     NSAssert(![touchedBlock isCollectedEnvelopeEmpty], @"Touched blocks should not be empty");
     NSAssert(![touchedBlock isCollectedEnvelopePlaceholder], @"Touched bocks should not be placeholders");
     NSAssert(!(_touchedBlock && touchedBlock), @"Touched block should only be set if it is nil");
-    NSAssert(![_touchedBlock.name isEqualToString:kTempCollectedEnvelopeName], @"Animated block should not be touched");
+    NSAssert(![_touchedBlock.name isEqualToString:kLRCollectedEnvelopeTemporaryName], @"Animated block should not be touched");
     _touchedBlock = touchedBlock;
 }
 
@@ -354,9 +353,8 @@ static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
 - (void)_shiftEnvelopesInRange:(NSRange)slotRange direction:(LRDirection)direction
 {
     //TODO: add other assertions here
-    NSAssert(slotRange.length + slotRange.location <= kWordMaximumLetterCount, @"Shift envelope range exceeds max letter count");
-    NSAssert(slotRange.length != 0, @"More than one envelope should be shifted");
-    int endcount = kWordMaximumLetterCount;
+    NSAssert(slotRange.length + slotRange.location <= kLRLetterSectionCapacity, @"Shift envelope range exceeds max letter count");
+    int endcount = kLRLetterSectionCapacity;
     NSUInteger initialIndex = slotRange.location;
     LRLetterSlot *currentSlot;
     [self hideAllAnimatedEnvelopes];
@@ -452,7 +450,7 @@ static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
         if ([(LRLetterSlot *)[self.letterSlots objectAtIndex:i] isLetterSlotEmpty])
             break;
     }
-    self.submitButton.isEnabled = (i >= kWordMinimumLetterCount && [[LRDictionaryChecker shared] checkForWordInDictionary:[self getCurrentWord]]);
+    self.submitButton.isEnabled = (i >= kLRLetterSectionMinimumWordLength && [[LRDictionaryChecker shared] checkForWordInDictionary:[self getCurrentWord]]);
 }
 
 #pragma mark - Reordering Functions -
@@ -602,7 +600,7 @@ static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
 
 - (void)hideAllAnimatedEnvelopes
 {
-    [self enumerateChildNodesWithName:kTempCollectedEnvelopeName usingBlock:^(SKNode *node, BOOL *stop) {
+    [self enumerateChildNodesWithName:kLRCollectedEnvelopeTemporaryName usingBlock:^(SKNode *node, BOOL *stop) {
         node.hidden = YES;
     }];
 }

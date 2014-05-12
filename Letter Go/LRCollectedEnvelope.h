@@ -11,7 +11,8 @@
 @class LRLetterSlot;
 
 extern CGFloat const kLRCollectedEnvelopeHeight;
-extern NSString * const kTempCollectedEnvelopeName;
+extern NSString * const kLRCollectedEnvelopeTemporaryName;
+extern NSString * const kLRCollectedEnvelopeName;
 
 static NSInteger const kSlotIndexNone = -1;
 

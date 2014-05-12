@@ -8,6 +8,10 @@
 
 #import "LRGameStateDelegate.h"
 #import "LRButton.h"
+
+
+static NSString *const kNotificationSubmitWord = @"Submit a word";
+
 @interface LRSubmitButton : LRButton <LRGameStateDelegate>
 
 @end

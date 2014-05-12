@@ -32,7 +32,7 @@
 - (void)submitButtonSelected
 {
     if (![[LRGameStateManager shared] isGameOver]) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_SUBMIT_WORD object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationSubmitWord object:nil];
     }
     self.isEnabled = NO;
 }

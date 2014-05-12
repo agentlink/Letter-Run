@@ -11,8 +11,10 @@
 #import "LRRowManager.h"
 #import "LRManfordAIManager.h"
 
-static CGFloat const kLRMovingBlockTouchSizeExtraWidth = 25.0;
+static CGFloat const kLRMovingBlockTouchSizeExtraWidth  = 25.0;
 static CGFloat const kLRMovingBlockTouchSizeExtraHeight = 35.0;
+static CGFloat const kLRMovingBlockSpriteDimension     = 48.0;
+NSString * const kLRMovingBlockName = @"Moving envelope";
 
 @interface LRMovingEnvelope ()
 @property (nonatomic, weak) id<LRManfordAIManagerSelectionDelegate> aiDelegate;
@@ -32,10 +34,10 @@ static CGFloat const kLRMovingBlockTouchSizeExtraHeight = 35.0;
 
 - (id)initWithLetter:(NSString *)letter paperColor:(LRPaperColor)paperColor
 {
-    CGSize size = CGSizeMake(kMovingEnvelopeSpriteDimension, kMovingEnvelopeSpriteDimension);
+    CGSize size = CGSizeMake(kLRMovingBlockSpriteDimension, kLRMovingBlockSpriteDimension);
     if (self = [super initWithLetter:letter paperColor:paperColor size:size])
     {
-        self.name = NAME_SPRITE_MOVING_ENVELOPE;
+        self.name = kLRMovingBlockName;
 
         SKSpriteNode *envelopeSprite = [self _envelopeSpriteForLetter:letter paperColor:paperColor];
         if (envelopeSprite) {
@@ -82,7 +84,7 @@ static CGFloat const kLRMovingBlockTouchSizeExtraHeight = 35.0;
     
     CGFloat yDiff = kSectionHeightMainSection/(kLRRowManagerNumberOfRows + 1);
     CGFloat lowestPosition = 0 - kSectionHeightMainSection/2 + yDiff * .5;
-    CGFloat xPos = SCREEN_WIDTH/2 + kMovingEnvelopeSpriteDimension;
+    CGFloat xPos = SCREEN_WIDTH/2 + kLRMovingBlockSpriteDimension;
     CGFloat yPos = lowestPosition + yDiff * row;
     
     return CGPointMake(xPos, yPos);

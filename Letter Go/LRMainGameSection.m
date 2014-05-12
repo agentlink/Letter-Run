@@ -112,7 +112,7 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
 
 - (void)gameStatePaused
 {
-    [self enumerateChildNodesWithName:NAME_SPRITE_MOVING_ENVELOPE usingBlock:^(SKNode *node, BOOL *stop) {
+    [self enumerateChildNodesWithName:kLRMovingBlockName usingBlock:^(SKNode *node, BOOL *stop) {
         [node setUserInteractionEnabled:NO];
     }];
     self.paused = YES;
@@ -121,7 +121,7 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
 
 - (void)gameStateUnpaused
 {
-    [self enumerateChildNodesWithName:NAME_SPRITE_MOVING_ENVELOPE usingBlock:^(SKNode *node, BOOL *stop) {
+    [self enumerateChildNodesWithName:kLRMovingBlockName usingBlock:^(SKNode *node, BOOL *stop) {
         [node setUserInteractionEnabled:YES];
     }];
     self.paused = YES;

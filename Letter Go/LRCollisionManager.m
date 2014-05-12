@@ -55,10 +55,11 @@ static LRCollisionManager *_shared = nil;
      dictionaries are also stored in a character's sub-dictionary.
      */
     
-    NSArray *spriteNameArray = [NSArray arrayWithObjects:
-                                NAME_SPRITE_BOTTOM_BARRIER,         // << 1
-                                NAME_SPRITE_SECTION_LETTER_BLOCK,   // << 2
-                                nil];
+    NSArray *spriteNameArray = @[];
+//    NSArray *spriteNameArray = [NSArray arrayWithObjects:
+//                                NAME_SPRITE_BOTTOM_BARRIER,         // << 1
+//                                NAME_SPRITE_SECTION_LETTER_BLOCK,   // << 2
+//                                nil];
     self.bitMaskDictionary = [[NSMutableDictionary alloc] init];
     for (int i = 0; i < [spriteNameArray count]; i++) {
         NSMutableDictionary *spriteDict = [[NSMutableDictionary alloc] init];

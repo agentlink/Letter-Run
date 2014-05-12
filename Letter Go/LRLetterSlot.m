@@ -18,7 +18,6 @@
     if (self = [super init])
     {
         self.currentBlock = [LRLetterBlockBuilder createEmptySectionBlock];
-        self.name = NAME_SPRITE_LETTER_SLOT;
         self.size = CGSizeMake(kDistanceBetweenSlots, kSectionHeightLetterSection);
         [self addChild:self.currentBlock];
     }

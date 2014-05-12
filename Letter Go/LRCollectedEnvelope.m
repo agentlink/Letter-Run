@@ -9,12 +9,15 @@
 #import "LRCollectedEnvelope.h"
 #import "LRGameScene.h"
 #import "LRLetterSlot.h"
-#import "LRCollisionManager.h"
 #import "LREnvelopeAnimationBuilder.h"
 #import "LRLetterSlot.h"
 #import "LRGameStateManager.h"
 
-NSString* const kTempCollectedEnvelopeName = @"NAME_SPRITE_SECTION_LETTER_BLOCK_TEMP";
+static CGFloat const kLRCollectedEnvelopeBubbleScale = 1.28;
+static CGFloat const kLRCollectedEnvelopeBubbleDuration = .12;
+
+NSString * const kLRCollectedEnvelopeTemporaryName = @"Collected envelope TEMPORARY";
+NSString * const kLRCollectedEnvelopeName = @"Collected envelope";
 
 typedef NS_ENUM(NSUInteger, MovementDirection)
 {
@@ -73,7 +76,7 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 - (LRCollectedEnvelope *)animatableCopyOfEnvelope
 {
     LRCollectedEnvelope *animatableEnvelopeCopy = [self copy];
-    animatableEnvelopeCopy.name = kTempCollectedEnvelopeName;
+    animatableEnvelopeCopy.name = kLRCollectedEnvelopeTemporaryName;
     animatableEnvelopeCopy.userInteractionEnabled = NO;
     return animatableEnvelopeCopy;
 }
@@ -82,7 +85,6 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 {
     CGSize size = CGSizeMake(kCollectedEnvelopeSpriteDimension, kCollectedEnvelopeSpriteDimension);
     if (self = [super initWithLetter:letter paperColor:paperColor size:size]) {
-        self.name = NAME_SPRITE_SECTION_LETTER_BLOCK;
         self.slotIndex = kSlotIndexNone;
         NSString *imageName = [self stringFromPaperColor:paperColor];
         if (imageName) {
@@ -112,9 +114,8 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
         {
             self.position = location;
             [self releaseBlockForRearrangement];
-            SKAction *bubble = [LREnvelopeAnimationBuilder bubbleByScale:kLRCollectedEnvelopeBubbleScale
-                                                            withDuration:kLRCollectedEnvelopeBubbleDuration];
-            [self runAction:bubble];
+            SKAction *expand = [LREnvelopeAnimationBuilder animateToScale:kLRCollectedEnvelopeBubbleScale withDuration:kLRCollectedEnvelopeBubbleDuration];
+            [self runAction:expand];
         }
     }
 }
@@ -160,8 +161,8 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
     }
     else {
         [self.delegate rearrangementHasFinishedWithLetterBlock:self];
-        SKAction *bubble = [LREnvelopeAnimationBuilder unbubbleWithDuration:kLRCollectedEnvelopeBubbleDuration];
-        [self runAction:bubble];
+        SKAction *descale = [LREnvelopeAnimationBuilder animateToScale:1.0 withDuration:kLRCollectedEnvelopeBubbleDuration];
+        [self runAction:descale];
     }
     self.touchedAfterGameOver = [[LRGameStateManager shared] isGameOver];
 }

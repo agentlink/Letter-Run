@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "LRConstants.h"
+#import "LRLetterSection.h"
 
 @interface LREnvelopeAnimationBuilder : NSObject
 
@@ -24,6 +25,8 @@
 + (SKAction *)shiftLetterInDirection:(LRDirection)direction withDelayForIndex:(NSUInteger)index;
 + (SKAction *)bubbleByScale:(CGFloat)overshootScale withDuration:(NSTimeInterval)duration;
 + (SKAction *)unbubbleWithDuration:(NSTimeInterval)duration;
+
++ (SKAction *)animateToScale:(CGFloat)scale withDuration:(NSTimeInterval)duration;
 
 #pragma Submission
 + (SKAction *)submitWordActionWithLetterAtIndex:(NSUInteger)index;

@@ -8,6 +8,8 @@
 
 #import "LRLetterBlock.h"
 
+extern NSString * const kLRMovingBlockName;
+
 @protocol LRMovingBlockTouchDelegate;
 @interface LRMovingEnvelope : LRLetterBlock
 
@@ -23,7 +25,7 @@
 
 ///Creates an instance of LRMovingEnvelope with a specific letter and color of paper
 + (LRMovingEnvelope *)movingBlockWithLetter:(NSString *)letter paperColor:(LRPaperColor)paperColor;
-///Returns the file name ofr a given paper color
+///Returns the file name for a given paper color
 + (NSString *)stringFromPaperColor:(LRPaperColor)paperColor open:(BOOL)open;
 ///Returns the position of an enveope at a given row
 + (CGPoint)envelopePositionForRow:(NSUInteger)row;
