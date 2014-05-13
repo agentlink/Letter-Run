@@ -14,7 +14,7 @@
 
 @interface LRBackgroundLayer ()
 @property SKSpriteNode *mainGameSectionBackground;
-@property (nonatomic, weak) NSArray *roadStripes;
+@property (nonatomic, strong) NSArray *roadStripes;
 @end
 
 @implementation LRBackgroundLayer
