@@ -49,10 +49,11 @@ static CGFloat const kLRGameSceneBlurEffectDuration = .4;
     self.backgroundLayer = [[LRBackgroundLayer alloc] init];
     self.gamePlayLayer = [[LRGamePlayLayer alloc] init];
     
-    self.rootEffectNode = [LRGameScene blurEffectNode];
-    [self.rootEffectNode addChild:self.backgroundLayer];
-    [self.rootEffectNode addChild:self.gamePlayLayer];
-    [self addChild:self.rootEffectNode];
+    SKEffectNode *effectNode = [LRGameScene blurEffectNode];
+    [effectNode addChild:self.backgroundLayer];
+    [effectNode addChild:self.gamePlayLayer];
+    [self addChild:effectNode];
+    self.rootEffectNode = effectNode;
     
     [self _addGameStateDelegateListeners];
 }
@@ -122,8 +123,16 @@ static CGFloat const kLRGameSceneBlurEffectDuration = .4;
         [[self rootEffectNode] setShouldEnableEffects:NO];
         handler();
     }];
-
 }
+
+- (void)addChild:(SKNode *)node
+{
+    if (!node) {
+        NSLog(@"STOP!");
+    }
+    [super addChild:node];
+}
+
 #pragma mark - Scene Getters
 + (LRGameScene *)scene
 {

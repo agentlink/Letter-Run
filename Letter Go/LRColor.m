@@ -71,7 +71,7 @@
     return [LRColor rgbColorWithRed:255.0 green:140.0 blue:0.0 alpha:1.0];
 }
 
-+ (LRColor *)healtBarColorRed {
++ (LRColor *)healthBarColorRed {
     return [LRColor rgbColorWithRed:192.0 green:0.0 blue:0.0 alpha:1.0];
 }
 

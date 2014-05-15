@@ -17,7 +17,21 @@ static const CGFloat kLRHealthSectionInitialDropTime = 40.0;
 static const CGFloat kLRHealthSectionRightMostEdge = 0.0;
 static const CGFloat kLRHealthSectionStartPercentYellow = .50;
 
+@interface LRHealthBarColoredBackground : SKSpriteNode
+@end
+
+@interface LRHealthBarColoredMovingSection : SKSpriteNode
+@end
+
+@interface LRHealthBarColoredContainer : SKSpriteNode
+@property (nonatomic,strong) SKSpriteNode *shadedSection;
+@property (nonatomic,strong) SKSpriteNode *movingBar;
+@end
+
+
 @interface LRHealthSection ()
+///The container object for all health bar objects whose color is affected by the health bar's position
+@property (nonatomic, strong) LRHealthBarColoredContainer *coloredBar;
 ///The background color of the health bar
 @property (nonatomic, strong) SKSpriteNode *healthBarBackground;
 ///The shading for the health bar layer
@@ -35,20 +49,19 @@ static const CGFloat kLRHealthSectionStartPercentYellow = .50;
 {
     //The color will be replaced by a health bar sprite
     [self addChild:self.healthBarBackground];
-    [self addChild:self.healthBarShadingLayer];
-    [self addChild:self.healthBarColored];
+    [self addChild:self.coloredBar];
     [self addChild:self.healthBarSkin];
-    self.initialTime = kLRHealthSectionLoopResetValue;
+
 }
 
 
 #pragma mark - Properties Accessors
 
-- (SKSpriteNode *)healthBarColored {
-    if (!_healthBarColored) {
-        _healthBarColored = [SKSpriteNode spriteNodeWithColor:[LRColor healthBarColorGreen] size:self.size];
+- (LRHealthBarColoredContainer *)coloredBar {
+    if (!_coloredBar) {
+        _coloredBar = [[LRHealthBarColoredContainer alloc] initWithColor:[LRColor healthBarColorGreen] size:self.size];
     }
-    return _healthBarColored;
+    return _coloredBar;
 }
 
 - (SKSpriteNode *)healthBarBackground {
@@ -162,7 +175,7 @@ static const CGFloat kLRHealthSectionStartPercentYellow = .50;
     else {
         relativePercent = 1 - (percentHealth / (1.0 - kLRHealthSectionStartPercentYellow));
         newColor = [LRColor colorBetweenStartColor:[LRColor healthBarColorYellow]
-                                       andEndColor:[LRColor healtBarColorRed]
+                                       andEndColor:[LRColor healthBarColorRed]
                                            percent:relativePercent];
     }
     [self setHealthBarColor:newColor];
@@ -194,8 +207,8 @@ static const CGFloat kLRHealthSectionStartPercentYellow = .50;
         self.initialTime = currentTime;
     }
     else {
-        [self _shiftHealthBarWithTimeInterval:currentTime];
-        [self _updateColor];
+//        [self _shiftHealthBarWithTimeInterval:currentTime];
+//        [self _updateColor];
     }
 }
 
@@ -209,3 +222,49 @@ static const CGFloat kLRHealthSectionStartPercentYellow = .50;
 }
 
 @end
+
+@implementation LRHealthBarColoredContainer
+
+- (id) initWithColor:(UIColor *)color size:(CGSize)size
+{
+    if (self = [super initWithColor:color size:size])
+    {
+        [self addChild:self.shadedSection];
+        [self addChild:self.movingBar];
+        [self runAction:[SKAction moveByX:-100 y:0 duration:3]];
+    }
+    return self;
+}
+
+- (SKSpriteNode *)shadedSection
+{
+    if (!_shadedSection) {
+        _shadedSection = [[SKSpriteNode alloc] initWithColor:[LRColor healthBarColorGreen] size:self.size];
+        _shadedSection.alpha = .25;
+    }
+    return _shadedSection;
+}
+
+- (SKSpriteNode *)movingBar
+{
+    if (!_movingBar) {
+        _movingBar = [[SKSpriteNode alloc] initWithColor:[LRColor healthBarColorGreen] size:self.size];
+    }
+    return _movingBar;
+}
+
+- (void)setPosition:(CGPoint)position
+{
+    self.movingBar.position = position;
+    self.color = (self.color == [LRColor greenColor]) ? [LRColor redColor] : [LRColor greenColor];
+}
+
+- (void)setColor:(UIColor *)color
+{
+    [super setColor:color];
+    self.shadedSection.color = color;
+    self.movingBar.color = color;
+}
+
+@end
+

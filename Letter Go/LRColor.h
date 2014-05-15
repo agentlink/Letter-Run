@@ -23,7 +23,7 @@
 //Health bar colors
 + (LRColor *)healthBarColorGreen;
 + (LRColor *)healthBarColorYellow;
-+ (LRColor *)healtBarColorRed;
++ (LRColor *)healthBarColorRed;
 
 //Submit button colors
 + (LRColor *)submitButtonEnabledColor;
