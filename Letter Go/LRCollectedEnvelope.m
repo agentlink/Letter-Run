@@ -146,6 +146,7 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    NSAssert(self.userInteractionEnabled, @"User interaction should be enabled if touch is ending");
     if (self.touchedAfterGameOver)
         return;
 

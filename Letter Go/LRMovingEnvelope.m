@@ -117,7 +117,7 @@ NSString * const kLRMovingBlockName = @"Moving envelope";
     for (UITouch *touch in touches)
     {
         CGPoint location = [touch locationInNode:[self parent]];
-        if (CGRectContainsPoint(self.frame, location)) {
+        if (CGRectContainsPoint(self.frame, location) && self.userInteractionEnabled) {
             [self.touchDelegate playerSelectedMovingBlock:self];
         }
     }
