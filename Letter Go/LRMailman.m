@@ -27,8 +27,6 @@ static CGFloat const LRMailmanMovementToEnvelopeGenerationRatio = .9;
     {
         //TODO: remove this hack
         self.currentRow = 2;
-        self.xScale = 1.2;
-        self.yScale = 1.2;
         [LRManfordAIManager shared].movementDelegate = self;
     }
     return self;

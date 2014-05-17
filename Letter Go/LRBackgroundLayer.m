@@ -12,6 +12,9 @@
 #import "LRMainGameSection.h"
 #import "LRMovingBlockBuilder.h"
 
+
+static NSUInteger const kLRBackgroundLayerStripesPerRow = 6;
+
 @interface LRBackgroundLayer ()
 @property SKSpriteNode *mainGameSectionBackground;
 @property (nonatomic, strong) NSArray *roadStripes;
@@ -48,14 +51,15 @@
 - (NSArray *)_stripesForRoadSprite:(SKSpriteNode *)road
 {
     NSMutableArray *allStripes = [NSMutableArray new];
+    //TODO: get this value correctly
+    CGFloat stripeWidth = 38.5;
     CGFloat diffY = road.size.height / (kLRRowManagerNumberOfRows + 1);
-    CGFloat diffX = 100;
+    CGFloat diffX = (road.size.width + 38.5)/(kLRBackgroundLayerStripesPerRow);
     CGFloat startY = diffY - road.size.height/2;
     CGFloat xPos = (road.size.width - diffX)/2;
     CGFloat yPos = startY;
-    int stripesPerRow = road.size.width/diffX + 1;
     
-    for (int j = 0; j < stripesPerRow; j++) {
+    for (int j = 0; j < kLRBackgroundLayerStripesPerRow; j++) {
         for (int i = 0; i < kLRRowManagerNumberOfRows; i++)
         {
             SKSpriteNode *stripe = [[SKSpriteNode alloc ] initWithImageNamed:@"mainSection-stripe"];
@@ -66,6 +70,7 @@
         xPos -= diffX;
         yPos = startY;
     }
+    NSAssert([(SKSpriteNode *)allStripes[0] size].width == stripeWidth, @"Stripe width value is incorrect");
     return allStripes;
 }
 
@@ -78,21 +83,22 @@
 
 - (void)_runRecursiveMovementOnStripe:(SKSpriteNode *)stripe
 {
-    SKAction *initialMove = [LRBackgroundLayer _movementForStripe:stripe];
+    SKAction *initialMove = [self _movementForStripe:stripe];
     [stripe runAction:initialMove completion:^{
-        stripe.position = CGPointMake(-(SCREEN_WIDTH/2 + stripe.size.width), stripe.position.y);
+        stripe.position = CGPointMake((self.mainGameSectionBackground.size.width + stripe.size.width)/2, stripe.position.y);
         [self _runRecursiveMovementOnStripe:stripe];
     }];
 }
 
-+ (SKAction *)_movementForStripe:(SKSpriteNode *)stripe
+- (SKAction *)_movementForStripe:(SKSpriteNode *)stripe
 {
-    //Get how far the stripe is from the right edge
-    CGPoint endPoint = CGPointMake(SCREEN_WIDTH/2 + stripe.size.width, stripe.position.y);
-    CGFloat distance = endPoint.x - stripe.position.x;
+    //Get how far the stripe is from the edge
+    CGFloat leftEdgeX = (self.mainGameSectionBackground.size.width + stripe.size.width)/2;
+    CGPoint endPoint = CGPointMake(-leftEdgeX, stripe.position.y);
+    CGFloat distance =  endPoint.x - stripe.position.x;
     //Make the duration the same as the letter cross time
     CGFloat totalCrossTime = [[LRMovingBlockBuilder shared] blockScreenCrossTime];
-    CGFloat duration = (distance/(SCREEN_WIDTH + stripe.size.width)) * totalCrossTime;
+    CGFloat duration = ABS(distance/self.mainGameSectionBackground.size.width) * totalCrossTime;
     
     return [SKAction moveBy:CGVectorMake(distance, 0) duration:duration];
 }

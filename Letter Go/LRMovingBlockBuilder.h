@@ -21,7 +21,7 @@
 - (void)stopMovingBlockGeneration;
 ///Returns the time difference in seconds between how often blocks are being generated
 - (CGFloat)blockGenerationInterval;
-///Returns how long it takes the block to move across the screen
+///Returns how long it takes the block to move the width of the screen
 - (CGFloat)blockScreenCrossTime;
 
 @end

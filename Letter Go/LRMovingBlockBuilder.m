@@ -67,7 +67,8 @@ static LRMovingBlockBuilder *_shared = nil;
     LRMovingEnvelope *envelope = [LRLetterBlockBuilder createRandomEnvelope];
     //TODO: get duration from some calculation
     CGFloat distance = SCREEN_WIDTH + kCollectedEnvelopeSpriteDimension;
-    SKAction *moveAcrossScreen = [SKAction moveBy:CGVectorMake(-distance, 0) duration:[self blockScreenCrossTime]];
+    CGFloat duration = [self blockScreenCrossTime] * distance/SCREEN_WIDTH;
+    SKAction *moveAcrossScreen = [SKAction moveBy:CGVectorMake(-distance, 0) duration:duration];
     [self.screenDelegate addMovingBlockToScreen:envelope];
     [envelope runAction:moveAcrossScreen];
     
