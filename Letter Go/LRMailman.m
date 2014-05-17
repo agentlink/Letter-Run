@@ -10,9 +10,6 @@
 #import "LRMovingEnvelope.h"
 #import "LRMovingBlockBuilder.h"
 
-//#toy
-static CGFloat const LRMailmanMovementToEnvelopeGenerationRatio = .9;
-
 @interface LRMailman ()
 @property (nonatomic, readwrite) NSUInteger currentRow;
 @end
@@ -66,11 +63,23 @@ static CGFloat const LRMailmanMovementToEnvelopeGenerationRatio = .9;
     }
     
     //The time that Manford take to move to an envelope should be relative to how quickly the envelopes are generating.
-    CGFloat maxManfordTravelTime = [[LRMovingBlockBuilder shared] blockGenerationInterval] * LRMailmanMovementToEnvelopeGenerationRatio;
-    
-    CGFloat duration = netRowDiff * maxManfordTravelTime/(kLRRowManagerNumberOfRows - 1);
+    CGFloat duration = [LRMailman _manfordMovementDurationForRowCDifference:netRowDiff];
     SKAction *movement = [SKAction moveTo:newManfordPos duration:duration];
     movement.timingMode = SKActionTimingEaseInEaseOut;
     return movement;
 }
+
+//This function returns how long Manford takes to move a given amount of rows
++ (CGFloat)_manfordMovementDurationForRowCDifference:(NSUInteger)rowDiff
+{
+    CGFloat blockInterval = [[LRMovingBlockBuilder shared] blockGenerationInterval];
+    //Manford should move slower for shorter distances
+    CGFloat maxMultiplier = 1.4;
+    CGFloat speedDiffPerRow = .2;
+    CGFloat multiplier = maxMultiplier - (rowDiff * speedDiffPerRow);
+    CGFloat maxManfordTravelTime =  blockInterval * multiplier;
+    CGFloat duration = rowDiff * maxManfordTravelTime/(kLRRowManagerNumberOfRows - 1);
+    return duration;
+}
+
 @end

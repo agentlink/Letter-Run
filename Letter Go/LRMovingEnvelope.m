@@ -38,8 +38,6 @@ NSString * const kLRMovingBlockName = @"Moving envelope";
     if (self = [super initWithLetter:letter paperColor:paperColor size:size])
     {
         self.name = kLRMovingBlockName;
-
-        self.color = [LRColor debugColor1];
         SKSpriteNode *envelopeSprite = [self _envelopeSpriteForLetter:letter paperColor:paperColor];
         if (envelopeSprite) {
             //Correctly position the envelope sprite

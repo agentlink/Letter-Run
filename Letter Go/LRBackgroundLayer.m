@@ -64,6 +64,7 @@ static NSUInteger const kLRBackgroundLayerStripesPerRow = 6;
         {
             SKSpriteNode *stripe = [[SKSpriteNode alloc ] initWithImageNamed:@"mainSection-stripe"];
             stripe.position = CGPointMake(xPos, yPos);
+            stripe.yScale = 1.2;
             yPos += diffY;
             [allStripes addObject:stripe];
         }

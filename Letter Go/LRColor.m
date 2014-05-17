@@ -83,7 +83,7 @@
     return [LRColor rgbColorWithRed:135.0 green:206.0 blue:250.0 alpha:1];
 }
 + (LRColor *)letterSectionColor {
-    return [LRColor rgbColorWithRed:14 green:85 blue:129 alpha:.9];
+    return [LRColor buttonSectionColor];
 }
 
 + (LRColor *)buttonSectionColor {
