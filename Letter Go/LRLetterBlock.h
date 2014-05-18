@@ -27,7 +27,7 @@ typedef NS_ENUM(NSInteger, LRPaperColor)
 ///The alphabetical letter represented by the envelope
 @property (nonatomic, readonly) NSString *letter;
 ///The label containing the letter
-@property (nonatomic, readonly) SKLabelNode *letterLabel;
+@property (nonatomic, strong) SKLabelNode *letterLabel;
 
 ///Returns TRUE if the letter is currently being touched
 @property (nonatomic, readonly) BOOL isTouched;

@@ -11,6 +11,7 @@
 #import "LRRowManager.h"
 #import "LRManfordAIManager.h"
 
+static LRPaperColor kLRMovingEnvelopeHiddenPaperColor = kLRPaperColorBlue;
 static CGFloat const kLRMovingBlockTouchSizeExtraWidth  = 25.0;
 static CGFloat const kLRMovingBlockTouchSizeExtraHeight = 35.0;
 static CGFloat const kLRMovingBlockSpriteDimension     = 48.0;
@@ -18,7 +19,6 @@ NSString * const kLRMovingBlockName = @"Moving envelope";
 
 @interface LRMovingEnvelope ()
 @property (nonatomic, weak) id<LRManfordAIManagerSelectionDelegate> aiDelegate;
-@property (nonatomic, strong) SKSpriteNode *glow;
 @property (nonatomic, strong) SKSpriteNode *envelopeSprite;
 @property (nonatomic, readwrite) NSUInteger envelopeID;
 @end
@@ -39,6 +39,7 @@ NSString * const kLRMovingBlockName = @"Moving envelope";
     {
         self.name = kLRMovingBlockName;
         SKSpriteNode *envelopeSprite = [self _envelopeSpriteForLetter:letter paperColor:paperColor];
+        [self _updateLetterLabel];
         if (envelopeSprite) {
             //Correctly position the envelope sprite
             self.envelopeSprite = envelopeSprite;
@@ -48,9 +49,7 @@ NSString * const kLRMovingBlockName = @"Moving envelope";
             self.envelopeSprite.position = envPosition;
             [self addChild:self.envelopeSprite];
         }
-        [self _setGlowEnabled:NO];
-        [self addChild:self.glow];
-
+        
         CGSize touchSize = self.size;
         touchSize.width += kLRMovingBlockTouchSizeExtraWidth;
         touchSize.height += kLRMovingBlockTouchSizeExtraHeight;
@@ -58,22 +57,6 @@ NSString * const kLRMovingBlockName = @"Moving envelope";
         self.aiDelegate = [LRManfordAIManager shared];
     }
     return self;
-}
-
-- (SKSpriteNode *)glow {
-    if (!_glow) {
-        _glow = [SKSpriteNode spriteNodeWithImageNamed:@"envelope-glow"];
-        _glow.zPosition = -1;
-        _glow.alpha = 0.0;
-    }
-    return _glow;
-}
-
-- (void)setRow:(NSUInteger)row
-{
-    _row = row;
-    self.position = [LRMovingEnvelope envelopePositionForRow:row];
-    self.envelopeID = [[LRManfordAIManager shared] nextEnvelopeIDForRow:row];
 }
 
 - (void)updateForRemoval
@@ -112,12 +95,9 @@ NSString * const kLRMovingBlockName = @"Moving envelope";
     return envelopeSprite;
 }
 
-#pragma mark - Touch Functions + Helpers
-#pragma mark -
-
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    //If the eltter is touched, go to the delegate
+    //If the letter is touched, go to the delegate
     for (UITouch *touch in touches)
     {
         CGPoint location = [touch locationInNode:[self parent]];
@@ -125,6 +105,15 @@ NSString * const kLRMovingBlockName = @"Moving envelope";
             [self.touchDelegate playerSelectedMovingBlock:self];
         }
     }
+}
+
+#pragma mark - Setters + Getters
+
+- (void)setRow:(NSUInteger)row
+{
+    _row = row;
+    self.position = [LRMovingEnvelope envelopePositionForRow:row];
+    self.envelopeID = [[LRManfordAIManager shared] nextEnvelopeIDForRow:row];
 }
 
 - (void)setSelected:(BOOL)selected
@@ -138,37 +127,6 @@ NSString * const kLRMovingBlockName = @"Moving envelope";
 {
     self.envelopeSprite.texture = [SKTexture textureWithImageNamed:[LRMovingEnvelope stringFromPaperColor:self.paperColor open:envelopeOpen]];
     _envelopeOpen = envelopeOpen;
-}
-
-- (SKAction *)_selectedAnimation
-{
-    NSMutableArray *textures = [NSMutableArray new];
-    NSString *baseTextureName = [LRMovingEnvelope stringFromPaperColor:self.paperColor open:self.selected];
-    int endCount = (self.selected) ? 1 : 4;
-    int startCount = (self.selected) ? 4 : 1;
-    int diff = (self.selected) ? -1 : 1;
-    for (int i = startCount; i != endCount + diff; i+= diff) {
-        NSString *textureName = [baseTextureName stringByReplacingCharactersInRange:NSMakeRange(baseTextureName.length - 1, 1)withString:[NSString stringWithFormat:@"%i", i]];
-        SKTexture *texture = [SKTexture textureWithImageNamed:textureName];
-        [textures addObject:texture];
-    }
-    
-    SKAction *animation = [SKAction animateWithTextures:textures timePerFrame:.04 resize:YES restore:NO];
-    return animation;
-}
-- (void)_setGlowEnabled:(BOOL)enabled
-{
-    CGFloat fadedAlpha = 0.7;
-    CGFloat fadeDuration = 0.15;
-
-    CGFloat newEnvelopeAlpha = (enabled) ? fadedAlpha : 1.0;
-    CGFloat newGlowAlpha = (enabled) ? fadedAlpha : 0.0;
-
-    SKAction *fadeEnvelope = [SKAction fadeAlphaTo:newEnvelopeAlpha duration:fadeDuration];
-    SKAction *fadeGlow = [SKAction fadeAlphaTo:newGlowAlpha duration:fadeDuration];
-    [self runAction:fadeEnvelope];
-    [self.glow runAction:fadeGlow];
-    
 }
 
 + (NSString *)stringFromPaperColor:(LRPaperColor)paperColor open:(BOOL)open
@@ -195,4 +153,40 @@ NSString * const kLRMovingBlockName = @"Moving envelope";
     return spriteName;
 }
 
+
+#pragma mark - Private Methods
+
+- (SKAction *)_selectedAnimation
+{
+    NSMutableArray *textures = [NSMutableArray new];
+    NSString *baseTextureName = [LRMovingEnvelope stringFromPaperColor:self.paperColor open:self.selected];
+    int endCount = (self.selected) ? 1 : 4;
+    int startCount = (self.selected) ? 4 : 1;
+    int diff = (self.selected) ? -1 : 1;
+    for (int i = startCount; i != endCount + diff; i+= diff) {
+        NSString *textureName = [baseTextureName stringByReplacingCharactersInRange:NSMakeRange(baseTextureName.length - 1, 1)withString:[NSString stringWithFormat:@"%i", i]];
+        SKTexture *texture = [SKTexture textureWithImageNamed:textureName];
+        [textures addObject:texture];
+    }
+    
+    SKAction *animation = [SKAction animateWithTextures:textures timePerFrame:.04 resize:YES restore:NO];
+    return animation;
+}
+
+
++ (NSString *)_letterLabelForPaperColor:(LRPaperColor)paperColor letter:(NSString *)letter
+{
+    if (paperColor != kLRMovingEnvelopeHiddenPaperColor)
+        return letter;
+    return @"?";
+}
+
+- (void)_updateLetterLabel
+{
+    NSString *letterToShow = [LRMovingEnvelope _letterLabelForPaperColor:self.paperColor letter:self.letter];
+    if (![self.letterLabel.text isEqualToString:letterToShow]) {
+        self.letterLabel.text = letterToShow;
+    }
+
+}
 @end

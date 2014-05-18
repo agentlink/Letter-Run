@@ -18,7 +18,6 @@ const NSUInteger kLRLetterGeneratorMaxRepeatLetters  = 2;
 
 
 static NSString* const kLetterQ = @"Q";
-static LRPaperColor const kMostCommonPaperColor = kLRPaperColorYellow;
 
 @interface LRLetterGenerator ()
 
@@ -30,7 +29,8 @@ static LRPaperColor const kMostCommonPaperColor = kLRPaperColorYellow;
 @property NSString *lastLetter;
 @property int repeatCount;
 @property NSDictionary *letterProbabilityDictionaries;
-@property (nonatomic, readonly) BOOL quEnabled;
+@property (nonatomic,readonly) BOOL quEnabled;
+@property (nonatomic,readonly) BOOL multipleLetterDictsEnabled;
 @end
 
 @implementation LRLetterGenerator
@@ -112,10 +112,9 @@ static LRLetterGenerator *_shared = nil;
      Consonants are negative
     */
     
-    //TODO: When fixing paper color generation, reinstate the max number of vowels and consonants correctly
     
-    NSInteger maxConsonants = (color == kMostCommonPaperColor) ? kLRLetterGeneratorMaxConsonants : INT32_MAX;
-    NSInteger maxVowels = (color == kMostCommonPaperColor) ? kLRLetterGeneratorMaxVowels : INT32_MAX;
+    NSInteger maxConsonants = kLRLetterGeneratorMaxConsonants;
+    NSInteger maxVowels =  kLRLetterGeneratorMaxVowels;
     
     //If it's a consonant and there is a max number of consonants
     if ([consonantSet characterIsMember:[letter characterAtIndex:0]] && maxConsonants > 0) {
@@ -236,19 +235,24 @@ static LRLetterGenerator *_shared = nil;
 - (NSArray *)dictionaryForPaperColor:(LRPaperColor)color
 {
     NSString *dictName;
-    switch (color) {
-        case kLRPaperColorYellow:
-            dictName = kLRLetterProbabilityDictionaryBasic;
-            break;
-        case kLRPaperColorBlue:
-            dictName = kLRLetterProbabilityDictionaryChallenging;
-            break;
-        case kLRPaperColorPink:
-            dictName = kLRLetterProbabilityDictionaryImpossible;
-            break;
-        default:
-            NSAssert(0, @"Should not generate a letter with an empty paper color");
-            break;
+    if (!self.multipleLetterDictsEnabled) {
+        dictName = kLRLetterProbabilityDictionaryBasic;
+    }
+    else {
+        switch (color) {
+            case kLRPaperColorYellow:
+                dictName = kLRLetterProbabilityDictionaryBasic;
+                break;
+            case kLRPaperColorBlue:
+                dictName = kLRLetterProbabilityDictionaryChallenging;
+                break;
+            case kLRPaperColorPink:
+                dictName = kLRLetterProbabilityDictionaryImpossible;
+                break;
+            default:
+                NSAssert(0, @"Should not generate a letter with an empty paper color");
+                break;
+        }
     }
     return self.letterProbabilityDictionaries[dictName];
 }
@@ -256,5 +260,10 @@ static LRLetterGenerator *_shared = nil;
 - (BOOL)quEnabled
 {
     return YES;
+}
+
+- (BOOL)multipleLetterDictsEnabled
+{
+    return NO;
 }
 @end

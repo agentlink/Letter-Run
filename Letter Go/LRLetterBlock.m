@@ -14,7 +14,6 @@
 
 @interface LRLetterBlock ()
 
-@property (nonatomic, strong) SKLabelNode *letterLabel;
 @property (nonatomic, strong) NSString *letter;
 @property (readwrite) BOOL isTouched;
 @end

@@ -81,7 +81,7 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
     return animatableEnvelopeCopy;
 }
 
-- (id) initWithLetter:(NSString *)letter paperColor:(LRPaperColor)paperColor
+- (id)initWithLetter:(NSString *)letter paperColor:(LRPaperColor)paperColor
 {
     CGSize size = CGSizeMake(kCollectedEnvelopeSpriteDimension, kCollectedEnvelopeSpriteDimension);
     if (self = [super initWithLetter:letter paperColor:paperColor size:size]) {
