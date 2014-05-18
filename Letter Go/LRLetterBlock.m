@@ -14,7 +14,6 @@
 
 @interface LRLetterBlock ()
 
-@property (nonatomic, strong) NSString *letter;
 @property (readwrite) BOOL isTouched;
 @end
 
@@ -35,6 +34,7 @@
         self.paperColor = paperColor;
         self.letter = letter;
         self.userInteractionEnabled = YES;
+        [self addChild:self.letterLabel];
     }
     return self;
 
@@ -44,7 +44,6 @@
     _letter = letter;
     if ([LRLetterBlock isLetterAlphabetical:letter]) {
         self.letterLabel.text = letter;
-        [self addChild:self.letterLabel];
     }
 }
 

@@ -25,7 +25,7 @@ typedef NS_ENUM(NSInteger, LRPaperColor)
 ///The additional size around the edges that the player can touch and have the envelope respond. For example, if this were {10, 5}, then the width of the touchable area would increase by 5 on either side and the height increased by 2.5 Initializes a letter block
 @property (nonatomic, readwrite) CGSize touchSize;
 ///The alphabetical letter represented by the envelope
-@property (nonatomic, readonly) NSString *letter;
+@property (nonatomic, readwrite) NSString *letter;
 ///The label containing the letter
 @property (nonatomic, strong) SKLabelNode *letterLabel;
 

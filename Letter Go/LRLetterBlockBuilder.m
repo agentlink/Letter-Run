@@ -11,9 +11,9 @@
 
 
 typedef NS_ENUM(NSInteger, LRLetterProbability) {
-    kLRLetterProbabilityBasic          = 15,
-    kLRLetterProbabilityChallenging    = 17,
-    kLRLetterProbabilityImpossible     = 18,
+    kLRLetterProbabilityCommon          = 20,
+    kLRLetterProbabilityUncommon        = 23,
+    kLRLetterProbabilityRare            = 25,
 };
 
 static const BOOL lgbDebugMode = NO;
@@ -62,17 +62,17 @@ static const BOOL lgbDebugMode = NO;
 
 + (LRPaperColor)generatePaperColor
 {
-    int maxVal = kLRLetterProbabilityImpossible + 1;
+    int maxVal = kLRLetterProbabilityRare + 1;
     int val = arc4random()%maxVal;
     
-    if (val <= kLRLetterProbabilityBasic) {
+    if (val <= kLRLetterProbabilityCommon) {
         return kLRPaperColorYellow;
     }
-    else if (val <= kLRLetterProbabilityChallenging) {
-        return kLRPaperColorBlue;
+    else if (val <= kLRLetterProbabilityUncommon) {
+        return kLRPaperColorPink;
     }
     else {
-        return kLRPaperColorPink;
+        return kLRPaperColorBlue;
     }
 
 }

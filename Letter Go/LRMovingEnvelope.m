@@ -8,19 +8,31 @@
 
 #import "LRMovingEnvelope.h"
 #import "LREnvelopeAnimationBuilder.h"
+#import "LRMovingBlockBuilder.h"
 #import "LRRowManager.h"
 #import "LRManfordAIManager.h"
 
 static LRPaperColor kLRMovingEnvelopeHiddenPaperColor = kLRPaperColorBlue;
+static LRPaperColor kLRMovingEnvelopeShiftingPaperColor = kLRPaperColorPink;
+
 static CGFloat const kLRMovingBlockTouchSizeExtraWidth  = 25.0;
 static CGFloat const kLRMovingBlockTouchSizeExtraHeight = 35.0;
 static CGFloat const kLRMovingBlockSpriteDimension     = 48.0;
+
+NSString * const kLRMovingBlockShiftLetterActionName = @"shift letter";
 NSString * const kLRMovingBlockName = @"Moving envelope";
 
 @interface LRMovingEnvelope ()
 @property (nonatomic, weak) id<LRManfordAIManagerSelectionDelegate> aiDelegate;
 @property (nonatomic, strong) SKSpriteNode *envelopeSprite;
 @property (nonatomic, readwrite) NSUInteger envelopeID;
+@property (nonatomic, strong) NSArray *shiftingLetterArray;
+@property (nonatomic) NSUInteger currentShiftedLetterIndex;
+@end
+
+@interface LRMovingEnvelopeShiftingLabel : SKLabelNode;
+@property (nonatomic) BOOL enableLetterShift;
+- (id)initWithLetters:(NSArray *)letters;
 @end
 
 @implementation LRMovingEnvelope
@@ -39,7 +51,7 @@ NSString * const kLRMovingBlockName = @"Moving envelope";
     {
         self.name = kLRMovingBlockName;
         SKSpriteNode *envelopeSprite = [self _envelopeSpriteForLetter:letter paperColor:paperColor];
-        [self _updateLetterLabel];
+        [self _updateLabel];
         if (envelopeSprite) {
             //Correctly position the envelope sprite
             self.envelopeSprite = envelopeSprite;
@@ -120,7 +132,15 @@ NSString * const kLRMovingBlockName = @"Moving envelope";
 {
     [self.envelopeSprite runAction:[self _selectedAnimation]];
     _selected = selected;
+    _envelopeOpen = selected;
     [self.aiDelegate envelopeSelectedChanged:selected withID:self.envelopeID];
+    
+    if (selected) {
+        [self removeActionForKey:kLRMovingBlockShiftLetterActionName];
+    }
+    else if (self.paperColor == kLRMovingEnvelopeShiftingPaperColor) {
+        [self runAction:[self _shiftLetterAction] withKey:kLRMovingBlockShiftLetterActionName];
+    }
 }
 
 - (void)setEnvelopeOpen:(BOOL)envelopeOpen
@@ -173,20 +193,36 @@ NSString * const kLRMovingBlockName = @"Moving envelope";
     return animation;
 }
 
-
-+ (NSString *)_letterLabelForPaperColor:(LRPaperColor)paperColor letter:(NSString *)letter
+- (void)_updateLabel
 {
-    if (paperColor != kLRMovingEnvelopeHiddenPaperColor)
-        return letter;
+    NSAssert(kLRMovingEnvelopeHiddenPaperColor != kLRMovingEnvelopeShiftingPaperColor, @"Unable to set paper label to both shifting and hidden");
+    if (self.paperColor == kLRMovingEnvelopeHiddenPaperColor) {
+        self.letterLabel.text = [LRMovingEnvelope _letterForHiddenPaperColor];
+    }
+    else if (self.paperColor == kLRMovingEnvelopeShiftingPaperColor) {
+        self.shiftingLetterArray = @[@"A", @"E", @"I", @"O", @"U"];
+        [self runAction:[self _shiftLetterAction] withKey:kLRMovingBlockShiftLetterActionName];
+    }
+}
+
++ (NSString *)_letterForHiddenPaperColor
+{
     return @"?";
 }
 
-- (void)_updateLetterLabel
+- (SKAction *)_shiftLetterAction
 {
-    NSString *letterToShow = [LRMovingEnvelope _letterLabelForPaperColor:self.paperColor letter:self.letter];
-    if (![self.letterLabel.text isEqualToString:letterToShow]) {
-        self.letterLabel.text = letterToShow;
-    }
-
+    NSAssert(self.shiftingLetterArray && self.shiftingLetterArray.count > 0, @"Shift letter action requires an array of letters");
+    CGFloat letterChangeInterval = [[LRMovingBlockBuilder shared] blockGenerationInterval];
+    SKAction *wait = [SKAction waitForDuration:letterChangeInterval];
+    SKAction *shiftLetter = [SKAction runBlock:^{
+        self.currentShiftedLetterIndex = (_currentShiftedLetterIndex == self.shiftingLetterArray.count - 1) ? 0 : self.currentShiftedLetterIndex + 1;
+        NSString *letter = self.shiftingLetterArray[self.currentShiftedLetterIndex];
+        self.letter = letter;
+    }];
+    SKAction *waitAndShift = [SKAction sequence:@[wait, shiftLetter]];
+    SKAction *shiftForever = [SKAction repeatActionForever:waitAndShift];
+    return shiftForever;
 }
+
 @end
