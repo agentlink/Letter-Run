@@ -99,7 +99,7 @@ static CGFloat const kLRGameSceneBlurEffectDuration = .4;
 
 + (NSArray *)_updateNodeNames
 {
-    return @[kLRGamePlayLayerHealthSectionName, kLRGamePlayLayerLetterSectionName];
+    return @[kLRGamePlayLayerLetterSectionName];
 }
 
 #pragma mark - Blur View
