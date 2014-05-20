@@ -99,7 +99,7 @@ static CGFloat const kLRGameSceneBlurEffectDuration = .4;
 
 + (NSArray *)_updateNodeNames
 {
-    return @[kLRGamePlayLayerHealthSectionName, kLRGamePlayLayerLetterSectionName];
+    return @[kLRGamePlayLayerLetterSectionName];
 }
 
 #pragma mark - Blur View
@@ -123,8 +123,16 @@ static CGFloat const kLRGameSceneBlurEffectDuration = .4;
         [[self rootEffectNode] setShouldEnableEffects:NO];
         handler();
     }];
-
 }
+
+- (void)addChild:(SKNode *)node
+{
+    if (!node) {
+        NSLog(@"STOP!");
+    }
+    [super addChild:node];
+}
+
 #pragma mark - Scene Getters
 + (LRGameScene *)scene
 {

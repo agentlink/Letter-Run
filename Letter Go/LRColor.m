@@ -18,6 +18,7 @@
 
 + (LRColor *)colorBetweenStartColor:(UIColor *)startColor andEndColor:(UIColor *)endColor percent:(CGFloat)percent
 {
+    NSAssert(percent <= 1.00, @"Percent should not exceed 1.00");
     const CGFloat *startRGB = CGColorGetComponents(startColor.CGColor);
     const CGFloat *endRGB = CGColorGetComponents(endColor.CGColor);
     CGFloat r, g, b, alpha;
@@ -71,7 +72,7 @@
     return [LRColor rgbColorWithRed:255.0 green:140.0 blue:0.0 alpha:1.0];
 }
 
-+ (LRColor *)healtBarColorRed {
++ (LRColor *)healthBarColorRed {
     return [LRColor rgbColorWithRed:192.0 green:0.0 blue:0.0 alpha:1.0];
 }
 
