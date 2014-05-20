@@ -18,6 +18,7 @@
 
 + (LRColor *)colorBetweenStartColor:(UIColor *)startColor andEndColor:(UIColor *)endColor percent:(CGFloat)percent
 {
+    NSAssert(percent <= 1.00, @"Percent should not exceed 1.00");
     const CGFloat *startRGB = CGColorGetComponents(startColor.CGColor);
     const CGFloat *endRGB = CGColorGetComponents(endColor.CGColor);
     CGFloat r, g, b, alpha;

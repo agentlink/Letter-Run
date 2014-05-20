@@ -10,10 +10,7 @@
 #import "LRScoreManager.h"
 #import "LRGameStateManager.h"
 
-static const NSInteger kLRHealthSectionLoopResetValue = -1;
-
-static const CGFloat kLRHealthSectionInitialDropTime = 20.0;
-static const CGFloat kLRHealthSectionRightMostEdge = 0.0;
+static const CGFloat kLRHealthSectionInitialDropTime = 40.0;
 static const CGFloat kLRHealthSectionStartPercentYellow = .50;
 
 @interface LRHealthBarColoredBackground : SKSpriteNode
@@ -22,25 +19,22 @@ static const CGFloat kLRHealthSectionStartPercentYellow = .50;
 @interface LRHealthBarColoredMovingSection : SKSpriteNode
 @end
 
-@interface LRHealthBarColoredContainer : SKSpriteNode
-@property (nonatomic, readwrite) NSUInteger healthbarDropTime;
+@interface LRHealthBarMovingSprite : SKSpriteNode
+@property (nonatomic,readwrite) NSUInteger healthbarDropTime;
+@property (nonatomic,readonly) CGFloat percentProgress;
 - (void)startColoredBarFall;
 - (void)increaseColoredBarByDistance:(CGFloat)distance;
+- (void)restartHealthBar;
 @end
 
 
 @interface LRHealthSection ()
 ///The container object for all health bar objects whose color is affected by the health bar's position
-@property (nonatomic, strong) LRHealthBarColoredContainer *coloredBar;
+@property (nonatomic, strong) LRHealthBarMovingSprite *coloredBar;
 ///The background color of the health bar
 @property (nonatomic, strong) SKSpriteNode *healthBarBackground;
-///The shading for the health bar layer
-@property (nonatomic, strong) SKSpriteNode *healthBarShadingLayer;
-///The moving health bar, more brightly colored
-@property (nonatomic, strong) SKSpriteNode *healthBarColored;
 ///The layer around the health bar
 @property (nonatomic, strong) SKSpriteNode *healthBarSkin;
-@property NSTimeInterval initialTime;
 @end
 
 @implementation LRHealthSection
@@ -57,9 +51,9 @@ static const CGFloat kLRHealthSectionStartPercentYellow = .50;
 
 #pragma mark - Properties Accessors
 
-- (LRHealthBarColoredContainer *)coloredBar {
+- (LRHealthBarMovingSprite *)coloredBar {
     if (!_coloredBar) {
-        _coloredBar = [[LRHealthBarColoredContainer alloc] initWithColor:[LRColor healthBarColorGreen] size:self.size];
+        _coloredBar = [[LRHealthBarMovingSprite alloc] initWithColor:[LRColor healthBarColorGreen] size:self.size];
         _coloredBar.healthbarDropTime = [self _healthBarDropTime];
         [_coloredBar startColoredBarFall];
     }
@@ -73,19 +67,10 @@ static const CGFloat kLRHealthSectionStartPercentYellow = .50;
     return _healthBarBackground;
 }
 
-- (SKSpriteNode *)healthBarShadingLayer {
-    if (!_healthBarShadingLayer) {
-        _healthBarShadingLayer = [SKSpriteNode spriteNodeWithColor:[LRColor healthBarColorGreen] size:self.size];
-        _healthBarShadingLayer.alpha = 0.25;
-    }
-    return _healthBarShadingLayer;
-
-}
-
 - (SKSpriteNode *)healthBarSkin {
     if (!_healthBarSkin) {
         _healthBarSkin = [SKSpriteNode spriteNodeWithImageNamed:@"healthSection-background"];
-        _healthBarSkin.xScale = (SCREEN_WIDTH / 480);
+        _healthBarSkin.xScale = (self.size.width / 480.0);
     }
     return _healthBarSkin;
 }
@@ -98,95 +83,48 @@ static const CGFloat kLRHealthSectionStartPercentYellow = .50;
     [self.coloredBar increaseColoredBarByDistance:shiftDistance];
 }
 
-- (CGFloat) percentHealth {
-    return (self.size.width + self.healthBarColored.position.x)/self.size.width;
+- (CGFloat) percentHealth
+{
+    return self.coloredBar.percentProgress;
 }
 
-- (void)moveHealthByPercent:(CGFloat)percent
+
+#pragma mark - LRGameStateDelegate Methods
+
+- (void)gameStateNewGame
 {
-    CGFloat newXPos = self.healthBarColored.position.x + (percent/100) * self.size.width;
-    if (newXPos > 0)
-        newXPos = 0;
-    else if (newXPos < 0 - self.size.width)
-        newXPos = 0 - self.size.width;
-    self.healthBarColored.position = CGPointMake(newXPos, self.healthBarColored.position.y);
+    [self.coloredBar restartHealthBar];
+    [self.coloredBar startColoredBarFall];
 }
+
 
 #pragma mark - Private Methods
-#pragma mark Health Bar Movement
 
-- (CGFloat)_healthBarDistanceForScore:(NSInteger)score {
-    float baseDistancePerLetter = self.size.width / kLRHealthSectionInitialDropTime;
-    
-    float wordDistance = (score * baseDistancePerLetter) / kLRScoreManagerScorePerLetter;
-    return wordDistance;
-}
-
-- (void)_restartHealthBar
+- (CGFloat)_healthBarDistanceForScore:(NSInteger)score
 {
-    self.healthBarColored.position = CGPointMake(0, self.healthBarColored.position.y);
-    self.initialTime = kLRHealthSectionLoopResetValue;
+    CGFloat baseDistancePerLetter = self.size.width / kLRHealthSectionInitialDropTime;
+    CGFloat wordDistance = (score * baseDistancePerLetter) / kLRScoreManagerScorePerLetter;
+    return wordDistance;
 }
 
 - (CGFloat)_healthBarDropTime
 {
     return kLRHealthSectionInitialDropTime;
 }
-
-#pragma mark Health Bar Color Change
-
-- (void)_updateColor
-{
-    CGFloat percentHealth = self.percentHealth;
-    CGFloat relativePercent;
-    SKColor *newColor;
-    if (percentHealth > kLRHealthSectionStartPercentYellow) {
-        relativePercent = 1 - (percentHealth - (1 - kLRHealthSectionStartPercentYellow))/kLRHealthSectionStartPercentYellow;
-        newColor = [LRColor colorBetweenStartColor:[LRColor healthBarColorGreen]
-                                       andEndColor:[LRColor healthBarColorYellow]
-                                           percent:relativePercent];
-    }
-    else {
-        relativePercent = 1 - (percentHealth / (1.0 - kLRHealthSectionStartPercentYellow));
-        newColor = [LRColor colorBetweenStartColor:[LRColor healthBarColorYellow]
-                                       andEndColor:[LRColor healthBarColorRed]
-                                           percent:relativePercent];
-    }
-    [self setHealthBarColor:newColor];
-}
-
-- (void)setHealthBarColor:(SKColor *)newColor
-{
-    [self.healthBarColored setColor:newColor];
-    [self.healthBarShadingLayer setColor:newColor];
-}
-
-- (BOOL)_healthBarFalls
-{
-    return YES;
-}
-#pragma mark - LRGameStateDelegate Methods
-
-- (void)gameStateNewGame
-{
-    [self _restartHealthBar];
-}
-- (void)gameStateUnpaused
-{
-    self.initialTime = kLRHealthSectionLoopResetValue;
-}
-
 @end
+
+
+#pragma mark - LRHealthBarMovingSprite
 
 static NSString * const kLRHealthBarColoredContainerFallAction = @"Health bar falling action";
 static NSString * const kLRHealthBarColoredContainerGainAction = @"Health bar gaining action";
 
-@interface LRHealthBarColoredContainer ()
+@interface LRHealthBarMovingSprite ()
 @property (nonatomic,strong) SKSpriteNode *shadedSection;
 @property (nonatomic,strong) SKSpriteNode *movingBar;
 @end
 
-@implementation LRHealthBarColoredContainer
+@implementation LRHealthBarMovingSprite
 
 #pragma mark - Set Up
 
@@ -196,7 +134,7 @@ static NSString * const kLRHealthBarColoredContainerGainAction = @"Health bar ga
     {
         [self addChild:self.shadedSection];
         [self addChild:self.movingBar];
-        self.color = [LRColor healthBarColorGreen];
+        self.color = [LRHealthBarMovingSprite _colorForPercentHealth:0.0];
     }
     return self;
 }
@@ -227,6 +165,17 @@ static NSString * const kLRHealthBarColoredContainerGainAction = @"Health bar ga
         self.movingBar.color = color;
 }
 
+- (void)setPosition:(CGPoint)position
+{
+    self.movingBar.position = position;
+    self.color = [LRHealthBarMovingSprite _colorForPercentHealth:self.percentProgress];
+}
+
+- (CGPoint)position
+{
+    return self.movingBar.position;
+}
+
 - (NSUInteger)healthbarDropTime
 {
     NSAssert(_healthbarDropTime > 0, @"Health bar drop time cannot be 0");
@@ -237,31 +186,83 @@ static NSString * const kLRHealthBarColoredContainerGainAction = @"Health bar ga
 
 - (void)startColoredBarFall
 {
-    CGFloat distance = self.size.width - self.position.x;
+    CGFloat distance = self.size.width + self.position.x;
     CGFloat duration = distance/self.size.width * self.healthbarDropTime;
-    SKAction *moveHealthbar = [SKAction moveToX:-self.size.width duration:duration];
+    __block CGFloat lastElapsedTime = 0.0;
+    SKAction *moveHealthbar = [SKAction customActionWithDuration:duration actionBlock:^(SKNode *node, CGFloat elapsedTime) {
+        NSAssert(node == self, @"Move health bar action should only be run on self");
+        CGFloat timeDiff = elapsedTime - lastElapsedTime;
+        lastElapsedTime = elapsedTime;
+        CGFloat dist = distance * timeDiff/duration;
+        self.position = CGPointMake(self.position.x - dist, self.position.y);
+    }];
+    
     SKAction *completion = [SKAction runBlock:^{
         [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_GAME_OVER object:nil];
     }];
     SKAction *moveWithCompletion = [SKAction sequence:@[moveHealthbar, completion]];
-    [self.movingBar runAction:moveWithCompletion withKey:kLRHealthBarColoredContainerFallAction];
+    [self runAction:moveWithCompletion withKey:kLRHealthBarColoredContainerFallAction];
 }
 
 - (void)increaseColoredBarByDistance:(CGFloat)distance
 {
-    distance = MIN(distance, self.size.width);
+    distance = MIN(distance, -self.position.x);
     //#toy
     CGFloat maxTime = 1.2;
     CGFloat duration = distance/self.size.width * maxTime;
     
     //Cancel the falling action, run the increase action, and restart the falling action
-    SKAction *moveHealthbar = [SKAction moveByX:distance y:0 duration:duration];
-    moveHealthbar.timingMode = SKActionTimingEaseInEaseOut;
+    CGFloat originalX = self.position.x;
+    SKAction *moveHealthBar = [SKAction customActionWithDuration:duration actionBlock:^(SKNode *node, CGFloat elapsedTime) {
+        CGFloat newX = originalX + (elapsedTime/duration) * distance;
+        self.position = CGPointMake(newX, self.position.y);
+    }];
+    moveHealthBar.timingMode = SKActionTimingEaseInEaseOut;
     SKAction *completion = [SKAction runBlock:^{
         [self startColoredBarFall];
     }];
-    [self.movingBar removeActionForKey:kLRHealthBarColoredContainerFallAction];
-    [self.movingBar runAction:[SKAction sequence:@[moveHealthbar, completion]] withKey:kLRHealthBarColoredContainerGainAction];
+    [self removeActionForKey:kLRHealthBarColoredContainerFallAction];
+    [self runAction:[SKAction sequence:@[moveHealthBar, completion]] withKey:kLRHealthBarColoredContainerGainAction];
 }
+
+- (void)restartHealthBar
+{
+    self.position = CGPointZero;
+}
+
+- (CGFloat)percentProgress
+{
+    CGFloat startX = 0.0;
+    CGFloat endX = -self.size.width;
+    CGFloat progressX = self.position.x;
+    
+    CGFloat percent = progressX/(endX - startX);
+    percent = MIN(1.00, percent);
+    percent = MAX(0.00, percent);
+    return percent;
+}
+
+#pragma Private Methods
+
++ (LRColor *)_colorForPercentHealth:(CGFloat)percent
+{
+    NSAssert(percent >= 0.0 && percent <= 1.0, @"Percent should be between 0 and 1");
+    CGFloat relativePercent;
+    LRColor *newColor;
+    if (percent < kLRHealthSectionStartPercentYellow) {
+        relativePercent = percent/kLRHealthSectionStartPercentYellow;
+        newColor = [LRColor colorBetweenStartColor:[LRColor healthBarColorGreen]
+                                       andEndColor:[LRColor healthBarColorYellow]
+                                           percent:relativePercent];
+    }
+    else {
+        relativePercent = (percent - kLRHealthSectionStartPercentYellow) / (1.0 - kLRHealthSectionStartPercentYellow);
+        newColor = [LRColor colorBetweenStartColor:[LRColor healthBarColorYellow]
+                                       andEndColor:[LRColor healthBarColorRed]
+                                           percent:relativePercent];
+    }
+    return newColor;
+}
+
 @end
 
