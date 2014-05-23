@@ -10,7 +10,7 @@
 #import "LRScoreManager.h"
 #import "LRGameStateManager.h"
 
-static const CGFloat kLRHealthSectionInitialDropTime = 40.0;
+static const CGFloat kLRHealthSectionInitialDropTime = 15.0;
 static const CGFloat kLRHealthSectionStartPercentYellow = .50;
 
 @interface LRHealthBarColoredBackground : SKSpriteNode

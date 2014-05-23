@@ -189,7 +189,7 @@ NSString * const kLRMovingBlockName = @"Moving envelope";
         [textures addObject:texture];
     }
     
-    SKAction *animation = [SKAction animateWithTextures:textures timePerFrame:.04 resize:YES restore:NO];
+    SKAction *animation = [SKAction animateWithTextures:textures timePerFrame:.05 resize:YES restore:NO];
     return animation;
 }
 
