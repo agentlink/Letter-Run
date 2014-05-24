@@ -11,6 +11,7 @@
 #import "LRMovingBlockBuilder.h"
 #import "LRRowManager.h"
 #import "LRManfordAIManager.h"
+#import "LRSharedTextureCache.h"
 
 static LRPaperColor kLRMovingEnvelopeHiddenPaperColor = kLRPaperColorBlue;
 static LRPaperColor kLRMovingEnvelopeShiftingPaperColor = kLRPaperColorPink;
@@ -96,6 +97,8 @@ NSString * const kLRMovingBlockName = @"Moving envelope";
     NSString *fileName = [LRMovingEnvelope stringFromPaperColor:paperColor open:NO];
     
     if (fileName) {
+        SKTexture *envelopeTexture = [[LRSharedTextureCache shared] textureForName:fileName];
+        envelopeSprite = [[SKSpriteNode alloc] initWithTexture:envelopeTexture];
         envelopeSprite = [SKSpriteNode spriteNodeWithImageNamed:fileName];
         envelopeSprite.size = CGSizeMake(self.size.width - self.touchSize.width,
                                          self.size.height - self.touchSize.height);
@@ -163,10 +166,10 @@ NSString * const kLRMovingBlockName = @"Moving envelope";
             spriteName = @"envelope-yellow";
             break;
         case kLRPaperColorNone:
-            spriteName = @"envelope-glow";
+            spriteName = nil;
             break;
     }
-    if (paperColor != kLRPaperColorNone) {
+    if (spriteName) {
         int append = open ? 4 : 1;
         spriteName = [spriteName stringByAppendingString:[NSString stringWithFormat:@"-%i", append]];
     }

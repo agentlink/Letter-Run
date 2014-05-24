@@ -12,6 +12,7 @@
 #import "LREnvelopeAnimationBuilder.h"
 #import "LRLetterSlot.h"
 #import "LRGameStateManager.h"
+#import "LRSharedTextureCache.h"
 
 static CGFloat const kLRCollectedEnvelopeBubbleScale = 1.28;
 static CGFloat const kLRCollectedEnvelopeBubbleDuration = .12;
@@ -88,7 +89,8 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
         self.slotIndex = kSlotIndexNone;
         NSString *imageName = [self stringFromPaperColor:paperColor];
         if (imageName) {
-            self.envelopeSprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
+            SKTexture *envelopeTexture = [[LRSharedTextureCache shared] textureForName:imageName];
+            self.envelopeSprite = [SKSpriteNode spriteNodeWithTexture:envelopeTexture];
             [self addChild:self.envelopeSprite];
         }
     }

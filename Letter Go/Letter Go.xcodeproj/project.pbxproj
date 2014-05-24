@@ -73,9 +73,12 @@
 		A8A3442219202AB3006C5C55 /* Mailman.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8A3442119202AB3006C5C55 /* Mailman.xcassets */; };
 		A8A3442619202C8D006C5C55 /* LRMailman.m in Sources */ = {isa = PBXBuildFile; fileRef = A8A3442519202C8D006C5C55 /* LRMailman.m */; };
 		A8B6B7221903243600E130A6 /* LRMovingBlockBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B6B7211903243600E130A6 /* LRMovingBlockBuilder.m */; };
+		A8D109DD19313AA200D34C62 /* LRSharedTextureCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A8D109DC19313AA200D34C62 /* LRSharedTextureCache.m */; };
+		A8D109E21931422500D34C62 /* Letter_Blue.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A8D109DF1931422500D34C62 /* Letter_Blue.atlas */; };
+		A8D109E31931422500D34C62 /* Letter_Pink.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A8D109E01931422500D34C62 /* Letter_Pink.atlas */; };
+		A8D109E41931422500D34C62 /* Letter_Yellow.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A8D109E11931422500D34C62 /* Letter_Yellow.atlas */; };
 		A8E60A161881F6E300F60DF4 /* LRSlotManager_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E60A151881F6E300F60DF4 /* LRSlotManager_Test.m */; };
 		A8F171CB18DF7C5B00964C34 /* Scenery.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8F171CA18DF7C5B00964C34 /* Scenery.xcassets */; };
-		A8F171CD18DF7D4C00964C34 /* Letters.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8F171CC18DF7D4C00964C34 /* Letters.xcassets */; };
 		A8F171CF18DF7D9300964C34 /* Buttons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8F171CE18DF7D9300964C34 /* Buttons.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -206,9 +209,13 @@
 		A8A3442519202C8D006C5C55 /* LRMailman.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRMailman.m; sourceTree = "<group>"; };
 		A8B6B7201903243600E130A6 /* LRMovingBlockBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRMovingBlockBuilder.h; sourceTree = "<group>"; };
 		A8B6B7211903243600E130A6 /* LRMovingBlockBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRMovingBlockBuilder.m; sourceTree = "<group>"; };
+		A8D109DB19313AA200D34C62 /* LRSharedTextureCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRSharedTextureCache.h; sourceTree = "<group>"; };
+		A8D109DC19313AA200D34C62 /* LRSharedTextureCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRSharedTextureCache.m; sourceTree = "<group>"; };
+		A8D109DF1931422500D34C62 /* Letter_Blue.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Letter_Blue.atlas; sourceTree = "<group>"; };
+		A8D109E01931422500D34C62 /* Letter_Pink.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Letter_Pink.atlas; sourceTree = "<group>"; };
+		A8D109E11931422500D34C62 /* Letter_Yellow.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Letter_Yellow.atlas; sourceTree = "<group>"; };
 		A8E60A151881F6E300F60DF4 /* LRSlotManager_Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRSlotManager_Test.m; sourceTree = "<group>"; };
 		A8F171CA18DF7C5B00964C34 /* Scenery.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Scenery.xcassets; sourceTree = "<group>"; };
-		A8F171CC18DF7D4C00964C34 /* Letters.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Letters.xcassets; sourceTree = "<group>"; };
 		A8F171CE18DF7D9300964C34 /* Buttons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Buttons.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -250,9 +257,9 @@
 		0007FB30180B2FB600E55B0D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A8D109DE1931422500D34C62 /* Atlases */,
 				00CDF15517F474EC003065F6 /* Images.xcassets */,
 				A8F171CA18DF7C5B00964C34 /* Scenery.xcassets */,
-				A8F171CC18DF7D4C00964C34 /* Letters.xcassets */,
 				A8F171CE18DF7D9300964C34 /* Buttons.xcassets */,
 				A8A3442119202AB3006C5C55 /* Mailman.xcassets */,
 				0007FB31180B2FBB00E55B0D /* Background */,
@@ -317,6 +324,8 @@
 				008428F81801F46C00908E5D /* LRScoreManager.m */,
 				A88DECE0190C39C10076EDE9 /* LRProgressManager.h */,
 				A88DECE1190C39C10076EDE9 /* LRProgressManager.m */,
+				A8D109DB19313AA200D34C62 /* LRSharedTextureCache.h */,
+				A8D109DC19313AA200D34C62 /* LRSharedTextureCache.m */,
 			);
 			name = Singletons;
 			sourceTree = "<group>";
@@ -661,6 +670,16 @@
 			name = Mailman;
 			sourceTree = "<group>";
 		};
+		A8D109DE1931422500D34C62 /* Atlases */ = {
+			isa = PBXGroup;
+			children = (
+				A8D109DF1931422500D34C62 /* Letter_Blue.atlas */,
+				A8D109E01931422500D34C62 /* Letter_Pink.atlas */,
+				A8D109E11931422500D34C62 /* Letter_Yellow.atlas */,
+			);
+			path = Atlases;
+			sourceTree = "<group>";
+		};
 		A8E60A141881E27900F60DF4 /* Class Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -778,11 +797,13 @@
 				A876EC41188367AA000FA069 /* Background_Mountains.png in Resources */,
 				A876EC3F188367AA000FA069 /* Background_Grass.png in Resources */,
 				A876EC3B18836795000FA069 /* Background_Cloud.png in Resources */,
+				A8D109E21931422500D34C62 /* Letter_Blue.atlas in Resources */,
+				A8D109E31931422500D34C62 /* Letter_Pink.atlas in Resources */,
 				008428F01800997800908E5D /* LetterProbabilities.plist in Resources */,
-				A8F171CD18DF7D4C00964C34 /* Letters.xcassets in Resources */,
 				A8F171CF18DF7D9300964C34 /* Buttons.xcassets in Resources */,
 				A85A4CDA18E78BA100787D21 /* LeagueGothic-Italic.otf in Resources */,
 				A876EC4318836838000FA069 /* Background_Grass2.png in Resources */,
+				A8D109E41931422500D34C62 /* Letter_Yellow.atlas in Resources */,
 				A8F171CB18DF7C5B00964C34 /* Scenery.xcassets in Resources */,
 				A876EC40188367AA000FA069 /* Background_Hills.png in Resources */,
 				00719CE318E6D21D00DF66E6 /* GothamBold.ttf in Resources */,
@@ -830,6 +851,7 @@
 				008428F318009F6300908E5D /* LRLetterGenerator.m in Sources */,
 				008428F61801EABB00908E5D /* LRSubmitButton.m in Sources */,
 				0049695917F8AB5D00176F2D /* LRCollisionManager.m in Sources */,
+				A8D109DD19313AA200D34C62 /* LRSharedTextureCache.m in Sources */,
 				0020001E18245B3E005DDD46 /* LRCollisionManager+ContactFunctions.m in Sources */,
 				A88DE67118DE1DCB00282AA8 /* LRMailmanArea.m in Sources */,
 				00F6F59717FF5234009EDADB /* LRGameStateManager.m in Sources */,
