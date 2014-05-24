@@ -71,10 +71,25 @@ static LRManfordAIManager *_shared = nil;
 
 - (void)_checkNextRowChangedFromRow:(NSUInteger)row
 {
+    //sort the envelopes by ID before checking for row change
+    [self _sortSelectedEnvelopes];
     NSUInteger nextRow = [self _rowWithNextSelectedSlot];
     if (row != nextRow) {
         [self.movementDelegate nextEnvelopeRowChangedToRow:nextRow];
     }
+}
+
+- (void)_sortSelectedEnvelopes
+{
+    //sort the selected envelopes by ID value
+    [self.selectedEnvelopes sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        NSUInteger uint1 = [obj1 unsignedIntegerValue];
+        NSUInteger uint2 = [obj2 unsignedIntegerValue];
+        if (uint1 < uint2) {
+            return NSOrderedAscending;
+        }
+        return NSOrderedDescending;
+    }];
 }
 
 - (void)resetEnvelopeIDs
