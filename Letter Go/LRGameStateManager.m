@@ -19,6 +19,7 @@
 @property SKNode *managerParent;
 @property (nonatomic) LRGameScene *gameScene;
 @property (nonatomic) LRDevPauseViewController *devPauseVC;
+@property (nonatomic) SKLabelNode *gameOverLabel;
 @end
 
 @implementation LRGameStateManager
@@ -49,6 +50,8 @@ static LRGameStateManager *_shared = nil;
         [LRDictionaryChecker shared];
         [self _setUpNotifications];
         [self _setUpManagerHierarchy];
+        //preload the game over label
+        (void)self.gameOverLabel;
     }
     return self;
 }
@@ -104,7 +107,7 @@ static LRGameStateManager *_shared = nil;
     NSLog(@"Game over");
     //Make all of the objects in the game non-touch responsive
     if (![[[notification userInfo] objectForKey:@"devpause"] isEqual: @(true)]) {
-        [self _showGameOverLabel];
+        [self _showGameOverLabelForDuration:3.5];
 
     }
 }
@@ -142,30 +145,34 @@ static LRGameStateManager *_shared = nil;
     }
 }
 
-- (void)_showGameOverLabel
+- (void)_showGameOverLabelForDuration:(CGFloat)duration
 {
-    LRFont *displayFont = [LRFont displayTextFontWithSize:100];
-    SKLabelNode *gameOverLabel = [[SKLabelNode alloc] init];
-    gameOverLabel.text = @"Game Over";
-    gameOverLabel.fontName = displayFont.familyName;
-    gameOverLabel.fontSize = 80.0;
-    gameOverLabel.fontColor = [LRColor gameOverLabelColor];
-    gameOverLabel.zPosition = 500;
-    gameOverLabel.position = CGPointMake(0, (SCREEN_HEIGHT - kSectionHeightMainSection)/2);
     __block LRGamePlayLayer *gpl = [self.gameScene gamePlayLayer];
-    
-    
     [gpl.pauseButton setIsEnabled:NO];
-    
     SKAction *showLabel = [SKAction runBlock:^{
-        [gpl addChild:gameOverLabel];
+        [gpl addChild:self.gameOverLabel];
     }];
-    SKAction *delay = [SKAction waitForDuration:3.5];
+    SKAction *delay = [SKAction waitForDuration:duration];
     SKAction *restartLevel = [SKAction runBlock:^{
-        [gpl removeChildrenInArray:[NSArray arrayWithObject:gameOverLabel]];
+        [self.gameOverLabel removeFromParent];
         [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_NEW_GAME object:nil];
     }];
     [self runAction:[SKAction sequence:@[showLabel, delay, restartLevel]]];
+}
+
+- (SKLabelNode *)gameOverLabel
+{
+    if (!_gameOverLabel) {
+        LRFont *displayFont = [LRFont displayTextFontWithSize:100];
+        _gameOverLabel = [[SKLabelNode alloc] init];
+        _gameOverLabel.text = @"Game Over";
+        _gameOverLabel.fontName = displayFont.familyName;
+        _gameOverLabel.fontSize = 80.0;
+        _gameOverLabel.fontColor = [LRColor gameOverLabelColor];
+        _gameOverLabel.zPosition = 500;
+        _gameOverLabel.position = CGPointMake(0, (SCREEN_HEIGHT - kSectionHeightMainSection)/2);
+    }
+    return _gameOverLabel;
 }
 
 - (void)dealloc
