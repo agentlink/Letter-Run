@@ -11,7 +11,7 @@
 #import "LRRowManager.h"
 #import "LRMainGameSection.h"
 #import "LRMovingBlockBuilder.h"
-
+#import "LRSharedTextureCache.h"
 
 static NSUInteger const kLRBackgroundLayerStripesPerRow = 6;
 
@@ -62,7 +62,8 @@ static NSUInteger const kLRBackgroundLayerStripesPerRow = 6;
     for (int j = 0; j < kLRBackgroundLayerStripesPerRow; j++) {
         for (int i = 0; i < kLRRowManagerNumberOfRows; i++)
         {
-            SKSpriteNode *stripe = [[SKSpriteNode alloc ] initWithImageNamed:@"mainSection-stripe"];
+            SKTexture *texture = [[LRSharedTextureCache shared] textureForName:@"mainSection-stripe"];
+            SKSpriteNode *stripe = [[SKSpriteNode alloc ] initWithTexture:texture];
             stripe.position = CGPointMake(xPos, yPos);
             stripe.yScale = 1.2;
             yPos += diffY;

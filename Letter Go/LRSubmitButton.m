@@ -19,7 +19,7 @@
 
 - (id) init
 {
-    if (self = [super initWithImageNamed:@"submit" withDisabledOption:YES])
+    if (self = [super initWithImageNamed:@"submit-button" withDisabledOption:YES])
     {
         [self setTouchUpInsideTarget:self action:@selector(submitButtonSelected)];
         self.isEnabled = NO;

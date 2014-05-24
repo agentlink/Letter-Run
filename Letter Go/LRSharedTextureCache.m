@@ -55,13 +55,22 @@ static LRSharedTextureCache *_shared = nil;
 {
     NSMutableArray *textureAtlases = [NSMutableArray new];
 
-    //letter texture assets
+    //letter atlases
     NSArray *letterColors = @[@"Blue", @"Pink", @"Yellow"];
     for (NSString *letterColor in letterColors) {
         NSString *atlasName = [NSString stringWithFormat:@"Letter_%@", letterColor];
         SKTextureAtlas *envelopeAtlas = [SKTextureAtlas atlasNamed:atlasName];
         [textureAtlases addObject:envelopeAtlas];
     }
+    
+    //button atlases
+    SKTextureAtlas *pauseAtlas = [SKTextureAtlas atlasNamed:@"Button_Pause"];
+    SKTextureAtlas *submitAtlas = [SKTextureAtlas atlasNamed:@"Button_Submit"];
+    [textureAtlases addObjectsFromArray:@[submitAtlas, pauseAtlas]];
+    
+    //Manford atlases
+    SKTextureAtlas *manfordAtlas = [SKTextureAtlas atlasNamed:@"Manford"];
+    [textureAtlases addObject:manfordAtlas];
     
     //add the textures to the texture dictionary
     for (SKTextureAtlas *atlas in textureAtlases) {

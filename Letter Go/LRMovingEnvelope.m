@@ -80,7 +80,7 @@ NSString * const kLRMovingBlockName = @"Moving envelope";
 
 + (CGPoint)envelopePositionForRow:(NSUInteger)row
 {
-    NSAssert(row < kLRRowManagerNumberOfRows, @"Slot %i exceeds the proper number of rows", row);
+    NSAssert(row < kLRRowManagerNumberOfRows, @"Slot %u exceeds the proper number of rows", (unsigned)row);
     
     CGFloat yDiff = kSectionHeightMainSection/(kLRRowManagerNumberOfRows + 1);
     CGFloat lowestPosition = 0 - kSectionHeightMainSection/2 + yDiff * .5;
@@ -99,7 +99,6 @@ NSString * const kLRMovingBlockName = @"Moving envelope";
     if (fileName) {
         SKTexture *envelopeTexture = [[LRSharedTextureCache shared] textureForName:fileName];
         envelopeSprite = [[SKSpriteNode alloc] initWithTexture:envelopeTexture];
-        envelopeSprite = [SKSpriteNode spriteNodeWithImageNamed:fileName];
         envelopeSprite.size = CGSizeMake(self.size.width - self.touchSize.width,
                                          self.size.height - self.touchSize.height);
         if (placeholderBlock) {
@@ -148,7 +147,8 @@ NSString * const kLRMovingBlockName = @"Moving envelope";
 
 - (void)setEnvelopeOpen:(BOOL)envelopeOpen
 {
-    self.envelopeSprite.texture = [SKTexture textureWithImageNamed:[LRMovingEnvelope stringFromPaperColor:self.paperColor open:envelopeOpen]];
+    NSString *textureName = [LRMovingEnvelope stringFromPaperColor:self.paperColor open:envelopeOpen];
+    self.envelopeSprite.texture = [[LRSharedTextureCache shared] textureForName:textureName];
     _envelopeOpen = envelopeOpen;
 }
 
@@ -188,7 +188,7 @@ NSString * const kLRMovingBlockName = @"Moving envelope";
     int diff = (self.selected) ? -1 : 1;
     for (int i = startCount; i != endCount + diff; i+= diff) {
         NSString *textureName = [baseTextureName stringByReplacingCharactersInRange:NSMakeRange(baseTextureName.length - 1, 1)withString:[NSString stringWithFormat:@"%i", i]];
-        SKTexture *texture = [SKTexture textureWithImageNamed:textureName];
+        SKTexture *texture = [[LRSharedTextureCache shared] textureForName:textureName];
         [textures addObject:texture];
     }
     

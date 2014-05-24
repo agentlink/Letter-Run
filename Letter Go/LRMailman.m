@@ -9,6 +9,7 @@
 #import "LRMailman.h"
 #import "LRMovingEnvelope.h"
 #import "LRMovingBlockBuilder.h"
+#import "LRSharedTextureCache.h"
 
 @interface LRMailman ()
 @property (nonatomic, readwrite) NSUInteger currentRow;
@@ -20,7 +21,8 @@
 
 - (id) init
 {
-    if (self = [super initWithImageNamed:@"manford"])
+    SKTexture *manfordTexture = [[LRSharedTextureCache shared] textureForName:@"Manford-1"];
+    if (self = [super initWithTexture:manfordTexture])
     {
         //TODO: remove this hack
         self.currentRow = 2;

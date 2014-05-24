@@ -8,6 +8,7 @@
 
 
 #import "LRButton.h"
+#import "LRSharedTextureCache.h"
 #import <objc/message.h>
 
 //  Most of this code was gotten from the following Stack Overflow post:
@@ -66,17 +67,17 @@
 - (id)initWithImageNamedNormal:(NSString *)normal selected:(NSString *)selected disabled:(NSString *)disabled {
     SKTexture *textureNormal = nil;
     if (normal) {
-        textureNormal = [SKTexture textureWithImageNamed:normal];
+        textureNormal = [[LRSharedTextureCache shared] textureForName:normal];
     }
     
     SKTexture *textureSelected = nil;
     if (selected) {
-        textureSelected = [SKTexture textureWithImageNamed:selected];
+        textureSelected = [[LRSharedTextureCache shared] textureForName:selected];
     }
     
     SKTexture *textureDisabled = nil;
     if (disabled) {
-        textureDisabled = [SKTexture textureWithImageNamed:disabled];
+        textureDisabled = [[LRSharedTextureCache shared] textureForName:disabled];
     }
     
     return [self initWithTextureNormal:textureNormal selected:textureSelected disabled:textureDisabled];

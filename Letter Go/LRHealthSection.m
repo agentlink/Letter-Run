@@ -9,6 +9,7 @@
 #import "LRHealthSection.h"
 #import "LRScoreManager.h"
 #import "LRGameStateManager.h"
+#import "LRSharedTextureCache.h"
 
 static const CGFloat kLRHealthSectionInitialDropTime = 15.0;
 static const CGFloat kLRHealthSectionStartPercentYellow = .50;
@@ -69,7 +70,8 @@ static const CGFloat kLRHealthSectionStartPercentYellow = .50;
 
 - (SKSpriteNode *)healthBarSkin {
     if (!_healthBarSkin) {
-        _healthBarSkin = [SKSpriteNode spriteNodeWithImageNamed:@"healthSection-background"];
+        SKTexture *texture = [[LRSharedTextureCache shared] textureForName:@"healthSection-background"];
+        _healthBarSkin = [SKSpriteNode spriteNodeWithTexture:texture];
         _healthBarSkin.xScale = (self.size.width / 480.0);
     }
     return _healthBarSkin;
