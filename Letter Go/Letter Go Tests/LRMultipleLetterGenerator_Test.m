@@ -31,11 +31,25 @@
 {
     LRMultipleLetterGenerator *generator = [LRMultipleLetterGenerator new];
     [generator setChainMailStyleEnabled:kLRChainMailStyleRandom enabled:YES];
-    XCTAssertTrue([generator isChainMailStyleEnabled:kLRChainMailStyleRandom], @"Enabling chain mail is busted");
     [generator setChainMailStyleEnabled:kLRChainMailStyleAlphabetical enabled:NO];
+    XCTAssertTrue([generator isChainMailStyleEnabled:kLRChainMailStyleRandom], @"Enabling chain mail is busted");
     XCTAssertFalse([generator isChainMailStyleEnabled:kLRChainMailStyleAlphabetical], @"Disabling chain mail is busted.");
+    
     [generator setChainMailStyleEnabled:kLRChainMailStyleAlphabetical enabled:YES];
     XCTAssertTrue([generator isChainMailStyleEnabled:kLRChainMailStyleReverseAlphabetical], @"Reenabling chian mail is busted");
+}
+
+- (void)testEnablingRandomStart
+{
+    LRMultipleLetterGenerator *generator = [LRMultipleLetterGenerator new];
+    [generator setRandomStartForChainMailStyle:kLRChainMailStyleVowels enabled:YES];
+    [generator setRandomStartForChainMailStyle:kLRChainMailStyleRandom enabled:NO];
+    XCTAssertTrue([generator isChainMailStyleUsingRandomStart:kLRChainMailStyleVowels], @"Enabling random start for chainmail styles doesn't work");
+    XCTAssertFalse([generator isChainMailStyleUsingRandomStart:kLRChainMailStyleRandom], @"Disabling random start for chainmail styles doesn't work");
+
+    [generator setRandomStartForChainMailStyle:kLRChainMailStyleVowels enabled:NO];
+    XCTAssertFalse([generator isChainMailStyleUsingRandomStart:kLRChainMailStyleVowels], @"Disabling random start for chainmail styles after enabling doesn't work");
+
 }
 
 @end

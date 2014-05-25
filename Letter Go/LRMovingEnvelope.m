@@ -12,6 +12,7 @@
 #import "LRRowManager.h"
 #import "LRManfordAIManager.h"
 #import "LRSharedTextureCache.h"
+#import "LRMultipleLetterGenerator.h"
 
 static LRPaperColor kLRMovingEnvelopeHiddenPaperColor = kLRPaperColorBlue;
 static LRPaperColor kLRMovingEnvelopeShiftingPaperColor = kLRPaperColorPink;
@@ -26,6 +27,7 @@ NSString * const kLRMovingBlockName = @"Moving envelope";
 @interface LRMovingEnvelope ()
 @property (nonatomic, weak) id<LRManfordAIManagerSelectionDelegate> aiDelegate;
 @property (nonatomic, strong) SKSpriteNode *envelopeSprite;
+@property (nonatomic, strong) LRMultipleLetterGenerator *multipleLetterGenerator;
 @property (nonatomic, readwrite) NSUInteger envelopeID;
 @property (nonatomic, strong) NSArray *shiftingLetterArray;
 @property (nonatomic) NSUInteger currentShiftedLetterIndex;
@@ -52,6 +54,8 @@ NSString * const kLRMovingBlockName = @"Moving envelope";
     {
         self.name = kLRMovingBlockName;
         SKSpriteNode *envelopeSprite = [self _envelopeSpriteForLetter:letter paperColor:paperColor];
+
+        self.multipleLetterGenerator = [[LRMultipleLetterGenerator alloc] init];
         [self _updateLabel];
         if (envelopeSprite) {
             //Correctly position the envelope sprite
@@ -67,6 +71,7 @@ NSString * const kLRMovingBlockName = @"Moving envelope";
         touchSize.width += kLRMovingBlockTouchSizeExtraWidth;
         touchSize.height += kLRMovingBlockTouchSizeExtraHeight;
         self.touchSize = touchSize;
+
         self.aiDelegate = [LRManfordAIManager shared];
     }
     return self;
@@ -203,7 +208,7 @@ NSString * const kLRMovingBlockName = @"Moving envelope";
         self.letterLabel.text = [LRMovingEnvelope _letterForHiddenPaperColor];
     }
     else if (self.paperColor == kLRMovingEnvelopeShiftingPaperColor) {
-        self.shiftingLetterArray = @[@"A", @"E", @"I", @"O", @"U"];
+        self.shiftingLetterArray = [self.multipleLetterGenerator generateMultipleLetterList];
         [self runAction:[self _shiftLetterAction] withKey:kLRMovingBlockShiftLetterActionName];
     }
 }
