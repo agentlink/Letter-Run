@@ -69,6 +69,8 @@
 		A88CEB20189D87C600092C8A /* LREnvelopeAnimationBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = A88CEB1F189D87C600092C8A /* LREnvelopeAnimationBuilder.m */; };
 		A88DE67118DE1DCB00282AA8 /* LRMailmanArea.m in Sources */ = {isa = PBXBuildFile; fileRef = A88DE67018DE1DCB00282AA8 /* LRMailmanArea.m */; };
 		A88DECE2190C39C10076EDE9 /* LRProgressManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A88DECE1190C39C10076EDE9 /* LRProgressManager.m */; };
+		A895AC5D19328FF30064FE73 /* LRMultipleLetterGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = A895AC5C19328FF30064FE73 /* LRMultipleLetterGenerator.m */; };
+		A895AC651932985C0064FE73 /* LRMultipleLetterGenerator_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = A895AC641932985C0064FE73 /* LRMultipleLetterGenerator_Test.m */; };
 		A8A34420191EC73C006C5C55 /* LRManfordAIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A8A3441F191EC73C006C5C55 /* LRManfordAIManager.m */; };
 		A8A3442619202C8D006C5C55 /* LRMailman.m in Sources */ = {isa = PBXBuildFile; fileRef = A8A3442519202C8D006C5C55 /* LRMailman.m */; };
 		A8B6B7221903243600E130A6 /* LRMovingBlockBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B6B7211903243600E130A6 /* LRMovingBlockBuilder.m */; };
@@ -203,6 +205,9 @@
 		A88DE67018DE1DCB00282AA8 /* LRMailmanArea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRMailmanArea.m; sourceTree = "<group>"; };
 		A88DECE0190C39C10076EDE9 /* LRProgressManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRProgressManager.h; sourceTree = "<group>"; };
 		A88DECE1190C39C10076EDE9 /* LRProgressManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRProgressManager.m; sourceTree = "<group>"; };
+		A895AC5B19328FF30064FE73 /* LRMultipleLetterGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRMultipleLetterGenerator.h; sourceTree = "<group>"; };
+		A895AC5C19328FF30064FE73 /* LRMultipleLetterGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRMultipleLetterGenerator.m; sourceTree = "<group>"; };
+		A895AC641932985C0064FE73 /* LRMultipleLetterGenerator_Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRMultipleLetterGenerator_Test.m; sourceTree = "<group>"; };
 		A8A3441E191EC73C006C5C55 /* LRManfordAIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRManfordAIManager.h; sourceTree = "<group>"; };
 		A8A3441F191EC73C006C5C55 /* LRManfordAIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRManfordAIManager.m; sourceTree = "<group>"; };
 		A8A3442419202C8D006C5C55 /* LRMailman.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRMailman.h; sourceTree = "<group>"; };
@@ -558,6 +563,7 @@
 			isa = PBXGroup;
 			children = (
 				A877E5CC185BFA960028CFFA /* LRLetterGenerator_Test.m */,
+				A895AC641932985C0064FE73 /* LRMultipleLetterGenerator_Test.m */,
 				A846FB8A186E0489009DCEF4 /* LRLetterBlock_Test.m */,
 				A8E60A151881F6E300F60DF4 /* LRSlotManager_Test.m */,
 				A877E5BD185BF8C30028CFFA /* Supporting Files */,
@@ -634,6 +640,8 @@
 				A88CEB1F189D87C600092C8A /* LREnvelopeAnimationBuilder.m */,
 				008428F118009F6300908E5D /* LRLetterGenerator.h */,
 				008428F218009F6300908E5D /* LRLetterGenerator.m */,
+				A895AC5B19328FF30064FE73 /* LRMultipleLetterGenerator.h */,
+				A895AC5C19328FF30064FE73 /* LRMultipleLetterGenerator.m */,
 				A8B6B7201903243600E130A6 /* LRMovingBlockBuilder.h */,
 				A8B6B7211903243600E130A6 /* LRMovingBlockBuilder.m */,
 			);
@@ -888,6 +896,7 @@
 				00B43D92182834CF00261468 /* LRButton.m in Sources */,
 				A87BDD981853AC8D00845BB5 /* LRCurveBuilder.m in Sources */,
 				0049695117F8A12B00176F2D /* LRLetterBlock.m in Sources */,
+				A895AC5D19328FF30064FE73 /* LRMultipleLetterGenerator.m in Sources */,
 				A8B6B7221903243600E130A6 /* LRMovingBlockBuilder.m in Sources */,
 				0007FB3F180C7A1A00E55B0D /* LRCollectedEnvelope.m in Sources */,
 				00CDF14F17F474EC003065F6 /* LRViewController.m in Sources */,
@@ -903,6 +912,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A895AC651932985C0064FE73 /* LRMultipleLetterGenerator_Test.m in Sources */,
 				00CDF16917F474EC003065F6 /* Letter_GoTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

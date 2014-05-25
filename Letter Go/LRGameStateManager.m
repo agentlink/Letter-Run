@@ -119,6 +119,7 @@ static LRGameStateManager *_shared = nil;
     }];
     self.gameScene.gameState = LRGameStatePauseGame;
     self.gameScene.gamePlayLayer.paused = YES;
+    self.gameScene.backgroundLayer.paused = YES;
 
 }
 
@@ -128,6 +129,7 @@ static LRGameStateManager *_shared = nil;
     [[[LRGameStateManager shared] gameScene] unblurSceneWithCompletion:^{
         self.gameScene.gameState = LRGameStateUnpauseGame;
         self.gameScene.gamePlayLayer.paused = NO;
+        self.gameScene.backgroundLayer.paused = NO;
     }];
 }
 

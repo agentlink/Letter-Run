@@ -125,14 +125,6 @@ static CGFloat const kLRGameSceneBlurEffectDuration = .4;
     }];
 }
 
-- (void)addChild:(SKNode *)node
-{
-    if (!node) {
-        NSLog(@"STOP!");
-    }
-    [super addChild:node];
-}
-
 #pragma mark - Scene Getters
 + (LRGameScene *)scene
 {
