@@ -221,14 +221,15 @@ NSString * const kLRMovingBlockName = @"Moving envelope";
 - (SKAction *)_shiftLetterAction
 {
     NSAssert(self.shiftingLetterArray && self.shiftingLetterArray.count > 0, @"Shift letter action requires an array of letters");
-    CGFloat letterChangeInterval = [[LRMovingBlockBuilder shared] blockGenerationInterval];
+    self.currentShiftedLetterIndex = -1;
+    CGFloat letterChangeInterval = [[LRMovingBlockBuilder shared] blockScreenCrossTime] / [self.shiftingLetterArray count];
     SKAction *wait = [SKAction waitForDuration:letterChangeInterval];
     SKAction *shiftLetter = [SKAction runBlock:^{
         self.currentShiftedLetterIndex = (_currentShiftedLetterIndex == self.shiftingLetterArray.count - 1) ? 0 : self.currentShiftedLetterIndex + 1;
         NSString *letter = self.shiftingLetterArray[self.currentShiftedLetterIndex];
         self.letter = letter;
     }];
-    SKAction *waitAndShift = [SKAction sequence:@[wait, shiftLetter]];
+    SKAction *waitAndShift = [SKAction sequence:@[shiftLetter, wait]];
     SKAction *shiftForever = [SKAction repeatActionForever:waitAndShift];
     return shiftForever;
 }
