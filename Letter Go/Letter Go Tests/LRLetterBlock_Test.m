@@ -32,21 +32,19 @@
 
 - (void)testLetterBlockLabels
 {
-//    NSString *letter = @"G";
-//    BOOL love = YES;
-//    LRCollectedEnvelope *emptyBlock = [LRLetterBlockGenerator createEmptySectionBlock];
-//    LRCollectedEnvelope *placeholderBlock = [LRLetterBlockGenerator createPlaceHolderBlock];
-//    LRCollectedEnvelope *gBlock = [LRLetterBlockGenerator createBlockWithLetter:letter loveLetter:love];
-//
-//    //Regular letter block tests
-//    XCTAssertEqual(letter, gBlock.letter, @"Error: section block should contain letter '%@' but instead contains '%@'", letter, gBlock.letter);
-//
-//    //Empty letter block test
-//    XCTAssertTrue([emptyBlock isLetterBlockEmpty], @"Error: isLetterBlockEmpty should be true on empty blocks");
-//    
-//    //Placeholder letter block tests
-//    XCTAssertTrue([placeholderBlock isLetterBlockPlaceHolder], @"Error: isLetterBlockPlaceholder should return true for placeholder blocks.");
-    
+    NSString *letter = @"G";
+    LRPaperColor paperColor = kLRPaperColorYellow;
+    LRCollectedEnvelope *emptyBlock = [LRLetterBlockBuilder createEmptySectionBlock];
+    LRCollectedEnvelope *placeholderBlock = [LRLetterBlockBuilder createPlaceHolderBlock];
+    LRCollectedEnvelope *gBlock = [LRLetterBlockBuilder createBlockWithLetter:letter paperColor:paperColor];
+
+    //Regular letter block tests
+    XCTAssertEqual(letter, gBlock.letter, @"Error: section block should contain letter '%@' but instead contains '%@'", letter, gBlock.letter);
+    XCTAssertEqual(paperColor, gBlock.paperColor, @"Setting the paper color for a collected envelope has failed");
+    //Empty letter block test
+    XCTAssertTrue([emptyBlock isCollectedEnvelopeEmpty], @"Error: isLetterBlockEmpty should be true on empty blocks");
+    //Placeholder letter block tests
+    XCTAssertTrue([placeholderBlock isCollectedEnvelopePlaceholder], @"Error: isLetterBlockPlaceholder should return true for placeholder blocks.");
 }
 
 @end

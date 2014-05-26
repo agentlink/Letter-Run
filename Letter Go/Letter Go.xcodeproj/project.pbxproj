@@ -75,8 +75,8 @@
 		A8A34420191EC73C006C5C55 /* LRManfordAIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A8A3441F191EC73C006C5C55 /* LRManfordAIManager.m */; };
 		A8A3442619202C8D006C5C55 /* LRMailman.m in Sources */ = {isa = PBXBuildFile; fileRef = A8A3442519202C8D006C5C55 /* LRMailman.m */; };
 		A8B6B7221903243600E130A6 /* LRMovingBlockBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B6B7211903243600E130A6 /* LRMovingBlockBuilder.m */; };
+		A8C588BF1933D3C3004311FD /* LRRowManager_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = A8C588BE1933D3C3004311FD /* LRRowManager_Test.m */; };
 		A8D109DD19313AA200D34C62 /* LRSharedTextureCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A8D109DC19313AA200D34C62 /* LRSharedTextureCache.m */; };
-		A8E60A161881F6E300F60DF4 /* LRSlotManager_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E60A151881F6E300F60DF4 /* LRSlotManager_Test.m */; };
 		A8EDE18C19314FAB007C456E /* Button_Pause.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A8EDE18519314FAB007C456E /* Button_Pause.atlas */; };
 		A8EDE18D19314FAB007C456E /* Button_Submit.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A8EDE18619314FAB007C456E /* Button_Submit.atlas */; };
 		A8EDE18E19314FAB007C456E /* Letter_Blue.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A8EDE18819314FAB007C456E /* Letter_Blue.atlas */; };
@@ -217,9 +217,9 @@
 		A8A3442519202C8D006C5C55 /* LRMailman.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRMailman.m; sourceTree = "<group>"; };
 		A8B6B7201903243600E130A6 /* LRMovingBlockBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRMovingBlockBuilder.h; sourceTree = "<group>"; };
 		A8B6B7211903243600E130A6 /* LRMovingBlockBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRMovingBlockBuilder.m; sourceTree = "<group>"; };
+		A8C588BE1933D3C3004311FD /* LRRowManager_Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRRowManager_Test.m; sourceTree = "<group>"; };
 		A8D109DB19313AA200D34C62 /* LRSharedTextureCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRSharedTextureCache.h; sourceTree = "<group>"; };
 		A8D109DC19313AA200D34C62 /* LRSharedTextureCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRSharedTextureCache.m; sourceTree = "<group>"; };
-		A8E60A151881F6E300F60DF4 /* LRSlotManager_Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRSlotManager_Test.m; sourceTree = "<group>"; };
 		A8EDE18519314FAB007C456E /* Button_Pause.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Button_Pause.atlas; sourceTree = "<group>"; };
 		A8EDE18619314FAB007C456E /* Button_Submit.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Button_Submit.atlas; sourceTree = "<group>"; };
 		A8EDE18819314FAB007C456E /* Letter_Blue.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Letter_Blue.atlas; sourceTree = "<group>"; };
@@ -568,7 +568,7 @@
 				A877E5CC185BFA960028CFFA /* LRLetterGenerator_Test.m */,
 				A895AC641932985C0064FE73 /* LRMultipleLetterGenerator_Test.m */,
 				A846FB8A186E0489009DCEF4 /* LRLetterBlock_Test.m */,
-				A8E60A151881F6E300F60DF4 /* LRSlotManager_Test.m */,
+				A8C588BE1933D3C3004311FD /* LRRowManager_Test.m */,
 				A877E5BD185BF8C30028CFFA /* Supporting Files */,
 			);
 			name = Tests;
@@ -919,6 +919,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A895AC651932985C0064FE73 /* LRMultipleLetterGenerator_Test.m in Sources */,
+				A8C588BF1933D3C3004311FD /* LRRowManager_Test.m in Sources */,
 				00CDF16917F474EC003065F6 /* Letter_GoTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -929,7 +930,6 @@
 			files = (
 				A846FB8B186E0489009DCEF4 /* LRLetterBlock_Test.m in Sources */,
 				A877E5CD185BFA960028CFFA /* LRLetterGenerator_Test.m in Sources */,
-				A8E60A161881F6E300F60DF4 /* LRSlotManager_Test.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

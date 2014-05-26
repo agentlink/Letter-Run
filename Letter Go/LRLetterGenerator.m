@@ -153,7 +153,7 @@ static LRLetterGenerator *_shared = nil;
             else if (forceConsonant)
                 letter = [self generateConsonantFromProbabilityArray:probabilityArray];
             else
-                letter = [self generateRandomLetterFromProbabiltyArray:probabilityArray];
+                letter = [self generateLetterForPaperColor:color];
             repeatCount = 1;
         }
         else {

@@ -13,7 +13,7 @@
 
 @end
 
-static const unsigned trialCount = 1000;
+static const unsigned trialCount = 10000;
 
 @implementation LRLetterGenerator_Test
 
