@@ -8,6 +8,7 @@
 
 #import "LRViewController.h"
 #import "LRGameScene.h"
+#import "LRSharedTextureCache.h"
 
 @implementation LRViewController
 
@@ -17,10 +18,17 @@
 
     // Configure the view.
     SKView * skView = (SKView *)self.view;
+    skView.backgroundColor = [UIColor blackColor];
     skView.showsFPS = YES;
     skView.showsNodeCount = YES;
     [skView setMultipleTouchEnabled:NO];
     [self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
+    
+    //[resent an all black scene to get rid of the gray color
+    SKScene *blackScene = [SKScene new];
+    blackScene.paused = YES;
+    blackScene.backgroundColor = [UIColor blackColor];
+    [skView presentScene:blackScene];
 }
 
 - (BOOL) prefersStatusBarHidden
@@ -30,13 +38,13 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    SKView * skView = (SKView *)self.view;
     // Create and configure the scene.
     LRGameScene * scene = [LRGameScene scene];
-    SKView * skView = (SKView *)self.view;
-
     // Present the scene.
-    [skView presentScene:scene];
-
+    [[LRSharedTextureCache shared] preloadTextureAtlasesWithCompletion:^{
+        [skView presentScene:scene];
+    }];
 }
 
 - (BOOL)shouldAutorotate

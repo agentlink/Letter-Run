@@ -13,6 +13,7 @@
 @end
 @implementation LRSharedTextureCache
 
+typedef void(^CompletionBlockType)(void);
 static LRSharedTextureCache *_shared = nil;
 
 #pragma mark - Public Methods
@@ -35,7 +36,6 @@ static LRSharedTextureCache *_shared = nil;
     if (!self) return nil;
     
     self.textureDict = [NSMutableDictionary new];
-    [self _loadTextureAtlases];
     return self;
 }
 
@@ -51,7 +51,7 @@ static LRSharedTextureCache *_shared = nil;
 }
 
 #pragma Private Methods
-- (void)_loadTextureAtlases
+- (void)preloadTextureAtlasesWithCompletion:(void(^)())handler
 {
     NSMutableArray *textureAtlases = [NSMutableArray new];
 
@@ -72,12 +72,25 @@ static LRSharedTextureCache *_shared = nil;
     SKTextureAtlas *manfordAtlas = [SKTextureAtlas atlasNamed:@"Manford"];
     [textureAtlases addObject:manfordAtlas];
     
-    //add the textures to the texture dictionary
-    for (SKTextureAtlas *atlas in textureAtlases) {
-        for (NSString *textureName in atlas.textureNames) {
-            self.textureDict[textureName] = [atlas textureNamed:textureName];
-        }
+    [self _preloadAtlasesInArray:textureAtlases startIndex:0 completion:handler];
+}
+
+- (void)_preloadAtlasesInArray:(NSArray *)atlases startIndex:(int)index completion:(void(^)())handler
+{
+    if (index == atlases.count) {
+        if (handler)
+            handler();
+        return;
     }
+    SKTextureAtlas *atlas = atlases[index];
+    //add the textures to the texture dictionary
+    for (NSString *textureName in atlas.textureNames) {
+        self.textureDict[textureName] = [atlas textureNamed:textureName];
+    }
+    //preload the texture atlas and on completion, do the next one
+    [atlas preloadWithCompletionHandler:^{
+        [self _preloadAtlasesInArray:atlases startIndex:index+1 completion:handler];
+    }];
 }
 
 @end
