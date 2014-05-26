@@ -21,9 +21,8 @@
 
 typedef NS_ENUM(NSUInteger, LetterSectionState)
 {
-    LetterSectionStateNormal = 0,
-    LetterSectionStateDeletingLetters,
-    LetterSectionStateSubmittingWord
+    kLRLetterSectionStateNormal = 0,
+    kLRLetterSectionStateSubmittingWord
 };
 
 typedef void(^CompletionBlockType)(void);
@@ -115,7 +114,7 @@ typedef void(^CompletionBlockType)(void);
 - (void)addEnvelopeToLetterSection:(id)envelope
 {
     //If letters are being deleted currently, add them when they're done being deleted
-    if (self.letterSectionState != LetterSectionStateNormal) {
+    if (self.letterSectionState != kLRLetterSectionStateNormal) {
         [self.delayedLetters addObject:envelope];
         return;
     }
@@ -278,7 +277,7 @@ static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
         }];
     }
     
-    self.letterSectionState = LetterSectionStateNormal;
+    self.letterSectionState = kLRLetterSectionStateNormal;
     //TODO: Test if this call is now screwed up
     [self _addDelayedLetters];
     [self _updateSubmitButton];
@@ -306,6 +305,7 @@ static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
 {
     self.touchedBlock = (LRCollectedEnvelope *)letterBlock;
     self.touchedBlock.zPosition = zPos_SectionBlock_Selected;
+    [self addChild:self.touchedBlock];
     
     NSAssert(![self _placeholderSlot], @"Should not be placeholder slot if rearrangement hasn't started yet");
     LRLetterSlot *newPlaceholderSlot = self.letterSlots[self.touchedBlock.slotIndex];
@@ -354,6 +354,8 @@ static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
 {
     //TODO: add other assertions here
     NSAssert(slotRange.length + slotRange.location <= kLRLetterSectionCapacity, @"Shift envelope range exceeds max letter count");
+    NSAssert(!(slotRange.location == 0 && direction == kLRDirectionLeft), @"Cannot shift left from index 0");
+    NSAssert(!(direction == kLRDirectionRight && slotRange.location + slotRange.length == kLRLetterSectionCapacity), @"Range with length and location added up to the length of the letter seciton is invalid");
     int endcount = kLRLetterSectionCapacity;
     NSUInteger initialIndex = slotRange.location;
     LRLetterSlot *currentSlot;
@@ -566,7 +568,7 @@ static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
 
 - (void)clearLetterSectionAnimated:(BOOL)animated
 {
-    self.letterSectionState  = LetterSectionStateSubmittingWord;
+    self.letterSectionState  = kLRLetterSectionStateSubmittingWord;
     for (int i = 0; i < [self.letterSlots count]; i++)
     {
         LRLetterSlot *slot = [self.letterSlots objectAtIndex:i];
@@ -575,7 +577,7 @@ static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
             slot.currentBlock = [LRLetterBlockBuilder createEmptySectionBlock];
             if (i == 0) {
                 [self _updateSubmitButton];
-                self.letterSectionState = LetterSectionStateNormal;
+                self.letterSectionState = kLRLetterSectionStateNormal;
                 [self _addDelayedLetters];
             }
         };

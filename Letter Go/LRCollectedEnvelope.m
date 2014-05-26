@@ -111,14 +111,11 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
     [super touchesBegan:touches withEvent:event];
     for (UITouch *touch in touches)
     {
-        CGPoint location = [touch locationInNode:self.parent];
-        if (CGRectContainsPoint(self.frame, location))
-        {
-            self.position = location;
-            [self releaseBlockForRearrangement];
-            SKAction *expand = [LREnvelopeAnimationBuilder animateToScale:kLRCollectedEnvelopeBubbleScale withDuration:kLRCollectedEnvelopeBubbleDuration];
-            [self runAction:expand];
-        }
+        self.position = [touch locationInNode:self.parent];
+        [self releaseBlockForRearrangement];
+        SKAction *expand = [LREnvelopeAnimationBuilder animateToScale:kLRCollectedEnvelopeBubbleScale withDuration:kLRCollectedEnvelopeBubbleDuration];
+        [self runAction:expand];
+
     }
 }
 
@@ -148,9 +145,9 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-//    NSAssert(self.userInteractionEnabled, @"User interaction should be enabled if touch is ending");
     if (self.touchedAfterGameOver)
         return;
+    NSAssert(self.userInteractionEnabled, @"User interaction should be enabled if touch is ending");
 
     [super touchesEnded:touches withEvent:event];
     BOOL canDelete = [self shouldEnvelopeBeDeletedAtPosition:self.position];
@@ -175,12 +172,10 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
 - (void)releaseBlockForRearrangement
 {
     //Move the block from being the child of the letter slot to the child of the whole letter section
-    LRLetterSection *letterSection = [[(LRGameScene *)[self scene] gamePlayLayer] letterSection];
     NSAssert(self.parent, @"Only blocks in slots should be rearranged.");
 
     self.position = self.parentSlot.position;
     [self.parentSlot setEmptyLetterBlock];
-    [letterSection addChild:self];
     [self.delegate rearrangementHasBegunWithLetterBlock:self];
 }
 
