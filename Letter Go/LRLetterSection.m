@@ -29,13 +29,17 @@ typedef void(^CompletionBlockType)(void);
 
 @interface LRLetterSection ()
 
+//sprites
 @property (nonatomic, strong) SKSpriteNode *letterSection;
 @property (nonatomic, weak) LRSubmitButton *submitButton;
+
+//letter section state business
 @property (nonatomic, strong) NSMutableArray *letterSlots;
 @property (nonatomic, strong) NSMutableArray *delayedLetters;
-
-//@property (nonatomic, weak) LRLetterSlot  *currentSlot;
 @property (nonatomic, weak) LRCollectedEnvelope *touchedBlock;
+
+//dictionary
+@property (nonatomic, strong) LRDictionaryChecker *wordChecker;
 
 @property LetterSectionState letterSectionState;
 
@@ -49,6 +53,7 @@ typedef void(^CompletionBlockType)(void);
 {
     if (self = [super initWithSize:size])
     {
+        self.wordChecker = [LRDictionaryChecker new];
         [self setUpNotifications];
     }
     return self;
@@ -448,7 +453,8 @@ static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
         if ([(LRLetterSlot *)[self.letterSlots objectAtIndex:i] isLetterSlotEmpty])
             break;
     }
-    self.submitButton.isEnabled = (i >= kLRLetterSectionMinimumWordLength && [[LRDictionaryChecker shared] checkForWordInDictionary:[self getCurrentWord]]);
+    //TODO: move where this gets checked
+    self.submitButton.isEnabled = (i >= kLRLetterSectionMinimumWordLength && [self.wordChecker checkForWordInDictionary:[self getCurrentWord]]);
 }
 
 #pragma mark - Reordering Functions -

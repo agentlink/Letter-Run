@@ -10,9 +10,6 @@
 
 @interface LRDictionaryChecker : SKNode
 
-//Futures (threading)
-
-+ (LRDictionaryChecker *)shared;
 - (BOOL)checkForWordInDictionary:(NSString *)word;
 
 @end

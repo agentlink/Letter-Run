@@ -47,7 +47,6 @@ static LRGameStateManager *_shared = nil;
     if (self = [super init])
     {
         //Set up the dictionary
-        [LRDictionaryChecker shared];
         [self _setUpNotifications];
         [self _setUpManagerHierarchy];
         //preload the game over label

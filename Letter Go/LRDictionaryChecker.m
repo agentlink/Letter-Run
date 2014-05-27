@@ -15,29 +15,13 @@
 @end
 
 @implementation LRDictionaryChecker
-
-static LRDictionaryChecker *_shared = nil;
-
-+ (LRDictionaryChecker *)shared
-{
-    //This @synchronized line is for multithreading
-    @synchronized (self)
-    {
-		if (!_shared)
-        {
-            
-			_shared = [[LRDictionaryChecker alloc] init];
-		}
-	}
-	return _shared;
-}
-
-- (id) init
+- (id)init
 {
     if (self = [super init]) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [self setUpDictionary];
+            [self _setUpDictionary];
             dispatch_async(dispatch_get_main_queue(), ^{
+                NSLog(@"Finished loading dictionary");
                 //Finished loading dictionary
             });
         });
@@ -45,7 +29,7 @@ static LRDictionaryChecker *_shared = nil;
     return self;
 }
 
-- (void)setUpDictionary
+- (void)_setUpDictionary
 {
     NSString* path = [[NSBundle mainBundle] pathForResource:DICTIONARY_FILE_NAME
                                                      ofType:@"txt"];
