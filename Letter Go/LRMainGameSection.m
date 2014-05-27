@@ -12,6 +12,7 @@
 #import "LRRowManager.h"
 #import "LRPositionConstants.h"
 #import "LRMailman.h"
+#import "LRMovingBlockBuilder.h"
 
 static const CGFloat kMailmanAreaWidth          = 70.0;
 
@@ -22,7 +23,6 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
 //Row logic
 @property LRRowManager *rowManager;
 @property NSMutableArray *envelopesOnScreen;
-@property LRMovingBlockBuilder *envelopeBuilder;
 @property int envelopeZPosition;
 
 @end
@@ -37,11 +37,6 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
         self.envelopesOnScreen = [NSMutableArray new];
         self.rowManager = [LRRowManager new];
         self.envelopeTouchEnabled = YES;
-        
-        self.envelopeBuilder = [LRMovingBlockBuilder shared];
-        self.envelopeBuilder.screenDelegate = self;
-        [self addChild:self.envelopeBuilder];
-        [self.envelopeBuilder startMovingBlockGeneration];
         self.envelopeZPosition = zPos_MovingEnvelope_Initial;
     }
     return self;
@@ -60,6 +55,12 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
     
 }
 
+- (void)setEnvelopeBuilder:(LRMovingBlockBuilder *)envelopeBuilder
+{
+    _envelopeBuilder = envelopeBuilder;
+    _envelopeBuilder.screenDelegate = self;
+    [self addChild:_envelopeBuilder];
+}
 
 #pragma mark Letter Addition and Removal
 - (void)clearMainGameSection

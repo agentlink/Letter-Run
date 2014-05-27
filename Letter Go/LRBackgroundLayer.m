@@ -99,7 +99,7 @@ static NSUInteger const kLRBackgroundLayerStripesPerRow = 6;
     CGPoint endPoint = CGPointMake(-leftEdgeX, stripe.position.y);
     CGFloat distance =  endPoint.x - stripe.position.x;
     //Make the duration the same as the letter cross time
-    CGFloat totalCrossTime = [[LRMovingBlockBuilder shared] blockScreenCrossTime];
+    CGFloat totalCrossTime = [LRMovingBlockBuilder blockScreenCrossTime];
     CGFloat duration = ABS(distance/self.mainGameSectionBackground.size.width) * totalCrossTime;
     
     return [SKAction moveBy:CGVectorMake(distance, 0) duration:duration];

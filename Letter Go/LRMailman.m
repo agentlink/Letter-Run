@@ -74,7 +74,7 @@
 //This function returns how long Manford takes to move a given amount of rows
 + (CGFloat)_manfordMovementDurationForRowCDifference:(NSUInteger)rowDiff
 {
-    CGFloat blockInterval = [[LRMovingBlockBuilder shared] blockGenerationInterval];
+    CGFloat blockInterval = [LRMovingBlockBuilder blockGenerationInterval];
     //Manford should move slower for shorter distances
     CGFloat maxMultiplier = 1.4;
     CGFloat speedDiffPerRow = .2;

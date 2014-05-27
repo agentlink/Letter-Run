@@ -43,6 +43,11 @@ NSString * const kLRGamePlayLayerLetterSectionName = @"letterSection";
         
         self.color = [LRColor gamePlayLayerBackgroundColor];
         [self createLayerContent];
+        LRMovingBlockBuilder *envBuilder = [LRMovingBlockBuilder new];
+        self.mainGameSection.envelopeBuilder = envBuilder;
+        envBuilder.letterAdditionDelegate = self.letterSection;
+        [envBuilder startMovingBlockGeneration];
+
     }
     return self;
 }

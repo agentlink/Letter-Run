@@ -19,22 +19,9 @@ static CGFloat const kLRMovingBlockBuilderCrossTime = 3.5;
 
 #pragma mark - Public Functions
 
-static LRMovingBlockBuilder *_shared = nil;
-+ (LRMovingBlockBuilder *)shared
-{
-    @synchronized (self)
-    {
-		if (!_shared)
-        {
-			_shared = [[LRMovingBlockBuilder alloc] init];
-		}
-	}
-	return _shared;
-}
-
 - (void)startMovingBlockGeneration
 {
-    SKAction *delay = [SKAction waitForDuration:[self blockGenerationInterval]];
+    SKAction *delay = [SKAction waitForDuration:[LRMovingBlockBuilder blockGenerationInterval]];
     SKAction *generate = [SKAction runBlock:^{
         [self _generateEnvelope];
     }];
@@ -49,13 +36,13 @@ static LRMovingBlockBuilder *_shared = nil;
     [self removeAllActions];
 }
 
-- (CGFloat)blockGenerationInterval
++ (CGFloat)blockGenerationInterval
 {
     NSUInteger level = [[LRProgressManager shared] level];
     return kLRMovingBlockBuilderIntialDropInterval/powf(kLRMovingBlockBuilderIntervalRatio, level - 1);
 }
 
-- (CGFloat)blockScreenCrossTime
++ (CGFloat)blockScreenCrossTime
 {
     return kLRMovingBlockBuilderCrossTime;
 }
@@ -67,7 +54,7 @@ static LRMovingBlockBuilder *_shared = nil;
     LRMovingEnvelope *envelope = [LRLetterBlockBuilder createRandomEnvelope];
     //TODO: get duration from some calculation
     CGFloat distance = SCREEN_WIDTH + kCollectedEnvelopeSpriteDimension;
-    CGFloat duration = [self blockScreenCrossTime] * distance/SCREEN_WIDTH;
+    CGFloat duration = [LRMovingBlockBuilder blockScreenCrossTime] * distance/SCREEN_WIDTH;
     SKAction *moveAcrossScreen = [SKAction moveBy:CGVectorMake(-distance, 0) duration:duration];
     [self.screenDelegate addMovingBlockToScreen:envelope];
     [envelope runAction:moveAcrossScreen];
@@ -97,7 +84,7 @@ static LRMovingBlockBuilder *_shared = nil;
 - (SKAction *)_discardedAction
 {
     SKAction *moveOff = [SKAction moveBy:CGVectorMake(-kCollectedEnvelopeSpriteDimension, 0)
-                                duration:[self blockScreenCrossTime] * (SCREEN_WIDTH/kCollectedEnvelopeSpriteDimension)];
+                                duration:[LRMovingBlockBuilder blockScreenCrossTime] * (SCREEN_WIDTH/kCollectedEnvelopeSpriteDimension)];
     return moveOff;
 }
 

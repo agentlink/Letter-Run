@@ -34,8 +34,6 @@ typedef void(^CompletionBlockType)(void);
 @property (nonatomic, strong) NSMutableArray *letterSlots;
 @property (nonatomic, strong) NSMutableArray *delayedLetters;
 
-@property (nonatomic, strong) SKSpriteNode *bottomBarrier;
-
 //@property (nonatomic, weak) LRLetterSlot  *currentSlot;
 @property (nonatomic, weak) LRCollectedEnvelope *touchedBlock;
 
@@ -44,7 +42,6 @@ typedef void(^CompletionBlockType)(void);
 @end
 
 @implementation LRLetterSection
-@synthesize bottomBarrier;
 
 #pragma mark - Set Up/Initialization -
 
@@ -53,7 +50,6 @@ typedef void(^CompletionBlockType)(void);
     if (self = [super initWithSize:size])
     {
         [self setUpNotifications];
-        [LRMovingBlockBuilder shared].letterAdditionDelegate = self;
     }
     return self;
 }

@@ -13,16 +13,15 @@
 @protocol LRMovingBlockBuilderDelegate;
 
 @interface LRMovingBlockBuilder : SKNode <LRGameStateDelegate>
-+ (LRMovingBlockBuilder *)shared;
 @property (nonatomic, weak) id <LRMovingBlockBuilderDelegate> screenDelegate;
 @property (nonatomic, weak) id <LRLetterBlockControlDelegate> letterAdditionDelegate;
 
 - (void)startMovingBlockGeneration;
 - (void)stopMovingBlockGeneration;
 ///Returns the time difference in seconds between how often blocks are being generated
-- (CGFloat)blockGenerationInterval;
++ (CGFloat)blockGenerationInterval;
 ///Returns how long it takes the block to move the width of the screen
-- (CGFloat)blockScreenCrossTime;
++ (CGFloat)blockScreenCrossTime;
 
 @end
 
