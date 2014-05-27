@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Gabe Nicholas. All rights reserved.
 //
 
-#import "LRLetterGenerator.h"
+#import "LRAlphabeticalLetterGenerator.h"
 
 #define kLRLetterProbabilityDictionaryBasic          @"letter_basic"
 #define kLRLetterProbabilityDictionaryChallenging    @"letter_challenging"
@@ -19,7 +19,7 @@ const NSUInteger kLRLetterGeneratorMaxRepeatLetters  = 2;
 
 static NSString* const kLetterQ = @"Q";
 
-@interface LRLetterGenerator ()
+@interface LRAlphabeticalLetterGenerator ()
 
 @property NSCharacterSet *consonantSet;
 @property NSCharacterSet *vowelSet;
@@ -33,7 +33,7 @@ static NSString* const kLetterQ = @"Q";
 @property (nonatomic,readonly) BOOL multipleLetterDictsEnabled;
 @end
 
-@implementation LRLetterGenerator
+@implementation LRAlphabeticalLetterGenerator
 @synthesize repeatCount, lastLetter, vowelConstCount;
 @synthesize consonantSet, vowelSet;
 @synthesize forceDropLetters;
@@ -78,16 +78,16 @@ static NSString* const kLetterQ = @"Q";
 
 #pragma mark - Public Functions
 
-static LRLetterGenerator *_shared = nil;
+static LRAlphabeticalLetterGenerator *_shared = nil;
 
-+ (LRLetterGenerator *)shared
++ (LRAlphabeticalLetterGenerator *)shared
 {
     //This @synchronized line is for multithreading
     @synchronized (self)
     {
 		if (!_shared)
         {
-			_shared = [[LRLetterGenerator alloc] init];
+			_shared = [[LRAlphabeticalLetterGenerator alloc] init];
 		}
 	}
 	return _shared;

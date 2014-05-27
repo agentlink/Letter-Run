@@ -7,7 +7,7 @@
 //
 
 #import "LRLetterBlockBuilder.h"
-#import "LRLetterGenerator.h"
+#import "LRAlphabeticalLetterGenerator.h"
 
 
 typedef NS_ENUM(NSInteger, LRLetterProbability) {
@@ -79,7 +79,7 @@ static const BOOL lgbDebugMode = NO;
 
 + (NSString *)generateLetterForPaperColor:(LRPaperColor)paperColor
 {
-    NSString *letter = [[LRLetterGenerator shared] generateLetterForPaperColor:paperColor];
+    NSString *letter = [[LRAlphabeticalLetterGenerator shared] generateLetterForPaperColor:paperColor];
     return letter;
 }
 

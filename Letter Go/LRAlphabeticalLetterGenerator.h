@@ -23,10 +23,10 @@ typedef NS_ENUM(NSUInteger, LetterType)
 static NSString* const kLetterQu = @"Qu";
 
 
-@interface LRLetterGenerator : SKNode
+@interface LRAlphabeticalLetterGenerator : SKNode
 
 ///Returns the shared instance of the letter generator
-+ (LRLetterGenerator *)shared;
++ (LRAlphabeticalLetterGenerator *)shared;
 
 ///Returns a letter generated from the limitations set in the difficulty manager
 - (NSString *)generateLetterForPaperColor:(LRPaperColor)color;

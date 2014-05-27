@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "LRLetterGenerator.h"
+#import "LRAlphabeticalLetterGenerator.h"
 
 @interface LRLetterGenerator_Test : XCTestCase
 
@@ -56,7 +56,7 @@ static const unsigned trialCount = 10000;
     NSMutableArray *letterArray = [NSMutableArray new];
     for (int i = 0; i < count; i++)
     {
-        NSString *letter = [[LRLetterGenerator shared] generateLetterForPaperColor:kLRPaperColorYellow];
+        NSString *letter = [[LRAlphabeticalLetterGenerator shared] generateLetterForPaperColor:kLRPaperColorYellow];
         [letterArray addObject:letter];
     }
     return letterArray;
@@ -73,12 +73,12 @@ static const unsigned trialCount = 10000;
     NSString *letterTypeDescriptor;
     if (letterType == LetterTypeConsonant) {
         maxLetterCount = kLRLetterGeneratorMaxConsonants;
-        letterSet = [LRLetterGenerator consonantSet];
+        letterSet = [LRAlphabeticalLetterGenerator consonantSet];
         letterTypeDescriptor = @"consonant";
     }
     else {
         maxLetterCount = kLRLetterGeneratorMaxVowels;
-        letterSet = [LRLetterGenerator vowelSet];
+        letterSet = [LRAlphabeticalLetterGenerator vowelSet];
         letterTypeDescriptor = @"vowel";
     }
     

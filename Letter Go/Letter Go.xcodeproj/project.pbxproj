@@ -18,7 +18,7 @@
 		0049695F17F8B5B900176F2D /* LRLetterSlot.m in Sources */ = {isa = PBXBuildFile; fileRef = 0049695E17F8B5B900176F2D /* LRLetterSlot.m */; };
 		00719CE318E6D21D00DF66E6 /* GothamBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 00719CE218E6CFE500DF66E6 /* GothamBold.ttf */; };
 		008428F01800997800908E5D /* LetterProbabilities.plist in Resources */ = {isa = PBXBuildFile; fileRef = 008428EF1800997800908E5D /* LetterProbabilities.plist */; };
-		008428F318009F6300908E5D /* LRLetterGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 008428F218009F6300908E5D /* LRLetterGenerator.m */; };
+		008428F318009F6300908E5D /* LRAlphabeticalLetterGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 008428F218009F6300908E5D /* LRAlphabeticalLetterGenerator.m */; };
 		008428F61801EABB00908E5D /* LRSubmitButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 008428F51801EABB00908E5D /* LRSubmitButton.m */; };
 		008428F91801F46C00908E5D /* LRScoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 008428F81801F46C00908E5D /* LRScoreManager.m */; };
 		009CC29E180349E700C0423D /* LRDictionaryChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 009CC29D180349E700C0423D /* LRDictionaryChecker.m */; };
@@ -125,8 +125,8 @@
 		0049696317FA0CB400176F2D /* LRGameStateDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRGameStateDelegate.h; sourceTree = "<group>"; };
 		00719CE218E6CFE500DF66E6 /* GothamBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GothamBold.ttf; sourceTree = "<group>"; };
 		008428EF1800997800908E5D /* LetterProbabilities.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = LetterProbabilities.plist; sourceTree = "<group>"; };
-		008428F118009F6300908E5D /* LRLetterGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRLetterGenerator.h; sourceTree = "<group>"; };
-		008428F218009F6300908E5D /* LRLetterGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterGenerator.m; sourceTree = "<group>"; };
+		008428F118009F6300908E5D /* LRAlphabeticalLetterGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRAlphabeticalLetterGenerator.h; sourceTree = "<group>"; };
+		008428F218009F6300908E5D /* LRAlphabeticalLetterGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRAlphabeticalLetterGenerator.m; sourceTree = "<group>"; };
 		008428F41801EABB00908E5D /* LRSubmitButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRSubmitButton.h; sourceTree = "<group>"; };
 		008428F51801EABB00908E5D /* LRSubmitButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRSubmitButton.m; sourceTree = "<group>"; };
 		008428F71801F46C00908E5D /* LRScoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRScoreManager.h; sourceTree = "<group>"; };
@@ -641,8 +641,8 @@
 				0049695417F8A75B00176F2D /* LRLetterBlockBuilder.m */,
 				A88CEB1E189D87C600092C8A /* LREnvelopeAnimationBuilder.h */,
 				A88CEB1F189D87C600092C8A /* LREnvelopeAnimationBuilder.m */,
-				008428F118009F6300908E5D /* LRLetterGenerator.h */,
-				008428F218009F6300908E5D /* LRLetterGenerator.m */,
+				008428F118009F6300908E5D /* LRAlphabeticalLetterGenerator.h */,
+				008428F218009F6300908E5D /* LRAlphabeticalLetterGenerator.m */,
 				A895AC5B19328FF30064FE73 /* LRMultipleLetterGenerator.h */,
 				A895AC5C19328FF30064FE73 /* LRMultipleLetterGenerator.m */,
 				A8B6B7201903243600E130A6 /* LRMovingBlockBuilder.h */,
@@ -881,7 +881,7 @@
 				A88A4B3B188734E400BC9905 /* LRMovingEnvelope.m in Sources */,
 				0049695F17F8B5B900176F2D /* LRLetterSlot.m in Sources */,
 				0049695517F8A75B00176F2D /* LRLetterBlockBuilder.m in Sources */,
-				008428F318009F6300908E5D /* LRLetterGenerator.m in Sources */,
+				008428F318009F6300908E5D /* LRAlphabeticalLetterGenerator.m in Sources */,
 				008428F61801EABB00908E5D /* LRSubmitButton.m in Sources */,
 				0049695917F8AB5D00176F2D /* LRCollisionManager.m in Sources */,
 				A8D109DD19313AA200D34C62 /* LRSharedTextureCache.m in Sources */,
