@@ -13,6 +13,7 @@
 #import "LRProgressManager.h"
 #import "LRScoreManager.h"
 #import "LRManfordAIManager.h"
+#import "LRDifficultyManager.h"
 
 @interface LRGameStateManager ()
 
@@ -83,7 +84,10 @@ static LRGameStateManager *_shared = nil;
     //This function makes the manager children so they can use the LRGameStateDelegate methods
     _managerParent = [SKNode new];
     [_managerParent addChild:[LRScoreManager shared]];
+    [_managerParent addChild:[LRDifficultyManager shared]];
     [self addChild:_managerParent];
+    
+    //initialize the progress manager
 }
 
 #pragma mark - Game State Functions

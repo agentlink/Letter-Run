@@ -37,6 +37,9 @@
     
     [generator setChainMailStyleEnabled:kLRChainMailStyleAlphabetical enabled:YES];
     XCTAssertTrue([generator isChainMailStyleEnabled:kLRChainMailStyleReverseAlphabetical], @"Reenabling chian mail is busted");
+    
+    [generator setChainMailStyleEnabled:kLRChainMailStyleReverseAlphabetical | kLRChainMailStyleVowels enabled:YES];
+    XCTAssertTrue([generator isChainMailStyleEnabled:kLRChainMailStyleReverseAlphabetical] && [generator isChainMailStyleEnabled:kLRChainMailStyleVowels], @"Unable to set multiple chain mail types enabled at once");
 }
 
 - (void)testEnablingRandomStart
@@ -49,6 +52,9 @@
 
     [generator setRandomStartForChainMailStyle:kLRChainMailStyleVowels enabled:NO];
     XCTAssertFalse([generator isChainMailStyleUsingRandomStart:kLRChainMailStyleVowels], @"Disabling random start for chainmail styles after enabling doesn't work");
+
+    [generator setRandomStartForChainMailStyle:kLRChainMailStyleVowels | kLRChainMailStyleRandom enabled:YES];
+    XCTAssertTrue([generator isChainMailStyleUsingRandomStart:kLRChainMailStyleVowels] && [generator isChainMailStyleUsingRandomStart:kLRChainMailStyleRandom], @"Unable to set multiple chain mail types to random at once");
 
 }
 

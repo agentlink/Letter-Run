@@ -69,6 +69,7 @@
 		A88CEB20189D87C600092C8A /* LREnvelopeAnimationBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = A88CEB1F189D87C600092C8A /* LREnvelopeAnimationBuilder.m */; };
 		A88DE67118DE1DCB00282AA8 /* LRMailmanArea.m in Sources */ = {isa = PBXBuildFile; fileRef = A88DE67018DE1DCB00282AA8 /* LRMailmanArea.m */; };
 		A88DECE2190C39C10076EDE9 /* LRProgressManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A88DECE1190C39C10076EDE9 /* LRProgressManager.m */; };
+		A8955B3819379ACE00AECDB3 /* LRDifficultyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A8955B3719379ACE00AECDB3 /* LRDifficultyManager.m */; };
 		A895AC5D19328FF30064FE73 /* LRMultipleLetterGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = A895AC5C19328FF30064FE73 /* LRMultipleLetterGenerator.m */; };
 		A895AC651932985C0064FE73 /* LRMultipleLetterGenerator_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = A895AC641932985C0064FE73 /* LRMultipleLetterGenerator_Test.m */; };
 		A895AC6B1932A3EF0064FE73 /* NSMutableArray+Shuffle.m in Sources */ = {isa = PBXBuildFile; fileRef = A895AC6A1932A3EF0064FE73 /* NSMutableArray+Shuffle.m */; };
@@ -206,6 +207,8 @@
 		A88DE67018DE1DCB00282AA8 /* LRMailmanArea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRMailmanArea.m; sourceTree = "<group>"; };
 		A88DECE0190C39C10076EDE9 /* LRProgressManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRProgressManager.h; sourceTree = "<group>"; };
 		A88DECE1190C39C10076EDE9 /* LRProgressManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRProgressManager.m; sourceTree = "<group>"; };
+		A8955B3619379ACE00AECDB3 /* LRDifficultyManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRDifficultyManager.h; sourceTree = "<group>"; };
+		A8955B3719379ACE00AECDB3 /* LRDifficultyManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRDifficultyManager.m; sourceTree = "<group>"; };
 		A895AC5B19328FF30064FE73 /* LRMultipleLetterGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRMultipleLetterGenerator.h; sourceTree = "<group>"; };
 		A895AC5C19328FF30064FE73 /* LRMultipleLetterGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRMultipleLetterGenerator.m; sourceTree = "<group>"; };
 		A895AC641932985C0064FE73 /* LRMultipleLetterGenerator_Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRMultipleLetterGenerator_Test.m; sourceTree = "<group>"; };
@@ -334,6 +337,8 @@
 				A88DECE1190C39C10076EDE9 /* LRProgressManager.m */,
 				A8D109DB19313AA200D34C62 /* LRSharedTextureCache.h */,
 				A8D109DC19313AA200D34C62 /* LRSharedTextureCache.m */,
+				A8955B3619379ACE00AECDB3 /* LRDifficultyManager.h */,
+				A8955B3719379ACE00AECDB3 /* LRDifficultyManager.m */,
 			);
 			name = Singletons;
 			sourceTree = "<group>";
@@ -882,6 +887,7 @@
 				0049695F17F8B5B900176F2D /* LRLetterSlot.m in Sources */,
 				0049695517F8A75B00176F2D /* LRLetterBlockBuilder.m in Sources */,
 				008428F318009F6300908E5D /* LRAlphabeticalLetterGenerator.m in Sources */,
+				A8955B3819379ACE00AECDB3 /* LRDifficultyManager.m in Sources */,
 				008428F61801EABB00908E5D /* LRSubmitButton.m in Sources */,
 				0049695917F8AB5D00176F2D /* LRCollisionManager.m in Sources */,
 				A8D109DD19313AA200D34C62 /* LRSharedTextureCache.m in Sources */,

@@ -20,16 +20,35 @@ static NSUInteger const kLRMultipleLetterGeneratorListLength = 4;
 @implementation LRMultipleLetterGenerator
 
 #pragma mark - Public Methods
+
+
+static LRMultipleLetterGenerator *_shared = nil;
++ (LRMultipleLetterGenerator *)shared
+{
+    //This @synchronized line is for multithreading
+    @synchronized (self)
+    {
+		if (!_shared)
+        {
+			_shared = [[LRMultipleLetterGenerator alloc] init];
+		}
+	}
+	return _shared;
+}
 - (id)init
 {
     self = [super init];
     if (!self) return nil;
     
-    self.enabledChainMailStyles = kLRChainMailStyleAlphabetical | kLRChainMailStyleReverseAlphabetical | kLRChainMailStyleVowels | kLRChainMailStyleRandom;
-    //all chain mail styles start with an ordered start
-    self.randomStartChainMailStyles = 0;
+    self.enabledChainMailStyles = kLRChainMailStyleNone;
+    self.randomStartChainMailStyles = kLRChainMailStyleNone;
     [self generateMultipleLetterListWithChainMailStyle:kLRChainMailStyleAlphabetical];
     return self;
+}
+
+- (BOOL)isMultipleLetterGenerationEnabled
+{
+    return self.enabledChainMailStyles != kLRChainMailStyleNone;
 }
 
 - (BOOL)isChainMailStyleEnabled:(LRChainMailStyle)style
@@ -105,12 +124,12 @@ static NSUInteger const kLRMultipleLetterGeneratorListLength = 4;
 
 - (LRChainMailStyle)_randomAvailableChainMailStyle
 {
-    NSAssert(self.enabledChainMailStyles != 0, @"No chain mail styles enabled");
-    LRChainMailStyle potentialStyle = 0;
-    while (potentialStyle == 0) {
+    NSAssert([self isMultipleLetterGenerationEnabled], @"No chain mail styles enabled");
+    LRChainMailStyle potentialStyle = kLRChainMailStyleNone;
+    while (potentialStyle == kLRChainMailStyleNone) {
         potentialStyle = 1 << arc4random()%32;
         if (![self isChainMailStyleEnabled:potentialStyle]) {
-            potentialStyle = 0;
+            potentialStyle = kLRChainMailStyleNone;
         }
     }
     return (LRChainMailStyle)potentialStyle;

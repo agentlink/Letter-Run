@@ -8,7 +8,7 @@
 
 #import "LRLetterBlockBuilder.h"
 #import "LRAlphabeticalLetterGenerator.h"
-
+#import "LRMultipleLetterGenerator.h"
 
 typedef NS_ENUM(NSInteger, LRLetterProbability) {
     kLRLetterProbabilityCommon          = 20,
@@ -65,16 +65,35 @@ static const BOOL lgbDebugMode = NO;
     int maxVal = kLRLetterProbabilityRare + 1;
     int val = arc4random()%maxVal;
     
+    LRPaperColor paperColor;
     if (val <= kLRLetterProbabilityCommon) {
-        return kLRPaperColorYellow;
+        paperColor = kLRPaperColorYellow;
     }
     else if (val <= kLRLetterProbabilityUncommon) {
-        return kLRPaperColorPink;
+        paperColor = kLRPaperColorPink;
     }
     else {
-        return kLRPaperColorBlue;
+        paperColor = kLRPaperColorBlue;
     }
+    
+    if (![LRLetterBlockBuilder _isPaperColorEnabled:paperColor]) {
+        paperColor = [LRLetterBlockBuilder generatePaperColor];
+    }
+    return paperColor;
+}
 
++ (BOOL)_isPaperColorEnabled:(LRPaperColor)color
+{
+    BOOL val;
+    switch (color) {
+        case kLRPaperColorPink:
+            val = [[LRMultipleLetterGenerator shared] isMultipleLetterGenerationEnabled];
+            break;
+        default:
+            val = YES;
+            break;
+    }
+    return val;
 }
 
 + (NSString *)generateLetterForPaperColor:(LRPaperColor)paperColor

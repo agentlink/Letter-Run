@@ -43,11 +43,6 @@ static LRProgressManager *_shared = nil;
 
 #pragma mark - Public Functions
 
-- (void)incrementLevel
-{
-    self.level += 1;
-}
-
 - (void)resetRoundProgress
 {
     self.level = 1;

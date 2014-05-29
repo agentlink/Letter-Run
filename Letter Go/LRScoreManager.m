@@ -56,6 +56,7 @@ static LRScoreManager *_shared = nil;
     
     //Check for level progression
     if ([[LRProgressManager shared] increasedLevelForScore:self.score]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_INCREASED_LEVEL object:nil];
         NSLog(@"Level %u", [[LRProgressManager shared] level]);
     }
     return wordScore;

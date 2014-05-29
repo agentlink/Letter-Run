@@ -32,16 +32,4 @@ static const CGFloat kSectionHeightHealthSection  =       18.0;
 #define GAME_STATE_NEW_GAME                         @"New game"
 #define GAME_STATE_PAUSE_GAME                       @"Game paused"
 #define GAME_STATE_CONTINUE_GAME                    @"Game continued"
-
-#define IS_IPHONE_5                 ([[UIScreen mainScreen] bounds].size.height == 568)
-#define IS_RETINA                   ([[UIScreen mainScreen] scale] == 2.0f)
-
-#define SCREEN_HEIGHT                ([[UIScreen mainScreen] bounds].size.height)
-#define SCREEN_WIDTH                 ([[UIScreen mainScreen] bounds].size.width)
-
-#define GAME_STATE_GAME_OVER                        @"Game over"
-#define GAME_STATE_NEW_GAME                         @"New game"
-#define GAME_STATE_PAUSE_GAME                       @"Game paused"
-#define GAME_STATE_CONTINUE_GAME                    @"Game continued"
-
-
+#define GAME_STATE_INCREASED_LEVEL                  @"Next level reached"

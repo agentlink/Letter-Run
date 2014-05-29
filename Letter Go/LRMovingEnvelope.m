@@ -27,7 +27,6 @@ NSString * const kLRMovingBlockName = @"Moving envelope";
 @interface LRMovingEnvelope ()
 @property (nonatomic, weak) id<LRManfordAIManagerSelectionDelegate> aiDelegate;
 @property (nonatomic, strong) SKSpriteNode *envelopeSprite;
-@property (nonatomic, strong) LRMultipleLetterGenerator *multipleLetterGenerator;
 @property (nonatomic, readwrite) NSUInteger envelopeID;
 @property (nonatomic, strong) NSArray *shiftingLetterArray;
 @property (nonatomic) NSUInteger currentShiftedLetterIndex;
@@ -55,7 +54,6 @@ NSString * const kLRMovingBlockName = @"Moving envelope";
         self.name = kLRMovingBlockName;
         SKSpriteNode *envelopeSprite = [self _envelopeSpriteForLetter:letter paperColor:paperColor];
 
-        self.multipleLetterGenerator = [[LRMultipleLetterGenerator alloc] init];
         [self _updateLabel];
         if (envelopeSprite) {
             //Correctly position the envelope sprite
@@ -208,7 +206,7 @@ NSString * const kLRMovingBlockName = @"Moving envelope";
         self.letterLabel.text = [LRMovingEnvelope _letterForHiddenPaperColor];
     }
     else if (self.paperColor == kLRMovingEnvelopeShiftingPaperColor) {
-        self.shiftingLetterArray = [self.multipleLetterGenerator generateMultipleLetterList];
+        self.shiftingLetterArray = [[LRMultipleLetterGenerator shared] generateMultipleLetterList];
         [self runAction:[self _shiftLetterAction] withKey:kLRMovingBlockShiftLetterActionName];
     }
 }
