@@ -124,13 +124,22 @@ typedef void(^CompletionBlockType)(void);
     LRMovingEnvelope *newEnvelope = (LRMovingEnvelope *)envelope;
     NSString *letter = newEnvelope.letter;
 
+    
     LRLetterSlot *firstEmptySlot = [self _firstEmptySlot];
+    LRLetterSlot *placeHolder = [self _placeholderSlot];
+    if (placeHolder && placeHolder.index < firstEmptySlot.index)
+        firstEmptySlot = placeHolder;
+
     //If there is an empty slot for the letter to appear in
     if (firstEmptySlot) {
         LRCollectedEnvelope *block = [LRLetterBlockBuilder createBlockWithLetter:letter paperColor:newEnvelope.paperColor];
         block.delegate = self;
         firstEmptySlot.currentBlock = block;
         [self runAddLetterAnimationWithEnvelope:block];
+    }
+    if (firstEmptySlot == placeHolder) {
+        LRLetterSlot *nextPlaceholder = self.letterSlots[placeHolder.index + 1];
+        nextPlaceholder.currentBlock = [LRCollectedEnvelope placeholderCollectedEnvelope];
     }
     [self _updateSubmitButton];
 }
@@ -163,19 +172,6 @@ typedef void(^CompletionBlockType)(void);
     animatedEnvelope.position = envelopeStartPos;
     animatedEnvelope.zPosition = 100;
     return animatedEnvelope;
-}
-
-- (LRCollectedEnvelope *)_animatedCollectedLetterForLetter:(LRCollectedEnvelope *)letter
-{
-    LRCollectedEnvelope *animatedLetter = [letter animatableCopyOfEnvelope];
-    animatedLetter.hidden = NO;
-    animatedLetter.zPosition = 99;
-    LRLetterSlot *parentSlot = letter.parentSlot;
-    
-    CGPoint letterDropPos = parentSlot.position;
-    letterDropPos.y -= kCollectedEnvelopeSpriteDimension + kSectionHeightButtonSection;
-    animatedLetter.position = letterDropPos;
-    return animatedLetter;
 }
 
 - (SKAction *)_movingEnvelopeAnimationForEnvelope:(LRMovingEnvelope *)envelope
@@ -438,7 +434,7 @@ static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
     NSMutableString *currentWord = [[NSMutableString alloc] init];
     for (LRLetterSlot *slot in self.letterSlots)
     {
-        if ([slot isLetterSlotEmpty] || [slot.currentBlock isCollectedEnvelopePlaceholder])
+        if ([slot.currentBlock isCollectedEnvelopeEmpty] || [slot.currentBlock isCollectedEnvelopePlaceholder])
             break;
         [currentWord appendString:[slot.currentBlock letter]];
     }
@@ -450,7 +446,7 @@ static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
     int i;
     for (i = 0; i < self.letterSlots.count; i++)
     {
-        if ([(LRLetterSlot *)[self.letterSlots objectAtIndex:i] isLetterSlotEmpty])
+        if ([[(LRLetterSlot *)[self.letterSlots objectAtIndex:i] currentBlock] isCollectedEnvelopeEmpty])
             break;
     }
     //TODO: move where this gets checked
@@ -536,8 +532,9 @@ static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
     LRLetterSlot *empty = nil;
     for (LRLetterSlot* slot in self.letterSlots)
     {
+        LRCollectedEnvelope *curBlock = slot.currentBlock;
         //If the slot is empty
-        if ([slot isLetterSlotEmpty]){
+        if ([curBlock isCollectedEnvelopeEmpty]){
             empty = slot;
             break;
         }
