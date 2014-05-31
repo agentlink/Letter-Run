@@ -42,9 +42,9 @@
     [[_newGameButton layer] setCornerRadius:8.0f];
     [[_newGameButton layer] setMasksToBounds:YES];
     [[_newGameButton layer] setBorderWidth:1.0f];
-    [[_newGameButton layer] setBorderColor:[UIColor whiteColor].CGColor];
+    [[_newGameButton layer] setBorderColor:[UIColor grayColor].CGColor];
     [_newGameButton setTitle:@"Restart?" forState:UIControlStateNormal];
-    [_newGameButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_newGameButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [_newGameButton setTitleColor:[UIColor blueColor] forState:UIControlStateSelected];
     
     [_newGameButton addTarget:self action:@selector(_restartGame) forControlEvents:UIControlEventTouchUpInside];

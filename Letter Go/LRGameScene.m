@@ -99,7 +99,6 @@ static CGFloat const kLRGameSceneBlurEffectDuration = .4;
 #pragma mark - Blur View
 -(void)blurSceneWithCompletion:(void (^)())handler
 {
-    NSLog(@"Blur start time: %@", [NSDate date]);
     [[self rootEffectNode] setShouldRasterize:NO];
     [[self rootEffectNode] setShouldEnableEffects:YES];
     [[self rootEffectNode] runAction:[SKAction customActionWithDuration:kLRGameSceneBlurEffectDuration actionBlock:^(SKNode *node, CGFloat elapsedTime){

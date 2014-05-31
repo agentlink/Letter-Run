@@ -24,8 +24,7 @@
     SKTexture *manfordTexture = [[LRSharedTextureCache shared] textureForName:@"Manford-1"];
     if (self = [super initWithTexture:manfordTexture])
     {
-        //TODO: remove this hack
-        self.currentRow = 2;
+        [self setCurrentRow:2 animated:NO];
         [LRManfordAIManager shared].movementDelegate = self;
     }
     return self;
@@ -44,13 +43,24 @@
 
 #pragma mark - Private Methods
 
-- (void)setCurrentRow:(NSUInteger)currentRow
+- (void)setCurrentRow:(NSUInteger)currentRow animated:(BOOL)animated
 {
-    SKAction *moveRowAction = [self _moveMailmanActionFromRow:_currentRow toRow:currentRow];
-    if (moveRowAction) {
-        [self runAction:moveRowAction];
+    if (animated) {
+        SKAction *moveRowAction = [self _moveMailmanActionFromRow:_currentRow toRow:currentRow];
+        if (moveRowAction) {
+            [self runAction:moveRowAction];
+        }
+    }
+    else {
+        CGPoint rowPoint = [LRMovingEnvelope envelopePositionForRow:currentRow];
+        self.position = CGPointMake(self.position.x, rowPoint.y);
     }
     _currentRow = currentRow;
+}
+
+- (void)setCurrentRow:(NSUInteger)currentRow
+{
+    [self setCurrentRow:currentRow animated:YES];
 }
 
 - (SKAction *)_moveMailmanActionFromRow:(NSUInteger)fromRow toRow:(NSUInteger)toRow

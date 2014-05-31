@@ -236,7 +236,7 @@ static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
     NSInteger startVal = (direction == kLRDirectionRight) ? kLRLetterSectionCapacity - 1: range.location - 1;
     NSInteger endVal = (direction == kLRDirectionRight) ? range.location : kLRLetterSectionCapacity;
     
-    for (int i = startVal; i != endVal; i += direction)
+    for (NSInteger i = startVal; i != endVal; i += direction)
     {
         LRLetterSlot *newLocation = self.letterSlots[i];
         if (i == kLRLetterSectionCapacity - 1 && direction == kLRDirectionLeft) {

@@ -39,7 +39,7 @@ static NSUInteger const kLRBackgroundLayerStripesPerRow = 6;
 {
     //TODO: Fix how this is done
     CGFloat mainGameSectionXPos = 0;
-    CGFloat mainGameSectionYPos = (kSectionHeightLetterSection + kSectionHeightHealthSection + kSectionHeightButtonSection)/2;
+    CGFloat mainGameSectionYPos = -self.size.height/2 + kSectionHeightLetterSection + kSectionHeightButtonSection + kSectionHeightMainSection/2;
     self.mainGameSectionBackground.position = CGPointMake(mainGameSectionXPos, mainGameSectionYPos);
     [self addChild:self.mainGameSectionBackground];
     for (SKSpriteNode *stripe in self.roadStripes) {

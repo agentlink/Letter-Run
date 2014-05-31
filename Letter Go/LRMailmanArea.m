@@ -14,7 +14,7 @@
 #pragma mark - Initialization / Set Up
 - (id)initWithSize:(CGSize)size
 {
-    if (self = [super initWithColor:[LRColor debugColor1] size:size])
+    if (self = [super initWithColor:[LRColor clearColor] size:size])
     {
         
     }

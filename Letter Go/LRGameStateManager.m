@@ -107,7 +107,6 @@ static LRGameStateManager *_shared = nil;
     //Make all of the objects in the game non-touch responsive
     if (![[[notification userInfo] objectForKey:@"devpause"] isEqual: @(true)]) {
         [self _showGameOverLabelForDuration:3.5];
-
     }
 }
 
@@ -177,7 +176,7 @@ static LRGameStateManager *_shared = nil;
         _gameOverLabel.fontSize = 80.0;
         _gameOverLabel.fontColor = [LRColor gameOverLabelColor];
         _gameOverLabel.zPosition = 500;
-        _gameOverLabel.position = CGPointMake(0, (SCREEN_HEIGHT - kSectionHeightMainSection)/2);
+        _gameOverLabel.position = CGPointMake(0, (SCREEN_HEIGHT - kSectionHeightMainSection - kSectionHeightTopMenuSection - kSectionHeightHealthSection)/2);
     }
     return _gameOverLabel;
 }

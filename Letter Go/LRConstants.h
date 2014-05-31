@@ -7,17 +7,19 @@
 //
 
 //Leter Properties
-static const NSUInteger kLRRowManagerNumberOfRows = 4;
+static const NSUInteger kLRRowManagerNumberOfRows = 3;
 static const NSUInteger kLRLetterSectionCapacity = 7;
 
 //Screen section constants
-static const CGFloat kSectionHeightButtonSection  =       65;
-static const CGFloat kSectionHeightLetterSection  =       65;
+static const CGFloat kSectionHeightButtonSection  =       55.0;
+static const CGFloat kSectionHeightLetterSection  =       65.0;
 static const CGFloat kSectionHeightHealthSection  =       18.0;
 
 typedef void(^CompletionBlockType)(void);
 
-#define kSectionHeightMainSection           (SCREEN_HEIGHT - kSectionHeightLetterSection - kSectionHeightHealthSection - kSectionHeightButtonSection)
+#define kSectionHeightTopMenuSection         (IS_IPHONE_5 ? 100.0 : 80)
+
+#define kSectionHeightMainSection           (SCREEN_HEIGHT - kSectionHeightLetterSection - kSectionHeightHealthSection - kSectionHeightButtonSection - kSectionHeightTopMenuSection)
 
 
 //Collected Envelope properties
