@@ -121,7 +121,6 @@ typedef NS_ENUM(NSUInteger, LetterSectionState)
     //Converting from a moving envelope to a collected envelope...
     LRMovingEnvelope *newEnvelope = (LRMovingEnvelope *)envelope;
     NSString *letter = newEnvelope.letter;
-
     
     LRLetterSlot *firstEmptySlot = [self _firstEmptySlot];
     LRLetterSlot *placeHolder = [self _placeholderSlot];
@@ -133,11 +132,10 @@ typedef NS_ENUM(NSUInteger, LetterSectionState)
         LRCollectedEnvelope *block = [LRLetterBlockBuilder createBlockWithLetter:letter paperColor:newEnvelope.paperColor];
         block.delegate = self;
         firstEmptySlot.currentBlock = block;
+        if (firstEmptySlot == placeHolder) {
+            [self _shiftEnvelopesInRange:NSMakeRange(placeHolder.index, [self numLettersInSection] - placeHolder.index) direction:kLRDirectionRight];
+        }
         [self runAddLetterAnimationWithEnvelope:block];
-    }
-    if (firstEmptySlot == placeHolder) {
-        LRLetterSlot *nextPlaceholder = self.letterSlots[placeHolder.index + 1];
-        nextPlaceholder.currentBlock = [LRCollectedEnvelope placeholderCollectedEnvelope];
     }
     [self _updateSubmitButton];
 }
