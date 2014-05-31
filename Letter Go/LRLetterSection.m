@@ -25,8 +25,6 @@ typedef NS_ENUM(NSUInteger, LetterSectionState)
     kLRLetterSectionStateSubmittingWord
 };
 
-typedef void(^CompletionBlockType)(void);
-
 @interface LRLetterSection ()
 
 //sprites
@@ -640,18 +638,6 @@ static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
         [self removeChildrenInArray:@[self.touchedBlock]];
         self.touchedBlock = nil;
     }
-    self.userInteractionEnabled = YES;
-}
-
-- (void)gameStatePaused
-{
-    self.paused = YES;
-    self.userInteractionEnabled = NO;
-}
-
-- (void)gameStateUnpaused
-{
-    self.paused = NO;
     self.userInteractionEnabled = YES;
 }
 

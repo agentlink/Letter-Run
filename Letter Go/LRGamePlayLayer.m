@@ -129,6 +129,7 @@ NSString * const kLRGamePlayLayerLetterSectionName = @"letterSection";
 - (void)pauseButtonPressed
 {
     NSString *notifName = ([[LRGameStateManager shared] isGamePaused]) ? GAME_STATE_CONTINUE_GAME : GAME_STATE_PAUSE_GAME;
+    NSLog(@"%@", notifName);
     [[NSNotificationCenter defaultCenter] postNotificationName:notifName object:nil];
 }
 

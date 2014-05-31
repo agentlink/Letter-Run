@@ -13,7 +13,6 @@
 @end
 @implementation LRSharedTextureCache
 
-typedef void(^CompletionBlockType)(void);
 static LRSharedTextureCache *_shared = nil;
 
 #pragma mark - Public Methods

@@ -14,6 +14,9 @@ static const NSUInteger kLRLetterSectionCapacity = 7;
 static const CGFloat kSectionHeightButtonSection  =       65;
 static const CGFloat kSectionHeightLetterSection  =       65;
 static const CGFloat kSectionHeightHealthSection  =       18.0;
+
+typedef void(^CompletionBlockType)(void);
+
 #define kSectionHeightMainSection           (SCREEN_HEIGHT - kSectionHeightLetterSection - kSectionHeightHealthSection - kSectionHeightButtonSection)
 
 

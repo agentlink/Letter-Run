@@ -73,12 +73,6 @@ static CGFloat const kLRGameSceneBlurEffectDuration = .4;
         if ([node respondsToSelector:@selector(gameStateGameOver)]) {
             [[NSNotificationCenter defaultCenter] addObserver:node selector:@selector(gameStateGameOver) name:GAME_STATE_GAME_OVER object:nil];
         }
-        if ([node respondsToSelector:@selector(gameStatePaused)]) {
-            [[NSNotificationCenter defaultCenter] addObserver:node selector:@selector(gameStatePaused) name:GAME_STATE_PAUSE_GAME object:nil];
-        }
-        if ([node respondsToSelector:@selector(gameStateUnpaused)]) {
-            [[NSNotificationCenter defaultCenter] addObserver:node selector:@selector(gameStateUnpaused) name:GAME_STATE_CONTINUE_GAME object:nil];
-        }
     }];
 }
 #pragma mark - LRGameStateDelegate methods

@@ -111,24 +111,6 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
     self.envelopeTouchEnabled = NO;
 }
 
-- (void)gameStatePaused
-{
-    [self enumerateChildNodesWithName:kLRMovingBlockName usingBlock:^(SKNode *node, BOOL *stop) {
-        [node setUserInteractionEnabled:NO];
-    }];
-    self.paused = YES;
-    self.envelopeBuilder.paused = YES;
-}
-
-- (void)gameStateUnpaused
-{
-    [self enumerateChildNodesWithName:kLRMovingBlockName usingBlock:^(SKNode *node, BOOL *stop) {
-        [node setUserInteractionEnabled:YES];
-    }];
-    self.paused = YES;
-    self.envelopeBuilder.paused = NO;
-}
-
 #pragma mark - Helper Methods
 
 - (void)setEnvelopeTouchEnabled:(BOOL)envelopeTouchEnabled

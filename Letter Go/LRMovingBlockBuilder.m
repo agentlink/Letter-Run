@@ -88,17 +88,4 @@ static CGFloat const kLRMovingBlockBuilderCrossTime = 3.5;
     return moveOff;
 }
 
-#pragma mark - Game State Delegate
-
-- (void)gameStatePaused
-{
-    self.paused = YES;
-}
-
-- (void)gameStateUnpaused
-{
-    self.paused = NO;
-}
-
-
 @end

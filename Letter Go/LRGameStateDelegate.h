@@ -23,10 +23,6 @@ typedef NS_ENUM(NSInteger, LRGameState)
 - (void)gameStateGameOver;
 ///Called when a new game begins
 - (void)gameStateNewGame;
-///Called when the game is paused.
-- (void)gameStatePaused;
-///Called when the game is unpaused.
-- (void)gameStateUnpaused;
 /*!
  @description Called every time the game loop runs
  @param currentTime The interval that the game loop is currently on

@@ -15,12 +15,17 @@
 #import "LRManfordAIManager.h"
 #import "LRDifficultyManager.h"
 
+static const BOOL kLRGameStateManagerUseBlur = NO;
+
 @interface LRGameStateManager ()
 
 @property SKNode *managerParent;
 @property (nonatomic) LRGameScene *gameScene;
 @property (nonatomic) LRDevPauseViewController *devPauseVC;
 @property (nonatomic) SKLabelNode *gameOverLabel;
+
+@property (nonatomic, readwrite) BOOL isGameOver;
+@property (nonatomic, readwrite) BOOL isGamePaused;
 @end
 
 @implementation LRGameStateManager
@@ -54,14 +59,6 @@ static LRGameStateManager *_shared = nil;
         (void)self.gameOverLabel;
     }
     return self;
-}
-
-- (BOOL) isGameOver {
-    return self.gameScene.gameState == LRGameStateGameOver;
-}
-
-- (BOOL) isGamePaused {
-    return self.gameScene.gameState == LRGameStatePauseGame;
 }
 
 - (LRGameScene *)gameScene
@@ -98,14 +95,13 @@ static LRGameStateManager *_shared = nil;
     if ([[[notification userInfo] objectForKey:@"devpause"] boolValue]) {
         [gpl.mainGameSection removeAllActions];
     }
-    
+    self.isGameOver = NO;
     [[LRProgressManager shared] resetRoundProgress];
-    [self.gameScene setGameState:LRGameStateNewGame];
 }
 
 - (void)_gameOver:(NSNotification *)notification
 {
-    self.gameScene.gameState = LRGameStateGameOver;
+    self.isGameOver = YES;
     [[LRManfordAIManager shared] resetEnvelopeIDs];
     NSLog(@"Game over");
     //Make all of the objects in the game non-touch responsive
@@ -117,23 +113,29 @@ static LRGameStateManager *_shared = nil;
 
 - (void)_pauseGame
 {
-    [self showPauseMenu:YES];
-    [[[LRGameStateManager shared] gameScene] blurSceneWithCompletion:^{
-    }];
-    self.gameScene.gameState = LRGameStatePauseGame;
+    if (kLRGameStateManagerUseBlur) {
+        [[[LRGameStateManager shared] gameScene] blurSceneWithCompletion:nil];
+    }
+    self.isGamePaused = YES;
     self.gameScene.gamePlayLayer.paused = YES;
     self.gameScene.backgroundLayer.paused = YES;
-
+    [self showPauseMenu:YES];
 }
 
 - (void)_unpauseGame
 {
-    [self showPauseMenu:NO];
-    [[[LRGameStateManager shared] gameScene] unblurSceneWithCompletion:^{
-        self.gameScene.gameState = LRGameStateUnpauseGame;
+    CompletionBlockType unpauseBlock = ^{
+        self.isGamePaused = NO;
         self.gameScene.gamePlayLayer.paused = NO;
         self.gameScene.backgroundLayer.paused = NO;
-    }];
+    };
+    [self showPauseMenu:NO];
+    if (kLRGameStateManagerUseBlur) {
+        [[[LRGameStateManager shared] gameScene] unblurSceneWithCompletion:unpauseBlock];
+    }
+    else {
+        unpauseBlock();
+    }
 }
 
 - (void)showPauseMenu:(BOOL)show

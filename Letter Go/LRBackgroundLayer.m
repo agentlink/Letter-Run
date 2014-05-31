@@ -105,14 +105,4 @@ static NSUInteger const kLRBackgroundLayerStripesPerRow = 6;
     return [SKAction moveBy:CGVectorMake(distance, 0) duration:duration];
 }
 
-- (void)gameStatePaused
-{
-    self.paused = YES;
-}
-
-- (void)gameStateUnpaused
-{
-    self.paused = NO;
-}
-
 @end

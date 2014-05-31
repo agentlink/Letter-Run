@@ -17,7 +17,7 @@
 + (LRGameStateManager *)shared;
 - (LRGameScene *)gameScene;
 
-- (BOOL) isGameOver;
-- (BOOL) isGamePaused;
+@property (nonatomic, readonly) BOOL isGameOver;
+@property (nonatomic, readonly) BOOL isGamePaused;
 
 @end
