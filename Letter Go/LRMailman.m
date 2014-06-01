@@ -24,6 +24,8 @@
     SKTexture *manfordTexture = [[LRSharedTextureCache shared] textureForName:@"Manford-1"];
     if (self = [super initWithTexture:manfordTexture])
     {
+        self.xScale = .94;
+        self.yScale = .94;
         [self setCurrentRow:2 animated:NO];
         [LRManfordAIManager shared].movementDelegate = self;
     }
@@ -52,8 +54,7 @@
         }
     }
     else {
-        CGPoint rowPoint = [LRMovingEnvelope envelopePositionForRow:currentRow];
-        self.position = CGPointMake(self.position.x, rowPoint.y);
+        self.position = [self mailmanPositionForRow:currentRow];
     }
     _currentRow = currentRow;
 }
@@ -63,9 +64,17 @@
     [self setCurrentRow:currentRow animated:YES];
 }
 
+- (CGPoint)mailmanPositionForRow:(NSUInteger)row
+{
+    CGPoint rowPoint = [LRMovingEnvelope envelopePositionForRow:row];
+    CGFloat manfordMargin = 30;
+    rowPoint = CGPointMake(self.position.x, rowPoint.y + manfordMargin);
+    return rowPoint;
+}
+
 - (SKAction *)_moveMailmanActionFromRow:(NSUInteger)fromRow toRow:(NSUInteger)toRow
 {
-    CGPoint envelopePoint = [LRMovingEnvelope envelopePositionForRow:toRow];
+    CGPoint envelopePoint = [self mailmanPositionForRow:toRow];
     CGPoint newManfordPos = CGPointMake(self.position.x, envelopePoint.y);
 
     NSInteger rowDiff = fromRow - toRow;
@@ -75,14 +84,14 @@
     }
     
     //The time that Manford take to move to an envelope should be relative to how quickly the envelopes are generating.
-    CGFloat duration = [LRMailman _manfordMovementDurationForRowCDifference:netRowDiff];
+    CGFloat duration = [LRMailman _manfordMovementDurationForRowDifference:netRowDiff];
     SKAction *movement = [SKAction moveTo:newManfordPos duration:duration];
     movement.timingMode = SKActionTimingEaseInEaseOut;
     return movement;
 }
 
 //This function returns how long Manford takes to move a given amount of rows
-+ (CGFloat)_manfordMovementDurationForRowCDifference:(NSUInteger)rowDiff
++ (CGFloat)_manfordMovementDurationForRowDifference:(NSUInteger)rowDiff
 {
     CGFloat blockInterval = [LRMovingBlockBuilder blockGenerationInterval];
     //Manford should move slower for shorter distances

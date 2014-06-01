@@ -85,7 +85,7 @@
 		A8EDE18F19314FAB007C456E /* Letter_Pink.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A8EDE18919314FAB007C456E /* Letter_Pink.atlas */; };
 		A8EDE19019314FAB007C456E /* Letter_Yellow.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A8EDE18A19314FAB007C456E /* Letter_Yellow.atlas */; };
 		A8EDE19119314FAB007C456E /* Manford.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A8EDE18B19314FAB007C456E /* Manford.atlas */; };
-		A8F171CB18DF7C5B00964C34 /* Scenery.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8F171CA18DF7C5B00964C34 /* Scenery.xcassets */; };
+		A8F171CB18DF7C5B00964C34 /* SectionImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8F171CA18DF7C5B00964C34 /* SectionImages.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -232,7 +232,7 @@
 		A8EDE18919314FAB007C456E /* Letter_Pink.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Letter_Pink.atlas; sourceTree = "<group>"; };
 		A8EDE18A19314FAB007C456E /* Letter_Yellow.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Letter_Yellow.atlas; sourceTree = "<group>"; };
 		A8EDE18B19314FAB007C456E /* Manford.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Manford.atlas; sourceTree = "<group>"; };
-		A8F171CA18DF7C5B00964C34 /* Scenery.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Scenery.xcassets; sourceTree = "<group>"; };
+		A8F171CA18DF7C5B00964C34 /* SectionImages.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SectionImages.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -275,7 +275,7 @@
 			children = (
 				A8EDE18319314FAB007C456E /* Atlases */,
 				00CDF15517F474EC003065F6 /* Images.xcassets */,
-				A8F171CA18DF7C5B00964C34 /* Scenery.xcassets */,
+				A8F171CA18DF7C5B00964C34 /* SectionImages.xcassets */,
 				0007FB31180B2FBB00E55B0D /* Background */,
 				00719CE118E6CFD500DF66E6 /* Fonts */,
 			);
@@ -860,7 +860,7 @@
 				A8EDE18F19314FAB007C456E /* Letter_Pink.atlas in Resources */,
 				A876EC4318836838000FA069 /* Background_Grass2.png in Resources */,
 				A8EDE18E19314FAB007C456E /* Letter_Blue.atlas in Resources */,
-				A8F171CB18DF7C5B00964C34 /* Scenery.xcassets in Resources */,
+				A8F171CB18DF7C5B00964C34 /* SectionImages.xcassets in Resources */,
 				A876EC40188367AA000FA069 /* Background_Hills.png in Resources */,
 				00719CE318E6D21D00DF66E6 /* GothamBold.ttf in Resources */,
 				A8EDE18D19314FAB007C456E /* Button_Submit.atlas in Resources */,

@@ -30,6 +30,8 @@
 - (LRSubmitButton *)submitButton {
     if (!_submitButton) {
         _submitButton = [LRSubmitButton new];
+        _submitButton.anchorPoint = CGPointMake(.5, 1);
+        _submitButton.position = CGPointMake(0, self.size.height/2);
     }
     return _submitButton;
 }

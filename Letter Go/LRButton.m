@@ -118,6 +118,12 @@
     }
 }
 
+- (void)setTexture:(SKTexture *)texture
+{
+    [super setTexture:texture];
+    self.size = texture.size;
+}
+
 - (void)setIsSelected:(BOOL)isSelected {
     _isSelected = isSelected;
     if ([self selectedTexture] && [self isEnabled]) {

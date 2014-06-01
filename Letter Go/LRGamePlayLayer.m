@@ -26,7 +26,6 @@ NSString * const kLRGamePlayLayerLetterSectionName = @"letterSection";
 @property (nonatomic, strong) LRButtonSection *buttonSection;
 @property (nonatomic, strong) LRTopMenuSection *topMenuSection;
 
-@property (nonatomic, strong) LRButton *pauseButton;
 @property (nonatomic, strong) LRDevPauseViewController *devPause;
 
 @end
@@ -62,8 +61,6 @@ NSString * const kLRGamePlayLayerLetterSectionName = @"letterSection";
     [self addChild:self.letterSection];
     [self addChild:self.mainGameSection];
     [self addChild:self.topMenuSection];
-    
-    [self addChild:self.pauseButton];
 }
 
 #pragma mark - Layer Content Set Up -
@@ -122,29 +119,10 @@ NSString * const kLRGamePlayLayerLetterSectionName = @"letterSection";
     if (!_topMenuSection) {
         CGFloat topMenuXPos = 0;
         CGFloat topmenuYPos = SCREEN_HEIGHT/2 - kSectionHeightTopMenuSection/2;
-        _topMenuSection = [[LRTopMenuSection alloc] initWithColor:[LRColor debugColor1] size:CGSizeMake(SCREEN_WIDTH, kSectionHeightTopMenuSection)];
+        _topMenuSection = [[LRTopMenuSection alloc]initWithSize:CGSizeMake(SCREEN_WIDTH, kSectionHeightTopMenuSection)];
         _topMenuSection.position = CGPointMake(topMenuXPos, topmenuYPos);
     }
     return _topMenuSection;
-}
-
-- (LRButton *)pauseButton
-{
-    if (!_pauseButton) {
-        _pauseButton = [[LRButton alloc] initWithImageNamed:@"pause-button" withDisabledOption:NO];
-        [_pauseButton setScale:.7];
-        [_pauseButton setTouchUpInsideTarget:self action:@selector(pauseButtonPressed)];
-        _pauseButton.position = CGPointMake(0 - SCREEN_WIDTH/2 + _pauseButton.size.width/2, SCREEN_HEIGHT/2 - _pauseButton.size.height/2);
-        _pauseButton.zPosition = zPos_PauseButton;
-    }
-    return _pauseButton;
-}
-
-- (void)pauseButtonPressed
-{
-    NSString *notifName = ([[LRGameStateManager shared] isGamePaused]) ? GAME_STATE_CONTINUE_GAME : GAME_STATE_PAUSE_GAME;
-    NSLog(@"%@", notifName);
-    [[NSNotificationCenter defaultCenter] postNotificationName:notifName object:nil];
 }
 
 #pragma mark - LRGameUpdateDelegate
