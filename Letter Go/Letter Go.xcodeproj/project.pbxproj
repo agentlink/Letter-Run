@@ -77,6 +77,7 @@
 		A8A3442619202C8D006C5C55 /* LRMailman.m in Sources */ = {isa = PBXBuildFile; fileRef = A8A3442519202C8D006C5C55 /* LRMailman.m */; };
 		A8B6B7221903243600E130A6 /* LRMovingBlockBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B6B7211903243600E130A6 /* LRMovingBlockBuilder.m */; };
 		A8C588BF1933D3C3004311FD /* LRRowManager_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = A8C588BE1933D3C3004311FD /* LRRowManager_Test.m */; };
+		A8CDE054193F82B700AC6F4C /* LRValueLabelNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CDE053193F82B700AC6F4C /* LRValueLabelNode.m */; };
 		A8D109DD19313AA200D34C62 /* LRSharedTextureCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A8D109DC19313AA200D34C62 /* LRSharedTextureCache.m */; };
 		A8D5CE79193A649300084F92 /* LRTopMenuSection.m in Sources */ = {isa = PBXBuildFile; fileRef = A8D5CE78193A649300084F92 /* LRTopMenuSection.m */; };
 		A8EDE18C19314FAB007C456E /* Button_Pause.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A8EDE18519314FAB007C456E /* Button_Pause.atlas */; };
@@ -222,6 +223,8 @@
 		A8B6B7201903243600E130A6 /* LRMovingBlockBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRMovingBlockBuilder.h; sourceTree = "<group>"; };
 		A8B6B7211903243600E130A6 /* LRMovingBlockBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRMovingBlockBuilder.m; sourceTree = "<group>"; };
 		A8C588BE1933D3C3004311FD /* LRRowManager_Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRRowManager_Test.m; sourceTree = "<group>"; };
+		A8CDE052193F82B700AC6F4C /* LRValueLabelNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRValueLabelNode.h; sourceTree = "<group>"; };
+		A8CDE053193F82B700AC6F4C /* LRValueLabelNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRValueLabelNode.m; sourceTree = "<group>"; };
 		A8D109DB19313AA200D34C62 /* LRSharedTextureCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRSharedTextureCache.h; sourceTree = "<group>"; };
 		A8D109DC19313AA200D34C62 /* LRSharedTextureCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRSharedTextureCache.m; sourceTree = "<group>"; };
 		A8D5CE77193A649300084F92 /* LRTopMenuSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRTopMenuSection.h; sourceTree = "<group>"; };
@@ -716,6 +719,8 @@
 				00076E63186F798200287EF9 /* LRColor.m */,
 				A895AC691932A3EF0064FE73 /* NSMutableArray+Shuffle.h */,
 				A895AC6A1932A3EF0064FE73 /* NSMutableArray+Shuffle.m */,
+				A8CDE052193F82B700AC6F4C /* LRValueLabelNode.h */,
+				A8CDE053193F82B700AC6F4C /* LRValueLabelNode.m */,
 			);
 			name = "Class Extensions";
 			sourceTree = "<group>";
@@ -926,6 +931,7 @@
 				00CDF17517F478A1003065F6 /* LRGameScene.m in Sources */,
 				00076E67186F819000287EF9 /* LRFont.m in Sources */,
 				A8A34420191EC73C006C5C55 /* LRManfordAIManager.m in Sources */,
+				A8CDE054193F82B700AC6F4C /* LRValueLabelNode.m in Sources */,
 				00B43D92182834CF00261468 /* LRButton.m in Sources */,
 				A87BDD981853AC8D00845BB5 /* LRCurveBuilder.m in Sources */,
 				0049695117F8A12B00176F2D /* LRLetterBlock.m in Sources */,

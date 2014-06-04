@@ -11,6 +11,7 @@
 #import "LRButton.h"
 #import "LRGameStateManager.h"
 #import "LRScoreManager.h"
+#import "LRValueLabelNode.h"
 
 @interface LRScoreControlColorScore : SKSpriteNode
 - (id)initWithPaperColor:(LRPaperColor)paperColor;
@@ -21,7 +22,9 @@
 @end
 
 @interface LRMissionControlSection : SKSpriteNode <LRScoreManagerDelegate>
-@property (nonatomic, strong) SKLabelNode *scoreLabel;
+@property (nonatomic, strong) LRValueLabelNode *scoreLabel;
+@property (nonatomic, weak) NSNumber *scoreNum;
+
 @property (nonatomic, strong) LRScoreControlColorScore *yellowScore;
 @property (nonatomic, strong) LRScoreControlColorScore *blueScore;
 @property (nonatomic, strong) LRScoreControlColorScore *pinkScore;
@@ -88,7 +91,7 @@
     return self;
 }
 
-- (SKLabelNode *)scoreLabel
+- (LRValueLabelNode *)scoreLabel
 {
     if (!_scoreLabel) {
         CGFloat fontSize = 75;
@@ -97,12 +100,12 @@
         CGFloat topMargin = -15.0;
         
         
-        _scoreLabel = [[SKLabelNode alloc] initWithFontNamed:scoreLabelFont.familyName];
+        _scoreLabel = [[LRValueLabelNode alloc] initWithFontNamed:scoreLabelFont.familyName initialValue:0];
         _scoreLabel.fontSize = fontSize;
         _scoreLabel.fontColor = [LRColor blackColor];
         _scoreLabel.position = CGPointMake(-_scoreLabel.frame.size.width/2 + rightMargin,
                                            -_scoreLabel.frame.size.height/2 + topMargin);
-        _scoreLabel.text = [self _stringForNumPoints:0];
+//        _scoreLabel.text =  [NSString stringWithFormat:@"%@ pts.", self.scoreNum];
         [_scoreLabel setVerticalAlignmentMode:SKLabelVerticalAlignmentModeTop];
         [_scoreLabel setHorizontalAlignmentMode:SKLabelHorizontalAlignmentModeRight];
     }
@@ -138,7 +141,8 @@
 #pragma mark - Score Manager Delegate Functions
 - (void)scoreDidChange
 {
-    self.scoreLabel.text = [NSString stringWithFormat: @"%u pts.", (unsigned)[[LRScoreManager shared] score]];
+    [self.scoreLabel updateValue:[[LRScoreManager shared] score] animated:YES];
+//    self.scoreLabel.text = [NSString stringWithFormat: @"%u pts.", (unsigned)[[LRScoreManager shared] score]];
     self.yellowScore.colorScore = [[LRScoreManager shared] numYellowEnvelopes];
     self.blueScore.colorScore = [[LRScoreManager shared] numBlueEnvelopes];
     self.pinkScore.colorScore = [[LRScoreManager shared] numPinkEnvelopes];
