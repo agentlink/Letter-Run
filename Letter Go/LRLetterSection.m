@@ -25,6 +25,9 @@ typedef NS_ENUM(NSUInteger, LetterSectionState)
     kLRLetterSectionStateSubmittingWord
 };
 
+NSString * const kSubmissionKeyWord = @"word";
+NSString * const kSubmissionKeyWordWithColors = @"word with paper colors";
+
 @interface LRLetterSection ()
 
 //sprites
@@ -410,20 +413,29 @@ static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
 
 - (void)submitWord:(NSNotification *)notification
 {
-    NSString *forcedWord = [[notification userInfo] objectForKey:@"forcedWord"];
-    NSString *submittedWord = (forcedWord) ? forcedWord : [self getCurrentWord];
-    
-    
-    NSDictionary *wordDict = [NSDictionary dictionaryWithObject:submittedWord forKey:@"word"];
+    NSDictionary *wordDict = [self dictionaryForCurrentWord];
     NSInteger wordScore = [[LRScoreManager shared] submitWord:wordDict];
-    if (!forcedWord)
-    {
-        LRHealthSection *healthSection = [[(LRGameScene *)[self scene] gamePlayLayer] healthSection];
-        [healthSection addScore:wordScore];
-        [self clearLetterSectionAnimated:YES];
-    }
+    
+    LRHealthSection *healthSection = [[(LRGameScene *)[self scene] gamePlayLayer] healthSection];
+    [healthSection addScore:wordScore];
+    [self clearLetterSectionAnimated:YES];
 }
 
+- (NSDictionary *)dictionaryForCurrentWord
+{
+    NSMutableArray *coloredLettersArray = [NSMutableArray new];
+
+    for (LRLetterSlot *slot in self.letterSlots)
+    {
+        if ([slot.currentBlock isCollectedEnvelopeEmpty] || [slot.currentBlock isCollectedEnvelopePlaceholder])
+            break;
+        NSDictionary *slotDict = @{slot.currentBlock.letter: @(slot.currentBlock.paperColor)};
+        [coloredLettersArray addObject:slotDict];
+    }
+    NSDictionary *dictionaryForCurrentWord = @{kSubmissionKeyWord: [self getCurrentWord],
+                                               kSubmissionKeyWordWithColors: coloredLettersArray};
+    return dictionaryForCurrentWord;
+}
 
 - (NSString *)getCurrentWord
 {

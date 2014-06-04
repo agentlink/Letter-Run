@@ -72,7 +72,7 @@
     return _letterLabel;
 }
 
-#pragma mark - Touch Functions
+#pragma mark - Helper Functions
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     self.isTouched = YES;
@@ -95,4 +95,24 @@
 {
     return [letter isEqualToString:kLetterBlockHolderText];
 }
+
++ (NSString *)stringValueForPaperColor:(LRPaperColor)paperColor
+{
+    switch (paperColor) {
+        case kLRPaperColorYellow:
+            return @"yellow";
+            break;
+        case kLRPaperColorBlue:
+            return @"blue";
+            break;
+        case kLRPaperColorPink:
+            return @"pink";
+            break;
+        default:
+            NSAssert(0, @"Empty envelope color has no name");
+            return @"";
+            break;
+    }
+}
+
 @end

@@ -31,6 +31,44 @@
     return (LRColor *)[SKColor colorWithRed:r green:g blue:b alpha:alpha];
 }
 
++ (LRColor *)primaryColorForPaperColor:(LRPaperColor)paperColor
+{
+    switch (paperColor) {
+        case kLRPaperColorYellow:
+            return [LRColor rgbColorWithRed:254.0 green:220.0 blue:138.0 alpha:1];
+            break;
+        case kLRPaperColorBlue:
+            return [LRColor rgbColorWithRed:148 green:217 blue:246 alpha:1];
+            break;
+        case kLRPaperColorPink:
+            return [LRColor rgbColorWithRed:226 green:138 blue:178 alpha:1];
+            break;
+        default:
+            NSAssert(0, @"Should not look up color for empty paper color");
+            return [LRColor clearColor];
+            break;
+    }
+}
+
++ (LRColor *)secondaryColorForPaperColor:(LRPaperColor)paperColor
+{
+    switch (paperColor) {
+        case kLRPaperColorYellow:
+            return [LRColor rgbColorWithRed:248 green:170 blue:90 alpha:1];
+            break;
+        case kLRPaperColorBlue:
+            return [LRColor rgbColorWithRed:127 green:189 blue:230 alpha:1];
+            break;
+        case kLRPaperColorPink:
+            return [LRColor rgbColorWithRed:194 green:110 blue:140 alpha:1];
+        default:
+            NSAssert(0, @"Should not look up color for empty paper color");
+            return [LRColor clearColor];
+            break;
+    }
+    
+}
+
 //Basic colors
 + (LRColor *)clearColor {
     return (LRColor *)[SKColor clearColor];

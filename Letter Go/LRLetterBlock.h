@@ -28,13 +28,10 @@ typedef NS_ENUM(NSInteger, LRPaperColor)
 @property (nonatomic, readwrite) NSString *letter;
 ///The label containing the letter
 @property (nonatomic, strong) SKLabelNode *letterLabel;
-
 ///Returns TRUE if the letter is currently being touched
 @property (nonatomic, readonly) BOOL isTouched;
-
 ///The paper color of letter or envelope. Correlates with both the envelope's score value and sprite color
 @property (nonatomic) LRPaperColor paperColor;
-
 ///The sprite of the envelope
 @property (nonatomic, strong) SKSpriteNode *envelopeSprite;
 
@@ -54,6 +51,8 @@ typedef NS_ENUM(NSInteger, LRPaperColor)
 + (BOOL)isLetterAlphabetical:(NSString *)letter;
 ///Returns yes if the letter is a placeholder
 + (BOOL)isLetterPlaceholder:(NSString *)letter;
+///Returns the name of the paper color (e.g. "yellow", "pink", etc)
++ (NSString *)stringValueForPaperColor:(LRPaperColor)paperColor;
 @end
 
 

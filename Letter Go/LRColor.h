@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <SpriteKit/SpriteKit.h>
+#import "LRLetterBlock.h"
 
 @interface LRColor : SKColor
 
@@ -15,6 +16,10 @@
 + (LRColor *)rgbColorWithRed:(CGFloat)r green:(CGFloat)g blue:(CGFloat)b alpha:(CGFloat)alpha;
 ///Returns a color with RGB values between the start and the end point by a given percentage
 + (LRColor *)colorBetweenStartColor:(UIColor *)startColor andEndColor:(UIColor *)endColor percent:(CGFloat)percent;
+///Returns the main color on an envelope for a given paper color
++ (LRColor *)primaryColorForPaperColor:(LRPaperColor)paperColor;
+///Returns the flap color on an envelope for a given paper color
++ (LRColor *)secondaryColorForPaperColor:(LRPaperColor)paperColor;
 
 //Basic colors
 + (LRColor *)clearColor;

@@ -19,5 +19,8 @@ typedef NS_ENUM(NSInteger, LRDirection)
 extern NSUInteger const kLRLetterSectionCapacity;
 static NSUInteger const kLRLetterSectionMinimumWordLength   = 3;
 
+extern NSString * const kSubmissionKeyWord;
+extern NSString * const kSubmissionKeyWordWithColors;
+
 @interface LRLetterSection : LRScreenSection <LRLetterBlockControlDelegate>
 @end
