@@ -82,7 +82,7 @@ static LRScoreManager *_shared = nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_INCREASED_LEVEL object:nil];
         NSLog(@"Level %u", (unsigned)[[LRProgressManager shared] level]);
     }
-    if (self.delegate) [self.delegate scoreDidChange];
+    if (self.delegate) [self.delegate changeScoreWithAnimation:YES];
     return wordScore;
 }
 
@@ -120,7 +120,7 @@ static LRScoreManager *_shared = nil;
     self.numBlueEnvelopes = 0;
     self.numPinkEnvelopes = 0;
     submittedWords = [NSMutableArray array];
-    if (self.delegate) [self.delegate scoreDidChange];
+    if (self.delegate) [self.delegate changeScoreWithAnimation:NO];
 }
 
 #pragma mark - LRGameStateDelegate Methods

@@ -12,7 +12,7 @@
 extern NSUInteger const kLRScoreManagerScorePerLetter;
 
 @protocol LRScoreManagerDelegate <NSObject>
-- (void)scoreDidChange;
+- (void)changeScoreWithAnimation:(BOOL)animated;
 @end
 
 @interface LRScoreManager : SKNode <LRGameStateDelegate>

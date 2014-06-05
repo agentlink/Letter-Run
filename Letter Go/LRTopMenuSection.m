@@ -15,10 +15,11 @@
 
 @interface LRScoreControlColorScore : SKSpriteNode
 - (id)initWithPaperColor:(LRPaperColor)paperColor;
+- (void)setColorScore:(NSUInteger)colorScore animated:(BOOL)animated;
 
 @property (readonly) LRPaperColor paperColor;
 @property (nonatomic) NSUInteger colorScore;
-@property (nonatomic, strong) SKLabelNode *colorScoreLabel;
+@property (nonatomic, strong) LRValueLabelNode *colorScoreLabel;
 @end
 
 @interface LRMissionControlSection : SKSpriteNode <LRScoreManagerDelegate>
@@ -139,14 +140,14 @@
 }
 
 #pragma mark - Score Manager Delegate Functions
-- (void)scoreDidChange
+- (void)changeScoreWithAnimation:(BOOL)animated
 {
-    [self.scoreLabel updateValue:[[LRScoreManager shared] score] animated:YES];
-//    self.scoreLabel.text = [NSString stringWithFormat: @"%u pts.", (unsigned)[[LRScoreManager shared] score]];
-    self.yellowScore.colorScore = [[LRScoreManager shared] numYellowEnvelopes];
-    self.blueScore.colorScore = [[LRScoreManager shared] numBlueEnvelopes];
-    self.pinkScore.colorScore = [[LRScoreManager shared] numPinkEnvelopes];
+    [self.scoreLabel updateValue:[[LRScoreManager shared] score] animated:NO];
+    [self.yellowScore setColorScore:[[LRScoreManager shared] numYellowEnvelopes] animated:animated];
+    [self.blueScore setColorScore:[[LRScoreManager shared] numBlueEnvelopes] animated:animated];
+    [self.pinkScore setColorScore:[[LRScoreManager shared] numPinkEnvelopes] animated:animated];
 }
+
 @end
 
 
@@ -169,10 +170,11 @@
         CGFloat fontSize = 50;
         LRFont *font = [LRFont displayTextFontWithSize:fontSize];
         
-        _colorScoreLabel = [SKLabelNode labelNodeWithFontNamed:font.familyName];
+        _colorScoreLabel = [[LRValueLabelNode alloc] initWithFontNamed:font.familyName initialValue:0];
+        _colorScoreLabel.postValueString = [self _colorScoreLabelStringForScore:0];
         _colorScoreLabel.fontColor = [LRColor secondaryColorForPaperColor:self.paperColor];
         _colorScoreLabel.fontSize = fontSize;
-        _colorScoreLabel.text = [self _scoreStringWithScore:0];
+        
         [_colorScoreLabel setVerticalAlignmentMode:SKLabelVerticalAlignmentModeCenter];
         [_colorScoreLabel setHorizontalAlignmentMode:SKLabelHorizontalAlignmentModeLeft];
     }
@@ -181,20 +183,26 @@
 
 - (void)setColorScore:(NSUInteger)colorScore
 {
-    _colorScore = colorScore;
-    self.colorScoreLabel.text = [self _scoreStringWithScore:_colorScore];
+    [self setColorScore:colorScore animated:YES];
 }
 
-- (NSString *)_scoreStringWithScore:(NSUInteger)score
+- (void)setColorScore:(NSUInteger)colorScore animated:(BOOL)animated
 {
-    NSString *envelopeStr = (score != 1) ? @"envelopes" : @"envelope";
-    NSString *labelText = [NSString stringWithFormat:@"%u %@", (unsigned)score, envelopeStr];
-    return labelText;
+    _colorScore = colorScore;
+    self.colorScoreLabel.postValueString = [self _colorScoreLabelStringForScore:colorScore];
+    [self.colorScoreLabel updateValue:colorScore animated:animated];
+
 }
 
 - (CGSize)size
 {
     return self.colorScoreLabel.frame.size;
+}
+
+- (NSString *)_colorScoreLabelStringForScore:(NSUInteger)score
+{
+    NSString *str = score == 1 ? @" envelope" : @" envelopes";
+    return str;
 }
 
 @end

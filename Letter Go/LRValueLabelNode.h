@@ -13,5 +13,6 @@
 - (id)initWithFontNamed:(NSString *)fontName initialValue:(NSInteger)value;
 - (void)updateValue:(NSInteger)value animated:(BOOL)animated;
 @property (nonatomic, readonly) NSInteger value;
-
+@property (nonatomic, strong) NSString *preValueString;
+@property (nonatomic, strong) NSString *postValueString;
 @end
