@@ -19,13 +19,8 @@ static const float zPos_SectionBlock_Selected = 210;
 static const float zPos_MovingEnvelope_Initial = 35;
 
 //TODO: remove when background changes
-static const float zPos_SkyLayer = 10;
-static const float zPos_MountainLayer = 20;
-static const float zPos_HillsLayer = 30;
-static const float zPos_GrassLayer = 50;
 
 static const float zPos_Mailman = 40;
-static const float zPos_Mailbag = 60;
 
 static const float zPos_PauseButton = 300;
 

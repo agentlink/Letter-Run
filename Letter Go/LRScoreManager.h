@@ -12,15 +12,19 @@
 extern NSUInteger const kLRScoreManagerScorePerLetter;
 
 @protocol LRScoreManagerDelegate <NSObject>
+@optional
 - (void)changeScoreWithAnimation:(BOOL)animated;
+- (void)changeDistance;
 @end
 
 @interface LRScoreManager : SKNode <LRGameStateDelegate>
 
 /// An array of the words that have bee submitted this round in teh order they were submitted
 @property (readonly) NSMutableArray *submittedWords;
-/// Returns the player's current score
+/// The player's current score
 @property (readonly) NSUInteger score;
+/// The distance the player has run
+@property (nonatomic, readonly) NSUInteger distance;
 /// The number of yellow envelopes collected
 @property (readonly) NSUInteger numYellowEnvelopes;
 /// The number of blue envelopes collected
@@ -45,6 +49,12 @@ extern NSUInteger const kLRScoreManagerScorePerLetter;
  @return The score for the word
  */
 + (NSUInteger)scoreForWordWithDict:(NSDictionary *)wordDict;
+
+/*! This function allows an object to add to the distance that the mailman has run. Should only ever be called by the mailman
+ @param distance: The amount by which the distance should be increased
+ */
+- (void)increaseDistanceByValue:(NSUInteger)distance;
+
 
 @end
 

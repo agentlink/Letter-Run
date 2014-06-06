@@ -14,6 +14,7 @@ NSUInteger const kLRScoreManagerScorePerLetter = 10;
 
 @interface LRScoreManager ()
 @property (nonatomic) NSUInteger score;
+@property (nonatomic) NSUInteger distance;
 @property (nonatomic) NSUInteger numYellowEnvelopes;
 @property (nonatomic) NSUInteger numBlueEnvelopes;
 @property (nonatomic) NSUInteger numPinkEnvelopes;
@@ -82,7 +83,9 @@ static LRScoreManager *_shared = nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_INCREASED_LEVEL object:nil];
         NSLog(@"Level %u", (unsigned)[[LRProgressManager shared] level]);
     }
-    if (self.delegate) [self.delegate changeScoreWithAnimation:YES];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(changeScoreWithAnimation:)]) {
+        [self.delegate changeScoreWithAnimation:YES];
+    }
     return wordScore;
 }
 
@@ -101,26 +104,28 @@ static LRScoreManager *_shared = nil;
     }
     
     //Multiply it by the lenght multiplier
-    wordScore *= [LRScoreManager scoreMultiplierForLength:wordLength];
+    wordScore *= [LRScoreManager _scoreMultiplierForLength:wordLength];
     return wordScore;
 }
 
-+ (CGFloat)scoreMultiplierForLength: (NSUInteger)length
++ (CGFloat)_scoreMultiplierForLength: (NSUInteger)length
 {
     CGFloat fLength = (CGFloat)length;
     CGFloat multiplier = (fLength - 1)/2;
     return multiplier;
 }
 
-#pragma mark - Game State and Level Progression
+- (void)increaseDistanceByValue:(NSUInteger)distance
+{
+    self.distance += distance;
+}
 
-- (void)_resetScoreForNewGame {
-    self.score = 0;
-    self.numYellowEnvelopes = 0;
-    self.numBlueEnvelopes = 0;
-    self.numPinkEnvelopes = 0;
-    submittedWords = [NSMutableArray array];
-    if (self.delegate) [self.delegate changeScoreWithAnimation:NO];
+- (void)setDistance:(NSUInteger)distance
+{
+    _distance = distance;
+    if (self.delegate && [self.delegate respondsToSelector:@selector(changeDistance)]) {
+        [self.delegate changeDistance];
+    }
 }
 
 #pragma mark - LRGameStateDelegate Methods
@@ -129,6 +134,29 @@ static LRScoreManager *_shared = nil;
 {
     [self _resetScoreForNewGame];
 }
+
+#pragma mark - Game State and Level Progression
+
+- (void)_resetScoreForNewGame {
+    //Clear all the scores
+    self.score = 0;
+    self.distance = 0;
+    self.numYellowEnvelopes = 0;
+    self.numBlueEnvelopes = 0;
+    self.numPinkEnvelopes = 0;
+    
+    //Empty the submitted owrds array
+    submittedWords = [NSMutableArray array];
+
+    //And update the score shown on screen
+    if (self.delegate && [self.delegate respondsToSelector:@selector(changeScoreWithAnimation:)]) {
+        [self.delegate changeScoreWithAnimation:NO];
+    }
+    if (self.delegate && [self.delegate respondsToSelector:@selector(changeDistance)]) {
+        [self.delegate changeDistance];
+    }
+}
+
 
 @end
 

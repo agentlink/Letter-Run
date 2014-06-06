@@ -14,12 +14,13 @@
 #import "LRMailman.h"
 #import "LRMovingBlockBuilder.h"
 
-static const CGFloat kMailmanAreaWidth          = 70.0;
+static const CGFloat kMailmanAreaWidth          = 60.0;
 
 @interface LRMainGameSection () <LRMovingBlockTouchDelegate>
 
 //Children
 @property SKSpriteNode *backgroundImage;
+@property (nonatomic, weak) LRMailman *mailman;
 //Row logic
 @property LRRowManager *rowManager;
 @property NSMutableArray *envelopesOnScreen;
@@ -51,7 +52,9 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
     [self addChild:self.mailmanArea];
     
     LRMailman *manford = [LRMailman new];
+    manford.position = CGPointMake(10, self.position.y);
     [self.mailmanArea addChild:manford];
+    self.mailman = manford;
     
 }
 
@@ -103,12 +106,14 @@ static const CGFloat kMailmanAreaWidth          = 70.0;
     [self.envelopeBuilder startMovingBlockGeneration];
     self.envelopeTouchEnabled = YES;
     [self clearMainGameSection];
+    [self.mailman startRun];
 }
 
 - (void)gameStateGameOver
 {
     [self.envelopeBuilder stopMovingBlockGeneration];
     self.envelopeTouchEnabled = NO;
+    [self.mailman stopRun];
 }
 
 #pragma mark - Helper Methods

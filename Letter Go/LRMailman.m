@@ -10,9 +10,15 @@
 #import "LRMovingEnvelope.h"
 #import "LRMovingBlockBuilder.h"
 #import "LRSharedTextureCache.h"
+#import "LRPositionConstants.h"
+#import "LRScoreManager.h"
+#import "LRProgressManager.h"
+
+static NSString * const kLRMailmanRunningActionKey = @"manford running";
 
 @interface LRMailman ()
 @property (nonatomic, readwrite) NSUInteger currentRow;
+@property (nonatomic) NSArray *runningTextures;
 @end
 
 @implementation LRMailman
@@ -21,13 +27,15 @@
 
 - (id) init
 {
-    SKTexture *manfordTexture = [[LRSharedTextureCache shared] textureForName:@"Manford-1"];
+    SKTexture *manfordTexture = [LRMailman _initialTexture];
     if (self = [super initWithTexture:manfordTexture])
     {
-        self.xScale = .94;
-        self.yScale = .94;
+        self.xScale = .7;
+        self.yScale = .7;
+        self.zPosition = zPos_Mailman;
         [self setCurrentRow:2 animated:NO];
         [LRManfordAIManager shared].movementDelegate = self;
+        [self startRun];
     }
     return self;
 }
@@ -72,11 +80,57 @@
     return rowPoint;
 }
 
+#pragma mark - Running
+
+- (void)startRun
+{
+    if ([self actionForKey:kLRMailmanRunningActionKey]) {
+        NSLog(@"WARNING: Manford is already performing running action");
+        return;
+    }
+    //Load the running textures
+    NSMutableArray *textures = [NSMutableArray new];
+    for (int i = 1; i < 11; i++)
+    {
+        NSString *fileName = [NSString stringWithFormat:@"Manford-Run%i", i];
+        SKTexture *texture = [[LRSharedTextureCache shared] textureForName:fileName];
+        [textures addObject:texture];
+    }
+    self.runningTextures = textures;
+    [self _runRecursiveRunAnimation];
+}
+
+-(void)_runRecursiveRunAnimation
+{
+    CGFloat initialTimePerFrame = 0.08;
+    CGFloat timePerFrameDecreasePerLevel = .003;
+    CGFloat minTimePerFrame = 0.052;
+    CGFloat potentialTimePerFrame = initialTimePerFrame - ([[LRProgressManager shared] level] - 1) * timePerFrameDecreasePerLevel;
+    CGFloat timePerFrame = MAX(minTimePerFrame, potentialTimePerFrame);
+    
+    SKAction *animation = [SKAction animateWithTextures:self.runningTextures timePerFrame:timePerFrame resize:YES restore:NO];
+    //The distance Manford has run depends on how often the animation goes
+    SKAction *completion = [SKAction runBlock:^{
+        [[LRScoreManager shared] increaseDistanceByValue:1];
+        [self _runRecursiveRunAnimation];
+    }];
+    [self runAction:[SKAction sequence:@[animation, completion]] withKey:kLRMailmanRunningActionKey];
+
+}
+
+- (void)stopRun
+{
+    [self removeActionForKey:kLRMailmanRunningActionKey];
+    self.texture = [LRMailman _initialTexture];
+}
+
+#pragma mark - Private Methods
+
 - (SKAction *)_moveMailmanActionFromRow:(NSUInteger)fromRow toRow:(NSUInteger)toRow
 {
     CGPoint envelopePoint = [self mailmanPositionForRow:toRow];
     CGPoint newManfordPos = CGPointMake(self.position.x, envelopePoint.y);
-
+    
     NSInteger rowDiff = fromRow - toRow;
     NSUInteger netRowDiff = ABS(rowDiff);
     if (netRowDiff <= 0) {
@@ -101,6 +155,11 @@
     CGFloat maxManfordTravelTime =  blockInterval * multiplier;
     CGFloat duration = rowDiff * maxManfordTravelTime/(kLRRowManagerNumberOfRows - 1);
     return duration;
+}
+
++ (SKTexture *)_initialTexture
+{
+     return [[LRSharedTextureCache shared] textureForName:@"Manford-Run1"];
 }
 
 @end

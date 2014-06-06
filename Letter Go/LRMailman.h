@@ -10,4 +10,6 @@
 #import "LRManfordAIManager.h"
 
 @interface LRMailman : SKSpriteNode <LRManfordMovementDelegate>
+- (void)startRun;
+- (void)stopRun;
 @end

@@ -23,7 +23,7 @@
 @end
 
 @interface LRMissionControlSection : SKSpriteNode <LRScoreManagerDelegate>
-@property (nonatomic, strong) LRValueLabelNode *scoreLabel;
+@property (nonatomic, strong) LRValueLabelNode *distanceLabel;
 @property (nonatomic, weak) NSNumber *scoreNum;
 
 @property (nonatomic, strong) LRScoreControlColorScore *yellowScore;
@@ -85,32 +85,31 @@
     if (self = [super initWithTexture:texture])
     {
         self.anchorPoint = CGPointMake(1, 1);
-        [self addChild:self.scoreLabel];
+        [self addChild:self.distanceLabel];
         [self _setUpEnvelopeScores];
         [LRScoreManager shared].delegate = self;
     }
     return self;
 }
 
-- (LRValueLabelNode *)scoreLabel
+- (LRValueLabelNode *)distanceLabel
 {
-    if (!_scoreLabel) {
-        CGFloat fontSize = 75;
+    if (!_distanceLabel) {
+        CGFloat fontSize = 90;
         LRFont *scoreLabelFont = [LRFont displayTextFontWithSize:fontSize];
         CGFloat rightMargin = -10.0;
-        CGFloat topMargin = -15.0;
         
+        _distanceLabel = [[LRValueLabelNode alloc] initWithFontNamed:scoreLabelFont.familyName initialValue:[[LRScoreManager shared] distance]];
+        _distanceLabel.postValueString = @" ft.";
+        _distanceLabel.fontSize = fontSize;
+        _distanceLabel.fontColor = [LRColor blackColor];
         
-        _scoreLabel = [[LRValueLabelNode alloc] initWithFontNamed:scoreLabelFont.familyName initialValue:0];
-        _scoreLabel.fontSize = fontSize;
-        _scoreLabel.fontColor = [LRColor blackColor];
-        _scoreLabel.position = CGPointMake(-_scoreLabel.frame.size.width/2 + rightMargin,
-                                           -_scoreLabel.frame.size.height/2 + topMargin);
-//        _scoreLabel.text =  [NSString stringWithFormat:@"%@ pts.", self.scoreNum];
-        [_scoreLabel setVerticalAlignmentMode:SKLabelVerticalAlignmentModeTop];
-        [_scoreLabel setHorizontalAlignmentMode:SKLabelHorizontalAlignmentModeRight];
+        _distanceLabel.position = CGPointMake(-_distanceLabel.frame.size.width/2 + rightMargin,
+                                           -self.frame.size.height/2);
+        [_distanceLabel setVerticalAlignmentMode:SKLabelVerticalAlignmentModeCenter];
+        [_distanceLabel setHorizontalAlignmentMode:SKLabelHorizontalAlignmentModeRight];
     }
-    return _scoreLabel;
+    return _distanceLabel;
 }
 
 - (void)_setUpEnvelopeScores
@@ -142,10 +141,14 @@
 #pragma mark - Score Manager Delegate Functions
 - (void)changeScoreWithAnimation:(BOOL)animated
 {
-    [self.scoreLabel updateValue:[[LRScoreManager shared] score] animated:NO];
     [self.yellowScore setColorScore:[[LRScoreManager shared] numYellowEnvelopes] animated:animated];
     [self.blueScore setColorScore:[[LRScoreManager shared] numBlueEnvelopes] animated:animated];
     [self.pinkScore setColorScore:[[LRScoreManager shared] numPinkEnvelopes] animated:animated];
+}
+
+- (void)changeDistance
+{
+    [self.distanceLabel updateValue:[[LRScoreManager shared] distance] animated:NO];
 }
 
 @end
