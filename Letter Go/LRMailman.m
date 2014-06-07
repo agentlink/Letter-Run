@@ -30,6 +30,7 @@ static NSString * const kLRMailmanRunningActionKey = @"manford running";
     SKTexture *manfordTexture = [LRMailman _initialTexture];
     if (self = [super initWithTexture:manfordTexture])
     {
+        self.color = [UIColor redColor];
         self.xScale = .7;
         self.yScale = .7;
         self.zPosition = zPos_Mailman;

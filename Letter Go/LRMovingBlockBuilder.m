@@ -60,7 +60,7 @@ static CGFloat const kLRMovingBlockBuilderCrossTime = 3.5;
     [envelope runAction:moveAcrossScreen];
     
     //Determines when the collection animation runs
-    CGFloat collectionPause = kLRMovingBlockBuilderCrossTime* (SCREEN_WIDTH/distance);
+    CGFloat collectionPause = kLRMovingBlockBuilderCrossTime* ((SCREEN_WIDTH + (kCollectedEnvelopeSpriteDimension/2))/distance);
     SKAction *pauseForCollectionCheck = [SKAction waitForDuration:collectionPause];
     
     [envelope runAction:pauseForCollectionCheck completion:^{

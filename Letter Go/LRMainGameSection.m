@@ -15,8 +15,6 @@
 #import "LRMovingBlockBuilder.h"
 #import "LRMailTruck.h"
 
-static const CGFloat kMailmanAreaWidth          = 60.0;
-
 @interface LRMainGameSection () <LRMovingBlockTouchDelegate>
 
 //Children
@@ -46,16 +44,13 @@ static const CGFloat kMailmanAreaWidth          = 60.0;
 
 - (void)createSectionContent
 {
-    //Mailman section
-    LRMailmanArea *mailmanArea = [[LRMailmanArea alloc] initWithSize:CGSizeMake(kMailmanAreaWidth, self.size.height)];
-    mailmanArea.position = (CGPoint){(mailmanArea.size.width - self.size.width)/2, 0};
-    self.mailmanArea = mailmanArea;
-    [self addChild:self.mailmanArea];
-    
     //Manford the Mailman
     LRMailman *manford = [LRMailman new];
-    manford.position = CGPointMake(10, self.position.y);
-    [self.mailmanArea addChild:manford];
+    CGFloat manfordLeftMargin = 40;
+    //TODO: make this be Manford's size
+    CGFloat manfordX = -self.size.width/2 + manfordLeftMargin;
+    manford.position = CGPointMake(manfordX, self.position.y);
+    [self addChild:manford];
     self.mailman = manford;
     
     //Mailtruck
