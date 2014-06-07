@@ -205,7 +205,7 @@ NSString * const kLRMovingBlockName = @"Moving envelope";
     if (self.paperColor == kLRMovingEnvelopeHiddenPaperColor) {
         self.letterLabel.text = [LRMovingEnvelope _letterForHiddenPaperColor];
     }
-    else if (self.paperColor == kLRMovingEnvelopeShiftingPaperColor) {
+    else if (self.paperColor == kLRMovingEnvelopeShiftingPaperColor && ![self.letter isEqualToString:@"  "]) {
         self.shiftingLetterArray = [[LRMultipleLetterGenerator shared] generateMultipleLetterList];
         [self runAction:[self _shiftLetterAction] withKey:kLRMovingBlockShiftLetterActionName];
     }

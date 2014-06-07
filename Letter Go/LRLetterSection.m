@@ -26,7 +26,7 @@ typedef NS_ENUM(NSUInteger, LetterSectionState)
 };
 
 NSString * const kSubmissionKeyWord = @"word";
-NSString * const kSubmissionKeyWordWithColors = @"word with paper colors";
+NSString * const kSubmissionKeyWordWithColors = @"paperColorDictionary";
 
 @interface LRLetterSection ()
 

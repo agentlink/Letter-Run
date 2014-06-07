@@ -106,7 +106,7 @@ static LRGameStateManager *_shared = nil;
     NSLog(@"Game over");
     //Make all of the objects in the game non-touch responsive
     if (![[[notification userInfo] objectForKey:@"devpause"] isEqual: @(true)]) {
-        [self _showGameOverLabelForDuration:3.5];
+        [self _showGameOverLabelForDuration:4];
     }
 }
 

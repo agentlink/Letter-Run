@@ -26,7 +26,7 @@
 
     //When the truck is selected, have it drive away and then start the game.
     CGFloat offscreenX = (SCREEN_WIDTH + self.size.width)/2;
-    SKAction *driveAway = [SKAction moveTo:CGPointMake(offscreenX, self.position.y) duration:2];
+    SKAction *driveAway = [SKAction moveTo:CGPointMake(offscreenX, self.position.y) duration:1.5];
     driveAway.timingMode = SKActionTimingEaseIn;
     [self runAction:driveAway completion:^{
         [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_NEW_GAME object:nil];
