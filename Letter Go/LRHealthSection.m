@@ -56,7 +56,6 @@ static const CGFloat kLRHealthSectionStartPercentYellow = .50;
     if (!_coloredBar) {
         _coloredBar = [[LRHealthBarMovingSprite alloc] initWithColor:[LRColor healthBarColorGreen] size:self.size];
         _coloredBar.healthbarDropTime = [self _healthBarDropTime];
-        [_coloredBar startColoredBarFall];
     }
     return _coloredBar;
 }

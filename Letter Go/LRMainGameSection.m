@@ -101,11 +101,20 @@ static const CGFloat kMailmanAreaWidth          = 60.0;
 
 #pragma mark LRGameStateDelegate Methods
 
++ (SKAction *)gameOverSlowDownAction
+{
+    SKAction *slowDown = [SKAction speedTo:0.0 duration:1.5];
+    slowDown.timingMode = SKActionTimingEaseIn;
+    return slowDown;
+}
+
 - (void)gameStateNewGame
 {
     [self.envelopeBuilder startMovingBlockGeneration];
     self.envelopeTouchEnabled = YES;
     [self clearMainGameSection];
+
+    //Start the mailman run
     [self.mailman startRun];
 }
 
@@ -113,6 +122,9 @@ static const CGFloat kMailmanAreaWidth          = 60.0;
 {
     [self.envelopeBuilder stopMovingBlockGeneration];
     self.envelopeTouchEnabled = NO;
+    for (LRMovingEnvelope *envelope in self.envelopesOnScreen) {
+        [envelope runAction:[LRMainGameSection gameOverSlowDownAction]];
+    }
     [self.mailman stopRun];
 }
 

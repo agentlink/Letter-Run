@@ -14,6 +14,7 @@
 #import "LRSharedTextureCache.h"
 
 static NSUInteger const kLRBackgroundLayerStripesPerRow = 6;
+static NSString * const kLRBackgroundLayerStripeMovementName = @"moving stripes action";
 
 @interface LRBackgroundLayer ()
 @property SKSpriteNode *mainGameSectionBackground;
@@ -45,7 +46,6 @@ static NSUInteger const kLRBackgroundLayerStripesPerRow = 6;
     for (SKSpriteNode *stripe in self.roadStripes) {
         [self.mainGameSectionBackground addChild:stripe];
     }
-    [self startStripeMovement];
 }
 
 - (NSArray *)_stripesForRoadSprite:(SKSpriteNode *)road
@@ -76,20 +76,34 @@ static NSUInteger const kLRBackgroundLayerStripesPerRow = 6;
     return allStripes;
 }
 
-- (void)startStripeMovement
+- (void)_startStripeMovement
 {
     for (SKSpriteNode *stripe in self.roadStripes) {
         [self _runRecursiveMovementOnStripe:stripe];
+        stripe.speed = 1.0;
+    }
+}
+
+- (void)_stopStripeMovementAnimated:(BOOL)animated
+{
+    for (SKSpriteNode *stripe in self.roadStripes) {
+        if (animated) {
+            SKAction *slowDown = [LRMainGameSection gameOverSlowDownAction];
+            [stripe runAction:slowDown completion:^{
+                [stripe removeActionForKey:kLRBackgroundLayerStripeMovementName];
+            }];
+        }
     }
 }
 
 - (void)_runRecursiveMovementOnStripe:(SKSpriteNode *)stripe
 {
     SKAction *initialMove = [self _movementForStripe:stripe];
-    [stripe runAction:initialMove completion:^{
+    SKAction *completion = [SKAction runBlock:^{
         stripe.position = CGPointMake((self.mainGameSectionBackground.size.width + stripe.size.width)/2, stripe.position.y);
         [self _runRecursiveMovementOnStripe:stripe];
     }];
+    [stripe runAction:[SKAction sequence:@[initialMove, completion]] withKey:kLRBackgroundLayerStripeMovementName];
 }
 
 - (SKAction *)_movementForStripe:(SKSpriteNode *)stripe
@@ -103,6 +117,16 @@ static NSUInteger const kLRBackgroundLayerStripesPerRow = 6;
     CGFloat duration = ABS(distance/self.mainGameSectionBackground.size.width) * totalCrossTime;
     
     return [SKAction moveBy:CGVectorMake(distance, 0) duration:duration];
+}
+
+- (void)gameStateNewGame
+{
+    [self _startStripeMovement];
+}
+
+- (void)gameStateGameOver
+{
+    [self _stopStripeMovementAnimated:YES];
 }
 
 @end

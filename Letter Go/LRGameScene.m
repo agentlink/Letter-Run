@@ -56,6 +56,9 @@ static CGFloat const kLRGameSceneBlurEffectDuration = .4;
     self.rootEffectNode = effectNode;
     
     [self _addGameStateDelegateListeners];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_NEW_GAME object:nil];
+
 }
 
 - (void)setUpPhysics

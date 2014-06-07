@@ -23,4 +23,6 @@
 - (void)addMovingBlockToScreen:(LRMovingEnvelope *)movingBlock;
 - (void)clearMainGameSection;
 
++ (SKAction *)gameOverSlowDownAction;
+
 @end
