@@ -38,7 +38,7 @@ static LRSharedTextureCache *_shared = nil;
     return self;
 }
 
-- (SKTexture *)textureForName:(NSString *)name
+- (SKTexture *)textureWithName:(NSString *)name
 {
     //check if the texture exists. If it does, return
     if (self.textureDict[name]) {

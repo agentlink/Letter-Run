@@ -100,7 +100,7 @@ NSString * const kLRMovingBlockName = @"Moving envelope";
     NSString *fileName = [LRMovingEnvelope stringFromPaperColor:paperColor open:NO];
     
     if (fileName) {
-        SKTexture *envelopeTexture = [[LRSharedTextureCache shared] textureForName:fileName];
+        SKTexture *envelopeTexture = [[LRSharedTextureCache shared] textureWithName:fileName];
         envelopeSprite = [[SKSpriteNode alloc] initWithTexture:envelopeTexture];
         envelopeSprite.size = CGSizeMake(self.size.width - self.touchSize.width,
                                          self.size.height - self.touchSize.height);
@@ -151,7 +151,7 @@ NSString * const kLRMovingBlockName = @"Moving envelope";
 - (void)setEnvelopeOpen:(BOOL)envelopeOpen
 {
     NSString *textureName = [LRMovingEnvelope stringFromPaperColor:self.paperColor open:envelopeOpen];
-    self.envelopeSprite.texture = [[LRSharedTextureCache shared] textureForName:textureName];
+    self.envelopeSprite.texture = [[LRSharedTextureCache shared] textureWithName:textureName];
     _envelopeOpen = envelopeOpen;
 }
 
@@ -191,7 +191,7 @@ NSString * const kLRMovingBlockName = @"Moving envelope";
     int diff = (self.selected) ? -1 : 1;
     for (int i = startCount; i != endCount + diff; i+= diff) {
         NSString *textureName = [baseTextureName stringByReplacingCharactersInRange:NSMakeRange(baseTextureName.length - 1, 1)withString:[NSString stringWithFormat:@"%i", i]];
-        SKTexture *texture = [[LRSharedTextureCache shared] textureForName:textureName];
+        SKTexture *texture = [[LRSharedTextureCache shared] textureWithName:textureName];
         [textures addObject:texture];
     }
     

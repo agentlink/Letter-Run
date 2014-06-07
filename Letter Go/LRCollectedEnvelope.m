@@ -89,7 +89,7 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
         self.slotIndex = kSlotIndexNone;
         NSString *imageName = [self stringFromPaperColor:paperColor];
         if (imageName) {
-            SKTexture *envelopeTexture = [[LRSharedTextureCache shared] textureForName:imageName];
+            SKTexture *envelopeTexture = [[LRSharedTextureCache shared] textureWithName:imageName];
             self.envelopeSprite = [SKSpriteNode spriteNodeWithTexture:envelopeTexture];
             [self addChild:self.envelopeSprite];
         }

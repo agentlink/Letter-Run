@@ -69,7 +69,7 @@ static const CGFloat kLRHealthSectionStartPercentYellow = .50;
 
 - (SKSpriteNode *)healthBarSkin {
     if (!_healthBarSkin) {
-        SKTexture *texture = [[LRSharedTextureCache shared] textureForName:@"healthSection-background"];
+        SKTexture *texture = [[LRSharedTextureCache shared] textureWithName:@"healthSection-background"];
         _healthBarSkin = [SKSpriteNode spriteNodeWithTexture:texture];
         _healthBarSkin.xScale = (self.size.width / _healthBarSkin.size.width);
         _healthBarSkin.yScale = _healthBarSkin.xScale;

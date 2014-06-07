@@ -62,7 +62,7 @@ static NSString * const kLRBackgroundLayerStripeMovementName = @"moving stripes 
     for (int j = 0; j < kLRBackgroundLayerStripesPerRow; j++) {
         for (int i = 0; i < kLRRowManagerNumberOfRows; i++)
         {
-            SKTexture *texture = [[LRSharedTextureCache shared] textureForName:@"mainSection-stripe"];
+            SKTexture *texture = [[LRSharedTextureCache shared] textureWithName:@"mainSection-stripe"];
             SKSpriteNode *stripe = [[SKSpriteNode alloc ] initWithTexture:texture];
             stripe.position = CGPointMake(xPos, yPos);
             stripe.yScale = 1.2;

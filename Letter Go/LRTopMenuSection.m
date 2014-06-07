@@ -51,7 +51,7 @@
     CGFloat contentMargin = self.size.width * .028;
 
     //mission control image
-    SKTexture *scoreControlTexture = [[LRSharedTextureCache shared] textureForName:@"topMenuSection-missionControl"];
+    SKTexture *scoreControlTexture = [[LRSharedTextureCache shared] textureWithName:@"topMenuSection-missionControl"];
     self.missionControlSprite = [[LRMissionControlSection alloc] initWithTexture:scoreControlTexture];
     self.missionControlSprite.xScale = .47;
     self.missionControlSprite.yScale = .47;

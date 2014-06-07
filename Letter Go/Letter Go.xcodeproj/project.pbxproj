@@ -75,6 +75,7 @@
 		A895AC6B1932A3EF0064FE73 /* NSMutableArray+Shuffle.m in Sources */ = {isa = PBXBuildFile; fileRef = A895AC6A1932A3EF0064FE73 /* NSMutableArray+Shuffle.m */; };
 		A8A34420191EC73C006C5C55 /* LRManfordAIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A8A3441F191EC73C006C5C55 /* LRManfordAIManager.m */; };
 		A8A3442619202C8D006C5C55 /* LRMailman.m in Sources */ = {isa = PBXBuildFile; fileRef = A8A3442519202C8D006C5C55 /* LRMailman.m */; };
+		A8B66E1D19439CE7001F1305 /* LRMailTruck.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B66E1C19439CE7001F1305 /* LRMailTruck.m */; };
 		A8B6B7221903243600E130A6 /* LRMovingBlockBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B6B7211903243600E130A6 /* LRMovingBlockBuilder.m */; };
 		A8C588BF1933D3C3004311FD /* LRRowManager_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = A8C588BE1933D3C3004311FD /* LRRowManager_Test.m */; };
 		A8CDE054193F82B700AC6F4C /* LRValueLabelNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CDE053193F82B700AC6F4C /* LRValueLabelNode.m */; };
@@ -220,6 +221,8 @@
 		A8A3441F191EC73C006C5C55 /* LRManfordAIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRManfordAIManager.m; sourceTree = "<group>"; };
 		A8A3442419202C8D006C5C55 /* LRMailman.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRMailman.h; sourceTree = "<group>"; };
 		A8A3442519202C8D006C5C55 /* LRMailman.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRMailman.m; sourceTree = "<group>"; };
+		A8B66E1B19439CE7001F1305 /* LRMailTruck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRMailTruck.h; sourceTree = "<group>"; };
+		A8B66E1C19439CE7001F1305 /* LRMailTruck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRMailTruck.m; sourceTree = "<group>"; };
 		A8B6B7201903243600E130A6 /* LRMovingBlockBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRMovingBlockBuilder.h; sourceTree = "<group>"; };
 		A8B6B7211903243600E130A6 /* LRMovingBlockBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRMovingBlockBuilder.m; sourceTree = "<group>"; };
 		A8C588BE1933D3C3004311FD /* LRRowManager_Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRRowManager_Test.m; sourceTree = "<group>"; };
@@ -310,9 +313,9 @@
 			isa = PBXGroup;
 			children = (
 				A8A3442319202C74006C5C55 /* Mailman */,
+				0049695217F8A70B00176F2D /* Letter Blocks */,
 				00B43D90182834CF00261468 /* LRButton.h */,
 				00B43D91182834CF00261468 /* LRButton.m */,
-				0049695217F8A70B00176F2D /* Letter Blocks */,
 			);
 			name = "Interactive Objects";
 			sourceTree = "<group>";
@@ -326,6 +329,8 @@
 				0007FB3E180C7A1A00E55B0D /* LRCollectedEnvelope.m */,
 				A88A4B39188734E400BC9905 /* LRMovingEnvelope.h */,
 				A88A4B3A188734E400BC9905 /* LRMovingEnvelope.m */,
+				A8B66E1B19439CE7001F1305 /* LRMailTruck.h */,
+				A8B66E1C19439CE7001F1305 /* LRMailTruck.m */,
 			);
 			name = "Letter Blocks";
 			sourceTree = "<group>";
@@ -944,6 +949,7 @@
 				00A6886E1904AA0E0074632F /* LRDevPauseViewController.m in Sources */,
 				00CDF18617F483E3003065F6 /* LRScreenSection.m in Sources */,
 				A87BDD9B1853AFDC00845BB5 /* LRBezierPath.m in Sources */,
+				A8B66E1D19439CE7001F1305 /* LRMailTruck.m in Sources */,
 				A8A3442619202C8D006C5C55 /* LRMailman.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

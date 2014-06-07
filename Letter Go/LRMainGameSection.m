@@ -13,6 +13,7 @@
 #import "LRPositionConstants.h"
 #import "LRMailman.h"
 #import "LRMovingBlockBuilder.h"
+#import "LRMailTruck.h"
 
 static const CGFloat kMailmanAreaWidth          = 60.0;
 
@@ -51,11 +52,15 @@ static const CGFloat kMailmanAreaWidth          = 60.0;
     self.mailmanArea = mailmanArea;
     [self addChild:self.mailmanArea];
     
+    //Manford the Mailman
     LRMailman *manford = [LRMailman new];
     manford.position = CGPointMake(10, self.position.y);
     [self.mailmanArea addChild:manford];
     self.mailman = manford;
     
+    //Mailtruck
+    LRMailTruck *truck = [[LRMailTruck alloc] init];
+    [self addChild:truck];    
 }
 
 - (void)setEnvelopeBuilder:(LRMovingBlockBuilder *)envelopeBuilder

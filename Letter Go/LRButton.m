@@ -67,17 +67,17 @@
 - (id)initWithImageNamedNormal:(NSString *)normal selected:(NSString *)selected disabled:(NSString *)disabled {
     SKTexture *textureNormal = nil;
     if (normal) {
-        textureNormal = [[LRSharedTextureCache shared] textureForName:normal];
+        textureNormal = [[LRSharedTextureCache shared] textureWithName:normal];
     }
     
     SKTexture *textureSelected = nil;
     if (selected) {
-        textureSelected = [[LRSharedTextureCache shared] textureForName:selected];
+        textureSelected = [[LRSharedTextureCache shared] textureWithName:selected];
     }
     
     SKTexture *textureDisabled = nil;
     if (disabled) {
-        textureDisabled = [[LRSharedTextureCache shared] textureForName:disabled];
+        textureDisabled = [[LRSharedTextureCache shared] textureWithName:disabled];
     }
     
     return [self initWithTextureNormal:textureNormal selected:textureSelected disabled:textureDisabled];

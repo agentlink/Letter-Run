@@ -92,7 +92,7 @@ static NSString * const kLRMailmanRunningActionKey = @"manford running";
     for (int i = 1; i < 11; i++)
     {
         NSString *fileName = [NSString stringWithFormat:@"Manford-Run%i", i];
-        SKTexture *texture = [[LRSharedTextureCache shared] textureForName:fileName];
+        SKTexture *texture = [[LRSharedTextureCache shared] textureWithName:fileName];
         [textures addObject:texture];
     }
     self.runningTextures = textures;
@@ -158,7 +158,7 @@ static NSString * const kLRMailmanRunningActionKey = @"manford running";
 
 + (SKTexture *)_initialTexture
 {
-     return [[LRSharedTextureCache shared] textureForName:@"Manford-Run1"];
+     return [[LRSharedTextureCache shared] textureWithName:@"Manford-Run1"];
 }
 
 @end
