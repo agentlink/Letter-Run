@@ -14,11 +14,12 @@
 #import "LRSharedTextureCache.h"
 
 static NSUInteger const kLRBackgroundLayerStripesPerRow = 6;
-static NSString * const kLRBackgroundLayerStripeMovementName = @"moving stripes action";
+static NSString * const kLRBackgroundLayerStartScroll = @"start background scroll";
+static NSString * const kLRBackgroundLayerStopScroll = @"stop background scroll";
 
 @interface LRBackgroundLayer ()
 @property SKSpriteNode *mainGameSectionBackground;
-@property (nonatomic, strong) NSArray *roadStripes;
+@property (nonatomic, strong) NSArray *scrollingChildren;
 @end
 
 @implementation LRBackgroundLayer
@@ -30,7 +31,8 @@ static NSString * const kLRBackgroundLayerStripeMovementName = @"moving stripes 
         [self setPosition:CGPointMake(self.size.width/2, self.size.height/2)];
         self.mainGameSectionBackground = [[SKSpriteNode alloc] initWithColor:[LRColor mainScreenRoad]
                                                                         size:CGSizeMake(SCREEN_WIDTH, kSectionHeightMainSection)];
-        self.roadStripes = [self _stripesForRoadSprite:self.mainGameSectionBackground];
+        NSArray *stripes = [self _stripesForRoadSprite:self.mainGameSectionBackground];
+        self.scrollingChildren = [NSArray arrayWithArray:stripes];
         [self createSectionContent];
     }
     return self;
@@ -43,8 +45,8 @@ static NSString * const kLRBackgroundLayerStripeMovementName = @"moving stripes 
     CGFloat mainGameSectionYPos = -self.size.height/2 + kSectionHeightLetterSection + kSectionHeightButtonSection + kSectionHeightMainSection/2;
     self.mainGameSectionBackground.position = CGPointMake(mainGameSectionXPos, mainGameSectionYPos);
     [self addChild:self.mainGameSectionBackground];
-    for (SKSpriteNode *stripe in self.roadStripes) {
-        [self.mainGameSectionBackground addChild:stripe];
+    for (SKSpriteNode *stripe in self.scrollingChildren) {
+        [self addChild:stripe];
     }
 }
 
@@ -78,40 +80,43 @@ static NSString * const kLRBackgroundLayerStripeMovementName = @"moving stripes 
 
 - (void)_startStripeMovement
 {
-    for (SKSpriteNode *stripe in self.roadStripes) {
-        [self _runRecursiveMovementOnStripe:stripe];
-        stripe.speed = 1.0;
+    for (SKSpriteNode *sprite in self.scrollingChildren)
+    {
+        [sprite removeActionForKey:kLRBackgroundLayerStopScroll];
+        [self _runRecursiveMovementOnSprite:sprite];
+        sprite.speed = 1.0;
     }
 }
 
 - (void)_stopStripeMovementAnimated:(BOOL)animated
 {
-    for (SKSpriteNode *stripe in self.roadStripes) {
+    for (SKSpriteNode *sprite in self.scrollingChildren) {
         if (animated) {
             SKAction *slowDown = [LRMainGameSection gameOverSlowDownAction];
-            [stripe runAction:slowDown completion:^{
-                [stripe removeActionForKey:kLRBackgroundLayerStripeMovementName];
+            SKAction *completion = [SKAction runBlock:^{
+                [sprite removeActionForKey:kLRBackgroundLayerStartScroll];
             }];
+            [sprite runAction:[SKAction sequence:@[slowDown, completion]] withKey:kLRBackgroundLayerStopScroll];
         }
     }
 }
 
-- (void)_runRecursiveMovementOnStripe:(SKSpriteNode *)stripe
+- (void)_runRecursiveMovementOnSprite:(SKSpriteNode *)sprite
 {
-    SKAction *initialMove = [self _movementForStripe:stripe];
+    SKAction *initialMove = [self _movementForSprite:sprite];
     SKAction *completion = [SKAction runBlock:^{
-        stripe.position = CGPointMake((self.mainGameSectionBackground.size.width + stripe.size.width)/2, stripe.position.y);
-        [self _runRecursiveMovementOnStripe:stripe];
+        sprite.position = CGPointMake((self.mainGameSectionBackground.size.width + sprite.size.width)/2, sprite.position.y);
+        [self _runRecursiveMovementOnSprite:sprite];
     }];
-    [stripe runAction:[SKAction sequence:@[initialMove, completion]] withKey:kLRBackgroundLayerStripeMovementName];
+    [sprite runAction:[SKAction sequence:@[initialMove, completion]] withKey:kLRBackgroundLayerStartScroll];
 }
 
-- (SKAction *)_movementForStripe:(SKSpriteNode *)stripe
+- (SKAction *)_movementForSprite:(SKSpriteNode *)sprite
 {
     //Get how far the stripe is from the edge
-    CGFloat leftEdgeX = (self.mainGameSectionBackground.size.width + stripe.size.width)/2;
-    CGPoint endPoint = CGPointMake(-leftEdgeX, stripe.position.y);
-    CGFloat distance =  endPoint.x - stripe.position.x;
+    CGFloat leftEdgeX = (self.mainGameSectionBackground.size.width + sprite.size.width)/2;
+    CGPoint endPoint = CGPointMake(-leftEdgeX, sprite.position.y);
+    CGFloat distance =  endPoint.x - sprite.position.x;
     //Make the duration the same as the letter cross time
     CGFloat totalCrossTime = [LRMovingBlockBuilder blockScreenCrossTime];
     CGFloat duration = ABS(distance/self.mainGameSectionBackground.size.width) * totalCrossTime;
