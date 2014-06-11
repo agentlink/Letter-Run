@@ -348,7 +348,6 @@ static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
 
 - (void)_shiftEnvelopesInRange:(NSRange)slotRange direction:(LRDirection)direction
 {
-    //TODO: add other assertions here
     NSAssert(slotRange.length + slotRange.location <= kLRLetterSectionCapacity, @"Shift envelope range exceeds max letter count");
     NSAssert(!(slotRange.location == 0 && direction == kLRDirectionLeft), @"Cannot shift left from index 0");
     NSAssert(!(direction == kLRDirectionRight && slotRange.location + slotRange.length == kLRLetterSectionCapacity), @"Range with length and location added up to the length of the letter seciton is invalid");

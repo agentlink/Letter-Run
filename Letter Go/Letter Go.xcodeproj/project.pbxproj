@@ -49,6 +49,7 @@
 		00F6F59717FF5234009EDADB /* LRGameStateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F6F59617FF5234009EDADB /* LRGameStateManager.m */; };
 		A82CA94C1855189F004ADD99 /* LRRowManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A82CA94B1855189F004ADD99 /* LRRowManager.m */; };
 		A846FB8B186E0489009DCEF4 /* LRLetterBlock_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = A846FB8A186E0489009DCEF4 /* LRLetterBlock_Test.m */; };
+		A8559ACE1947E0DF00766C13 /* LRLevelManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A8559ACD1947E0DF00766C13 /* LRLevelManager.m */; };
 		A85A4CDA18E78BA100787D21 /* LeagueGothic-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = A85A4CD818E78BA100787D21 /* LeagueGothic-Italic.otf */; };
 		A85A4CDB18E78BA100787D21 /* LeagueGothic-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = A85A4CD918E78BA100787D21 /* LeagueGothic-Regular.otf */; };
 		A876EC3B18836795000FA069 /* Background_Cloud.png in Resources */ = {isa = PBXBuildFile; fileRef = A876EC3A18836795000FA069 /* Background_Cloud.png */; };
@@ -181,6 +182,8 @@
 		A82DD7E71857FB24007483A6 /* LRPositionConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LRPositionConstants.h; sourceTree = "<group>"; };
 		A8423117188B162300F1693E /* LRLetterBlockControlDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRLetterBlockControlDelegate.h; sourceTree = "<group>"; };
 		A846FB8A186E0489009DCEF4 /* LRLetterBlock_Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterBlock_Test.m; sourceTree = "<group>"; };
+		A8559ACC1947E0DF00766C13 /* LRLevelManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRLevelManager.h; sourceTree = "<group>"; };
+		A8559ACD1947E0DF00766C13 /* LRLevelManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLevelManager.m; sourceTree = "<group>"; };
 		A85A4CD818E78BA100787D21 /* LeagueGothic-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LeagueGothic-Italic.otf"; sourceTree = "<group>"; };
 		A85A4CD918E78BA100787D21 /* LeagueGothic-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LeagueGothic-Regular.otf"; sourceTree = "<group>"; };
 		A876EC3A18836795000FA069 /* Background_Cloud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background_Cloud.png; sourceTree = "<group>"; };
@@ -337,16 +340,11 @@
 			children = (
 				A8A3441D191EC70A006C5C55 /* AI Managers */,
 				00AC2808182EEA1300B3C0EB /* Collision Manager */,
-				00AC2809182EEA2200B3C0EB /* Difficulty Manager */,
-				00AC280A182EEA3F00B3C0EB /* Letters + Words */,
-				008428F71801F46C00908E5D /* LRScoreManager.h */,
-				008428F81801F46C00908E5D /* LRScoreManager.m */,
-				A88DECE0190C39C10076EDE9 /* LRProgressManager.h */,
-				A88DECE1190C39C10076EDE9 /* LRProgressManager.m */,
+				A8559ACB1947E0AA00766C13 /* Score */,
+				00AC2809182EEA2200B3C0EB /* Difficulty */,
+				00AC280A182EEA3F00B3C0EB /* Words */,
 				A8D109DB19313AA200D34C62 /* LRSharedTextureCache.h */,
 				A8D109DC19313AA200D34C62 /* LRSharedTextureCache.m */,
-				A8955B3619379ACE00AECDB3 /* LRDifficultyManager.h */,
-				A8955B3719379ACE00AECDB3 /* LRDifficultyManager.m */,
 			);
 			name = Singletons;
 			sourceTree = "<group>";
@@ -411,20 +409,24 @@
 			name = "Collision Manager";
 			sourceTree = "<group>";
 		};
-		00AC2809182EEA2200B3C0EB /* Difficulty Manager */ = {
+		00AC2809182EEA2200B3C0EB /* Difficulty */ = {
 			isa = PBXGroup;
 			children = (
+				A8955B3619379ACE00AECDB3 /* LRDifficultyManager.h */,
+				A8955B3719379ACE00AECDB3 /* LRDifficultyManager.m */,
+				A8559ACC1947E0DF00766C13 /* LRLevelManager.h */,
+				A8559ACD1947E0DF00766C13 /* LRLevelManager.m */,
 			);
-			name = "Difficulty Manager";
+			name = Difficulty;
 			sourceTree = "<group>";
 		};
-		00AC280A182EEA3F00B3C0EB /* Letters + Words */ = {
+		00AC280A182EEA3F00B3C0EB /* Words */ = {
 			isa = PBXGroup;
 			children = (
 				009CC29C180349E700C0423D /* LRDictionaryChecker.h */,
 				009CC29D180349E700C0423D /* LRDictionaryChecker.m */,
 			);
-			name = "Letters + Words";
+			name = Words;
 			sourceTree = "<group>";
 		};
 		00AC280B182EEA7900B3C0EB /* Menus */ = {
@@ -571,6 +573,17 @@
 				A8423117188B162300F1693E /* LRLetterBlockControlDelegate.h */,
 			);
 			name = Delegates;
+			sourceTree = "<group>";
+		};
+		A8559ACB1947E0AA00766C13 /* Score */ = {
+			isa = PBXGroup;
+			children = (
+				008428F71801F46C00908E5D /* LRScoreManager.h */,
+				008428F81801F46C00908E5D /* LRScoreManager.m */,
+				A88DECE0190C39C10076EDE9 /* LRProgressManager.h */,
+				A88DECE1190C39C10076EDE9 /* LRProgressManager.m */,
+			);
+			name = Score;
 			sourceTree = "<group>";
 		};
 		A877E5BC185BF8C30028CFFA /* Tests */ = {
@@ -938,6 +951,7 @@
 				A8B6B7221903243600E130A6 /* LRMovingBlockBuilder.m in Sources */,
 				A8D5CE79193A649300084F92 /* LRTopMenuSection.m in Sources */,
 				0007FB3F180C7A1A00E55B0D /* LRCollectedEnvelope.m in Sources */,
+				A8559ACE1947E0DF00766C13 /* LRLevelManager.m in Sources */,
 				00CDF14F17F474EC003065F6 /* LRViewController.m in Sources */,
 				A82CA94C1855189F004ADD99 /* LRRowManager.m in Sources */,
 				00A6886E1904AA0E0074632F /* LRDevPauseViewController.m in Sources */,

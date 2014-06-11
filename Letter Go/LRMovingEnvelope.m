@@ -14,8 +14,8 @@
 #import "LRSharedTextureCache.h"
 #import "LRMultipleLetterGenerator.h"
 
-static LRPaperColor kLRMovingEnvelopeHiddenPaperColor = kLRPaperColorBlue;
-static LRPaperColor kLRMovingEnvelopeShiftingPaperColor = kLRPaperColorPink;
+const LRPaperColor kLRMovingEnvelopeHiddenPaperColor = kLRPaperColorBlue;
+const LRPaperColor kLRMovingEnvelopeShiftingPaperColor = kLRPaperColorPink;
 
 static CGFloat const kLRMovingBlockTouchSizeExtraWidth  = 25.0;
 static CGFloat const kLRMovingBlockTouchSizeExtraHeight = 35.0;

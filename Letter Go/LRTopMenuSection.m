@@ -12,6 +12,7 @@
 #import "LRGameStateManager.h"
 #import "LRScoreManager.h"
 #import "LRValueLabelNode.h"
+#import "LRProgressManager.h"
 
 @interface LRScoreControlColorScore : SKSpriteNode
 - (id)initWithPaperColor:(LRPaperColor)paperColor;
@@ -141,9 +142,9 @@
 #pragma mark - Score Manager Delegate Functions
 - (void)changeScoreWithAnimation:(BOOL)animated
 {
-    [self.yellowScore setColorScore:[[LRScoreManager shared] numYellowEnvelopes] animated:animated];
-    [self.blueScore setColorScore:[[LRScoreManager shared] numBlueEnvelopes] animated:animated];
-    [self.pinkScore setColorScore:[[LRScoreManager shared] numPinkEnvelopes] animated:animated];
+    [self.yellowScore setColorScore:[[LRProgressManager shared]scoreLeftForPaperColor: kLRPaperColorYellow] animated:animated];
+    [self.blueScore setColorScore:[[LRProgressManager shared]scoreLeftForPaperColor:kLRPaperColorBlue] animated:animated];
+    [self.pinkScore setColorScore:[[LRProgressManager shared]scoreLeftForPaperColor:kLRPaperColorPink] animated:animated];
 }
 
 - (void)changeDistance

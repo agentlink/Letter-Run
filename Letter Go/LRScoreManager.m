@@ -79,14 +79,34 @@ static LRScoreManager *_shared = nil;
     [submittedWords addObject:updatedWordDict];
     
     //Check for level progression
-    if ([[LRProgressManager shared] increasedLevelForScore:self.score]) {
+    if ([[LRProgressManager shared] didIncreaseLevel]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_INCREASED_LEVEL object:nil];
         NSLog(@"Level %u", (unsigned)[[LRProgressManager shared] level]);
+        [self _resetScoreForNewGame];
     }
     if (self.delegate && [self.delegate respondsToSelector:@selector(changeScoreWithAnimation:)]) {
         [self.delegate changeScoreWithAnimation:YES];
     }
     return wordScore;
+}
+
+- (NSUInteger)envelopesCollectedForColor:(LRPaperColor)paperColor
+{
+    switch (paperColor) {
+        case kLRPaperColorYellow:
+            return self.numYellowEnvelopes;
+            break;
+        case kLRPaperColorBlue:
+            return self.numBlueEnvelopes;
+            break;
+        case kLRPaperColorPink:
+            return self.numPinkEnvelopes;
+            break;
+        default:
+            NSAssert(0, @"Unknown paper color has no score");
+            return 0;
+            break;
+    }
 }
 
 + (NSUInteger)scoreForWordWithDict:(NSDictionary *)wordDict
@@ -108,6 +128,14 @@ static LRScoreManager *_shared = nil;
     return wordScore;
 }
 
+- (void)increaseDistanceByValue:(NSUInteger)distance
+{
+    self.distance += distance;
+}
+
+#pragma Private Methods
+
+
 + (CGFloat)_scoreMultiplierForLength: (NSUInteger)length
 {
     CGFloat fLength = (CGFloat)length;
@@ -115,9 +143,31 @@ static LRScoreManager *_shared = nil;
     return multiplier;
 }
 
-- (void)increaseDistanceByValue:(NSUInteger)distance
+- (void)_resetScoreForNewLevel
 {
-    self.distance += distance;
+    self.numYellowEnvelopes = 0;
+    self.numBlueEnvelopes = 0;
+    self.numPinkEnvelopes = 0;
+}
+
+- (void)_resetScoreForNewGame {
+    //Clear all the scores
+    self.score = 0;
+    self.distance = 0;
+    self.numYellowEnvelopes = 0;
+    self.numBlueEnvelopes = 0;
+    self.numPinkEnvelopes = 0;
+    
+    //Empty the submitted owrds array
+    submittedWords = [NSMutableArray array];
+    
+    //And update the score shown on screen
+    if (self.delegate && [self.delegate respondsToSelector:@selector(changeScoreWithAnimation:)]) {
+        [self.delegate changeScoreWithAnimation:NO];
+    }
+    if (self.delegate && [self.delegate respondsToSelector:@selector(changeDistance)]) {
+        [self.delegate changeDistance];
+    }
 }
 
 - (void)setDistance:(NSUInteger)distance
@@ -135,27 +185,6 @@ static LRScoreManager *_shared = nil;
     [self _resetScoreForNewGame];
 }
 
-#pragma mark - Game State and Level Progression
-
-- (void)_resetScoreForNewGame {
-    //Clear all the scores
-    self.score = 0;
-    self.distance = 0;
-    self.numYellowEnvelopes = 0;
-    self.numBlueEnvelopes = 0;
-    self.numPinkEnvelopes = 0;
-    
-    //Empty the submitted owrds array
-    submittedWords = [NSMutableArray array];
-
-    //And update the score shown on screen
-    if (self.delegate && [self.delegate respondsToSelector:@selector(changeScoreWithAnimation:)]) {
-        [self.delegate changeScoreWithAnimation:NO];
-    }
-    if (self.delegate && [self.delegate respondsToSelector:@selector(changeDistance)]) {
-        [self.delegate changeDistance];
-    }
-}
 
 
 @end

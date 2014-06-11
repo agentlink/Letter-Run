@@ -25,17 +25,16 @@ extern NSUInteger const kLRScoreManagerScorePerLetter;
 @property (readonly) NSUInteger score;
 /// The distance the player has run
 @property (nonatomic, readonly) NSUInteger distance;
-/// The number of yellow envelopes collected
-@property (readonly) NSUInteger numYellowEnvelopes;
-/// The number of blue envelopes collected
-@property (readonly) NSUInteger numBlueEnvelopes;
-/// The number of pink envelopes collected
-@property (readonly) NSUInteger numPinkEnvelopes;
-
 /// The score delegate that handles showing the user when the score has changed
 @property (nonatomic, weak) id <LRScoreManagerDelegate> delegate;
 ///The shared instance of the score manager
 + (LRScoreManager *)shared;
+
+/*!
+ @param paperColor: the paper color the user wants to look up
+ @return the number of envelopes collected for a given paper color
+ */
+- (NSUInteger)envelopesCollectedForColor:(LRPaperColor)paperColor;
 
 /*!
  This functions submits a word for scoring/storing and returns the score as calculated by scoreForWordWithDict:(NSDictionary)dict

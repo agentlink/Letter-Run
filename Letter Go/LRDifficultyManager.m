@@ -8,6 +8,9 @@
 
 #import "LRDifficultyManager.h"
 #import "LRProgressManager.h"
+#import "LRMovingEnvelope.h"
+
+static NSUInteger const kLRDifficultyManagerHiddenEnvelopeLevel = 1;
 
 @implementation LRDifficultyManager
 {
@@ -38,12 +41,31 @@ static LRDifficultyManager *_shared = nil;
     return self;
 }
 
+- (NSSet *)availablePaperColors
+{
+    NSMutableSet *paperColors = [NSMutableSet setWithObject:@(kLRPaperColorYellow)];
+    if ([[LRMultipleLetterGenerator shared] isMultipleLetterGenerationEnabled])
+    {
+        [paperColors addObject:@(kLRMovingEnvelopeShiftingPaperColor)];
+    }
+    if ([self _isHiddenEnvelopeGenerationEnabled])
+    {
+        [paperColors addObject:@(kLRMovingEnvelopeHiddenPaperColor)];
+    }
+    return paperColors;
+}
+
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - Private Methods
+
+- (BOOL)_isHiddenEnvelopeGenerationEnabled
+{
+    return _level >= kLRDifficultyManagerHiddenEnvelopeLevel;
+}
 
 - (void)_changedLevel
 {

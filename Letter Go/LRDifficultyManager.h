@@ -13,4 +13,7 @@
 
 + (LRDifficultyManager *)shared;
 
+///Returns the available paper colors as an array of NSNumbers
+- (NSSet *)availablePaperColors;
+
 @end

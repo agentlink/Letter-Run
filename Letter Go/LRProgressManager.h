@@ -14,9 +14,11 @@
 ///The level the player is currently on
 @property (nonatomic, readonly) NSUInteger level;
 
-///Returns YES if the level is increased by the score. It also increases the score for the level
-- (BOOL)increasedLevelForScore:(NSUInteger)score;
+///Returns YES if the player has collected all required envelopes to beat the level
+- (BOOL)didIncreaseLevel;
 ///Resets the level to one
 - (void)resetRoundProgress;
+//Returns the required score for a given envelope
+- (NSUInteger)scoreLeftForPaperColor:(LRPaperColor)color;
 
 @end

@@ -53,7 +53,7 @@ static NSString * const kLRBackgroundLayerStopScroll = @"stop background scroll"
 - (NSArray *)_stripesForRoadSprite:(SKSpriteNode *)road
 {
     NSMutableArray *allStripes = [NSMutableArray new];
-    //TODO: get this value correctly
+    //TODO: create a parallax layer to do this correctly
     CGFloat stripeWidth = 38.5;
     CGFloat diffY = road.size.height / (kLRRowManagerNumberOfRows + 1);
     CGFloat diffX = (road.size.width + 38.5)/(kLRBackgroundLayerStripesPerRow);

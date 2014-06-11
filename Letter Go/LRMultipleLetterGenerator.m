@@ -173,8 +173,4 @@ static LRMultipleLetterGenerator *_shared = nil;
     return kLRMultipleLetterGeneratorListLength;
 }
 
-//- (NSArray *)generateMultipleLetterList;
-//- (NSArray *)generateMultipleLetterListWithChainMailStyle:(LRChainMailStyle)style;
-//- (NSArray *)generateMultipleLetterListWithChainMailStyle:(LRChainMailStyle)style startingLetter:(NSString *)letter;
-
 @end

@@ -7,6 +7,8 @@
 //
 
 #import "LRProgressManager.h"
+#import "LRLevelManager.h"
+#import "LRScoreManager.h"
 
 //#toy
 static CGFloat const kLRProgressManagerInitialScoreToNextLevel = 200;
@@ -14,6 +16,8 @@ static CGFloat const kLRProgressManagerNextLevelIncreaseRatio = 1.2;
 
 @interface LRProgressManager ()
 @property (nonatomic, readwrite) NSUInteger level;
+@property (nonatomic, strong) NSMutableDictionary *collectedEnvelopesForCurrentLevel;
+@property (nonatomic, strong) LRLevelManager *levelManager;
 @end
 
 @implementation LRProgressManager
@@ -36,8 +40,10 @@ static LRProgressManager *_shared = nil;
 {
     self = [super init];
     if (!self) return nil;
-    
-    self.level = 1;
+   
+    self.levelManager = [[LRLevelManager alloc] init];
+    [self resetRoundProgress];
+
     return self;
 }
 
@@ -48,18 +54,27 @@ static LRProgressManager *_shared = nil;
     self.level = 1;
 }
 
-- (BOOL)increasedLevelForScore:(NSUInteger)score;
+- (BOOL)didIncreaseLevel
 {
-    NSUInteger scoreToNextLevel = [LRProgressManager _scoreForLevel:self.level];
-    BOOL increasedLevel = NO;
-    NSUInteger newLevel = self.level;
-    while (score >= scoreToNextLevel) {
-        newLevel += 1;
-        increasedLevel = YES;
-        scoreToNextLevel = [LRProgressManager _scoreForLevel:newLevel];
+    NSDictionary *levelUpDict = [self.levelManager envelopesRequiredToWinCurrentLevel];
+    for (NSNumber *key in [levelUpDict allKeys])
+    {
+        LRPaperColor color = [key integerValue];
+        NSUInteger collected = [[LRScoreManager shared] envelopesCollectedForColor:color];
+        NSUInteger reqCollected = [levelUpDict[key] unsignedIntegerValue];
+        if (collected < reqCollected)
+            return NO;
     }
-    self.level = newLevel;
-    return increasedLevel;
+    self.level++;
+    return YES;
+}
+
+- (NSUInteger)scoreLeftForPaperColor:(LRPaperColor)color
+{
+    NSDictionary *levelDict = [self.levelManager envelopesRequiredToWinCurrentLevel];
+    NSInteger envelopesToContinue = [levelDict[@(color)] integerValue];
+    NSInteger colorScore = envelopesToContinue - [[LRScoreManager shared] envelopesCollectedForColor:color];
+    return MAX(0, colorScore);
 }
 
 #pragma mark - Private Functions
