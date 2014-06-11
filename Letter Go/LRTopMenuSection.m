@@ -24,7 +24,7 @@
 @end
 
 @interface LRMissionControlSection : SKSpriteNode <LRScoreManagerDelegate>
-@property (nonatomic, strong) LRValueLabelNode *distanceLabel;
+@property (nonatomic, strong) LRValueLabelNode *levelLabel;
 @property (nonatomic, weak) NSNumber *scoreNum;
 
 @property (nonatomic, strong) LRScoreControlColorScore *yellowScore;
@@ -86,31 +86,31 @@
     if (self = [super initWithTexture:texture])
     {
         self.anchorPoint = CGPointMake(1, 1);
-        [self addChild:self.distanceLabel];
+        [self addChild:self.levelLabel];
         [self _setUpEnvelopeScores];
         [LRScoreManager shared].delegate = self;
     }
     return self;
 }
 
-- (LRValueLabelNode *)distanceLabel
+- (LRValueLabelNode *)levelLabel
 {
-    if (!_distanceLabel) {
+    if (!_levelLabel) {
         CGFloat fontSize = 90;
         LRFont *scoreLabelFont = [LRFont displayTextFontWithSize:fontSize];
-        CGFloat rightMargin = -10.0;
+        CGFloat rightMargin = -20.0;
         
-        _distanceLabel = [[LRValueLabelNode alloc] initWithFontNamed:scoreLabelFont.familyName initialValue:[[LRScoreManager shared] distance]];
-        _distanceLabel.postValueString = @" ft.";
-        _distanceLabel.fontSize = fontSize;
-        _distanceLabel.fontColor = [LRColor blackColor];
+        _levelLabel = [[LRValueLabelNode alloc] initWithFontNamed:scoreLabelFont.familyName initialValue:[[LRProgressManager shared] level]];
+        _levelLabel.preValueString = @"Level ";
+        _levelLabel.fontSize = fontSize;
+        _levelLabel.fontColor = [LRColor blackColor];
         
-        _distanceLabel.position = CGPointMake(-_distanceLabel.frame.size.width/2 + rightMargin,
+        _levelLabel.position = CGPointMake(rightMargin,
                                            -self.frame.size.height/2);
-        [_distanceLabel setVerticalAlignmentMode:SKLabelVerticalAlignmentModeCenter];
-        [_distanceLabel setHorizontalAlignmentMode:SKLabelHorizontalAlignmentModeRight];
+        [_levelLabel setVerticalAlignmentMode:SKLabelVerticalAlignmentModeCenter];
+        [_levelLabel setHorizontalAlignmentMode:SKLabelHorizontalAlignmentModeRight];
     }
-    return _distanceLabel;
+    return _levelLabel;
 }
 
 - (void)_setUpEnvelopeScores
@@ -145,11 +145,13 @@
     [self.yellowScore setColorScore:[[LRProgressManager shared]scoreLeftForPaperColor: kLRPaperColorYellow] animated:animated];
     [self.blueScore setColorScore:[[LRProgressManager shared]scoreLeftForPaperColor:kLRPaperColorBlue] animated:animated];
     [self.pinkScore setColorScore:[[LRProgressManager shared]scoreLeftForPaperColor:kLRPaperColorPink] animated:animated];
+    
+    [self.levelLabel updateValue:[[LRProgressManager shared] level]  animated:NO];
 }
 
 - (void)changeDistance
 {
-    [self.distanceLabel updateValue:[[LRScoreManager shared] distance] animated:NO];
+//    [self.levelLabel updateValue:[[LRScoreManager shared] distance] animated:NO];
 }
 
 @end

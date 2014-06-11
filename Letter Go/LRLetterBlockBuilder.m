@@ -10,9 +10,9 @@
 #import "LRAlphabeticalLetterGenerator.h"
 #import "LRDifficultyManager.h"
 typedef NS_ENUM(NSInteger, LRLetterProbability) {
-    kLRLetterProbabilityCommon          = 20,
-    kLRLetterProbabilityUncommon        = 23,
-    kLRLetterProbabilityRare            = 25,
+    kLRLetterProbabilityCommon          = 11,
+    kLRLetterProbabilityUncommon        = 14,
+    kLRLetterProbabilityRare            = 16,
 };
 
 static const BOOL lgbDebugMode = NO;
@@ -69,10 +69,10 @@ static const BOOL lgbDebugMode = NO;
         paperColor = kLRPaperColorYellow;
     }
     else if (val <= kLRLetterProbabilityUncommon) {
-        paperColor = kLRPaperColorPink;
+        paperColor = kLRPaperColorBlue;
     }
     else {
-        paperColor = kLRPaperColorBlue;
+        paperColor = kLRPaperColorPink;
     }
     
     if (![LRLetterBlockBuilder _isPaperColorEnabled:paperColor]) {

@@ -11,7 +11,7 @@
 #import "LRGameStateManager.h"
 #import "LRSharedTextureCache.h"
 
-static const CGFloat kLRHealthSectionInitialDropTime = 35.0;
+static const CGFloat kLRHealthSectionInitialDropTime = 50.0;
 static const CGFloat kLRHealthSectionStartPercentYellow = .50;
 
 @interface LRHealthBarColoredBackground : SKSpriteNode
@@ -40,6 +40,16 @@ static const CGFloat kLRHealthSectionStartPercentYellow = .50;
 
 @implementation LRHealthSection
 
+- (id) initWithSize:(CGSize)size
+{
+    self = [super initWithSize:size];
+    if (!self) return self;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_resetHealthBar) name:GAME_STATE_INCREASED_LEVEL object:nil];
+    
+    return self;
+}
+
 - (void)createSectionContent
 {
     //The color will be replaced by a health bar sprite
@@ -49,6 +59,10 @@ static const CGFloat kLRHealthSectionStartPercentYellow = .50;
 
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 #pragma mark - Properties Accessors
 
@@ -77,12 +91,12 @@ static const CGFloat kLRHealthSectionStartPercentYellow = .50;
     return _healthBarSkin;
 }
 
-#pragma mark - Public Functions
+#pragma mark - Public Methods
 
 - (void)addScore:(NSInteger)wordScore;
 {
-    CGFloat shiftDistance = [self _healthBarDistanceForScore:wordScore];
-    [self.coloredBar increaseColoredBarByDistance:shiftDistance];
+//    CGFloat shiftDistance = [self _healthBarDistanceForScore:wordScore];
+//    [self.coloredBar increaseColoredBarByDistance:shiftDistance];
 }
 
 - (CGFloat) percentHealth
@@ -112,6 +126,11 @@ static const CGFloat kLRHealthSectionStartPercentYellow = .50;
 - (CGFloat)_healthBarDropTime
 {
     return kLRHealthSectionInitialDropTime;
+}
+
+- (void)_resetHealthBar
+{
+    [self.coloredBar increaseColoredBarByDistance:self.coloredBar.size.width];
 }
 @end
 
