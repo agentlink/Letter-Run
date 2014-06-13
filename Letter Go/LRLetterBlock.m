@@ -39,6 +39,7 @@
     return self;
 
 }
+
 - (void)setLetter:(NSString *)letter
 {
     _letter = letter;

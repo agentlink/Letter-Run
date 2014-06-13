@@ -98,7 +98,7 @@
     if (!_levelLabel) {
         CGFloat fontSize = 90;
         LRFont *scoreLabelFont = [LRFont displayTextFontWithSize:fontSize];
-        CGFloat rightMargin = -20.0;
+        CGFloat rightMargin = -15.0;
         
         _levelLabel = [[LRValueLabelNode alloc] initWithFontNamed:scoreLabelFont.familyName initialValue:[[LRProgressManager shared] level]];
         _levelLabel.preValueString = @"Level ";
@@ -115,22 +115,22 @@
 
 - (void)_setUpEnvelopeScores
 {
-    CGFloat vertMargin = -15;
-    CGFloat leftMargin = 10;
-    CGFloat scoreXPos = -self.size.width + leftMargin;
-
     self.yellowScore = [[LRScoreControlColorScore alloc] initWithPaperColor:kLRPaperColorYellow];
     self.blueScore = [[LRScoreControlColorScore alloc] initWithPaperColor:kLRPaperColorBlue];
     self.pinkScore = [[LRScoreControlColorScore alloc] initWithPaperColor:kLRPaperColorPink];
     NSArray *scoreLabels = @[self.yellowScore, self.blueScore, self.pinkScore];
-    
-    CGFloat marginedHeight = self.size.height - 2 * vertMargin - self.yellowScore.size.height;
+
+    CGFloat leftMargin = 5 + self.yellowScore.size.width/2;
+    CGFloat scoreXPos = -self.size.width + leftMargin;
+    CGFloat scoreYPos = -self.size.height/2;
+    CGFloat xDiff = 12;
+
     int count = 0;
     for (LRScoreControlColorScore *scoreLabel in scoreLabels)
     {
-        CGFloat scoreYPos = marginedHeight * -count/[scoreLabels count] + -scoreLabel.size.height/2 + vertMargin;
-        scoreLabel.position = CGPointMake(scoreXPos, scoreYPos);
+        scoreLabel.position = CGPointMake(scoreXPos + xDiff * count, scoreYPos);
         count ++;
+        scoreXPos += scoreLabel.size.width + xDiff;
         [self addChild:scoreLabel];
     }
 }
@@ -159,13 +159,24 @@
 
 #pragma mark - LRScoreControlColorScore -
 @implementation LRScoreControlColorScore
-
+{
+    SKSpriteNode *_envSprite;
+}
 - (id)initWithPaperColor:(LRPaperColor)paperColor
 {
     if (self = [super init])
     {
         _paperColor = paperColor;
-        [self addChild:self.colorScoreLabel];
+        
+        NSString *envSpriteName = [LRMovingEnvelope stringFromPaperColor:paperColor open:YES];
+        _envSprite = [[SKSpriteNode alloc] initWithTexture:[[LRSharedTextureCache shared] textureWithName:envSpriteName]];
+        _envSprite.xScale = 1.8;
+        _envSprite.yScale = 1.8;
+        [_envSprite addChild:self.colorScoreLabel];
+        
+        self.colorScoreLabel.position = CGPointMake(0, -7);
+
+        [self addChild:_envSprite];
     }
     return self;
 }
@@ -182,7 +193,7 @@
         _colorScoreLabel.fontSize = fontSize;
         
         [_colorScoreLabel setVerticalAlignmentMode:SKLabelVerticalAlignmentModeCenter];
-        [_colorScoreLabel setHorizontalAlignmentMode:SKLabelHorizontalAlignmentModeLeft];
+        [_colorScoreLabel setHorizontalAlignmentMode:SKLabelHorizontalAlignmentModeCenter];
     }
     return _colorScoreLabel;
 }
@@ -202,13 +213,14 @@
 
 - (CGSize)size
 {
-    return self.colorScoreLabel.frame.size;
+    return _envSprite.size;
 }
 
 - (NSString *)_colorScoreLabelStringForScore:(NSUInteger)score
 {
-    NSString *str = score == 1 ? @" envelope" : @" envelopes";
-    return str;
+    return @"";
+//    NSString *str = score == 1 ? @" envelope" : @" envelopes";
+//    return str;
 }
 
 @end
