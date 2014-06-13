@@ -34,7 +34,7 @@ static NSString * const kLRMailmanRunningActionKey = @"manford running";
         self.xScale = .7;
         self.yScale = .7;
         self.zPosition = zPos_Mailman;
-        [self setCurrentRow:2 animated:NO];
+        [self setCurrentRow:1 animated:NO];
         [LRManfordAIManager shared].movementDelegate = self;
     }
     return self;
