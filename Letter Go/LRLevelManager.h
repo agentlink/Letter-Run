@@ -1,14 +1,18 @@
 //
-//  LRLevelManager.h
+//  LRMissionManager.h
 //  Letter Go
 //
-//  Created by Gabe Nicholas on 6/10/14.
+//  Created by Gabe Nicholas on 6/15/14.
 //  Copyright (c) 2014 Gabe Nicholas. All rights reserved.
 //
 
 #import <SpriteKit/SpriteKit.h>
 
-@interface LRLevelManager : SKNode
-
-- (NSDictionary *)envelopesRequiredToWinCurrentLevel;
+@interface LRMission : NSObject
+- (NSUInteger)numberOfEnvelopesForColor:(LRPaperColor)paperColor;
 @end
+
+@interface LRLevelManager : NSObject
+- (LRMission *)missionForLevel:(NSUInteger)level;
+@end
+

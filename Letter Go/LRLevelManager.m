@@ -1,34 +1,78 @@
 //
-//  LRLevelManager.m
+//  LRMissionManager.m
 //  Letter Go
 //
-//  Created by Gabe Nicholas on 6/10/14.
+//  Created by Gabe Nicholas on 6/15/14.
 //  Copyright (c) 2014 Gabe Nicholas. All rights reserved.
 //
 
 #import "LRLevelManager.h"
-#import "LRDifficultyManager.h"
-#import "LRProgressManager.h"
+#import "LRLetterBlock.h"
+
+@interface LRMission ()
++ (instancetype)missionFromDictionary:(NSDictionary *)dict;
+@property NSDictionary *paperColorDict;
+@end
+
+@interface LRLevelManager ()
+@property NSArray *missionPropertyList;
+@end
+
+@implementation LRMission
+
+#pragma mark - Public Methods
+
+- (id)init
+{
+    if (self = [super init])
+    {
+        self.paperColorDict = [NSDictionary new];
+    }
+    return self;
+}
+
+- (NSUInteger)numberOfEnvelopesForColor:(LRPaperColor)paperColor
+{
+    NSString *key = [LRLetterBlock stringValueForPaperColor:paperColor];
+    return [self.paperColorDict[key] unsignedIntegerValue];
+}
+
++ (instancetype)missionFromDictionary:(NSDictionary *)dict
+{
+    LRMission *mission = [LRMission new];
+    mission.paperColorDict = dict;
+    return mission;
+}
+@end
+
+
 
 @implementation LRLevelManager
 
-- (NSDictionary *)envelopesRequiredToWinCurrentLevel
+- (id)init
 {
-    NSMutableDictionary *reqEnvelopes = [NSMutableDictionary new];
-    NSSet *availablePaperColors = [[LRDifficultyManager shared] availablePaperColors];
-
-    //TODO: update how this is calculated
-    NSUInteger maxEnvelopes = [[LRProgressManager shared] level] * 2 + 1;
-    
-    for (NSNumber *num in availablePaperColors)
+    if (self = [super init])
     {
-        LRPaperColor paperColor = [num integerValue];
-        NSUInteger increaseLevelVal = maxEnvelopes/(paperColor + 1);
-        reqEnvelopes[num] = @(increaseLevelVal);
+        //set up the plist
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"LRMissions" ofType:@"plist"];
+        NSArray *plist = [NSArray arrayWithContentsOfFile:path];
+        self.missionPropertyList = plist;
     }
-    
-    return reqEnvelopes;
+    return self;
 }
 
+- (LRMission *)missionForLevel:(NSUInteger)level
+{
+    //If there is not a mission for a given level, start the missions over
+    if (level == 0)
+    {
+        NSLog(@"Warning: no mission for level 0");
+    }
+    NSUInteger modLevel = MAX(level%[self.missionPropertyList count], 1);
+    NSDictionary *levelDict = self.missionPropertyList[modLevel];
+    LRMission *mission = [LRMission missionFromDictionary:levelDict];
+    return mission;
+}
 
 @end
+

@@ -11,6 +11,7 @@
 #import "LRMovingEnvelope.h"
 
 static NSUInteger const kLRDifficultyManagerHiddenEnvelopeLevel = 2;
+static NSUInteger const kLRDifficultyManagerShiftingEnvelopeLevel = 3;
 
 @implementation LRDifficultyManager
 {
@@ -87,7 +88,7 @@ static LRDifficultyManager *_shared = nil;
             disable = ~kLRChainMailStyleNone;
             unrandomize = ~kLRChainMailStyleNone;
             break;
-        case 3:
+        case kLRDifficultyManagerShiftingEnvelopeLevel:
             enable = kLRChainMailStyleAlphabetical;
             break;
         case 4:

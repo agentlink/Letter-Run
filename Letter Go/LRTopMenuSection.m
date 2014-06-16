@@ -24,7 +24,6 @@
 @end
 
 @interface LRMissionControlSection : SKSpriteNode <LRScoreManagerDelegate>
-@property (nonatomic, strong) LRValueLabelNode *levelLabel;
 @property (nonatomic, weak) NSNumber *scoreNum;
 
 @property (nonatomic, strong) LRScoreControlColorScore *yellowScore;
@@ -86,31 +85,10 @@
     if (self = [super initWithTexture:texture])
     {
         self.anchorPoint = CGPointMake(1, 1);
-        [self addChild:self.levelLabel];
         [self _setUpEnvelopeScores];
         [LRScoreManager shared].delegate = self;
     }
     return self;
-}
-
-- (LRValueLabelNode *)levelLabel
-{
-    if (!_levelLabel) {
-        CGFloat fontSize = 90;
-        LRFont *scoreLabelFont = [LRFont displayTextFontWithSize:fontSize];
-        CGFloat rightMargin = -15.0;
-        
-        _levelLabel = [[LRValueLabelNode alloc] initWithFontNamed:scoreLabelFont.familyName initialValue:[[LRProgressManager shared] level]];
-        _levelLabel.preValueString = @"Level ";
-        _levelLabel.fontSize = fontSize;
-        _levelLabel.fontColor = [LRColor blackColor];
-        
-        _levelLabel.position = CGPointMake(rightMargin,
-                                           -self.frame.size.height/2);
-        [_levelLabel setVerticalAlignmentMode:SKLabelVerticalAlignmentModeCenter];
-        [_levelLabel setHorizontalAlignmentMode:SKLabelHorizontalAlignmentModeRight];
-    }
-    return _levelLabel;
 }
 
 - (void)_setUpEnvelopeScores
@@ -145,13 +123,6 @@
     [self.yellowScore setColorScore:[[LRProgressManager shared]scoreLeftForPaperColor: kLRPaperColorYellow] animated:animated];
     [self.blueScore setColorScore:[[LRProgressManager shared]scoreLeftForPaperColor:kLRPaperColorBlue] animated:animated];
     [self.pinkScore setColorScore:[[LRProgressManager shared]scoreLeftForPaperColor:kLRPaperColorPink] animated:animated];
-    
-    [self.levelLabel updateValue:[[LRProgressManager shared] level]  animated:NO];
-}
-
-- (void)changeDistance
-{
-//    [self.levelLabel updateValue:[[LRScoreManager shared] distance] animated:NO];
 }
 
 @end

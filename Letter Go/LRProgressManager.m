@@ -7,8 +7,8 @@
 //
 
 #import "LRProgressManager.h"
-#import "LRLevelManager.h"
 #import "LRScoreManager.h"
+#import "LRLevelManager.h"
 
 //#toy
 static CGFloat const kLRProgressManagerInitialScoreToNextLevel = 200;
@@ -56,12 +56,10 @@ static LRProgressManager *_shared = nil;
 
 - (BOOL)didIncreaseLevel
 {
-    NSDictionary *levelUpDict = [self.levelManager envelopesRequiredToWinCurrentLevel];
-    for (NSNumber *key in [levelUpDict allKeys])
+    for (LRPaperColor color = 0; color < kNumPaperColors; color++)
     {
-        LRPaperColor color = [key integerValue];
         NSUInteger collected = [[LRScoreManager shared] envelopesCollectedForColor:color];
-        NSUInteger reqCollected = [levelUpDict[key] unsignedIntegerValue];
+        NSUInteger reqCollected = [[self _currentMission] numberOfEnvelopesForColor:color];
         if (collected < reqCollected)
             return NO;
     }
@@ -71,8 +69,7 @@ static LRProgressManager *_shared = nil;
 
 - (NSUInteger)scoreLeftForPaperColor:(LRPaperColor)color
 {
-    NSDictionary *levelDict = [self.levelManager envelopesRequiredToWinCurrentLevel];
-    NSInteger envelopesToContinue = [levelDict[@(color)] integerValue];
+    NSUInteger envelopesToContinue= [[self _currentMission] numberOfEnvelopesForColor:color];
     NSInteger colorScore = envelopesToContinue - [[LRScoreManager shared] envelopesCollectedForColor:color];
     return MAX(0, colorScore);
 }
@@ -82,6 +79,11 @@ static LRProgressManager *_shared = nil;
 + (NSUInteger)_scoreForLevel:(NSUInteger)level
 {
     return kLRProgressManagerInitialScoreToNextLevel * pow(kLRProgressManagerNextLevelIncreaseRatio, level - 1);
+}
+
+- (LRMission *)_currentMission
+{
+    return [self.levelManager missionForLevel:self.level];
 }
 
 @end

@@ -12,6 +12,8 @@
 static NSString * const kLetterBlockEmptyLetter  = @"";
 static NSString * const kLetterBlockHolderText   = @" ";
 
+static NSInteger const kNumPaperColors = 3;
+
 @interface LRLetterBlock : SKSpriteNode <LRGameStateDelegate>
 
 typedef NS_ENUM(NSInteger, LRPaperColor)
