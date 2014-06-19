@@ -102,9 +102,8 @@ static LRScoreManager *_shared = nil;
         case kLRPaperColorPink:
             return self.numPinkEnvelopes;
             break;
-        default:
-            NSAssert(0, @"Unknown paper color has no score");
-            return 0;
+        case kLRPaperColorNone:
+            return self.numBlueEnvelopes + self.numPinkEnvelopes + self.numYellowEnvelopes;
             break;
     }
 }

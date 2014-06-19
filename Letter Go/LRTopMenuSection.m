@@ -26,9 +26,13 @@
 @interface LRMissionControlSection : SKSpriteNode <LRScoreManagerDelegate>
 @property (nonatomic, weak) NSNumber *scoreNum;
 
+@property (nonatomic, strong) NSArray *scoreControllerArray;
+
 @property (nonatomic, strong) LRScoreControlColorScore *yellowScore;
 @property (nonatomic, strong) LRScoreControlColorScore *blueScore;
 @property (nonatomic, strong) LRScoreControlColorScore *pinkScore;
+@property (nonatomic, strong) LRScoreControlColorScore *grayScore;
+
 @end
 
 @interface LRTopMenuSection ()
@@ -96,7 +100,9 @@
     self.yellowScore = [[LRScoreControlColorScore alloc] initWithPaperColor:kLRPaperColorYellow];
     self.blueScore = [[LRScoreControlColorScore alloc] initWithPaperColor:kLRPaperColorBlue];
     self.pinkScore = [[LRScoreControlColorScore alloc] initWithPaperColor:kLRPaperColorPink];
-    NSArray *scoreLabels = @[self.yellowScore, self.blueScore, self.pinkScore];
+    self.grayScore = [[LRScoreControlColorScore alloc] initWithPaperColor:kLRPaperColorNone];
+
+    NSArray *scoreLabels = @[self.yellowScore, self.blueScore, self.pinkScore, self.grayScore];
 
     CGFloat leftMargin = 5 + self.yellowScore.size.width/2;
     CGFloat scoreXPos = -self.size.width + leftMargin;
@@ -123,6 +129,7 @@
     [self.yellowScore setColorScore:[[LRProgressManager shared]scoreLeftForPaperColor: kLRPaperColorYellow] animated:animated];
     [self.blueScore setColorScore:[[LRProgressManager shared]scoreLeftForPaperColor:kLRPaperColorBlue] animated:animated];
     [self.pinkScore setColorScore:[[LRProgressManager shared]scoreLeftForPaperColor:kLRPaperColorPink] animated:animated];
+    [self.grayScore setColorScore:[[LRProgressManager shared]scoreLeftForPaperColor:kLRPaperColorNone] animated:animated];
 }
 
 @end

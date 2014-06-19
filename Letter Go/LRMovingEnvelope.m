@@ -169,7 +169,7 @@ NSString * const kLRMovingBlockName = @"Moving envelope";
             spriteName = @"envelope-yellow";
             break;
         case kLRPaperColorNone:
-            spriteName = nil;
+            spriteName = @"envelope-gray";
             break;
     }
     if (spriteName) {

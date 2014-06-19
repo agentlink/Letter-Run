@@ -109,9 +109,8 @@
         case kLRPaperColorPink:
             return @"pink";
             break;
-        default:
-            NSAssert(0, @"Empty envelope color has no name");
-            return @"";
+        case kLRPaperColorNone:
+            return @"gray";
             break;
     }
 }

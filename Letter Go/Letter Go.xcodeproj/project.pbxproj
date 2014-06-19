@@ -47,6 +47,7 @@
 		00CDF18917F4840F003065F6 /* LRHealthSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CDF18817F4840F003065F6 /* LRHealthSection.m */; };
 		00CDF18C17F4899B003065F6 /* LRLetterSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CDF18B17F4899B003065F6 /* LRLetterSection.m */; };
 		00F6F59717FF5234009EDADB /* LRGameStateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F6F59617FF5234009EDADB /* LRGameStateManager.m */; };
+		A82527141953439F0061DEE2 /* Letter_Gray.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A82527131953439F0061DEE2 /* Letter_Gray.atlas */; };
 		A82CA94C1855189F004ADD99 /* LRRowManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A82CA94B1855189F004ADD99 /* LRRowManager.m */; };
 		A8447EE7194E70280037A004 /* LRLevelManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A8447EE6194E70280037A004 /* LRLevelManager.m */; };
 		A8447EEA194E72EE0037A004 /* LRMissions.plist in Resources */ = {isa = PBXBuildFile; fileRef = A8447EE9194E72EE0037A004 /* LRMissions.plist */; };
@@ -178,6 +179,7 @@
 		00CDF18B17F4899B003065F6 /* LRLetterSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterSection.m; sourceTree = "<group>"; };
 		00F6F59517FF5234009EDADB /* LRGameStateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRGameStateManager.h; sourceTree = "<group>"; };
 		00F6F59617FF5234009EDADB /* LRGameStateManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRGameStateManager.m; sourceTree = "<group>"; };
+		A82527131953439F0061DEE2 /* Letter_Gray.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Letter_Gray.atlas; sourceTree = "<group>"; };
 		A82CA94A1855189F004ADD99 /* LRRowManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRRowManager.h; sourceTree = "<group>"; };
 		A82CA94B1855189F004ADD99 /* LRRowManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRRowManager.m; sourceTree = "<group>"; };
 		A82DD7E71857FB24007483A6 /* LRPositionConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LRPositionConstants.h; sourceTree = "<group>"; };
@@ -771,6 +773,7 @@
 		A8EDE18719314FAB007C456E /* Letters */ = {
 			isa = PBXGroup;
 			children = (
+				A82527131953439F0061DEE2 /* Letter_Gray.atlas */,
 				A8EDE18819314FAB007C456E /* Letter_Blue.atlas */,
 				A8EDE18919314FAB007C456E /* Letter_Pink.atlas */,
 				A8EDE18A19314FAB007C456E /* Letter_Yellow.atlas */,
@@ -892,6 +895,7 @@
 				A8F171CB18DF7C5B00964C34 /* SectionImages.xcassets in Resources */,
 				A876EC40188367AA000FA069 /* Background_Hills.png in Resources */,
 				00719CE318E6D21D00DF66E6 /* GothamBold.ttf in Resources */,
+				A82527141953439F0061DEE2 /* Letter_Gray.atlas in Resources */,
 				A8EDE18D19314FAB007C456E /* Button_Submit.atlas in Resources */,
 				A8EDE19119314FAB007C456E /* Manford.atlas in Resources */,
 				A85A4CDB18E78BA100787D21 /* LeagueGothic-Regular.otf in Resources */,

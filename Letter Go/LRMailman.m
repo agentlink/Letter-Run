@@ -138,14 +138,21 @@ static NSString * const kLRMailmanRunningActionKey = @"manford running";
     }
     
     //The time that Manford take to move to an envelope should be relative to how quickly the envelopes are generating.
-    CGFloat duration = [LRMailman _manfordMovementDurationForRowDifference:netRowDiff];
-    SKAction *movement = [SKAction moveTo:newManfordPos duration:duration];
-    movement.timingMode = SKActionTimingEaseInEaseOut;
-    return movement;
+    CGFloat manfordTimeRatio = .27;
+    CGFloat duration = [LRMailman _totalMovementDurationForRowDifference:netRowDiff];
+    CGFloat manfordDuration = duration * manfordTimeRatio;
+    CGFloat waitTime = duration - manfordDuration;
+    
+    SKAction *move = [SKAction moveTo:newManfordPos duration:manfordDuration];
+    SKAction *wait = [SKAction waitForDuration:waitTime];
+    
+    move.timingMode = SKActionTimingEaseInEaseOut;
+    SKAction *waitAndMove = [SKAction sequence:@[wait, move]];
+    return waitAndMove;
 }
 
 //This function returns how long Manford takes to move a given amount of rows
-+ (CGFloat)_manfordMovementDurationForRowDifference:(NSUInteger)rowDiff
++ (CGFloat)_totalMovementDurationForRowDifference:(NSUInteger)rowDiff
 {
     CGFloat blockInterval = [LRMovingBlockBuilder blockGenerationInterval];
     //Manford should move slower for shorter distances
