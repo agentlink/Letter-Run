@@ -11,7 +11,8 @@
 
 @interface LRMission ()
 + (instancetype)missionFromDictionary:(NSDictionary *)dict;
-@property NSDictionary *paperColorDict;
+@property (nonatomic, readwrite) NSDictionary *levelDict;
+@property (nonatomic, readwrite) NSDictionary *paperColorDict;
 @end
 
 @interface LRLevelManager ()
@@ -26,7 +27,6 @@
 {
     if (self = [super init])
     {
-        self.paperColorDict = [NSDictionary new];
     }
     return self;
 }
@@ -47,10 +47,21 @@
     return array;
 }
 
+- (void)setLevelDict:(NSDictionary *)levelDict
+{
+    _levelDict = levelDict;
+    self.paperColorDict = levelDict[@"paper colors"];
+}
+
+- (CGFloat)healthDropTime
+{
+    return [self.levelDict[@"health bar time"] floatValue];
+}
+
 + (instancetype)missionFromDictionary:(NSDictionary *)dict
 {
     LRMission *mission = [LRMission new];
-    mission.paperColorDict = dict;
+    mission.levelDict = dict;
     return mission;
 }
 @end

@@ -10,6 +10,7 @@
 
 @interface LRMission : NSObject
 @property (nonatomic, readonly) NSArray *paperColors;
+@property (nonatomic, readonly) CGFloat healthDropTime;
 - (NSUInteger)numberOfEnvelopesForColor:(LRPaperColor)paperColor;
 @end
 

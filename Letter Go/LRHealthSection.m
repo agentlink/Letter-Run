@@ -10,8 +10,9 @@
 #import "LRScoreManager.h"
 #import "LRGameStateManager.h"
 #import "LRSharedTextureCache.h"
+#import "LRProgressManager.h"
 
-static const CGFloat kLRHealthSectionInitialDropTime = 50.0;
+//static const CGFloat kLRHealthSectionInitialDropTime = 50.0;
 static const CGFloat kLRHealthSectionStartPercentYellow = .50;
 
 @interface LRHealthBarColoredBackground : SKSpriteNode
@@ -21,7 +22,7 @@ static const CGFloat kLRHealthSectionStartPercentYellow = .50;
 @end
 
 @interface LRHealthBarMovingSprite : SKSpriteNode
-@property (nonatomic,readwrite) NSUInteger healthbarDropTime;
+@property (nonatomic,readonly) CGFloat healthBarDropTime;
 @property (nonatomic,readonly) CGFloat percentProgress;
 - (void)startColoredBarFall;
 - (void)increaseColoredBarByDistance:(CGFloat)distance restartMovement:(BOOL)restartMovement;
@@ -69,7 +70,6 @@ static const CGFloat kLRHealthSectionStartPercentYellow = .50;
 - (LRHealthBarMovingSprite *)coloredBar {
     if (!_coloredBar) {
         _coloredBar = [[LRHealthBarMovingSprite alloc] initWithColor:[LRColor healthBarColorGreen] size:self.size];
-        _coloredBar.healthbarDropTime = [self _healthBarDropTime];
     }
     return _coloredBar;
 }
@@ -117,14 +117,9 @@ static const CGFloat kLRHealthSectionStartPercentYellow = .50;
 
 - (CGFloat)_healthBarDistanceForScore:(NSInteger)score
 {
-    CGFloat baseDistancePerLetter = self.size.width / kLRHealthSectionInitialDropTime;
+    CGFloat baseDistancePerLetter = self.size.width / self.coloredBar.healthBarDropTime;
     CGFloat wordDistance = (score * baseDistancePerLetter) / kLRScoreManagerScorePerLetter;
     return wordDistance;
-}
-
-- (CGFloat)_healthBarDropTime
-{
-    return kLRHealthSectionInitialDropTime;
 }
 
 - (void)_levelFinished
@@ -201,18 +196,12 @@ static NSString * const kLRHealthBarColoredContainerGainAction = @"Health bar ga
     return self.movingBar.position;
 }
 
-- (NSUInteger)healthbarDropTime
-{
-    NSAssert(_healthbarDropTime > 0, @"Health bar drop time cannot be 0");
-    return _healthbarDropTime;
-}
-
 #pragma mark - Public Methods
 
 - (void)startColoredBarFall
 {
     CGFloat distance = self.size.width + self.position.x;
-    CGFloat duration = distance/self.size.width * self.healthbarDropTime;
+    CGFloat duration = distance/self.size.width * self.healthBarDropTime;
     __block CGFloat lastElapsedTime = 0.0;
     SKAction *moveHealthbar = [SKAction customActionWithDuration:duration actionBlock:^(SKNode *node, CGFloat elapsedTime) {
         NSAssert(node == self, @"Move health bar action should only be run on self");
@@ -262,6 +251,12 @@ static NSString * const kLRHealthBarColoredContainerGainAction = @"Health bar ga
 - (void)restartHealthBar
 {
     self.position = CGPointZero;
+}
+
+- (CGFloat)healthBarDropTime
+{
+    CGFloat dropTime = [[[LRProgressManager shared] currentMission] healthDropTime];
+    return dropTime;
 }
 
 - (CGFloat)percentProgress
