@@ -37,6 +37,16 @@
     return [self.paperColorDict[key] unsignedIntegerValue];
 }
 
+- (NSArray *)paperColors
+{
+    NSMutableArray *array = [NSMutableArray new];
+    for (NSString *key in [self.paperColorDict allKeys])
+    {
+        [array addObject:@([LRLetterBlock paperColorForString:key])];
+    }
+    return array;
+}
+
 + (instancetype)missionFromDictionary:(NSDictionary *)dict
 {
     LRMission *mission = [LRMission new];
@@ -54,7 +64,7 @@
     if (self = [super init])
     {
         //set up the plist
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"LRMissions" ofType:@"plist"];
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"Missions" ofType:@"plist"];
         NSArray *plist = [NSArray arrayWithContentsOfFile:path];
         self.missionPropertyList = plist;
     }

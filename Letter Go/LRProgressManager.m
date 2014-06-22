@@ -8,7 +8,6 @@
 
 #import "LRProgressManager.h"
 #import "LRScoreManager.h"
-#import "LRLevelManager.h"
 
 //#toy
 static CGFloat const kLRProgressManagerInitialScoreToNextLevel = 200;
@@ -59,7 +58,7 @@ static LRProgressManager *_shared = nil;
     for (LRPaperColor color = kLRPaperColorNone; color < kNumPaperColors; color++)
     {
         NSUInteger collected = [[LRScoreManager shared] envelopesCollectedForColor:color];
-        NSUInteger reqCollected = [[self _currentMission] numberOfEnvelopesForColor:color];
+        NSUInteger reqCollected = [[self currentMission] numberOfEnvelopesForColor:color];
         if (collected < reqCollected)
             return NO;
     }
@@ -69,7 +68,7 @@ static LRProgressManager *_shared = nil;
 
 - (NSUInteger)scoreLeftForPaperColor:(LRPaperColor)color
 {
-    NSUInteger envelopesToContinue= [[self _currentMission] numberOfEnvelopesForColor:color];
+    NSUInteger envelopesToContinue= [[self currentMission] numberOfEnvelopesForColor:color];
     NSInteger colorScore = envelopesToContinue - [[LRScoreManager shared] envelopesCollectedForColor:color];
     return MAX(0, colorScore);
 }
@@ -81,7 +80,7 @@ static LRProgressManager *_shared = nil;
     return kLRProgressManagerInitialScoreToNextLevel * pow(kLRProgressManagerNextLevelIncreaseRatio, level - 1);
 }
 
-- (LRMission *)_currentMission
+- (LRMission *)currentMission
 {
     return [self.levelManager missionForLevel:self.level];
 }

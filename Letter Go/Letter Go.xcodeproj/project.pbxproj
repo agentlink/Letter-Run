@@ -50,7 +50,7 @@
 		A82527141953439F0061DEE2 /* Letter_Gray.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A82527131953439F0061DEE2 /* Letter_Gray.atlas */; };
 		A82CA94C1855189F004ADD99 /* LRRowManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A82CA94B1855189F004ADD99 /* LRRowManager.m */; };
 		A8447EE7194E70280037A004 /* LRLevelManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A8447EE6194E70280037A004 /* LRLevelManager.m */; };
-		A8447EEA194E72EE0037A004 /* LRMissions.plist in Resources */ = {isa = PBXBuildFile; fileRef = A8447EE9194E72EE0037A004 /* LRMissions.plist */; };
+		A8447EEA194E72EE0037A004 /* Missions.plist in Resources */ = {isa = PBXBuildFile; fileRef = A8447EE9194E72EE0037A004 /* Missions.plist */; };
 		A846FB8B186E0489009DCEF4 /* LRLetterBlock_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = A846FB8A186E0489009DCEF4 /* LRLetterBlock_Test.m */; };
 		A85A4CDA18E78BA100787D21 /* LeagueGothic-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = A85A4CD818E78BA100787D21 /* LeagueGothic-Italic.otf */; };
 		A85A4CDB18E78BA100787D21 /* LeagueGothic-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = A85A4CD918E78BA100787D21 /* LeagueGothic-Regular.otf */; };
@@ -186,7 +186,7 @@
 		A8423117188B162300F1693E /* LRLetterBlockControlDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRLetterBlockControlDelegate.h; sourceTree = "<group>"; };
 		A8447EE5194E70280037A004 /* LRLevelManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRLevelManager.h; sourceTree = "<group>"; };
 		A8447EE6194E70280037A004 /* LRLevelManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLevelManager.m; sourceTree = "<group>"; };
-		A8447EE9194E72EE0037A004 /* LRMissions.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = LRMissions.plist; sourceTree = "<group>"; };
+		A8447EE9194E72EE0037A004 /* Missions.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Missions.plist; sourceTree = "<group>"; };
 		A846FB8A186E0489009DCEF4 /* LRLetterBlock_Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterBlock_Test.m; sourceTree = "<group>"; };
 		A85A4CD818E78BA100787D21 /* LeagueGothic-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LeagueGothic-Italic.otf"; sourceTree = "<group>"; };
 		A85A4CD918E78BA100787D21 /* LeagueGothic-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LeagueGothic-Regular.otf"; sourceTree = "<group>"; };
@@ -397,6 +397,7 @@
 		008428EE1800992D00908E5D /* Property Lists */ = {
 			isa = PBXGroup;
 			children = (
+				A8447EE9194E72EE0037A004 /* Missions.plist */,
 				008428EF1800997800908E5D /* LetterProbabilities.plist */,
 				003C266F180F46C6003729D4 /* organizedDict.txt */,
 			);
@@ -583,7 +584,6 @@
 			children = (
 				A8447EE5194E70280037A004 /* LRLevelManager.h */,
 				A8447EE6194E70280037A004 /* LRLevelManager.m */,
-				A8447EE9194E72EE0037A004 /* LRMissions.plist */,
 			);
 			name = Missions;
 			sourceTree = "<group>";
@@ -901,7 +901,7 @@
 				A85A4CDB18E78BA100787D21 /* LeagueGothic-Regular.otf in Resources */,
 				00CDF14317F474EC003065F6 /* InfoPlist.strings in Resources */,
 				00CDF15617F474EC003065F6 /* Images.xcassets in Resources */,
-				A8447EEA194E72EE0037A004 /* LRMissions.plist in Resources */,
+				A8447EEA194E72EE0037A004 /* Missions.plist in Resources */,
 				003C2670180F46C6003729D4 /* organizedDict.txt in Resources */,
 				A8EDE18C19314FAB007C456E /* Button_Pause.atlas in Resources */,
 				00CDF14C17F474EC003065F6 /* Main.storyboard in Resources */,

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "LRLevelManager.h"
 
 @interface LRProgressManager : NSObject
 ///The progress manager singleton
@@ -20,5 +21,5 @@
 - (void)resetRoundProgress;
 //Returns the required score for a given envelope
 - (NSUInteger)scoreLeftForPaperColor:(LRPaperColor)color;
-
+- (LRMission *)currentMission;
 @end

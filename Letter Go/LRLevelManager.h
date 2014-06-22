@@ -9,6 +9,7 @@
 #import <SpriteKit/SpriteKit.h>
 
 @interface LRMission : NSObject
+@property (nonatomic, readonly) NSArray *paperColors;
 - (NSUInteger)numberOfEnvelopesForColor:(LRPaperColor)paperColor;
 @end
 

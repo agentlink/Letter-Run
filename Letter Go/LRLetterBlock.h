@@ -55,6 +55,9 @@ typedef NS_ENUM(NSInteger, LRPaperColor)
 + (BOOL)isLetterPlaceholder:(NSString *)letter;
 ///Returns the name of the paper color (e.g. "yellow", "pink", etc)
 + (NSString *)stringValueForPaperColor:(LRPaperColor)paperColor;
+///Returns the paper color for the name of a string
++ (LRPaperColor)paperColorForString:(NSString *)string;
+
 @end
 
 

@@ -12,6 +12,12 @@
 #import "LRLetterSlot.h"
 #import "LRPositionConstants.h"
 
+static NSString * const kLRPaperColorStringYellow = @"yellow";
+static NSString * const kLRPaperColorStringBlue = @"blue";
+static NSString * const kLRPaperColorStringPink = @"pink";
+static NSString * const kLRPaperColorStringGray = @"gray";
+
+
 @interface LRLetterBlock ()
 
 @property (readwrite) BOOL isTouched;
@@ -101,18 +107,33 @@
 {
     switch (paperColor) {
         case kLRPaperColorYellow:
-            return @"yellow";
+            return kLRPaperColorStringYellow;
             break;
         case kLRPaperColorBlue:
-            return @"blue";
+            return kLRPaperColorStringBlue;
             break;
         case kLRPaperColorPink:
-            return @"pink";
+            return kLRPaperColorStringPink;
             break;
         case kLRPaperColorNone:
-            return @"gray";
+            return kLRPaperColorStringGray;
             break;
     }
+}
+
++ (LRPaperColor)paperColorForString:(NSString *)string
+{
+    if ([string isEqualToString:kLRPaperColorStringYellow])
+        return kLRPaperColorYellow;
+    else if ([string isEqualToString:kLRPaperColorStringBlue])
+        return kLRPaperColorBlue;
+    else if ([string isEqualToString:kLRPaperColorStringPink])
+        return kLRPaperColorPink;
+    else if ([string isEqualToString:kLRPaperColorStringGray])
+        return kLRPaperColorNone;
+    
+    NSAssert(0, @"Invalid string for paper color %@", string);
+    return -1;
 }
 
 @end
