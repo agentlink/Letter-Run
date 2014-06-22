@@ -37,4 +37,5 @@ typedef void(^CompletionBlockType)(void);
 #define GAME_STATE_NEW_GAME                         @"New game"
 #define GAME_STATE_PAUSE_GAME                       @"Game paused"
 #define GAME_STATE_CONTINUE_GAME                    @"Game continued"
-#define GAME_STATE_INCREASED_LEVEL                  @"Next level reached"
+#define GAME_STATE_FINISHED_LEVEL                   @"Next level reached"
+#define GAME_STATE_STARTED_LEVEL                    @"Started a new level"

@@ -36,7 +36,7 @@ static LRDifficultyManager *_shared = nil;
 {
     if (self = [super init])
     {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_changedLevel) name:GAME_STATE_INCREASED_LEVEL object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_changedLevel) name:GAME_STATE_FINISHED_LEVEL object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_changedLevel) name:GAME_STATE_NEW_GAME object:nil];
     }
     return self;

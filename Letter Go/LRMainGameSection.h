@@ -18,9 +18,6 @@
 @property (nonatomic) BOOL envelopeTouchEnabled;
 @property (nonatomic, strong) LRMovingBlockBuilder *envelopeBuilder;
 
-- (void)addMovingBlockToScreen:(LRMovingEnvelope *)movingBlock;
-- (void)clearMainGameSection;
-
 + (SKAction *)gameOverSlowDownAction;
 
 @end

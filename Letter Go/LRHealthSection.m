@@ -24,7 +24,7 @@ static const CGFloat kLRHealthSectionStartPercentYellow = .50;
 @property (nonatomic,readwrite) NSUInteger healthbarDropTime;
 @property (nonatomic,readonly) CGFloat percentProgress;
 - (void)startColoredBarFall;
-- (void)increaseColoredBarByDistance:(CGFloat)distance;
+- (void)increaseColoredBarByDistance:(CGFloat)distance restartMovement:(BOOL)restartMovement;
 - (void)restartHealthBar;
 @end
 
@@ -45,8 +45,8 @@ static const CGFloat kLRHealthSectionStartPercentYellow = .50;
     self = [super initWithSize:size];
     if (!self) return self;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_resetHealthBar) name:GAME_STATE_INCREASED_LEVEL object:nil];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_levelFinished) name:GAME_STATE_FINISHED_LEVEL object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_levelStarted) name:GAME_STATE_STARTED_LEVEL object:nil];
     return self;
 }
 
@@ -110,7 +110,6 @@ static const CGFloat kLRHealthSectionStartPercentYellow = .50;
 - (void)gameStateNewGame
 {
     [self.coloredBar restartHealthBar];
-    [self.coloredBar startColoredBarFall];
 }
 
 
@@ -128,9 +127,14 @@ static const CGFloat kLRHealthSectionStartPercentYellow = .50;
     return kLRHealthSectionInitialDropTime;
 }
 
-- (void)_resetHealthBar
+- (void)_levelFinished
 {
-    [self.coloredBar increaseColoredBarByDistance:self.coloredBar.size.width];
+    [self.coloredBar increaseColoredBarByDistance:self.coloredBar.size.width restartMovement:NO];
+}
+
+- (void)_levelStarted
+{
+    [self.coloredBar startColoredBarFall];
 }
 @end
 
@@ -225,7 +229,7 @@ static NSString * const kLRHealthBarColoredContainerGainAction = @"Health bar ga
     [self runAction:moveWithCompletion withKey:kLRHealthBarColoredContainerFallAction];
 }
 
-- (void)increaseColoredBarByDistance:(CGFloat)distance
+- (void)increaseColoredBarByDistance:(CGFloat)distance restartMovement:(BOOL)restartMovement
 {
     distance = MIN(distance, -self.position.x);
     //#toy
@@ -239,11 +243,20 @@ static NSString * const kLRHealthBarColoredContainerGainAction = @"Health bar ga
         self.position = CGPointMake(newX, self.position.y);
     }];
     moveHealthBar.timingMode = SKActionTimingEaseInEaseOut;
-    SKAction *completion = [SKAction runBlock:^{
-        [self startColoredBarFall];
-    }];
+    SKAction *increaseAction;
+    if (restartMovement)
+    {
+        SKAction *completion = [SKAction runBlock:^{
+            [self startColoredBarFall];
+        }];
+        increaseAction = [SKAction sequence:@[moveHealthBar, completion]];
+    }
+    else
+    {
+        increaseAction = moveHealthBar;
+    }
     [self removeActionForKey:kLRHealthBarColoredContainerFallAction];
-    [self runAction:[SKAction sequence:@[moveHealthBar, completion]] withKey:kLRHealthBarColoredContainerGainAction];
+    [self runAction:increaseAction withKey:kLRHealthBarColoredContainerGainAction];
 }
 
 - (void)restartHealthBar

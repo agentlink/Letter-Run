@@ -31,7 +31,7 @@ static NSString * const kLRScoreControllerName = @"score controller";
 
 @property (nonatomic, strong) NSArray *scoreControllerArray;
 @property (nonatomic, strong) LRMission *mission;
-
+@property (nonatomic, strong) LRButton *okButton;
 @end
 
 @interface LRTopMenuSection ()
@@ -96,10 +96,29 @@ static NSString * const kLRScoreControllerName = @"score controller";
         self.color = [UIColor redColor];
         self.anchorPoint = CGPointMake(1, 1);
         [LRScoreManager shared].delegate = self;
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_increasedLevel) name:GAME_STATE_INCREASED_LEVEL object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_increasedLevel) name:GAME_STATE_FINISHED_LEVEL object:nil];
+        [self addChild:self.okButton];
+        self.okButton.hidden = YES;
 
     }
     return self;
+}
+
+- (LRButton *)okButton
+{
+    if (!_okButton)
+    {
+        SKLabelNode *okLabel = [[SKLabelNode alloc] init];
+        okLabel.fontSize = 40;
+        okLabel.text = @"Gotcha";
+        _okButton = [[LRButton alloc] initWithTextureNormal:[[LRSharedTextureCache shared] textureWithName:@"ok_unselected"] selected:[[LRSharedTextureCache shared] textureWithName: @"ok_selected"]];
+        [_okButton addChild:okLabel];
+        okLabel.position = CGPointMake(0, okLabel.frame.size.height/2);
+        _okButton.anchorPoint = CGPointMake(0.5, 0);
+        _okButton.position = CGPointMake(-self.size.width/2, -self.size.height);
+        [_okButton setTouchUpInsideTarget:self action:@selector(_okTapped)];
+    }
+    return _okButton;
 }
 
 - (void)setMission:(LRMission *)mission
@@ -114,6 +133,7 @@ static NSString * const kLRScoreControllerName = @"score controller";
         [scoreControllers addObject:score];
     }
     self.scoreControllerArray = scoreControllers;
+    self.okButton.hidden = NO;
 }
 
 - (void)setScoreControllerArray:(NSArray *)scoreControllerArray
@@ -123,8 +143,9 @@ static NSString * const kLRScoreControllerName = @"score controller";
     if (!scoreControllerArray || [scoreControllerArray count] == 0)
         return;
     
-    CGFloat scoreYPos = -self.size.height;
     CGFloat xOffset = -self.size.width * 1/self.xScale;
+    CGFloat yOffset = 10.0;
+    CGFloat scoreYPos = -self.size.height + yOffset;
     NSInteger count = [scoreControllerArray count];
     for (int i = 0; i < count; i++)
     {
@@ -148,6 +169,13 @@ static NSString * const kLRScoreControllerName = @"score controller";
     [self enumerateChildNodesWithName:kLRScoreControllerName usingBlock:^(SKNode *node, BOOL *stop) {
         [self removeChildrenInArray:@[node]];
     }];
+}
+
+- (void)_okTapped
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_STARTED_LEVEL object:nil];
+    self.okButton.hidden = YES;
+    NSLog(@"WOOHOO!");
 }
 
 - (NSString *)_stringForNumPoints:(NSUInteger)points

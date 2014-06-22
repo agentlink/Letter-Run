@@ -38,6 +38,9 @@
         self.rowManager = [LRRowManager new];
         self.envelopeTouchEnabled = YES;
         self.envelopeZPosition = zPos_MovingEnvelope_Initial;
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_levelStarted) name:GAME_STATE_STARTED_LEVEL object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_levelFinished) name:GAME_STATE_FINISHED_LEVEL object:nil];
     }
     return self;
 }
@@ -91,15 +94,13 @@
     [self removeChildrenInArray:@[envelope]];
 }
 
-
-#pragma mark LRMovingBlockTouchDelegate Methods
-
-- (void)playerSelectedMovingBlock:(LRMovingEnvelope *)movingBlock
+- (void)setEnvelopeTouchEnabled:(BOOL)envelopeTouchEnabled
 {
-    movingBlock.selected = !movingBlock.selected;
+    _envelopeTouchEnabled = envelopeTouchEnabled;
+    for (LRMovingEnvelope *envelope in self.envelopesOnScreen) {
+        envelope.userInteractionEnabled = envelopeTouchEnabled;
+    }
 }
-
-#pragma mark LRGameStateDelegate Methods
 
 + (SKAction *)gameOverSlowDownAction
 {
@@ -108,9 +109,18 @@
     return slowDown;
 }
 
+#pragma mark LRMovingBlockTouchDelegate Methods
+
+- (void)playerSelectedMovingBlock:(LRMovingEnvelope *)movingBlock
+{
+    movingBlock.selected = !movingBlock.selected;
+}
+
+
+#pragma mark LRGameStateDelegate Methods
+
 - (void)gameStateNewGame
 {
-    [self.envelopeBuilder startMovingBlockGeneration];
     self.envelopeTouchEnabled = YES;
     [self clearMainGameSection];
 
@@ -128,22 +138,22 @@
     [self.mailman stopRun];
 }
 
+#pragma mark - Private Methods
+- (void)_levelStarted
+{
+    [self.envelopeBuilder startMovingBlockGeneration];
+}
+
+- (void)_levelFinished
+{
+    [self.envelopeBuilder stopMovingBlockGeneration];
+    [self clearMainGameSection];
+}
 #pragma mark - Helper Methods
 
-- (void)setEnvelopeTouchEnabled:(BOOL)envelopeTouchEnabled
+
+- (void)dealloc
 {
-    _envelopeTouchEnabled = envelopeTouchEnabled;
-    for (LRMovingEnvelope *envelope in self.envelopesOnScreen) {
-        envelope.userInteractionEnabled = envelopeTouchEnabled;
-    }
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-
-- (CGFloat)zPositionForNextEnvelope
-{
-    CGFloat retVal = self.envelopeZPosition;
-    self.envelopeZPosition += zDiff_Envelope_Envelope;
-    return retVal;
-}
-
-
 @end
