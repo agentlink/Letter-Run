@@ -23,7 +23,6 @@
 //Row logic
 @property LRRowManager *rowManager;
 @property NSMutableArray *envelopesOnScreen;
-@property int envelopeZPosition;
 
 @end
 
@@ -37,7 +36,6 @@
         self.envelopesOnScreen = [NSMutableArray new];
         self.rowManager = [LRRowManager new];
         self.envelopeTouchEnabled = YES;
-        self.envelopeZPosition = zPos_MovingEnvelope_Initial;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_levelStarted) name:GAME_STATE_STARTED_LEVEL object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_levelFinished) name:GAME_STATE_FINISHED_LEVEL object:nil];

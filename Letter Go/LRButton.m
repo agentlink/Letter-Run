@@ -16,6 +16,19 @@
 
 @implementation LRButton
 
+#pragma mark Specific Buttons
++ (instancetype)okButtonWithFontSize:(CGFloat)fontSize
+{
+    SKLabelNode *okLabel = [[SKLabelNode alloc] init];
+    okLabel.fontSize = fontSize;
+    okLabel.text = @"Gotcha";
+    LRButton *okButton = [[LRButton alloc] initWithTextureNormal:[[LRSharedTextureCache shared] textureWithName:@"ok_unselected"] selected:[[LRSharedTextureCache shared] textureWithName: @"ok_selected"]];
+    [okButton addChild:okLabel];
+    okLabel.position = CGPointMake(0, okLabel.frame.size.height/2);
+    
+    return okButton;
+}
+
 #pragma mark Texture Initializer
 
 /**

@@ -75,6 +75,7 @@
 		A895AC5D19328FF30064FE73 /* LRMultipleLetterGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = A895AC5C19328FF30064FE73 /* LRMultipleLetterGenerator.m */; };
 		A895AC651932985C0064FE73 /* LRMultipleLetterGenerator_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = A895AC641932985C0064FE73 /* LRMultipleLetterGenerator_Test.m */; };
 		A895AC6B1932A3EF0064FE73 /* NSMutableArray+Shuffle.m in Sources */ = {isa = PBXBuildFile; fileRef = A895AC6A1932A3EF0064FE73 /* NSMutableArray+Shuffle.m */; };
+		A8995EDA1959D3A500A5A5A8 /* LRGameOverMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = A8995ED91959D3A500A5A5A8 /* LRGameOverMenu.m */; };
 		A8A34420191EC73C006C5C55 /* LRManfordAIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A8A3441F191EC73C006C5C55 /* LRManfordAIManager.m */; };
 		A8A3442619202C8D006C5C55 /* LRMailman.m in Sources */ = {isa = PBXBuildFile; fileRef = A8A3442519202C8D006C5C55 /* LRMailman.m */; };
 		A8B66E1D19439CE7001F1305 /* LRMailTruck.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B66E1C19439CE7001F1305 /* LRMailTruck.m */; };
@@ -223,6 +224,8 @@
 		A895AC641932985C0064FE73 /* LRMultipleLetterGenerator_Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRMultipleLetterGenerator_Test.m; sourceTree = "<group>"; };
 		A895AC691932A3EF0064FE73 /* NSMutableArray+Shuffle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Shuffle.h"; sourceTree = "<group>"; };
 		A895AC6A1932A3EF0064FE73 /* NSMutableArray+Shuffle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Shuffle.m"; sourceTree = "<group>"; };
+		A8995ED81959D3A500A5A5A8 /* LRGameOverMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRGameOverMenu.h; sourceTree = "<group>"; };
+		A8995ED91959D3A500A5A5A8 /* LRGameOverMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRGameOverMenu.m; sourceTree = "<group>"; };
 		A8A3441E191EC73C006C5C55 /* LRManfordAIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRManfordAIManager.h; sourceTree = "<group>"; };
 		A8A3441F191EC73C006C5C55 /* LRManfordAIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRManfordAIManager.m; sourceTree = "<group>"; };
 		A8A3442419202C8D006C5C55 /* LRMailman.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRMailman.h; sourceTree = "<group>"; };
@@ -443,6 +446,8 @@
 			isa = PBXGroup;
 			children = (
 				00641EA5182C2C210098EC38 /* Dev Pause Menu */,
+				A8995ED81959D3A500A5A5A8 /* LRGameOverMenu.h */,
+				A8995ED91959D3A500A5A5A8 /* LRGameOverMenu.m */,
 			);
 			name = Menus;
 			sourceTree = "<group>";
@@ -965,6 +970,7 @@
 				00CDF18C17F4899B003065F6 /* LRLetterSection.m in Sources */,
 				A88CEB20189D87C600092C8A /* LREnvelopeAnimationBuilder.m in Sources */,
 				00CDF17917F478D7003065F6 /* LRLayer.m in Sources */,
+				A8995EDA1959D3A500A5A5A8 /* LRGameOverMenu.m in Sources */,
 				00CDF17517F478A1003065F6 /* LRGameScene.m in Sources */,
 				00076E67186F819000287EF9 /* LRFont.m in Sources */,
 				A8A34420191EC73C006C5C55 /* LRManfordAIManager.m in Sources */,

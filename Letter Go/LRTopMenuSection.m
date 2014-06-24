@@ -108,12 +108,7 @@ static NSString * const kLRScoreControllerName = @"score controller";
 {
     if (!_okButton)
     {
-        SKLabelNode *okLabel = [[SKLabelNode alloc] init];
-        okLabel.fontSize = 40;
-        okLabel.text = @"Gotcha";
-        _okButton = [[LRButton alloc] initWithTextureNormal:[[LRSharedTextureCache shared] textureWithName:@"ok_unselected"] selected:[[LRSharedTextureCache shared] textureWithName: @"ok_selected"]];
-        [_okButton addChild:okLabel];
-        okLabel.position = CGPointMake(0, okLabel.frame.size.height/2);
+        _okButton = [LRButton okButtonWithFontSize:40];
         _okButton.anchorPoint = CGPointMake(0.5, 0);
         _okButton.position = CGPointMake(-self.size.width/2, -self.size.height);
         [_okButton setTouchUpInsideTarget:self action:@selector(_okTapped)];
@@ -123,6 +118,7 @@ static NSString * const kLRScoreControllerName = @"score controller";
 
 - (void)setMission:(LRMission *)mission
 {
+    //TODO: Preload the color score label
     _mission = mission;
     NSArray *paperColors = [mission paperColors];
     NSMutableArray *scoreControllers = [NSMutableArray new];
@@ -134,6 +130,7 @@ static NSString * const kLRScoreControllerName = @"score controller";
     }
     self.scoreControllerArray = scoreControllers;
     self.okButton.hidden = NO;
+    
 }
 
 - (void)setScoreControllerArray:(NSArray *)scoreControllerArray
@@ -175,7 +172,6 @@ static NSString * const kLRScoreControllerName = @"score controller";
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_STARTED_LEVEL object:nil];
     self.okButton.hidden = YES;
-    NSLog(@"WOOHOO!");
 }
 
 - (NSString *)_stringForNumPoints:(NSUInteger)points
@@ -243,6 +239,8 @@ static NSString * const kLRScoreControllerName = @"score controller";
         [_colorScoreLabel setHorizontalAlignmentMode:SKLabelHorizontalAlignmentModeCenter];
     }
     return _colorScoreLabel;
+    
+
 }
 
 - (void)setColorScore:(NSUInteger)colorScore

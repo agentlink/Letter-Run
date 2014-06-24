@@ -23,6 +23,9 @@
 @property (nonatomic, readwrite, strong) SKTexture *selectedTexture;
 @property (nonatomic, readwrite, strong) SKTexture *disabledTexture;
 
+//Specific Buttons
++ (instancetype)okButtonWithFontSize:(CGFloat)fontSize;
+
 - (id)initWithTextureNormal:(SKTexture *)normal selected:(SKTexture *)selected;
 - (id)initWithTextureNormal:(SKTexture *)normal selected:(SKTexture *)selected disabled:(SKTexture *)disabled; // Designated Initializer
 
