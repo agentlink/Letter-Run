@@ -11,7 +11,5 @@
 @interface LRScreenSection : SKSpriteNode <LRGameStateDelegate>
 
 - (id) initWithSize:(CGSize)size;
-/// Instantiate all the properties and sprites the section needs
-- (void)createSectionContent;
 
 @end

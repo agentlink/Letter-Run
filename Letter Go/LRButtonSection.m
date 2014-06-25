@@ -18,13 +18,10 @@
     if (self = [super initWithSize:size])
     {
         self.color = [LRColor buttonSectionColor];
+        [self addChild:self.submitButton];
+
     }
     return self;
-}
-
-- (void)createSectionContent
-{
-    [self addChild:self.submitButton];
 }
 
 - (LRSubmitButton *)submitButton {

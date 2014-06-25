@@ -48,16 +48,12 @@ static const CGFloat kLRHealthSectionStartPercentYellow = .50;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_levelFinished) name:GAME_STATE_FINISHED_LEVEL object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_levelStarted) name:GAME_STATE_STARTED_LEVEL object:nil];
-    return self;
-}
-
-- (void)createSectionContent
-{
-    //The color will be replaced by a health bar sprite
+    
     [self addChild:self.healthBarBackground];
     [self addChild:self.coloredBar];
     [self addChild:self.healthBarSkin];
 
+    return self;
 }
 
 - (void)dealloc

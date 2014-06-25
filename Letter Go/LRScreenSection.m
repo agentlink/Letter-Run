@@ -20,13 +20,8 @@
 {
     if (self = [super initWithColor:[SKColor clearColor] size:size])
     {
-        [self createSectionContent];
     }
     return self;
 }
 
-- (void)createSectionContent
-{
-    NSLog(@"Warning: createSectionContent should be overridden for class %@", [[self class] description]);
-}
 @end

@@ -118,7 +118,6 @@ static NSString * const kLRScoreControllerName = @"score controller";
 
 - (void)setMission:(LRMission *)mission
 {
-    //TODO: Preload the color score label
     _mission = mission;
     NSArray *paperColors = [mission paperColors];
     NSMutableArray *scoreControllers = [NSMutableArray new];

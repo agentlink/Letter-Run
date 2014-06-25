@@ -55,22 +55,16 @@ NSString * const kSubmissionKeyWordWithColors = @"paperColorDictionary";
     if (self = [super initWithSize:size])
     {
         self.wordChecker = [LRDictionaryChecker new];
-        [self setUpNotifications];
+        //Set up notifications
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(submitWord:) name:kNotificationSubmitWord object:nil];
+        //Create section content
+        [self addChild:self.letterSection];
+        for (LRLetterSlot *slot in self.letterSlots) {
+            [self addChild:slot];
+        }
+
     }
     return self;
-}
-
-- (void)setUpNotifications
-{
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(submitWord:) name:kNotificationSubmitWord object:nil];
-}
-
-- (void)createSectionContent
-{
-    [self addChild:self.letterSection];    
-    for (LRLetterSlot *slot in self.letterSlots) {
-        [self addChild:slot];
-    }
 }
 
 #pragma mark - Private Properties -

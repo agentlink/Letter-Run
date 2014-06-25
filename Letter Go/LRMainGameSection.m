@@ -39,24 +39,21 @@
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_levelStarted) name:GAME_STATE_STARTED_LEVEL object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_levelFinished) name:GAME_STATE_FINISHED_LEVEL object:nil];
+        
+        //Manford the Mailman
+        LRMailman *manford = [LRMailman new];
+        CGFloat manfordLeftMargin = 40;
+        //TODO: make this be Manford's size
+        CGFloat manfordX = -self.size.width/2 + manfordLeftMargin;
+        manford.position = CGPointMake(manfordX, self.position.y);
+        [self addChild:manford];
+        self.mailman = manford;
+        
+        //Mailtruck
+        LRMailTruck *truck = [[LRMailTruck alloc] init];
+        [self addChild:truck];
     }
     return self;
-}
-
-- (void)createSectionContent
-{
-    //Manford the Mailman
-    LRMailman *manford = [LRMailman new];
-    CGFloat manfordLeftMargin = 40;
-    //TODO: make this be Manford's size
-    CGFloat manfordX = -self.size.width/2 + manfordLeftMargin;
-    manford.position = CGPointMake(manfordX, self.position.y);
-    [self addChild:manford];
-    self.mailman = manford;
-    
-    //Mailtruck
-    LRMailTruck *truck = [[LRMailTruck alloc] init];
-    [self addChild:truck];    
 }
 
 - (void)setEnvelopeBuilder:(LRMovingBlockBuilder *)envelopeBuilder
