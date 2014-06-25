@@ -10,6 +10,7 @@
 
 @interface LRFont : UIFont
 
++ (void)preloadFonts;
 + (LRFont *)displayTextFontWithSize:(CGFloat)size;
 + (LRFont *)letterBlockFont;
 
