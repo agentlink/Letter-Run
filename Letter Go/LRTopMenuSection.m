@@ -18,6 +18,7 @@
 #import "LRPositionConstants.h"
 
 static NSString * const kLRScoreControllerName = @"score controller";
+static CGFloat const kLRScoreControllerPaperColorVertOffset = 10.0;
 
 @interface LRScoreControllerPaperColor : SKSpriteNode
 - (id)initWithPaperColor:(LRPaperColor)paperColor;
@@ -50,11 +51,10 @@ static NSString * const kLRScoreControllerName = @"score controller";
         
         self.color = [LRColor whiteColor];
         self.zPosition = zPos_TopSection;
+        
         //mission control image
         SKTexture *scoreControlTexture = [[LRSharedTextureCache shared] textureWithName:@"topMenuSection-missionControl"];
         self.missionControlSprite = [[LRMissionControlSection alloc] initWithTexture:scoreControlTexture];
-        self.missionControlSprite.xScale = .47;
-        self.missionControlSprite.yScale = .47;
         self.missionControlSprite.anchorPoint = CGPointMake(0.5, 0.5);
         [self addChild:self.missionControlSprite];
         
@@ -66,6 +66,10 @@ static NSString * const kLRScoreControllerName = @"score controller";
         self.pauseButton.hidden = NO;
         [self addChild:self.pauseButton];
         [_pauseButton setTouchUpInsideTarget:self action:@selector(pauseButtonPressed)];
+        
+        //preload the fonts
+        LRScoreControllerPaperColor *dummy = [[LRScoreControllerPaperColor alloc] initWithPaperColor:kLRPaperColorPink];
+        (void)dummy;
     }
     return self;
 }
@@ -89,20 +93,22 @@ static NSString * const kLRScoreControllerName = @"score controller";
 @end
 
 #pragma mark - LRScoreControlSprite
-
+static CGFloat const kLRScoreControlSpriteWidth = 238.0;
+static CGFloat const kLRScoreControlSpriteHeight = 88.0;
 @implementation LRMissionControlSection
 
 - (id)initWithTexture:(SKTexture *)texture
 {
+ 
     if (self = [super initWithTexture:texture])
     {
+        self.size = CGSizeMake(kLRScoreControlSpriteWidth, kLRScoreControlSpriteHeight);
         self.color = [UIColor redColor];
         self.anchorPoint = CGPointMake(1, 1);
         [LRScoreManager shared].delegate = self;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_increasedLevel) name:GAME_STATE_FINISHED_LEVEL object:nil];
         [self addChild:self.okButton];
         self.okButton.hidden = YES;
-
     }
     return self;
 }
@@ -111,7 +117,7 @@ static NSString * const kLRScoreControllerName = @"score controller";
 {
     if (!_okButton)
     {
-        _okButton = [LRButton okButtonWithFontSize:40];
+        _okButton = [LRButton okButtonWithFontSize:20];
         _okButton.anchorPoint = CGPointMake(0.5, 0);
         _okButton.position = CGPointMake(0, -self.size.height/2);
         [_okButton setTouchUpInsideTarget:self action:@selector(_okTapped)];
@@ -131,8 +137,10 @@ static NSString * const kLRScoreControllerName = @"score controller";
         [scoreControllers addObject:score];
     }
     self.scoreControllerArray = scoreControllers;
+    SKAction *showMission = [self _missionControlDropAnimationWithDuration:1.0];
+    self.okButton.alpha = 0.0;
     self.okButton.hidden = NO;
-    
+    [self runAction:showMission];
 }
 
 - (void)setScoreControllerArray:(NSArray *)scoreControllerArray
@@ -143,8 +151,7 @@ static NSString * const kLRScoreControllerName = @"score controller";
         return;
     
     CGFloat xOffset = -self.size.width * 1/self.xScale;
-    CGFloat yOffset = 10.0;
-    CGFloat scoreYPos = yOffset;
+    CGFloat scoreYPos = kLRScoreControllerPaperColorVertOffset;
     NSInteger count = [scoreControllerArray count];
     for (int i = 0; i < count; i++)
     {
@@ -173,9 +180,9 @@ static NSString * const kLRScoreControllerName = @"score controller";
 
 - (void)_okTapped
 {
-    SKAction *action = [self _missionControlDropAnimationWithDuration:1.1];
-    [self runAction:action];
-//    [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_STARTED_LEVEL object:nil];
+    SKAction *moveUp = [self _missionControlUpWithDuration:.4];
+    [self runAction:moveUp];
+    [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_STARTED_LEVEL object:nil];
     self.okButton.hidden = YES;
 }
 
@@ -189,29 +196,30 @@ static NSString * const kLRScoreControllerName = @"score controller";
 - (SKAction *)_missionControlDropAnimationWithDuration:(CGFloat)duration
 {
     __block BOOL crossedVertex;
-    __block CGFloat endY = -SCREEN_HEIGHT/3;
+    __block CGFloat endY = -220.0;
     __block CGFloat topScale = 0;
     CGFloat overshoot = 30;
     CGPoint yIntercept= CGPointMake(0, self.position.y);
     CGPoint vertex = CGPointMake(duration/2, endY - overshoot);
     double a = (yIntercept.y - vertex.y)/pow((yIntercept.x - vertex.x), 2);
 
+    CGFloat originalHeight = kLRScoreControlSpriteHeight;
+    
     SKAction *parabola = [SKAction customActionWithDuration:duration actionBlock:^(SKNode *node, CGFloat elapsedTime) {
         CGFloat y = quadratic_equation_y(a, vertex, elapsedTime);
         crossedVertex = (elapsedTime > vertex.x);
         
+        //If the function is over
         if (crossedVertex && y > endY)
         {
             node.position = CGPointMake(node.position.x, endY);
-            self.xScale = .47;
-            self.yScale = .47;
             for (LRScoreControllerPaperColor *scoreCont in self.scoreControllerArray)
             {
                 scoreCont.alpha = 1;
             }
         }
         else {
-            //Expansion
+            //Scale
             CGFloat growthPoint = .4;
             CGFloat scale = 0;
             if (y < endY * growthPoint)
@@ -226,20 +234,61 @@ static NSString * const kLRScoreControllerName = @"score controller";
                 {
                     scale = topScale * (endY - y)/overshoot;
                 }
-                self.xScale = .47 + scale;
-                self.yScale = .47 + scale;
+                self.xScale = 1 + scale;
+                self.yScale = 1 + scale;
             }
-            //Children alpha
+            
+            
+            //Height expansion + Fade in
+            CGFloat endHeight = 250.0;
+            CGFloat endHeightDiff = endHeight - originalHeight;
+            CGFloat newHeight = originalHeight + endHeightDiff * MIN(elapsedTime/vertex.x, 1.0);
+            CGFloat alpha =  1 - (endY - y)/endY;
+
+            //Envelopes
+            self.size = CGSizeMake(self.size.width, newHeight);
             for (LRScoreControllerPaperColor *scoreCont in self.scoreControllerArray)
             {
-                CGFloat alpha =  1 - (endY - y)/endY;
-                scoreCont.alpha = alpha;
+                CGFloat scoreY = (self.size.height - originalHeight)/2 * 1/self.yScale;
+                scoreCont.position = CGPointMake(scoreCont.position.x,scoreY);
+                //only change the alpha if it's 0
+                if (scoreCont.alpha != 1.0)
+                {
+                    scoreCont.alpha = alpha;
+                }
             }
+            
+            //OK button
+            self.okButton.position = CGPointMake(self.okButton.position.x, -self.size.height/2 * 1/self.yScale);
+            self.okButton.alpha = alpha;
 
             node.position = CGPointMake(node.position.x, y);
         }
     }];
     return parabola;
+}
+
+- (SKAction *)_missionControlUpWithDuration:(CGFloat)duration
+{
+    CGFloat originalHeight = self.size.height;
+    CGPoint originalPostion = self.position;
+    CGPoint endPosition = CGPointZero;
+    SKAction *action = [SKAction customActionWithDuration:duration actionBlock:^(SKNode *node, CGFloat elapsedTime)
+    {
+        CGFloat yPos = originalPostion.y + (endPosition.y - originalPostion.y) * (elapsedTime/duration);
+        CGFloat height = originalHeight - (originalHeight - kLRScoreControlSpriteHeight) * (elapsedTime/duration);
+        self.position = CGPointMake(self.position.x, yPos);
+        self.size = CGSizeMake(self.size.width, height);
+        
+        for (LRScoreControllerPaperColor *scoreCont in self.scoreControllerArray)
+        {
+            CGFloat scoreY = (self.size.height - kLRScoreControlSpriteHeight)/2 + (elapsedTime/duration) *kLRScoreControllerPaperColorVertOffset;
+            scoreCont.position = CGPointMake(scoreCont.position.x,scoreY);
+            
+        }
+    }];
+    action.timingMode = SKActionTimingEaseInEaseOut;
+    return action;
 }
 
 #pragma mark - Score Manager Delegate Functions
@@ -273,13 +322,13 @@ static NSString * const kLRScoreControllerName = @"score controller";
         
         NSString *envSpriteName = [LRMovingEnvelope stringFromPaperColor:paperColor open:YES];
         _envSprite = [[SKSpriteNode alloc] initWithTexture:[[LRSharedTextureCache shared] textureWithName:envSpriteName]];
-        _envSprite.xScale = 1.8;
-        _envSprite.yScale = 1.8;
+        _envSprite.size = CGSizeMake(40.0, 48.0);
         [_envSprite addChild:self.colorScoreLabel];
         
         self.colorScoreLabel.position = CGPointMake(0, -7);
-
         [self addChild:_envSprite];
+        
+        self.alpha = 0.0;
     }
     return self;
 }
@@ -292,7 +341,7 @@ static NSString * const kLRScoreControllerName = @"score controller";
 - (SKLabelNode *)colorScoreLabel
 {
     if (!_colorScoreLabel) {
-        CGFloat fontSize = 50;
+        CGFloat fontSize = 40;
         LRFont *font = [LRFont displayTextFontWithSize:fontSize];
         
         _colorScoreLabel = [[LRValueLabelNode alloc] initWithFontNamed:font.familyName initialValue:0];
