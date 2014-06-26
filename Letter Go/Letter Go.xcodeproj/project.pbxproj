@@ -48,6 +48,7 @@
 		00CDF18C17F4899B003065F6 /* LRLetterSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CDF18B17F4899B003065F6 /* LRLetterSection.m */; };
 		00F6F59717FF5234009EDADB /* LRGameStateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F6F59617FF5234009EDADB /* LRGameStateManager.m */; };
 		A82527141953439F0061DEE2 /* Letter_Gray.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A82527131953439F0061DEE2 /* Letter_Gray.atlas */; };
+		A825E4F4195C767C0073BA09 /* LRMath.m in Sources */ = {isa = PBXBuildFile; fileRef = A825E4F3195C767C0073BA09 /* LRMath.m */; };
 		A82CA94C1855189F004ADD99 /* LRRowManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A82CA94B1855189F004ADD99 /* LRRowManager.m */; };
 		A8447EE7194E70280037A004 /* LRLevelManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A8447EE6194E70280037A004 /* LRLevelManager.m */; };
 		A8447EEA194E72EE0037A004 /* Missions.plist in Resources */ = {isa = PBXBuildFile; fileRef = A8447EE9194E72EE0037A004 /* Missions.plist */; };
@@ -183,6 +184,8 @@
 		00F6F59517FF5234009EDADB /* LRGameStateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRGameStateManager.h; sourceTree = "<group>"; };
 		00F6F59617FF5234009EDADB /* LRGameStateManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRGameStateManager.m; sourceTree = "<group>"; };
 		A82527131953439F0061DEE2 /* Letter_Gray.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Letter_Gray.atlas; sourceTree = "<group>"; };
+		A825E4F2195C767C0073BA09 /* LRMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRMath.h; sourceTree = "<group>"; };
+		A825E4F3195C767C0073BA09 /* LRMath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRMath.m; sourceTree = "<group>"; };
 		A82CA94A1855189F004ADD99 /* LRRowManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRRowManager.h; sourceTree = "<group>"; };
 		A82CA94B1855189F004ADD99 /* LRRowManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRRowManager.m; sourceTree = "<group>"; };
 		A82DD7E71857FB24007483A6 /* LRPositionConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LRPositionConstants.h; sourceTree = "<group>"; };
@@ -368,6 +371,8 @@
 			children = (
 				0049695B17F8AC6400176F2D /* LRConstants.h */,
 				A82DD7E71857FB24007483A6 /* LRPositionConstants.h */,
+				A825E4F2195C767C0073BA09 /* LRMath.h */,
+				A825E4F3195C767C0073BA09 /* LRMath.m */,
 			);
 			name = Constants;
 			sourceTree = "<group>";
@@ -949,6 +954,7 @@
 				A8447EE7194E70280037A004 /* LRLevelManager.m in Sources */,
 				00CDF14917F474EC003065F6 /* LRAppDelegate.m in Sources */,
 				009CC29E180349E700C0423D /* LRDictionaryChecker.m in Sources */,
+				A825E4F4195C767C0073BA09 /* LRMath.m in Sources */,
 				00CDF14517F474EC003065F6 /* main.m in Sources */,
 				A88A4B371887308C00BC9905 /* LRMainGameSection.m in Sources */,
 				00CDF17F17F4799B003065F6 /* LRBackgroundLayer.m in Sources */,

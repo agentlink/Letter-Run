@@ -10,6 +10,7 @@ static const float zPos_HealthSection = 110;
 static const float zPos_MainGameSection = 100;
 static const float zPos_LetterSection = 90;
 static const float zPos_ButtonSection = 120;
+static const float zPos_TopSection = 150;
 static const float zPos_GameOver = 1000;
 
 static const float zPos_LetterSectionBarrier_Vert = 200;

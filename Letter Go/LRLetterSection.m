@@ -18,6 +18,7 @@
 #import "LRGameStateManager.h"
 #import "LRColor.h"
 #import "LRMovingBlockBuilder.h"
+#import "LRMath.h"
 
 typedef NS_ENUM(NSUInteger, LetterSectionState)
 {
@@ -204,10 +205,6 @@ NSString * const kSubmissionKeyWordWithColors = @"paperColorDictionary";
         }
     }];
     return parabola;}
-
-static inline double quadratic_equation_y (double a, CGPoint vertex, double x) {
-    return a * pow((x - vertex.x), 2) + vertex.y;
-}
 
 #pragma mark Deletion
 - (void)removeEnvelopeFromLetterSection:(id)envelope
