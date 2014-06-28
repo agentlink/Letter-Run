@@ -20,7 +20,7 @@ typedef NS_ENUM(NSUInteger, LetterType)
     LetterTypeNone
 };
 
-static NSString* const kLetterQu = @"Qu";
+static NSString* const kLetterQu = @"QU";
 
 
 @interface LRAlphabeticalLetterGenerator : SKNode

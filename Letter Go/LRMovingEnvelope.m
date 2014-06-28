@@ -14,9 +14,6 @@
 #import "LRSharedTextureCache.h"
 #import "LRMultipleLetterGenerator.h"
 
-const LRPaperColor kLRMovingEnvelopeHiddenPaperColor = kLRPaperColorBlue;
-const LRPaperColor kLRMovingEnvelopeShiftingPaperColor = kLRPaperColorPink;
-
 static CGFloat const kLRMovingBlockTouchSizeExtraWidth  = 25.0;
 static CGFloat const kLRMovingBlockTouchSizeExtraHeight = 35.0;
 static CGFloat const kLRMovingBlockSpriteDimension     = 48.0;
@@ -143,7 +140,7 @@ NSString * const kLRMovingBlockName = @"Moving envelope";
     if (selected) {
         [self removeActionForKey:kLRMovingBlockShiftLetterActionName];
     }
-    else if (self.paperColor == kLRMovingEnvelopeShiftingPaperColor) {
+    else if (self.paperColor == kLRLetterBlockShiftingPaperColor) {
         [self runAction:[self _shiftLetterAction] withKey:kLRMovingBlockShiftLetterActionName];
     }
 }
@@ -185,11 +182,11 @@ NSString * const kLRMovingBlockName = @"Moving envelope";
 
 - (void)_updateLabel
 {
-    NSAssert(kLRMovingEnvelopeHiddenPaperColor != kLRMovingEnvelopeShiftingPaperColor, @"Unable to set paper label to both shifting and hidden");
-    if (self.paperColor == kLRMovingEnvelopeHiddenPaperColor) {
+    NSAssert(kLRLetterBlockHiddenPaperColor != kLRLetterBlockShiftingPaperColor, @"Unable to set paper label to both shifting and hidden");
+    if (self.paperColor == kLRLetterBlockHiddenPaperColor) {
         self.letterLabel.text = [LRMovingEnvelope _letterForHiddenPaperColor];
     }
-    else if (self.paperColor == kLRMovingEnvelopeShiftingPaperColor && ![self.letter isEqualToString:@"  "]) {
+    else if (self.paperColor == kLRLetterBlockShiftingPaperColor && ![self.letter isEqualToString:@"  "]) {
         self.shiftingLetterArray = [[LRMultipleLetterGenerator shared] generateMultipleLetterList];
         [self runAction:[self _shiftLetterAction] withKey:kLRMovingBlockShiftLetterActionName];
     }

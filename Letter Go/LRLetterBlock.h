@@ -22,7 +22,12 @@ static NSString * const kLetterBlockEmptyLetter  = @"";
 static NSString * const kLetterBlockHolderText   = @" ";
 
 static NSInteger const kNumPaperColors = 3;
-static LRPaperColor const kLRPaperColorHighestValue = kLRPaperColorGreen;
+
+extern const LRPaperColor kLRLetterBlockHiddenPaperColor;
+extern const LRPaperColor kLRLetterBlockShiftingPaperColor;
+extern const LRPaperColor kLRLetterBlockMultiLetterPaperColor;
+
+extern const LRPaperColor kLRPaperColorHighestValue;
 
 @interface LRLetterBlock : SKSpriteNode <LRGameStateDelegate>
 

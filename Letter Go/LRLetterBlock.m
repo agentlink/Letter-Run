@@ -18,6 +18,11 @@ static NSString * const kLRPaperColorStringPink = @"pink";
 static NSString * const kLRPaperColorStringGreen = @"green";
 static NSString * const kLRPaperColorStringGray = @"gray";
 
+const LRPaperColor kLRLetterBlockHiddenPaperColor = kLRPaperColorBlue;
+const LRPaperColor kLRLetterBlockShiftingPaperColor = kLRPaperColorPink;
+const LRPaperColor kLRLetterBlockMultiLetterPaperColor = kLRPaperColorGreen;
+const LRPaperColor kLRPaperColorHighestValue = kLRPaperColorGreen;
+
 @interface LRLetterBlock ()
 
 @property (readwrite) BOOL isTouched;

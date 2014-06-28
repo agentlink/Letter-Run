@@ -10,8 +10,9 @@
 #import "LRProgressManager.h"
 #import "LRMovingEnvelope.h"
 
-static NSUInteger const kLRDifficultyManagerHiddenEnvelopeLevel = 2;
-static NSUInteger const kLRDifficultyManagerShiftingEnvelopeLevel = 3;
+static NSUInteger const kLRDifficultyManagerMultiEnvelopeLevel = 2;
+static NSUInteger const kLRDifficultyManagerHiddenEnvelopeLevel = 3;
+static NSUInteger const kLRDifficultyManagerShiftingEnvelopeLevel = 4;
 
 @implementation LRDifficultyManager
 {
@@ -44,14 +45,18 @@ static LRDifficultyManager *_shared = nil;
 
 - (NSSet *)availablePaperColors
 {
-    NSMutableSet *paperColors = [NSMutableSet setWithObjects:@(kLRPaperColorYellow), @(kLRPaperColorGreen), nil];
+    NSMutableSet *paperColors = [NSMutableSet setWithObject:@(kLRPaperColorYellow)];
     if ([[LRMultipleLetterGenerator shared] isMultipleLetterGenerationEnabled])
     {
-        [paperColors addObject:@(kLRMovingEnvelopeShiftingPaperColor)];
+        [paperColors addObject:@(kLRLetterBlockShiftingPaperColor)];
     }
     if ([self _isHiddenEnvelopeGenerationEnabled])
     {
-        [paperColors addObject:@(kLRMovingEnvelopeHiddenPaperColor)];
+        [paperColors addObject:@(kLRLetterBlockHiddenPaperColor)];
+    }
+    if ([self _isMultiletterGenerationEnabled])
+    {
+        [paperColors addObject:@(kLRLetterBlockMultiLetterPaperColor)];
     }
     return paperColors;
 }
@@ -68,6 +73,11 @@ static LRDifficultyManager *_shared = nil;
     return _level >= kLRDifficultyManagerHiddenEnvelopeLevel;
 }
 
+- (BOOL)_isMultiletterGenerationEnabled
+{
+    return _level >= kLRDifficultyManagerMultiEnvelopeLevel;
+}
+         
 - (void)_changedLevel
 {
     _level = [[LRProgressManager shared] level];
@@ -89,10 +99,7 @@ static LRDifficultyManager *_shared = nil;
             unrandomize = ~kLRChainMailStyleNone;
             break;
         case kLRDifficultyManagerShiftingEnvelopeLevel:
-            enable = kLRChainMailStyleAlphabetical;
-            break;
-        case 4:
-            enable = kLRChainMailStyleReverseAlphabetical;
+            enable = kLRChainMailStyleAlphabetical | kLRChainMailStyleReverseAlphabetical;
             break;
         case 5:
             enable = kLRChainMailStyleVowels;

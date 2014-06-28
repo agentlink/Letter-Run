@@ -8,9 +8,8 @@
 
 #import "LRAlphabeticalLetterGenerator.h"
 
-#define kLRLetterProbabilityDictionaryBasic          @"letter_basic"
-#define kLRLetterProbabilityDictionaryChallenging    @"letter_challenging"
-#define kLRLetterProbabilityDictionaryImpossible     @"letter_impossible"
+#define kLRLetterProbabilityDictionaryScrabble      @"Scrabble"
+#define kLRLetterProbabilityDictionaryMultiLetter   @"Multiletters"
 
 const NSUInteger kLRLetterGeneratorMaxConsonants     = 3;
 const NSUInteger kLRLetterGeneratorMaxVowels         = 3;
@@ -54,7 +53,7 @@ static NSString* const kLetterQ = @"Q";
 {
     //Load general probability dictionary
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"LetterProbabilities" ofType:@"plist"];
-    NSArray *letterDictionaryNames = @[kLRLetterProbabilityDictionaryBasic, kLRLetterProbabilityDictionaryChallenging, kLRLetterProbabilityDictionaryImpossible];
+    NSArray *letterDictionaryNames = @[kLRLetterProbabilityDictionaryScrabble, kLRLetterProbabilityDictionaryMultiLetter];
     NSMutableDictionary *_letterProbabilities = [NSMutableDictionary new];
     
     for (NSString *dictName in letterDictionaryNames) {
@@ -234,27 +233,9 @@ static LRAlphabeticalLetterGenerator *_shared = nil;
 
 - (NSArray *)dictionaryForPaperColor:(LRPaperColor)color
 {
-    NSString *dictName;
-    if (!self.multipleLetterDictsEnabled) {
-        dictName = kLRLetterProbabilityDictionaryBasic;
-    }
-    else {
-        switch (color) {
-            case kLRPaperColorYellow:
-                dictName = kLRLetterProbabilityDictionaryBasic;
-                break;
-            case kLRPaperColorBlue:
-                dictName = kLRLetterProbabilityDictionaryChallenging;
-                break;
-            case kLRPaperColorPink:
-                dictName = kLRLetterProbabilityDictionaryImpossible;
-                break;
-            default:
-                NSAssert(0, @"Should not generate a letter with an empty paper color");
-                break;
-        }
-    }
-    return self.letterProbabilityDictionaries[dictName];
+    if (color == kLRLetterBlockMultiLetterPaperColor)
+        return self.letterProbabilityDictionaries[kLRLetterProbabilityDictionaryMultiLetter];
+    return self.letterProbabilityDictionaries[kLRLetterProbabilityDictionaryScrabble];
 }
 
 - (BOOL)quEnabled

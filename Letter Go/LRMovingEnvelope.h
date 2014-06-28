@@ -9,8 +9,6 @@
 #import "LRLetterBlock.h"
 
 extern NSString * const kLRMovingBlockName;
-extern const LRPaperColor kLRMovingEnvelopeHiddenPaperColor;
-extern const LRPaperColor kLRMovingEnvelopeShiftingPaperColor;
 
 @protocol LRMovingBlockTouchDelegate;
 @interface LRMovingEnvelope : LRLetterBlock
