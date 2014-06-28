@@ -15,8 +15,8 @@
 static NSString * const kLRPaperColorStringYellow = @"yellow";
 static NSString * const kLRPaperColorStringBlue = @"blue";
 static NSString * const kLRPaperColorStringPink = @"pink";
+static NSString * const kLRPaperColorStringGreen = @"green";
 static NSString * const kLRPaperColorStringGray = @"gray";
-
 
 @interface LRLetterBlock ()
 
@@ -115,6 +115,9 @@ static NSString * const kLRPaperColorStringGray = @"gray";
         case kLRPaperColorPink:
             return kLRPaperColorStringPink;
             break;
+        case kLRPaperColorGreen:
+            return kLRPaperColorStringGreen;
+            break;
         case kLRPaperColorNone:
             return kLRPaperColorStringGray;
             break;
@@ -129,6 +132,8 @@ static NSString * const kLRPaperColorStringGray = @"gray";
         return kLRPaperColorBlue;
     else if ([string isEqualToString:kLRPaperColorStringPink])
         return kLRPaperColorPink;
+    else if ([string isEqualToString:kLRPaperColorStringGreen])
+        return kLRPaperColorGreen;
     else if ([string isEqualToString:kLRPaperColorStringGray])
         return kLRPaperColorNone;
     

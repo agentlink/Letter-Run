@@ -13,6 +13,7 @@
 + (instancetype)missionFromDictionary:(NSDictionary *)dict;
 @property (nonatomic, readwrite) NSDictionary *levelDict;
 @property (nonatomic, readwrite) NSDictionary *paperColorDict;
+@property (nonatomic, readwrite) NSString *missionDescription;
 @end
 
 @interface LRLevelManager ()
@@ -51,6 +52,7 @@
 {
     _levelDict = levelDict;
     self.paperColorDict = levelDict[@"paper colors"];
+    self.missionDescription = levelDict[@"description"];
 }
 
 - (CGFloat)healthDropTime

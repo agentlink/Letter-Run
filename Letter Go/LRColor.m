@@ -43,6 +43,9 @@
         case kLRPaperColorPink:
             return [LRColor rgbColorWithRed:226 green:138 blue:178 alpha:1];
             break;
+        case kLRPaperColorGreen:
+            return (LRColor *)[UIColor greenColor];
+            break;
         default:
             return (LRColor*)[SKColor blackColor];
             break;
@@ -60,6 +63,10 @@
             break;
         case kLRPaperColorPink:
             return [LRColor rgbColorWithRed:194 green:110 blue:140 alpha:1];
+            break;
+        case kLRPaperColorGreen:
+            return [LRColor rgbColorWithRed:110 green:254 blue:186 alpha:1];
+            break;
         default:
             return (LRColor *)[SKColor grayColor];
 //            NSAssert(0, @"Should not look up color for empty paper color");
@@ -68,7 +75,6 @@
     }
     
 }
-
 //Basic colors
 + (LRColor *)clearColor {
     return (LRColor *)[SKColor clearColor];

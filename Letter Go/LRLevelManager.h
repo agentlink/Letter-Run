@@ -9,8 +9,11 @@
 #import <SpriteKit/SpriteKit.h>
 
 @interface LRMission : NSObject
+
 @property (nonatomic, readonly) NSArray *paperColors;
 @property (nonatomic, readonly) CGFloat healthDropTime;
+@property (nonatomic, readonly) NSString *missionDescription;
+
 - (NSUInteger)numberOfEnvelopesForColor:(LRPaperColor)paperColor;
 @end
 

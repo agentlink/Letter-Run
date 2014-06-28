@@ -68,6 +68,9 @@ typedef NS_ENUM(NSUInteger, MovementDirection)
         case kLRPaperColorYellow:
             return @"paper-yellow";
             break;
+        case kLRPaperColorGreen:
+            return @"paper-green";
+            break;
         case kLRPaperColorNone:
             return nil;
             break;

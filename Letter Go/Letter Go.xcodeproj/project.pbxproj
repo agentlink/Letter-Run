@@ -53,6 +53,7 @@
 		A8447EE7194E70280037A004 /* LRLevelManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A8447EE6194E70280037A004 /* LRLevelManager.m */; };
 		A8447EEA194E72EE0037A004 /* Missions.plist in Resources */ = {isa = PBXBuildFile; fileRef = A8447EE9194E72EE0037A004 /* Missions.plist */; };
 		A846FB8B186E0489009DCEF4 /* LRLetterBlock_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = A846FB8A186E0489009DCEF4 /* LRLetterBlock_Test.m */; };
+		A8568D91195F5129001855B1 /* Letter_Green.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A8568D90195F5129001855B1 /* Letter_Green.atlas */; };
 		A85A4CDA18E78BA100787D21 /* LeagueGothic-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = A85A4CD818E78BA100787D21 /* LeagueGothic-Italic.otf */; };
 		A85A4CDB18E78BA100787D21 /* LeagueGothic-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = A85A4CD918E78BA100787D21 /* LeagueGothic-Regular.otf */; };
 		A876EC3B18836795000FA069 /* Background_Cloud.png in Resources */ = {isa = PBXBuildFile; fileRef = A876EC3A18836795000FA069 /* Background_Cloud.png */; };
@@ -194,6 +195,7 @@
 		A8447EE6194E70280037A004 /* LRLevelManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLevelManager.m; sourceTree = "<group>"; };
 		A8447EE9194E72EE0037A004 /* Missions.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Missions.plist; sourceTree = "<group>"; };
 		A846FB8A186E0489009DCEF4 /* LRLetterBlock_Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLetterBlock_Test.m; sourceTree = "<group>"; };
+		A8568D90195F5129001855B1 /* Letter_Green.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Letter_Green.atlas; sourceTree = "<group>"; };
 		A85A4CD818E78BA100787D21 /* LeagueGothic-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LeagueGothic-Italic.otf"; sourceTree = "<group>"; };
 		A85A4CD918E78BA100787D21 /* LeagueGothic-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LeagueGothic-Regular.otf"; sourceTree = "<group>"; };
 		A876EC3A18836795000FA069 /* Background_Cloud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background_Cloud.png; sourceTree = "<group>"; };
@@ -789,6 +791,7 @@
 		A8EDE18719314FAB007C456E /* Letters */ = {
 			isa = PBXGroup;
 			children = (
+				A8568D90195F5129001855B1 /* Letter_Green.atlas */,
 				A82527131953439F0061DEE2 /* Letter_Gray.atlas */,
 				A8EDE18819314FAB007C456E /* Letter_Blue.atlas */,
 				A8EDE18919314FAB007C456E /* Letter_Pink.atlas */,
@@ -899,6 +902,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A8568D91195F5129001855B1 /* Letter_Green.atlas in Resources */,
 				A876EC41188367AA000FA069 /* Background_Mountains.png in Resources */,
 				A876EC3F188367AA000FA069 /* Background_Grass.png in Resources */,
 				A876EC3B18836795000FA069 /* Background_Cloud.png in Resources */,

@@ -44,7 +44,7 @@ static LRDifficultyManager *_shared = nil;
 
 - (NSSet *)availablePaperColors
 {
-    NSMutableSet *paperColors = [NSMutableSet setWithObject:@(kLRPaperColorYellow)];
+    NSMutableSet *paperColors = [NSMutableSet setWithObjects:@(kLRPaperColorYellow), @(kLRPaperColorGreen), nil];
     if ([[LRMultipleLetterGenerator shared] isMultipleLetterGenerationEnabled])
     {
         [paperColors addObject:@(kLRMovingEnvelopeShiftingPaperColor)];

@@ -9,20 +9,23 @@
 #import <SpriteKit/SpriteKit.h>
 #import "LRGameStateDelegate.h"
 
-static NSString * const kLetterBlockEmptyLetter  = @"";
-static NSString * const kLetterBlockHolderText   = @" ";
-
-static NSInteger const kNumPaperColors = 3;
-
-@interface LRLetterBlock : SKSpriteNode <LRGameStateDelegate>
-
 typedef NS_ENUM(NSInteger, LRPaperColor)
 {
     kLRPaperColorNone = -1,
     kLRPaperColorYellow = 0,
     kLRPaperColorBlue,
     kLRPaperColorPink,
+    kLRPaperColorGreen,
 };
+
+static NSString * const kLetterBlockEmptyLetter  = @"";
+static NSString * const kLetterBlockHolderText   = @" ";
+
+static NSInteger const kNumPaperColors = 3;
+static LRPaperColor const kLRPaperColorHighestValue = kLRPaperColorGreen;
+
+@interface LRLetterBlock : SKSpriteNode <LRGameStateDelegate>
+
 
 ///The additional size around the edges that the player can touch and have the envelope respond. For example, if this were {10, 5}, then the width of the touchable area would increase by 5 on either side and the height increased by 2.5 Initializes a letter block
 @property (nonatomic, readwrite) CGSize touchSize;

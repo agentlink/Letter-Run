@@ -15,9 +15,7 @@ NSUInteger const kLRScoreManagerScorePerLetter = 10;
 @interface LRScoreManager ()
 @property (nonatomic) NSUInteger score;
 @property (nonatomic) NSUInteger distance;
-@property (nonatomic) NSUInteger numYellowEnvelopes;
-@property (nonatomic) NSUInteger numBlueEnvelopes;
-@property (nonatomic) NSUInteger numPinkEnvelopes;
+@property (nonatomic, strong) NSMutableArray *numEnvelopes;
 @end
 
 @implementation LRScoreManager
@@ -40,6 +38,8 @@ static LRScoreManager *_shared = nil;
     if (self = [super init])
     {
         [self _resetScoreForNewGame];
+        self.numEnvelopes = [NSMutableArray new];
+        [self _resetScoreForNewGame];
     }
     return self;
 }
@@ -56,20 +56,8 @@ static LRScoreManager *_shared = nil;
     for (NSDictionary *paperColorDict in wordDict[kSubmissionKeyWordWithColors])
     {
         LRPaperColor paperColor = [[[paperColorDict allValues] firstObject] unsignedIntegerValue];
-        switch (paperColor) {
-            case kLRPaperColorYellow:
-                self.numYellowEnvelopes++;
-                break;
-            case kLRPaperColorBlue:
-                self.numBlueEnvelopes++;
-                break;
-            case kLRPaperColorPink:
-                self.numPinkEnvelopes++;
-                break;
-            default:
-                NSAssert(0, @"Paper dictionary provided invalid color");
-                break;
-        }
+        NSNumber *currentVal = self.numEnvelopes[paperColor];
+        self.numEnvelopes[paperColor] = @([currentVal integerValue] + 1);
     }
     
     NSMutableDictionary *updatedWordDict = [NSMutableDictionary dictionaryWithDictionary:wordDict];
@@ -92,20 +80,19 @@ static LRScoreManager *_shared = nil;
 
 - (NSUInteger)envelopesCollectedForColor:(LRPaperColor)paperColor
 {
-    switch (paperColor) {
-        case kLRPaperColorYellow:
-            return self.numYellowEnvelopes;
-            break;
-        case kLRPaperColorBlue:
-            return self.numBlueEnvelopes;
-            break;
-        case kLRPaperColorPink:
-            return self.numPinkEnvelopes;
-            break;
-        case kLRPaperColorNone:
-            return self.numBlueEnvelopes + self.numPinkEnvelopes + self.numYellowEnvelopes;
-            break;
+    NSUInteger val = 0;
+    if (paperColor != kLRPaperColorNone)
+    {
+        val = [[self.numEnvelopes objectAtIndex:paperColor] unsignedIntegerValue];
     }
+    else
+    {
+        for (NSNumber *num in self.numEnvelopes)
+        {
+            val += [num integerValue];
+        }
+    }
+    return val;
 }
 
 + (NSUInteger)scoreForWordWithDict:(NSDictionary *)wordDict
@@ -144,18 +131,17 @@ static LRScoreManager *_shared = nil;
 
 - (void)_resetScoreForNewLevel
 {
-    self.numYellowEnvelopes = 0;
-    self.numBlueEnvelopes = 0;
-    self.numPinkEnvelopes = 0;
+    for (int i = 0; i < kLRPaperColorHighestValue + 1; i++)
+    {
+        self.numEnvelopes[i] = @(0);
+    }
 }
 
 - (void)_resetScoreForNewGame {
     //Clear all the scores
     self.score = 0;
     self.distance = 0;
-    self.numYellowEnvelopes = 0;
-    self.numBlueEnvelopes = 0;
-    self.numPinkEnvelopes = 0;
+    [self _resetScoreForNewLevel];
     
     //Empty the submitted owrds array
     submittedWords = [NSMutableArray array];
@@ -183,8 +169,6 @@ static LRScoreManager *_shared = nil;
 {
     [self _resetScoreForNewGame];
 }
-
-
 
 @end
 

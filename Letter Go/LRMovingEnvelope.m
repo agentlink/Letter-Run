@@ -157,25 +157,9 @@ NSString * const kLRMovingBlockName = @"Moving envelope";
 
 + (NSString *)stringFromPaperColor:(LRPaperColor)paperColor open:(BOOL)open
 {
-    NSString *spriteName;
-    switch (paperColor) {
-        case kLRPaperColorBlue:
-            spriteName = @"envelope-blue";
-            break;
-        case kLRPaperColorPink:
-            spriteName = @"envelope-pink";
-            break;
-        case kLRPaperColorYellow:
-            spriteName = @"envelope-yellow";
-            break;
-        case kLRPaperColorNone:
-            spriteName = @"envelope-gray";
-            break;
-    }
-    if (spriteName) {
-        int append = open ? 4 : 1;
-        spriteName = [spriteName stringByAppendingString:[NSString stringWithFormat:@"-%i", append]];
-    }
+    NSString *spriteName =  [NSString stringWithFormat:@"envelope-%@", [LRLetterBlock stringValueForPaperColor:paperColor]];
+    int append = open ? 4 : 1;
+    spriteName = [spriteName stringByAppendingString:[NSString stringWithFormat:@"-%i", append]];
     return spriteName;
 }
 
