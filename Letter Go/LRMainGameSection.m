@@ -14,6 +14,7 @@
 #import "LRMailman.h"
 #import "LRMovingBlockBuilder.h"
 #import "LRMailTruck.h"
+#import "LRShadowRoundedRect.h"
 
 @interface LRMainGameSection () <LRMovingBlockTouchDelegate>
 

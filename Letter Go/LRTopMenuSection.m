@@ -15,10 +15,13 @@
 #import "LRProgressManager.h"
 #import "LRLevelManager.h"
 #import "LRMath.h"
+#import "LRShadowRoundedRect.h"
 #import "LRPositionConstants.h"
 
 static NSString * const kLRScoreControllerName = @"score controller";
 static CGFloat const kLRScoreControllerPaperColorVertOffset = 10.0;
+static CGFloat const kLRScoreControlSpriteWidth = 238.0;
+static CGFloat const kLRScoreControlSpriteHeight = 88.0;
 
 @interface LRScoreControllerPaperColor : SKSpriteNode
 - (id)initWithPaperColor:(LRPaperColor)paperColor;
@@ -29,7 +32,7 @@ static CGFloat const kLRScoreControllerPaperColorVertOffset = 10.0;
 @property (nonatomic, strong) LRValueLabelNode *colorScoreLabel;
 @end
 
-@interface LRMissionControlSection : SKSpriteNode <LRScoreManagerDelegate>
+@interface LRMissionControlSection : LRShadowRoundedRect <LRScoreManagerDelegate>
 @property (nonatomic, weak) NSNumber *scoreNum;
 
 @property (nonatomic, strong) NSArray *scoreControllerArray;
@@ -53,9 +56,12 @@ static CGFloat const kLRScoreControllerPaperColorVertOffset = 10.0;
         self.zPosition = zPos_TopSection;
         
         //mission control image
-        SKTexture *scoreControlTexture = [[LRSharedTextureCache shared] textureWithName:@"topMenuSection-missionControl"];
-        self.missionControlSprite = [[LRMissionControlSection alloc] initWithTexture:scoreControlTexture];
-        self.missionControlSprite.anchorPoint = CGPointMake(0.5, 0.5);
+        
+        LRColor *darkBlue = [LRColor rgbColorWithRed:125.0 green:188.0 blue:232.0 alpha:1.0];
+        LRColor *lightBlue = [LRColor rgbColorWithRed:178.0 green:215.0 blue:228.0 alpha:1];
+        LRShadow *shadow = [LRShadow shadowWithRadius:CGSizeMake(15, 15) color:darkBlue top:NO height:10];
+        self.missionControlSprite = [[LRMissionControlSection alloc] initWithColor:lightBlue size:CGSizeMake(kLRScoreControlSpriteWidth, kLRScoreControlSpriteHeight) shadow:shadow];
+        self.missionControlSprite.position = self.position;
         [self addChild:self.missionControlSprite];
         
         //pause button
@@ -93,18 +99,12 @@ static CGFloat const kLRScoreControllerPaperColorVertOffset = 10.0;
 @end
 
 #pragma mark - LRScoreControlSprite
-static CGFloat const kLRScoreControlSpriteWidth = 238.0;
-static CGFloat const kLRScoreControlSpriteHeight = 88.0;
 @implementation LRMissionControlSection
 
-- (id)initWithTexture:(SKTexture *)texture
+- (id)initWithColor:(UIColor *)color size:(CGSize)size shadow:(LRShadow *)shadow
 {
- 
-    if (self = [super initWithTexture:texture])
+    if (self = [super initWithColor:(UIColor *)color size:(CGSize)size shadow:(LRShadow *)shadow])
     {
-        self.size = CGSizeMake(kLRScoreControlSpriteWidth, kLRScoreControlSpriteHeight);
-        self.color = [UIColor redColor];
-        self.anchorPoint = CGPointMake(1, 1);
         [LRScoreManager shared].delegate = self;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_increasedLevel) name:GAME_STATE_FINISHED_LEVEL object:nil];
         [self addChild:self.okButton];

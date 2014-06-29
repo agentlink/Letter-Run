@@ -50,6 +50,7 @@
 		A82527141953439F0061DEE2 /* Letter_Gray.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A82527131953439F0061DEE2 /* Letter_Gray.atlas */; };
 		A825E4F4195C767C0073BA09 /* LRMath.m in Sources */ = {isa = PBXBuildFile; fileRef = A825E4F3195C767C0073BA09 /* LRMath.m */; };
 		A82CA94C1855189F004ADD99 /* LRRowManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A82CA94B1855189F004ADD99 /* LRRowManager.m */; };
+		A82E894D1960B8EC0076A136 /* LRShadowRoundedRect.m in Sources */ = {isa = PBXBuildFile; fileRef = A82E894C1960B8EC0076A136 /* LRShadowRoundedRect.m */; };
 		A8447EE7194E70280037A004 /* LRLevelManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A8447EE6194E70280037A004 /* LRLevelManager.m */; };
 		A8447EEA194E72EE0037A004 /* Missions.plist in Resources */ = {isa = PBXBuildFile; fileRef = A8447EE9194E72EE0037A004 /* Missions.plist */; };
 		A846FB8B186E0489009DCEF4 /* LRLetterBlock_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = A846FB8A186E0489009DCEF4 /* LRLetterBlock_Test.m */; };
@@ -190,6 +191,8 @@
 		A82CA94A1855189F004ADD99 /* LRRowManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRRowManager.h; sourceTree = "<group>"; };
 		A82CA94B1855189F004ADD99 /* LRRowManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRRowManager.m; sourceTree = "<group>"; };
 		A82DD7E71857FB24007483A6 /* LRPositionConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LRPositionConstants.h; sourceTree = "<group>"; };
+		A82E894B1960B8EC0076A136 /* LRShadowRoundedRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRShadowRoundedRect.h; sourceTree = "<group>"; };
+		A82E894C1960B8EC0076A136 /* LRShadowRoundedRect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRShadowRoundedRect.m; sourceTree = "<group>"; };
 		A8423117188B162300F1693E /* LRLetterBlockControlDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRLetterBlockControlDelegate.h; sourceTree = "<group>"; };
 		A8447EE5194E70280037A004 /* LRLevelManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRLevelManager.h; sourceTree = "<group>"; };
 		A8447EE6194E70280037A004 /* LRLevelManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLevelManager.m; sourceTree = "<group>"; };
@@ -327,15 +330,17 @@
 			name = "Background Layer";
 			sourceTree = "<group>";
 		};
-		0049694E17F8A10700176F2D /* Interactive Objects */ = {
+		0049694E17F8A10700176F2D /* UI Objects */ = {
 			isa = PBXGroup;
 			children = (
 				A8A3442319202C74006C5C55 /* Mailman */,
 				0049695217F8A70B00176F2D /* Letter Blocks */,
 				00B43D90182834CF00261468 /* LRButton.h */,
 				00B43D91182834CF00261468 /* LRButton.m */,
+				A82E894B1960B8EC0076A136 /* LRShadowRoundedRect.h */,
+				A82E894C1960B8EC0076A136 /* LRShadowRoundedRect.m */,
 			);
-			name = "Interactive Objects";
+			name = "UI Objects";
 			sourceTree = "<group>";
 		};
 		0049695217F8A70B00176F2D /* Letter Blocks */ = {
@@ -468,7 +473,7 @@
 				0049695617F8AB3400176F2D /* Managers */,
 				00AC280B182EEA7900B3C0EB /* Menus */,
 				A88A4B3418872F7600BC9905 /* Helper Objects */,
-				0049694E17F8A10700176F2D /* Interactive Objects */,
+				0049694E17F8A10700176F2D /* UI Objects */,
 				00CDF17217F477C1003065F6 /* Scenes */,
 				00CDF17617F478BA003065F6 /* Layers */,
 				00CDF13E17F474EC003065F6 /* Base */,
@@ -960,6 +965,7 @@
 				009CC29E180349E700C0423D /* LRDictionaryChecker.m in Sources */,
 				A825E4F4195C767C0073BA09 /* LRMath.m in Sources */,
 				00CDF14517F474EC003065F6 /* main.m in Sources */,
+				A82E894D1960B8EC0076A136 /* LRShadowRoundedRect.m in Sources */,
 				A88A4B371887308C00BC9905 /* LRMainGameSection.m in Sources */,
 				00CDF17F17F4799B003065F6 /* LRBackgroundLayer.m in Sources */,
 				A88A4B3B188734E400BC9905 /* LRMovingEnvelope.m in Sources */,
