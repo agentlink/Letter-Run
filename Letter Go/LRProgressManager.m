@@ -50,7 +50,7 @@ static LRProgressManager *_shared = nil;
 
 - (void)resetRoundProgress
 {
-    self.level = 4;
+    self.level = 1;
 }
 
 - (BOOL)didIncreaseLevel

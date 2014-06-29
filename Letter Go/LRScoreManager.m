@@ -62,7 +62,6 @@ static LRScoreManager *_shared = nil;
     
     NSMutableDictionary *updatedWordDict = [NSMutableDictionary dictionaryWithDictionary:wordDict];
     [updatedWordDict setObject:[NSNumber numberWithInteger:wordScore] forKey:@"score"];
-    NSLog(@"%@", updatedWordDict);
     
     [submittedWords addObject:updatedWordDict];
     
@@ -97,20 +96,17 @@ static LRScoreManager *_shared = nil;
 
 + (NSUInteger)scoreForWordWithDict:(NSDictionary *)wordDict
 {
-    NSString *word = [wordDict objectForKey:kSubmissionKeyWord];
-    
-    NSUInteger wordLength = [word length];
+    NSArray *letterArray = wordDict[kSubmissionKeyWordWithColors];
     NSUInteger wordScore = 0;
 
     //For every letter in the word...
-    for (int i = 0; i < wordLength; i++) {
-        //...set it equal to the base score...
-        NSInteger letterScore = kLRScoreManagerScorePerLetter;
+    for (NSDictionary *letterDict in letterArray)
+    {
+        NSAssert([letterDict count] == 1, @"Letter dicts should not have more than one key/value pair in them");
+        LRPaperColor color = [[[letterDict allValues] firstObject] integerValue];
+        NSInteger letterScore = [LRScoreManager _scoreForPaperColor:color];
         wordScore += letterScore;
     }
-    
-    //Multiply it by the lenght multiplier
-    wordScore *= [LRScoreManager _scoreMultiplierForLength:wordLength];
     return wordScore;
 }
 
@@ -121,17 +117,14 @@ static LRScoreManager *_shared = nil;
 
 #pragma Private Methods
 
-
-+ (CGFloat)_scoreMultiplierForLength: (NSUInteger)length
++ (NSInteger)_scoreForPaperColor:(LRPaperColor)color
 {
-    CGFloat fLength = (CGFloat)length;
-    CGFloat multiplier = (fLength - 1)/2;
-    return multiplier;
+    return (color + 1) * kLRScoreManagerScorePerLetter;
 }
 
 - (void)_resetScoreForNewLevel
 {
-    for (int i = 0; i < kLRPaperColorHighestValue + 1; i++)
+    for (int i = 0; i <= kLRPaperColorHighestValue; i++)
     {
         self.numEnvelopes[i] = @(0);
     }
