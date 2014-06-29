@@ -50,7 +50,7 @@ static LRProgressManager *_shared = nil;
 
 - (void)resetRoundProgress
 {
-    self.level = 1;
+    self.level = 4;
 }
 
 - (BOOL)didIncreaseLevel
@@ -58,7 +58,7 @@ static LRProgressManager *_shared = nil;
     for (LRPaperColor color = kLRPaperColorNone; color < kNumPaperColors; color++)
     {
         NSUInteger collected = [[LRScoreManager shared] envelopesCollectedForColor:color];
-        NSUInteger reqCollected = [[self currentMission] numberOfEnvelopesForColor:color];
+        NSUInteger reqCollected = [[self currentMission] objectiveEnvelopesForColor:color];
         if (collected < reqCollected)
             return NO;
     }
@@ -68,7 +68,7 @@ static LRProgressManager *_shared = nil;
 
 - (NSUInteger)scoreLeftForPaperColor:(LRPaperColor)color
 {
-    NSUInteger envelopesToContinue= [[self currentMission] numberOfEnvelopesForColor:color];
+    NSUInteger envelopesToContinue= [[self currentMission] objectiveEnvelopesForColor:color];
     NSInteger colorScore = envelopesToContinue - [[LRScoreManager shared] envelopesCollectedForColor:color];
     return MAX(0, colorScore);
 }

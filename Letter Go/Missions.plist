@@ -4,115 +4,113 @@
 <array>
 	<dict/>
 	<dict>
+		<key>objective</key>
+		<dict>
+			<key>paper colors</key>
+			<dict>
+				<key>gray</key>
+				<integer>3</integer>
+			</dict>
+		</dict>
+		<key>generation probabilities</key>
+		<dict>
+			<key>yellow</key>
+			<integer>1</integer>
+		</dict>
 		<key>health bar time</key>
 		<integer>30</integer>
-		<key>paper colors</key>
-		<dict>
-			<key>gray</key>
-			<integer>3</integer>
-		</dict>
 	</dict>
 	<dict>
-		<key>health bar time</key>
-		<integer>50</integer>
-		<key>paper colors</key>
+		<key>objective</key>
 		<dict>
+			<key>paper colors</key>
+			<dict>
+				<key>green</key>
+				<integer>3</integer>
+				<key>yellow</key>
+				<integer>10</integer>
+			</dict>
+		</dict>
+		<key>generation probabilities</key>
+		<dict>
+			<key>yellow</key>
+			<integer>3</integer>
 			<key>green</key>
-			<integer>3</integer>
-			<key>yellow</key>
-			<integer>10</integer>
+			<integer>1</integer>
 		</dict>
-	</dict>
-	<dict>
 		<key>health bar time</key>
 		<integer>50</integer>
-		<key>paper colors</key>
-		<dict>
-			<key>pink</key>
-			<integer>3</integer>
-			<key>blue</key>
-			<integer>3</integer>
-			<key>yellow</key>
-			<integer>10</integer>
-		</dict>
 	</dict>
 	<dict>
-		<key>health bar time</key>
-		<integer>50</integer>
-		<key>paper colors</key>
+		<key>objective</key>
+		<dict>
+			<key>paper colors</key>
+			<dict>
+				<key>pink</key>
+				<integer>3</integer>
+				<key>blue</key>
+				<integer>3</integer>
+				<key>yellow</key>
+				<integer>10</integer>
+			</dict>
+		</dict>
+		<key>generation probabilities</key>
 		<dict>
 			<key>pink</key>
-			<integer>3</integer>
+			<integer>1</integer>
 			<key>blue</key>
+			<integer>1</integer>
+			<key>yellow</key>
+			<integer>4</integer>
+		</dict>
+		<key>health bar time</key>
+		<integer>50</integer>
+	</dict>
+	<dict>
+		<key>objective</key>
+		<dict>
+			<key>paper colors</key>
+			<dict>
+				<key>pink</key>
+				<integer>3</integer>
+				<key>blue</key>
+				<integer>5</integer>
+				<key>yellow</key>
+				<integer>12</integer>
+			</dict>
+		</dict>
+		<key>generation probabilities</key>
+		<dict>
+			<key>pink</key>
+			<integer>1</integer>
+			<key>blue</key>
+			<integer>2</integer>
+			<key>yellow</key>
 			<integer>5</integer>
-			<key>yellow</key>
-			<integer>12</integer>
 		</dict>
-	</dict>
-	<dict>
 		<key>health bar time</key>
 		<integer>50</integer>
-		<key>paper colors</key>
-		<dict>
-			<key>pink</key>
-			<integer>5</integer>
-			<key>blue</key>
-			<integer>5</integer>
-			<key>yellow</key>
-			<integer>0</integer>
-		</dict>
 	</dict>
 	<dict>
-		<key>health bar time</key>
-		<integer>50</integer>
-		<key>paper colors</key>
+		<key>objective</key>
+		<dict>
+			<key>paper colors</key>
+			<dict>
+				<key>pink</key>
+				<integer>5</integer>
+				<key>blue</key>
+				<integer>5</integer>
+			</dict>
+		</dict>
+		<key>generation probabilities</key>
 		<dict>
 			<key>pink</key>
-			<integer>3</integer>
+			<integer>1</integer>
 			<key>blue</key>
-			<integer>3</integer>
-			<key>yellow</key>
-			<integer>20</integer>
+			<integer>1</integer>
 		</dict>
-	</dict>
-	<dict>
 		<key>health bar time</key>
 		<integer>50</integer>
-		<key>paper colors</key>
-		<dict>
-			<key>pink</key>
-			<integer>3</integer>
-			<key>blue</key>
-			<integer>7</integer>
-			<key>yellow</key>
-			<integer>20</integer>
-		</dict>
-	</dict>
-	<dict>
-		<key>health bar time</key>
-		<integer>50</integer>
-		<key>paper colors</key>
-		<dict>
-			<key>pink</key>
-			<integer>10</integer>
-			<key>blue</key>
-			<integer>10</integer>
-			<key>yellow</key>
-			<integer>25</integer>
-		</dict>
-	</dict>
-	<dict>
-		<key>health bar time</key>
-		<integer>50</integer>
-		<key>paper colors</key>
-		<dict>
-			<key>pink</key>
-			<integer>10</integer>
-			<key>blue</key>
-			<integer>10</integer>
-			<key>yellow</key>
-			<integer>30</integer>
-		</dict>
 	</dict>
 </array>
 </plist>

@@ -9,12 +9,7 @@
 #import "LRLetterBlockBuilder.h"
 #import "LRAlphabeticalLetterGenerator.h"
 #import "LRDifficultyManager.h"
-typedef NS_ENUM(NSInteger, LRLetterProbability) {
-    kLRLetterProbabilityCommon          = 11,
-    kLRLetterProbabilityUncommon        = 14,
-    kLRLetterProbabilityLessCommon      = 17,
-    kLRLetterProbabilityRare            = 20,
-};
+#import "LRProgressManager.h"
 
 static const BOOL lgbDebugMode = NO;
 
@@ -62,34 +57,46 @@ static const BOOL lgbDebugMode = NO;
 
 + (LRPaperColor)generatePaperColor
 {
-    int maxVal = kLRLetterProbabilityRare + 1;
-    int val = arc4random()%maxVal;
+    LRMission *mission = [[LRProgressManager shared] currentMission];
+    NSMutableDictionary *probabilityDict = [NSMutableDictionary new];
+    NSInteger maxVal = 0;
     
-    LRPaperColor paperColor;
-    if (val <= kLRLetterProbabilityCommon) {
-        paperColor = kLRPaperColorYellow;
-    }
-    else if (val <= kLRLetterProbabilityLessCommon)
+    //get all the probabilities and load them into a dictionary
+    for (LRPaperColor color = 0; color <= kLRPaperColorHighestValue; color++)
     {
-        paperColor = kLRPaperColorGreen;
+        NSInteger probability = [mission probabilityForEnvelopeColor:color];
+        if (probability != 0)
+        {
+            maxVal += probability;
+            NSString *strColor = [LRLetterBlock stringValueForPaperColor:color];
+            [probabilityDict setObject:@(maxVal) forKey:strColor];
+        }
     }
-    else if (val <= kLRLetterProbabilityUncommon) {
-        paperColor = kLRPaperColorBlue;
-    }
-    else {
-        paperColor = kLRPaperColorPink;
-    }
+    //sort the dictionary by value order so we can add them into the plist however we'd like
+    NSArray *sortedKeys = [probabilityDict keysSortedByValueUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        NSInteger v1 = [obj1 integerValue];
+        NSInteger v2 = [obj2 integerValue];
+        if (v1 < v2)
+            return NSOrderedAscending;
+        else if (v1 > v2)
+            return NSOrderedDescending;
+        else
+            return NSOrderedSame;
+    }];
     
-    if (![LRLetterBlockBuilder _isPaperColorEnabled:paperColor]) {
-        paperColor = [LRLetterBlockBuilder generatePaperColor];
+    //generate the value
+    NSInteger val = arc4random()%maxVal + 1;
+    //and compare it ot the values in the dictionary
+    for (NSString *key in sortedKeys)
+    {
+        NSInteger probVal = [probabilityDict[key] integerValue];
+        if (probVal >= val)
+        {
+            return [LRLetterBlock paperColorForString:key];
+        }
     }
-    return paperColor;
-}
-
-+ (BOOL)_isPaperColorEnabled:(LRPaperColor)color
-{
-    NSNumber *newColorVal = @(color);
-    return [[[LRDifficultyManager shared] availablePaperColors] containsObject:newColorVal];
+    NSAssert(0, @"Unable to find paper color for given probabilities");
+    return kLRPaperColorNone;
 }
 
 + (NSString *)generateLetterForPaperColor:(LRPaperColor)paperColor

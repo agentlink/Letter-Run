@@ -31,7 +31,7 @@ static const unsigned trialCount = 10000;
 
 - (void)testBuildLetterGenerator
 {
-    XCTAssertNotNil([LRLetterGenerator shared], @"Letter generator should not be nil");
+    XCTAssertNotNil([LRAlphabeticalLetterGenerator shared], @"Letter generator should not be nil");
 }
 
 //Check to see if more than the max number of vowels, consonants, or repeated letters is produced

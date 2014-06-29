@@ -12,7 +12,7 @@
 @interface LRMission ()
 + (instancetype)missionFromDictionary:(NSDictionary *)dict;
 @property (nonatomic, readwrite) NSDictionary *levelDict;
-@property (nonatomic, readwrite) NSDictionary *paperColorDict;
+@property (nonatomic, readwrite) NSDictionary *objectivePaperColorDict;
 @property (nonatomic, readwrite) NSString *missionDescription;
 @end
 
@@ -24,35 +24,38 @@
 
 #pragma mark - Public Methods
 
-- (id)init
++ (instancetype)missionFromDictionary:(NSDictionary *)dict
 {
-    if (self = [super init])
-    {
-    }
-    return self;
+    LRMission *mission = [LRMission new];
+    mission.levelDict = dict;
+    return mission;
 }
 
-- (NSUInteger)numberOfEnvelopesForColor:(LRPaperColor)paperColor
+- (NSUInteger)objectiveEnvelopesForColor:(LRPaperColor)paperColor
 {
     NSString *key = [LRLetterBlock stringValueForPaperColor:paperColor];
-    return [self.paperColorDict[key] unsignedIntegerValue];
+    return [self.objectivePaperColorDict[key] unsignedIntegerValue];
 }
+
+- (NSInteger)probabilityForEnvelopeColor:(LRPaperColor)paperColor
+{
+    NSDictionary *probabilityDict = self.levelDict[@"generation probabilities"];
+    NSString *key = [LRLetterBlock stringValueForPaperColor:paperColor];
+    if (!probabilityDict[key]) {
+        return 0;
+    }
+    return [probabilityDict[key] integerValue];
+}
+
 
 - (NSArray *)paperColors
 {
     NSMutableArray *array = [NSMutableArray new];
-    for (NSString *key in [self.paperColorDict allKeys])
+    for (NSString *key in [self.objectivePaperColorDict allKeys])
     {
         [array addObject:@([LRLetterBlock paperColorForString:key])];
     }
     return array;
-}
-
-- (void)setLevelDict:(NSDictionary *)levelDict
-{
-    _levelDict = levelDict;
-    self.paperColorDict = levelDict[@"paper colors"];
-    self.missionDescription = levelDict[@"description"];
 }
 
 - (CGFloat)healthDropTime
@@ -60,11 +63,13 @@
     return [self.levelDict[@"health bar time"] floatValue];
 }
 
-+ (instancetype)missionFromDictionary:(NSDictionary *)dict
+#pragma mark - Private Methods
+
+- (void)setLevelDict:(NSDictionary *)levelDict
 {
-    LRMission *mission = [LRMission new];
-    mission.levelDict = dict;
-    return mission;
+    _levelDict = levelDict;
+    self.objectivePaperColorDict = levelDict[@"objective"][@"paper colors"];
+    self.missionDescription = levelDict[@"description"];
 }
 @end
 

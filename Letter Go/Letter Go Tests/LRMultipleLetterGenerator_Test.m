@@ -29,14 +29,14 @@
 
 - (void)testEnablingChainMail
 {
-    LRMultipleLetterGenerator *generator = [LRMultipleLetterGenerator new];
+    LRMultipleLetterGenerator *generator = [LRMultipleLetterGenerator shared];
     [generator setChainMailStyleEnabled:kLRChainMailStyleRandom enabled:YES];
     [generator setChainMailStyleEnabled:kLRChainMailStyleAlphabetical enabled:NO];
     XCTAssertTrue([generator isChainMailStyleEnabled:kLRChainMailStyleRandom], @"Enabling chain mail is busted");
     XCTAssertFalse([generator isChainMailStyleEnabled:kLRChainMailStyleAlphabetical], @"Disabling chain mail is busted.");
     
     [generator setChainMailStyleEnabled:kLRChainMailStyleAlphabetical enabled:YES];
-    XCTAssertTrue([generator isChainMailStyleEnabled:kLRChainMailStyleReverseAlphabetical], @"Reenabling chian mail is busted");
+    XCTAssertTrue([generator isChainMailStyleEnabled:kLRChainMailStyleAlphabetical], @"Reenabling chian mail is busted");
     
     [generator setChainMailStyleEnabled:kLRChainMailStyleReverseAlphabetical | kLRChainMailStyleVowels enabled:YES];
     XCTAssertTrue([generator isChainMailStyleEnabled:kLRChainMailStyleReverseAlphabetical] && [generator isChainMailStyleEnabled:kLRChainMailStyleVowels], @"Unable to set multiple chain mail types enabled at once");

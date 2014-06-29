@@ -14,7 +14,10 @@
 @property (nonatomic, readonly) CGFloat healthDropTime;
 @property (nonatomic, readonly) NSString *missionDescription;
 
-- (NSUInteger)numberOfEnvelopesForColor:(LRPaperColor)paperColor;
+///Returns how many envelopes of a given color are required to complete a mission
+- (NSUInteger)objectiveEnvelopesForColor:(LRPaperColor)paperColor;
+///Returns the probability of a given envelope color being generated
+- (NSInteger)probabilityForEnvelopeColor:(LRPaperColor)paperColor;
 @end
 
 @interface LRLevelManager : NSObject
