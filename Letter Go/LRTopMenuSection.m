@@ -72,7 +72,8 @@ static CGFloat const kLRScoreControllerPaperColorVertOffset = 10.0;
         pauseLabel.text = @"P";
         
         CGFloat pauseMargin = 9.0;
-        self.pauseButton.position = CGPointMake((self.pauseButton.size.width - self.size.width)/2 + pauseMargin, (self.size.height - self.pauseButton.size.height)/2 - pauseMargin);
+        self.pauseButton.anchorPoint = CGPointMake(0.5, 1.0);
+        self.pauseButton.position = CGPointMake((self.pauseButton.size.width - self.size.width)/2 + pauseMargin, (self.size.height - self.missionControlSprite.size.height + self.pauseButton.size.height)/2);
         self.pauseButton.hidden = NO;
         self.pauseButton.titleLabel = pauseLabel;
         [self addChild:self.pauseButton];
