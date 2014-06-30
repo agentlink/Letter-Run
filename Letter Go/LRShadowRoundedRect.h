@@ -17,11 +17,11 @@
  @param height The height of the shadow
  */
 
-+ (instancetype)shadowWithRadius:(CGSize)radius color:(UIColor *)color top:(BOOL)top height:(CGFloat)height;
-@property (nonatomic, readonly) CGSize radius;
++ (instancetype)shadowWithHeight:(CGFloat)height color:(UIColor *)color top:(BOOL)top radius:(CGFloat)radius;
 @property (nonatomic, readonly) UIColor *color;
 @property (nonatomic, readonly) BOOL top;
 @property (nonatomic, readonly) CGFloat height;
+@property (nonatomic, readonly) CGFloat radius;
 
 @end
 /*
@@ -33,4 +33,23 @@
 
 @interface LRShadowRoundedRect : SKSpriteNode
 - (id)initWithColor:(UIColor *)color size:(CGSize)size shadow:(LRShadow *)shadow;
+@end
+
+@interface LRShadowRoundedButton : LRShadowRoundedRect
+
+@property (nonatomic, readonly) SEL actionTouchUpInside;
+@property (nonatomic, readonly) SEL actionTouchDown;
+@property (nonatomic, readonly) SEL actionTouchUp;
+@property (nonatomic, readonly, weak) id targetTouchUpInside;
+@property (nonatomic, readonly, weak) id targetTouchDown;
+@property (nonatomic, readonly, weak) id targetTouchUp;
+@property (nonatomic, readwrite, strong) SKLabelNode *titleLabel;
+
+@property (nonatomic) BOOL isEnabled;
+@property (nonatomic) BOOL isSelected;
+
+- (void)setTouchUpInsideTarget:(id)target action:(SEL)action;
+- (void)setTouchDownTarget:(id)target action:(SEL)action;
+- (void)setTouchUpTarget:(id)target action:(SEL)action;
+
 @end

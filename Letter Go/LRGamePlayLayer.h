@@ -13,6 +13,7 @@
 #import "LRButtonSection.h"
 #import "LRMainGameSection.h"
 #import "LRTopMenuSection.h"
+#import "LRShadowRoundedRect.h"
 
 #import "LRButton.h"
 #import "LRDevPauseViewController.h"
@@ -29,7 +30,7 @@ extern NSString * const kLRGamePlayLayerLetterSectionName;
 @property (nonatomic, readonly) LRButtonSection *buttonSection;
 @property (nonatomic, readonly) LRTopMenuSection *topMenuSection;
 
-@property (nonatomic, readonly) LRButton *pauseButton;
+@property (nonatomic, readonly) LRShadowRoundedButton *pauseButton;
 @property (nonatomic, readonly) LRDevPauseViewController *devPause;
 
 @end

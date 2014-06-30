@@ -20,8 +20,6 @@
 
 static NSString * const kLRScoreControllerName = @"score controller";
 static CGFloat const kLRScoreControllerPaperColorVertOffset = 10.0;
-static CGFloat const kLRScoreControlSpriteWidth = 238.0;
-static CGFloat const kLRScoreControlSpriteHeight = 88.0;
 
 @interface LRScoreControllerPaperColor : SKSpriteNode
 - (id)initWithPaperColor:(LRPaperColor)paperColor;
@@ -32,7 +30,7 @@ static CGFloat const kLRScoreControlSpriteHeight = 88.0;
 @property (nonatomic, strong) LRValueLabelNode *colorScoreLabel;
 @end
 
-@interface LRMissionControlSection : LRShadowRoundedRect <LRScoreManagerDelegate>
+@interface LRMissionControlSection : SKSpriteNode <LRScoreManagerDelegate>
 @property (nonatomic, weak) NSNumber *scoreNum;
 
 @property (nonatomic, strong) NSArray *scoreControllerArray;
@@ -42,7 +40,7 @@ static CGFloat const kLRScoreControlSpriteHeight = 88.0;
 
 @interface LRTopMenuSection ()
 @property (nonatomic, strong) LRMissionControlSection *missionControlSprite;
-@property (nonatomic, strong) LRButton *pauseButton;
+@property (nonatomic, strong) LRShadowRoundedButton *pauseButton;
 @end
 
 @implementation LRTopMenuSection
@@ -57,20 +55,29 @@ static CGFloat const kLRScoreControlSpriteHeight = 88.0;
         
         //mission control image
         
-        LRColor *darkBlue = [LRColor rgbColorWithRed:125.0 green:188.0 blue:232.0 alpha:1.0];
-        LRColor *lightBlue = [LRColor rgbColorWithRed:178.0 green:215.0 blue:228.0 alpha:1];
-        LRShadow *shadow = [LRShadow shadowWithRadius:CGSizeMake(15, 15) color:darkBlue top:NO height:10];
-        self.missionControlSprite = [[LRMissionControlSection alloc] initWithColor:lightBlue size:CGSizeMake(kLRScoreControlSpriteWidth, kLRScoreControlSpriteHeight) shadow:shadow];
-        self.missionControlSprite.position = self.position;
+        SKTexture *scoreControlTexture = [[LRSharedTextureCache shared] textureWithName:@"topMenuSection-missionControl"];
+        self.missionControlSprite = [[LRMissionControlSection alloc] initWithTexture:scoreControlTexture];
+        self.missionControlSprite.anchorPoint = CGPointMake(0.5, 0.5);
         [self addChild:self.missionControlSprite];
         
         //pause button
-        self.pauseButton = [[LRButton alloc] initWithImageNamed:@"pause-button" withDisabledOption:NO];
-        self.pauseButton.anchorPoint = CGPointMake(0, 1);
-        self.pauseButton.scale = .5;
-        self.pauseButton.position = CGPointMake(-self.size.width/2, self.size.height/2);
+        
+        LRColor *darkBlue = [LRColor rgbColorWithRed:125.0 green:188.0 blue:232.0 alpha:1.0];
+        LRColor *lightBlue = [LRColor rgbColorWithRed:178.0 green:215.0 blue:228.0 alpha:1];
+        LRShadow *shadow = [LRShadow shadowWithHeight:5.0 color:darkBlue top:NO radius:2];
+        
+        self.pauseButton = [[LRShadowRoundedButton alloc] initWithColor:lightBlue size:CGSizeMake(26, 32) shadow:shadow];
+        
+        SKLabelNode *pauseLabel = [SKLabelNode labelNodeWithFontNamed:[LRFont displayTextFontWithSize:10].familyName];
+        pauseLabel.text = @"P";
+        
+        CGFloat pauseMargin = 9.0;
+        self.pauseButton.position = CGPointMake((self.pauseButton.size.width - self.size.width)/2 + pauseMargin, (self.size.height - self.pauseButton.size.height)/2 - pauseMargin);
         self.pauseButton.hidden = NO;
+        self.pauseButton.titleLabel = pauseLabel;
         [self addChild:self.pauseButton];
+        
+        
         [_pauseButton setTouchUpInsideTarget:self action:@selector(pauseButtonPressed)];
         
         //preload the fonts
@@ -99,12 +106,17 @@ static CGFloat const kLRScoreControlSpriteHeight = 88.0;
 @end
 
 #pragma mark - LRScoreControlSprite
+static CGFloat const kLRScoreControlSpriteWidth = 230.0;
+static CGFloat const kLRScoreControlSpriteHeight = 88.0;
 @implementation LRMissionControlSection
 
-- (id)initWithColor:(UIColor *)color size:(CGSize)size shadow:(LRShadow *)shadow
+- (id)initWithTexture:(SKTexture *)texture
 {
-    if (self = [super initWithColor:(UIColor *)color size:(CGSize)size shadow:(LRShadow *)shadow])
+ 
+    if (self = [super initWithTexture:texture])
     {
+        self.size = CGSizeMake(kLRScoreControlSpriteWidth, kLRScoreControlSpriteHeight);
+        self.anchorPoint = CGPointMake(1, 1);
         [LRScoreManager shared].delegate = self;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_increasedLevel) name:GAME_STATE_FINISHED_LEVEL object:nil];
         [self addChild:self.okButton];
