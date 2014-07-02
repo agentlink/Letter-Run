@@ -20,7 +20,7 @@
 {
     if (self = [super initWithColor:[UIColor clearColor] size:size])
     {
-        _bodySprite = [SKSpriteNode spriteNodeWithColor:[UIColor greenColor]
+        _bodySprite = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor]
                                                   size:CGSizeMake(size.width, size.height - shadow.height)];
         _bodySprite.anchorPoint = CGPointMake(0.5, 0);
         _bodySprite.position = CGPointMake(0, -self.size.height/2 + (shadow.height * !shadow.top));

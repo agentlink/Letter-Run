@@ -35,6 +35,10 @@
 + (LRColor *)submitButtonDisabledColor;
 + (LRColor *)submitButtonTextColor;
 
+//General Buttons
++ (LRColor *)buttonLightBlue;
++ (LRColor *)buttonDarkBlue;
+
 //Main Screen Colors
 + (LRColor *)mainScreenRoad;
 
@@ -46,6 +50,7 @@
 + (LRColor *)letterSectionColor;
 + (LRColor *)buttonSectionColor;
 + (LRColor *)gamePlayLayerBackgroundColor;
++ (LRColor *)textDarkBlue;
 
 + (LRColor *)debugColor1;
 + (LRColor *)debugColor2;

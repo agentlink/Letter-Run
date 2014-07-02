@@ -94,6 +94,18 @@
     return (LRColor *)[SKColor whiteColor];
 }
 
++ (LRColor *)buttonLightBlue {
+    return [LRColor rgbColorWithRed:178.0 green:215.0 blue:228.0 alpha:1];
+}
+
++ (LRColor *)buttonDarkBlue {
+    return [LRColor rgbColorWithRed:125.0 green:188.0 blue:232.0 alpha:1.0];
+}
+
++ (LRColor *)textDarkBlue {
+    return [LRColor rgbColorWithRed:30.0 green:79.0 blue:115.0 alpha:1.0];
+}
+
 + (LRColor *)emptySlotColor {
     return [LRColor clearColor];
 }

@@ -28,7 +28,7 @@
 
 + (NSArray *)_fontNamesToPreload
 {
-    return @[@"Helvetica", @"LeagueGothic-Italic", @"GothamBold"];
+    return @[@"Helvetica", @"LeagueGothic-Italic", @"GothamBold", @"LeagueGothic-Regular"];
 }
 
 @end
