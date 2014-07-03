@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00076E67186F819000287EF9 /* LRFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 00076E66186F819000287EF9 /* LRFont.m */; };
 		0007FB3F180C7A1A00E55B0D /* LRCollectedEnvelope.m in Sources */ = {isa = PBXBuildFile; fileRef = 0007FB3E180C7A1A00E55B0D /* LRCollectedEnvelope.m */; };
 		0020001E18245B3E005DDD46 /* LRCollisionManager+ContactFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0020001D18245B3E005DDD46 /* LRCollisionManager+ContactFunctions.m */; };
 		003C2670180F46C6003729D4 /* organizedDict.txt in Resources */ = {isa = PBXBuildFile; fileRef = 003C266F180F46C6003729D4 /* organizedDict.txt */; };
@@ -74,6 +73,7 @@
 		A88CEB20189D87C600092C8A /* LREnvelopeAnimationBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = A88CEB1F189D87C600092C8A /* LREnvelopeAnimationBuilder.m */; };
 		A88DECE2190C39C10076EDE9 /* LRProgressManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A88DECE1190C39C10076EDE9 /* LRProgressManager.m */; };
 		A891BDB31965DEC1004601FB /* UIColor+LRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A891BDB21965DEC1004601FB /* UIColor+LRAdditions.m */; };
+		A891BDB61965E06B004601FB /* UIFont+LRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A891BDB51965E06B004601FB /* UIFont+LRAdditions.m */; };
 		A8955B3819379ACE00AECDB3 /* LRDifficultyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A8955B3719379ACE00AECDB3 /* LRDifficultyManager.m */; };
 		A895AC5D19328FF30064FE73 /* LRMultipleLetterGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = A895AC5C19328FF30064FE73 /* LRMultipleLetterGenerator.m */; };
 		A895AC651932985C0064FE73 /* LRMultipleLetterGenerator_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = A895AC641932985C0064FE73 /* LRMultipleLetterGenerator_Test.m */; };
@@ -116,8 +116,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		00076E65186F819000287EF9 /* LRFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRFont.h; sourceTree = "<group>"; };
-		00076E66186F819000287EF9 /* LRFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LRFont.m; sourceTree = "<group>"; };
 		0007FB3D180C7A1A00E55B0D /* LRCollectedEnvelope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRCollectedEnvelope.h; sourceTree = "<group>"; };
 		0007FB3E180C7A1A00E55B0D /* LRCollectedEnvelope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRCollectedEnvelope.m; sourceTree = "<group>"; };
 		0020001C18245B3E005DDD46 /* LRCollisionManager+ContactFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LRCollisionManager+ContactFunctions.h"; sourceTree = "<group>"; };
@@ -225,6 +223,8 @@
 		A88DECE1190C39C10076EDE9 /* LRProgressManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRProgressManager.m; sourceTree = "<group>"; };
 		A891BDB11965DEC1004601FB /* UIColor+LRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+LRAdditions.h"; sourceTree = "<group>"; };
 		A891BDB21965DEC1004601FB /* UIColor+LRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+LRAdditions.m"; sourceTree = "<group>"; };
+		A891BDB41965E06B004601FB /* UIFont+LRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+LRAdditions.h"; sourceTree = "<group>"; };
+		A891BDB51965E06B004601FB /* UIFont+LRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+LRAdditions.m"; sourceTree = "<group>"; };
 		A8955B3619379ACE00AECDB3 /* LRDifficultyManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRDifficultyManager.h; sourceTree = "<group>"; };
 		A8955B3719379ACE00AECDB3 /* LRDifficultyManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRDifficultyManager.m; sourceTree = "<group>"; };
 		A895AC5B19328FF30064FE73 /* LRMultipleLetterGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRMultipleLetterGenerator.h; sourceTree = "<group>"; };
@@ -762,14 +762,14 @@
 		A8E60A141881E27900F60DF4 /* Class Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				00076E65186F819000287EF9 /* LRFont.h */,
-				00076E66186F819000287EF9 /* LRFont.m */,
+				A891BDB41965E06B004601FB /* UIFont+LRAdditions.h */,
+				A891BDB51965E06B004601FB /* UIFont+LRAdditions.m */,
 				A895AC691932A3EF0064FE73 /* NSMutableArray+Shuffle.h */,
 				A895AC6A1932A3EF0064FE73 /* NSMutableArray+Shuffle.m */,
-				A8CDE052193F82B700AC6F4C /* LRValueLabelNode.h */,
-				A8CDE053193F82B700AC6F4C /* LRValueLabelNode.m */,
 				A891BDB11965DEC1004601FB /* UIColor+LRAdditions.h */,
 				A891BDB21965DEC1004601FB /* UIColor+LRAdditions.m */,
+				A8CDE052193F82B700AC6F4C /* LRValueLabelNode.h */,
+				A8CDE053193F82B700AC6F4C /* LRValueLabelNode.m */,
 			);
 			name = "Class Extensions";
 			sourceTree = "<group>";
@@ -986,8 +986,8 @@
 				A88CEB20189D87C600092C8A /* LREnvelopeAnimationBuilder.m in Sources */,
 				00CDF17917F478D7003065F6 /* LRLayer.m in Sources */,
 				A8995EDA1959D3A500A5A5A8 /* LRGameOverMenu.m in Sources */,
+				A891BDB61965E06B004601FB /* UIFont+LRAdditions.m in Sources */,
 				00CDF17517F478A1003065F6 /* LRGameScene.m in Sources */,
-				00076E67186F819000287EF9 /* LRFont.m in Sources */,
 				A8A34420191EC73C006C5C55 /* LRManfordAIManager.m in Sources */,
 				A8CDE054193F82B700AC6F4C /* LRValueLabelNode.m in Sources */,
 				00B43D92182834CF00261468 /* LRButton.m in Sources */,

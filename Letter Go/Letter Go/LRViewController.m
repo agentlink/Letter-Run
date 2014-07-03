@@ -42,7 +42,7 @@
     // Create and configure the scene.
     LRGameScene * scene = [LRGameScene scene];
     // Present the scene.
-    [LRFont preloadFonts];
+    [UIFont preloadFonts];
     [[LRSharedTextureCache shared] preloadTextureAtlasesWithCompletion:^{
         [skView presentScene:scene];
     }];

@@ -59,9 +59,8 @@
 + (SKLabelNode *)_gameOverLabel
 {
     SKLabelNode *gameOverLabel = [[SKLabelNode alloc] init];
-    LRFont *displayFont = [LRFont displayTextFontWithSize:100];
     gameOverLabel.text = @"Game Over";
-    gameOverLabel.fontName = displayFont.familyName;
+    gameOverLabel.fontName = [UIFont lr_displayFontRegular];
     gameOverLabel.fontSize = 40.0;
     gameOverLabel.fontColor = [UIColor gameOverLabelColor];
     return gameOverLabel;

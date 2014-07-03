@@ -69,7 +69,7 @@ static CGFloat const kLRScoreControllerPaperColorVertOffset = 10.0;
         [self addChild:self.missionControlSprite];
         
         //pause button
-        SKLabelNode *pauseLabel = [SKLabelNode labelNodeWithFontNamed:[LRFont displayTextFontWithSize:10].familyName];
+        SKLabelNode *pauseLabel = [SKLabelNode labelNodeWithFontNamed:[UIFont lr_displayFontRegular]];
         pauseLabel.text = @"I I";
         pauseLabel.fontColor = [UIColor textDarkBlue];
         CGFloat childMargin = 9.0;
@@ -368,10 +368,8 @@ static CGFloat const kLRScoreControlSpriteHeight = 88.0;
 - (SKLabelNode *)colorScoreLabel
 {
     if (!_colorScoreLabel) {
-        CGFloat fontSize = 40;
-        LRFont *font = [LRFont displayTextFontWithSize:fontSize];
-        
-        _colorScoreLabel = [[LRValueLabelNode alloc] initWithFontNamed:font.familyName initialValue:0];
+        CGFloat fontSize = 40;        
+        _colorScoreLabel = [[LRValueLabelNode alloc] initWithFontNamed:[UIFont lr_displayFontRegular] initialValue:0];
         _colorScoreLabel.fontColor = [UIColor secondaryColorForPaperColor:self.paperColor];
         _colorScoreLabel.fontSize = fontSize;
         

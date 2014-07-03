@@ -15,5 +15,5 @@
     #import <Foundation/Foundation.h>
     #import "LRConstants.h"
     #import "UIColor+LRAdditions.h"
-    #import "LRFont.h"
+    #import "UIFont+LRAdditions.h"
 #endif
