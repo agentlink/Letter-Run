@@ -154,15 +154,19 @@ static CGFloat const kLRScoreControlSpriteHeight = 88.0;
 - (void)setMission:(LRMission *)mission
 {
     _mission = mission;
-    NSArray *paperColors = [mission paperColors];
     NSMutableArray *scoreControllers = [NSMutableArray new];
-    for (NSNumber *paperNum in paperColors)
+    if (mission.missionType == LRMissionTypePaperColor)
     {
-        LRPaperColor color = [paperNum integerValue];
-        LRScoreControllerPaperColor *score = [[LRScoreControllerPaperColor alloc] initWithPaperColor:color];
-        [scoreControllers addObject:score];
+        for (LRPaperColor color = -1; color <= kLRPaperColorHighestValue; color++)
+        {
+            if ([mission objectiveEnvelopesForColor:color] != 0)
+            {
+                LRScoreControllerPaperColor *score = [[LRScoreControllerPaperColor alloc] initWithPaperColor:color];
+                [scoreControllers addObject:score];
+            }
+        }
+        self.scoreControllerArray = scoreControllers;
     }
-    self.scoreControllerArray = scoreControllers;
     SKAction *showMission = [self _missionControlDropAnimationWithDuration:1.0];
     self.okButton.alpha = 0.0;
     self.okButton.hidden = NO;

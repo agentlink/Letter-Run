@@ -10,10 +10,14 @@
 #import "LRLetterBlock.h"
 
 @interface LRMission ()
+
 + (instancetype)missionFromDictionary:(NSDictionary *)dict;
+@property (nonatomic, readwrite) NSString *missionDescription;
+
 @property (nonatomic, readwrite) NSDictionary *levelDict;
 @property (nonatomic, readwrite) NSDictionary *objectivePaperColorDict;
-@property (nonatomic, readwrite) NSString *missionDescription;
+@property (nonatomic, readwrite) NSDictionary *objectiveWordLengthsDict;
+
 @end
 
 @interface LRLevelManager ()
@@ -31,10 +35,28 @@
     return mission;
 }
 
+- (LRMissionType)missionType
+{
+    LRMissionType type = 0;
+    if ([self.objectivePaperColorDict count]!= 0) {
+        type = type | LRMissionTypePaperColor;
+    }
+    if ([self.objectiveWordLengthsDict count]) {
+        type = type | LRMisisonTypeWordLength;
+    }
+    return type;
+}
+
 - (NSUInteger)objectiveEnvelopesForColor:(LRPaperColor)paperColor
 {
     NSString *key = [LRLetterBlock stringValueForPaperColor:paperColor];
     return [self.objectivePaperColorDict[key] unsignedIntegerValue];
+}
+
+- (NSUInteger)objectiveWordsForWordLength:(NSUInteger)length
+{
+    NSString *key = [NSString stringWithFormat:@"%u", (unsigned)length];
+    return [self.objectiveWordLengthsDict[key] unsignedIntegerValue];
 }
 
 - (NSInteger)probabilityForEnvelopeColor:(LRPaperColor)paperColor
@@ -45,17 +67,6 @@
         return 0;
     }
     return [probabilityDict[key] integerValue];
-}
-
-
-- (NSArray *)paperColors
-{
-    NSMutableArray *array = [NSMutableArray new];
-    for (NSString *key in [self.objectivePaperColorDict allKeys])
-    {
-        [array addObject:@([LRLetterBlock paperColorForString:key])];
-    }
-    return array;
 }
 
 - (CGFloat)healthDropTime
@@ -69,6 +80,7 @@
 {
     _levelDict = levelDict;
     self.objectivePaperColorDict = levelDict[@"objective"][@"paper colors"];
+    self.objectiveWordLengthsDict = levelDict[@"objective"][@"word lengths"];
     self.missionDescription = levelDict[@"description"];
 }
 @end

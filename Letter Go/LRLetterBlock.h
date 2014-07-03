@@ -21,8 +21,6 @@ typedef NS_ENUM(NSInteger, LRPaperColor)
 static NSString * const kLetterBlockEmptyLetter  = @"";
 static NSString * const kLetterBlockHolderText   = @" ";
 
-static NSInteger const kNumPaperColors = 3;
-
 extern const LRPaperColor kLRLetterBlockHiddenPaperColor;
 extern const LRPaperColor kLRLetterBlockShiftingPaperColor;
 extern const LRPaperColor kLRLetterBlockMultiLetterPaperColor;

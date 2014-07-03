@@ -55,7 +55,7 @@ static LRProgressManager *_shared = nil;
 
 - (BOOL)didIncreaseLevel
 {
-    for (LRPaperColor color = kLRPaperColorNone; color < kNumPaperColors; color++)
+    for (LRPaperColor color = kLRPaperColorNone; color <= kLRPaperColorHighestValue; color++)
     {
         NSUInteger collected = [[LRScoreManager shared] envelopesCollectedForColor:color];
         NSUInteger reqCollected = [[self currentMission] objectiveEnvelopesForColor:color];
