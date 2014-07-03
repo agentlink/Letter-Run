@@ -58,7 +58,7 @@ static CGFloat const kLRScoreControllerPaperColorVertOffset = 10.0;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_gameStarted) name:GAME_STATE_NEW_GAME object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_increasedLevel) name:GAME_STATE_FINISHED_LEVEL object:nil];
         
-        self.color = [LRColor whiteColor];
+        self.color = [UIColor whiteColor];
         self.zPosition = zPos_TopSection;
         
         //mission control image
@@ -71,11 +71,11 @@ static CGFloat const kLRScoreControllerPaperColorVertOffset = 10.0;
         //pause button
         SKLabelNode *pauseLabel = [SKLabelNode labelNodeWithFontNamed:[LRFont displayTextFontWithSize:10].familyName];
         pauseLabel.text = @"I I";
-        pauseLabel.fontColor = [LRColor textDarkBlue];
+        pauseLabel.fontColor = [UIColor textDarkBlue];
         CGFloat childMargin = 9.0;
 
-        LRShadow *pauseShadow = [LRShadow shadowWithHeight:5.0 color:[LRColor buttonDarkBlue] top:NO radius:3.5];
-        self.pauseButton = [[LRShadowRoundedButton alloc] initWithColor:[LRColor buttonLightBlue] size:CGSizeMake(26, 32) shadow:pauseShadow];
+        LRShadow *pauseShadow = [LRShadow shadowWithHeight:5.0 color:[UIColor buttonDarkBlue] top:NO radius:3.5];
+        self.pauseButton = [[LRShadowRoundedButton alloc] initWithColor:[UIColor buttonLightBlue] size:CGSizeMake(26, 32) shadow:pauseShadow];
         self.pauseButton.anchorPoint = CGPointMake(0.5, 1.0);
         self.pauseButton.position = CGPointMake((self.pauseButton.size.width - self.size.width)/2 + childMargin, (self.size.height - self.missionControlSprite.size.height + self.pauseButton.size.height)/2);
         self.pauseButton.titleLabel = pauseLabel;
@@ -83,8 +83,8 @@ static CGFloat const kLRScoreControllerPaperColorVertOffset = 10.0;
         [_pauseButton setTouchUpInsideTarget:self action:@selector(pauseButtonPressed)];
         
         //level label
-        LRShadow *levelShadow = [LRShadow shadowWithHeight:5.0 color:[LRColor buttonDarkBlue] top:YES radius:3.5];
-        self.levelLabel = [[LRMisisonControlLevelLabel alloc] initWithColor:[LRColor buttonLightBlue] size:CGSizeMake(27, 54) shadow:levelShadow];
+        LRShadow *levelShadow = [LRShadow shadowWithHeight:5.0 color:[UIColor buttonDarkBlue] top:YES radius:3.5];
+        self.levelLabel = [[LRMisisonControlLevelLabel alloc] initWithColor:[UIColor buttonLightBlue] size:CGSizeMake(27, 54) shadow:levelShadow];
         self.levelLabel.anchorPoint = CGPointMake(1.0, 1.0);
         self.levelLabel.position = CGPointMake((self.size.width - self.levelLabel.size.width)/2- childMargin, self.pauseButton.position.y - levelShadow.height * 2);
         [self addChild:self.levelLabel];
@@ -372,7 +372,7 @@ static CGFloat const kLRScoreControlSpriteHeight = 88.0;
         LRFont *font = [LRFont displayTextFontWithSize:fontSize];
         
         _colorScoreLabel = [[LRValueLabelNode alloc] initWithFontNamed:font.familyName initialValue:0];
-        _colorScoreLabel.fontColor = [LRColor secondaryColorForPaperColor:self.paperColor];
+        _colorScoreLabel.fontColor = [UIColor secondaryColorForPaperColor:self.paperColor];
         _colorScoreLabel.fontSize = fontSize;
         
         [_colorScoreLabel setVerticalAlignmentMode:SKLabelVerticalAlignmentModeCenter];
@@ -412,13 +412,13 @@ static CGFloat const kLRScoreControlSpriteHeight = 88.0;
         SKLabelNode *levelTitle = [SKLabelNode labelNodeWithFontNamed:@"LeagueGothic-Regular"];
         _levelLabel = [SKLabelNode labelNodeWithFontNamed:@"LeagueGothic-Regular"];
         levelTitle.text = @"LEVEL";
-        levelTitle.fontColor = [LRColor textDarkBlue];
+        levelTitle.fontColor = [UIColor textDarkBlue];
         levelTitle.fontSize = 13;
         levelTitle.position = CGPointMake(0, self.size.height/2 - levelTitle.frame.size.height * 1.5);
         
         _levelLabel.fontSize = 34.0;
         _levelLabel.position = CGPointMake(0, shadow.height - (self.size.height  - _levelLabel.frame.size.height)/2);
-        _levelLabel.fontColor = [LRColor textDarkBlue];
+        _levelLabel.fontColor = [UIColor textDarkBlue];
         self.level = 1;
         
         [self addChild:levelTitle];

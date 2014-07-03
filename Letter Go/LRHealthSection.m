@@ -65,7 +65,7 @@ static const CGFloat kLRHealthSectionStartPercentYellow = .50;
 
 - (LRHealthBarMovingSprite *)coloredBar {
     if (!_coloredBar) {
-        _coloredBar = [[LRHealthBarMovingSprite alloc] initWithColor:[LRColor healthBarColorGreen] size:self.size];
+        _coloredBar = [[LRHealthBarMovingSprite alloc] initWithColor:[UIColor healthBarColorGreen] size:self.size];
     }
     return _coloredBar;
 }
@@ -158,7 +158,7 @@ static NSString * const kLRHealthBarColoredContainerGainAction = @"Health bar ga
 - (SKSpriteNode *)shadedSection
 {
     if (!_shadedSection) {
-        _shadedSection = [[SKSpriteNode alloc] initWithColor:[LRColor clearColor] size:self.size];
+        _shadedSection = [[SKSpriteNode alloc] initWithColor:[UIColor clearColor] size:self.size];
         _shadedSection.alpha = .15;
     }
     return _shadedSection;
@@ -167,7 +167,7 @@ static NSString * const kLRHealthBarColoredContainerGainAction = @"Health bar ga
 - (SKSpriteNode *)movingBar
 {
     if (!_movingBar) {
-        _movingBar = [[SKSpriteNode alloc] initWithColor:[LRColor clearColor] size:self.size];
+        _movingBar = [[SKSpriteNode alloc] initWithColor:[UIColor clearColor] size:self.size];
     }
     return _movingBar;
 }
@@ -269,21 +269,21 @@ static NSString * const kLRHealthBarColoredContainerGainAction = @"Health bar ga
 
 #pragma Private Methods
 
-+ (LRColor *)_colorForPercentHealth:(CGFloat)percent
++ (UIColor *)_colorForPercentHealth:(CGFloat)percent
 {
     NSAssert(percent >= 0.0 && percent <= 1.0, @"Percent should be between 0 and 1");
     CGFloat relativePercent;
-    LRColor *newColor;
+    UIColor *newColor;
     if (percent < kLRHealthSectionStartPercentYellow) {
         relativePercent = percent/kLRHealthSectionStartPercentYellow;
-        newColor = [LRColor colorBetweenStartColor:[LRColor healthBarColorGreen]
-                                       andEndColor:[LRColor healthBarColorYellow]
+        newColor = [UIColor colorBetweenStartColor:[UIColor healthBarColorGreen]
+                                       andEndColor:[UIColor healthBarColorYellow]
                                            percent:relativePercent];
     }
     else {
         relativePercent = (percent - kLRHealthSectionStartPercentYellow) / (1.0 - kLRHealthSectionStartPercentYellow);
-        newColor = [LRColor colorBetweenStartColor:[LRColor healthBarColorYellow]
-                                       andEndColor:[LRColor healthBarColorRed]
+        newColor = [UIColor colorBetweenStartColor:[UIColor healthBarColorYellow]
+                                       andEndColor:[UIColor healthBarColorRed]
                                            percent:relativePercent];
     }
     return newColor;

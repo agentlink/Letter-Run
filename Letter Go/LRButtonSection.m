@@ -17,7 +17,7 @@
 {
     if (self = [super initWithSize:size])
     {
-        self.color = [LRColor buttonSectionColor];
+        self.color = [UIColor buttonSectionColor];
         [self addChild:self.submitButton];
 
     }

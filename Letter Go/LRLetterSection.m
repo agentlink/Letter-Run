@@ -16,7 +16,6 @@
 #import "LRGameScene.h"
 #import "LREnvelopeAnimationBuilder.h"
 #import "LRGameStateManager.h"
-#import "LRColor.h"
 #import "LRMovingBlockBuilder.h"
 #import "LRMath.h"
 
@@ -72,7 +71,7 @@ NSString * const kSubmissionKeyWordWithColors = @"paperColorDictionary";
 
 - (SKSpriteNode *)letterSection {
     if (!_letterSection) {
-        _letterSection = [SKSpriteNode spriteNodeWithColor:[LRColor letterSectionColor] size:self.size];
+        _letterSection = [SKSpriteNode spriteNodeWithColor:[UIColor letterSectionColor] size:self.size];
     }
     return _letterSection;
 }

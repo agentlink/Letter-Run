@@ -39,7 +39,7 @@ static const BOOL lgbDebugMode = NO;
 {
     LRCollectedEnvelope *lb = [LRCollectedEnvelope emptyCollectedEnvelope];
     lb.userInteractionEnabled = NO;
-    lb.color = (lgbDebugMode) ? [SKColor purpleColor] : [LRColor clearColor];
+    lb.color = (lgbDebugMode) ? [SKColor purpleColor] : [UIColor clearColor];
     return lb;
 }
 

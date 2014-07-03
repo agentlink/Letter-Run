@@ -63,7 +63,7 @@
     gameOverLabel.text = @"Game Over";
     gameOverLabel.fontName = displayFont.familyName;
     gameOverLabel.fontSize = 40.0;
-    gameOverLabel.fontColor = [LRColor gameOverLabelColor];
+    gameOverLabel.fontColor = [UIColor gameOverLabelColor];
     return gameOverLabel;
 
 }

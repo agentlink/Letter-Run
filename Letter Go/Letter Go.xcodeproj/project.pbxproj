@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00076E64186F798200287EF9 /* LRColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 00076E63186F798200287EF9 /* LRColor.m */; };
 		00076E67186F819000287EF9 /* LRFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 00076E66186F819000287EF9 /* LRFont.m */; };
 		0007FB3F180C7A1A00E55B0D /* LRCollectedEnvelope.m in Sources */ = {isa = PBXBuildFile; fileRef = 0007FB3E180C7A1A00E55B0D /* LRCollectedEnvelope.m */; };
 		0020001E18245B3E005DDD46 /* LRCollisionManager+ContactFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0020001D18245B3E005DDD46 /* LRCollisionManager+ContactFunctions.m */; };
@@ -74,6 +73,7 @@
 		A88A4B3B188734E400BC9905 /* LRMovingEnvelope.m in Sources */ = {isa = PBXBuildFile; fileRef = A88A4B3A188734E400BC9905 /* LRMovingEnvelope.m */; };
 		A88CEB20189D87C600092C8A /* LREnvelopeAnimationBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = A88CEB1F189D87C600092C8A /* LREnvelopeAnimationBuilder.m */; };
 		A88DECE2190C39C10076EDE9 /* LRProgressManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A88DECE1190C39C10076EDE9 /* LRProgressManager.m */; };
+		A891BDB31965DEC1004601FB /* UIColor+LRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A891BDB21965DEC1004601FB /* UIColor+LRAdditions.m */; };
 		A8955B3819379ACE00AECDB3 /* LRDifficultyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A8955B3719379ACE00AECDB3 /* LRDifficultyManager.m */; };
 		A895AC5D19328FF30064FE73 /* LRMultipleLetterGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = A895AC5C19328FF30064FE73 /* LRMultipleLetterGenerator.m */; };
 		A895AC651932985C0064FE73 /* LRMultipleLetterGenerator_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = A895AC641932985C0064FE73 /* LRMultipleLetterGenerator_Test.m */; };
@@ -116,8 +116,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		00076E62186F798200287EF9 /* LRColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRColor.h; sourceTree = "<group>"; };
-		00076E63186F798200287EF9 /* LRColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRColor.m; sourceTree = "<group>"; };
 		00076E65186F819000287EF9 /* LRFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRFont.h; sourceTree = "<group>"; };
 		00076E66186F819000287EF9 /* LRFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LRFont.m; sourceTree = "<group>"; };
 		0007FB3D180C7A1A00E55B0D /* LRCollectedEnvelope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRCollectedEnvelope.h; sourceTree = "<group>"; };
@@ -225,6 +223,8 @@
 		A88CEB1F189D87C600092C8A /* LREnvelopeAnimationBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LREnvelopeAnimationBuilder.m; sourceTree = "<group>"; };
 		A88DECE0190C39C10076EDE9 /* LRProgressManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRProgressManager.h; sourceTree = "<group>"; };
 		A88DECE1190C39C10076EDE9 /* LRProgressManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRProgressManager.m; sourceTree = "<group>"; };
+		A891BDB11965DEC1004601FB /* UIColor+LRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+LRAdditions.h"; sourceTree = "<group>"; };
+		A891BDB21965DEC1004601FB /* UIColor+LRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+LRAdditions.m"; sourceTree = "<group>"; };
 		A8955B3619379ACE00AECDB3 /* LRDifficultyManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRDifficultyManager.h; sourceTree = "<group>"; };
 		A8955B3719379ACE00AECDB3 /* LRDifficultyManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRDifficultyManager.m; sourceTree = "<group>"; };
 		A895AC5B19328FF30064FE73 /* LRMultipleLetterGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRMultipleLetterGenerator.h; sourceTree = "<group>"; };
@@ -764,12 +764,12 @@
 			children = (
 				00076E65186F819000287EF9 /* LRFont.h */,
 				00076E66186F819000287EF9 /* LRFont.m */,
-				00076E62186F798200287EF9 /* LRColor.h */,
-				00076E63186F798200287EF9 /* LRColor.m */,
 				A895AC691932A3EF0064FE73 /* NSMutableArray+Shuffle.h */,
 				A895AC6A1932A3EF0064FE73 /* NSMutableArray+Shuffle.m */,
 				A8CDE052193F82B700AC6F4C /* LRValueLabelNode.h */,
 				A8CDE053193F82B700AC6F4C /* LRValueLabelNode.m */,
+				A891BDB11965DEC1004601FB /* UIColor+LRAdditions.h */,
+				A891BDB21965DEC1004601FB /* UIColor+LRAdditions.m */,
 			);
 			name = "Class Extensions";
 			sourceTree = "<group>";
@@ -958,7 +958,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00076E64186F798200287EF9 /* LRColor.m in Sources */,
 				008428F91801F46C00908E5D /* LRScoreManager.m in Sources */,
 				A8447EE7194E70280037A004 /* LRLevelManager.m in Sources */,
 				00CDF14917F474EC003065F6 /* LRAppDelegate.m in Sources */,
@@ -995,6 +994,7 @@
 				A87BDD981853AC8D00845BB5 /* LRCurveBuilder.m in Sources */,
 				0049695117F8A12B00176F2D /* LRLetterBlock.m in Sources */,
 				A895AC5D19328FF30064FE73 /* LRMultipleLetterGenerator.m in Sources */,
+				A891BDB31965DEC1004601FB /* UIColor+LRAdditions.m in Sources */,
 				A8B6B7221903243600E130A6 /* LRMovingBlockBuilder.m in Sources */,
 				A8D5CE79193A649300084F92 /* LRTopMenuSection.m in Sources */,
 				0007FB3F180C7A1A00E55B0D /* LRCollectedEnvelope.m in Sources */,

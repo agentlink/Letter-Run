@@ -11,7 +11,6 @@
 #import "LRGameStateManager.h"
 #import "LRRowManager.h"
 #import "LRPositionConstants.h"
-#import "LRColor.h"
 
 NSString * const kLRGamePlayLayerHealthSectionName = @"healthSection";
 NSString * const kLRGamePlayLayerLetterSectionName = @"letterSection";
@@ -42,7 +41,7 @@ NSString * const kLRGamePlayLayerLetterSectionName = @"letterSection";
         [self setPosition:CGPointMake(self.size.width/2, self.size.height/2)];
         [self setUserInteractionEnabled:YES];
         
-        self.color = [LRColor gamePlayLayerBackgroundColor];
+        self.color = [UIColor gamePlayLayerBackgroundColor];
         [self createLayerContent];
         LRMovingBlockBuilder *envBuilder = [LRMovingBlockBuilder new];
         self.mainGameSection.envelopeBuilder = envBuilder;
@@ -96,7 +95,7 @@ NSString * const kLRGamePlayLayerLetterSectionName = @"letterSection";
         _mainGameSection = [[LRMainGameSection alloc] initWithSize:CGSizeMake(SCREEN_WIDTH, kSectionHeightMainSection)];
         _mainGameSection.position = CGPointMake(mainGameSectionXPos, mainGameSectionYPos);
         _mainGameSection.zPosition = zPos_MainGameSection;
-        _mainGameSection.color = [LRColor clearColor];
+        _mainGameSection.color = [UIColor clearColor];
     }
     return _mainGameSection;
 }

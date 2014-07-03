@@ -29,7 +29,7 @@ static NSString * const kLRBackgroundLayerStopScroll = @"stop background scroll"
     if (self = [super initWithColor:[UIColor clearColor] size:CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT)])
     {
         [self setPosition:CGPointMake(self.size.width/2, self.size.height/2)];
-        self.mainGameSectionBackground = [[SKSpriteNode alloc] initWithColor:[LRColor mainScreenRoad]
+        self.mainGameSectionBackground = [[SKSpriteNode alloc] initWithColor:[UIColor mainScreenRoad]
                                                                         size:CGSizeMake(SCREEN_WIDTH, kSectionHeightMainSection)];
         NSArray *stripes = [self _stripesForRoadSprite:self.mainGameSectionBackground];
         self.scrollingChildren = [NSArray arrayWithArray:stripes];

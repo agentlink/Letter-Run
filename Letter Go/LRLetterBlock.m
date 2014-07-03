@@ -40,7 +40,7 @@ const LRPaperColor kLRPaperColorHighestValue = kLRPaperColorGreen;
 
 - (id) initWithLetter:(NSString *)letter paperColor:(LRPaperColor)paperColor size:(CGSize)size
 {
-    if (self = [super initWithColor:[LRColor clearColor] size:size])
+    if (self = [super initWithColor:[UIColor clearColor] size:size])
     {
         self.paperColor = paperColor;
         self.letter = letter;
@@ -75,10 +75,10 @@ const LRPaperColor kLRPaperColorHighestValue = kLRPaperColorGreen;
         LRFont *letterFont = [LRFont letterBlockFont];
         _letterLabel = [SKLabelNode new];
         _letterLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - (self.size.height - self.touchSize.height)/4);
-        _letterLabel.color = [LRColor debugColor1];
+        _letterLabel.color = [UIColor debugColor1];
         _letterLabel.fontSize = letterFont.pointSize;
         _letterLabel.fontName = letterFont.fontName;
-        _letterLabel.fontColor = [LRColor letterBlockFontColor];
+        _letterLabel.fontColor = [UIColor letterBlockFontColor];
         _letterLabel.zPosition += zDiff_Letter_Envelope;
     }
     return _letterLabel;
