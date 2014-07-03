@@ -8,7 +8,6 @@
 
 //Leter Properties
 static const NSUInteger kLRRowManagerNumberOfRows = 3;
-static const NSUInteger kLRLetterSectionCapacity = 7;
 
 //Screen section constants
 static const CGFloat kSectionHeightButtonSection  =       60.0;

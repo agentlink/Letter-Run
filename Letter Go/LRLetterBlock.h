@@ -46,9 +46,8 @@ extern const LRPaperColor kLRPaperColorHighestValue;
 /*!
  @description Use this method to initialize a collected envelope
  @param size The size of the envelope as it appears on the screen
-
-@param paper The paper color and thus score value that the letter
-@param letter The alphabetical letter
+ @param paper The paper color and thus score value that the letter
+ @param letter The alphabetical letter
  */
 - (id) initWithLetter:(NSString *)letter paperColor:(LRPaperColor)paperColor size:(CGSize)size;
 - (id) initWithLetter:(NSString *)letter paperColor:(LRPaperColor)paperColor;

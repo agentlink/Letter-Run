@@ -31,10 +31,16 @@ extern NSUInteger const kLRScoreManagerScorePerLetter;
 + (LRScoreManager *)shared;
 
 /*!
- @param paperColor: the paper color the user wants to look up
+ @param paperColor the paper color the user wants to look up
  @return the number of envelopes collected for a given paper color
  */
 - (NSUInteger)envelopesCollectedForColor:(LRPaperColor)paperColor;
+
+/*!
+ @param length the length of the word the user is trying to look up
+ @return how many words of a length equal to the parameter provided the player has collected this level
+ */
+- (NSUInteger)wordsCollectedForLength:(NSUInteger)length;
 
 /*!
  This functions submits a word for scoring/storing and returns the score as calculated by scoreForWordWithDict:(NSDictionary)dict

@@ -8,6 +8,7 @@
 
 #import "LRProgressManager.h"
 #import "LRScoreManager.h"
+#import "LRLetterSection.h"
 
 //#toy
 static CGFloat const kLRProgressManagerInitialScoreToNextLevel = 200;
@@ -55,12 +56,20 @@ static LRProgressManager *_shared = nil;
 
 - (BOOL)didIncreaseLevel
 {
+    //check paper colors
     for (LRPaperColor color = kLRPaperColorNone; color <= kLRPaperColorHighestValue; color++)
     {
         NSUInteger collected = [[LRScoreManager shared] envelopesCollectedForColor:color];
         NSUInteger reqCollected = [[self currentMission] objectiveEnvelopesForColor:color];
         if (collected < reqCollected)
             return NO;
+    }
+    for (NSUInteger wordLength = kLRLetterSectionMinimumWordLength; wordLength <= kLRLetterSectionCapacity; wordLength++)
+    {
+        NSUInteger collected = [[LRScoreManager shared] wordsCollectedForLength:wordLength];
+        NSUInteger reqCollected = [[self currentMission] objectiveWordsForWordLength:wordLength];
+        if (collected < reqCollected)
+            return NO;        
     }
     self.level++;
     return YES;

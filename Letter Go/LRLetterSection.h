@@ -16,8 +16,8 @@ typedef NS_ENUM(NSInteger, LRDirection)
     kLRDirectionLeft = 1
 };
 
-extern NSUInteger const kLRLetterSectionCapacity;
-static NSUInteger const kLRLetterSectionMinimumWordLength   = 3;
+static NSUInteger const kLRLetterSectionCapacity = 7;
+static NSUInteger const kLRLetterSectionMinimumWordLength = 3;
 
 extern NSString * const kSubmissionKeyWord;
 extern NSString * const kSubmissionKeyWordWithColors;

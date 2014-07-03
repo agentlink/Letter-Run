@@ -16,6 +16,7 @@ NSUInteger const kLRScoreManagerScorePerLetter = 10;
 @property (nonatomic) NSUInteger score;
 @property (nonatomic) NSUInteger distance;
 @property (nonatomic, strong) NSMutableArray *numEnvelopes;
+@property (nonatomic, strong) NSMutableArray *wordLengths;
 @end
 
 @implementation LRScoreManager
@@ -39,6 +40,7 @@ static LRScoreManager *_shared = nil;
     {
         [self _resetScoreForNewGame];
         self.numEnvelopes = [NSMutableArray new];
+        self.wordLengths = [NSMutableArray new];
         [self _resetScoreForNewGame];
     }
     return self;
@@ -52,13 +54,18 @@ static LRScoreManager *_shared = nil;
     NSInteger wordScore = [LRScoreManager scoreForWordWithDict:wordDict];
     self.score += wordScore;
     
-    //Get the colored envelopes
+    //Get the colored envelopes and store the value
     for (NSDictionary *paperColorDict in wordDict[kSubmissionKeyWordWithColors])
     {
         LRPaperColor paperColor = [[[paperColorDict allValues] firstObject] unsignedIntegerValue];
         NSNumber *currentVal = self.numEnvelopes[paperColor];
         self.numEnvelopes[paperColor] = @([currentVal integerValue] + 1);
     }
+    
+    //Get the length of the word and store the value
+    NSString *word = wordDict[@"word"];
+    NSUInteger length = [word length];
+    self.wordLengths[length] = @([self.wordLengths[length] integerValue] + 1);
     
     NSMutableDictionary *updatedWordDict = [NSMutableDictionary dictionaryWithDictionary:wordDict];
     [updatedWordDict setObject:[NSNumber numberWithInteger:wordScore] forKey:@"score"];
@@ -92,6 +99,11 @@ static LRScoreManager *_shared = nil;
         }
     }
     return val;
+}
+
+- (NSUInteger)wordsCollectedForLength:(NSUInteger)length
+{
+    return [self.wordLengths[length] unsignedIntegerValue];
 }
 
 + (NSUInteger)scoreForWordWithDict:(NSDictionary *)wordDict
@@ -128,6 +140,11 @@ static LRScoreManager *_shared = nil;
     {
         self.numEnvelopes[i] = @(0);
     }
+    for (int i = 0; i <= kLRLetterSectionCapacity; i++)
+    {
+        self.wordLengths[i] = @(0);
+    }
+
 }
 
 - (void)_resetScoreForNewGame {
