@@ -144,6 +144,11 @@
     return [UIColor clearColor];
 }
 
++ (UIColor *)dropShadowColor
+{
+    return [UIColor colorWithWhite:.6 alpha:.5];
+}
+
 + (UIColor *)debugColor1 {
     //Opaque green
     return [UIColor rgbColorWithRed:0.0 green:179.0 blue:26.0 alpha:.3];

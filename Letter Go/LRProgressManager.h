@@ -14,6 +14,8 @@
 + (LRProgressManager *)shared;
 ///The level the player is currently on
 @property (nonatomic, readonly) NSUInteger level;
+///The number of words the player collected
+@property (nonatomic, readonly) NSUInteger numWords;
 
 ///Returns YES if the player has collected all required envelopes to beat the level
 - (BOOL)didIncreaseLevel;

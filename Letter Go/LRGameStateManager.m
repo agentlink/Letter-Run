@@ -99,13 +99,12 @@ static LRGameStateManager *_shared = nil;
 
 - (void)_gameOver:(NSNotification *)notification
 {
-    LRGamePlayLayer *gpl = [self.gameScene gamePlayLayer];
     self.isGameOver = YES;
     [[LRManfordAIManager shared] resetEnvelopeIDs];
     NSLog(@"Game over");
     //Make all of the objects in the game non-touch responsive
     if (![[[notification userInfo] objectForKey:@"devpause"] isEqual: @(true)]) {
-        [LRGameOverMenu presentGameOverMenuFromNode:gpl.mainGameSection];
+        [LRGameOverMenu presentGameOverMenuOverNode:self.gameScene];
     }
 }
 

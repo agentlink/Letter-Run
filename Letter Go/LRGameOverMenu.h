@@ -2,14 +2,14 @@
 //  LRGameOverMenu.h
 //  Letter Go
 //
-//  Created by Gabe Nicholas on 6/24/14.
+//  Created by Gabe Nicholas on 7/3/14.
 //  Copyright (c) 2014 Gabe Nicholas. All rights reserved.
 //
 
-#import <SpriteKit/SpriteKit.h>
+#import "LRShadowRoundedRect.h"
 
-@interface LRGameOverMenu : SKNode
+@interface LRGameOverMenu : LRShadowRoundedRect
 
-+ (void)presentGameOverMenuFromNode:(SKNode *)parentNode;
++ (void)presentGameOverMenuOverNode:(SKNode *)presentationNode;
 
 @end

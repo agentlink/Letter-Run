@@ -19,12 +19,14 @@ extern NSUInteger const kLRScoreManagerScorePerLetter;
 
 @interface LRScoreManager : SKNode <LRGameStateDelegate>
 
-/// An array of the words that have bee submitted this round in teh order they were submitted
-@property (readonly) NSMutableArray *submittedWords;
+/// An array of the words that have bee submitted this round in the order they were submitted
+@property (readonly) NSArray *submittedWords;
 /// The player's current score
 @property (readonly) NSUInteger score;
 /// The distance the player has run
 @property (nonatomic, readonly) NSUInteger distance;
+/// How many letters the player has collected
+@property (nonatomic, readonly) NSUInteger lettersCollected;
 /// The score delegate that handles showing the user when the score has changed
 @property (nonatomic, weak) id <LRScoreManagerDelegate> delegate;
 ///The shared instance of the score manager

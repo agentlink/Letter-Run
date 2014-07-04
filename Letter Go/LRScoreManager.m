@@ -15,12 +15,13 @@ NSUInteger const kLRScoreManagerScorePerLetter = 10;
 @interface LRScoreManager ()
 @property (nonatomic) NSUInteger score;
 @property (nonatomic) NSUInteger distance;
+@property (nonatomic) NSUInteger lettersCollected;
 @property (nonatomic, strong) NSMutableArray *numEnvelopes;
 @property (nonatomic, strong) NSMutableArray *wordLengths;
+@property (nonatomic, strong) NSMutableArray *collectedWords;
 @end
 
 @implementation LRScoreManager
-@synthesize submittedWords;
 static LRScoreManager *_shared = nil;
 
 + (LRScoreManager *)shared
@@ -60,6 +61,7 @@ static LRScoreManager *_shared = nil;
         LRPaperColor paperColor = [[[paperColorDict allValues] firstObject] unsignedIntegerValue];
         NSNumber *currentVal = self.numEnvelopes[paperColor];
         self.numEnvelopes[paperColor] = @([currentVal integerValue] + 1);
+        self.lettersCollected++;
     }
     
     //Get the length of the word and store the value
@@ -70,7 +72,7 @@ static LRScoreManager *_shared = nil;
     NSMutableDictionary *updatedWordDict = [NSMutableDictionary dictionaryWithDictionary:wordDict];
     [updatedWordDict setObject:[NSNumber numberWithInteger:wordScore] forKey:@"score"];
     
-    [submittedWords addObject:updatedWordDict];
+    [self.collectedWords addObject:updatedWordDict];
     
     //Check for level progression
     if ([[LRProgressManager shared] didIncreaseLevel]) {
@@ -127,6 +129,11 @@ static LRScoreManager *_shared = nil;
     self.distance += distance;
 }
 
+- (NSArray *)submittedWords
+{
+    return self.collectedWords;
+}
+
 #pragma Private Methods
 
 + (NSInteger)_scoreForPaperColor:(LRPaperColor)color
@@ -144,6 +151,7 @@ static LRScoreManager *_shared = nil;
     {
         self.wordLengths[i] = @(0);
     }
+    self.lettersCollected = 0;
 
 }
 
@@ -154,7 +162,7 @@ static LRScoreManager *_shared = nil;
     [self _resetScoreForNewLevel];
     
     //Empty the submitted owrds array
-    submittedWords = [NSMutableArray array];
+    self.collectedWords = [NSMutableArray array];
     
     //And update the score shown on screen
     if (self.delegate && [self.delegate respondsToSelector:@selector(changeScoreWithAnimation:)]) {
