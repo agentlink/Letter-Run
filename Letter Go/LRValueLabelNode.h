@@ -11,7 +11,18 @@
 @interface LRValueLabelNode : SKLabelNode
 
 - (id)initWithFontNamed:(NSString *)fontName initialValue:(NSInteger)value;
-- (void)updateValue:(NSInteger)value animated:(BOOL)animated;
+
+/*!
+ Update the value over a total amount of time
+ @param totalDuration: how long it should take to update the value node to updatedValue
+*/
+- (void)updateValue:(NSInteger)updatedValue animated:(BOOL)animated totalDuration:(CGFloat)totalDuration;
+/*!
+ Update the value taking a certain amount of time per value in between
+ @param duration: how long it should take to chagne the value node by 1
+ */
+- (void)updateValue:(NSInteger)updatedValue animated:(BOOL)animated durationPerNumber:(CGFloat)duration;
+
 @property (nonatomic, readonly) NSInteger value;
 @property (nonatomic, strong) NSString *preValueString;
 @property (nonatomic, strong) NSString *postValueString;

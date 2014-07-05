@@ -391,7 +391,7 @@ static CGFloat const kLRScoreControlSpriteHeight = 88.0;
 - (void)setColorScore:(NSUInteger)colorScore animated:(BOOL)animated
 {
     _colorScore = colorScore;
-    [self.colorScoreLabel updateValue:colorScore animated:animated];
+    [self.colorScoreLabel updateValue:colorScore animated:animated durationPerNumber:.04];
 }
 
 - (CGSize)size

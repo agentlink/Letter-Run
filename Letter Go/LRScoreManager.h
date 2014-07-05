@@ -25,6 +25,8 @@ extern NSUInteger const kLRScoreManagerScorePerLetter;
 @property (readonly) NSUInteger score;
 /// The distance the player has run
 @property (nonatomic, readonly) NSUInteger distance;
+/// The highest scoring word a player has gotten in a round
+@property (nonatomic, readonly) NSArray *highestScoringWord;
 /// How many letters the player has collected
 @property (nonatomic, readonly) NSUInteger lettersCollected;
 /// The score delegate that handles showing the user when the score has changed
@@ -52,10 +54,10 @@ extern NSUInteger const kLRScoreManagerScorePerLetter;
 - (NSUInteger)submitWord:(NSDictionary *)wordDict;
 
 /*! This function calculates the score for a word, including bonuses for length and love letters
- @param wordDict: Has word stored in "word" key and love letter indices scored in "loveLetters" set
+ @param wordArray: An array of key/value pairs, each with the letter and paper color
  @return The score for the word
  */
-+ (NSUInteger)scoreForWordWithDict:(NSDictionary *)wordDict;
++ (NSUInteger)scoreForWordWithArray:(NSArray *)letterArray;
 
 /*! This function allows an object to add to the distance that the mailman has run. Should only ever be called by the mailman
  @param distance: The amount by which the distance should be increased

@@ -99,6 +99,10 @@
     return [UIColor rgbColorWithRed:30.0 green:79.0 blue:115.0 alpha:1.0];
 }
 
++ (UIColor *)textOrange {
+    return [UIColor rgbColorWithRed:239.0 green:81.0 blue:46.0 alpha:1.0];
+}
+
 + (UIColor *)emptySlotColor {
     return [UIColor clearColor];
 }

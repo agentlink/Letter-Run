@@ -16,9 +16,12 @@ NSUInteger const kLRScoreManagerScorePerLetter = 10;
 @property (nonatomic) NSUInteger score;
 @property (nonatomic) NSUInteger distance;
 @property (nonatomic) NSUInteger lettersCollected;
+
 @property (nonatomic, strong) NSMutableArray *numEnvelopes;
 @property (nonatomic, strong) NSMutableArray *wordLengths;
 @property (nonatomic, strong) NSMutableArray *collectedWords;
+
+@property (nonatomic, readwrite) NSArray *highestScoringWord;
 @end
 
 @implementation LRScoreManager
@@ -39,7 +42,6 @@ static LRScoreManager *_shared = nil;
 {
     if (self = [super init])
     {
-        [self _resetScoreForNewGame];
         self.numEnvelopes = [NSMutableArray new];
         self.wordLengths = [NSMutableArray new];
         [self _resetScoreForNewGame];
@@ -51,8 +53,13 @@ static LRScoreManager *_shared = nil;
 
 - (NSUInteger)submitWord:(NSDictionary *)wordDict
 {
-    //Add to the score
-    NSInteger wordScore = [LRScoreManager scoreForWordWithDict:wordDict];
+    //Add to the score and check if it's the highest scoring word
+    NSArray *wordArray = wordDict[kSubmissionKeyWordWithColors];
+    NSInteger wordScore = [LRScoreManager scoreForWordWithArray:wordArray];
+    if (!self.highestScoringWord || wordScore >= [LRScoreManager scoreForWordWithArray:self.highestScoringWord])
+    {
+        self.highestScoringWord = wordArray;
+    }
     self.score += wordScore;
     
     //Get the colored envelopes and store the value
@@ -68,7 +75,7 @@ static LRScoreManager *_shared = nil;
     NSString *word = wordDict[@"word"];
     NSUInteger length = [word length];
     self.wordLengths[length] = @([self.wordLengths[length] integerValue] + 1);
-    
+
     NSMutableDictionary *updatedWordDict = [NSMutableDictionary dictionaryWithDictionary:wordDict];
     [updatedWordDict setObject:[NSNumber numberWithInteger:wordScore] forKey:@"score"];
     
@@ -108,11 +115,9 @@ static LRScoreManager *_shared = nil;
     return [self.wordLengths[length] unsignedIntegerValue];
 }
 
-+ (NSUInteger)scoreForWordWithDict:(NSDictionary *)wordDict
++ (NSUInteger)scoreForWordWithArray:(NSArray *)letterArray
 {
-    NSArray *letterArray = wordDict[kSubmissionKeyWordWithColors];
     NSUInteger wordScore = 0;
-
     //For every letter in the word...
     for (NSDictionary *letterDict in letterArray)
     {
@@ -151,14 +156,15 @@ static LRScoreManager *_shared = nil;
     {
         self.wordLengths[i] = @(0);
     }
-    self.lettersCollected = 0;
-
 }
 
 - (void)_resetScoreForNewGame {
     //Clear all the scores
     self.score = 0;
     self.distance = 0;
+    self.lettersCollected = 0;
+    self.highestScoringWord = nil;
+
     [self _resetScoreForNewLevel];
     
     //Empty the submitted owrds array

@@ -46,6 +46,7 @@
 + (UIColor *)buttonSectionColor;
 + (UIColor *)gamePlayLayerBackgroundColor;
 + (UIColor *)textDarkBlue;
++ (UIColor *)textOrange;
 + (UIColor *)dropShadowColor;
 
 + (UIColor *)debugColor1;

@@ -23,13 +23,31 @@
     return self;
 }
 
-- (void)updateValue:(NSInteger)updatedValue animated:(BOOL)animated
+- (void)updateValue:(NSInteger)updatedValue animated:(BOOL)animated totalDuration:(CGFloat)duration
+{
+    CGFloat valueDiff = (CGFloat)ABS(updatedValue - self.value);
+    CGFloat timePerNumber = valueDiff/duration;
+    [self updateValue:updatedValue animated:animated durationPerNumber:timePerNumber];
+}
+
+- (void)updateValue:(NSInteger)updatedValue animated:(BOOL)animated durationPerNumber:(CGFloat)duration
 {
     if (!animated)
     {
-        self.value = updatedValue;
+        if (duration > 0.0)
+        {
+            SKAction *wait = [SKAction waitForDuration:duration];
+            [self runAction:wait completion:^{
+                self.value = updatedValue;
+            }];
+        }
+        else
+        {
+            self.value = updatedValue;
+        }
         return;
     }
+    
     NSMutableArray *changeLabelActions = [NSMutableArray new];
     NSInteger iterator = self.value;
     while (iterator != updatedValue) {
@@ -37,7 +55,7 @@
             iterator++;
         else
             iterator--;
-        SKAction *pauseTime = [SKAction waitForDuration:.04];
+        SKAction *pauseTime = [SKAction waitForDuration:duration];
         SKAction *update = [SKAction runBlock:^{
             self.value = iterator;
         }];
@@ -45,6 +63,7 @@
     }
     SKAction *changeAction = [SKAction sequence:changeLabelActions];
     [self runAction:changeAction];
+    
 
 }
 
