@@ -85,7 +85,7 @@ static LRScoreManager *_shared = nil;
     if ([[LRProgressManager shared] didIncreaseLevel]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:GAME_STATE_FINISHED_LEVEL object:nil];
         NSLog(@"Level %u", (unsigned)[[LRProgressManager shared] level]);
-        [self _resetScoreForNewGame];
+        [self _resetScoreForNewLevel];
     }
     if (self.delegate && [self.delegate respondsToSelector:@selector(changeScoreWithAnimation:)]) {
         [self.delegate changeScoreWithAnimation:YES];
