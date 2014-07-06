@@ -12,11 +12,12 @@
 #import "LRScoreManager.h"
 
 static CGSize const kLRGameOverMenuSize = (CGSize){248.0, 355.0};
-static CGFloat const kLRGameOverFontSize = 24.0;
+static CGFloat const kLRGameOverFontSize = 22.0;
 
 @interface LRGameOverValueLabel : SKNode
 - (id)initWithTitle:(NSString *)title initialValue:(NSInteger)initialValue;
-- (void)updateValue:(NSInteger)value animated:(BOOL)animated;
+- (void)updateValue:(NSInteger)value animated:(BOOL)animated durationPerNumber:(CGFloat)duration;
+- (void)updateValue:(NSInteger)value animated:(BOOL)animated totalDuration:(CGFloat)totalDuration;
 @end
 
 @interface LRCollectedWordColoredLabel: SKNode
@@ -34,6 +35,7 @@ static CGFloat const kLRGameOverFontSize = 24.0;
     LRGameOverValueLabel *_levelValue;
     LRGameOverValueLabel *_wordsValue;
     LRGameOverValueLabel *_lettersValue;
+    LRGameOverValueLabel *_scoreValue;
 }
 + (void)presentGameOverMenuOverNode:(SKNode *)presentationNode
 {
@@ -85,33 +87,38 @@ static CGFloat const kLRGameOverFontSize = 24.0;
         CGFloat topMargin = scoreInfoShadow.height;
         CGFloat betweenY = 5.0;
         CGFloat yVal = scoreInfoRect.size.height/2 - topMargin;
+        CGFloat labelX = -scoreInfoRect.size.width/2 + labelLeftMargin;
+
         for (SKNode *label in scoreLabels)
         {
             yVal -= label.frame.size.height + betweenY;
-            label.position = CGPointMake((-scoreInfoRect.size.width)/2 + labelLeftMargin, yVal);
+            label.position = CGPointMake(labelX, yVal);
             [scoreInfoRect addChild:label];
         }
-        //to do: move this to a specific update method
-        [_wordsValue updateValue:[[[LRScoreManager shared] submittedWords] count] animated:YES];
-        [_lettersValue updateValue:[[LRScoreManager shared] lettersCollected] animated:YES];
-        
         
         //best word
         if ([[[LRScoreManager shared] highestScoringWord] count] != 0)
         {
-            CGFloat bestWordY = -20;
-            SKLabelNode *bestWord = [[SKLabelNode alloc] initWithFontNamed:[UIFont lr_displayFontRegular]];
-            bestWord.text = @"Best Word:";
-            bestWord.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
-            bestWord.fontColor = [UIColor textDarkBlue];
-            bestWord.fontSize = kLRGameOverFontSize;
-            bestWord.position = CGPointMake([scoreLabels[0] position].x, bestWordY);
+            CGFloat bestWordYOffset = 10.0;
+            CGFloat bestWordY = _lettersValue.frame.origin.y - bestWordYOffset;
+            SKLabelNode *bestWord = [LRGameOverMenu _gameOverLabelNodeWithText:@"Best Word:"];
+            bestWord.position = CGPointMake(labelX, bestWordY);
             [scoreInfoRect addChild:bestWord];
             
             LRCollectedWordColoredLabel *coloredLabel = [[LRCollectedWordColoredLabel alloc] initWithArray:[[LRScoreManager shared] highestScoringWord]];
-            coloredLabel.position = CGPointMake(bestWord.position.x, bestWord.position.y - coloredLabel.frame.size.height - betweenY);
+            coloredLabel.position = CGPointMake(bestWord.position.x, bestWord.position.y - coloredLabel.frame.size.height);
             [scoreInfoRect addChild:coloredLabel];
         }
+        
+        //score
+        CGFloat scoreBottomMargin = 22.0;
+        SKLabelNode *scoreLabel = [LRGameOverMenu _gameOverLabelNodeWithText:@"Score:"];
+        _scoreValue = [[LRGameOverValueLabel alloc] initWithTitle:nil initialValue:0];
+        
+        _scoreValue.position = CGPointMake(labelX, -scoreInfoRect.size.height/2 + scoreBottomMargin);
+        scoreLabel.position = CGPointMake(labelX, _scoreValue.position.y + _scoreValue.frame.size.height);
+        [scoreInfoRect addChild:_scoreValue];
+        [scoreInfoRect addChild:scoreLabel];
         
         //restart button
         CGFloat restartMargin = shadow.height + 13.0;
@@ -124,8 +131,23 @@ static CGFloat const kLRGameOverFontSize = 24.0;
         restartLabel.text = @"R";
         self.restartButton.titleLabel = restartLabel;
         
+        //to do: move this to a specific update method
+        [_wordsValue updateValue:[[[LRScoreManager shared] submittedWords] count] animated:YES durationPerNumber:.02];
+        [_lettersValue updateValue:[[LRScoreManager shared] lettersCollected] animated:YES durationPerNumber:.02];
+        [_scoreValue updateValue:[[LRScoreManager shared] score] animated:YES totalDuration:0.5];
     }
+    
     return self;
+}
+
++ (SKLabelNode *)_gameOverLabelNodeWithText:(NSString *)text
+{
+    SKLabelNode *labelNode = [[SKLabelNode alloc] initWithFontNamed:[UIFont lr_displayFontRegular]];
+    labelNode.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
+    labelNode.fontColor = [UIColor textDarkBlue];
+    labelNode.fontSize = kLRGameOverFontSize;
+    labelNode.text = text;
+    return labelNode;
 }
 
 - (NSString *)_scoreInfoTitleText
@@ -154,11 +176,15 @@ static CGFloat const kLRGameOverFontSize = 24.0;
         NSString *fontName = [UIFont lr_displayFontRegular];
         CGFloat fontSize = kLRGameOverFontSize;
         
-        _titleNode = [[SKLabelNode alloc] initWithFontNamed:fontName];
-        _titleNode.text = title;
-        _titleNode.fontSize = fontSize;
-        _titleNode.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
-        _titleNode.fontColor = [UIColor textDarkBlue];
+        if (title)
+        {
+            _titleNode = [[SKLabelNode alloc] initWithFontNamed:fontName];
+            _titleNode.text = title;
+            _titleNode.fontSize = fontSize;
+            _titleNode.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
+            _titleNode.fontColor = [UIColor textDarkBlue];
+            [self addChild:_titleNode];
+        }
 
         _valueNode = [[LRValueLabelNode alloc] initWithFontNamed:fontName initialValue:initialValue];
         _valueNode.fontSize = fontSize;
@@ -167,24 +193,31 @@ static CGFloat const kLRGameOverFontSize = 24.0;
         
         _valueNode.position = CGPointMake(_titleNode.position.x + _titleNode.frame.size.width, 0);
         
-        [self addChild:_titleNode];
         [self addChild:_valueNode];
     }
     return self;
 }
 
-- (void)updateValue:(NSInteger)value animated:(BOOL)animated
+- (void)updateValue:(NSInteger)value animated:(BOOL)animated durationPerNumber:(CGFloat)duration
 {
     if (_valueNode)
     {
-        [_valueNode updateValue:value animated:animated durationPerNumber:.04];
+        [_valueNode updateValue:value animated:animated durationPerNumber:duration];
+    }
+}
+
+- (void)updateValue:(NSInteger)value animated:(BOOL)animated totalDuration:(CGFloat)totalDuration
+{
+    if (_valueNode)
+    {
+        [_valueNode updateValue:value animated:animated totalDuration:totalDuration];
     }
 }
 
 - (CGRect)frame
 {
-    CGPoint origin = _titleNode.frame.origin;
-    CGSize size = CGSizeMake(_titleNode.frame.size.width + _valueNode.frame.size.width, _titleNode.frame.size.height);
+    CGPoint origin = (_titleNode) ? _titleNode.frame.origin : _valueNode.frame.origin;
+    CGSize size = CGSizeMake(_titleNode.frame.size.width + _valueNode.frame.size.width, _valueNode.frame.size.height);
     return CGRectMake(origin.x, origin.y, size.width, size.height);
 }
 
@@ -202,19 +235,20 @@ static CGFloat const kLRGameOverFontSize = 24.0;
         for (NSDictionary *kv in array)
         {
             LRPaperColor paperColor = [[kv allValues][0] integerValue];
-            SKLabelNode *label = [[SKLabelNode alloc] initWithFontNamed:[UIFont lr_displayFontRegular]];
-            label.text = [[kv allKeys] firstObject];
+            NSString *text = [[kv allKeys] firstObject];
+            SKLabelNode *label = [LRGameOverMenu _gameOverLabelNodeWithText:text];
             label.fontColor = [UIColor primaryColorForPaperColor:paperColor];
-            label.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
+            label.fontSize = 24.0;
             [_labels addObject:label];
         }
         
+        CGFloat xOffset = -2.0;
         CGPoint position = CGPointZero;
         for (SKLabelNode *label in _labels)
         {
             label.position = position;
             [self addChild:label];
-            position = CGPointMake(position.x + label.frame.size.width, position.y);
+            position = CGPointMake(position.x + label.frame.size.width + xOffset, position.y);
         }
     }
     return self;
@@ -224,11 +258,7 @@ static CGFloat const kLRGameOverFontSize = 24.0;
 {
     CGPoint origin = ([_labels count]) ? [_labels[0] frame].origin : CGPointZero;
     CGFloat height = ([_labels count]) ? [_labels[0] frame].size.height : 0;
-    CGFloat width = 0;
-    for (SKLabelNode *node in _labels)
-    {
-        width += node.frame.size.width;
-    }
+    CGFloat width = [[_labels lastObject] frame].size.width + [[_labels lastObject] frame].origin.x - [[_labels firstObject] frame].origin.x;
     return CGRectMake(origin.x, origin.y, width, height);
 }
 

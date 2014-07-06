@@ -26,7 +26,7 @@
 - (void)updateValue:(NSInteger)updatedValue animated:(BOOL)animated totalDuration:(CGFloat)duration
 {
     CGFloat valueDiff = (CGFloat)ABS(updatedValue - self.value);
-    CGFloat timePerNumber = valueDiff/duration;
+    CGFloat timePerNumber = duration/valueDiff;
     [self updateValue:updatedValue animated:animated durationPerNumber:timePerNumber];
 }
 
